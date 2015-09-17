@@ -1,0 +1,84 @@
+#! /bin/bash
+
+#=========================================================================
+# Copyright (c) 2014 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#
+# Name - installWindowsClient
+#
+# Purpose - Install GemStone (specified gs-version), Pharo, build tODE client
+#           image and launch the tODE client.
+#
+# Examples
+#   installWindowsClient -h
+#   installWindowsClient 3.2.1 c:/tode c:/ston
+#
+#=========================================================================
+
+# help function
+function display_help() {
+  echo ""
+  echo "USAGE: $(basename $0) [-h] <gemstone-version> <tode-repository-path> <ston-repository-path>"
+  echo "Install GemStone (specified gs-version), Pharo, build tODE client"
+  echo "image and launch the tODE client."
+  echo "<tode-repository-path> and <ston-repository-path> must be explicitly"
+  echo "specified to circumvent several problems."
+  echo ""
+  echo "OPTIONS"
+  echo "  -h display help"
+  echo ""
+  echo "EXAMPLES"
+  echo "   $(basename $0) -h"
+  echo "   $(basename $0) 3.2.3 c:/tode c:/ston"
+  echo ""
+}
+
+while getopts "h" OPT ; do
+  case "$OPT" in
+    h) 
+      display_help
+      exit 1
+      ;;
+    *)
+      display_help
+      exit 1
+      ;;
+  esac
+done
+
+if [ "$1x" = "x" ] ; then
+  display_help
+  exit 1
+fi
+vers="$1"
+
+if [ "$2x" = "x" ] ; then
+  display_help
+  exit 1
+fi
+
+if [ "$3x" = "x" ] ; then
+  display_help
+  exit 1
+fi
+
+tode_path="$2"
+ston_path="$3"
+
+if [ "${GS_HOME}x" = "x" ] ; then
+  echo "the GS_HOME environment variable needs to be defined"
+  exit 1
+fi
+
+$GS_HOME/bin/windows/installWindowsGCI $vers
+if [[ $? != 0 ]] ; then exit 1; fi
+
+$GS_HOME/bin/windows/installWindowsPharo
+if [[ $? != 0 ]] ; then exit 1; fi
+
+$GS_HOME/bin/windows/createWindowsTodeImage "$tode_path" "$ston_path"
+if [[ $? != 0 ]] ; then exit 1; fi
+
+$GS_HOME/bin/windows/todeWindowsClient
+
+# End of script
+exit 0

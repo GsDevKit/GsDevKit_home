@@ -1,0 +1,128 @@
+#! /bin/bash
+
+#=========================================================================
+# Copyright (c) 2014 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#
+# Name - createTodeImage
+#
+# Purpose - create the tODE client image
+#
+# Examples
+#   createTodeImage -h
+#   createTodeImage -p _0 c:/tode c:/ston
+#   createTodeImage c:/tode c:/ston
+#
+#=========================================================================
+
+# help function
+function display_help() {
+  echo ""
+  echo "USAGE: $(basename $0) [-h] [-p <postfix] <tode-repository-path> <ston-repository-path>"
+  echo "Create the tODE client image loading tODE and ston from the specified"
+  echo "repositories. Used for running pharo-based scripts and for running the"
+  echo "tODE client UI."
+  echo ""
+  echo "OPTIONS"
+  echo "  -h "
+  echo "    display help"
+  echo "  -p <postfix>"
+  echo "    Append <postfix> to end of image name. Useful for creating"
+  echo "    multiple tode client images."
+  echo ""
+  echo "EXAMPLES"
+  echo "  $(basename $0) -h"
+  echo "  $(basename $0) -p _0 c:/tode c:/ston"
+  echo "  $(basename $0) c:/tode c:/ston"
+  echo ""  
+}
+
+postFix=""
+while getopts "hp:" OPT ; do
+  case "$OPT" in
+    h) 
+      display_help
+      exit 1
+      ;;
+    p)
+      postFix="${OPTARG}"
+      ;;
+    *)
+      display_help
+      exit 1
+      ;;
+  esac
+done
+
+if [ "$1x" = "x" ] ; then
+  echo "<tode-repository-path> missing"
+  exit 1
+fi
+tode_path="$1"
+
+if [ "$2x" = "x" ] ; then
+  echo "<ston-repository-path> missing"
+  exit 1
+fi
+ston_path="$2"
+
+if [ "${GS_HOME}x" = "x" ] ; then
+  echo "the GS_HOME environment variable needs to be defined"
+  exit 1
+fi
+
+# create tODE client
+pharo=$GS_HOME/pharo
+if [ -e $pharo/todeClient${postFix}.image ] ; then
+  echo "todeClient already installed"
+  exit 0
+fi
+
+echo "creating todeClient${postFix} image"
+
+$pharo/Pharo.exe --headless $pharo/Pharo3.0.image save todeClientTmp
+
+cat - > $pharo/todeLoad.st << EOF
+[ | metacello string repoPath |
+  "Windows path limitations force us to put Tode and ston outside GS_HOME."
+  Metacello new
+    baseline: 'Tode';
+    repository: 'filetree://', '${tode_path}/repository';
+    lock.
+  Metacello new
+    baseline: 'Ston';
+    repository: 'filetree://', '${ston_path}/repository';
+    lock.
+  string := '$GS_HOME/repository'.
+  repoPath := (string copyFrom: 2 to: 2), ':', (string copyFrom: 3 to: string size).
+  metacello := Metacello new
+    configuration: 'TodeClient';
+    version: #release;
+    repository: 'filetree://', repoPath.
+  metacello copy get.
+  metacello 
+    onConflict: [:ex | ex disallow];
+    load ]
+      on: Warning
+      do: [:ex | Transcript cr; show: ex description ].
+EOF
+
+$pharo/Pharo.exe --headless $pharo/todeClientTmp.image st --quit --save $pharo/todeLoad.st
+if [[ $? != 0 ]] ; then
+  echo "createTodeImage[Error]: failed loading tode client"
+  exit 1
+fi
+
+$pharo/Pharo.exe --headless $pharo/todeClientTmp.image save todeClient${postFix}
+if [[ $? != 0 ]] ; then
+  echo "createTodeImage[Error]: failed saving tode client"
+  rm -f todeClient*
+  exit 1
+fi
+
+rm -f todeClientTmp.*
+echo
+echo "tODE client image creation complete"
+
+# End of script
+exit 0
+

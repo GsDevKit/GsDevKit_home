@@ -1,0 +1,127 @@
+#! /bin/bash
+
+#=========================================================================
+# Copyright (c) 2014 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#
+# Name - installWindowsGCI
+#
+# Purpose - Install GemStone (specified gs-version) GCI dlls.
+#
+# Examples
+#   installWindowsGCI -h
+#   installWindowsGCI 3.2.1
+#
+#=========================================================================
+
+# help function
+function display_help() {
+  echo ""
+  echo "USAGE: $(basename $0) [-h] <gemstone-version>"
+  echo "Install GemStone (specified gs-version) GCI dlls."
+  echo ""
+  echo "OPTIONS"
+  echo "  -h display help"
+  echo ""
+  echo "EXAMPLES"
+  echo "   $(basename $0) -h"
+  echo "   $(basename $0) 3.2.1"
+  echo ""
+}
+
+while getopts "h" OPT ; do
+  case "$OPT" in
+    h) 
+      display_help
+      exit 1
+      ;;
+    *)
+      display_help
+      exit 1
+      ;;
+  esac
+done
+
+if [ "$1x" = "x" ] ; then
+  display_help
+  exit 1
+fi
+vers="$1"
+if [ "${GS_HOME}x" = "x" ] ; then
+  echo "the GS_HOME environment variable needs to be defined"
+  exit 1
+fi
+
+gsvers="GemBuilderC${vers}-x86.Windows_NT"
+gbc_file="${gsvers}.zip"
+case "$vers" in
+  2.4.4.1|2.4.4.2|2.4.4.3|2.4.4.4|2.4.4.5|2.4.4.6)
+    ftp_address=ftp://ftp.gemstone.com
+    ;;
+  2.4.5|2.4.5.2)
+    ftp_address=ftp://ftp.gemstone.com
+    ;;
+  3.0.0|3.0.1)
+    ftp_address=ftp://ftp.gemstone.com
+    ;;
+  3.1.0|3.1.0.1|3.1.0.2)
+    ftp_address=ftp://ftp.gemstone.com
+    ;;
+  *)
+    ftp_address=http://ftp.gemtalksystems.com:80
+    ;;
+esac
+cmd="`which curl`"
+pushd $GS_HOME/gemstone/downloads >& /dev/null
+if [ ! -e $gbc_file ]; then
+    echo "[Info] Downloading $gbc_file using ${cmd}"
+    $cmd --output $gbc_file ${ftp_address}/pub/GemStone64/$vers/$gbc_file
+else
+    echo "[Info] $gbc_file already exists"
+    echo "to replace it, remove or rename it and rerun this script"
+fi
+echo "[Info] Uncompressing GemStone archive into $GS_HOME/gemstone/products/"
+gs_product=$GS_HOME/gemstone/products/$gsvers
+if [ ! -e $gs_product ]
+    then
+    unzip -q -d $GS_HOME/gemstone/products $gbc_file
+else
+    echo "[Warning] $GS_HOME/gemstone/products/$gsvers already exists"
+    echo "to replace it, remove or rename it and rerun this script"
+fi
+popd >& /dev/null
+
+echo "copy gci libraries"
+if [ ! -e $pharo_vm/libgcirpc-${vers}-32.dll ] ; then
+  case "$vers" in
+    2.4.*|3.0.*|3.1.*)
+      cp $gs_product/bin/lib* $GS_HOME/pharo
+      ;;
+    *)
+      cp $gs_product/bin32/lib* $GS_HOME/pharo
+      ;;
+  esac
+else
+  echo "[Warning] gci libraries already present to replace, delete them and try again"
+fi
+
+echo "copy msvcr100.dll library"
+if [ ! -e $pharo_vm/msvcr*.dll ] ; then
+  case "$vers" in
+    2.4.*|3.0.*|3.1.*)
+      cp $gs_product/bin/msvcr* $GS_HOME/pharo
+      ;;
+    *)
+      cp $gs_product/bin32/msvcr* $GS_HOME/pharo
+      ;;
+  esac
+else
+  echo "[Warning] msvcr library already present to replace, delete it and try again"
+fi
+
+echo "[Info] Finished $gsvers installation"
+echo ""
+echo "[Info] GemStone version information:"
+cat $gs_product/version.txt
+
+# End of script
+exit 0

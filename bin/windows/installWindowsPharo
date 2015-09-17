@@ -1,0 +1,84 @@
+#! /bin/bash
+
+#=========================================================================
+# Copyright (c) 2014 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#
+# Name - installWindowsPharo 
+#
+# Purpose - Download and install a Windows Pharo VM
+#
+# Examples
+#   installWindowsPharo -h
+#   installWindowsPharo
+#
+#=========================================================================
+
+# help function
+function display_help() {
+  echo ""
+  echo "USAGE: $(basename $0) [-h]"
+  echo "Download and install a Windows Pharo VM."
+  echo ""
+  echo "OPTIONS"
+  echo "  -h display help"
+  echo ""
+  echo "EXAMPLES"
+  echo "  $(basename $0) -h"
+  echo "  $(basename $0)"
+  echo ""
+}
+
+while getopts "h" OPT ; do
+  case "$OPT" in
+    h) 
+      display_help
+      exit 1
+      ;;
+    *)
+      display_help
+      exit 1
+      ;;
+  esac
+done
+
+if [ "${GS_HOME}x" = "x" ] ; then
+  echo "the GS_HOME environment variable needs to be defined"
+  exit 1
+fi
+echo "Installing Pharo"
+
+if [ -e "$GS_HOME/pharo/pharo-vm" ]; then
+  echo "Pharo already installed. To reinstall delete Pharo directory and try again."
+  exit 0
+fi
+
+# Look for curl to download Pharo
+if [ -e "`which curl`" ]; then
+    cmd="`which curl`"
+else
+    echo "[Error] curl is not available. Install curl and rerun this script."
+    exit 1
+fi
+
+cmd="`which curl`"
+pharo_zip=Pharo3.0-win.zip
+pushd $GS_HOME/gemstone/downloads >& /dev/null
+if [ ! -e $pharo_zip ]; then
+    echo "[Info] Downloading $pharo_zip using ${cmd}"
+    $cmd --output $pharo_zip http://files.pharo.org/platform/$pharo_zip
+else
+    echo "[Info] $pharo_zip already exists"
+    echo "to replace it, remove or rename it and rerun this script"
+fi
+
+echo "[Info] Uncompressing Pharo archive into $GS_HOME/pharo"
+if [ ! -e $GS_HOME/pharo/Pharo.exe ]; then
+    unzip -j -q -d $GS_HOME/pharo $pharo_zip
+else
+    echo "[Warning] $GS_HOME/pharo/Pharo.exe already exists"
+    echo "to replace it, remove or rename it and rerun this script"
+fi
+popd >& /dev/null
+
+# End of script
+exit 0

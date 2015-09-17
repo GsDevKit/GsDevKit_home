@@ -1,0 +1,45 @@
+#! /bin/bash
+#=========================================================================
+# Copyright (c) 2014 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#=========================================================================
+
+usage() {
+  cat <<HELP
+USAGE: $(basename $0) [-h] [-p <postfix]
+Launch todeClient image.
+
+OPTIONS
+  -h 
+    display help
+  -p <postfix>
+    Launch the tode client image created with a matching postfix.
+
+EXAMPLES
+  $(basename $0) -h
+  $(basename $0) -p _0
+  $(basename $0)
+
+HELP
+}
+
+postFix=""
+while getopts "hp:" OPT ; do
+  case "$OPT" in
+    h) usage; exit 0 ;;
+    p) postFix="${OPTARG}" ;;
+    *) usage; exit 1 ;;
+  esac
+done
+if [ "${GS_HOME}x" = "x" ] ; then
+  echo "the GS_HOME environment variable needs to be defined"
+  exit 1
+fi
+
+set -e # exit on error
+if [ ! -e "$GS_HOME/pharo/pharo" ]; then
+  $GS_HOME/bin/installPharo
+fi
+
+pharo=$GS_HOME/pharo
+unset GEMSTONE_NRS_ALL
+$pharo/pharo-ui $pharo/todeClient${postFix}.image &> $GS_HOME/tode/logs/todeClient${postFix}.log &

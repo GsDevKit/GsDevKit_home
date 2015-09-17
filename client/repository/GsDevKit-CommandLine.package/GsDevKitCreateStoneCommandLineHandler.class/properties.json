@@ -1,0 +1,15 @@
+{
+	"category" : "GsDevKit-CommandLine",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "dkh 7/17/2014 13:34",
+	"instvars" : [
+		"stoneName",
+		"gsVers" ],
+	"name" : "GsDevKitCreateStoneCommandLineHandler",
+	"pools" : [
+		 ],
+	"super" : "GsDevKitAbstractStoneCommandLineHandler",
+	"type" : "normal" }

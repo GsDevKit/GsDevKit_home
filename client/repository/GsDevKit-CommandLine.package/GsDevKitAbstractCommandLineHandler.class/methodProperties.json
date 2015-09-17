@@ -1,0 +1,18 @@
+{
+	"class" : {
+		"isAbstract" : "dkh 7/19/2014 07:48" },
+	"instance" : {
+		"backupsHome" : "dkh 7/19/2014 17:46",
+		"binHome" : "dkh 7/30/2014 15:34",
+		"gemstoneHome" : "dkh 7/17/2014 16:13",
+		"gsDevKitHome" : "dkh 7/17/2014 13:41",
+		"gsDownloadNameFor:" : "dkh 7/18/2014 08:50",
+		"productsHome" : "dkh 7/17/2014 16:14",
+		"runShellCommand:args:" : "dkh 7/21/2014 11:16",
+		"sessionDescription" : "dkh 7/19/2014 17:40",
+		"sessionDescriptionHome" : "dkh 7/18/2014 14:44",
+		"stoneInfoFilename" : "dkh 7/18/2014 08:29",
+		"stoneName" : "dkh 7/19/2014 17:40",
+		"stonesHome" : "dkh 7/17/2014 16:13",
+		"templateHome" : "dkh 7/17/2014 16:14",
+		"todeHome" : "dkh 7/21/2014 11:31" } }

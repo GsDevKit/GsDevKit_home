@@ -1,0 +1,12 @@
+{
+	"class" : {
+		"commandName" : "dkh 7/26/2014 10:14",
+		"description" : "dkh 7/26/2014 10:16",
+		"helloWorld" : "dkh 7/26/2014 11:17" },
+	"instance" : {
+		"activate" : "dkh 7/28/2014 20:02",
+		"evaluate" : "dkh 7/26/2014 10:14",
+		"evaluate:" : "dkh 7/26/2014 12:31",
+		"stoneName" : "dkh 7/26/2014 10:14",
+		"stoneName:" : "dkh 7/26/2014 10:14",
+		"write:" : "dkh 7/26/2014 10:14" } }

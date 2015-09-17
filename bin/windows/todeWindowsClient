@@ -1,0 +1,67 @@
+#! /bin/bash
+
+#=========================================================================
+# Copyright (c) 2014 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#
+# Name - todeWindowsClient 
+#
+# Purpose - Launch windows todeClient image
+#
+# Examples
+#   todeWindowsClient -h
+#   todeWindowsClient -p _0
+#   todeWindowsClient
+#
+#=========================================================================
+
+# help function
+function display_help() {
+  echo ""
+  echo "USAGE: $(basename $0) [-h] [-p <postfix]"
+  echo "Launch windows todeClient image."
+  echo ""
+  echo "OPTIONS"
+  echo "  -h "
+  echo "    display help"
+  echo "  -p <postfix>"
+  echo "    Launch the tode client image created with a matching postfix."
+  echo ""
+  echo "EXAMPLES"
+  echo "  $(basename $0) -h"
+  echo "  $(basename $0) -p _0"
+  echo "  $(basename $0)"
+  echo ""
+}
+
+postFix=""
+while getopts "hp:" OPT ; do
+  case "$OPT" in
+    h) 
+      display_help
+      exit 1
+      ;;
+    p)
+      postFix="${OPTARG}"
+      ;;
+    *)
+      display_help
+      exit 1
+      ;;
+  esac
+done
+
+if [ "${GS_HOME}x" = "x" ] ; then
+  echo "the GS_HOME environment variable needs to be defined"
+  exit 1
+fi
+if [ ! -e "$GS_HOME/pharo/Pharo.exe" ]; then
+  $GS_HOME/bin/windows/installWindowsPharo
+fi
+
+# Run script
+pharo=$GS_HOME/pharo
+unset GEMSTONE_NRS_ALL
+$pharo/Pharo.exe $pharo/todeClient${postFix}.image &> $GS_HOME/tode/logs/todeClient${postFix}.log &
+
+# End of script
+exit 0

@@ -1,0 +1,15 @@
+{
+	"category" : "GsDevKit-CommandLine",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "dkh 7/19/2014 17:40",
+	"instvars" : [
+		"stoneName",
+		"backupfile" ],
+	"name" : "GsDevKitRestoreFromBackupCommandLineHandler",
+	"pools" : [
+		 ],
+	"super" : "GsDevKitAbstractCommandLineHandler",
+	"type" : "normal" }

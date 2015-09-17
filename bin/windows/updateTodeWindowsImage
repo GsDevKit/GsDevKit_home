@@ -1,0 +1,97 @@
+#! /bin/bash
+
+#=========================================================================
+# Copyright (c) 2014 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#
+# Name - updateTodeWindowsImage
+#
+# Purpose - Update the tODE windows client image
+#
+# Examples
+#   updateTodeWindowsImage -h
+#   updateTodeWindowsImage -p _0
+#   updateTodeWindowsImage
+#
+#=========================================================================
+
+# help function
+function display_help() {
+  echo ""
+  echo "USAGE: $(basename $0) [-h]] [-p <postfix>]"
+  echo "Update the tODE client image."
+  echo ""
+  echo "OPTIONS"
+  echo "  -h "
+  echo "    display help"
+  echo "  -p <postfix>"
+  echo "   Update the tode windows client image created with a matching postfix."
+  echo ""
+  echo "EXAMPLES"
+  echo "  $(basename $0) -h"
+  echo "  $(basename $0)"
+  echo ""
+}
+
+postFix=""
+while getopts "hp:" OPT ; do
+  case "$OPT" in
+    h) 
+      display_help
+      exit 1
+      ;;
+    p)
+      postFix="${OPTARG}"
+      ;;
+    *)
+      display_help
+      exit 1
+      ;;
+  esac
+done
+
+if [ "${GS_HOME}x" = "x" ] ; then
+  echo "the GS_HOME environment variable needs to be defined"
+  exit 1
+fi
+
+echo "Updating todeClient image"
+
+pharo=$GS_HOME/pharo
+$pharo/Pharo.exe --headless $pharo/todeClient${postFix}.image save todeClientTmp
+
+cat - > $pharo/todeLoad.st << EOF
+[ | metacello string repoPath |
+  string := '$GS_HOME/repository'.
+  repoPath := (string copyFrom: 2 to: 2), ':', (string copyFrom: 3 to: string size).
+  metacello := Metacello new
+    configuration: 'TodeClient';
+    version: #release;
+    repository: 'filetree://', repoPath.
+  metacello copy get.
+  metacello 
+    onConflict: [:ex | ex disallow];
+    load ]
+      on: Warning
+      do: [:ex | Transcript cr; show: ex description ].
+EOF
+
+$pharo/Pharo.exe --headless $pharo/todeClientTmp.image st --quit --save $pharo/todeLoad.st
+if [[ $? != 0 ]] ; then
+  echo "updateTodeImage[Error]: failed loading tode client"
+  exit 1
+fi
+
+$pharo/Pharo.exe --headless $pharo/todeClientTmp.image save todeClient${postFix}
+if [[ $? != 0 ]] ; then
+  echo "updateTodeImage[Error]: failed saving tode client"
+  rm -f todeClient*
+  exit 1
+fi
+
+rm -f todeClientTmp.*
+echo
+echo "tODE client image update complete"
+
+# End of script
+exit 0
+

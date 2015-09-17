@@ -1,0 +1,15 @@
+{
+	"category" : "GsDevKit-CommandLine",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "dkh 7/19/2014 07:56",
+	"instvars" : [
+		"stoneName",
+		"stoneInfo" ],
+	"name" : "GsDevKitNewExtentCommandLineHandler",
+	"pools" : [
+		 ],
+	"super" : "GsDevKitAbstractStoneCommandLineHandler",
+	"type" : "normal" }
