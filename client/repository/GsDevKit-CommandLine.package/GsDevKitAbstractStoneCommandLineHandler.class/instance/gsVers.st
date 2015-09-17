@@ -1,3 +1,0 @@
-accessing
-gsVers
-	self subclassResponsibility

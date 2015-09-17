@@ -1,3 +1,6 @@
+client
+server
+tode
 [._]*.s[a-w][a-z]
 [._]s[a-w][a-z]
 *.un~
