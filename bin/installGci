@@ -1,11 +1,16 @@
 #! /bin/bash
 #=========================================================================
-# Copyright (c) 2014 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+# Copyright (c) 2014, 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
 #=========================================================================
+
+echo "================="
+echo "   GsDevKit script: $(basename $0) $*"
+echo "================="
 
 usage() {
   cat <<HELP
 USAGE: $(basename $0) [-h] <gemstone-version>
+
 Copy the gci libraries for the given GemStone version to the
 $GS_HOME/pharo directory.
 
@@ -55,3 +60,5 @@ case "$PLATFORM" in
     cp $gs_product/lib32/lib* $pharo_vm/Pharo.app/Contents/MacOS/Plugins
   ;;
 esac
+
+echo "...finished $(basename $0)"

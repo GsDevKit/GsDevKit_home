@@ -3,6 +3,10 @@
 # Copyright (c) 2014 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
 #=========================================================================
 
+echo "================="
+echo "   GsDevKit script: $(basename $0) $*"
+echo "================="
+
 usage() {
   cat <<HELP
 USAGE: $(basename $0) [-h]] [-p <postfix>]
@@ -16,49 +20,22 @@ OPTIONS
 
 EXAMPLES
   $(basename $0) -h
+  $(basename $0) -p _small
   $(basename $0)
 
 HELP
 }
 
-postFix=""
-while getopts "hp:" OPT ; do
+set -e # exit on error
+if [ "${GS_HOME}x" = "x" ] ; then
+  echo "the GS_HOME environment variable needs to be defined"; exit 1
+fi
+
+while getopts "pfh" OPT ; do
   case "$OPT" in
-    h) usage; exit 0 ;;
-    p) postFix="${OPTARG}" ;;
-    *) usage; exit 1 ;;
+    h) usage; exit 0;;
+    *) ;;
   esac
 done
 
-set -e # exit on error
-if [ "${GS_HOME}x" = "x" ] ; then
-  echo "the GS_HOME environment variable needs to be defined"
-  exit 1
-fi
-
-echo "Updating todeClient${postFix} image"
-
-pharo=$GS_HOME/pharo
-$pharo/pharo $pharo/todeClient${postFix}.image save todeClientTmp
-
-cat - > $pharo/todeLoad.st << EOF
-[ | metacello |
-  metacello := Metacello new
-    configuration: 'TodeClient';
-    version: #release;
-    repository: 'filetree://$GS_HOME/repository'.
-  metacello copy get.
-  metacello 
-    onConflict: [:ex | ex disallow];
-    load ]
-      on: Warning
-      do: [:ex | Transcript cr; show: ex description ].
-EOF
-
-$pharo/pharo $pharo/todeClientTmp.image st --quit --save $pharo/todeLoad.st
-
-$pharo/pharo $pharo/todeClientTmp.image save todeClient${postFix}
-
-rm -f todeClientTmp.*
-echo
-echo "tODEClient${postFix} image update complete"
+$GS_HOME/bin/createTodeImage -f $*

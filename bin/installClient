@@ -1,13 +1,17 @@
 #! /bin/bash
 #=========================================================================
-# Copyright (c) 2014 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+# Copyright (c) 2014, 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
 #=========================================================================
+
+echo "================="
+echo "   GsDevKit script: $(basename $0) $*"
+echo "================="
 
 usage() {
   cat <<HELP
-
 USAGE: $(basename $0) [-h] <gemstone-version>
- Create a todeClient image on a remote machine. Runs the installGemstone (to acquire gci
+
+Create a todeClient image on a remote machine. Runs the installGemstone (to acquire gci
 libraries), createTodeImage and todeClient scripts.
 
 OPTIONS
@@ -37,3 +41,5 @@ $GS_HOME/bin/installGemStone $gsvers
 $GS_HOME/bin/createTodeImage
 
 $GS_HOME/bin/todeClient
+
+echo "...finished $(basename $0)"

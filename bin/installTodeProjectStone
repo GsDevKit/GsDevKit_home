@@ -1,0 +1,65 @@
+#! /bin/bash
+#=========================================================================
+# Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#=========================================================================
+
+echo "================="
+echo "   GsDevKit script: $(basename $0) $*"
+echo "================="
+
+usage() {
+  cat <<HELP
+USAGE: $(basename $0) [-h] [-b <backup-name>] <stone-name> <project-name>
+
+Load the project named <project-name> into <stone-name>. The installation of <project-name> 
+is based upon the informaton in the tODE project entry for the project. A backup is
+made when the script completes. By default, the backup is named <project-name>.dbf unless
+you specify an alternate backup name with the -b option.
+
+tODE must be installed before running this script.
+
+OPTIONS
+  -h
+     show usage
+  -b <backup-name>
+     Use <backup-name> as the name of the backup file
+
+EXAMPLES
+  $(basename $0) -h
+  $(basename $0) devkit Flow
+
+HELP
+}
+
+set -e # exit on error
+if [ "${GS_HOME}x" = "x" ] ; then
+  echo "the GS_HOME environment variable needs to be defined"; exit 1
+fi
+
+backupName=""
+while getopts "b:h" OPT ; do
+  case "$OPT" in
+    s) backupName="${OPTARG}";;
+    h) usage; exit 0;;
+    *) usage; exit 1;;
+  esac
+done
+shift $(($OPTIND - 1))
+
+if [ "${backupName}x" = "x" ] ; then
+  backupName="${projectName}"
+fi 
+
+if [ $# -ne 2 ]; then
+  usage; exit 1
+fi
+
+stoneName="$1"
+projectName="$2"
+
+$GS_HOME/bin/tode todeIt $stoneName << EOF
+project load ${projectName}
+bu backup ${backupName}.dbf
+EOF
+
+echo "...finished $(basename $0)"

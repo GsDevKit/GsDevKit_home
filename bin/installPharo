@@ -1,11 +1,16 @@
 #! /bin/bash
 #=========================================================================
-# Copyright (c) 2014 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+# Copyright (c) 2014, 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
 #=========================================================================
+
+echo "================="
+echo "   GsDevKit script: $(basename $0) $*"
+echo "================="
 
 usage() {
   cat <<HELP
 USAGE: $(basename $0) [-h]
+
 Download and install a Linux or Mac or Pharo3.0 VM, image and changes file.
 
 OPTIONS
@@ -46,5 +51,7 @@ fi
 # Download Pharo
 
 cd $GS_HOME/pharo
- wget -O- get.pharo.org/vmLatest | bash
+wget -O- get.pharo.org/vm30 | bash
 wget -O- get.pharo.org/30 | bash
+
+echo "...finished $(basename $0)"

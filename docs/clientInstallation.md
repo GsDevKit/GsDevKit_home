@@ -1,4 +1,7 @@
-##tODE Client Installation
+#tODE Client Installation
+
+**Before installing a remote client, you should seriously consider using [ssh X11 forwarding][8]. 
+With [ssh X11 forwarding][8], you install an X11 client on the server, and install an X11 server on your client, instead of installing a tODE client.**
 
 tODE clients may be installed on **Linux**, **Mac** or **Windows**. 
 
@@ -58,3 +61,4 @@ Here's the [list of scripts that can be used on the client machine][7].
 [5]: images/descriptionWorkspace.png
 [6]: ../bin/stones
 [7]: ../bin/README.md#client-scripts
+[8]: x11ForwardingForRemoteDisplays.md#x11-forwarding-for-remote-servers

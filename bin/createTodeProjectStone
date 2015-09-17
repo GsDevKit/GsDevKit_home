@@ -1,6 +1,6 @@
 #! /bin/bash
 #=========================================================================
-# Copyright (c) 2014, 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+# Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
 #=========================================================================
 
 echo "================="
@@ -9,10 +9,13 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-n] [-s <snapshot-file-path>] <stone-name> <gemstone-version>
+USAGE: $(basename $0) [-h] [-n] [-s <snapshot-file-path>] <stone-name> <gemstone-version> <project-name> 
 
-Create a new stone with the the given stone name with tODE installed. Start stone
-and netldi unless -n is specified.
+Create a new stone <stone-name> with tODE and the <project-name> project 
+installed. The installation of <project-name> is based upon the informaton in 
+the tODE project entry for the project.
+
+Start stone and netldi unless -n is specified.
 
 If the -s option is not specified, $GEMSTONE/bin/extent0.seaside.dbf will be used as 
 the initial extent.
@@ -20,9 +23,10 @@ the initial extent.
 If you create a stone from an extent snapshot, you should use the -N
 option to start the stone, the first time.
 
+
 OPTIONS
   -h 
-   display help
+     display help
   -n
      No startStone, no startNetldi.
   -s <snapshot-file-path> 
@@ -30,7 +34,7 @@ OPTIONS
 
 EXAMPLES
   $(basename $0) -h
-  $(basename $0) kit 3.2.1
+  $(basename $0) kit 3.2.4 Flow
 "
 HELP
 }
@@ -52,14 +56,15 @@ while getopts "hns:" OPT ; do
 done
 shift $(($OPTIND - 1))
 
-if [ $# -ne 2 ]; then
+if [ $# -ne 3 ]; then
   usage; exit 1
 fi
 stoneName="$1"
 gsvers="$2"
+projectName="$3"
 
-$GS_HOME/bin/createStone $noRestartArg $snapshotFileArg $stoneName $gsvers
+$GS_HOME/bin/createTodeStone $noRestartArg $snapshotFileArg $stoneName $gsvers
 
-$GS_HOME/bin/installTodeStone $stoneName
+$GS_HOME/bin/installTodeProjectStone $stoneName $projectName
 
 echo "...finished $(basename $0)"

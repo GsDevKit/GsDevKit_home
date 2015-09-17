@@ -1,6 +1,6 @@
 #! /bin/bash
 #=========================================================================
-# Copyright (c) 2014, 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+# Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
 #=========================================================================
 
 echo "================="
@@ -9,16 +9,18 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] <stone-name>
+USAGE: $(basename $0) [-h] <stone-name> <tode-command-line>
 
-Start the netldi process for the given stone.
+Execute the <tode-command-line> as a tODE command 
 
 OPTIONS
-  -h display help
+  -h show usage
 
 EXAMPLES
   $(basename $0) -h
-  $(basename $0) kit
+  $(basename $0) devkit project load Seaside3
+  $(basename $0) devkit eval \`3+4\`
+  $(basename $0) devkit eval \`3+4\`\; eval \`self == 7 ifFalse: [ System logout ]\`
 
 HELP
 }
@@ -28,21 +30,15 @@ if [ "${GS_HOME}x" = "x" ] ; then
   echo "the GS_HOME environment variable needs to be defined"; exit 1
 fi
 source ${GS_HOME}/bin/shFunctions
-getOpts_help $@
 
-if [ $# -ne 1 ]; then
-  usage; exit 1
-fi
-stoneName=$1
+getOpts_help $@ #parse standard (-h) options
 
-echo "starting netldi $stoneName"
+stoneName="$1"
+shift
 
-# set up stone environment
-stonePath=$GS_HOME/gemstone/stones/$stoneName
-pushd $stonePath >& /dev/null
-source $stonePath/stone.env
-popd >& /dev/null
-
-$GS_HOME/bin/tode startnetldi $stoneName
+echo "performing: __$*__"
+$GS_HOME/bin/tode todeIt $stoneName << EOF
+$*
+EOF
 
 echo "...finished $(basename $0)"

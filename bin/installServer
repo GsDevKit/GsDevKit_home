@@ -1,22 +1,37 @@
 #! /bin/bash
 #=========================================================================
-# Copyright (c) 2014 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+# Copyright (c) 2014, 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
 #=========================================================================
+
+echo "================="
+echo "   GsDevKit script: $(basename $0) $*"
+echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] <stone-name> <gemstone-version>
+USAGE: $(basename $0) [-h] [-f] <stone-name> <gemstone-version>
+
 Install GemStone/S, create a stone, start the stone, create a todeClient
 image. Runs the installGemstone, createTodeImage, createStone,
 startStone, startNetldi, startStatmonitor, installTodeStone and
 todeClient scripts.
 
+If a stone named $stoneName exists, the existing directory will be left
+alone unless the -f option is specified in which case the existing
+stone directory is deleted.
+
+If a todeClient image exists, the creation of a new image will be skipped
+unless the -f option is specified in which case the todeClient image is
+re-created.
+
 OPTIONS
   -h display help
+  -f force creation of stone and tode image
 
 EXAMPLES
    $(basename $0) -h
    $(basename $0) kit 3.2.1
+   $(basename $0) -f kit 3.2.1
 
 HELP
 }
@@ -25,8 +40,16 @@ set -e # exit on error
 if [ "${GS_HOME}x" = "x" ] ; then
   echo "the GS_HOME environment variable needs to be defined"; exit 1
 fi
-source ${GS_HOME}/bin/shFunctions
-getOpts_help $@
+
+forceArg=""
+while getopts "fhns:" OPT ; do
+  case "$OPT" in
+    h) usage; exit 0;;
+    f) forceArg="-f";;
+    *) usage; exit 1;;
+  esac
+done
+shift $(($OPTIND - 1))
 
 if [ $# -ne 2 ]; then
   usage; exit 1
@@ -36,13 +59,9 @@ gsvers="$2"
 
 $GS_HOME/bin/installGemStone $gsvers
 
-$GS_HOME/bin/createTodeImage
+$GS_HOME/bin/createTodeImage $forceArg
 
-$GS_HOME/bin/createStone $stoneName $gsvers
-
-$GS_HOME/bin/startStone $stoneName
-
-$GS_HOME/bin/startNetldi $stoneName
+$GS_HOME/bin/createStone $forceArg $stoneName $gsvers
 
 if [ "${GS_TRAVIS}x" = "x" ] ; then
   $GS_HOME/bin/startStatmonitor $stoneName
@@ -56,6 +75,8 @@ $GS_HOME/bin/installTodeStone $stoneName
 if [ "${GS_TRAVIS}x" = "x" ] ; then
   $GS_HOME/bin/todeClient
 else
-  # running on travis server - statmonitor fails on startup (bug #44491)
+  # running on travis server - don't start todeClient
   echo "skipping $GS_HOME/bin/todeClient"
 fi
+
+echo "...finished $(basename $0)"

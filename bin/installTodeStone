@@ -1,11 +1,16 @@
 #! /bin/bash
 #=========================================================================
-# Copyright (c) 2014 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+# Copyright (c) 2014, 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
 #=========================================================================
+
+echo "================="
+echo "   GsDevKit script: $(basename $0) $*"
+echo "================="
 
 usage() {
   cat <<HELP
 USAGE: $(basename $0) [-h] <stone-name>
+
 Install tODE in the given stone. The stone <stone-name> should already be started.
 
 OPTIONS
@@ -40,3 +45,5 @@ popd >& /dev/null
 
 # install tode
 $GS_HOME/bin/tode installTode $stoneName
+
+echo "...finished $(basename $0)"

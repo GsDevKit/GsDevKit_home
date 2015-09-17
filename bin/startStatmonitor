@@ -1,11 +1,16 @@
 #! /bin/bash
 #=========================================================================
-# Copyright (c) 2014 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+# Copyright (c) 2014, 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
 #=========================================================================
+
+echo "================="
+echo "   GsDevKit script: $(basename $0) $*"
+echo "================="
 
 usage() {
   cat <<HELP
 USAGE: $(basename $0) [-h] <stone-name>
+
 Start statmonitor for the given stone. Two statmonitors are
 started. One that collects a sample every second and is
 restarted every hour. One that collects a sample once a
@@ -44,3 +49,5 @@ cd $stonePath/stats/1-second
 $stonePath/product/bin/statmonitor $stoneName -Arzq -h 1 -i 1 -u 0 &
 cd ../60-second
 $stonePath/product/bin/statmonitor $stoneName -Arzq -h 24 -i 60 -u 0 &
+
+echo "...finished $(basename $0)"

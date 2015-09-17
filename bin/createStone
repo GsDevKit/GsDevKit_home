@@ -1,19 +1,45 @@
 #! /bin/bash
 #=========================================================================
-# Copyright (c) 2014 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+# Copyright (c) 2014, 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
 #=========================================================================
+
+echo "================="
+echo "   GsDevKit script: $(basename $0) $*"
+echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] <stone-name> <gemstone-version>
-Create a new stone with the given stone name. Do not install tODE.
+USAGE: $(basename $0) [-h] [-f] [-n] [-s <snapshot-file-path>] <stone-name> <gemstone-version>
+
+Create a new stone with the given stone name. Do not install tODE. Start stone
+and netldi unless -n is specified.
+
+If the -s option is not specified, $GEMSTONE/bin/extent0.seaside.dbf will be used as 
+the initial extent.
+
+If you create a stone from an extent snapshot, you should use the -N
+option to start the stone, the first time.
+
+If the stone already exists, creation is skipped unless the -f otion is specified,
+in which case the stone and netldi are stopped and the existing stone directory removed
+before creation.
 
 OPTIONS
-  -h display help
+  -h
+     display help
+  -f
+     Force creation of new stone, by deleting 
+     $GS_HOME/gemstone/stone/<stone-name> directory if it exists
+  -n
+     No startStone, no startNetldi.
+  -s <snapshot-file-path> 
+     path to snapshot file used to create stone.
 
 EXAMPLES
   $(basename $0) -h
   $(basename $0) kit 3.2.1
+  $(basename $0) -f kit 3.2.1
+  $(basename $0) -s $GS_HOME/gemstone/snapshots/extent0.tode.3.2.4.dbf kit 3.2.4
 
 HELP
 }
@@ -22,8 +48,20 @@ set -e # exit on error
 if [ "${GS_HOME}x" = "x" ] ; then
   echo "the GS_HOME environment variable needs to be defined"; exit 1
 fi
-source ${GS_HOME}/bin/shFunctions
-getOpts_help $@
+
+snapshotFileArg=""
+noRestartArg=""
+force=""
+while getopts "fhns:" OPT ; do
+  case "$OPT" in
+    h) usage; exit 0;;
+    f) force="true";; 
+    n) noRestartArg=" -n ";;
+    s) snapshotFileArg=" -s ${OPTARG} ";;
+    *) usage; exit 1;;
+  esac
+done
+shift $(($OPTIND - 1))
 
 if [ $# -ne 2 ]; then
   usage; exit 1
@@ -31,10 +69,28 @@ fi
 stoneName="$1"
 gsvers="$2"
 
-if [ ! -e "$GS_HOME/pharo/pharo" ]; then
-  $GS_HOME/bin/installPharo
+pharo=$GS_HOME/pharo
+
+if [ ! -e $pharo/todeClient.image ] ; then
+  $GS_HOME/bin/createTodeImage
+fi
+
+if [ -d $GS_HOME/gemstone/stones/$stoneName ] ; then
+  if [ "${force}x" = "x" ] ; then
+    echo "stone $stoneName already exists. Use the -f option to force re-creation"
+    exit 0 
+  else
+    $GS_HOME/bin/deleteStone $stoneName
+  fi
 fi
 
 echo "Creating stone $stoneName"
-pharo=$GS_HOME/pharo
 $pharo/pharo $pharo/todeClient.image createStone $stoneName $gsvers
+
+$GS_HOME/bin/stoneNewExtent $noRestartArg $snapshotFileArg $stoneName
+
+if [ "${noRestartArg}x" = "x" ] ; then
+  $GS_HOME/bin/startNetldi $stoneName
+fi
+
+echo "...finished $(basename $0)"

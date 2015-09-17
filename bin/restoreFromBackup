@@ -1,11 +1,16 @@
 #! /bin/bash
 #=========================================================================
-# Copyright (c) 2014 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+# Copyright (c) 2014, 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
 #=========================================================================
+
+echo "================="
+echo "   GsDevKit script: $(basename $0) $*"
+echo "================="
 
 usage() {
   cat <<HELP
 USAGE: $(basename $0) [-h] <stone-name> <backup-file>
+
 Restore a backup on the given stone.
 
 OPTIONS
@@ -41,3 +46,5 @@ popd >& /dev/null
 
 # do restore
 $GS_HOME/bin/tode restoreFromBackup $stoneName $backupFile
+
+echo "...finished $(basename $0)"
