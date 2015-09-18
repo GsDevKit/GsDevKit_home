@@ -86,10 +86,9 @@ Define the `$GS_HOME` environment variable and add `$GS_HOME/bin` to your `$PATH
 cd GsDevKit_home                # if you are not already located there
 export GS_HOME=`pwd`
 export PATH=$GS_HOME/bin:$PATH
-. $GS_HOME/bin/defGsDevKit.env  # Define rest of environment variables used gy GsDevKit_home
 ```
 
-To make sure they are always correctly defined, it's a good idea to update your `.bashrc` file with these `$GS_HOME`, `$PATH` and `defGsDevKit.env` definitions. 
+To make sure they are always correctly defined, it's a good idea to update your `.bashrc` file with these `$GS_HOME`, and `$PATH`. 
 
 ###Install a GemStone stone
 To install a GemStone stone, run the `$GS_HOME/bin/install` script.
