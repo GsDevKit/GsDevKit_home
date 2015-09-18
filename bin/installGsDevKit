@@ -9,7 +9,7 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: installServer [-h] [-f] [-b|-g|-t] [-s <snapshot-file-path>] <stone-name> <gemstone-version>
+USAGE: $(basename $0) [-h] [-f] <stone-name> <gemstone-version>
 
 Install GemStone/S, create a stone, start the stone, create a todeClient
 image. Runs the installGemstone, createTodeImage, createStone,
@@ -25,26 +25,13 @@ unless the -f option is specified in which case the todeClient image is
 re-created.
 
 OPTIONS
-  -b
-     create a base GemStone stone - use $GEMSTONE/bin/extent0.dbf. No additional
-     code loaded and no tODE client created.
-  -h
-     display help
-  -f
-     force creation of stone and tode image
-  -g
-     create a GLASS/GsDevKit stone - use $GEMSTONE/bin/extent0.seaside.dbf. Update
-     repository using gsUpgrader and no tODE client created
-  -s <snapshot-file-path>
-     Path to snapshot file used to create stone. Path may be a relative file path.
-  -t
-     [DEFAULT] create a tODE stone - use $GEMSTONE/bin/extent0.seaside.dbf. Update
-     repository using gsUpgrader, then install tODE and create a tODE client.
+  -h display help
+  -f force creation of stone and tode image
 
 EXAMPLES
    $(basename $0) -h
-   $(basename $0) gs_327 3.2.7
-   $(basename $0) -f gs_327 3.2.7
+   $(basename $0) kit 3.2.1
+   $(basename $0) -f kit 3.2.1
 
 HELP
 }
