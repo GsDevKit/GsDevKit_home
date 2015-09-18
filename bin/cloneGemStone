@@ -33,3 +33,23 @@ if [ "${GS_HOME}x" = "x" ] ; then
   echo "the GS_HOME environment variable needs to be defined"; exit 1
 fi
 
+mode="ssh"
+while getopts ":hc:" OPT ; do
+  case "$OPT" in
+    h) usage; exit 0;;
+    c) mode="${OPTARG}";;
+    *) usage; exit 1;;
+  esac
+done
+shift $(($OPTIND - 1))
+
+if [ "${mode}" = "ssh" ] ; then
+  url="git@github.com:GsDevKit/GsDevKit_gemstone.git"
+else if [  "${mode}" = "https" ] ; then
+  url="https://github.com/GsDevKit/GsDevKit_gemstone.git"
+else
+  usage; exit 1
+fi
+
+git clone ${url} gemstone
+
