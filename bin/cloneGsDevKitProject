@@ -68,6 +68,8 @@ else
   usage; exit 1
 fi
 
-git clone $url $directoryName
+if [ ! -d "${directoryName}" ] ; then
+  git clone $url $directoryName
+fi
 
 echo "...finished $(basename $0)"
