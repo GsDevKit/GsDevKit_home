@@ -35,9 +35,8 @@ if [ "${GS_HOME}x" = "x" ] ; then
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 if [ "${GS_GEMSTONE}x" = "x" ] ; then
-  echo "the GsDevKit_gemstone project has not been installed correctly or the"
-  echo "GS_GEMSTONE environment variable has not been defined"
-  exit 1
+  $GS_GEMSTONE/bin/cloneGemStone
+  source ${GS_HOME}/bin/defGsDevKit.env
 fi
 
 pushd ${GS_GEMSTONE}/client >& /dev/null
