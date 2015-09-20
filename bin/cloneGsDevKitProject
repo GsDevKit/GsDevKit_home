@@ -24,9 +24,9 @@ OPTIONS
 
 EXAMPLES
    $(basename $0) -h
-   $(basename $0) GsDevKit_gemstone
-   $(basename $0) -c ssh GsDevKit_gemstone
-   $(basename $0) -c https GsDevKit_gemstone
+   $(basename $0) GsDevKit_gemstone gemstone
+   $(basename $0) -c ssh GsDevKit_gemstone gemstone
+   $(basename $0) -c https GsDevKit_gemstone gemstone
 
 HELP
 }
