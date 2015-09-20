@@ -1,0 +1,47 @@
+#! /bin/bash
+#=========================================================================
+# Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#=========================================================================
+
+echo "================="
+echo "   GsDevKit script: $(basename $0) $*"
+echo "================="
+
+usage() {
+  cat <<HELP
+USAGE: $(basename $0) [-h] [-c https | ssh ]
+
+
+OPTIONS
+  -h
+     display help
+  -c https | ssh
+     clone using https (https://github.com) or ssh (git@github.com)
+     ssh is the default 
+
+EXAMPLES
+   $(basename $0) -h
+   $(basename $0) 
+   $(basename $0) -c ssh
+   $(basename $0) -c https
+
+HELP
+}
+useHttpsForGit=${GS_HOME}/bin/.useHttpsForGit
+
+set -e # exit on error
+if [ "${GS_HOME}x" = "x" ] ; then
+  echo "the GS_HOME environment variable needs to be defined"; exit 1
+fi
+source ${GS_HOME}/bin/defGsDevKit.env
+if [ "${GS_GEMSTONE}x" = "x" ] ; then
+  echo "the GsDevKit_gemstone project has not been installed correctly or the"
+  echo "GS_GEMSTONE environment variable has not been defined"
+  exit 1
+fi
+
+pushd ${GS_GEMSTONE}/client >& /dev/null
+${GS_HOME}/bin/cloneGsDevKitProject $* GsDevKit_todeClient todeClient
+popd >& /dev/null
+
+echo "...finished $(basename $0)"
