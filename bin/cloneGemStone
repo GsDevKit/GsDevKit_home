@@ -27,13 +27,19 @@ EXAMPLES
 
 HELP
 }
+useHttpsForGit=${GS_HOME}/bin/.useHttpsForGit
 
 set -e # exit on error
 if [ "${GS_HOME}x" = "x" ] ; then
   echo "the GS_HOME environment variable needs to be defined"; exit 1
 fi
 
-mode="ssh"
+if [ -d "$useHttpsForGit" ] ; then
+  mode="https"
+else
+  mode="ssh"
+fi
+
 while getopts ":hc:" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
@@ -44,9 +50,10 @@ done
 shift $(($OPTIND - 1))
 
 if [ "${mode}" = "ssh" ] ; then
+  rm -rf $useHttpsForGit
   url="git@github.com:GsDevKit/GsDevKit_gemstone.git"
 elif [  "${mode}" = "https" ] ; then
-  touch ${GS_HOME}/bin/.useHttpsForGit
+  touch $useHttpsForGit
   url="https://github.com/GsDevKit/GsDevKit_gemstone.git"
 else 
   usage; exit 1
