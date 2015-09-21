@@ -1,0 +1,85 @@
+#! /bin/bash
+#=========================================================================
+# Copyright (c) 2014, 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#=========================================================================
+
+echo "================="
+echo "   GsDevKit script: $(basename $0) $*"
+echo "================="
+
+usage() {
+  cat <<HELP
+USAGE: $(basename $0) [-h] [-v Pharo3.0 | Pharo4.0 ] -d <full-path-to-directory>
+
+Download a Linux or Mac VM, image. and changes file.
+
+OPTIONS
+  -h
+     display help
+  -d <full-path-to-directory>
+     <full-path-to-directory> specifies the directory into which the chosen
+     pharo version is downloaded
+  -v Pharo3.0 | Pharo4.0
+     Choose the version of Smalltalk to use for the client. Default is 
+     Pharo3.0.
+
+EXAMPLES
+  $(basename $0) -h
+  $(basename $0) -v Pharo3.0
+  $(basename $0)
+
+HELP
+}
+
+set -e # exit on error
+if [ "${GS_TODE_CLIENT}x" = "x" ] ; then
+  echo "the GS_TODE_CLIENT environment variable needs to be defined"; exit 1
+fi
+
+directoryPath=""
+version="Pharo3.0"
+while getopts ":hd:v:" OPT ; do
+  case "$OPT" in
+    h) usage; exit 0;;
+    d) directoryPath="${OPTARG}";;
+    v) version="${OPTARG}";;
+   *) usage; exit 1;;
+  esac
+done
+shift $(($OPTIND - 1))
+if [ $# -ne 0 ]; then
+  usage; exit 1
+fi
+if [ "${directoryPath}x" = "x" ]; then
+  usage; exit 1
+fi
+
+echo "Installing $version"
+
+
+# Download client
+
+case $version in
+  Pharo*)
+    if [ -e "$directoryPath/pharo-vm" ]; then
+      echo "Pharo already installed. To reinstall run $GS_TODE_CLIENT/bin/deleteClientInstall and try again."
+      exit 0
+    fi
+    pushd $directoryPath >& /dev/null
+    case $version in
+      Pharo3.0)
+        wget -O- get.pharo.org/vm30 | bash
+        wget -O- get.pharo.org/30 | bash
+        ;;
+      Pharo4.0)
+        wget -O- get.pharo.org/vm40 | bash
+        wget -O- get.pharo.org/40 | bash
+        ;;
+      *) usage; exit 1;;
+    esac
+    popd >& /dev/null
+    ;;
+  *) usage; exit 1;;
+esac
+
+echo "...finished $(basename $0)"
