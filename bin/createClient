@@ -9,9 +9,9 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-f] [-c gemtools|tode|jade] [ <client-specific-args> ]
+USAGE: $(basename $0) [-h] [-f] [-t gemtools|tode|jade] <client-name> [ <client-specific-args> ]
 
-Create the specified client image. 
+Create a client of the given type and <client-name>.
 
 If the client already exists, the installation is skipped unless the -f option 
 is specified.
@@ -19,7 +19,7 @@ is specified.
 OPTIONS
   -h 
      display help
-  -c gemtools|tode|jade  <client-specific-args>
+  -t gemtools|tode|jade  <client-specific-args>
      Start the spedcifed client using the <client-specific-args>
   -f
      Force tODE client installation, whether or not the image
@@ -27,24 +27,24 @@ OPTIONS
 
 EXAMPLES
   $(basename $0) -h
-  $(basename $0) -c tode -h
-  $(basename $0) -c gemtools -h
-  $(basename $0) -c jade -h
+  $(basename $0) -t tode todeDev
+  $(basename $0) -t tode todeDev -p _0
+  $(basename $0) -t gemtools gemtools_329 3.2.9
+  $(basename $0) -t jade jade_329 3.2.9
 
   # tode client (default)
   $(basename $0) -f
   $(basename $0)
-  $(basename $0) -p _0
-  $(basename $0) -c tode -p _0
-  $(basename $0) -f -c tode -p _0
+  $(basename $0) todeDev -p _0
+  $(basename $0) -f todeDev -p _0
 
   # gemtools client
-  $(basename $0) -c gemtools 3.2.8.1
-  $(basename $0) -f -c gemtools 3.2.8.1
+  $(basename $0) -t gemtools gt_329 3.2.9
+  $(basename $0) -f -t gemtools gt_329 3.2.9
 
   # jade client
-  $(basename $0) -c jade 3.2.8.1
-  $(basename $0) -f -c jade 3.2.8.1
+  $(basename $0) -t jade j_329 3.2.9
+  $(basename $0) -f -t jade j_329 3.2.9
 
 HELP
 }
@@ -55,31 +55,37 @@ if [ "${GS_HOME}x" = "x" ] ; then
   exit 1
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
-if [ "${GS_GEMSTONE}x" = "x" ] ; then
-  echo "the GsDevKit_gemstone project has not been installed correctly or the"
-  echo "GS_GEMSTONE environment variable has not been defined"
-  exit 1
-fi
 
 clientType="tode"
 forceArg=""
-while getopts ":fhc:" OPT ; do
+while getopts ":fht:" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     f) forceArg=" -f ";;
-    c) clientType="${OPTARG}";;
+    t) clientType="${OPTARG}";;
     *) usage; exit 1;;
   esac
 done
 shift $(($OPTIND - 1))
 
+if [ $# -lt 1 ]; then
+  usage; exit 1
+fi
+clientName=$1
+shift 1
+
+if [ "${GS_GS_CLIENT_DEV}x" = "x" ] ; then
+  $GS_HOME/bin/private/clone_gs_client_dev
+  source ${GS_HOME}/bin/defGsDevKit.env
+fi
+
 case $clientType in
   tode)
     if [ "${GS_TODE_CLIENT}x" = "x" ] ; then
-      $GS_GEMSTONE/client/bin/cloneTodeClient
+      ${GS_HOME}/bin/private/cloneTodeClient
       source ${GS_HOME}/bin/defGsDevKit.env
     fi
-    ${GS_TODE_CLIENT}/bin/createClient $forceArg $*
+    ${GS_TODE_CLIENT}/bin/createClient $forceArg $* $clientName
     ;;
   gemtools)
     ;;

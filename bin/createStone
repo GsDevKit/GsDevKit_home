@@ -94,36 +94,36 @@ if [ "${GS_Gs_SERVER}x" = "x" ] ; then
   source ${GS_HOME}/bin/defGsDevKit.env
 fi
 
-if [ ! -e ${GS_GSDEV}/gsDevKit.image ] ; then
-  $GS_GEMSTONE/bin/createGsDevKitImage
+if [ ! -e ${GS_GS_SERVER_PHARO}/gsDevKit.image ] ; then
+  $GS_GS_SERVER/bin/createGsDevKitImage
 fi
 
-if [ -d $GS_GEMSTONE/stones/$stoneName ] ; then
+if [ -d $GS_GS_SERVER/stones/$stoneName ] ; then
   if [ "${force}x" = "x" ] ; then
     echo "stone $stoneName already exists. Use the -f option to force re-creation"
     exit 0 
   else
-    $GS_GEMSTONE/bin/deleteStone $stoneName
+    $GS_GS_SERVER/bin/deleteStone $stoneName
   fi
 fi
 
 echo "Creating stone $stoneName"
 
-$GS_GEMSTONE/bin/downloadGemStone $gsvers
-${GS_GSDEV}/pharo ${GS_GSDEV}/gsDevKit.image createStone $stoneName $gsvers
+$GS_HOME/bin/downloadGemStone $gsvers
+${GS_GS_SERVER_PHARO}/pharo ${GS_GS_SERVER_PHARO}/gsDevKit.image createStone $stoneName $gsver
 
-$GS_GEMSTONE/bin/newStoneExtent $noRestartArg $snapshotFileArg $stoneName
+$GS_HOME/bin/newStoneExtent $noRestartArg $snapshotFileArg $stoneName
 
 if [ "${noRestartArg}x" = "x" ] ; then
   $GS_HOME/bin/startNetldi $stoneName
 fi
 
 if [ "$installTode" = "true" ] ; then
-  $GS_GEMSTONE/bin/installTode $stoneName
+  $GS_GS_SERVER/bin/installTode $stoneName
 fi
 
 if [ "$todeProjectName" != "" ] ; then
-  $GS_GEMSTONE/bin/tode todeIt $stoneName << EOF
+  $GS_GS_SERVER/bin/tode todeIt $stoneName << EOF
 project load ${todeProjectName}
 bu backup ${backupName}.dbf
 EOF
