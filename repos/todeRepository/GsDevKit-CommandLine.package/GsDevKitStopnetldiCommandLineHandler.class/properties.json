@@ -1,0 +1,14 @@
+{
+	"category" : "GsDevKit-CommandLine",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "dkh 3/24/2015 07:30",
+	"instvars" : [
+		"stoneName" ],
+	"name" : "GsDevKitStopnetldiCommandLineHandler",
+	"pools" : [
+		 ],
+	"super" : "GsDevKitAbstractCommandLineHandler",
+	"type" : "normal" }

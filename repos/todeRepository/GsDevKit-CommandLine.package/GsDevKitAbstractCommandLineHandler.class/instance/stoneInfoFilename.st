@@ -1,0 +1,3 @@
+accessing
+stoneInfoFilename
+	^  'info.ston'

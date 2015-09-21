@@ -1,0 +1,14 @@
+{
+	"category" : "GsDevKit-CommandLine",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "dkh 3/19/2015 12:08",
+	"instvars" : [
+		 ],
+	"name" : "GsDevKitNewExtentCommandLineHandler",
+	"pools" : [
+		 ],
+	"super" : "GsDevKitAbstractStoneCommandLineHandler",
+	"type" : "normal" }

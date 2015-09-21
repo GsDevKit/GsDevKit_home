@@ -1,0 +1,17 @@
+{
+	"category" : "GsDevKit-CommandLine",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"stoneName",
+		"gsVers",
+		"username",
+		"netldiName" ],
+	"name" : "GsDevKitStoneInfo",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

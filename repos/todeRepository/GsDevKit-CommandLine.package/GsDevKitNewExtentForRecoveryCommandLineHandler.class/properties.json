@@ -1,0 +1,14 @@
+{
+	"category" : "GsDevKit-CommandLine",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "dkh 3/20/2015 19:24",
+	"instvars" : [
+		 ],
+	"name" : "GsDevKitNewExtentForRecoveryCommandLineHandler",
+	"pools" : [
+		 ],
+	"super" : "GsDevKitNewExtentCommandLineHandler",
+	"type" : "normal" }
