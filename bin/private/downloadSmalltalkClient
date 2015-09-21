@@ -56,7 +56,6 @@ fi
 
 echo "Installing $version"
 
-
 # Download client
 
 case $version in
