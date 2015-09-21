@@ -62,11 +62,6 @@ if [ "${GS_HOME}x" = "x" ] ; then
   echo "the GS_HOME environment variable needs to be defined"; exit 1
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
-if [ "${GS_GEMSTONE}x" = "x" ] ; then
-  echo "the GsDevKit_gemstone project has not been installed correctly or the"
-  echo "GS_GEMSTONE environment variable has not been defined"
-  exit 1
-fi
 
 snapshotFileArg=""
 noRestartArg=""
@@ -93,6 +88,11 @@ if [ $# -ne 2 ]; then
 fi
 stoneName="$1"
 gsvers="$2"
+
+if [ "${GS_Gs_SERVER}x" = "x" ] ; then
+  $GS_HOME/bin/private/clone_gs_server
+  source ${GS_HOME}/bin/defGsDevKit.env
+fi
 
 if [ ! -e ${GS_GSDEV}/gsDevKit.image ] ; then
   $GS_GEMSTONE/bin/createGsDevKitImage

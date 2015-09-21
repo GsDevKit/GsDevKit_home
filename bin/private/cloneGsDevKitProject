@@ -30,14 +30,14 @@ EXAMPLES
 
 HELP
 }
-useHttpsForGit=${GS_HOME}/bin/.useHttpsForGit
+useHttpsForGit=${GS_HOME}/bin/private/.useHttpsForGit
 
 set -e # exit on error
 if [ "${GS_HOME}x" = "x" ] ; then
   echo "the GS_HOME environment variable needs to be defined"; exit 1
 fi
 
-if [ -d "$useHttpsForGit" ] ; then
+if [ -e "$useHttpsForGit" ] ; then
   mode="https"
 else
   mode="ssh"
@@ -62,7 +62,9 @@ if [ "${mode}" = "ssh" ] ; then
   rm -rf $useHttpsForGit${gsdevKitProject}
   url="git@github.com:GsDevKit/${gsdevKitProject}.git"
 elif [  "${mode}" = "https" ] ; then
-  touch $useHttpsForGit
+  cat - > $useHttpsForGit << EOF
+the presence of this file means that GsDevKit_* will clone git projects using https protocol
+EOF
   url="https://github.com/GsDevKit/${gsdevKitProject}.git"
 else 
   usage; exit 1

@@ -34,7 +34,7 @@ if [ "${GS_HOME}x" = "x" ] ; then
 fi
 
 pushd ${GS_HOME} >& /dev/null
-${GS_HOME}/bin/cloneGsDevKitProject $* GsDevKit_gemstone gemstone
+${GS_HOME}/bin/private/cloneGsDevKitProject $* GsDevKit_gs_server gs_server
 popd >& /dev/null
 
 echo "...finished $(basename $0)"
