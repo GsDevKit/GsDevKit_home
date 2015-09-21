@@ -1,0 +1,3 @@
+TDTopezLeafNode{#name:'x',#contents:'project load ZincHTTPComponents # load Zinc project
+# bu backup zinc2.4.3.1.dbf       # make a backup after load completes
+project list                    # refresh the project list',#creationTime:DateAndTime['2015-02-22T17:16:42.70123791694641-08:00'],#modificationTime:DateAndTime['2015-02-22T17:19:33.31049394607544-08:00']}
