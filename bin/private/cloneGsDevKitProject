@@ -1,4 +1,4 @@
-#! /bin/bash -x
+#! /bin/bash
 #=========================================================================
 # Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
 #=========================================================================
@@ -60,12 +60,12 @@ directoryName=$2
 
 if [ "${mode}" = "ssh" ] ; then
   rm -rf $useHttpsForGit${gsdevKitProject}
-  url="git@github.com:GsDevKit/${gsdevKitProject}.git"
+  url="git@github.com:GsDevKit/${gsDevKitProject}.git"
 elif [  "${mode}" = "https" ] ; then
   cat - > $useHttpsForGit << EOF
 the presence of this file means that GsDevKit_* will clone git projects using https protocol
 EOF
-  url="https://github.com/GsDevKit/${gsdevKitProject}.git"
+  url="https://github.com/GsDevKit/${gsDevKitProject}.git"
 else 
   usage; exit 1
 fi
