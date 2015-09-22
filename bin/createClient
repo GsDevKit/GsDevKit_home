@@ -20,7 +20,8 @@ OPTIONS
   -h 
      display help
   -t gemtools|tode|jade  <client-specific-args>
-     Start the spedcifed client using the <client-specific-args>
+     Start the spedcifed client using the <client-specific-args>. 
+     DEFAULT is '-t tode'.
   -f
      Force tODE client installation, whether or not the image
      already exists.
@@ -29,6 +30,7 @@ EXAMPLES
   $(basename $0) -h
   $(basename $0) -t tode todeDev
   $(basename $0) -t tode todeDev -p _0
+  $(basename $0) todeDev
   $(basename $0) -t gemtools gemtools_329 3.2.9
   $(basename $0) -t jade jade_329 3.2.9
 
