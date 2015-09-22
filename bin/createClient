@@ -9,7 +9,8 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-f] [-t gemtools|tode|jade] <client-name> [ <client-specific-args> ]
+USAGE: $(basename $0) [-h] [-f] [-t gemtools|tode|jade] <client-name> 
+                      [ <client-specific-args> ]
 
 Create a client of the given type and <client-name>.
 
@@ -30,7 +31,6 @@ EXAMPLES
   $(basename $0) -h
   $(basename $0) -t tode todeDev
   $(basename $0) -t tode todeDev -p _0
-  $(basename $0) todeDev
   $(basename $0) -t gemtools gemtools_329 3.2.9
   $(basename $0) -t jade jade_329 3.2.9
 
