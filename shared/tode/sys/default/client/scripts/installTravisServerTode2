@@ -1,0 +1,4 @@
+#no backups on travis
+bu snapshot --safely tode.dbf # make a snapshot of initial tODE install
+script --script=setUpSys      # set up the in-image tODE /sys structure
+bu snapshot --safely home.dbf # make a snapshot of initial tODE install with /sys structures in place
