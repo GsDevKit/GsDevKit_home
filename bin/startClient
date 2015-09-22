@@ -41,8 +41,7 @@ if [ $# -lt 1 ]; then
   usage; exit 1
 fi
 clientName=$1
-shift 1
 
-${GS_GS_CLIENT_DEV_CLIENTS}/$clientName/startClient $*
+${GS_GS_CLIENT_DEV_CLIENTS}/$clientName/startClient $* 
 
 echo "...finished $(basename $0)"
