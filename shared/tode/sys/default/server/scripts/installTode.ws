@@ -9,6 +9,6 @@ GsUpgrader batchErrorHandlingDo: [
   GsDeployer bulkMigrate: [ 
     Metacello new
       baseline: 'Tode';
-      repository: 'github://dalehenrich/tode:0.0.?/repository';
+      repository: 'github://dalehenrich/tode:dev/repository';
       get;
       load: 'GemStone Dev' ] ].

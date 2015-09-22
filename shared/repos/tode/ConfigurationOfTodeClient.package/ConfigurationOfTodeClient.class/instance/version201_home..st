@@ -6,7 +6,7 @@ version201_home: spec
 		do: [ 
 			spec blessing: #development.
 			spec description: 'This version is for use with GsDevKit_todeClient, part of GsDevKit_home'.
-			spec repository: 'filetree://' , (Smalltalk os environment at: 'GS_TODE_REPOSITORY') .
+			spec repository: 'filetree://' , (Smalltalk os environment at: 'GS_SHARED_TODE_REPOSITORY') .
 			spec
 				package: 'GsDevKit-CommandLine' with: [ spec requires: #('Tode' 'OSProcess') ];
 				configuration: 'OSProcess'
