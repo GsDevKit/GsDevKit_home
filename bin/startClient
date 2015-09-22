@@ -1,0 +1,89 @@
+#! /bin/bash
+#=========================================================================
+# Copyright (c) 2014, 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#=========================================================================
+
+echo "================="
+echo "   GsDevKit script: $(basename $0) $*"
+echo "     Pharo STDOUT routed to: $GS_HOME/pharo/logs/todeClient${postFix}.log"
+echo "================="
+
+usage() {
+  cat <<HELP
+USAGE: $(basename $0) [-h] [-f] [-p <postfix>]
+
+Launch todeClient image.
+
+OPTIONS
+  -h 
+     display help
+  -f
+     Rebuild the todeClient image
+  -p <postfix>
+     Launch the tode client image created with a matching postfix. If
+     the tode client image does not exist, build it.
+
+EXAMPLES
+  $(basename $0) -h
+  $(basename $0) -f
+  $(basename $0)
+  $(basename $0) -p _0  # Launches the image named todeClient_0.image
+
+HELP
+}
+
+postFix=""
+force=""
+while getopts "fhp:" OPT ; do
+  case "$OPT" in
+    f) force="true";;
+    h) usage; exit 0 ;;
+    p) postFix="${OPTARG}" ;;
+    *) usage; exit 1 ;;
+  esac
+done
+shift $(($OPTIND - 1))
+
+if [ "${GS_HOME}x" = "x" ] ; then
+  echo "the GS_HOME environment variable needs to be defined"
+  exit 1
+fi
+
+set -e # exit on error
+pharo=$GS_HOME/pharo
+
+if [ "$force" = "true" ] ; then
+ $GS_HOME/bin/createTodeImage -f -p ${postFix}
+fi
+
+if [ ! -e $pharo/todeClient${postFix}.image ] ; then
+  echo "The requested todeClient image: $pharo/todeClient${postFix}.image does not exist"
+  created="false"
+  while [ "$created" = "false" ] ; do
+    read -p "Do you wish to create todeClient${postFix}? [y/n]" yn
+    case $yn in
+      [Yy]* ) $GS_HOME/bin/createTodeImage -p ${postFix}; created="true" ;;
+      [Nn]* ) exit 1;;
+      * ) echo "Please answer yes or no.";;
+    esac
+  done
+fi
+
+# Detect operating system
+PLATFORM="`uname -sm | tr ' ' '-'`"
+# Macs with Core i7 use the same software as older Macs
+[ $PLATFORM = "Darwin-x86_64" ] && PLATFORM="Darwin-i386"
+
+vmArgs=""
+case "$PLATFORM" in
+  Darwin-i386) vmArgs="" ;;
+  Linux-x86_64) vmArgs=" --textenc UTF-8" ;;
+  *)
+    echo "unsupported platform: $PLATFORM"
+    exit 1
+    ;;
+esac
+
+pharo=$GS_HOME/pharo
+unset GEMSTONE_NRS_ALL
+$pharo/pharo-ui $vmArgs $pharo/todeClient${postFix}.image &> $pharo/logs/todeClient${postFix}.log &
