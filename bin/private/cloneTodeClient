@@ -34,7 +34,8 @@ if [ "${GS_HOME}x" = "x" ] ; then
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 if [ "${GS_GS_CLIENT_DEV}x" = "x" ] ; then
-  echo "the GS_GS_CLIENT_DEV environment variable needs to be defined"; exit 1
+  ${GS_HOME}/bin/private/clone_gs_client_dev
+  source ${GS_HOME}/bin/defGsDevKit.env
 fi
 
 pushd ${GS_GS_CLIENT_DEV} >& /dev/null
