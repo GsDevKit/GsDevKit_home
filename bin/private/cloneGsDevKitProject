@@ -45,7 +45,7 @@ fi
 
 while getopts ":hc:" OPT ; do
   case "$OPT" in
-    h) usage; exit 0;;${gsdevKitProject}
+    h) usage; exit 0;;
     c) mode="${OPTARG}";;
     *) usage; exit 1;;
   esac
