@@ -11,15 +11,16 @@ usage() {
   cat <<HELP
 USAGE: $(basename $0) [-h] <stone-name> <backup-file>
 
-Create a GemStone backup for the given stone. tODE needs to be installed in the
-stone.
+Create a GemStone backup for the given stone. 
+
+tODE needs to be installed in the stone.
 
 OPTIONS
   -h display help
 "
 EXAMPLES"
   $(basename $0) -h
-  $(basename $0) kit home.dbf
+  $(basename $0) gs_329 home.dbf
 
 HELP
 }
@@ -52,6 +53,7 @@ pushd $stonePath >& /dev/null
   source $stonePath/stone.env
 popd >& /dev/null
 
+# do tODE backup
 $GS_HOME/bin/gsDevKitTodeCommandLine backup $stoneName $backupFile
 
 echo "...finished $(basename $0)"

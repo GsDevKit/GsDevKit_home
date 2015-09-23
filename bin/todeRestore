@@ -11,14 +11,16 @@ usage() {
   cat <<HELP
 USAGE: $(basename $0) [-h] <stone-name> <backup-file>
 
-Restore a backup on the given stone.
+Restore a backup for the given stone.
+
+tODE needs to be installed in the stone.
 
 OPTIONS
   -h display help
 
 EXAMPLES
   $(basename $0) -h
-  $(basename $0) kit home.dbf
+  $(basename $0) gs_329 home.dbf
 
 HELP
 }
@@ -27,7 +29,14 @@ set -e # exit on error
 if [ "${GS_HOME}x" = "x" ] ; then
   echo "the GS_HOME environment variable needs to be defined"; exit 1
 fi
-source ${GS_HOME}/bin/shFunctions
+source ${GS_HOME}/bin/defGsDevKit.env
+if [ "$GS_GS_SERVER{}x" = "x" ] ; then
+  echo "the GS_GS_SERVER environment variable needs to be defined"
+  echo "Perhaps a stone has not been create yet?"
+  exit 1
+fi
+
+source ${GS_HOME}/bin/privateshFunctions
 getOpts_help $@
 
 if [ $# -ne 2 ]; then
@@ -39,12 +48,12 @@ backupFile=$2
 echo "Restoring backup for stone: $stoneName using: $backupFile"
 
 # set up stone environment
-stonePath=$GS_HOME/gemstone/stones/$stoneName
+stonePath=$GS_GS_SERVER_STONES/$stoneName
 pushd $stonePath >& /dev/null
-source $stonePath/stone.env
+ source $stonePath/stone.env
 popd >& /dev/null
 
-# do restore
-$GS_HOME/bin/tode restoreFromBackup $stoneName $backupFile
+# do tODE restore
+$GS_HOME/bin/gsDevKitTodeCommandLine restoreFromBackup $stoneName $backupFile
 
 echo "...finished $(basename $0)"

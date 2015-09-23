@@ -38,7 +38,8 @@ getOpts_help $@ #parse standard (-h) options
 stoneName="$1"
 shift
 
-echo "performing: __$*__"
+# do tODE shell command
+echo "performing tode command: __$*__"
 $GS_HOME/bin/gsDevKitTodeCommandLine todeIt $stoneName << EOF
 $*
 EOF
