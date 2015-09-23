@@ -87,7 +87,7 @@ if [ $# -ne 2 ]; then
   usage; exit 1
 fi
 stoneName="$1"
-gsvers="$2"
+vers="$2"
 
 if [ "${GS_GS_SERVER}x" = "x" ] ; then
   $GS_HOME/bin/private/clone_gs_server
@@ -109,7 +109,7 @@ fi
 
 echo "Creating stone $stoneName"
 
-$GS_HOME/bin/downloadGemStone $gsvers
+$GS_HOME/bin/downloadGemStone $vers
 ${GS_GS_SERVER_PHARO}/pharo ${GS_GS_SERVER_PHARO}/gsDevKit.image createStone $stoneName $gsver
 
 $GS_HOME/bin/newStoneExtent $noRestartArg $snapshotFileArg $stoneName
