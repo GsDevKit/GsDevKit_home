@@ -29,6 +29,11 @@ if [ "${GS_HOME}x" = "x" ] ; then
   exit 1
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
+if [ "$GS_GS_SERVER{}x" = "x" ] ; then
+  echo "the GS_GS_SERVER environment variable needs to be defined"
+  echo "Perhaps a stone has not been create yet?"
+  exit 1
+fi
 
 case "$1" in
   --*) # pass to tode
@@ -49,6 +54,6 @@ if [ ! -e ${GS_GS_SERVER_PHARO}/todeCommand.image ] ; then
 fi
 
 # Run script
-${GS_GS_SERVER_PHARO}/pharo ${GS_GS_SERVER_PHARO}/tode.image $*
+${GS_GS_SERVER_PHARO}/pharo ${GS_GS_SERVER_PHARO}/todeCommand.image $*
 
 echo "...finished $(basename $0)"

@@ -29,6 +29,11 @@ if [ "${GS_HOME}x" = "x" ] ; then
   exit 1
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
+if [ "$GS_GS_SERVER{}x" = "x" ] ; then
+  echo "the GS_GS_SERVER environment variable needs to be defined"
+  echo "Perhaps a stone has not been create yet?"
+  exit 1
+fi
 
 case "$1" in
   --*) # pass to tode
@@ -44,11 +49,11 @@ case "$1" in
     ;;
 esac
 
-if [ ! -e ${GS_GS_SERVER_PHARO}/gsServerDevKit.image] ; then
-  $GS_GS_SERVER/bin/create_gs_server_image -d $GS_GS_SERVER_PHARO gsDevKit
+if [ ! -e ${GS_GS_SERVER_PHARO}/gsDevKitCommand.image] ; then
+  $GS_GS_SERVER/bin/create_gs_server_image -d $GS_GS_SERVER_PHARO gsDevKitCommand
 fi
 
 # Run script
-${GS_GS_SERVER_PHARO}/pharo ${GS_GS_SERVER_PHARO}/gsServerDevKit.image $*
+${GS_GS_SERVER_PHARO}/pharo ${GS_GS_SERVER_PHARO}/gsDevKitCommand.image $*
 
 echo "...finished $(basename $0)"
