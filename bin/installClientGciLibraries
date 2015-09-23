@@ -1,0 +1,40 @@
+#! /bin/bash
+#=========================================================================
+# Copyright (c) 2014, 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#=========================================================================
+
+echo "================="
+echo "   GsDevKit script: $(basename $0) $*"
+echo "================="
+
+usage() {
+  cat <<HELP
+USAGE: $(basename $0) [-h] <gemstone-version>
+
+Notification that a new version of GemStone has been installed. Copy the GCI 
+libraries to the approprate place for the various clients
+
+OPTIONS
+  -h display help
+
+EXAMPLES
+   $(basename $0) -h
+   $(basename $0) 3.2.9
+
+HELP
+}
+
+set -e # exit on error
+if [ "${GS_HOME}x" = "x" ] ; then
+  echo "the GS_HOME environment variable needs to be defined"; exit 1
+fi
+
+if [ "${GS_GS_CLIENT_DEV}x" -ne "x" ] ; then
+   ${GS_GS_CLIENT_DEV}/bin/installClientGciLibraries $*
+fi
+
+if [ "${GS_GS_SERVER}x" -ne "x" ];
+   ${GS_GS_SERVER}/bin/installClientGciLibraries $*
+fi
+
+echo "...finished $(basename $0)"

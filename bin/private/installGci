@@ -57,8 +57,8 @@ PLATFORM="`uname -sm | tr ' ' '-'`"
 [ $PLATFORM = "Darwin-x86_64" ] && PLATFORM="Darwin-i386"
 
 case "$PLATFORM" in
-  Linux-x86_64) gsvers="GemStone64Bit${vers}-x86_64.Linux" ;;
-  Darwin-i386) gsvers="GemStone64Bit${vers}-i386.Darwin" ;;
+  Linux-x86_64) gsvers="GemStone64Bit${vers}-x86_64.Linux"; libext="so" ;;
+  Darwin-i386) gsvers="GemStone64Bit${vers}-i386.Darwin"; libext="dylib" ;;
 esac
 gs_product=$GS_HOME/gemstone/products/$gsvers
 
@@ -74,6 +74,10 @@ case "$clientType" in
   *) usage; exit 1;;
 esac
 
-cp $gs_product/lib32/lib* $targetLocation
+if [ ! -e "$targetLocation/libgcirpc-${vers}-32.${libext}" ] ; then
+  cp $gs_product/lib32/lib* $targetLocation
+else
+  echo "[Warning] gci libraries already present to replace, delete them and try again"
+fi
 
 echo "...finished $(basename $0)"
