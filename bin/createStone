@@ -112,7 +112,7 @@ echo "Creating stone $stoneName"
 $GS_HOME/bin/downloadGemStone $vers
 ${GS_GS_SERVER_PHARO}/pharo ${GS_GS_SERVER_PHARO}/gsDevKit.image createStone $stoneName $gsver
 
-$GS_HOME/bin/newStoneExtent $noRestartArg $snapshotFileArg $stoneName
+$GS_HOME/bin/newExtent $noRestartArg $snapshotFileArg $stoneName
 
 if [ "${noRestartArg}x" = "x" ] ; then
   $GS_HOME/bin/startNetldi $stoneName
