@@ -1,0 +1,9 @@
+TDObjectGatewayNode{#name:'seaside',#contents:'^ TDProjectSpecEntryDefinition new
+    configuration: \'Seaside30\'
+      version: \'3.0.8\'
+      repository:
+        \'http://www.squeaksource.com/MetacelloRepository\'
+      loads: #(\'Development\' \'Core\');
+    status: #(#\'inactive\');
+    locked: true;
+    yourself'}

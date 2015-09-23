@@ -1,0 +1,10 @@
+TDSmalltalkLeafNode{#name:'patchExecBlock',#contents:'\"In GemStone3.x,  the method #forkAt:named: needs to be added to ExecBlock. This a bit of a hack, but I don\'t want to perturb old versions of the project configurations .... Zinc 1.1 worked okay in GemStone 2.4.x. and this hack brings it up to speed for GemStone 3.x.\"
+
+  Smalltalk
+    at: #\'ExecBlock\'
+    ifPresent: [ :cls | 
+      cls
+        compile:
+          \'forkAt: priority named: ignored 
+  ^ self forkAt: priority\'
+        classified: \'Zinc 1.1 patch for GemStone 3.x\' ]',#creationTime:DateAndTime['2015-03-06T11:48:56.70375204086304-08:00'],#modificationTime:DateAndTime['2015-03-06T11:51:52.9531569480896-08:00']}

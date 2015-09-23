@@ -1,0 +1,7 @@
+TDObjectGatewayNode{#name:'zinc',#contents:'^ TDProjectSpecEntryDefinition new
+    baseline: \'ZincHTTPComponents\'
+      repository: \'github://GsDevKit/zinc:2.4.3.?/repository\'
+      loads: #(\'Core\');
+    status: #(#\'active\');
+    locked: true;
+    yourself'}

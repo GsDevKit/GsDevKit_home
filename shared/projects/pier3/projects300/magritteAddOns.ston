@@ -1,0 +1,8 @@
+TDObjectGatewayNode{#name:'magritteAddOns',#contents:'^ TDProjectSpecEntryDefinition new
+    configuration: \'Magritte3AddOns\'
+      version: \'3.0.0\'
+      repository: \'http://www.squeaksource.com/MetacelloRepository\'
+      loads: #(\'Magritte-Json\');
+    status: #(#\'inactive\');
+    locked: true;
+    yourself'}
