@@ -95,7 +95,7 @@ $GS_HOME/bin/stopStone $stoneName
 
 if [ "${noRestart}" = "false" ] ; then
   echo "Copy snapshot and remove tranlogs"
-  $GS_HOME/bin/gsDevKitCommand newExtent $stoneName $snapshotFile
+  $GS_HOME/bin/gsDevKitCommandLine newExtent $stoneName $snapshotFile
 
   # -N option used to ignore tranlog files during restart
   echo "Restarting stone"
@@ -109,7 +109,7 @@ else
     echo "  Are not likely to be appropriate for $GEMSTONE/bin/extent0.seaside.dbf"
     usage; exit 1
   fi
-  $GS_HOME/bin/gsDevKitHome newExtentForRecovery $stoneName $snapshotFile
+  $GS_HOME/bin/gsDevKitCommandLine newExtentForRecovery $stoneName $snapshotFile
 
   echo "Stone is now ready for recovery. Please read the How to Restore from Backup"
   echo "section of the manual (http://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/GS64-SysAdmin-3.2.htm?http://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/9-BackupAndRestore.htm#pgfId-999128)"

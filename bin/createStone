@@ -106,7 +106,7 @@ fi
 echo "Creating stone $stoneName"
 
 $GS_HOME/bin/downloadGemStone $vers
-${GS_HOME}/bin/gsDevKitCommand createStone $stoneName $gsver
+${GS_HOME}/bin/gsDevKitCommandLine createStone $stoneName $gsver
 
 $GS_HOME/bin/newExtent $noRestartArg $snapshotFileArg $stoneName
 
@@ -119,7 +119,7 @@ if [ "$installTode" = "true" ] ; then
 fi
 
 if [ "$todeProjectName" != "" ] ; then
-  $GS_HOME/bin/todeCommand todeIt $stoneName << EOF
+  $GS_HOME/bin/gsDevKitTodeCommandLine todeIt $stoneName << EOF
 project load ${todeProjectName}
 bu backup ${backupName}.dbf
 EOF

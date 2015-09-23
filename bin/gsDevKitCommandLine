@@ -11,7 +11,7 @@ usage() {
   cat <<HELP
 USAGE: $(basename $0) [-h]
 
-Run headless tode scripts using the todeClient image.
+Perform commands implemented using $GS_GS_SERVER_PHARO/gsDevKitCommandLine.image.
 
 OPTIONS
   -h display help
@@ -49,11 +49,11 @@ case "$1" in
     ;;
 esac
 
-if [ ! -e ${GS_GS_SERVER_PHARO}/todeCommand.image ] ; then
-  $GS_GS_SERVER/bin/create_gs_server_image -d $GS_GS_SERVER_PHARO todeCommand
+if [ ! -e ${GS_GS_SERVER_PHARO}/gsDevKitCommandLine.image] ; then
+  $GS_GS_SERVER/bin/create_gs_server_image -d $GS_GS_SERVER_PHARO gsDevKitCommandLine
 fi
 
 # Run script
-${GS_GS_SERVER_PHARO}/pharo ${GS_GS_SERVER_PHARO}/todeCommand.image $*
+${GS_GS_SERVER_PHARO}/pharo ${GS_GS_SERVER_PHARO}/gsDevKitCommandLine.image $*
 
 echo "...finished $(basename $0)"
