@@ -11,7 +11,9 @@ usage() {
   cat <<HELP
 USAGE: $(basename $0) [-h] <stone-name> <tode-command-line>
 
-Execute the <tode-command-line> as a tODE command 
+Execute the <tode-command-line> as a tODE shell command.
+
+tODE must be installed in the named stone.
 
 OPTIONS
   -h show usage
