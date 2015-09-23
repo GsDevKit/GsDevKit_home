@@ -37,6 +37,12 @@ set -e # exit on error
 if [ "${GS_HOME}x" = "x" ] ; then
   echo "the GS_HOME environment variable needs to be defined"; exit 1
 fi
+source ${GS_HOME}/bin/defGsDevKit.env
+if [ "$GS_GS_SERVER{}x" = "x" ] ; then
+  echo "the GS_GS_SERVER environment variable needs to be defined"
+  echo "Perhaps a stone has not been create yet?"
+  exit 1
+fi
 
 forceArg=""
 createStone="true"
@@ -66,14 +72,14 @@ sourceStoneName="$1"
 targetStoneName="$2"
 gsvers="$3"
 
-sourceStonePath=$GS_HOME/gemstone/stones/$sourceStoneName
-targetStonePath=$GS_HOME/gemstone/stones/$targetStoneName
+sourceStonePath=$GS_GS_SERVER_STONES/$sourceStoneName
+targetStonePath=$GS_GS_SERVER_STONES/$targetStoneName
 
 sourceStoneVersion="$(sed -n '2{p;q;}' $sourceStonePath/product/version.txt| awk '{print $1;}')"
 majorMinorVersion="${sourceStoneVersion:0:3}"
 
 if [ "${hasSnapshotFile}" = "false" ] ; then
-  snapshotFile="$GS_HOME/gemstone/stones/$sourceStoneName/extents/extent0.dbf"
+  snapshotFile="$GS_GS_SERVER_STONES/$sourceStoneName/extents/extent0.dbf"
 fi
 
 cat <<EOF
@@ -81,13 +87,13 @@ cat <<EOF
 Performing the GsDevKitHome upgrade from the stone "$sourceStoneName" to the
 stone "$targetStoneName":
 
-  1. executes the $GS_HOME/bin/installGemStone to install GemStone $gsvers
+  1. executes the $GS_HOME/bin/downloadGemStone to install GemStone $gsvers
   2. executes the $GS_HOME/bin/createStone to create the $targetStoneName stone
   3. copy the extent0.dbf file from "$sourceStoneName to $targetStoneName
   4. create $targetStonePath/upgradeLog
   5. executes the $GEMSTONE/bin/upgradeImage script
   6. executes the $GEMSTONE/seaside/bin/upgradeSeasideImage script
-  7. exeuctes the $GS_HOME/bin/installTodeStone in $targetStoneName stone
+  7. executes the $GS_GS_SERVER/bin/installTode in $targetStoneName stone
      to complete the upgrade process
 
 If an error occurs during execution of this script, the details of the error are
@@ -101,8 +107,8 @@ read prompt
 
 $GS_HOME/bin/stopStone $sourceStoneName
 if [ "${createStone}" = "true" ] ; then
-  $GS_HOME/bin/installGemStone $gsvers
-  $GS_HOME/bin/createStone $forceArg $targetStoneName $gsvers
+  $GS_HOME/bin/downloadGemStone $gsvers
+  $GS_HOME/bin/createStone $forceArg -g $targetStoneName $gsvers
   $GS_HOME/bin/stopStone $targetStoneName
 fi
 
@@ -111,7 +117,7 @@ if [ "$majorMinorVersion" = "2.4" ]  ; then
   cp $snapshotFile $targetStonePath/extents/extent0.dbf
   chmod +w $targetStonePath/extents/extent0.dbf
 else
-  $GS_HOME/bin/stoneNewExtent -n -s $snapshotFile $targetStoneName
+  $GS_HOME/bin/newExtent -n -s $snapshotFile $targetStoneName
 fi
 rm $targetStonePath/tranlogs/tranlog*.dbf
 
@@ -224,15 +230,15 @@ EOF
 
 
 echo "Installing tODE"
-$GS_HOME/bin/installTodeStone $targetStoneName
+$GS_GS_SERVER/bin/installTode $targetStoneName
 if [ "${createStone}" = "true" ] ; then
-  if [ -d  $GS_HOME/tode/sys/stones/$sourceStoneName/projects ] ; then
-    cp -r $GS_HOME/tode/sys/stones/$sourceStoneName/projects/. \
-          $GS_HOME/tode/sys/stones/$targetStoneName/projects/
+  if [ -d  $GS_TODE/sys/stones/$sourceStoneName/projects ] ; then
+    cp -r $GS_TODE/sys/stones/$sourceStoneName/projects/. \
+          $GS_TODE/sys/stones/$targetStoneName/projects/
   fi
-  if [ -d  $GS_HOME/tode/sys/stones/$sourceStoneName/home ] ; then
-    cp -r $GS_HOME/tode/sys/stones/$sourceStoneName/home/. \
-          $GS_HOME/tode/sys/stones/$targetStoneName/home/
+  if [ -d  $GS_TODE/sys/stones/$sourceStoneName/home ] ; then
+    cp -r $GS_TODE/sys/stones/$sourceStoneName/home/. \
+          $GS_TODE/sys/stones/$targetStoneName/home/
   fi
 fi
 
@@ -241,7 +247,7 @@ if [ "${postUpgradeLoadScriptPath}x" != "x" ] ;  then
   #install application code
   echo "Running /home/${postUpgradeLoadScriptPath} tODE script"
 
-  $GS_HOME/bin/tode todeIt $targetStoneName << TODE
+  $GS_HOME/bin/private/gsDevKitTodeCommandLine todeIt$targetStoneName << TODE
 ${postUpgradeLoadScriptPath}
 TODE
 fi

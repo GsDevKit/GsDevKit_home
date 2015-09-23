@@ -45,4 +45,4 @@ pushd $stonePath >& /dev/null
   source $stonePath/stone.env
 popd >& /dev/null
 
-$GS_HOME/bin/gsDevKitCommandLine stopnetldi $stoneName
+$GS_HOME/bin/private/gsDevKitCommandLine stopnetldi $stoneName

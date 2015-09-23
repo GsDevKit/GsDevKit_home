@@ -36,11 +36,5 @@ if [ $# -ne 0 ]; then
   usage; exit 1
 fi
 
-pharo=$GS_HOME/pharo
-
-if [ ! -e $pharo/todeClient.image ] ; then
-  $GS_HOME/bin/createTodeImage
-fi
-
 # Run script
-$pharo/pharo $pharo/todeClient.image stones
+$GS_HOME/bin/private/gsDevKitCommandLine products

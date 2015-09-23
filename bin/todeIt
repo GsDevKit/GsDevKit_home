@@ -40,7 +40,7 @@ shift
 
 # do tODE shell command
 echo "performing tode command: __$*__"
-$GS_HOME/bin/gsDevKitTodeCommandLine todeIt $stoneName << EOF
+$GS_HOME/bin/private/gsDevKitTodeCommandLine todeIt $stoneName << EOF
 $*
 EOF
 

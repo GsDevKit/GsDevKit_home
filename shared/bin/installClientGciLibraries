@@ -34,8 +34,8 @@ if [ $# -ne 1 ]; then
 fi
 vers="$1"
 
-if [ -e ${GS_GS_SERVER_PHARO}/pharo ] ; then
-  $GS_HOME/bin/private/installGci -d ${GS_GS_SERVER_PHARO} -t pharo $vers
+if [ -e ${GS_SHARED_PHARO}/pharo ] ; then
+  $GS_HOME/bin/private/installGci -d ${GS_SHARED_PHARO} -t pharo $vers
 fi
 
 echo "...finished $(basename $0)"

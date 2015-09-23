@@ -54,6 +54,6 @@ pushd $stonePath >& /dev/null
 popd >& /dev/null
 
 # do tODE backup
-$GS_HOME/bin/gsDevKitTodeCommandLine backup $stoneName $backupFile
+$GS_HOME/bin/private/gsDevKitTodeCommandLine backup $stoneName $backupFile
 
 echo "...finished $(basename $0)"

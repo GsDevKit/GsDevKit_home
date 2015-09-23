@@ -76,16 +76,6 @@ if [ ! -e "${directoryPath}/pharo" ] ; then
   $GS_HOME/bin/private/downloadSmalltalkClient -v $version -d $directoryPath
 fi
 
-message="create"
-if [ -e $directoryPath/gsServer.image ] ; then
-  if [ "${force}x" = "x" ] ; then
-    echo "gsServer image already created, use -f to force update"
-    exit 0
-  else
-    message="update"
-  fi
-fi
-
 case "$imageType" in
   gsDevKitCommandLine)
     loadScript=gsDevKitCommandLineLoad.st
@@ -102,6 +92,16 @@ case "$imageType" in
   ;;
   *) usage; exit 1;;
 esac
+
+message="create"
+if [ -e $directoryPath/$imageName ] ; then
+  if [ "${force}x" = "x" ] ; then
+    echo "$imageName image already created, use -f to force update"
+    exit 0
+  else
+    message="update"
+  fi
+fi
 
 gs_serverLoadPath=$GS_SHARED_TODE/sys/default/pharo/$loadScript
 if [ -e $GS_SHARED_TODE/sys/local/pharo/$loadScript ] ; then
