@@ -95,7 +95,7 @@ if [ "${GS_GS_SERVER}x" = "x" ] ; then
 fi
 
 if [ ! -e ${GS_GS_SERVER_PHARO}/gsDevKit.image ] ; then
-  $GS_GS_SERVER/bin/create_gs_server_image
+  $GS_GS_SERVER/bin/create_gs_server_image -d $GS_GS_SERVER_PHARO
 fi
 
 if [ -d $GS_GS_SERVER/stones/$stoneName ] ; then
