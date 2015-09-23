@@ -31,7 +31,7 @@ fi
 
 directoryPath=""
 clientType=""
-while getopts "b:fhnp:s:" OPT ; do
+while getopts "d:ht:" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     d) directoryPath="${OPTARG}";;
