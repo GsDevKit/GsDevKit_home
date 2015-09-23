@@ -89,13 +89,13 @@ fi
 stoneName="$1"
 gsvers="$2"
 
-if [ "${GS_Gs_SERVER}x" = "x" ] ; then
+if [ "${GS_GS_SERVER}x" = "x" ] ; then
   $GS_HOME/bin/private/clone_gs_server
   source ${GS_HOME}/bin/defGsDevKit.env
 fi
 
 if [ ! -e ${GS_GS_SERVER_PHARO}/gsDevKit.image ] ; then
-  $GS_GS_SERVER/bin/createGsDevKitImage
+  $GS_GS_SERVER/bin/create_gs_server_image
 fi
 
 if [ -d $GS_GS_SERVER/stones/$stoneName ] ; then
