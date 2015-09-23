@@ -1,33 +1,7 @@
 #! /bin/bash
-
 #=========================================================================
 # Copyright (C) VMware, Inc. 1986-2011.  All Rights Reserved.
 # Copyright (c) 2013-2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
-#
-# Name - installGemStone <gemstone version (e.g., 3.2)>
-#
-# Purpose - Download and install a Linux or Mac version of GemStone
-#
-# Description:
-#    Does a basic install of GemStone for a developer on Mac or Linux
-#    Setup for manual GemStone startup rather than automatic startup upon boot
-#    Safe to run multiple times, as it will not overwrite existing data
-#    Requires root access (using sudo) to change setings and create directories
-#
-# Examples
-#    installGemStone -h
-#    installGemStone 3.2.1
-#
-# Actions:
-#    Verify machine is capable of running GemStone 64-bit
-#    Add shared memory setup to /etc/sysctl.conf
-#    Add GemStone netldi service port to /etc/services
-#    Download the GemStone product zipfile
-#    Create /opt/gemstone and required subdirectories
-#    Uncompress the GemStone zipfile into $GS_HOME/products
-#    Copy the initial GsDevKit repository to data directory
-#    Copy the gci libraries to the Pharo vm (install Pharo if necessary)
-#    Print build version information and available IPv4 addresses
 #=========================================================================
 
 echo "================="
@@ -39,18 +13,29 @@ usage() {
  cat <<HELP
 USAGE: $(basename $0) [-h] <gemstone-version>
 
-Download and install the given GemStone version. Will make sure that
-shared memory is correctly configuration on your server. Performs some
-operations as `root` using sudo.
+Does a basic install of GemStone for a developer on Mac or Linux
+Setup for manual GemStone startup rather than automatic startup upon boot
+Safe to run multiple times, as it will not overwrite existing data
+Requires root access (using sudo) to change setings and create directories
 
 If the file $GS_HOME/bin/.gsdevkitSysSetup exists skip the steps requiring sudo access. 
+
+Actions:
+   Verify machine is capable of running GemStone 64-bit
+   Add shared memory setup to /etc/sysctl.conf
+   Add GemStone netldi service port to /etc/services
+   Download the GemStone product zipfile
+   Uncompress the GemStone zipfile into $GS_HOME/shared/downloads/products
+   Copy the initial GsDevKit repository to data directory
+   Copy the gci libraries to the client smalltalk vms
+   Print build version information and available IPv4 addresses
 
 OPTIONS
   -h display help
 
 EXAMPLES
   $(basename $0) -h
-  $(basename $0) 3.2.0
+  $(basename $0) 3.2.9
 
 HELP
 }
@@ -300,7 +285,7 @@ else
 fi
 
 # Download GemStone
-pushd $GS_HOME/gemstone/downloads >& /dev/null
+pushd $GS_SHARED_DOWNLOADS/zip >& /dev/null
 if [ ! -e $gss_file ]; then
     echo "[Info] Downloading $gss_file using ${cmd}"
     $cmd ${ftp_address}/pub/GemStone64/$bucket/$gss_file
@@ -311,17 +296,15 @@ fi
 
 # Unzip the downloaded archive into $GS_HOME/gemstone/products/
 echo "[Info] Uncompressing GemStone archive into $GS_HOME/gemstone/products/"
-gs_product=$GS_HOME/gemstone/products/$gsvers
+gs_product=$GS_SHARED_DOWNLOADS/products/$gsvers
 if [ ! -e $gs_product ]
     then
-    unzip -q -d $GS_HOME/gemstone/products $gss_file
+    unzip -q -d $GS_SHARED_DOWNLOADS/products $gss_file
 else
-    echo "[Warning] $GS_HOME/gemstone/products/$gsvers already exists"
+    echo "[Warning] $GS_SHARED_DOWNLOADS/products/$gsvers already exists"
     echo "to replace it, remove or rename it and rerun this script"
 fi
 popd >& /dev/null
-
-pharo_vm=$GS_HOME/pharo/pharo-vm
 
 # Copy initial system.conf into the Seaside data directory
 echo "[Info] Copying initial system.conf to data directory"
@@ -347,7 +330,7 @@ else
     echo "to replace it, remove or rename it and rerun this script"
 fi
 
-#    Copy the gci libraries to the Pharo vm
+#    Copy the gci libraries to client installations
 if [ ! -e "$pharo_vm" ]; then
   echo "Install Pharo"
   $GS_HOME/bin/installPharo
