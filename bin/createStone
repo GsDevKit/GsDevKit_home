@@ -103,7 +103,7 @@ if [ -d $GS_GS_SERVER/stones/$stoneName ] ; then
     echo "stone $stoneName already exists. Use the -f option to force re-creation"
     exit 0 
   else
-    $GS_GS_SERVER/bin/deleteStone $stoneName
+    $GS_HOME/bin/deleteStone $stoneName
   fi
 fi
 

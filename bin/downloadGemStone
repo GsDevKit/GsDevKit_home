@@ -1,0 +1,403 @@
+#! /bin/bash
+
+#=========================================================================
+# Copyright (C) VMware, Inc. 1986-2011.  All Rights Reserved.
+# Copyright (c) 2013-2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#
+# Name - installGemStone <gemstone version (e.g., 3.2)>
+#
+# Purpose - Download and install a Linux or Mac version of GemStone
+#
+# Description:
+#    Does a basic install of GemStone for a developer on Mac or Linux
+#    Setup for manual GemStone startup rather than automatic startup upon boot
+#    Safe to run multiple times, as it will not overwrite existing data
+#    Requires root access (using sudo) to change setings and create directories
+#
+# Examples
+#    installGemStone -h
+#    installGemStone 3.2.1
+#
+# Actions:
+#    Verify machine is capable of running GemStone 64-bit
+#    Add shared memory setup to /etc/sysctl.conf
+#    Add GemStone netldi service port to /etc/services
+#    Download the GemStone product zipfile
+#    Create /opt/gemstone and required subdirectories
+#    Uncompress the GemStone zipfile into $GS_HOME/products
+#    Copy the initial GsDevKit repository to data directory
+#    Copy the gci libraries to the Pharo vm (install Pharo if necessary)
+#    Print build version information and available IPv4 addresses
+#=========================================================================
+
+echo "================="
+echo "   GsDevKit script: $(basename $0) $*"
+echo "================="
+
+# help function
+usage() {
+ cat <<HELP
+USAGE: $(basename $0) [-h] <gemstone-version>
+
+Download and install the given GemStone version. Will make sure that
+shared memory is correctly configuration on your server. Performs some
+operations as `root` using sudo.
+
+If the file $GS_HOME/bin/.gsdevkitSysSetup exists skip the steps requiring sudo access. 
+
+OPTIONS
+  -h display help
+
+EXAMPLES
+  $(basename $0) -h
+  $(basename $0) 3.2.0
+
+HELP
+}
+
+set -e # exit on error
+while getopts "h" OPT ; do
+  case "$OPT" in
+    h) usage ; exit 0 ;;
+    *) usage ; exit 1 ;;
+  esac
+done
+
+if [ "$1x" = "x" ] ; then
+  usage
+  exit 1
+fi 
+vers="$1"
+if [ "${GS_HOME}x" = "x" ] ; then
+  echo "the GS_HOME environment variable needs to be defined"
+  exit 1
+fi
+echo "Installing GemStone/S $vers"
+bucket=$vers
+
+# Detect operating system
+PLATFORM="`uname -sm | tr ' ' '-'`"
+# Macs with Core i7 use the same software as older Macs
+[ $PLATFORM = "Darwin-x86_64" ] && PLATFORM="Darwin-i386"
+
+# Check we're on a suitable 64-bit machine and set gsvers
+case "$PLATFORM" in
+    Darwin-i386)
+    OSVERSION="`sw_vers -productVersion`"
+    MAJOR="`echo $OSVERSION | cut -f1 -d.`"
+    MINOR="`echo $OSVERSION | cut -f2 -d.`"
+    CPU_CAPABLE="`sysctl hw.cpu64bit_capable | cut -f2 -d' '`"
+    #
+    # Check the CPU and Mac OS X profile.
+    if [[ $CPU_CAPABLE -ne 1 || $MAJOR -lt 10 || $MINOR -lt 5 ]] ; then
+        echo "[Error] This script requires Mac OS X 10.5 or later on a 64-bit Intel CPU."
+        exit 1
+    fi
+    gsvers="GemStone64Bit${vers}-i386.Darwin"
+    ;;
+    Linux-x86_64)
+    # Linux looks OK
+    gsvers="GemStone64Bit${vers}-x86_64.Linux"
+    ;;
+    *)
+    echo "[Error] This script only works on a 64-bit Linux or Mac OS X machine"
+    echo "The result from \"uname -sm\" is \"`uname -sm`\""
+    exit 1
+    ;;
+esac
+
+# set zipfile name from gsvers
+gss_file=${gsvers}.zip
+
+# set ftp_address
+case "$vers" in
+  2.4.4.1|2.4.4.2|2.4.4.3|2.4.4.4|2.4.4.5|2.4.4.6)
+    ftp_address=ftp://ftp.gemstone.com
+    ;;
+  2.4.5|2.4.5.2)
+    ftp_address=ftp://ftp.gemstone.com
+    ;;
+  3.0.0|3.0.1)
+    ftp_address=ftp://ftp.gemstone.com
+    ;;
+  3.1.0|3.1.0.1|3.1.0.2)
+    ftp_address=ftp://ftp.gemstone.com
+    ;;
+  *)
+    ftp_address=http://ftp.gemtalksystems.com:80
+    ;;
+esac
+
+# We should run this as a normal user, not root.
+if [ `id | cut -f2 -d= | cut -f1 -d\(` -eq 0 ]
+    then
+    echo "[Error] This script must be run as a normal user, not root."
+    echo "However, some steps require root access using sudo."
+    exit 1
+fi
+
+# Check that the current directory is writable
+if [ ! -w "." ]
+    then
+    echo "[Error] This script requires write permission on your current directory."
+    /bin/ls -ld "`pwd`"
+    exit 1
+fi
+
+# We're good to go. Let user know.
+machine_name="`uname -n`"
+echo "[Info] Starting installation of $gsvers on $machine_name"
+
+gsdevkitSysSetup=$GS_HOME/bin/.gsdevkitSysSetup # if file exists, system setup alrady completed
+
+if [ -e "$gsdevkitSysSetup" ]; then
+  echo "Skip operating system configuration steps, system already setup ($gsdevkitSysSetup exists)"
+else
+  # Do a trivial sudo to test we can and get the password prompt out of the way
+  sudo date
+
+  echo "[Info] Setting up shared memory"
+  # Ref: http://developer.postgresql.org/pgdocs/postgres/kernel-resources.html
+  # Ref: http://www.idevelopment.info/data/Oracle/DBA_tips/Linux/LINUX_8tml
+
+  case "$PLATFORM" in
+    Linux-x86_64)
+    # use TotalMem: kB because Ubuntu doesn't have Mem: in Bytes
+    totalMemKB=`awk '/MemTotal:/{print($2);}' /proc/meminfo`
+    totalMem=$(($totalMemKB * 1024))
+    # Figure out the max shared memory segment size currently allowed
+    shmmax=`cat /proc/sys/kernel/shmmax`
+    # Figure out the max shared memory currently allowed
+    shmall=`cat /proc/sys/kernel/shmall`
+    ;;
+    Darwin-i386)
+    totalMem="`sysctl hw.memsize | cut -f2 -d' '`"
+    # Figure out the max shared memory segment size currently allowed
+    shmmax="`sysctl kern.sysv.shmmax | cut -f2 -d' '`"
+    # Figure out the max shared memory currently allowed
+    shmall="`sysctl kern.sysv.shmall | cut -f2 -d' '`"
+    ;;
+    *)
+    echo "[Error] Can't determine operating system. Check script."
+    exit 1
+    ;;
+  esac
+  totalMemMB=$(($totalMem / 1048576))
+  shmmaxMB=$(($shmmax / 1048576))
+  shmallMB=$(($shmall / 256))
+
+  # Print current values
+  echo "  Total memory available is $totalMemMB MB"
+  echo "  Max shared memory segment size is $shmmaxMB MB"
+  echo "  Max shared memory allowed is $shmallMB MB"
+
+  # Figure out the max shared memory segment size (shmmax) we want
+  # Use 75% of available memory but not more than 2GB
+  shmmaxNew=$(($totalMem * 3/4))
+  [ $shmmaxNew -gt 2147483648 ] && shmmaxNew=2147483648
+  shmmaxNewMB=$(($shmmaxNew / 1048576))
+
+  # Figure out the max shared memory allowed (shmall) we want
+  # The MacOSX default is 4MB, way too small
+  # The Linux default is 2097152 or 8GB, so we should never need this
+  # but things will certainly break if it's been reset too small
+  # so ensure it's at least big enough to hold a fullsize shared memory segment
+  shmallNew=$(($shmmaxNew / 4096))
+  [ $shmallNew -lt $shmall ] && shmallNew=$shmall
+  shmallNewMB=$(($shmallNew / 256))
+
+  # Increase shmmax if appropriate
+  if [ $shmmaxNew -gt $shmmax ]; then
+    echo "[Info] Increasing max shared memory segment size to $shmmaxNewMB MB"
+    [ $PLATFORM = "Darwin-i386" ] \
+	    && sudo sysctl -w kern.sysv.shmmax=$shmmaxNew
+    [ $PLATFORM = "Linux-x86_64" ] \
+	    && sudo bash -c "echo $shmmaxNew > /proc/sys/kernel/shmmax" \
+	    && sudo /bin/su -c "echo 'kernel.shmmax=$shmmaxNew' >>/etc/sysctl.conf"
+  else
+    echo "[Info] No need to increase max shared memory segment size"
+  fi
+
+  # Increase shmall if appropriate
+  if [ $shmallNew -gt $shmall ]; then
+    echo "[Info] Increasing max shared memory allowed to $shmallNewMB MB"
+    [ $PLATFORM = "Darwin-i386" ] && sudo sysctl -w kern.sysv.shmall=$shmallNew
+    [ $PLATFORM = "Linux-x86_64" ] && sudo bash -c "echo $shmallNew > /proc/sys/kernel/shmall"
+  else
+    echo "[Info] No need to increase max shared memory allowed"
+  fi
+
+  # At this point, shared memory settings contain the values we want, 
+  # put them in sysctl.conf so they are preserved.
+  if [[ ! -f /etc/sysctl.conf || `grep -sc "kern.*m" /etc/sysctl.conf` -eq 0 ]]; then
+    case "$PLATFORM" in
+        Linux-x86_64)
+        echo "# kernelm* settings added by GsDevKit installation" > /tmp/sysctl.conf.$$
+        echo "kernelmmax=`cat /proc/sys/kernel/shmmax`" >> /tmp/sysctl.conf.$$
+        echo "kernelmall=`cat /proc/sys/kernel/shmall`" >> /tmp/sysctl.conf.$$
+        ;;
+        Darwin-i386)
+        # On Mac OS X Leopard, you must have all five settings in sysctl.conf
+        # before they will take effect.
+        echo "# kern.sysv.shm* settings added by GsDevKit installation" > /tmp/sysctl.conf.$$
+        sysctl kern.sysv.shmmax kern.sysv.shmall kern.sysv.shmmin kern.sysv.shmmni \
+        kern.sysv.mseg  | tr ":" "=" | tr -d " " >> /tmp/sysctl.conf.$$
+        ;;
+        *)
+        echo "[Error] Can't determine operating system. Check script."
+        exit 1
+        ;;
+    esac
+    #
+    echo "[Info] Adding the following section to /etc/sysctl.conf"
+    cat /tmp/sysctl.conf.$$
+    sudo bash -c "cat /tmp/sysctl.conf.$$ >> /etc/sysctl.conf"
+    /bin/rm -f /tmp/sysctl.conf.$$
+  else
+    echo "[Info] The following shared memory settings already exist in /etc/sysctl.conf"
+    echo "To change them, remove the following lines from /etc/sysctl.conf and rerun this script"
+    grep "kern.*m" /etc/sysctl.conf
+  fi
+
+  # Now setup for NetLDI in case we ever need it.
+  echo "[Info] Setting up GemStone netldi service port"
+  if [ `grep -sc "^gs64ldi" /etc/services` -eq 0 ]; then
+    echo '[Info] Adding "gs64ldi  50377/tcp" to /etc/services'
+    sudo bash -c 'echo "gs64ldi         50377/tcp        # Gemstone netldi"  >> /etc/services'
+  else
+    echo "[Info] GemStone netldi service port is already set in /etc/services"
+    echo "To change it, remove the following line from /etc/services and rerun this script"
+    grep "^gs64ldi" /etc/services
+  fi
+
+  # Create some directories that GemStone expects; make them writable
+  echo "[Info] Creating /opt/gemstone directory"
+  if [ ! -e /opt/gemstone ]
+    then
+    sudo mkdir -p /opt/gemstone /opt/gemstone/log /opt/gemstone/locks
+    sudo chown $USER:${GROUPS[0]} /opt/gemstone /opt/gemstone/log /opt/gemstone/locks
+    sudo chmod 770 /opt/gemstone /opt/gemstone/log /opt/gemstone/locks
+  else
+    echo "[Warning] /opt/gemstone directory already exists"
+    echo "to replace it, remove or rename it and rerun this script"
+  fi
+  touch $gsdevkitSysSetup
+fi # no sudo usage after this point
+
+if [ -d "$GS_HOME/gemstone/products/$gsvers" ] ; then
+    echo "[Warning] $GS_HOME/gemstone/products/$gsvers already exists"
+    echo "to replace it, remove or rename it and rerun this script"
+    echo "...finished $(basename $0)"
+    exit 0
+fi
+
+# Look for either wget to download GemStone
+if [ -e "`which wget`" ]; then
+    cmd="`which wget`"
+else
+    echo "[Error] wget is not available. Install wget and rerun this script."
+    exit 1
+fi
+
+# Download GemStone
+pushd $GS_HOME/gemstone/downloads >& /dev/null
+if [ ! -e $gss_file ]; then
+    echo "[Info] Downloading $gss_file using ${cmd}"
+    $cmd ${ftp_address}/pub/GemStone64/$bucket/$gss_file
+else
+    echo "[Info] $gss_file already exists"
+    echo "to replace it, remove or rename it and rerun this script"
+fi
+
+# Unzip the downloaded archive into $GS_HOME/gemstone/products/
+echo "[Info] Uncompressing GemStone archive into $GS_HOME/gemstone/products/"
+gs_product=$GS_HOME/gemstone/products/$gsvers
+if [ ! -e $gs_product ]
+    then
+    unzip -q -d $GS_HOME/gemstone/products $gss_file
+else
+    echo "[Warning] $GS_HOME/gemstone/products/$gsvers already exists"
+    echo "to replace it, remove or rename it and rerun this script"
+fi
+popd >& /dev/null
+
+pharo_vm=$GS_HOME/pharo/pharo-vm
+
+# Copy initial system.conf into the Seaside data directory
+echo "[Info] Copying initial system.conf to data directory"
+if [ ! -e $gs_product/seaside/data/system.conf ]
+    then
+    cp $gs_product/seaside/system.conf \
+        $gs_product/seaside/data
+    chmod 644 $gs_product/seaside/data/system.conf
+else
+    echo "[Warning] $gs_product/seaside/data/system.conf already exists"
+    echo "to replace it, remove or rename it and rerun this script"
+fi
+
+# Copy an initial extent to the Seaside data directory
+echo "[Info] Copying initial Seaside repository to data directory"
+if [ ! -e $gs_product/seaside/data/extent0.dbf ]
+    then
+    cp $gs_product/bin/extent0.seaside.dbf \
+        $gs_product/seaside/data/extent0.dbf
+    chmod 644 $gs_product/seaside/data/extent0.dbf
+else
+    echo "[Warning] $gs_product/seaside/data/extent0.dbf already exists"
+    echo "to replace it, remove or rename it and rerun this script"
+fi
+
+#    Copy the gci libraries to the Pharo vm
+if [ ! -e "$pharo_vm" ]; then
+  echo "Install Pharo"
+  $GS_HOME/bin/installPharo
+  if [[ $? != 0 ]] ; then exit 1; fi
+fi
+echo "copy gci libraries"
+case "$PLATFORM" in
+  Linux-x86_64)
+    if [ ! -e $pharo_vm/libgcirpc-${vers}-32.so ] ; then
+      cp $gs_product/lib32/lib* $pharo_vm
+    else
+      echo "[Warning] gci libraries already present to replace, delete them and try again"
+    fi
+  ;;
+  Darwin-i386)
+    if [ ! -e $pharo_vm/Pharo.app/Contents/MacOS/Plugins/libgcirpc-${vers}-32.dylib ] ; then
+      cp $gs_product/lib32/lib* $pharo_vm/Pharo.app/Contents/MacOS/Plugins
+    else
+      echo "[Warning] gci libraries already present to replace, delete them and try again"
+    fi
+  ;;
+esac
+
+echo "[Info] Finished $gsvers installation on $machine_name"
+echo ""
+echo "[Info] GemStone version information:"
+cat $gs_product/version.txt
+
+if [ "${GS_TRAVIS}x" != "x" ] ; then
+  # running on travis server - have to use a custom key file
+  case "$vers" in
+    2.4.*) keyName="GemStone64Bit2.4.0-x86_64.Linux.key" ;;
+    3.0.1) keyName="GemStone64Bit3.0.0-x86_64.Linux.key" ;;
+    3.1.*) keyName="GemStone64Bit3.1.0-x86_64.Linux.key" ;;
+    3.2.*) keyName="GemStone64Bit3.2.0-x86_64.Linux.key" ;;
+    *) echo "No travis license for GemStone $vers"; exit 1;;
+  esac
+  chmod +w  $gs_product/seaside/etc/gemstone.key
+  echo "Copying $GS_HOME/travis/$keyName to $gs_product/seaside/etc/gemstone.key"
+  cp $GS_HOME/travis/$keyName $gs_product/seaside/etc/gemstone.key
+fi
+
+# If we can determine any IPv4 addresses, print them out. Otherwise be silent.
+if [[ -x /sbin/ifconfig && `/sbin/ifconfig -a | grep -sc " inet addr:.*Bcast"` -gt 0 ]]
+    then
+    echo ""
+    echo "[Info] $machine_name has the following IPv4 addresses:"
+    /sbin/ifconfig -a | grep ' inet addr:.*Bcast' | cut -f2 -d: | cut -f1 -d' '
+fi
+
+# End of script
+echo "...finished $(basename $0)"
+exit 0
