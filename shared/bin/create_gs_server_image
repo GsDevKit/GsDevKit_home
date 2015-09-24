@@ -83,7 +83,7 @@ case "$imageType" in
     imageBaseName=gsDevKitCommandLine
   ;;
   gsDevKitTodeCommandLine)
-    if [ ! -e ${GS_GS_SERVER_PHARO}/gsDevKitCommandLine.image] ; then
+    if [ ! -e "${GS_GS_SERVER_PHARO}/gsDevKitCommandLine.image" ] ; then
       $GS_GS_SERVER/bin/create_gs_server_image -d $GS_GS_SERVER_PHARO gsDevKitCommandLine
     fi
     loadScript=gsDevKitTodeCommandLineLoad.st
