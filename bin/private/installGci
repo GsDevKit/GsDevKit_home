@@ -67,8 +67,8 @@ case "$clientType" in
   jade) ;;
   pharo) 
     case "$PLATFORM" in
-      Linux-x86_64) targetLocation="${directoryName}/pharo/pharo-vm" ;;
-      Darwin-i386) targetLocation="${directoryName}/pharo/pharo-vm/Pharo.app/Contents/MacOS/Plugins" ;;
+      Linux-x86_64) targetLocation="${directoryPath}/pharo/pharo-vm" ;;
+      Darwin-i386) targetLocation="${directoryPath}/pharo/pharo-vm/Pharo.app/Contents/MacOS/Plugins" ;;
     esac
     ;;
   *) usage; exit 1;;
