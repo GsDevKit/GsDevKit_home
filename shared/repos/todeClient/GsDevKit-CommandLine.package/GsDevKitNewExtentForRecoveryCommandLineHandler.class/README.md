@@ -12,4 +12,4 @@ See http://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/
 
 Examples:
   newExtent --help
-  newExtent sample $GS_HOME/gemstone/snapshots
+  newExtent sample $GS_HOME/gs_server/snapshots

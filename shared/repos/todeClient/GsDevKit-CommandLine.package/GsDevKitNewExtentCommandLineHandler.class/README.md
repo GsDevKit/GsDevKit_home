@@ -10,4 +10,4 @@ Copy a fresh extent file to the given stones extent directory.
 Examples:
   newExtent --help
   newExtent sample
-  newExtent sample $GS_HOME/gemstone/snapshots
+  newExtent sample $GS_HOME/gs_server/snapshots

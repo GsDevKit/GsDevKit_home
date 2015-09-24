@@ -3,7 +3,7 @@ Usage: createStone [ --help] <stone-name> <gs-version>
   <gs-version>  GemStone version with which to create stone
 	
 Documentation:
-Create a directory under $GS_HOME/gemstone/stones using the given
+Create a directory under $GS_GS_SERVER_STONES using the given
 <stone-name> and populate directory with supporting files and directories
 based on the given <gs-version> .
 
