@@ -2,8 +2,14 @@ accessing
 installedStones
 	installedStones
 		ifNil: [ 
+			| stonesHome dirs |
 			installedStones := Dictionary new.
-			self gs_stonesHome directories
+			[ 
+			stonesHome := self gs_stonesHome.
+			dirs := stonesHome directories ]
+				on: KeyNotFound
+				do: [ :ex | dirs := #() ].
+			dirs
 				do: [ :stoneDir | 
 					(stoneDir filesMatching: self stoneInfoFilename)
 						do: [ :infoFile | 
