@@ -80,7 +80,7 @@ case "$imageType" in
   gsDevKitCommandLine)
     loadScript=gsDevKitCommandLineLoad.st
     initialImageName=Pharo.image
-    imageName=gsDevKitCommandLine.image
+    imageName=gsDevKitCommandLine
   ;;
   gsDevKitTodeCommandLine)
     if [ ! -e ${GS_GS_SERVER_PHARO}/gsDevKitCommandLine.image] ; then
@@ -88,10 +88,11 @@ case "$imageType" in
     fi
     loadScript=gsDevKitTodeCommandLineLoad.st
     initialImageName=gsDevKitCommandLine.image
-    imageName=gsDevKitDTodeCommandLine.image
+    imageBaseName=gsDevKitDTodeCommandLine
   ;;
   *) usage; exit 1;;
 esac
+imageName=${imageBaseName}.image
 
 message="create"
 if [ -e $directoryPath/$imageName ] ; then
@@ -118,7 +119,7 @@ fi
 
 $directoryPath/pharo $directoryPath/gsDevKitTmp.image st --quit --save $gs_serverLoadPath
 
-$directoryPath/pharo $directoryPath/gsDevKitTmp.image save $imageName
+$directoryPath/pharo $directoryPath/gsDevKitTmp.image save $imageBaseName
 rm -f $directoryPath/gsDevKitTmp.*
 
 echo
