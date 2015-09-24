@@ -49,7 +49,7 @@ case "$1" in
     ;;
 esac
 
-if [ ! -e ${GS_SHARED_PHARO}/gsDevKitCommandLine.image] ; then
+if [ ! -e "${GS_SHARED_PHARO}/gsDevKitCommandLine.image" ] ; then
   $GS_SHARED/bin/create_gs_server_image -d $GS_SHARED_PHARO gsDevKitCommandLine
 fi
 
