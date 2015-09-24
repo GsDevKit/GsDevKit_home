@@ -365,4 +365,4 @@ fi
 
 # End of script
 echo "...finished $(basename $0)"
-exit 0newGemStoneVersionInstalled
+exit 0
