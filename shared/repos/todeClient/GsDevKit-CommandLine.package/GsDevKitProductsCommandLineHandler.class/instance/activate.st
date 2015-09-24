@@ -2,4 +2,4 @@ activation
 activate
 	self activateHelp
 		ifTrue: [ ^ self ].
-	self produceStonesReport
+	self produceProductsReport

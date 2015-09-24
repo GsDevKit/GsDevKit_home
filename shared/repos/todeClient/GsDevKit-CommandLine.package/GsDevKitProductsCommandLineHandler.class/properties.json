@@ -4,11 +4,10 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "dkh 7/18/2014 08:15",
+	"commentStamp" : "dkh 9/24/2015 15:30",
 	"instvars" : [
-		"installedStones",
-		"gemstoneBin" ],
-	"name" : "GsDevKitStonesCommandLineHandler",
+		"installedProducts" ],
+	"name" : "GsDevKitProductsCommandLineHandler",
 	"pools" : [
 		 ],
 	"super" : "GsDevKitAbstractCommandLineHandler",

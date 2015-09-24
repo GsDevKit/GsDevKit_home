@@ -1,5 +1,5 @@
 actions
-produceStoneReport
+produceStonesReport
 
 	installedStones := Dictionary new.
 	self gs_stonesHome directories
@@ -10,7 +10,6 @@ produceStoneReport
 					info := GsDevKitStoneInfo importFrom: infoFile.
 					installedStones at: info stoneName put: info ] ].
 	self
-		installedProductsReportOn: Transcript;
 		installedStoneReportOn: Transcript;
 		runningStoneReportOn: Transcript;
 		runningNetldiReportOn: Transcript;
