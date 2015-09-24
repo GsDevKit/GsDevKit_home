@@ -24,7 +24,7 @@ baseline: spec
 				package: 'GsDevKit-Tode-CommandLine' with: [ spec requires: #('GsDevKit-CommandLine' 'Tode') ];
 				yourself.
 			spec
-				group: 'default' with: #('Core');
-				group: 'Core' with: #('GsDevKit-CommandLine');
-				group: 'Tode' with: #('GsDevKit-Tode-CommandLine');
+				group: 'default' with: #('CommandLine');
+				group: 'CommandLine' with: #('GsDevKit-CommandLine');
+				group: 'Tode-CommandLine' with: #('GsDevKit-Tode-CommandLine');
 				yourself ]
