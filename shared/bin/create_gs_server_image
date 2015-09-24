@@ -88,7 +88,7 @@ case "$imageType" in
     fi
     loadScript=gsDevKitTodeCommandLineLoad.st
     initialImageName=gsDevKitCommandLine.image
-    imageBaseName=gsDevKitDTodeCommandLine
+    imageBaseName=gsDevKitTodeCommandLine
   ;;
   *) usage; exit 1;;
 esac
