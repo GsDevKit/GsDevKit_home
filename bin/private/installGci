@@ -60,7 +60,7 @@ case "$PLATFORM" in
   Linux-x86_64) gsvers="GemStone64Bit${vers}-x86_64.Linux"; libext="so" ;;
   Darwin-i386) gsvers="GemStone64Bit${vers}-i386.Darwin"; libext="dylib" ;;
 esac
-gs_product=$GS_HOME/gemstone/products/$gsvers
+gs_product=$GS_SHARED_DOWNLOADS/products/$gsvers
 
 case "$clientType" in
   gemtools) ;;
