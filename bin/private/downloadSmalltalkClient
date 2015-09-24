@@ -32,9 +32,6 @@ HELP
 }
 
 set -e # exit on error
-if [ "${GS_TODE_CLIENT}x" = "x" ] ; then
-  echo "the GS_TODE_CLIENT environment variable needs to be defined"; exit 1
-fi
 
 directoryPath=""
 version="Pharo3.0"
@@ -61,7 +58,7 @@ echo "Installing $version"
 case $version in
   Pharo*)
     if [ -e "$directoryPath/pharo-vm" ]; then
-      echo "Pharo already installed. To reinstall run $GS_TODE_CLIENT/bin/deleteClientInstall and try again."
+      echo "Pharo already installed in $directoryPath. To reinstall use \$GS_HOME/private/cleanPharoDirectory and try again."
       exit 0
     fi
     pushd $directoryPath >& /dev/null
