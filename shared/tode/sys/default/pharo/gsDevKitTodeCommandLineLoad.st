@@ -1,5 +1,6 @@
-[ 
-  "todeClient pharo todeLoad.st"
+[ | gsSharedTodeRepo |
+  "gs_server pharo gsServerLoad.st"
+  gsSharedTodeRepo := Smalltalk os environment at: 'GS_SHARED_TODE_REPOSITORY'.
   Metacello new
     baseline: 'Metacello';
     repository: 'github://dalehenrich/metacello-work:master/repository';
@@ -17,10 +18,11 @@
         siteUsername: '';
         sitePassword: ''] ].
   Metacello new
-    baseline: 'Tode-Core';
-    repository: 'github://dalehenrich/tode:master/repository';
+    configuration: 'TodeClient';
+    version: #gsdev_home;
+    repository: 'filetree://', gsSharedTodeRepo;
     get;
-    load ]
+    load: #( 'Tode' ) ]
       on: Warning, MetacelloSkipDirtyPackageLoad
       do: [:ex | 
         (ex isKindOf: MetacelloSkipDirtyPackageLoad)

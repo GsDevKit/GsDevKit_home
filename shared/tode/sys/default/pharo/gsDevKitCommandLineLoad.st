@@ -2,6 +2,15 @@
   "gs_server pharo gsServerLoad.st"
   gsSharedTodeRepo := Smalltalk os environment at: 'GS_SHARED_TODE_REPOSITORY'.
   Metacello new
+    baseline: 'Metacello';
+    repository: 'github://dalehenrich/metacello-work:master/repository';
+    get.
+  Metacello new
+    baseline: 'Metacello';
+    repository: 'github://dalehenrich/metacello-work:master/repository';
+    onConflict: [:ex | ex allow];
+    load: #( 'Core' ).
+  Metacello new
     configuration: 'TodeClient';
     version: #gsdev_home;
     repository: 'filetree://', gsSharedTodeRepo;

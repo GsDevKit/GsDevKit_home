@@ -1,13 +1,13 @@
 {
-	"category" : "GsDevKit-CommandLine",
+	"category" : "GsDevKit-Tode-CommandLine",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "dkh 7/18/2014 15:45",
+	"commentStamp" : "dkh 7/26/2014 10:16",
 	"instvars" : [
 		"stoneName" ],
-	"name" : "GsDevKitInstallTodeCommandLineHandler",
+	"name" : "GsDevKitServerDoItCommandLineHandler",
 	"pools" : [
 		 ],
 	"super" : "GsDevKitAbstractCommandLineHandler",
