@@ -9,8 +9,8 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-f] [-v Pharo3.0 | Pharo4.0 ] \
-                      -d <full-path-to-directory> \
+USAGE: $(basename $0) [-h] [-f] [-v Pharo3.0 | Pharo4.0 ]
+                      -d <full-path-to-directory>
 		      gsDevKitCommandLine|gsDevKitTodeCommandLine
 
 Create a gsDevKit image of the given type (gsDevKitCommand or todeCommand). 
@@ -50,7 +50,7 @@ source ${GS_HOME}/bin/defGsDevKit.env
 force=""
 version="Pharo3.0"
 directoryPath=""
-while getopts ":fhv:" OPT ; do
+while getopts "d:fhv:" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     f) force="true";;
