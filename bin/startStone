@@ -93,7 +93,7 @@ pushd $stonePath >& /dev/null
 popd >& /dev/null
 
 # start the stone
-$GS_HOME/bin/gs/startGemstone $ARG
+$GS_GS_SERVER/bin/gs/startGemstone $ARG
 
 if [ "${waitTime}x" = "x" ] ; then
   if [ "${GS_TRAVIS}x" != "x" ] ; then
