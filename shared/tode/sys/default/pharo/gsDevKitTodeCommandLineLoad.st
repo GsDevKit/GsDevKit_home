@@ -1,22 +1,7 @@
 [ | gsSharedTodeRepo |
   "gs_server pharo gsServerLoad.st"
   gsSharedTodeRepo := Smalltalk os environment at: 'GS_SHARED_TODE_REPOSITORY'.
-  Metacello new
-    baseline: 'Metacello';
-    repository: 'github://dalehenrich/metacello-work:master/repository';
-    get.
-  Metacello new
-    baseline: 'Metacello';
-    repository: 'github://dalehenrich/metacello-work:master/repository';
-    onConflict: [:ex | ex allow];
-    load.
-  false ifTrue: [
-    "To avoid GitHub API rate limits, edit and define github username/password in tode client image"
-    "Change `false` to `true` execute this block"
-    Smalltalk at: #MCGitHubRepository ifPresent: [:cls |
-      cls
-        siteUsername: '';
-        sitePassword: ''] ].
+  "Expect that gsDevKitCommandLineLoad.st already loaded ... assume Metacello is up-to-date"
   "If tODE is already loaded, clear github cache for baseline"
   Metacello image
     baseline: 'Tode';
