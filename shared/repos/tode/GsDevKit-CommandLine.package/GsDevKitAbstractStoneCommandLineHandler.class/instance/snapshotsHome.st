@@ -1,3 +1,3 @@
 accessing
 snapshotsHome
-	^ self stonesHome / self stoneName / 'snapshots'
+	^ self gs_stonesHome / self stoneName / 'snapshots'

@@ -3,7 +3,7 @@ installedStones
 	installedStones
 		ifNil: [ 
 			installedStones := Dictionary new.
-			self stonesHome directories
+			self gs_stonesHome directories
 				do: [ :stoneDir | 
 					(stoneDir filesMatching: self stoneInfoFilename)
 						do: [ :infoFile | 

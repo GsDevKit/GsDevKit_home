@@ -1,3 +1,3 @@
 accessing
 sessionDescriptionHome
-	^ self todeSysLocalClient / 'descriptions'
+	^ self sharedTodeSysLocalClient / 'descriptions'

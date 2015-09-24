@@ -1,3 +1,3 @@
 accessing
 gitHome
-	^ self stonesHome / self stoneName / 'git'
+	^ self gs_stonesHome / self stoneName / 'git'

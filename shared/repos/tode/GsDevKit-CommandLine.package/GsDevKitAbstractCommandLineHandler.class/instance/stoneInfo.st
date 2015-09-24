@@ -1,3 +1,3 @@
 accessing
 stoneInfo
-	^ GsDevKitStoneInfo importFrom: self stonesHome / self stoneName / self stoneInfoFilename
+	^ GsDevKitStoneInfo importFrom: self gs_stonesHome / self stoneName / self stoneInfoFilename

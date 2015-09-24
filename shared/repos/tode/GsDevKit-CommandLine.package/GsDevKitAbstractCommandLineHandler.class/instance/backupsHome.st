@@ -1,3 +1,3 @@
 accessing
 backupsHome
-	^ self stonesHome / self stoneName / 'backups'
+	^ self gs_stonesHome / self stoneName / 'backups'

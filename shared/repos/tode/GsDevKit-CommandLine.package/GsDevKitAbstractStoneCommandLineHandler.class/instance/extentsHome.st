@@ -1,3 +1,3 @@
 accessing
 extentsHome
-	^ self stonesHome / self stoneName / 'extents'
+	^ self gs_stonesHome / self stoneName / 'extents'

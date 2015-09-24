@@ -4,7 +4,7 @@ createStone
 	Transcript
 		cr;
 		show: 'Creating stone ' , self stoneName.
-	stoneDirectory := self stonesHome / self stoneName.
+	stoneDirectory := self gs_stonesHome / self stoneName.
 	stoneDirectory exists
 		ifTrue: [ 
 			self stoneInfo gsVers = self gsVers

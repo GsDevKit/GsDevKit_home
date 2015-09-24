@@ -5,5 +5,5 @@ copyTemplateFiles: stoneDirectory
 		cr;
 		tab;
 		show: 'Copying template files'.
-	templateDir := self templateHome.
+	templateDir := self gs_templateHome.
 	self templateFiles do: [ :fileName | templateDir / fileName copyTo: stoneDirectory / fileName ]

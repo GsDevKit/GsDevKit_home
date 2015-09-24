@@ -1,3 +1,3 @@
 accessing
 gemstoneBin
-	^ self stonesHome / self stoneName / 'product' / 'bin'
+	^ self gs_stonesHome / self stoneName / 'product' / 'bin'

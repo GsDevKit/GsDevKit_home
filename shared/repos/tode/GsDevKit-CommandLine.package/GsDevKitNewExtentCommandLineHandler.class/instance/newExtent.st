@@ -4,7 +4,7 @@ newExtent
 	Transcript
 		cr;
 		show: 'New extent for ' , self stoneName.
-	stoneDirectory := self stonesHome / self stoneName.
+	stoneDirectory := self gs_stonesHome / self stoneName.
 	extentFile := stoneDirectory / 'extents' / 'extent0.dbf'.
 	extentFile exists
 		ifTrue: [ extentFile delete ].

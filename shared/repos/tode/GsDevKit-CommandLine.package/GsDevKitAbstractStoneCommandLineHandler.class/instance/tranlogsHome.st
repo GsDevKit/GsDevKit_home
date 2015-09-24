@@ -1,3 +1,3 @@
 accessing
 tranlogsHome
-	^ self stonesHome / self stoneName / 'tranlogs'
+	^ self gs_stonesHome / self stoneName / 'tranlogs'
