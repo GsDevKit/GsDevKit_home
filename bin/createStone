@@ -68,7 +68,7 @@ noRestartArg=""
 force=""
 installTode="true"
 todeProjectName=""
-while getopts "b:fg:hnp:s:t" OPT ; do
+while getopts "b:fghnp:s:t" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     b) backupName="${OPTARG}";;
