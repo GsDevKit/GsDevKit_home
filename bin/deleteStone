@@ -41,7 +41,7 @@ if [ $# -ne 1 ]; then
 fi
 stoneName="$1"
 
-if [ "${GS_GS_SERVER}x" -ne  "x" ] ; then
+if [ "${GS_GS_SERVER}x" !=  "x" ] ; then
   echo "deleting old instance of stone $stoneName (stopping stone and netldi first)"
   if [ -d $GS_GS_SERVER/stones/$stoneName ] ; then
     $GS_HOME/bin/stopStone -b $stoneName
@@ -49,7 +49,7 @@ if [ "${GS_GS_SERVER}x" -ne  "x" ] ; then
   fi
 fi
 
-if [ "${GS_TODE}x" -ne "x" ] ; then
+if [ "${GS_TODE}x" != "x" ] ; then
   if [ -d $GS_TODE/sys/stones/$stoneName ] ; then
     rm -rf $GS_TODE/sys/stones/$stoneName
   fi
