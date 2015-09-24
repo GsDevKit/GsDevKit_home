@@ -121,6 +121,6 @@ $directoryPath/pharo $directoryPath/gsDevKitTmp.image st --quit --save $gs_serve
 echo ""
 
 $directoryPath/pharo $directoryPath/gsDevKitTmp.image save $imageBaseName
-rm -f $directoryPath/gsDevKitTmp.* *.zip
+rm -f $directoryPath/gsDevKitTmp.* $directoryPath/*.zip
 
 echo "...finished $(basename $0)"
