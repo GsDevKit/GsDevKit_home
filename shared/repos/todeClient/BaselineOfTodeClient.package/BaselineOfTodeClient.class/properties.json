@@ -1,5 +1,5 @@
 {
-	"category" : "ConfigurationOfTodeClient",
+	"category" : "BaselineOfTodeClient",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
@@ -7,8 +7,8 @@
 	"commentStamp" : "",
 	"instvars" : [
 		 ],
-	"name" : "ConfigurationOfTodeClient",
+	"name" : "BaselineOfTodeClient",
 	"pools" : [
 		 ],
-	"super" : "ConfigurationOf",
+	"super" : "BaselineOf",
 	"type" : "normal" }

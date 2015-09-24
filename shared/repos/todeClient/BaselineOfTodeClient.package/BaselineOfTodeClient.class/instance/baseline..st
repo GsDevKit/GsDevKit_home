@@ -1,12 +1,10 @@
-versions
-version300: spec
-	<version: '3.0.0'>
+baseline
+baseline: spec
+	<baseline>
 	spec
 		for: #(#'pharo3.x' #'pharo4.x')
 		do: [ 
-			spec blessing: #development.
 			spec description: 'This version is for use with GsDevKit_gs_server image, part of GsDevKit_home'.
-			spec repository: 'filetree://' , (Smalltalk os environment at: 'GS_SHARED_TODE_REPOSITORY').
 			spec
 				baseline: 'Tode' with: [ spec repository: 'github://dalehenrich/tode:dev_dev/repository' ];
 				yourself.
