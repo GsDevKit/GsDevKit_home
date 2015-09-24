@@ -334,7 +334,7 @@ else
 fi
 
 #    Copy the gci libraries to client installations
-$GS_HOME/private/installClientGciLibraries $vers
+$GS_HOME/bin/private/installClientGciLibraries $vers
 
 echo "[Info] Finished $gsvers installation on $machine_name"
 echo ""
