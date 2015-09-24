@@ -20,9 +20,9 @@ OPTIONS
 
 EXAMPLES
   $(basename $0) -h
-  $(basename $0) devkit project load Seaside3
-  $(basename $0) devkit eval \`3+4\`
-  $(basename $0) devkit eval \`3+4\`\; eval \`self == 7 ifFalse: [ System logout ]\`
+  $(basename $0) gs_326 project load Seaside3
+  $(basename $0) gs_326 eval \`3+4\`
+  $(basename $0) gs_326 eval \`3+4\`\; eval \`self == 7 ifFalse: [ System logout ]\`
 
 HELP
 }

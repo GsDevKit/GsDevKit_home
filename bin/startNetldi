@@ -18,7 +18,7 @@ OPTIONS
 
 EXAMPLES
   $(basename $0) -h
-  $(basename $0) kit
+  $(basename $0) gs_326
 
 HELP
 }
