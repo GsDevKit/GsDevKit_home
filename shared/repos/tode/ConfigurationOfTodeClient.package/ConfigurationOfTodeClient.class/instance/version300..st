@@ -8,10 +8,11 @@ version300: spec
 			spec description: 'This version is for use with GsDevKit_gs_server image, part of GsDevKit_home'.
 			spec repository: 'filetree://' , (Smalltalk os environment at: 'GS_SHARED_TODE_REPOSITORY').
 			spec
-				baseline: 'Tode' with: [ spec repository: 'github://dalehenrich/tode:master/repository' ];
+				baseline: 'Tode' with: [ spec repository: 'github://dalehenrich/tode:dev_dev/repository' ];
 				yourself.
+			spec project: 'Tode-CommandLine' copyFrom: 'Tode' with: [ spec loads: 'Tode-CommandLine' ].
 			spec
-				package: 'GsDevKit-CommandLine' with: [ spec requires: #('OSProcess') ];
+				package: 'GsDevKit-CommandLine' with: [ spec requires: #('OSProcess' 'Tode-CommandLine') ];
 				configuration: 'OSProcess'
 					with: [ 
 							spec
