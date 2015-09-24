@@ -1,3 +1,3 @@
 accessing
 gsDevKitHome
-	^ FileSystem workingDirectory parent
+	^ (Smalltalk os environment at: 'GS_HOME') asFileReference

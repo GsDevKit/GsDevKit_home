@@ -1,3 +1,3 @@
 accessing
 templateHome
-	^ self gemstoneHome  / 'templates'
+	^ self gs_gs_serverHome  / 'templates'

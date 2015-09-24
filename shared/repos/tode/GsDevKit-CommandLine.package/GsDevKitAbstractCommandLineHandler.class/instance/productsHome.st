@@ -1,3 +1,3 @@
 accessing
 productsHome
-	^ self gemstoneHome / 'products'
+	^ self downloadsHome / 'products'

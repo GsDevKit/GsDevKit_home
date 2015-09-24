@@ -15,6 +15,6 @@ createTodeDescription: theStoneInfo
 		backupDirectory: self backupsHome pathString;
 		snapshotDirectory: self snapshotsHome pathString;
 		serverGitRoot: self gitHome pathString;
-		serverTodeRoot: self todeHome pathString;
+		serverTodeRoot: self serverTodeHome pathString;
 		yourself.
 	sessionDescription exportTo: self sessionDescriptionHome pathString , '/'

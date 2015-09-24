@@ -1,3 +1,3 @@
 accessing
 todeSysStonesStones
-	^ self todeSysStones / 'stones'
+	^ self serverTodeSysStones / 'stones'

@@ -1,3 +1,3 @@
 accessing
 stonesHome
-	^ self gemstoneHome / 'stones'
+	^ (Smalltalk os environment at: 'GS_GS_SERVER_STONES') asFileReference 
