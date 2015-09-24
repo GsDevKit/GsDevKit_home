@@ -49,9 +49,9 @@ OPTIONS
 
 EXAMPLES
   $(basename $0) -h
-  $(basename $0) -g gs_3281 3.2.8.1
-  $(basename $0) gs_3281 3.2.8.1
-  $(basename $0) -f gs_3281 3.2.8.1
+  $(basename $0) -g gs_329 3.2.9
+  $(basename $0) gs_329 3.2.9
+  $(basename $0) -f gs_329 3.2.9
   $(basename $0) -g -s $GS_HOME/gemstone/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
 
 HELP
