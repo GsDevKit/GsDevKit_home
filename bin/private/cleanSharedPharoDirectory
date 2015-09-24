@@ -32,7 +32,7 @@ fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
 pushd ${GS_SHARED_PHARO} >& /dev/null
-  rm -rf *.zip github-cache package-cache *.image *.changes pharo pharo-ui pharo-vm
+  rm -rf *.zip github-cache package-cache *.image *.changes pharo pharo-ui pharo-vm *.log
 popd >& /dev/null
 
 echo "...finished $(basename $0)"
