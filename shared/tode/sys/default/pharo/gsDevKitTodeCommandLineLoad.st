@@ -21,7 +21,7 @@
     baseline: 'TodeClient';
     repository: 'filetree://', gsSharedTodeRepo;
     get;
-    load: #( 'Tode-Core' ) ]
+    load: #( 'Tode' ) ]
       on: Warning, MetacelloSkipDirtyPackageLoad
       do: [:ex | 
         (ex isKindOf: MetacelloSkipDirtyPackageLoad)

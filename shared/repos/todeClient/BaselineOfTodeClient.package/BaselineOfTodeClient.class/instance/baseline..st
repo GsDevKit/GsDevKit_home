@@ -6,11 +6,15 @@ baseline: spec
 		do: [ 
 			spec description: 'This version is for use with GsDevKit_gs_server image, part of GsDevKit_home'.
 			spec
-				baseline: 'Tode' with: [ spec repository: 'github://dalehenrich/tode:dev_dev/repository' ];
+				baseline: 'Tode' with: [ 
+                                  spec 
+                                    loads: 'GemStone';
+                                    repository: 'github://dalehenrich/tode:dev_dev/repository';
+                                    yourself ];
 				yourself.
-			spec project: 'Tode-CommandLine' copyFrom: 'Tode' with: [ spec loads: 'Tode-CommandLine' ].
+			spec project: 'Tode-Common-Core' copyFrom: 'Tode' with: [ spec loads: 'Common-Core' ].
 			spec
-				package: 'GsDevKit-CommandLine' with: [ spec requires: #('OSProcess' 'Tode-CommandLine') ];
+				package: 'GsDevKit-CommandLine' with: [ spec requires: #('OSProcess' 'Tode-Common-Core') ];
 				configuration: 'OSProcess'
 					with: [ 
 							spec
@@ -22,5 +26,5 @@ baseline: spec
 			spec
 				group: 'default' with: #('Core');
 				group: 'Core' with: #('GsDevKit-CommandLine');
-				group: 'Tode-Core' with: #('GsDevKit-Tode-CommandLine');
+				group: 'Tode' with: #('GsDevKit-Tode-CommandLine');
 				yourself ]
