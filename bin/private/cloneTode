@@ -35,7 +35,7 @@ if [ "${GS_HOME}x" = "x" ] ; then
 fi
 
 pushd ${GS_HOME} >& /dev/null
-${GS_HOME}/bin/cloneGsDevKitProject $* GsDevKit_tode tode
+  ${GS_HOME}/bin/private/cloneGsDevKitProject $* GsDevKit_tode tode
 popd >& /dev/null
 
 echo "...finished $(basename $0)"
