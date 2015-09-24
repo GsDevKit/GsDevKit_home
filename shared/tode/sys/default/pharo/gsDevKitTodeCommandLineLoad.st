@@ -17,6 +17,10 @@
       cls
         siteUsername: '';
         sitePassword: ''] ].
+  "If tODE is already loaded, clear github cache for baseline"
+  Metacello image
+    baseline: 'Tode';
+    get.
   Metacello new
     baseline: 'TodeClient';
     repository: 'filetree://', gsSharedTodeRepo;
