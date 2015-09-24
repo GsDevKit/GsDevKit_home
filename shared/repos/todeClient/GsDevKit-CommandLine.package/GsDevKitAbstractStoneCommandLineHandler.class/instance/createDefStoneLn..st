@@ -6,5 +6,5 @@ createDefStoneLn: stoneDirectory
 	Transcript
 		cr;
 		tab;
-		show: 'Creating product symbolic link to ' , defStoneBinFile pathString .
+		show: 'Creating defStone.env symbolic link to ' , defStoneBinFile pathString .
 	OSProcess command: 'ln -sf ' , defStoneBinFile pathString , ' ' , (stoneDirectory / defStone) pathString
