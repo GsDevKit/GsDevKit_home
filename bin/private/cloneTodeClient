@@ -39,7 +39,7 @@ if [ "${GS_GS_CLIENT_DEV}x" = "x" ] ; then
 fi
 
 pushd ${GS_GS_CLIENT_DEV} >& /dev/null
-${GS_HOME}/bin/private/cloneGsDevKitProject $* GsDevKit_todeClient todeClient
+${GS_HOME}/bin/private/cloneGitHubProject $* GsDevKit GsDevKit_todeClient todeClient
 popd >& /dev/null
 
 echo "...finished $(basename $0)"

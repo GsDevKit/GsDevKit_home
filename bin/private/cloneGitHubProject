@@ -9,9 +9,9 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-c https | ssh ] <gsdevkit-project-name> <directory-name>
+USAGE: $(basename $0) [-h] [-c https | ssh ] <github-user-name> <github-project-name> <directory-name>
 
-Clone the given <gsdevkit-project-name> using either https or ssh.
+Clone the given <github-user-name>/<github-project-name> using either https or ssh.
 ssh is the default.
 
 
@@ -24,9 +24,9 @@ OPTIONS
 
 EXAMPLES
    $(basename $0) -h
-   $(basename $0) GsDevKit_gemstone gemstone
-   $(basename $0) -c ssh GsDevKit_gemstone gemstone
-   $(basename $0) -c https GsDevKit_gemstone gemstone
+   $(basename $0) GsDevKit GsDevKit_gemstone gemstone
+   $(basename $0) -c ssh GsDevKit GsDevKit_gemstone gemstone
+   $(basename $0) -c https GsDevKit GsDevKit_gemstone gemstone
 
 HELP
 }
@@ -52,20 +52,21 @@ while getopts ":hc:" OPT ; do
 done
 shift $(($OPTIND - 1))
 
-if [ $# -ne 2 ]; then
+if [ $# -ne 3 ]; then
   usage; exit 1
 fi
-gsDevKitProject=$1
-directoryName=$2
+userName=$1
+projectName=$2
+directoryName=$3
 
 if [ "${mode}" = "ssh" ] ; then
-  rm -rf $useHttpsForGit${gsdevKitProject}
-  url="git@github.com:GsDevKit/${gsDevKitProject}.git"
+  rm -rf ${useHttpsForGit}
+  url="git@github.com:${userName}/${projectName}.git"
 elif [  "${mode}" = "https" ] ; then
   cat - > $useHttpsForGit << EOF
 the presence of this file means that GsDevKit_* will clone git projects using https protocol
 EOF
-  url="https://github.com/GsDevKit/${gsDevKitProject}.git"
+  url="https://github.com/${userName}/${projectName}.git"
 else 
   usage; exit 1
 fi

@@ -11,6 +11,7 @@ usage() {
   cat <<HELP
 USAGE: $(basename $0) [-h] [-c https | ssh ]
 
+Clone the Github repositories used by the tODE client to \$GS_HOME/shared/repos.
 
 OPTIONS
   -h
@@ -27,14 +28,15 @@ EXAMPLES
 
 HELP
 }
+useHttpsForGit=${GS_HOME}/bin/.useHttpsForGit
 
 set -e # exit on error
 if [ "${GS_HOME}x" = "x" ] ; then
   echo "the GS_HOME environment variable needs to be defined"; exit 1
 fi
 
-pushd ${GS_HOME} >& /dev/null
-${GS_HOME}/bin/private/cloneGitHubProject $* GsDevKit GsDevKit_gs_server gs_server
+pushd ${GS_SHARED_REPO} >& /dev/null
+  ${GS_HOME}/bin/private/cloneGitHubProject $* GsDevKit GsDevKit_tode tode
 popd >& /dev/null
 
 echo "...finished $(basename $0)"

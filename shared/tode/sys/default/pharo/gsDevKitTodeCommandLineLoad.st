@@ -1,6 +1,6 @@
 [ | gsSharedTodeRepo |
   "gs_server pharo gsServerLoad.st"
-  gsSharedTodeRepo := Smalltalk os environment at: 'GS_SHARED_TODE_REPOSITORY'.
+  gsSharedTodeRepo := Smalltalk os environment at: 'GS_SHARED_TODE_CLIENT_REPOSITORY'.
   "Expect that gsDevKitCommandLineLoad.st already loaded ... assume Metacello is up-to-date"
   "If tODE is already loaded, clear github cache for baseline"
   Metacello image
