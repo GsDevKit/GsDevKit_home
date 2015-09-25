@@ -1,0 +1,57 @@
+#! /bin/bash
+#=========================================================================
+# Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#=========================================================================
+
+echo "================="
+echo "   GsDevKit script: $(basename $0) $*"
+echo "================="
+
+usage() {
+  cat <<HELP
+USAGE: $(basename $0) [-h] [-c https | ssh ]
+
+Clone the Github repositories used by the tODE client to \$GS_HOME/shared/repos.
+
+OPTIONS
+  -h
+     display help
+  -c https | ssh
+     clone using https (https://github.com) or ssh (git@github.com)
+     ssh is the default 
+
+EXAMPLES
+   $(basename $0) -h
+   $(basename $0) 
+   $(basename $0) -c ssh
+   $(basename $0) -c https
+
+HELP
+}
+
+set -e # exit on error
+if [ "${GS_HOME}x" = "x" ] ; then
+  echo "the GS_HOME environment variable needs to be defined"; exit 1
+fi
+source ${GS_HOME}/bin/defGsDevKit.env
+
+pushd ${GS_SHARED_REPO} >& /dev/null
+  ${GS_HOME}/bin/private/cloneGitHubProject $* dalehenrich metacello-work metacello-work
+  cd metacello-work
+  git checkout master
+  cd ..
+  ${GS_HOME}/bin/private/cloneGitHubProject $* dalehenrich filetree filetree
+  cd filetree
+  git checkout pharo3.0 #change this if you are using a different version of Pharo for the client
+  cd ..
+  ${GS_HOME}/bin/private/cloneGitHubProject $* dalehenrich tode tode
+  cd tode
+  git checkout dev_dev
+  cd ..
+  ${GS_HOME}/bin/private/cloneGitHubProject $* GsDevKit ston ston
+  cd ston
+  git checkout v0.9.4
+  cd ..
+popd >& /dev/null
+
+echo "...finished $(basename $0)"
