@@ -27,7 +27,6 @@ EXAMPLES
 
 HELP
 }
-useHttpsForGit=${GS_HOME}/bin/.useHttpsForGit
 
 set -e # exit on error
 if [ "${GS_HOME}x" = "x" ] ; then
