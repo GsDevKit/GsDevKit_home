@@ -36,8 +36,21 @@ fi
 
 pushd ${GS_SHARED_REPO} >& /dev/null
   ${GS_HOME}/bin/private/cloneGitHubProject $* dalehenrich metacello-work metacello-work
+  cd metacello-work
+  git checkout master
+  cd ..
   ${GS_HOME}/bin/private/cloneGitHubProject $* dalehenrich filetree filetree
+  cd filetree
+  git checkout pharo3.0 #change this if you are using a different version of Pharo for the client
+  cd ..
   ${GS_HOME}/bin/private/cloneGitHubProject $* dalehenrich tode tode
+  cd tode
+  git checkout dev_dev
+  cd ..
+  ${GS_HOME}/bin/private/cloneGitHubProject $* GsDevKit ston ston
+  cd ston
+  git checkout v0.9.4
+  cd ..
 popd >& /dev/null
 
 echo "...finished $(basename $0)"
