@@ -8,7 +8,7 @@
     baseline: 'Metacello';
     repository: gsSharedRepo, '/metacello-work/repository';
     onConflict: [:ex | ex allow];
-    load.
+    load: #( 'Metacello-Core' ). "on windows, github and bitbucket repos aren't functional"
   Metacello new
     baseline: 'FileTree';
     repository: gsSharedRepo, '/filetree/repository';

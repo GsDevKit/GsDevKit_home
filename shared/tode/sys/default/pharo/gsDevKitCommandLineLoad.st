@@ -9,7 +9,7 @@
     baseline: 'Metacello';
     repository: 'github://dalehenrich/metacello-work:master/repository';
     onConflict: [:ex | ex allow];
-    load: #( 'Core' ).
+    load: #( 'batch' ).
   false ifTrue: [
     "To avoid GitHub API rate limits, edit and define github username/password in tode client image"
     "Change `false` to `true` execute this block"
