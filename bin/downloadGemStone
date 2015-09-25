@@ -283,8 +283,12 @@ fi
 if [ -e "`which wget`" ]; then
     cmd="`which wget`"
 else
+  if [ -e "`which curl`" ]; then
+      cmd="`which curl`"
+  else
     echo "[Error] wget is not available. Install wget and rerun this script."
     exit 1
+  fi
 fi
 
 # Download GemStone

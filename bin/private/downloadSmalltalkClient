@@ -68,6 +68,7 @@ case $version in
         cmd="`which curl` "
       else
         echo "Error: wget is not available. Install wget and rerun this script."
+        exit 1
       fi
     fi
     pushd $directoryPath >& /dev/null

@@ -1,4 +1,4 @@
-[ 
+[ | repo | 
   "todeClient pharo todeLoad.st"
   Metacello new
     baseline: 'Metacello';
@@ -16,10 +16,12 @@
       cls
         siteUsername: '';
         sitePassword: ''] ].
-  Smalltalk snapshot: true andQuit: false. "for debugging"
+  false 
+    ifTrue: [ repo := 'filetree:///opt/git/tode/repository' ]
+    ifFalse: [ repo := 'github://dalehenrich/tode:dev_dev/repository' ].
   Metacello new
     baseline: 'Tode';
-    repository: 'filetree:///opt/git/tode/repository';
+    repository: repo;
     get;
     load ]
       on: Warning, MetacelloSkipDirtyPackageLoad
