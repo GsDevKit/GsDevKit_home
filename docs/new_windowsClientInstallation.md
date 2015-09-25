@@ -16,6 +16,7 @@
    cd gsDevKit_home
    export GS_HOME=`pwd`
    export PATH=$GS_HOME/bin:$PATH
+   $GS_HOME/bin/utils/cloneSharedTodeClientProjects -c https
    ```
 
 
