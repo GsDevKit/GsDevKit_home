@@ -64,7 +64,7 @@ installUbuntuPackages(){
         sudo apt-get -y install libXrender1:i386
         sudo apt-get -y install libSM6:i386
         sudo apt-get -y install libICE6:i386
-        wget http://seaside.gemtalksystems.com/squeak/GemTools-1.0-beta.8.7-310x.zip
+        curl -O  http://seaside.gemtalksystems.com/squeak/GemTools-1.0-beta.8.7-310x.zip
         unzip GemTools-1.0-beta.8.7-310x.zip
       fi
     fi
