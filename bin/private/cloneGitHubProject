@@ -9,7 +9,7 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-c https | ssh ] <github-user-name> <github-project-name> <directory-name>
+USAGE: $(basename $0) [-h] [-n] [-c https | ssh ] <github-user-name> <github-project-name> <directory-name>
 
 Clone the given <github-user-name>/<github-project-name> using either https or ssh.
 ssh is the default.
@@ -20,13 +20,16 @@ OPTIONS
      display help
   -c https | ssh
      clone using https (https://github.com) or ssh (git@github.com)
-     ssh is the default 
+     ssh is the default
+  -n
+     No checkout option passed along to git
 
 EXAMPLES
    $(basename $0) -h
-   $(basename $0) GsDevKit GsDevKit_gemstone gemstone
-   $(basename $0) -c ssh GsDevKit GsDevKit_gemstone gemstone
-   $(basename $0) -c https GsDevKit GsDevKit_gemstone gemstone
+   $(basename $0) -n GsDevKit GsDevKit_gs_server gs_server
+   $(basename $0) GsDevKit GsDevKit_gs_server gs_server
+   $(basename $0) -c ssh GsDevKit GsDevKit_gs_server gs_server
+   $(basename $0) -c https GsDevKit GsDevKit_gs_server gs_server
 
 HELP
 }
@@ -43,10 +46,12 @@ else
   mode="ssh"
 fi
 
-while getopts ":hc:" OPT ; do
+gitArg=""
+while getopts ":hc:n" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     c) mode="${OPTARG}";;
+    n) gitArg=" -n ";;
     *) usage; exit 1;;
   esac
 done
@@ -72,7 +77,7 @@ else
 fi
 
 if [ ! -d "${directoryName}" ] ; then
-  git clone $url $directoryName
+  git clone $gitArg $url $directoryName
 fi
 
 echo "...finished $(basename $0)"
