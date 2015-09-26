@@ -18,7 +18,7 @@ OPTIONS
 
 EXAMPLES
   $(basename $0) -h
-  $(basename $0) todeDev
+  $(basename $0) tode
   $(basename $0) gemtools_329
   $(basename $0) jade_329
 
@@ -36,11 +36,20 @@ if [ "${GS_GS_CLIENT_DEV}x" = "x" ] ; then
   exit 1
 fi
 
+while getopts "h" OPT ; do
+  case "$OPT" in
+    h) usage; exit 0;;
+   *) usage; exit 1;;
+  esac
+done
+shift $(($OPTIND - 1))
+
 if [ $# -lt 1 ]; then
   usage; exit 1
 fi
 clientName=$1
 
-${GS_GS_CLIENT_DEV_CLIENTS}/$clientName/deleteClient $*
+deleteCmd="`${GS_GS_CLIENT_DEV_CLIENTS}/$clientName/deleteClient $*`"
+$deleteCmd
 
 echo "...finished $(basename $0)"
