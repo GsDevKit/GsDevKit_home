@@ -40,23 +40,30 @@ if [ "${GS_HOME}x" = "x" ] ; then
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
-source ${GS_HOME}/bin/private/shFunctions
-getOpts_help $@
+modeArg=""
+while getopts "hnc:" OPT ; do
+  case "$OPT" in
+    h) usage; exit 0;;
+    c) modeArg=" -c ${OPTARG} ";;
+    *) usage; exit 1;;
+  esac
+done
+shift $(($OPTIND - 1))
 
 pushd ${GS_SHARED_REPO} >& /dev/null
-  ${GS_HOME}/bin/private/cloneGitHubProject -n $* dalehenrich metacello-work metacello-work
+  ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich metacello-work metacello-work
   cd metacello-work
   git checkout dev
   cd ..
-  ${GS_HOME}/bin/private/cloneGitHubProject -n $* dalehenrich filetree filetree
+  ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich filetree filetree
   cd filetree
   git checkout pharo3.0 #change this if you are using a different version of Pharo for the client
   cd ..
-  ${GS_HOME}/bin/private/cloneGitHubProject -n $* dalehenrich tode tode
+  ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich tode tode
   cd tode
   git checkout dev_dev
   cd ..
-  ${GS_HOME}/bin/private/cloneGitHubProject -n $* GsDevKit ston ston
+  ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg GsDevKit ston ston
   cd ston
   git checkout v0.9.4
   cd ..

@@ -38,8 +38,18 @@ if [ "${GS_GS_CLIENT_DEV}x" = "x" ] ; then
   source ${GS_HOME}/bin/defGsDevKit.env
 fi
 
+modeArg=""
+while getopts "hnc:" OPT ; do
+  case "$OPT" in
+    h) usage; exit 0;;
+    c) modeArg=" -c ${OPTARG} ";;
+    *) usage; exit 1;;
+  esac
+done
+shift $(($OPTIND - 1))
+
 pushd ${GS_GS_CLIENT_DEV} >& /dev/null
-${GS_HOME}/bin/private/cloneGitHubProject $* GsDevKit GsDevKit_todeClient todeClient
+${GS_HOME}/bin/private/cloneGitHubProject $modeArg GsDevKit GsDevKit_todeClient todeClient
 popd >& /dev/null
 
 echo "...finished $(basename $0)"
