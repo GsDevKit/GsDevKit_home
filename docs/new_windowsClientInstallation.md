@@ -16,6 +16,7 @@
    cd gsDevKit_home
    export GS_HOME=`pwd`
    export PATH=$GS_HOME/bin:$PATH
+   git config --global core.longpaths true   # https://github.com/git-for-windows/git/wiki/Git-cannot-create-a-file-or-directory-with-a-long-path
    $GS_HOME/bin/utils/cloneSharedTodeClientProjects -c https
    ```
 
