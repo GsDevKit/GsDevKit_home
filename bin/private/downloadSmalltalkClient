@@ -53,8 +53,10 @@ fi
 
 echo "Installing $version"
 
-# Download client
+# Detect operating system
+PLATFORM="`uname -sm | tr ' ' '-'`"
 
+# Download client
 case $version in
   Pharo*)
     if [ -e "$directoryPath/pharo-vm" ]; then
@@ -74,8 +76,16 @@ case $version in
     pushd $directoryPath >& /dev/null
       case $version in
         Pharo3.0)
-          $cmd get.pharo.org/vm30 | bash
-          $cmd get.pharo.org/30 | bash
+          case "$PLATFORM" in
+            MINGW32_NT*)
+              cmd=`which curl`
+              $cmd -O http://files.pharo.org/platform/Pharo3.0-win.zip
+              unzip -j -q Pharo3.0-win.zip
+            ;;
+            *) 
+              $cmd get.pharo.org/vm30 | bash
+              $cmd get.pharo.org/30 | bash
+          esac
           ;;
         Pharo4.0)
           $cmd get.pharo.org/vm40 | bash
