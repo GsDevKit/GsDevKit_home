@@ -52,8 +52,8 @@ shift $(($OPTIND - 1))
 
 # Detect operating system
 PLATFORM="`uname -sm | tr ' ' '-'`"
-if [ "$PLATFORM" = " MINGW32_NT*" ] ; then
-  git config core.longpaths 
+if [[ "$PLATFORM" == MINGW32_NT* ]] ; then
+  git config core.longpaths true
 fi
 
 pushd ${GS_SHARED_REPO} >& /dev/null
