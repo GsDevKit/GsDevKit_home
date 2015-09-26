@@ -22,7 +22,10 @@ false ifTrue: [
   Metacello new
     baseline: 'Tode';
     repository: 'filetree://',gsSharedRepo, '/tode/repository';
-    get;
+    get.
+  Metacello new
+    baseline: 'Tode';
+    repository: 'filetree://',gsSharedRepo, '/tode/repository';
     load ]
       on: Warning, MetacelloSkipDirtyPackageLoad
       do: [:ex | 
