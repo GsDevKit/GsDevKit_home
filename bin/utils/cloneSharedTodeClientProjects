@@ -11,7 +11,12 @@ usage() {
   cat <<HELP
 USAGE: $(basename $0) [-h] [-c https | ssh ]
 
-Clone the Github repositories used by the tODE client to \$GS_HOME/shared/repos.
+Clone the Github repositories used by the tODE client to \$GS_HOME/shared/repos:
+
+  - github://dalehenrich/metacello-work:master/repository'
+  - github://dalehenrich/tode:master/repository
+  - github://dalehenrich/filetree:pharo3.0/repository
+  - github://GsDevKit/ston:v0.9.?/repository
 
 OPTIONS
   -h
@@ -41,7 +46,7 @@ getOpts_help $@
 pushd ${GS_SHARED_REPO} >& /dev/null
   ${GS_HOME}/bin/private/cloneGitHubProject -n $* dalehenrich metacello-work metacello-work
   cd metacello-work
-  git checkout master
+  git checkout dev
   cd ..
   ${GS_HOME}/bin/private/cloneGitHubProject -n $* dalehenrich filetree filetree
   cd filetree
