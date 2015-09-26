@@ -73,6 +73,7 @@ the presence of this file means that GsDevKit_* will clone git projects using ht
 EOF
   url="https://github.com/${userName}/${projectName}.git"
 else 
+  echo "Unknown -c argument: $mode"
   usage; exit 1
 fi
 
