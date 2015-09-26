@@ -19,7 +19,10 @@
   Metacello new
     baseline: 'Tode';
     repository: 'github://dalehenrich/tode:master/repository';
-    get;
+    get.
+  Metacello new
+    baseline: 'Tode';
+    repository: 'github://dalehenrich/tode:master/repository';
     load ]
       on: Warning, MetacelloSkipDirtyPackageLoad
       do: [:ex | 
