@@ -20,7 +20,7 @@ false ifTrue: [
     repository: 'filetree://',gsSharedRepo, '/ston/repository';
     lock.
   Metacello new
-    baseline: 'Tode-Core';
+    baseline: 'Tode';
     repository: 'filetree://',gsSharedRepo, '/tode/repository';
     get;
     load ]

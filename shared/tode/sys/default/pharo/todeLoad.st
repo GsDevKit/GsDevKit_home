@@ -17,7 +17,7 @@
         siteUsername: '';
         sitePassword: ''] ].
   Metacello new
-    baseline: 'Tode-Core';
+    baseline: 'Tode';
     repository: 'github://dalehenrich/tode:master/repository';
     get;
     load ]
