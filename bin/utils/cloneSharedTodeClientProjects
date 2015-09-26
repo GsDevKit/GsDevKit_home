@@ -50,6 +50,12 @@ while getopts "hnc:" OPT ; do
 done
 shift $(($OPTIND - 1))
 
+# Detect operating system
+PLATFORM="`uname -sm | tr ' ' '-'`"
+if [ "$PLATFORM" = " MINGW32_NT*" ] ; then
+  git config core.longpaths 
+fi
+
 pushd ${GS_SHARED_REPO} >& /dev/null
   ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich metacello-work metacello-work
   cd metacello-work
