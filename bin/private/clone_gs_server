@@ -5,6 +5,7 @@
 
 echo "================="
 echo "   GsDevKit script: $(basename $0) $*"
+echo "              path: $0"
 echo "================="
 
 usage() {

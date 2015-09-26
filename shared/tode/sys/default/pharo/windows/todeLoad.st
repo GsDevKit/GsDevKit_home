@@ -1,29 +1,29 @@
-[ | gsSharedRepo |
-  gsSharedRepo := Smalltalk os environment at: 'GS_SHARED_REPO'.
+[ | filetreeRepo metacelloRepo stonRepo todeRepo |
+  filetreeRepo := Smalltalk os environment at: 'GS_SHARED_REPO_PHARO_FILETREE'.
+  metacelloRepo := Smalltalk os environment at: 'GS_SHARED_REPO_METACELLO'.
+  stonRepo := Smalltalk os environment at: 'GS_SHARED_REPO_STON'.
+  todeRepo := Smalltalk os environment at: 'GS_SHARED_REPO_TODE'.
   Metacello new
     baseline: 'FileTree';
-    repository: 'filetree://',gsSharedRepo, '/filetree/repository';
+    repository: filetreeRepo;
     lock.
   Metacello new
     baseline: 'Metacello';
-    repository: 'filetree://',gsSharedRepo, '/metacello-work/repository';
+    repository: metacelloRepo;
     get.
   Metacello new
     baseline: 'Metacello';
-    repository: 'filetree://',gsSharedRepo, '/metacello-work/repository';
+    repository: metacelloRepo;
     onConflict: [:ex | ex allow];
     load: #( 'Metacello-Core' ). "on windows, github and bitbucket repos aren't functional"
   Metacello new
     baseline: 'Ston';
-    repository: 'filetree://',gsSharedRepo, '/ston/repository';
+    repository: stonRepo;
     lock.
   Metacello new
     baseline: 'Tode';
-    repository: 'filetree://',gsSharedRepo, '/tode/repository';
-    get.
-  Metacello new
-    baseline: 'Tode';
-    repository: 'filetree://',gsSharedRepo, '/tode/repository';
+    repository: todeRepo;
+    get;
     load ]
       on: Warning, MetacelloSkipDirtyPackageLoad
       do: [:ex | 

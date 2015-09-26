@@ -5,6 +5,7 @@
 
 echo "================="
 echo "   GsDevKit script: $(basename $0) $*"
+echo "              path: $0"
 echo "================="
 
 usage() {
@@ -13,10 +14,24 @@ USAGE: $(basename $0) [-h] [-c https | ssh ]
 
 Clone the Github repositories used by the tODE client to \$GS_HOME/shared/repos:
 
-  - github://dalehenrich/metacello-work:master/repository'
+  - github://dalehenrich/metacello-work:master/repository
   - github://dalehenrich/tode:master/repository
   - github://dalehenrich/filetree:pharo3.0/repository
+  - github://dalehenrich/filetree:gemstone2.4/repository
   - github://GsDevKit/ston:v0.9.?/repository
+
+If you clone these repositoris into  \$GS_HOME/shared/repos, then they will be 
+used for creating pharo images and bootstrapping tODE into stones. 
+
+The following env vars are defined:
+
+  \$GS_SHARED_REPO_METACELLO
+  \$GS_SHARED_REPO_TODE
+  \$GS_SHARED_REPO_PHARO_FILETREE
+  \$GS_SHARED_REPO_GEMSTONE_FILETREE
+  \$GS_SHARED_REPO_STON
+
+If the repositories have not been cloned, the the env var points to the github repo.
 
 OPTIONS
   -h
@@ -55,9 +70,14 @@ pushd ${GS_SHARED_REPO} >& /dev/null
   cd metacello-work
   git checkout dev_win-hack
   cd ..
+  cd pharo3.0
   ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich filetree filetree
   cd filetree
-  git checkout pharo3.0 #change this if you are using a different version of Pharo for the client
+  git checkout pharo3.0
+  cd ../..
+  ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich filetree filetree
+  cd filetree
+  git checkout gemstone2.4
   cd ..
   ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich tode tode
   cd tode

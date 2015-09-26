@@ -3,20 +3,20 @@
 
 Transcript cr; show: '---Step 1 of tODE bootstrap process: execute upgradeGlass.ws'.
 [
-  | monticelloDir gofer gsHome |
+  | monticelloDir gofer sharedTode |
   Transcript
     cr;
     show: '-----Install GsUpgrader-Core package '.
 
-  gsHome := GsFile _expandEnvVariable: 'GS_HOME' isClient: false.
-  monticelloDir := ServerFileDirectory on: gsHome, '/tode/sys/local/monticello'.
+  sharedTode := GsFile _expandEnvVariable: 'GS_SHARED_TODE' isClient: false.
+  monticelloDir := ServerFileDirectory on: sharedTode, '/sys/local/monticello'.
   gofer := Gofer new
         package: 'GsUpgrader-Core';
         yourself.
   (monticelloDir fileNamesMatching: 'GsUpgrader-Core-*.mcz') size > 0
     ifTrue: [ 
       "local GsUpgrader-Core package"
-      Transcript show: ' from $GS_HOME/tode/sys/local/monticello'.
+      Transcript show: ' from $GS_SHARED_TODE/sys/local/monticello'.
       gofer repository: (MCDirectoryRepository new directory: monticelloDir) ]
     ifFalse: [ 
       "default repository"

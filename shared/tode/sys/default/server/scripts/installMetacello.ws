@@ -4,9 +4,20 @@
 Transcript cr; show: '---Step 2 of tODE bootstrap process: execute installMetacello.ws'.
 
 GsUpgrader batchErrorHandlingDo: [
-  "Uncomment and edit the following to lock the desired Metacello version/repository. 
-   By default will let GsUpgrader install Metacello in Step 3 (installGLASS1.ws)."
-  "
-   If you want to change the repository used to load Metacello, use the Metacello `lock` command. 
-  "
-  ].
+  | metacelloRepo filetree |
+  metacelloRepo := GsFile _expandEnvVariable: 'GS_SHARED_REPO_METACELLO' isClient: false.
+  filetreeRepo := GsFile _expandEnvVariable: 'GS_SHARED_REPO_FILETREE' isClient: false.
+  Transcript 
+    cr; 
+    show: 'Locking Metacello: ', metacelloRepo printString;
+    cr; 
+    show: 'Locking FileTree: ', filetreeRepo printString.
+  Metacello new
+    baseline: 'Metacello';
+    repository: metacelloRepo;
+    lock.
+  Metacello new
+    baseline: 'FileTree';
+    repository: filetreeRepo;
+    lock.
+    ].

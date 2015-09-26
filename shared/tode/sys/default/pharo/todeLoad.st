@@ -1,24 +1,28 @@
-[ 
-  "todeClient pharo todeLoad.st"
+[ | filetreeRepo metacelloRepo stonRepo todeRepo |
+  filetreeRepo := Smalltalk os environment at: 'GS_SHARED_REPO_PHARO_FILETREE'.
+  metacelloRepo := Smalltalk os environment at: 'GS_SHARED_REPO_METACELLO'.
+  stonRepo := Smalltalk os environment at: 'GS_SHARED_REPO_STON'.
+  todeRepo := Smalltalk os environment at: 'GS_SHARED_REPO_TODE'.
+  Metacello new
+    baseline: 'FileTree';
+    repository: filetreeRepo;
+    lock.
   Metacello new
     baseline: 'Metacello';
-    repository: 'github://dalehenrich/metacello-work:master/repository';
+    repository: metacelloRepo;
     get.
   Metacello new
     baseline: 'Metacello';
-    repository: 'github://dalehenrich/metacello-work:master/repository';
+    repository: metacelloRepo;
     onConflict: [:ex | ex allow];
-    load: #( 'batch').
-  false ifTrue: [
-    "To avoid GitHub API rate limits, edit and define github username/password in tode client image"
-    "Change `false` to `true` execute this block"
-    Smalltalk at: #MCGitHubRepository ifPresent: [:cls |
-      cls
-        siteUsername: '';
-        sitePassword: ''] ].
+    load: #( 'batch' ).
+  Metacello new
+    baseline: 'Ston';
+    repository: stonRepo;
+    lock.
   Metacello new
     baseline: 'Tode';
-    repository: 'github://dalehenrich/tode:master/repository';
+    repository: todeRepo;
     get;
     load ]
       on: Warning, MetacelloSkipDirtyPackageLoad
