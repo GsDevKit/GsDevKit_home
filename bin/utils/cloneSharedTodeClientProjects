@@ -53,7 +53,7 @@ shift $(($OPTIND - 1))
 pushd ${GS_SHARED_REPO} >& /dev/null
   ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich metacello-work metacello-work
   cd metacello-work
-  git checkout dev
+  git checkout dev_win-hack
   cd ..
   ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich filetree filetree
   cd filetree

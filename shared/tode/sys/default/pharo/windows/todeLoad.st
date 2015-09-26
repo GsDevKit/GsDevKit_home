@@ -4,7 +4,6 @@
     baseline: 'FileTree';
     repository: 'filetree://',gsSharedRepo, '/filetree/repository';
     lock.
-false ifTrue: [ 
   Metacello new
     baseline: 'Metacello';
     repository: 'filetree://',gsSharedRepo, '/metacello-work/repository';
@@ -14,7 +13,6 @@ false ifTrue: [
     repository: 'filetree://',gsSharedRepo, '/metacello-work/repository';
     onConflict: [:ex | ex allow];
     load: #( 'Metacello-Core' ). "on windows, github and bitbucket repos aren't functional"
-].
   Metacello new
     baseline: 'Ston';
     repository: 'filetree://',gsSharedRepo, '/ston/repository';
