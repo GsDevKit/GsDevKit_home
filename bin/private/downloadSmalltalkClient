@@ -81,6 +81,8 @@ case $version in
               cmd=`which curl`
               $cmd -O http://files.pharo.org/platform/Pharo3.0-win.zip
               unzip -j -q Pharo3.0-win.zip
+              mv Pharo3.0.image Pharo.image
+              mv Pharo3.0.changes Pharo.changes
             ;;
             *) 
               $cmd get.pharo.org/vm30 | bash
