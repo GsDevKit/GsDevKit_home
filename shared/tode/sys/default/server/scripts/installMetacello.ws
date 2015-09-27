@@ -4,7 +4,7 @@
 Transcript cr; show: '---Step 2 of tODE bootstrap process: execute installMetacello.ws'.
 
 GsUpgrader batchErrorHandlingDo: [
-  | metacelloRepo filetree |
+  | metacelloRepo filetreeRepo |
   metacelloRepo := GsFile _expandEnvVariable: 'GS_SHARED_REPO_METACELLO' isClient: false.
   filetreeRepo := GsFile _expandEnvVariable: 'GS_SHARED_REPO_GEMSTONE_FILETREE' isClient: false.
   Transcript 

@@ -4,7 +4,6 @@
 Transcript cr; show: '---Step 3 of tODE bootstrap process: execute installGLASS1.ws'.
 
 GsUpgrader batchErrorHandlingDo: [
-  | monticelloDir gofer |
   Transcript
     cr;
     show: '-----Upgrade GLASS1 using gsUpgrader'.
