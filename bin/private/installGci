@@ -60,6 +60,7 @@ PLATFORM="`uname -sm | tr ' ' '-'`"
 case "$PLATFORM" in
   Linux-x86_64) gsvers="GemStone64Bit${vers}-x86_64.Linux"; libext="so" ;;
   Darwin-i386) gsvers="GemStone64Bit${vers}-i386.Darwin"; libext="dylib" ;;
+  MINGW32_NT*) gsvers="GemBuilderC${vers}-x86.Windows_NT"; libext="dll" ;;
 esac
 gs_product=$GS_SHARED_DOWNLOADS/products/$gsvers
 
@@ -67,16 +68,29 @@ case "$clientType" in
   gemtools) ;;
   jade) ;;
   pharo) 
+    sourceLocation="$gs_product/lib32"
     case "$PLATFORM" in
       Linux-x86_64) targetLocation="${directoryPath}/pharo-vm" ;;
       Darwin-i386) targetLocation="${directoryPath}/pharo-vm/Pharo.app/Contents/MacOS/Plugins" ;;
+      MINGW32_NT*)
+        case "$vers" in
+          2.4.*|3.0.*|3.1.*) sourceLocation="${gs_product}/bin" ;;
+          *) sourceLocation="${gs_product}/bin32" ;;
+        esac
+        targetLocation="${directoryPath}"
+        if [ ! -e "$targetLocation/msvcr*.dll" ] ; then
+          cp ${sourceLocation}/msvcr* $targetLocation
+        else
+          echo "[Warning]  ${msvcrLocation}/msvcrXXX.dll already present to replace, delete and try again"
+        fi
+        ;;
     esac
     ;;
-  *) usage; exit 1;;
+  *) echo "uknown client type: $clientType"; usage; exit 1;;
 esac
 
 if [ ! -e "$targetLocation/libgcirpc-${vers}-32.${libext}" ] ; then
-  cp $gs_product/lib32/lib* $targetLocation
+  cp ${sourceLocation}/lib* $targetLocation
 else
   echo "[Warning] gci libraries already present to replace, delete them and try again"
 fi
