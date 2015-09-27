@@ -66,27 +66,38 @@ done
 shift $(($OPTIND - 1))
 
 pushd ${GS_SHARED_REPO} >& /dev/null
-  ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich metacello-work metacello-work
-  cd metacello-work
-  git checkout dev_win-hack
-  cd ..
+  if [ ! -d "metacello-work" ] ; then
+    ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich metacello-work metacello-work
+    cd metacello-work
+    git checkout dev_win-hack
+    cd ..
+  fi
   cd pharo3.0
-  ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich filetree filetree
-  cd filetree
-  git checkout pharo3.0
-  cd ../..
-  ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich filetree filetree
-  cd filetree
-  git checkout gemstone2.4
+  if [ ! -d "filetree" ] ; then
+    ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich filetree filetree
+    cd filetree
+    git checkout pharo3.0
+    cd ..
+  fi
   cd ..
-  ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich tode tode
-  cd tode
-  git checkout dev_dev
-  cd ..
-  ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg GsDevKit ston ston
-  cd ston
-  git checkout v0.9.4
-  cd ..
+  if [ ! -d "filetree" ] ; then
+    ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich filetree filetree
+    cd filetree
+    git checkout gemstone2.4
+    cd ..
+  fi
+  if [ ! -d "tode" ] ; then
+    ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich tode tode
+    cd tode
+    git checkout dev_dev
+    cd ..
+  fi
+  if [ ! -d "ston" ] ; then
+    ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg GsDevKit ston ston
+    cd ston
+    git checkout v0.9.4
+    cd ..
+  fi
 popd >& /dev/null
 
 echo "...finished $(basename $0)"
