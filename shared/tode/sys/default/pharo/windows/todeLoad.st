@@ -3,6 +3,17 @@
   metacelloRepo := Smalltalk os environment at: 'GS_SHARED_REPO_METACELLO'.
   stonRepo := Smalltalk os environment at: 'GS_SHARED_REPO_STON'.
   todeRepo := Smalltalk os environment at: 'GS_SHARED_REPO_TODE'.
+
+({metacelloRepo } collect:  [ :repoSpec |  |fileSpec path |
+	(repoSpec beginsWith: 'filetree://') ifTrue:[
+	fileSpec := repoSpec copyFrom: 12 to: repoSpec size.
+	path := fileSpec asFileReference path segments.
+	path at: 1 put:(path at:1), ':'.
+	'filetree://', (AbsolutePath withAll: path) asFileReference fullName
+	] ifFalse: [ repoSpec ] ]) do:[:spec | 
+Metacello new baseline:'Metacello'; repository: spec; get].
+
+
   Metacello new
     baseline: 'FileTree';
     repository: filetreeRepo;
