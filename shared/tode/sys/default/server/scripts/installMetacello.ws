@@ -6,7 +6,7 @@ Transcript cr; show: '---Step 2 of tODE bootstrap process: execute installMetace
 GsUpgrader batchErrorHandlingDo: [
   | metacelloRepo filetree |
   metacelloRepo := GsFile _expandEnvVariable: 'GS_SHARED_REPO_METACELLO' isClient: false.
-  filetreeRepo := GsFile _expandEnvVariable: 'GS_SHARED_REPO_FILETREE' isClient: false.
+  filetreeRepo := GsFile _expandEnvVariable: 'GS_SHARED_REPO_GEMSTONE_FILETREE' isClient: false.
   Transcript 
     cr; 
     show: 'Locking Metacello: ', metacelloRepo printString;
