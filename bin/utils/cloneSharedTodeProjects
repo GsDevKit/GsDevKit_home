@@ -10,15 +10,27 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-c https | ssh ]
+USAGE: $(basename $0) [-h] [-c https | ssh ] [-b <branch-name>] client|server|both
 
-Clone the Github repositories used by the tODE client to \$GS_HOME/shared/repos:
+Clone the Github repositories used by the tODE client to \$GS_HOME/shared/repos.
+
+"client" & "server" repos:
 
   - github://dalehenrich/metacello-work:master/repository
   - github://dalehenrich/tode:master/repository
-  - github://dalehenrich/filetree:pharo3.0/repository
-  - github://dalehenrich/filetree:gemstone2.4/repository
   - github://GsDevKit/ston:v0.9.?/repository
+
+"client" repos:
+
+  - github://dalehenrich/filetree:pharo3.0/repository
+
+"server" repos:
+
+  - github://dalehenrich/filetree:gemstone2.4/repository
+  - github://GsDevKit/Grease:1.1.?/repository
+  - github://glassdb/PharoCompatibility:master/repository
+  - github://glassdb/glass:master/repository
+  - github://dalehenrich/rb:dev/repository
 
 If you clone these repositoris into  \$GS_HOME/shared/repos, then they will be 
 used for creating pharo images and bootstrapping tODE into stones. 
@@ -30,12 +42,20 @@ The following env vars are defined:
   \$GS_SHARED_REPO_PHARO_FILETREE
   \$GS_SHARED_REPO_GEMSTONE_FILETREE
   \$GS_SHARED_REPO_STON
+  \$GS_SHARED_REPO_GREASE
+  \$GS_SHARED_REPO_PHARO_COMPAT
+  \$GS_SHARED_REPO_GLASS1
+  \$GS_SHARED_REPO_RB
+
 
 If the repositories have not been cloned, the the env var points to the github repo.
 
 OPTIONS
   -h
      display help
+  -b <branch-name>
+     The name of the branch to create for local use, isolating your changes 
+     from the primary (master) branch. The default branch name is "gsdevkit"
   -c https | ssh
      clone using https (https://github.com) or ssh (git@github.com)
      ssh is the default 
@@ -56,47 +76,99 @@ fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
 modeArg=""
-while getopts "hnc:" OPT ; do
+branchName="gsdevkit"
+while getopts "hnb:c:" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
+    b) branchName="${OPTARG}";;
     c) modeArg=" -c ${OPTARG} ";;
     *) usage; exit 1;;
   esac
 done
 shift $(($OPTIND - 1))
 
+if [ $# -lt 1 ]; then
+  echo "missing required argument"; usage; exit 1
+fi
+
+loadClientRepos="false"
+loadServerRepos="false"
+case "$1" in
+  client) loadClientRepos="true";;
+  server) loadServerRepos="true";;
+  both) loadClientRepos="true"; loadServerRepos="true" ;;
+  *) echo "unknown argument: $1"; usage; exit 1;;
+esac
+
 pushd ${GS_SHARED_REPO} >& /dev/null
   if [ ! -d "metacello-work" ] ; then
     ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich metacello-work metacello-work
     cd metacello-work
     git checkout dev_win-hack
-    cd ..
-  fi
-  cd pharo3.0
-  if [ ! -d "filetree" ] ; then
-    ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich filetree filetree
-    cd filetree
-    git checkout pharo3.0
-    cd ..
-  fi
-  cd ..
-  if [ ! -d "filetree" ] ; then
-    ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich filetree filetree
-    cd filetree
-    git checkout gemstone2.4
+    git checkout -b $branchName
     cd ..
   fi
   if [ ! -d "tode" ] ; then
     ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich tode tode
     cd tode
     git checkout dev_dev
+    git checkout -b $branchName
     cd ..
   fi
   if [ ! -d "ston" ] ; then
     ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg GsDevKit ston ston
     cd ston
     git checkout v0.9.4
+    git checkout -b $branchName
     cd ..
+  fi
+  if [ "$loadClientRepos" = "true" ] ; then
+    cd pharo3.0
+    if [ ! -d "filetree" ] ; then
+      ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich filetree filetree
+      cd filetree
+      git checkout pharo3.0
+      git checkout -b $branchName
+      cd ..
+      fi
+    cd ..
+  fi
+  if [ "$loadServerRepos" = "true" ] ; then
+    if [ ! -d "filetree" ] ; then
+      ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich filetree filetree
+      cd filetree
+      git checkout gemstone2.4
+      git checkout -b $branchName
+      cd ..
+    fi
+    if [ ! -d "Grease" ] ; then
+      ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg GsDevKit Grease
+      cd Grease
+      git checkout master
+      git checkout -b $branchName
+      cd ..
+    fi
+    if [ ! -d "PharoCompatibility" ] ; then
+      ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg glassdb PharoCompatibility
+      cd PharoCompatibility
+      git checkout master
+      git checkout -b $branchName
+      cd ..
+    fi
+    if [ ! -d "glass" ] ; then
+      ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg glassdb glass
+      cd glass
+      git checkout master
+      git checkout -b $branchName
+      cd ..
+    fi
+    if [ ! -d "rb" ] ; then
+      ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich rb
+      cd rb
+      git checkout dev
+      git checkout -b $branchName
+      cd ..
+    fi
   fi
 popd >& /dev/null
 
