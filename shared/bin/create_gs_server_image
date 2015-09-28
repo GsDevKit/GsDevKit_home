@@ -90,13 +90,13 @@ case "$imageType" in
       MINGW32_NT*)
         pharoCmd="win_run_pharo $directoryPath --headless"
         gs_serverLoadPath=$GS_SHARED_TODE/sys/default/pharo/windows/gsDevKitCommandLineLoad.st
-        if [ -e $GS_SHARED_TODE/sys/local/pharo/$loadScript ] ; then
+        if [ -e "$GS_SHARED_TODE/sys/local/pharo/gsDevKitCommandLineLoad.st" ] ; then
           gs_serverLoadPath=$GS_SHARED_TODE/sys/local/pharo/windows/gsDevKitCommandLineLoad.st
         fi
         ;;
       *)
         gs_serverLoadPath=$GS_SHARED_TODE/sys/default/pharo/gsDevKitCommandLineLoad.st
-        if [ -e $GS_SHARED_TODE/sys/local/pharo/$loadScript ] ; then
+        if [ -e "$GS_SHARED_TODE/sys/local/pharo/gsDevKitCommandLineLoad.st" ] ; then
           gs_serverLoadPath=$GS_SHARED_TODE/sys/local/pharo/gsDevKitCommandLineLoad.st
         fi
         ;;
