@@ -56,4 +56,17 @@ GsUpgrader batchErrorHandlingDo: [
     baseline: 'Ston';
     repository: stonRepo;
     lock.
+  (Metacello image
+    baseline: [ :spec | spec name = 'Grease' ];
+    list)
+    do: [ :greaseSpec | 
+      greaseSpec isLocked
+        ifTrue: [Transcript cr; show: 'Grease is locked (image)'].
+  (Metacello registry
+    baseline: [ :spec | spec name = 'Grease' ];
+    list)
+    do: [ :greaseSpec | 
+      greaseSpec isLocked
+        ifTrue: [Transcript cr; show: 'Grease is locked (registry)'].
+
     ].
