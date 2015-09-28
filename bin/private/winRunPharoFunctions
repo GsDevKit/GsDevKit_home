@@ -14,6 +14,6 @@ $directoryPath/Pharo.exe $*
 
 trap - ERR
 
-cat $directoryPath/stdout
+cat $directoryPath/stderr
 }
 
