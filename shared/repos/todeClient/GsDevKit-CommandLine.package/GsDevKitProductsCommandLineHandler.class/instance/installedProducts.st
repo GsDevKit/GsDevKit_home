@@ -14,5 +14,12 @@ installedProducts
 							| productVersion dashIndex |
 							dashIndex := dirName indexOf: $-.
 							productVersion := dirName copyFrom: 'GemStone64Bit' size + 1 to: dashIndex - 1.
-							installedProducts at: productVersion put: productDir ] ] ].
+							installedProducts at: productVersion put: productDir ]
+						ifFalse: [ 
+							(dirName beginsWith: 'GemBuilderC')
+								ifTrue: [ 
+									| productVersion dashIndex |
+									dashIndex := dirName indexOf: $-.
+									productVersion := dirName copyFrom: 'GemBuilderC' size + 1 to: dashIndex - 1.
+									installedProducts at: productVersion put: productDir ] ] ] ].
 	^ installedProducts

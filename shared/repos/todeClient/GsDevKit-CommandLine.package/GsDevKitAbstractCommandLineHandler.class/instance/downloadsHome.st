@@ -1,3 +1,3 @@
 accessing
 downloadsHome
-	^ (TDSessionDescription convertPathFromEnvironmentForOS: 'GS_SHARED_DOWNLOADS') asFileReference 
+	^ (Smalltalk os environment at: 'GS_SHARED_DOWNLOADS') asFileReference 

@@ -1,3 +1,3 @@
 accessing
 gs_stonesHome
-	^ (TDSessionDescription convertPathFromEnvironmentForOS: 'GS_GS_SERVER_STONES') asFileReference 
+	^ (Smalltalk os environment at: 'GS_GS_SERVER_STONES') asFileReference 

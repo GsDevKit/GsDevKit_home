@@ -1,3 +1,3 @@
 accessing
 sharedTodeHome
-	^ (TDSessionDescription convertPathFromEnvironmentForOS: 'GS_SHARED_TODE') asFileReference 
+	^ (Smalltalk os environment at: 'GS_SHARED_TODE') asFileReference 
