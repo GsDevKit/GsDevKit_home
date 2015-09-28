@@ -1,10 +1,11 @@
-[ | converted filetreeRepo metacelloRepo stonRepo todeRepo |
+[ | converted todeClientRepo filetreeRepo metacelloRepo stonRepo todeRepo |
   filetreeRepo := Smalltalk os environment at: 'GS_SHARED_REPO_PHARO_FILETREE'.
   metacelloRepo := Smalltalk os environment at: 'GS_SHARED_REPO_METACELLO'.
   stonRepo := Smalltalk os environment at: 'GS_SHARED_REPO_STON'.
   todeRepo := Smalltalk os environment at: 'GS_SHARED_REPO_TODE'.
+  todeClientRepo := Smalltalk os environment at: 'GS_SHARED_REPO_TODE_CLIENT'.
 
-  converted := ({filetreeRepo. metacelloRepo. stonRepo. todeRepo.}
+  converted := ({filetreeRepo. metacelloRepo. stonRepo. todeRepo. todeClientRepo.}
     collect: [ :repoSpec | 
       | fileSpec path |
       (repoSpec beginsWith: 'filetree://')
@@ -19,6 +20,7 @@
   metacelloRepo := converted at: 2.
   stonRepo := converted at: 3.
   todeRepo := converted at: 4.
+  todeClientRepo := converted at: 5.
 
   Metacello new
     baseline: 'FileTree';
@@ -32,7 +34,7 @@
     baseline: 'Metacello';
     repository: metacelloRepo;
     onConflict: [:ex | ex allow];
-    load: #( 'Metacello-Core' ). "on windows, github and bitbucket repos aren't functional"
+    load: #( 'batch' ).
   Metacello new
     baseline: 'Ston';
     repository: stonRepo;
@@ -40,8 +42,13 @@
   Metacello new
     baseline: 'Tode';
     repository: todeRepo;
+    lock;
+    get.
+  Metacello new
+    baseline: 'TodeClient';
+    repository: todeClientRepo;
     get;
-    load ]
+    load:  #( 'CommandLine' ) ]
       on: Warning, MetacelloSkipDirtyPackageLoad
       do: [:ex | 
         (ex isKindOf: MetacelloSkipDirtyPackageLoad)

@@ -77,19 +77,47 @@ if [ ! -e "${directoryPath}/pharo" ] ; then
   $GS_HOME/bin/private/downloadSmalltalkClient -v $version -d $directoryPath
 fi
 
+# Detect operating system
+PLATFORM="`uname -sm | tr ' ' '-'`"
+
 case "$imageType" in
   gsDevKitCommandLine)
-    loadScript=gsDevKitCommandLineLoad.st
     initialImageName=Pharo.image
     imageBaseName=gsDevKitCommandLine
+    case "$PLATFORM" in
+      MINGW32_NT*)
+        gs_serverLoadPath=$GS_SHARED_TODE/sys/default/pharo/windows/gsDevKitCommandLineLoad.st
+        if [ -e $GS_SHARED_TODE/sys/local/pharo/$loadScript ] ; then
+          gs_serverLoadPath=$GS_SHARED_TODE/sys/local/pharo/windows/gsDevKitCommandLineLoad.st
+        fi
+        ;;
+      *)
+        gs_serverLoadPath=$GS_SHARED_TODE/sys/default/pharo/gsDevKitCommandLineLoad.st
+        if [ -e $GS_SHARED_TODE/sys/local/pharo/$loadScript ] ; then
+          gs_serverLoadPath=$GS_SHARED_TODE/sys/local/pharo/gsDevKitCommandLineLoad.st
+        fi
+        ;;
+    esac
   ;;
   gsDevKitTodeCommandLine)
     if [ ! -e "$directoryPath/gsDevKitCommandLine.image" ] ; then
       $GS_GS_SERVER/bin/create_gs_server_image -d $directoryPath gsDevKitCommandLine
     fi
-    loadScript=gsDevKitTodeCommandLineLoad.st
     initialImageName=gsDevKitCommandLine.image
     imageBaseName=gsDevKitTodeCommandLine
+    case "$PLATFORM" in
+      MINGW32_NT*) 
+        echo "gsDevKitTodeCommandLine not applicable for a windows installation"
+        usage
+        exit 1
+        ;;
+      *)
+        gs_serverLoadPath=$GS_SHARED_TODE/sys/default/pharo/gsDevKitTodeCommandLineLoad.st
+        if [ -e $GS_SHARED_TODE/sys/local/pharo/$loadScript ] ; then
+          gs_serverLoadPath=$GS_SHARED_TODE/sys/local/pharo/gsDevKitTodeCommandLineLoad.st
+        fi
+        ;;
+    esac
   ;;
   *) usage; exit 1;;
 esac
@@ -103,11 +131,6 @@ if [ -e $directoryPath/$imageName ] ; then
   else
     message="update"
   fi
-fi
-
-gs_serverLoadPath=$GS_SHARED_TODE/sys/default/pharo/$loadScript
-if [ -e $GS_SHARED_TODE/sys/local/pharo/$loadScript ] ; then
-  gs_serverLoadPath=$GS_SHARED_TODE/sys/local/pharo/$loadScript
 fi
 
 echo "${message} $imageName image using $gs_serverLoadPath"
