@@ -47,6 +47,7 @@ if [ "${GS_HOME}x" = "x" ] ; then
   exit 1
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
+source ${GS_HOME}/bin/private/winRunPharoFunctions
 
 force=""
 version="Pharo3.0"
@@ -80,12 +81,14 @@ fi
 # Detect operating system
 PLATFORM="`uname -sm | tr ' ' '-'`"
 
+pharoCmd="$directoryPath/pharo"
 case "$imageType" in
   gsDevKitCommandLine)
     initialImageName=Pharo.image
     imageBaseName=gsDevKitCommandLine
     case "$PLATFORM" in
       MINGW32_NT*)
+        pharoCmd="win_run_pharo $directoryPath --headless"
         gs_serverLoadPath=$GS_SHARED_TODE/sys/default/pharo/windows/gsDevKitCommandLineLoad.st
         if [ -e $GS_SHARED_TODE/sys/local/pharo/$loadScript ] ; then
           gs_serverLoadPath=$GS_SHARED_TODE/sys/local/pharo/windows/gsDevKitCommandLineLoad.st
@@ -136,15 +139,15 @@ fi
 echo "${message} $imageName image using $gs_serverLoadPath"
 
 if [ "${force}" = "true" ] ; then
-  $directoryPath/pharo $directoryPath/$imageName save gsDevKitTmp
+  $pharoCmd $directoryPath/$imageName save gsDevKitTmp
 else
-  $directoryPath/pharo $directoryPath/$initialImageName save gsDevKitTmp
+  $pharoCmd $directoryPath/$initialImageName save gsDevKitTmp
 fi
 
-$directoryPath/pharo $directoryPath/gsDevKitTmp.image st --quit --save $gs_serverLoadPath
+$pharoCmd $directoryPath/gsDevKitTmp.image st --quit --save $gs_serverLoadPath
 echo ""
 
-$directoryPath/pharo $directoryPath/gsDevKitTmp.image save $imageBaseName
+$pharoCmd $directoryPath/gsDevKitTmp.image save $imageBaseName
 rm -f $directoryPath/gsDevKitTmp.* $directoryPath/*.zip
 
 echo "...finished $(basename $0)"

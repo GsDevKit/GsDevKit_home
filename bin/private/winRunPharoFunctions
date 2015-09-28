@@ -1,0 +1,19 @@
+#!/bin/bash
+
+win_error_exit() {
+echo "Error on or near line $1"
+cat $2/stderr
+}
+
+win_run_pharo(){
+directoryPath=$1
+shift 1
+
+trap 'win_error_exit ${LINENO} ${directoryPath}' ERR
+$directoryPath/Pharo.exe $*
+
+trap - ERR
+
+cat $directoryPath/stdout
+}
+
