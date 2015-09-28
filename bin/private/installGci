@@ -90,7 +90,7 @@ case "$clientType" in
 esac
 
 if [ ! -e "$targetLocation/libgcirpc-${vers}-32.${libext}" ] ; then
-  cp ${sourceLocation}/lib* $targetLocation
+  cp ${sourceLocation}/lib*.${libext} $targetLocation
 else
   echo "[Warning] gci libraries already present to replace, delete them and try again"
 fi
