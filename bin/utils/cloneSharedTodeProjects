@@ -58,13 +58,13 @@ OPTIONS
      from the primary (master) branch. The default branch name is "gsdevkit"
   -c https | ssh
      clone using https (https://github.com) or ssh (git@github.com)
-     ssh is the default 
+     "ssh" is the default 
 
 EXAMPLES
    $(basename $0) -h
-   $(basename $0) 
-   $(basename $0) -c ssh
-   $(basename $0) -c https
+   $(basename $0) client
+   $(basename $0) -c ssh server
+   $(basename $0) -c https both
 
 HELP
 }
