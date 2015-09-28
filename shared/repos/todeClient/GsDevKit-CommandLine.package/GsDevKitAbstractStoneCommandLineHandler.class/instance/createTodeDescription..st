@@ -1,7 +1,8 @@
 actions
 createTodeDescription: theStoneInfo
-	| sessionDescription localHostName |
+	| sessionDescription localHostName defaultServerTodeHome |
 	localHostName := NetNameResolver localHostName.
+	defaultServerTodeHome := self serverTodeHome ifNil: [ nil ] ifNotNil: [ :home | home pathString ].
 	sessionDescription := TDSessionDescription new
 		name: theStoneInfo stoneName;
 		gemstoneVersion: theStoneInfo gsVers;
@@ -15,6 +16,6 @@ createTodeDescription: theStoneInfo
 		backupDirectory: self backupsHome pathString;
 		snapshotDirectory: self snapshotsHome pathString;
 		serverGitRoot: self gitHome pathString;
-		serverTodeRoot: self serverTodeHome pathString;
+		serverTodeRoot: defaultServerTodeHome;
 		yourself.
 	sessionDescription exportTo: self sessionDescriptionHome pathString , '/'
