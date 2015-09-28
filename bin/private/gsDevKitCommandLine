@@ -58,7 +58,7 @@ pharoCmd="${GS_SHARED_PHARO}/pharo"
 case "$PLATFORM" in
   MINGW32_NT*) 
     pharoCmd=win_run_pharo ${GS_SHARED_PHARO} --headless  ${GS_SHARED_PHARO}/gsDevKitCommandLine.image $*
-    cat ${GS_SHARED_PHARO}
+    cat ${GS_SHARED_PHARO}/stderr
     exit 0
     ;;
 esac
