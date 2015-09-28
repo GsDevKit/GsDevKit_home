@@ -30,6 +30,7 @@ if [ "$GS_GS_SERVER{}x" = "x" ] ; then
   echo "Perhaps a stone has not been create yet?"
   exit 1
 fi
+source ${GS_HOME}/bin/private/winRunPharoFunctions
 
 case "$1" in
   --*) # pass to tode
@@ -50,4 +51,11 @@ if [ ! -e "${GS_SHARED_PHARO}/gsDevKitCommandLine.image" ] ; then
 fi
 
 # Run script
-${GS_SHARED_PHARO}/pharo ${GS_SHARED_PHARO}/gsDevKitCommandLine.image $*
+# Detect operating system
+PLATFORM="`uname -sm | tr ' ' '-'`"
+
+pharoCmd="${GS_SHARED_PHARO}/pharo"
+case "$PLATFORM" in
+  MINGW32_NT*) pharoCmd="win_run_pharo ${GS_SHARED_PHARO} --headless" ;;
+esac
+$pharoCmd ${GS_SHARED_PHARO}/gsDevKitCommandLine.image $*
