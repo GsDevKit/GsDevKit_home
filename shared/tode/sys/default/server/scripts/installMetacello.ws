@@ -18,14 +18,12 @@ GsUpgrader batchErrorHandlingDo: [
     cr; 
     show: 'Locking FileTree: ', filetreeRepo printString;
     cr; 
-    show: 'Locking Grease: ', greaseRepo printString;
-     cr; 
     show: 'Locking GLASS1: ', glass1Repo printString;
-     cr; 
+    cr; 
     show: 'Locking PharoCompatibility: ', pharoCompatRepo printString;
-     cr; 
+    cr; 
     show: 'Locking Ston: ',stonRepo printString;
-     cr; 
+    cr; 
     show: 'Locking RB: ', rbRepo printString;
     yourself.
   Metacello new
@@ -52,6 +50,9 @@ GsUpgrader batchErrorHandlingDo: [
     baseline: 'Ston';
     repository: stonRepo;
     lock.
+  Transcript
+    cr; 
+    show: 'Lock and Load Grease (to ensure new repo is honored): ', greaseRepo printString.
   Metacello new
     baseline: 'Grease';
     repository: greaseRepo;
@@ -64,21 +65,4 @@ GsUpgrader batchErrorHandlingDo: [
     baseline: 'Grease';
     repository: greaseRepo;
     load.
-Transcript cr; show: 'Locked projects in registry'.
-Metacello registry locked do: [:spec | Transcript cr; tab; show: spec name].
-Transcript cr; show: 'Locked projects in image'.
-Metacello image locked do: [:spec | Transcript cr; tab; show: spec name].
-  (Metacello image
-    baseline: [ :spec | spec name = 'Grease' ];
-    list)
-    do: [ :greaseSpec | 
-      greaseSpec isLocked
-        ifTrue: [Transcript cr; show: 'Grease is locked (image)' ] ].
-  (Metacello registry
-    baseline: [ :spec | spec name = 'Grease' ];
-    list)
-    do: [ :greaseSpec | 
-      greaseSpec isLocked
-        ifTrue: [Transcript cr; show: 'Grease is locked (registry)' ] ].
-
     ].
