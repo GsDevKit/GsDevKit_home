@@ -18,6 +18,8 @@ Create a client of the given type and <client-name>.
 If the client already exists, the installation is skipped unless the -f option 
 is specified.
 
+Currently only the "tode" type is implemented.
+
 OPTIONS
   -h 
      display help
