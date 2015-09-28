@@ -145,9 +145,12 @@ else
 fi
 
 $pharoCmd $directoryPath/gsDevKitTmp.image st --quit --save $gs_serverLoadPath
-echo ""
 
 $pharoCmd $directoryPath/gsDevKitTmp.image save $imageBaseName
+echo ""
+
 rm -f $directoryPath/gsDevKitTmp.* $directoryPath/*.zip
+
+$GS_HOME/bin/private/scanProductsForInstallingGciLibs $directoryPath
 
 echo "...finished $(basename $0)"
