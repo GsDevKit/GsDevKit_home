@@ -37,10 +37,6 @@ GsUpgrader batchErrorHandlingDo: [
     repository: filetreeRepo;
     lock.
   Metacello new
-    baseline: 'Grease';
-    repository: greaseRepo;
-    lock.
-  Metacello new
     baseline: 'PharoCompatibility';
     repository: pharoCompatRepo;
     lock.
@@ -56,6 +52,14 @@ GsUpgrader batchErrorHandlingDo: [
     baseline: 'Ston';
     repository: stonRepo;
     lock.
+  Metacello new
+    baseline: 'Grease';
+    repository: greaseRepo;
+    lock.
+Transcript cr; show: 'Locked projects in registry'.
+Metacello registry locked do: [:spec | Transcript cr; tab; show: spec name].
+Transcript cr; show: 'Locked projects in image'.
+Metacello image locked do: [:spec | Transcript cr; tab; show: spec name].
   (Metacello image
     baseline: [ :spec | spec name = 'Grease' ];
     list)
