@@ -116,7 +116,7 @@ case "$imageType" in
         ;;
       *)
         gs_serverLoadPath=$GS_SHARED_TODE/sys/default/pharo/gsDevKitTodeCommandLineLoad.st
-        if [ -e $GS_SHARED_TODE/sys/local/pharo/$loadScript ] ; then
+        if [ -e "$GS_SHARED_TODE/sys/local/pharo/gsDevKitTodeCommandLineLoad.st" ] ; then
           gs_serverLoadPath=$GS_SHARED_TODE/sys/local/pharo/gsDevKitTodeCommandLineLoad.st
         fi
         ;;
