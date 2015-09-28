@@ -4,11 +4,12 @@
   stonRepo := Smalltalk os environment at: 'GS_SHARED_REPO_STON'.
   todeRepo := Smalltalk os environment at: 'GS_SHARED_REPO_TODE'.
 
-({metacelloRepo}
+  converted := ({filetreeRepo. metacelloRepo. stonRepo. todeRepo.}
     collect: [ :repoSpec | 
       | fileSpec path |
       (repoSpec beginsWith: 'filetree://')
         ifTrue: [ 
+          "convert the disk patch into a windows path"
           fileSpec := repoSpec copyFrom: 12 to: repoSpec size.
           path := fileSpec asFileReference path segments.
           path at: 1 put: (path at: 1) , ':'.
@@ -18,9 +19,11 @@
       Metacello new
         baseline: 'Metacello';
         repository: spec;
-        get ]
-
-
+        get ].
+  filetreeRepo := converted at: 1.
+  metacelloRepo := converted at: 2.
+  stonRepo := converted at: 3.
+  todeRepo := converted at: 4.
   Metacello new
     baseline: 'FileTree';
     repository: filetreeRepo;
