@@ -14,12 +14,7 @@
           path := fileSpec asFileReference path segments.
           path at: 1 put: (path at: 1) , ':'.
           'filetree://' , (AbsolutePath withAll: path) asFileReference fullName ]
-        ifFalse: [ repoSpec ] ])
-    do: [ :spec | 
-      Metacello new
-        baseline: 'Metacello';
-        repository: spec;
-        get ].
+        ifFalse: [ repoSpec ] ]).
   filetreeRepo := converted at: 1.
   metacelloRepo := converted at: 2.
   stonRepo := converted at: 3.
