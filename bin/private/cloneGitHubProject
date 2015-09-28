@@ -10,10 +10,12 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-n] [-c https | ssh ] <github-user-name> <github-project-name> <directory-name>
+USAGE: $(basename $0) [-h] [-n] [-c https | ssh ] <github-user-name> <github-project-name> [<directory-name>]
 
 Clone the given <github-user-name>/<github-project-name> using either https or ssh.
-ssh is the default.
+"ssh" is the default.
+
+The cloned directory is renamed to <directory-name> if present.
 
 
 OPTIONS
@@ -29,6 +31,8 @@ EXAMPLES
    $(basename $0) -h
    $(basename $0) -n GsDevKit GsDevKit_gs_server gs_server
    $(basename $0) GsDevKit GsDevKit_gs_server gs_server
+   $(basename $0) GsDevKit GsDevKit_gs_server gs_server
+   $(basename $0) dalehenrich metacello-work
    $(basename $0) -c ssh GsDevKit GsDevKit_gs_server gs_server
    $(basename $0) -c https GsDevKit GsDevKit_gs_server gs_server
 
@@ -58,12 +62,17 @@ while getopts ":hc:n" OPT ; do
 done
 shift $(($OPTIND - 1))
 
-if [ $# -ne 3 ]; then
-  usage; exit 1
+if [ $# -eq 3 ]; then
+  userName=$1
+  projectName=$2
+  directoryName=$3
+else if [ $# -eq 2 ]; then
+  userName=$1
+  projectName=$2
+  directoryName=$projectName
+else
+  echo "missing required arguments"; usage; exit 1
 fi
-userName=$1
-projectName=$2
-directoryName=$3
 
 if [ "${mode}" = "ssh" ] ; then
   rm -rf ${useHttpsForGit}

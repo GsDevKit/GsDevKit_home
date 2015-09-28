@@ -102,21 +102,21 @@ esac
 
 pushd ${GS_SHARED_REPO} >& /dev/null
   if [ ! -d "metacello-work" ] ; then
-    ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich metacello-work metacello-work
+    ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich metacello-work
     cd metacello-work
     git checkout dev_win-hack
     git checkout -b $branchName
     cd ..
   fi
   if [ ! -d "tode" ] ; then
-    ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich tode tode
+    ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich tode
     cd tode
     git checkout dev_dev
     git checkout -b $branchName
     cd ..
   fi
   if [ ! -d "ston" ] ; then
-    ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg GsDevKit ston ston
+    ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg GsDevKit ston
     cd ston
     git checkout v0.9.4
     git checkout -b $branchName
@@ -125,7 +125,7 @@ pushd ${GS_SHARED_REPO} >& /dev/null
   if [ "$loadClientRepos" = "true" ] ; then
     cd pharo3.0
     if [ ! -d "filetree" ] ; then
-      ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich filetree filetree
+      ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich filetree
       cd filetree
       git checkout pharo3.0
       git checkout -b $branchName
@@ -135,7 +135,7 @@ pushd ${GS_SHARED_REPO} >& /dev/null
   fi
   if [ "$loadServerRepos" = "true" ] ; then
     if [ ! -d "filetree" ] ; then
-      ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich filetree filetree
+      ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich filetree
       cd filetree
       git checkout gemstone2.4
       git checkout -b $branchName
