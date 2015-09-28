@@ -60,6 +60,10 @@ GsUpgrader batchErrorHandlingDo: [
     baseline: 'Grease';
     repository: greaseRepo;
     get.
+  Metacello new
+    baseline: 'Grease';
+    repository: greaseRepo;
+    load.
 Transcript cr; show: 'Locked projects in registry'.
 Metacello registry locked do: [:spec | Transcript cr; tab; show: spec name].
 Transcript cr; show: 'Locked projects in image'.
@@ -68,6 +72,7 @@ Metacello image locked do: [:spec | Transcript cr; tab; show: spec name].
     baseline: [ :spec | spec name = 'Grease' ];
     list)
     do: [ :greaseSpec | 
+Transcript cr; show: 
       greaseSpec isLocked
         ifTrue: [Transcript cr; show: 'Grease is locked (image)' ] ].
   (Metacello registry
