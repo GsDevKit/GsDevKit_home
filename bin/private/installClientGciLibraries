@@ -30,7 +30,7 @@ if [ "${GS_HOME}x" = "x" ] ; then
   echo "the GS_HOME environment variable needs to be defined"; exit 1
 fi
 
-if [ "${GS_GS_CLIENT_DEV}x" -ne "x" ] ; then
+if [ "${GS_GS_CLIENT_DEV}x" != "x" ] ; then
    ${GS_GS_CLIENT_DEV}/bin/installClientGciLibraries $*
 fi
 
