@@ -1,3 +1,3 @@
 accessing
 gs_serverHome
-	^ (Smalltalk os environment at: 'GS_GS_SERVER') asFileReference 
+	^ (TDSessionDescription convertPathFromEnvironmentForOS:'GS_GS_SERVER') asFileReference 

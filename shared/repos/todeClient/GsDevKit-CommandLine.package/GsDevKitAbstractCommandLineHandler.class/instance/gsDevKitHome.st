@@ -1,3 +1,3 @@
 accessing
 gsDevKitHome
-	^ (Smalltalk os environment at: 'GS_HOME') asFileReference
+	^ (TDSessionDescription convertPathFromEnvironmentForOS: 'GS_HOME') asFileReference
