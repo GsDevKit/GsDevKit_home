@@ -72,7 +72,6 @@ Metacello image locked do: [:spec | Transcript cr; tab; show: spec name].
     baseline: [ :spec | spec name = 'Grease' ];
     list)
     do: [ :greaseSpec | 
-Transcript cr; show: 
       greaseSpec isLocked
         ifTrue: [Transcript cr; show: 'Grease is locked (image)' ] ].
   (Metacello registry
