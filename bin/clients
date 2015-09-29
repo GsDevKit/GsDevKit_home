@@ -44,9 +44,10 @@ fi
 
 pushd $GS_GS_CLIENT_DEV_CLIENTS >& /dev/null
   echo "Clients:"
-  for clientName in $(find . -maxdepth 1 -type d)
+  for fileName in $(find . -maxdepth 1 -type d)
   do
-    if [ "$clientName" != "." ] ; then
+    if [ "$fileName" != "." ] ; then
+      clientName=`echo "$fileName" | cut -c 3`
       ${GS_GS_CLIENT_DEV_CLIENTS}/$clientName/clientInfo $clientName
     fi
   done
