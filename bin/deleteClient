@@ -47,7 +47,7 @@ fi
 for clientName in "$@"
 do
   if [ -d "${GS_GS_CLIENT_DEV_CLIENTS}/$clientName/" ] ; then
-    deleteCmd="`${GS_GS_CLIENT_DEV_CLIENTS}/$clientName/deleteClient $*`"
+    deleteCmd="`${GS_GS_CLIENT_DEV_CLIENTS}/$clientName/deleteClient $clientName`"
     $deleteCmd
   else
     echo "client $clientName does not exist"
