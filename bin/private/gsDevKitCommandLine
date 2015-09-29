@@ -54,6 +54,7 @@ case "$1" in
         i) interactive="true";;
       esac
     done
+    shift $(($OPTIND - 1))
     ;;
   *)  # pass everything else to tode
     ;;
