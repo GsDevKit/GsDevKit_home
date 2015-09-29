@@ -42,7 +42,7 @@ if [ $# -lt 1 ]; then
   echo "missing stone name args"; usage; exit 1
 fi
 
-for stoneName in $@
+for stoneName in "$@"
 do
   if [ "${GS_GS_SERVER}x" !=  "x" ] ; then
     echo "deleting old instance of stone $stoneName (stopping stone and netldi first)"
