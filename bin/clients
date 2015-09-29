@@ -43,7 +43,7 @@ if [ ! -d "$GS_GS_CLIENT_DEV_CLIENTS" ] ; then
 fi
 
 pushd $GS_GS_CLIENT_DEV_CLIENTS >& /dev/null
-
+  echo "Clients:"
   for clientName in $(find . -maxdepth 1 -type d)
   do
     if [ "$clientName" != "." ] ; then
