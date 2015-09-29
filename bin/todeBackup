@@ -26,6 +26,12 @@ EXAMPLES"
 HELP
 }
 
+PLATFORM="`uname -sm | tr ' ' '-'`"
+if [[ "$PLATFORM" == MINGW32_NT* ]] ; then
+  echo "This script is a server-only script and cannot be used on Windows"
+  exit 1
+fi
+
 set -e # exit on error
 if [ "${GS_HOME}x" = "x" ] ; then
   echo "the GS_HOME environment variable needs to be defined"; exit 1
