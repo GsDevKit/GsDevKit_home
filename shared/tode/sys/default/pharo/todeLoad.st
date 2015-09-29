@@ -1,5 +1,5 @@
 [ | filetreeRepo metacelloRepo stonRepo todeRepo |
-  filetreeRepo := Smalltalk os environment at: 'GS_SHARED_REPO_PHARO_FILETREE'.
+  filetreeRepo := Smalltalk os environment at: 'GS_SHARED_REPO_PHARO3_FILETREE'.
   metacelloRepo := Smalltalk os environment at: 'GS_SHARED_REPO_METACELLO'.
   stonRepo := Smalltalk os environment at: 'GS_SHARED_REPO_STON'.
   todeRepo := Smalltalk os environment at: 'GS_SHARED_REPO_TODE'.

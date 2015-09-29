@@ -16,21 +16,21 @@ Clone the Github repositories used by the tODE client to \$GS_HOME/shared/repos.
 
 "client" & "server" repos:
 
-  - github://dalehenrich/metacello-work:master/repository
-  - github://dalehenrich/tode:master/repository
-  - github://GsDevKit/ston:v0.9.?/repository
+  - github://dalehenrich/metacello-work:\${GS_SHARED_COMMIT_METACELLO}/repository
+  - github://dalehenrich/tode:\${GS_SHARED_COMMIT_TODE}/repository
+  - github://GsDevKit/ston:\${GS_SHARED_COMMIT_STON}/repository
 
 "client" repos:
 
-  - github://dalehenrich/filetree:pharo3.0/repository
+  - github://dalehenrich/filetree:\${GS_SHARED_COMMIT_PHARO3_FILETREE}/repository
 
 "server" repos:
 
-  - github://dalehenrich/filetree:gemstone2.4/repository
-  - github://GsDevKit/Grease:1.1.?/repository
-  - github://glassdb/PharoCompatibility:master/repository
-  - github://glassdb/glass:master/repository
-  - github://dalehenrich/rb:dev/repository
+  - github://dalehenrich/filetree:\${GS_SHARED_COMMIT_GEMSTONE_FILETREE}/repository
+  - github://GsDevKit/Grease:\${GS_SHARED_COMMIT_GREASE}/repository
+  - github://glassdb/PharoCompatibility:\${GS_SHARED_COMMIT_OHARO_COMPAT}/repository
+  - github://glassdb/glass:\${GS_SHARED_COMMIT_GLASS1}/repository
+  - github://dalehenrich/rb:\${GS_SHARED_COMMIT_RB}/repository
 
 If you clone these repositoris into  \$GS_HOME/shared/repos, then they will be 
 used for creating pharo images and bootstrapping tODE into stones. 
@@ -39,7 +39,7 @@ The following env vars are defined:
 
   \$GS_SHARED_REPO_METACELLO
   \$GS_SHARED_REPO_TODE
-  \$GS_SHARED_REPO_PHARO_FILETREE
+  \$GS_SHARED_REPO_PHARO3_FILETREE
   \$GS_SHARED_REPO_GEMSTONE_FILETREE
   \$GS_SHARED_REPO_STON
   \$GS_SHARED_REPO_GREASE
@@ -104,21 +104,21 @@ pushd ${GS_SHARED_REPO} >& /dev/null
   if [ ! -d "metacello-work" ] ; then
     ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich metacello-work
     cd metacello-work
-    git checkout dev_win-hack
+    git checkout $GS_SHARED_GIT_CHECKOUT_METACELLO
     git checkout -b $branchName
     cd ..
   fi
   if [ ! -d "tode" ] ; then
     ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich tode
     cd tode
-    git checkout dev_dev
+    git checkout $GS_SHARED_GIT_CHECKOUT_TODE
     git checkout -b $branchName
     cd ..
   fi
   if [ ! -d "ston" ] ; then
     ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg GsDevKit ston
     cd ston
-    git checkout v0.9.4
+    git checkout $GS_SHARED_GIT_CHECKOUT_STON
     git checkout -b $branchName
     cd ..
   fi
@@ -127,7 +127,7 @@ pushd ${GS_SHARED_REPO} >& /dev/null
     if [ ! -d "filetree" ] ; then
       ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich filetree
       cd filetree
-      git checkout pharo3.0
+      git checkout $GS_SHARED_GIT_CHECKOUT_PHARO3_FILETREE
       git checkout -b $branchName
       cd ..
       fi
@@ -137,35 +137,35 @@ pushd ${GS_SHARED_REPO} >& /dev/null
     if [ ! -d "filetree" ] ; then
       ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich filetree
       cd filetree
-      git checkout gemstone2.4
+      git checkout $GS_SHARED_GIT_CHECKOUT_GEMSTONE_FILETREE
       git checkout -b $branchName
       cd ..
     fi
     if [ ! -d "Grease" ] ; then
       ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg GsDevKit Grease
       cd Grease
-      git checkout master
+      git checkout $GS_SHARED_GIT_CHECKOUT_GREASE
       git checkout -b $branchName
       cd ..
     fi
     if [ ! -d "PharoCompatibility" ] ; then
       ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg glassdb PharoCompatibility
       cd PharoCompatibility
-      git checkout master
+      git checkout $GS_SHARED_GIT_CHECKOUT_PHARO_COMPAT
       git checkout -b $branchName
       cd ..
     fi
     if [ ! -d "glass" ] ; then
       ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg glassdb glass
       cd glass
-      git checkout master
+      git checkout $GS_SHARED_GIT_CHECKOUT_GLASS1
       git checkout -b $branchName
       cd ..
     fi
     if [ ! -d "rb" ] ; then
       ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich rb
       cd rb
-      git checkout dev
+      git checkout $GS_SHARED_GIT_CHECKOUT_RB
       git checkout -b $branchName
       cd ..
     fi
