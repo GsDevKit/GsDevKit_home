@@ -1,15 +1,15 @@
 actions
 createTodeDescription: theStoneInfo
-	| sessionDescription localHostName defaultServerTodeHome |
+	| description localHostName defaultServerTodeHome |
 	localHostName := NetNameResolver localHostName.
 	defaultServerTodeHome := self serverTodeHome ifNil: [ nil ] ifNotNil: [ :home | home pathString ].
-	sessionDescription := TDSessionDescription new
+	description := TDSessionDescription new
 		name: theStoneInfo stoneName;
 		gemstoneVersion: theStoneInfo gsVers;
 		stoneHost: localHostName;
 		stoneName: theStoneInfo stoneName;
 		gemHost: localHostName;
-		netLDI: theStoneInfo netldiName;
+		netLDI: theStoneInfo stoneName , '_ldi';
 		gemTask: 'gemnetobject';
 		userId: 'DataCurator';
 		password: 'swordfish';
@@ -18,4 +18,4 @@ createTodeDescription: theStoneInfo
 		serverGitRoot: self gitHome pathString;
 		serverTodeRoot: defaultServerTodeHome;
 		yourself.
-	sessionDescription exportTo: self sessionDescriptionHome pathString , '/'
+	description exportTo: self sessionDescriptionHome pathString , '/'

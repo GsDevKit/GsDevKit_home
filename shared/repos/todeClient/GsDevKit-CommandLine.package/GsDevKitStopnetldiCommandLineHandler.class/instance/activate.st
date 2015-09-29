@@ -7,7 +7,7 @@ activate
 		ifTrue: [ 
 			self printHelp.
 			^ self exitFailure: 'Missing arguments' ].
-	argsArray := {(self stoneInfo netldiName)}.
+	argsArray := {(self sessionDescription netLDI)}.
 	Transcript
 		cr;
 		show: (self runShellCommand: (self gemstoneBin / 'stopnetldi') pathString args: argsArray);

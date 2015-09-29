@@ -1,8 +1,8 @@
 actions
 produceNetldiArgs
-	| info netldiArgs |
-	info := self stoneInfo.
+	| sess netldiArgs |
+	sess := self sessionDescription.
 	netldiArgs := OrderedCollection new.
 	self netldiArgsOn: netldiArgs.
-	info netldiArgsOn: netldiArgs.
+	sess netldiArgsOn: netldiArgs.
 	^ netldiArgs asArray

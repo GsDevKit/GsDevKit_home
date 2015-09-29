@@ -8,7 +8,8 @@
 	"instvars" : [
 		"stoneName",
 		"stoneInfo",
-		"snapshotFile" ],
+		"snapshotFile",
+		"sessionDescription" ],
 	"name" : "GsDevKitAbstractStoneCommandLineHandler",
 	"pools" : [
 		 ],
