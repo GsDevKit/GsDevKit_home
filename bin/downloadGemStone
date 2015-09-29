@@ -19,14 +19,14 @@ Setup for manual GemStone startup rather than automatic startup upon boot
 Safe to run multiple times, as it will not overwrite existing data
 Requires root access (using sudo) to change setings and create directories
 
-If the file $GS_HOME/bin/.gsdevkitSysSetup exists skip the steps requiring sudo access. 
+If the file \$GS_HOME/bin/.gsdevkitSysSetup exists skip the steps requiring sudo access. 
 
 Actions:
    Verify machine is capable of running GemStone 64-bit
    Add shared memory setup to /etc/sysctl.conf
    Add GemStone netldi service port to /etc/services
    Download the GemStone product zipfile
-   Uncompress the GemStone zipfile into $GS_HOME/shared/downloads/products
+   Uncompress the GemStone zipfile into \$GS_HOME/shared/downloads/products
    Copy the initial GsDevKit repository to data directory
    Copy the gci libraries to the client smalltalk vms
    Print build version information and available IPv4 addresses
@@ -313,8 +313,8 @@ pushd $GS_SHARED_DOWNLOADS/zip >& /dev/null
     echo "to replace it, remove or rename it and rerun this script"
   fi
 
-  # Unzip the downloaded archive into $GS_HOME/gemstone/products/
-  echo "[Info] Uncompressing GemStone archive into $GS_HOME/gemstone/products/"
+  # Unzip the downloaded archive into $GS_HOME/shared/downloads/products/
+  echo "[Info] Uncompressing GemStone archive into $GS_HOME/shared/downloads/products/"
   gs_product=$GS_SHARED_DOWNLOADS/products/$gsvers
   if [ ! -e $gs_product ]
     then
