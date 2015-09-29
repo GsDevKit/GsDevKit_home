@@ -38,11 +38,11 @@ source ${GS_HOME}/bin/defGsDevKit.env
 
 modeArg=""
 devKitType="both"
-while getopts "hc:t:" OPT ; do
+while getopts "hc:m:" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     c) modeArg=" -c ${OPTARG} ";;
-    t) devKitType="${OPTARG}" ;;
+    m) devKitType="${OPTARG}" ;;
     *) echo "unknown option: ${OPTARG}"; usage; exit 1;;
   esac
 done
