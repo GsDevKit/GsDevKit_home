@@ -58,6 +58,7 @@ if [ "$devKitType" = "both" ] ; then
   vers=$2
   clientName=$3
   $GS_HOME/bin/createClient $clientName
+  $GS_HOME/bin/createStone $stoneName $vers
 fi
 if [ "$devKitType" = "client" ] ; then
   if [ $# -ne 1 ]; then
@@ -65,10 +66,9 @@ if [ "$devKitType" = "client" ] ; then
   fi
   clientName=$1
   $GS_HOME/bin/createClient $clientName
-  $GS_HOME/bin/createStone $stoneName $vers
 fi
 if [ "$devKitType" = "server" ] ; then
-  if [ $# -ne 3 ]; then
+  if [ $# -ne 2 ]; then
     echo "missing arguments"; usage; exit 1
   fi
   stoneName=$1
