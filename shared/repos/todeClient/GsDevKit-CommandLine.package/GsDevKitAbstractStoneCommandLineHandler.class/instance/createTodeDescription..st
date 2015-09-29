@@ -20,7 +20,7 @@ createTodeDescription: theStoneInfo
 		serverTodeRoot: defaultServerTodeHome;
 		yourself.
 	vrsnAr := description gemstoneVersion findTokens: '.'.
-	((vrsnAr at: 1) < 3 or: [ (vrsnAr at: 1) = 3 and: [ (vrsnAr at: 2) < 2 ] ])
+	((vrsnAr at: 1) asNumber < 3 or: [ (vrsnAr at: 1) asNumber = 3 and: [ (vrsnAr at: 2) asNumber < 2 ] ])
 		ifTrue: [ 
 			"after GemSTone 3.2, port range no longer accepted by startnetldi"
 			description netLDIPortRange: '' ].
