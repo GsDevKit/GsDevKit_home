@@ -3,5 +3,5 @@ netldiArgsOn: netldiArgs
 	netldiArgs
 		add: '-g';
 		add: '-a';
-		add: self userId;
+		add: self osUserId;
 		add: self netLDI
