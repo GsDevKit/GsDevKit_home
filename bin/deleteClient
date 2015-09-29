@@ -50,7 +50,11 @@ if [ $# -lt 1 ]; then
 fi
 clientName=$1
 
-deleteCmd="`${GS_GS_CLIENT_DEV_CLIENTS}/$clientName/deleteClient $*`"
-$deleteCmd
+if [ -d "${GS_GS_CLIENT_DEV_CLIENTS}/$clientName/" ] ; then
+  deleteCmd="`${GS_GS_CLIENT_DEV_CLIENTS}/$clientName/deleteClient $*`"
+  $deleteCmd
+else
+  echo "client $clientName does not exist"
+fi
 
 echo "...finished $(basename $0)"
