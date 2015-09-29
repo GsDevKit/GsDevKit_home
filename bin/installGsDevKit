@@ -65,7 +65,7 @@ if [ "$devKitType" = "client" ] ; then
   fi
   clientName=$1
   $GS_HOME/bin/createClient $clientName
-  $GS_HOME/bin/createStone -b $stoneName $vers
+  $GS_HOME/bin/createStone $stoneName $vers
 fi
 if [ "$devKitType" = "server" ] ; then
   if [ $# -ne 3 ]; then
@@ -73,7 +73,7 @@ if [ "$devKitType" = "server" ] ; then
   fi
   stoneName=$1
   vers=$2
-  $GS_HOME/bin/createStone -b $stoneName $vers
+  $GS_HOME/bin/createStone $stoneName $vers
 fi
 
 echo "...finished $(basename $0)"

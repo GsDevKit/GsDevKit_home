@@ -10,7 +10,7 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] -b] [-C] [-N] [-R] [-w <waitstone-timeout>] <stone-name>
+USAGE: $(basename $0) [-h] [-b] [-C] [-N] [-R] [-w <waitstone-timeout>] <stone-name>
 
  Start the stone process for the given stone.
 
