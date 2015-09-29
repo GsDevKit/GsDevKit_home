@@ -10,6 +10,8 @@ createTodeDescription: theStoneInfo
 		stoneName: theStoneInfo stoneName;
 		gemHost: localHostName;
 		netLDI: theStoneInfo stoneName , '_ldi';
+		netLDIPort: '';
+		netLDIPortRange: '';
 		gemTask: 'gemnetobject';
 		userId: 'DataCurator';
 		password: 'swordfish';
