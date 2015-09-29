@@ -10,7 +10,7 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] <stone-name>
+USAGE: $(basename $0) [-h] <stone-name>...
 
 Delete the stone with the given name. The stone is stopped before the 
 $GS_GS_SERVER/stones/<stone-name> directory is deleted. The 
@@ -38,27 +38,29 @@ source ${GS_HOME}/bin/defGsDevKit.env
 source ${GS_HOME}/bin/private/shFunctions
 getOpts_help $@
 
-if [ $# -ne 1 ]; then
-  usage; exit 1
+if [ $# -lt 1 ]; then
+  echo "missing stone name args"; usage; exit 1
 fi
-stoneName="$1"
 
-if [ "${GS_GS_SERVER}x" !=  "x" ] ; then
-  echo "deleting old instance of stone $stoneName (stopping stone and netldi first)"
-  if [ -d $GS_GS_SERVER/stones/$stoneName ] ; then
-    $GS_HOME/bin/stopStone -b $stoneName
-    rm -rf $GS_GS_SERVER/stones/$stoneName
+for stoneName in $@
+do
+  if [ "${GS_GS_SERVER}x" !=  "x" ] ; then
+    echo "deleting old instance of stone $stoneName (stopping stone and netldi first)"
+    if [ -d $GS_GS_SERVER/stones/$stoneName ] ; then
+      $GS_HOME/bin/stopStone -b $stoneName
+      rm -rf $GS_GS_SERVER/stones/$stoneName
+    fi
   fi
-fi
 
-if [ "${GS_TODE}x" != "x" ] ; then
-  if [ -d $GS_TODE/sys/stones/$stoneName ] ; then
-    rm -rf $GS_TODE/sys/stones/$stoneName
+  if [ "${GS_TODE}x" != "x" ] ; then
+    if [ -d $GS_TODE/sys/stones/$stoneName ] ; then
+      rm -rf $GS_TODE/sys/stones/$stoneName
+    fi
   fi
-fi
 
-if [ -e $GS_SHARED_TODE/sys/local/client/descriptions/$stoneName ] ; then
-  rm -rf $GS_SHARED_TODE/sys/local/client/descriptions/$stoneName
-fi
+  if [ -e $GS_SHARED_TODE/sys/local/client/descriptions/$stoneName ] ; then
+    rm -rf $GS_SHARED_TODE/sys/local/client/descriptions/$stoneName
+  fi
+done
 
 echo "...finished $(basename $0)"
