@@ -5,16 +5,26 @@
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h]
+USAGE: $(basename $0) [-h] [-f] [-i] [<gsDevKit-tode-command-line>]
 
-Perform commands implemented using $GS_GS_SERVER_PHARO/gsDevKitTodeCommandLine.image.
+Perform commands specified in <gsDevKit-tode-command-line> against
+$GS_GS_SERVER_PHARO/gsDevKitTodeCommandLine.image.
 
 OPTIONS
-  -h display help
+  -h 
+     display help
+  -f 
+     rebuild gsDevKitTodeCommandLine.image before executing 
+     <gsDevKit-tode-command-line>
+  -i
+     start gsDevKitTodeCommandLine.image interactively for development or 
+     debugging  <gsDevKit-tode-command-line>
 
 EXAMPLES
   $(basename $0) -h
-  $(basename $0)
+  $(basename $0) restoreFromBackup gs_329 wip.dbf
+  $(basename $0) -f restoreFromBackup gs_329 wip.dbf
+  $(basename $0) -i
 
 HELP
 }
@@ -31,13 +41,17 @@ if [ "$GS_GS_SERVER{}x" = "x" ] ; then
   exit 1
 fi
 
+force="false"
+interactive="false"
 case "$1" in
   --*) # pass to tode
     ;;
   -*) # handle single - options here
-    while getopts "h" OPT ; do
+    while getopts "fhi" OPT ; do
       case "$OPT" in
         h) usage; exit 0 ;;
+        f) force="true";;
+        i) interactive="true";;
       esac
     done
     ;;
@@ -45,9 +59,17 @@ case "$1" in
     ;;
 esac
 
+if [ "$force" = "true" ] ; then
+  rm -rf "${GS_SHARED_PHARO}/gsDevKitTodeCommandLine.image"
+fi
 if [ ! -e "${GS_SHARED_PHARO}/gsDevKitTodeCommandLine.image" ] ; then
   $GS_SHARED/bin/create_gs_server_image -d $GS_SHARED_PHARO gsDevKitTodeCommandLine
 fi
 
+pharoCmd="${GS_SHARED_PHARO}/pharo"
+if [ "$interactive" = "true" ] ; then
+  pharoCmd="${GS_SHARED_PHARO}/pharo-ui"
+fi
+
 # Run script
-${GS_SHARED_PHARO}/pharo ${GS_SHARED_PHARO}/gsDevKitTodeCommandLine.image $*
+$pharoCmd ${GS_SHARED_PHARO}/gsDevKitTodeCommandLine.image $*

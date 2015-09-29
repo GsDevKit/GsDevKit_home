@@ -5,16 +5,25 @@
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h]
+USAGE: $(basename $0) [-h] [-f] [-i] [<gsDevKit-command-line>]
 
-Perform commands implemented using $GS_GS_SERVER_PHARO/gsDevKitCommandLine.image.
+Perform commands specified in <gsDevKit-command-line> against 
+$GS_GS_SERVER_PHARO/gsDevKitCommandLine.image.
 
 OPTIONS
-  -h display help
+  -h 
+     display help
+  -f 
+     rebuild gsDevKitCommandLine.image before executing <gsDevKit-command-line>
+  -i
+     start gsDevKitCommandLine.image interactively for development or debugging
+     <gsDevKit-command-line>
 
 EXAMPLES
   $(basename $0) -h
-  $(basename $0)
+  $(basename $0) stopnetldi gs_329
+  $(basename $0) -f stopnetldi gs_329
+  $(basename $0) -i
 
 HELP
 }
@@ -32,13 +41,17 @@ if [ "$GS_GS_SERVER{}x" = "x" ] ; then
 fi
 source ${GS_HOME}/bin/private/winRunPharoFunctions
 
+force="false"
+interactive="false"
 case "$1" in
   --*) # pass to tode
     ;;
   -*) # handle single - options here
-    while getopts "h" OPT ; do
+    while getopts "fhi" OPT ; do
       case "$OPT" in
         h) usage; exit 0 ;;
+        f) force="true";;
+        i) interactive="true";;
       esac
     done
     ;;
@@ -46,6 +59,9 @@ case "$1" in
     ;;
 esac
 
+if [ "$force" = "true" ] ; then
+  rm -rf "${GS_SHARED_PHARO}/gsDevKitCommandLine.image"
+fi
 if [ ! -e "${GS_SHARED_PHARO}/gsDevKitCommandLine.image" ] ; then
   $GS_SHARED/bin/create_gs_server_image -d $GS_SHARED_PHARO gsDevKitCommandLine
 fi
@@ -54,8 +70,19 @@ fi
 # Detect operating system
 PLATFORM="`uname -sm | tr ' ' '-'`"
 
-pharoCmd="${GS_SHARED_PHARO}/pharo"
 case "$PLATFORM" in
-  MINGW32_NT*) pharoCmd="win_run_pharo ${GS_SHARED_PHARO} --headless" ;;
+  MINGW32_NT*) 
+    vmArgs="--headless"
+    if [ "$interactive" = "true" ] ; then
+      vmArgs=""
+    fi
+    pharoCmd="win_run_pharo ${GS_SHARED_PHARO} $vmArgs" 
+    ;;
+  *)
+    pharoCmd="${GS_SHARED_PHARO}/pharo"
+    if [ "$interactive" = "true" ] ; then
+      pharoCmd="${GS_SHARED_PHARO}/pharo-ui"
+    fi
+    ;;
 esac
 $pharoCmd ${GS_SHARED_PHARO}/gsDevKitCommandLine.image $*
