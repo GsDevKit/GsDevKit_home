@@ -41,8 +41,19 @@ clientName=$1
 shift 1
 
 if [ "${GS_GS_CLIENT_DEV}x" = "x" ] || [ ! -d "${GS_GS_CLIENT_DEV_CLIENTS}/$clientName" ] ; then
-  ${GS_HOME}/bin/createClient -t tode $clientName $*
-  source ${GS_HOME}/bin/defGsDevKit.env
+  echo "The requested client: $clientName does not exist"
+  created="false"
+  while [ "$created" = "false" ] ; do
+    read -p "Do you wish to create ${clientName}? [y/n]" yn
+    case $yn in
+      [Yy]* ) 
+        ${GS_HOME}/bin/createClient -t tode $clientName $*
+        source ${GS_HOME}/bin/defGsDevKit.env
+        created="true" ;;
+      [Nn]* ) exit 1;;
+      * ) echo "Please answer yes or no.";;
+    esac
+  done
 fi
 
 ${GS_GS_CLIENT_DEV_CLIENTS}/$clientName/startClient $* $clientName
