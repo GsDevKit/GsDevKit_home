@@ -88,7 +88,7 @@ while getopts "b:fghnp:s:t:" OPT ; do
     n) noRestartArg=" -n ";;
     p) todeProjectName="${OPTARG}";;
     s) snapshotFileArg=" -s ${OPTARG} ";;
-    t) snapshotFileArg="${OPTARG}"; installTode="false"; todeSnapshotArg=" -t ";;
+    t) snapshotFileArg=" -s ${OPTARG} "; installTode="false"; todeSnapshotArg=" -t ";;
     *) usage; exit 1;;
   esac
 done
