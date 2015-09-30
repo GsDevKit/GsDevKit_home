@@ -56,8 +56,8 @@ if [ "$devKitType" = "both" ] ; then
   vers=$2
   clientName=$3
   $GS_HOME/bin/utils/cloneSharedTodeProjects $modeArg $devKitType
-  $GS_HOME/bin/createClient $clientName
   $GS_HOME/bin/createStone $stoneName $vers
+  $GS_HOME/bin/createClient $clientName
 fi
 if [ "$devKitType" = "client" ] ; then
   if [ $# -ne 1 ]; then
