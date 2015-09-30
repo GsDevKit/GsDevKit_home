@@ -2,7 +2,7 @@
 
 The Development Kit for GemStone/S (GsDevKit) contains tools and compatiblity changes that sit on top of the GemStone/S 64 Bit product, providing a complete and powerful open-source development environment. The Development kit allows Pharo and Squeak developers to take advantage of GemStone's object persistence, along with a variety of open-source Smalltalk tools and frameworks.
 
-The Development kit includes simplified processes for installing and managing the GemStone/S server.
+GsDevKit is a client-server system, which may both be installed on a single machine, or the server and client may be installed on separate nodes. The GsDevKit server installation includes the GemStone/S server.
 
 Detailed instructions for configuring your OS and installing GemStone/S, GsDevKit, and starting tODE: 
 * [Development Kit Installation and Configuration](#development-kit-server-installation)
