@@ -10,7 +10,7 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-n] [-s <snapshot-file-path>] <stone-name>
+USAGE: $(basename $0) [-h] [-n] [-t] [-s <snapshot-file-path>] <stone-name>
 
 Copy a new extent into the named stone's extent directory. The stone
 will be stopped before doing the copy and after the copy is complete,
@@ -29,6 +29,10 @@ Please read the 'How to Restore from Backup' section of the System
 Administration manual (http://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/GS64-SysAdmin-3.2.htm?http://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/9-BackupAndRestore.htm#pgfId-999128)
 before using the -n option.
 
+With the -t option, the extent file is assumed to already have tODE installed.
+The extent will be be attached to the tode directory structure for <stone-name>:
+
+  \$GS_TODE/sys/stones/<stone-name> 
 
 OPTIONS
   -h
@@ -38,15 +42,17 @@ OPTIONS
      Restore from Backup' section of the System Administration manual
      (http://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/GS64-SysAdmin-3.2.htm?http://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/9-BackupAndRestore.htm#pgfId-999128)
      before using the -n option.
-
   -s <snapshot-file-path> 
      Path to snapshot file used to create stone. Path may be a relative file 
      path.
+  -t
+     Attach image to the \$GS_TODE/sys/stones/<stone-name> directory structure
 
 EXAMPLES
   $(basename $0) -h
   $(basename $0) gs_329
   $(basename $0) -s $GS_HOME/gs_server/snapshots/extent0.tode.3.2.9.dbf gs_329
+  $(basename $0) -t -s $GS_HOME/gs_server/snapshots/extent0.tode.3.2.9.dbf gs_329
 
 HELP
 }
@@ -70,11 +76,13 @@ fi
 
 snapshotFile=""
 noRestart="false"
+attachTode="false"
 while getopts "hns:" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     n) noRestart="true";;
     s) snapshotFile=`readlink -f ${OPTARG}` ;;
+    t) attachTode="true";;
     *) usage; exit 1;;
   esac
 done
@@ -107,6 +115,10 @@ if [ "${noRestart}" = "false" ] ; then
   # -N option used to ignore tranlog files during restart
   echo "Restarting stone"
   $GS_HOME/bin/startStone -N $stoneName
+
+  if [ "${attachTode}" = "true" ] ; then
+    $GS_HOME/bin/todeIt $stoneName "script --script=installServerTode2"
+  fi
 else
   echo "Copy snapshot and leave tranlogs for recovery"
   

@@ -45,8 +45,10 @@ OPTIONS
      -t or -s options.
   -s <snapshot-file-path> 
      path to snapshot file used to create stone.
-  -t
-     install tODE in stone after creation (DEFAULT)
+  -t <tode-snapshot-file-path>
+     path to snapshot file used to create stone. It is assumed that the snapshot
+     already has tODE installed and the snapshot will be attached to the
+     existing \$GS_TODE/sys/stones/<stone-name> structure.
 
 EXAMPLES
   $(basename $0) -h
@@ -54,6 +56,7 @@ EXAMPLES
   $(basename $0) gs_329 3.2.9
   $(basename $0) -f gs_329 3.2.9
   $(basename $0) -g -s \$GS_GS_SERVER/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
+  $(basename $0) -t \$GS_GS_SERVER/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
 
 HELP
 }
@@ -73,9 +76,10 @@ source ${GS_HOME}/bin/defGsDevKit.env
 snapshotFileArg=""
 noRestartArg=""
 force=""
-installTode="true"
 todeProjectName=""
-while getopts "b:fghnp:s:t" OPT ; do
+installTode="true"
+todeSnapshotArg=""
+while getopts "b:fghnp:s:t:" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     b) backupName="${OPTARG}";;
@@ -84,7 +88,7 @@ while getopts "b:fghnp:s:t" OPT ; do
     n) noRestartArg=" -n ";;
     p) todeProjectName="${OPTARG}";;
     s) snapshotFileArg=" -s ${OPTARG} ";;
-    t) installTode="true";;
+    t) snapshotFileArg="${OPTARG}"; installTode="false"; todeSnapshotArg=" -t ";;
     *) usage; exit 1;;
   esac
 done
@@ -114,7 +118,7 @@ echo "Creating stone $stoneName"
 
 $GS_HOME/bin/downloadGemStone $vers
 
-if [ "$installTode" = "true" ] ; then
+if [ "$installTode" = "true" ] || [ "$todeSnapshotArg" = " -t " ] ; then
   if [ "${GS_TODE}x" = "x" ] ; then
     # clone tode module - needed if creating a tode stone
     $GS_HOME/bin/private/cloneTode
@@ -124,7 +128,7 @@ fi
 
 ${GS_HOME}/bin/private/gsDevKitCommandLine createStone $stoneName $vers
 
-$GS_HOME/bin/newExtent $noRestartArg $snapshotFileArg $stoneName
+$GS_HOME/bin/newExtent $todeSnapshotArg $noRestartArg $snapshotFileArg $stoneName
 
 if [ "${noRestartArg}x" = "x" ] ; then
   $GS_HOME/bin/startNetldi $stoneName
