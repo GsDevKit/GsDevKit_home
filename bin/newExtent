@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/bash -x
 #=========================================================================
 # Copyright (c) 2014, 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
 #=========================================================================
@@ -83,13 +83,13 @@ while getopts "hns:t" OPT ; do
     n) noRestart="true";;
     s) snapshotFile=`readlink -f ${OPTARG}` ;;
     t) attachTode="true";;
-    *) usage; exit 1;;
+    *) echo "unknown option: ${OPTARG}"; usage; exit 1;;
   esac
 done
 shift $(($OPTIND - 1))
 
 if [ $# -ne 1 ]; then
-  usage; exit 1
+  echo "missing argument"; usage; exit 1
 fi
 stoneName=$1
 
