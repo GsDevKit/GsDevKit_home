@@ -38,7 +38,7 @@ set -e # exit on error
 if [ "${GS_HOME}x" = "x" ] ; then
   echo "the GS_HOME environment variable needs to be defined"; exit 1
 fi
-source ${GS_HOME}/bin/shFunctions
+source ${GS_HOME}/bin/private/shFunctions
 
 getOpts_help $@ #parse standard (-h) options
 
