@@ -48,8 +48,6 @@ while getopts "hc:m:" OPT ; do
 done
 shift $(($OPTIND - 1))
 
-$GS_HOME/bin/utils/cloneSharedTodeProjects $modeArg $devKitType
-
 if [ "$devKitType" = "both" ] ; then
   if [ $# -ne 3 ]; then
     echo "missing arguments"; usage; exit 1
@@ -57,6 +55,7 @@ if [ "$devKitType" = "both" ] ; then
   stoneName=$1
   vers=$2
   clientName=$3
+  $GS_HOME/bin/utils/cloneSharedTodeProjects $modeArg $devKitType
   $GS_HOME/bin/createClient $clientName
   $GS_HOME/bin/createStone $stoneName $vers
 fi
@@ -65,6 +64,7 @@ if [ "$devKitType" = "client" ] ; then
     echo "missing arguments"; usage; exit 1
   fi
   clientName=$1
+  $GS_HOME/bin/utils/cloneSharedTodeProjects $modeArg $devKitType
   $GS_HOME/bin/createClient $clientName
 fi
 if [ "$devKitType" = "server" ] ; then
@@ -73,6 +73,7 @@ if [ "$devKitType" = "server" ] ; then
   fi
   stoneName=$1
   vers=$2
+  $GS_HOME/bin/utils/cloneSharedTodeProjects $modeArg $devKitType
   $GS_HOME/bin/createStone $stoneName $vers
 fi
 
