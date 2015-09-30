@@ -113,8 +113,8 @@ if [ "${noRestart}" = "false" ] ; then
   $GS_HOME/bin/private/gsDevKitCommandLine newExtent $stoneName $snapshotFile
 
   # -N option used to ignore tranlog files during restart
-  echo "Restarting stone"
-  $GS_HOME/bin/startStone -N $stoneName
+  echo "Restarting stone and netldi"
+  $GS_HOME/bin/startStone -b -N $stoneName
 
   if [ "${attachTode}" = "true" ] ; then
     $GS_HOME/bin/todeIt $stoneName "script --script=installServerTode2"
