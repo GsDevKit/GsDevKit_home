@@ -10,7 +10,10 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-c https | ssh ] [-m client | server | both] [<stone-name> <gemstone-version> <client-name>]
+USAGE: $(basename $0) [-h] [-c https | ssh ] 
+                      -m client <gemstone-version> <client-name>
+                      -m server <gemstone-version>  <stone-name>
+                      -m client <gemstone-version> <stone-name> <client-name>
 
 OPTIONS
   -h
@@ -23,9 +26,9 @@ OPTIONS
 
 EXAMPLES
    $(basename $0) -h
-   $(basename $0) -m client tode
-   $(basename $0) -c ssh -m server gs_329 3.2.9
-   $(basename $0) -c https -m both gs_329 3.2.9 tode
+   $(basename $0) -m client 3.2.9 tode
+   $(basename $0) -c ssh -m server 3.2.9 gs_329
+   $(basename $0) -c https -m both 3.2.9 gs_329 tode
 
 HELP
 }
@@ -52,18 +55,20 @@ if [ "$devKitType" = "both" ] ; then
   if [ $# -ne 3 ]; then
     echo "missing arguments"; usage; exit 1
   fi
-  stoneName=$1
-  vers=$2
+  stoneName=$2
+  vers=$1
   clientName=$3
-  $GS_HOME/bin/utils/cloneSharedTodeProjects $modeArg $devKitType
   $GS_HOME/bin/createStone $stoneName $vers
+  $GS_HOME/bin/utils/cloneSharedTodeProjects $modeArg $devKitType
   $GS_HOME/bin/createClient $clientName
 fi
 if [ "$devKitType" = "client" ] ; then
-  if [ $# -ne 1 ]; then
+  if [ $# -ne  ]; then
     echo "missing arguments"; usage; exit 1
   fi
-  clientName=$1
+  vers=$1
+  clientName=$2
+  $GS_HOME/bin/downloadGemStone $vers
   $GS_HOME/bin/utils/cloneSharedTodeProjects $modeArg $devKitType
   $GS_HOME/bin/createClient $clientName
 fi
@@ -71,8 +76,8 @@ if [ "$devKitType" = "server" ] ; then
   if [ $# -ne 2 ]; then
     echo "missing arguments"; usage; exit 1
   fi
-  stoneName=$1
-  vers=$2
+  stoneName=$2
+  vers=$1
   $GS_HOME/bin/utils/cloneSharedTodeProjects $modeArg $devKitType
   $GS_HOME/bin/createStone $stoneName $vers
 fi
