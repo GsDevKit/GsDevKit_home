@@ -13,7 +13,7 @@ usage() {
 USAGE: $(basename $0) [-h] [-c https | ssh ] 
                       -m client <gemstone-version> <client-name>
                       -m server <gemstone-version>  <stone-name>
-                      -m client <gemstone-version> <stone-name> <client-name>
+                      -m both <gemstone-version> <stone-name> <client-name>
 
 OPTIONS
   -h
@@ -58,8 +58,9 @@ if [ "$devKitType" = "both" ] ; then
   stoneName=$2
   vers=$1
   clientName=$3
-  $GS_HOME/bin/createStone $stoneName $vers
+  $GS_HOME/bin/downloadGemStone $vers
   $GS_HOME/bin/utils/cloneSharedTodeProjects $modeArg $devKitType
+  $GS_HOME/bin/createStone $stoneName $vers
   $GS_HOME/bin/createClient $clientName
 fi
 if [ "$devKitType" = "client" ] ; then
@@ -78,6 +79,7 @@ if [ "$devKitType" = "server" ] ; then
   fi
   stoneName=$2
   vers=$1
+  $GS_HOME/bin/downloadGemStone $vers
   $GS_HOME/bin/utils/cloneSharedTodeProjects $modeArg $devKitType
   $GS_HOME/bin/createStone $stoneName $vers
 fi
