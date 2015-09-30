@@ -16,7 +16,7 @@ Copy a new extent into the named stone's extent directory. The stone
 will be stopped before doing the copy and after the copy is complete,
 the stone will be restarted with the -N option.
 
-If the -s option is not specified, $GEMSTONE/bin/extent0.seaside.dbf will be 
+If the -s option is not specified, \$GEMSTONE/bin/extent0.seaside.dbf will be 
 used as the initial extent.
 
 If the -n option is not specified, the tranlogs in the stone's tranlog 
@@ -77,7 +77,7 @@ fi
 snapshotFile=""
 noRestart="false"
 attachTode="false"
-while getopts "hns:" OPT ; do
+while getopts "hns:t" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     n) noRestart="true";;
