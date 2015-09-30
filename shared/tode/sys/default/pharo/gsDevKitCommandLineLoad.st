@@ -30,7 +30,7 @@
     baseline: 'TodeClient';
     repository: todeClientRepo;
     get;
-    load:  #( 'CommandLine' ) ]
+    load:  #( 'Tode-CommandLine' ) ]
       on: Warning, MetacelloSkipDirtyPackageLoad
       do: [:ex | 
         (ex isKindOf: MetacelloSkipDirtyPackageLoad)
