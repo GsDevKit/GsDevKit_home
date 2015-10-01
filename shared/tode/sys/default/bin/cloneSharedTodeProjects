@@ -1,0 +1,194 @@
+#! /bin/bash
+#=========================================================================
+# Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#=========================================================================
+
+echo "================="
+echo "   GsDevKit script: $(basename $0) $*"
+echo "              path: $0"
+echo "================="
+
+usage() {
+  cat <<HELP
+USAGE: $(basename $0) [-h] [-c https | ssh ] [-b <branch-name>] client|server|both
+
+Clone the Github repositories used by the tODE client to \$GS_HOME/shared/repos.
+
+"client" & "server" repos:
+
+  - github://dalehenrich/metacello-work:\${GS_SHARED_COMMIT_METACELLO}/repository
+  - github://dalehenrich/tode:\${GS_SHARED_COMMIT_TODE}/repository
+  - github://GsDevKit/ston:\${GS_SHARED_COMMIT_STON}/repository
+
+"client" repos:
+
+  - github://dalehenrich/filetree:\${GS_SHARED_COMMIT_PHARO3_FILETREE}/repository
+
+"server" repos:
+
+  - github://dalehenrich/filetree:\${GS_SHARED_COMMIT_GEMSTONE_FILETREE}/repository
+  - github://GsDevKit/Grease:\${GS_SHARED_COMMIT_GREASE}/repository
+  - github://glassdb/PharoCompatibility:\${GS_SHARED_COMMIT_OHARO_COMPAT}/repository
+  - github://glassdb/glass:\${GS_SHARED_COMMIT_GLASS1}/repository
+  - github://dalehenrich/rb:\${GS_SHARED_COMMIT_RB}/repository
+
+If you clone these repositoris into  \$GS_HOME/shared/repos, then they will be 
+used for creating pharo images and bootstrapping tODE into stones. 
+
+The following env vars are defined:
+
+  \$GS_SHARED_REPO_METACELLO
+  \$GS_SHARED_REPO_TODE
+  \$GS_SHARED_REPO_PHARO3_FILETREE
+  \$GS_SHARED_REPO_GEMSTONE_FILETREE
+  \$GS_SHARED_REPO_STON
+  \$GS_SHARED_REPO_GREASE
+  \$GS_SHARED_REPO_PHARO_COMPAT
+  \$GS_SHARED_REPO_GLASS1
+  \$GS_SHARED_REPO_RB
+
+  \$GS_SHARED_GITHUB_COMMIT_METACELLO
+  \$GS_SHARED_GITHUB_COMMIT_TODE
+  \$GS_SHARED_GITHUB_COMMIT_STON
+  \$GS_SHARED_GITHUB_COMMIT_PHARO3_FILETREE
+  \$GS_SHARED_GITHUB_COMMIT_GEMSTONE_FILETREE
+  \$GS_SHARED_GITHUB_COMMIT_GREASE
+  \$GS_SHARED_GITHUB_COMMIT_PHARO_COMPAT
+  \$GS_SHARED_GITHUB_COMMIT_GLASS1
+  \$GS_SHARED_GITHUB_COMMIT_RB
+
+  \$GS_SHARED_GIT_CHECKOUT_METACELLO
+  \$GS_SHARED_GIT_CHECKOUT_TODE
+  \$GS_SHARED_GIT_CHECKOUT_STON
+  \$GS_SHARED_GIT_CHECKOUT_PHARO3_FILETREE
+  \$GS_SHARED_GIT_CHECKOUT_GEMSTONE_FILETREE
+  \$GS_SHARED_GIT_CHECKOUT_GREASE
+  \$GS_SHARED_GIT_CHECKOUT_PHARO_COMPAT
+  \$GS_SHARED_GIT_CHECKOUT_GLASS1
+  \$GS_SHARED_GIT_CHECKOUT_RB
+
+If the repositories have not been cloned, the the env var points to the github repo.
+
+OPTIONS
+  -h
+     display help
+  -b <branch-name>
+     The name of the branch to create for local use, isolating your changes 
+     from the primary (master) branch. The default branch name is "gsdevkit"
+  -c https | ssh
+     clone using https (https://github.com) or ssh (git@github.com)
+     "ssh" is the default 
+
+EXAMPLES
+   $(basename $0) -h
+   $(basename $0) client
+   $(basename $0) -c ssh server
+   $(basename $0) -c https both
+
+HELP
+}
+
+set -e # exit on error
+if [ "${GS_HOME}x" = "x" ] ; then
+  echo "the GS_HOME environment variable needs to be defined"; exit 1
+fi
+source ${GS_HOME}/bin/defGsDevKit.env
+
+modeArg=""
+branchName="gsdevkit"
+while getopts "hnb:c:" OPT ; do
+  case "$OPT" in
+    h) usage; exit 0;;
+    b) branchName="${OPTARG}";;
+    c) modeArg=" -c ${OPTARG} ";;
+    *) usage; exit 1;;
+  esac
+done
+shift $(($OPTIND - 1))
+
+if [ $# -lt 1 ]; then
+  echo "missing required argument"; usage; exit 1
+fi
+
+loadClientRepos="false"
+loadServerRepos="false"
+case "$1" in
+  client) loadClientRepos="true";;
+  server) loadServerRepos="true";;
+  both) loadClientRepos="true"; loadServerRepos="true" ;;
+  *) echo "unknown argument: $1"; usage; exit 1;;
+esac
+
+pushd ${GS_SHARED_REPO} >& /dev/null
+  if [ ! -d "metacello-work" ] ; then
+    ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich metacello-work
+    cd metacello-work
+    git checkout $GS_SHARED_GIT_CHECKOUT_METACELLO
+    git checkout -b $branchName
+    cd ..
+  fi
+  if [ ! -d "tode" ] ; then
+    ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich tode
+    cd tode
+    git checkout $GS_SHARED_GIT_CHECKOUT_TODE
+    git checkout -b $branchName
+    cd ..
+  fi
+  if [ ! -d "ston" ] ; then
+    ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg GsDevKit ston
+    cd ston
+    git checkout $GS_SHARED_GIT_CHECKOUT_STON
+    git checkout -b $branchName
+    cd ..
+  fi
+  if [ "$loadClientRepos" = "true" ] ; then
+    cd pharo3.0
+    if [ ! -d "filetree" ] ; then
+      ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich filetree
+      cd filetree
+      git checkout $GS_SHARED_GIT_CHECKOUT_PHARO3_FILETREE
+      git checkout -b $branchName
+      cd ..
+      fi
+    cd ..
+  fi
+  if [ "$loadServerRepos" = "true" ] ; then
+    if [ ! -d "filetree" ] ; then
+      ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich filetree
+      cd filetree
+      git checkout $GS_SHARED_GIT_CHECKOUT_GEMSTONE_FILETREE
+      git checkout -b $branchName
+      cd ..
+    fi
+    if [ ! -d "Grease" ] ; then
+      ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg GsDevKit Grease
+      cd Grease
+      git checkout $GS_SHARED_GIT_CHECKOUT_GREASE
+      git checkout -b $branchName
+      cd ..
+    fi
+    if [ ! -d "PharoCompatibility" ] ; then
+      ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg glassdb PharoCompatibility
+      cd PharoCompatibility
+      git checkout $GS_SHARED_GIT_CHECKOUT_PHARO_COMPAT
+      git checkout -b $branchName
+      cd ..
+    fi
+    if [ ! -d "glass" ] ; then
+      ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg glassdb glass
+      cd glass
+      git checkout $GS_SHARED_GIT_CHECKOUT_GLASS1
+      git checkout -b $branchName
+      cd ..
+    fi
+    if [ ! -d "rb" ] ; then
+      ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich rb
+      cd rb
+      git checkout $GS_SHARED_GIT_CHECKOUT_RB
+      git checkout -b $branchName
+      cd ..
+    fi
+  fi
+popd >& /dev/null
+
+echo "...finished $(basename $0)"
