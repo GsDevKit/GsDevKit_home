@@ -34,7 +34,7 @@ if [ "${GS_HOME}x" = "x" ] ; then
   echo "the GS_HOME environment variable needs to be defined"; exit 1
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
-if [ "${GS_GS_CLIENT_DEV}x" = "x" ] ; then
+if [ "${GS_CLIENT_DEV}x" = "x" ] ; then
   ${GS_HOME}/bin/private/clone_gs_client_dev
   source ${GS_HOME}/bin/defGsDevKit.env
 fi
@@ -49,7 +49,7 @@ while getopts "hnc:" OPT ; do
 done
 shift $(($OPTIND - 1))
 
-pushd ${GS_GS_CLIENT_DEV} >& /dev/null
+pushd ${GS_CLIENT_DEV} >& /dev/null
 ${GS_HOME}/bin/private/cloneGitHubProject $modeArg GsDevKit GsDevKit_todeClient todeClient
 popd >& /dev/null
 

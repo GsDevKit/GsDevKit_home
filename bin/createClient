@@ -79,7 +79,7 @@ fi
 clientName=$1
 shift 1
 
-if [ "${GS_GS_CLIENT_DEV}x" = "x" ] ; then
+if [ "${GS_CLIENT_DEV}x" = "x" ] ; then
   $GS_HOME/bin/private/clone_gs_client_dev
   source ${GS_HOME}/bin/defGsDevKit.env
 fi

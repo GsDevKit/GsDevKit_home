@@ -40,7 +40,7 @@ fi
 clientName=$1
 shift 1
 
-if [ "${GS_GS_CLIENT_DEV}x" = "x" ] || [ ! -d "${GS_GS_CLIENT_DEV_CLIENTS}/$clientName" ] ; then
+if [ "${GS_CLIENT_DEV}x" = "x" ] || [ ! -d "${GS_CLIENT_DEV_CLIENTS}/$clientName" ] ; then
   echo "The requested client: $clientName does not exist"
   created="false"
   while [ "$created" = "false" ] ; do
@@ -56,6 +56,6 @@ if [ "${GS_GS_CLIENT_DEV}x" = "x" ] || [ ! -d "${GS_GS_CLIENT_DEV_CLIENTS}/$clie
   done
 fi
 
-${GS_GS_CLIENT_DEV_CLIENTS}/$clientName/startClient $* $clientName
+${GS_CLIENT_DEV_CLIENTS}/$clientName/startClient $* $clientName
 
 echo "...finished $(basename $0)"

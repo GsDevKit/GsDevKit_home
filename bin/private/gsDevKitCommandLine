@@ -8,7 +8,7 @@ usage() {
 USAGE: $(basename $0) [-h] [-f] [-i] [<gsDevKit-command-line>]
 
 Perform commands specified in <gsDevKit-command-line> against 
-$GS_GS_SERVER_PHARO/gsDevKitCommandLine.image.
+$GS_SERVER_PHARO/gsDevKitCommandLine.image.
 
 OPTIONS
   -h 
@@ -34,8 +34,8 @@ if [ "${GS_HOME}x" = "x" ] ; then
   exit 1
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
-if [ "$GS_GS_SERVER{}x" = "x" ] ; then
-  echo "the GS_GS_SERVER environment variable needs to be defined"
+if [ "$GS_SERVER{}x" = "x" ] ; then
+  echo "the GS_SERVER environment variable needs to be defined"
   echo "Perhaps a stone has not been create yet?"
   exit 1
 fi

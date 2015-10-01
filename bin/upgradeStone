@@ -45,8 +45,8 @@ if [ "${GS_HOME}x" = "x" ] ; then
   echo "the GS_HOME environment variable needs to be defined"; exit 1
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
-if [ "$GS_GS_SERVER{}x" = "x" ] ; then
-  echo "the GS_GS_SERVER environment variable needs to be defined"
+if [ "$GS_SERVER{}x" = "x" ] ; then
+  echo "the GS_SERVER environment variable needs to be defined"
   echo "Perhaps a stone has not been create yet?"
   exit 1
 fi
@@ -79,14 +79,14 @@ sourceStoneName="$1"
 targetStoneName="$2"
 gsvers="$3"
 
-sourceStonePath=$GS_GS_SERVER_STONES/$sourceStoneName
-targetStonePath=$GS_GS_SERVER_STONES/$targetStoneName
+sourceStonePath=$GS_SERVER_STONES/$sourceStoneName
+targetStonePath=$GS_SERVER_STONES/$targetStoneName
 
 sourceStoneVersion="$(sed -n '2{p;q;}' $sourceStonePath/product/version.txt| awk '{print $1;}')"
 majorMinorVersion="${sourceStoneVersion:0:3}"
 
 if [ "${hasSnapshotFile}" = "false" ] ; then
-  snapshotFile="$GS_GS_SERVER_STONES/$sourceStoneName/extents/extent0.dbf"
+  snapshotFile="$GS_SERVER_STONES/$sourceStoneName/extents/extent0.dbf"
 fi
 
 cat <<EOF
@@ -100,7 +100,7 @@ stone "$targetStoneName":
   4. create $targetStonePath/upgradeLog
   5. executes the $GEMSTONE/bin/upgradeImage script
   6. executes the $GEMSTONE/seaside/bin/upgradeSeasideImage script
-  7. executes the $GS_GS_SERVER/bin/installTode in $targetStoneName stone
+  7. executes the $GS_SERVER/bin/installTode in $targetStoneName stone
      to complete the upgrade process
 
 If an error occurs during execution of this script, the details of the error are
@@ -237,7 +237,7 @@ EOF
 
 
 echo "Installing tODE"
-$GS_GS_SERVER/bin/installTode $targetStoneName
+$GS_SERVER/bin/installTode $targetStoneName
 if [ "${createStone}" = "true" ] ; then
   if [ -d  $GS_TODE/sys/stones/$sourceStoneName/projects ] ; then
     cp -r $GS_TODE/sys/stones/$sourceStoneName/projects/. \

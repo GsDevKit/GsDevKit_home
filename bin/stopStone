@@ -40,8 +40,8 @@ if [ "${GS_HOME}x" = "x" ] ; then
   echo "the GS_HOME environment variable needs to be defined"; exit 1
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
-if [ "$GS_GS_SERVER{}x" = "x" ] ; then
-  echo "the GS_GS_SERVER environment variable needs to be defined"
+if [ "$GS_SERVER{}x" = "x" ] ; then
+  echo "the GS_SERVER environment variable needs to be defined"
   echo "Perhaps a stone has not been create yet?"
   exit 1
 fi
@@ -60,7 +60,7 @@ if [ $# -ne 1 ]; then
   usage; exit 1
 fi
 stoneName=$1
-stonePath=$GS_GS_SERVER_STONES/${stoneName}
+stonePath=$GS_SERVER_STONES/${stoneName}
 
 if [ -d "$stonePath" ] ; then
 # set up stone environment
@@ -69,7 +69,7 @@ if [ -d "$stonePath" ] ; then
   popd >& /dev/null
 
   # stop the stone
-  $GS_GS_SERVER/bin/gs/stopGemstone
+  $GS_SERVER/bin/gs/stopGemstone
 
   if [ "${stopNetldi}" = "true" ] ; then
     $GS_HOME/bin/stopNetldi $stoneName

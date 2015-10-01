@@ -13,9 +13,9 @@ usage() {
 USAGE: $(basename $0) [-h] <stone-name>...
 
 Delete the stone with the given name. The stone is stopped before the 
-$GS_GS_SERVER/stones/<stone-name> directory is deleted. The 
-$GS_HOME/tode/sys/stone/<stone-name> directory is deleted as well as the
-$GS_HOME/tode/sys/local/client/descriptions/<stone-name> description file
+\$GS_SERVER/stones/<stone-name> directory is deleted. The 
+\$GS_HOME/tode/sys/stone/<stone-name> directory is deleted as well as the
+\$GS_HOME/tode/sys/local/client/descriptions/<stone-name> description file
 is deleted.
 
 OPTIONS
@@ -50,11 +50,11 @@ fi
 
 for stoneName in "$@"
 do
-  if [ "${GS_GS_SERVER}x" !=  "x" ] ; then
+  if [ "${GS_SERVER}x" !=  "x" ] ; then
     echo "deleting old instance of stone $stoneName (stopping stone and netldi first)"
-    if [ -d $GS_GS_SERVER/stones/$stoneName ] ; then
+    if [ -d $GS_SERVER/stones/$stoneName ] ; then
       $GS_HOME/bin/stopStone -b $stoneName
-      rm -rf $GS_GS_SERVER/stones/$stoneName
+      rm -rf $GS_SERVER/stones/$stoneName
     fi
   fi
 

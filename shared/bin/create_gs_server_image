@@ -34,9 +34,9 @@ OPTIONS
 
 EXAMPLES
   $(basename $0) -h
-  $(basename $0) -d \$GS_GS_SERVER_PHARO
-  $(basename $0) -v Pharo3.0 -d \$GS_GS_SERVER_PHARO
-  $(basename $0) -f -d \$GS_GS_SERVER_PHARO
+  $(basename $0) -d \$GS_SERVER_PHARO
+  $(basename $0) -v Pharo3.0 -d \$GS_SERVER_PHARO
+  $(basename $0) -f -d \$GS_SERVER_PHARO
 
 HELP
 }
@@ -104,7 +104,7 @@ case "$imageType" in
   ;;
   gsDevKitTodeCommandLine)
     if [ ! -e "$directoryPath/gsDevKitCommandLine.image" ] ; then
-      $GS_GS_SERVER/bin/create_gs_server_image -d $directoryPath gsDevKitCommandLine
+      $GS_SERVER/bin/create_gs_server_image -d $directoryPath gsDevKitCommandLine
     fi
     initialImageName=gsDevKitCommandLine.image
     imageBaseName=gsDevKitTodeCommandLine

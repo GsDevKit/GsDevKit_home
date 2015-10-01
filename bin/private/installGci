@@ -20,7 +20,7 @@ OPTIONS
 
 EXAMPLES
    $(basename $0) -h
-   $(basename $0) -d $GS_GS_CLIENT_DEV -t pharo 3.2.9
+   $(basename $0) -d \$GS_CLIENT_DEV -t pharo 3.2.9
 
 HELP
 }
