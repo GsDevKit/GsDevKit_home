@@ -111,31 +111,16 @@ installServer gs_3281 3.2.8.1
 ```
 *Note that the script will prompt you for your password because it uses `sudo` to setup up your server for running GemStone*.
 
-###Open a tODE client image
-When the `installServer` script finishes, the tode client image is opened:
+###Start up the tODE client image
 
-![tode image][63]
+you can now [start up the tODE client][42].
 
-To manually open a tode client image, use the [$GS_HOME/bin/todeClient][35] script:
+for example,
 
 ```
-todeClient
+startClient tode
 ```
 
-####Open a tODE shell
-Once a tode client image is open, use the following menu to open a tode shell:  
-   
-![open tode shell][18]
-
-*If an error occurs while attempting to open the tODE shell, see the [tODE Test Login][64] section of the [Getting Started with tODE][62] document for getting help diagnosing the problem.*
-
-####Open a tODE project list
-
-Open a tODE a *Project List Browser* using the `project list` tODE command:
-
-![project list][19]
-
-For additional information on using tODE see the [Getting Started with tODE][62] document.
 
 ###Commit GsDevKit_home configuration changes to git
 commit the changes that you've made.
@@ -188,6 +173,8 @@ commit the changes that you've made.
 [38]: https://github.com/GsDevKit/GsDevKit_gemstone
 [39]: https://github.com/GsDevKit/GsDevKit_tode
 [40]: https://github.com/GsDevKit/GsDevKit_todeClient
+
+[42]: ./docs/#gettingStartedWithTode
 
 [46]: bin/installTodeStone
 
