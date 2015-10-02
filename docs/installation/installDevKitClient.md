@@ -51,7 +51,7 @@ The following steps are involved in installing the GsDevKit client. For an examp
    ```
    $GS_HOME/bin/installClient <myGemStoneVersion> <myClientName>
    ```
-   You may use any name for <myClientName>, and note that you may later have multiple clients. The examples below use  **tode** as the client name.
+   You may use any name for `<myClientName>`, and note that you may later have multiple clients. The examples below use  **tode** as the client name.
 
    The install scripts invokes the following sub-scripts:
    ```
