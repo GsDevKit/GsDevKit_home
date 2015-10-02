@@ -1,12 +1,7 @@
 #! /bin/bash
 #=========================================================================
-# Copyright (c) 2014, 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+# Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
 #=========================================================================
-
-echo "================="
-echo "   GsDevKit script: $(basename $0) $*"
-echo "              path: $0"
-echo "================="
 
 usage() {
   cat <<HELP
