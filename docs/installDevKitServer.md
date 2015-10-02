@@ -92,4 +92,5 @@ $GS_HOME/bin/installClientServer 3.2.9 devKit_329 tode
 ```
 
 [1]: ./installDevKitClient.md
-[2]: ./osConfig/configureOS.md
+[2]: ./osPrereqs/configureOS.md
+
