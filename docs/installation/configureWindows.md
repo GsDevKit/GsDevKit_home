@@ -10,7 +10,9 @@ The installation of GitHub on windows provides a shell environment that can be u
 
 2. In *GitHub for Windows*, go to the *Options page* and set your default shell to **Git Bash**.
 
-3. Close the *Github for Windows* window and open a **Git Bash** shell window by clicking on the *Git Shell* icon on your desktop.
+3. Close the *Github for Windows* window; this will not be used for any further GsDevKit work.  
+ 
+   Open a **Git Bash** shell window by clicking on the *Git Shell* icon on your desktop.  
 
 4. On Windows, which has [path length limitations][2], tODE client file paths risk running up against the character limits.  To avoid issues, enable longpaths in git, and reduce overhead by choosing an installation directory with a short path. 
   
