@@ -12,16 +12,15 @@ The installation of GitHub on windows provides a shell environment that can be u
 
 3. Close the *Github for Windows* window and open a **Git Bash** shell window by clicking on the *Git Shell* icon on your desktop.
 
-4. [Git on Windows is senstitive to path length][2].  
+4. On Windows, which has [path length limitations][2], tODE client file paths risk running up against the character limits.  To avoid issues, enable longpaths in git, and reduce overhead by choosing an installation directory with a short path. 
+  
+   execute the following:
+   ```
+   git config --global core.longpaths true   
+   ```
 
-execute the following:
-
-```
-git config --global core.longpaths true   
-```
-
-In addition, we recommend that the client be installed in the root directory of the user's directory.  
-You may install elsewhere, but longer paths may create problems for some tODE operations. 
+   We recommend that the client be installed in the root directory of the user's directory.  
+   You may install elsewhere, but longer paths may create problems for some tODE operations. 
 
 ---
   
