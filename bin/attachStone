@@ -10,7 +10,7 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [ -s | -d <dev-GS_HOME-path> | -m <master-GS_HOME-path ] 
+USAGE: $(basename $0) [-h] [ -f | -d <dev-GS_HOME-path> | -m <master-GS_HOME-path ] 
                       [-o <old-stone-name] <stone-name> <gemstone-version>
 
 OPTIONS
@@ -21,7 +21,7 @@ EXAMPLES
   $(basename $0) -d /export/foos1/users/dhenrich/gsDevKitHome seaside 3.2.2
   $(basename $0) -m /export/foos1/users/dhenrich/old_gsDevKitHome gs_3106 3.1.0.6
   $(basename $0) -o gs_3106 -m /export/foos1/users/dhenrich/old_gsDevKitHome gso_3106 3.1.0.6
-  $(basename $0) -s gs_3106 3.1.0.6
+  $(basename $0) -f gs_3106 3.1.0.6
 
 HELP
 }
@@ -40,27 +40,27 @@ source ${GS_HOME}/bin/defGsDevKit.env
 
 master_GS_HOME="false"
 dev_GS_HOME="false"
-sessionDescriptionOnly="false"
+foreign="false"
 oldStonePath=""
 while getopts "hsd:m:o:" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     s) 
       if [ "$oldGsDevKitHome{}x" != "x" ] ; then
-        echo "only one of -s, -m or -d options may be used"; usage; exit 1
+        echo "only one of -f, -m or -d options may be used"; usage; exit 1
       fi
       oldGsDevKitHome="XXX"
-      sessionDescriptionOnly="true"
+      foreign="true"
     d) 
       if [ "${oldGsDevKitHome}x" != "x" ] ; then
-        echo "only one of -s, -m or -d options may be used"; usage; exit 1
+        echo "only one of -f, -m or -d options may be used"; usage; exit 1
       fi
       oldGsDevKitHome="${OPTARG}"
       dev_GS_HOME="true"
       ;;
     m) 
       if [ "$oldGsDevKitHome{}x" != "x" ] ; then
-        echo "only one of -s, -m or -d options may be used"; usage; exit 1
+        echo "only one of -f, -m or -d options may be used"; usage; exit 1
       fi
       oldGsDevKitHome="${OPTARG}"
       master_GS_HOME="true"
@@ -95,8 +95,8 @@ echo "Attaching stone $stoneName"
 
 $GS_HOME/bin/downloadGemStone $vers
 
-if [ "${sessionDescriptionOnly}" = "true" ] ; then
-  $GS_HOME/bin/private/gsDevKitCommandLine createSessionDescription $stoneName
+if [ "${foreign}" = "true" ] ; then
+  $GS_HOME/bin/private/gsDevKitCommandLine createForeignStone $stoneName $vers 
 else
   oldStonePath=${oldGsDevKitHome}/gemstone/stones/$stoneName
   if [ "${master_GS_HOME}x" != "x" ] ; then

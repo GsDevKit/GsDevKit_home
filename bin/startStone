@@ -51,7 +51,7 @@ while getopts "bhw:CNR" OPT ; do
   case "$OPT" in
     b) startnetldi="true" ;;
     C) 
-      if [ "${ARGS}x" != "x" ] ; then 
+      if [ "${ARG}x" != "x" ] ; then 
         echo "Only one of -C -N or -R options may be specified"
         exit 1
       fi
@@ -59,14 +59,14 @@ while getopts "bhw:CNR" OPT ; do
     ;;
     h) usage; exit 0 ;;
     N)
-      if [ "${ARGS}x" != "x" ] ; then 
+      if [ "${ARG}x" != "x" ] ; then 
         echo "Only one of -C -N or -R options may be specified"
         exit 1
       fi
       ARG="-N"
     ;;
     R)
-      if [ "${ARGS}x" != "x" ] ; then 
+      if [ "${ARG}x" != "x" ] ; then 
         echo "Only one of -C -N or -R options may be specified"
         exit 1
       fi
@@ -104,7 +104,7 @@ pushd $stonePath >& /dev/null
 popd >& /dev/null
 
 # start the stone
-$GS_SERVER/bin/gs/startGemstone $ARG
+$GS_HOME/bin/private/gsDevKitCommandLine startstone $stoneName $ARG
 
 if [ "${waitTime}x" = "x" ] ; then
   if [ "${GS_TRAVIS}x" != "x" ] ; then
