@@ -40,7 +40,7 @@ source ${GS_HOME}/bin/defGsDevKit.env
 master_GS_HOME="false"
 dev_GS_HOME="false"
 oldStonePath=""
-while getopts "hd:m:" OPT ; do
+while getopts "hd:m:o:" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     d) 
@@ -57,6 +57,7 @@ while getopts "hd:m:" OPT ; do
       oldGsDevKitHome="${OPTARG}"
       master_GS_HOME="true"
       ;;
+    o) oldStoneName="${OPTARG}";;
     *) usage; exit 1;;
   esac
 done
@@ -67,6 +68,9 @@ if [ $# -ne 2 ]; then
 fi
 stoneName=$1
 vers=$2
+if [ "${oldStoneName}x" = "x" ] ; then 
+  oldStoneName=$stoneName
+fi
 
 if [ "${GS_SERVER}x" = "x" ] ; then
   $GS_HOME/bin/private/clone_gs_server
@@ -83,16 +87,19 @@ echo "Attaching stone $stoneName"
 
 oldStonePath=${oldGsDevKitHome}/gemstone/stones/$stoneName
 if [ "${master_GS_HOME}x" != "x" ] ; then
-  oldClientDescriptionsPath=""
-  oldStoneHomePath=""
+  oldClientDescriptionsPath="${oldGsDevKitHome}/tode/client/descriptions/${olStoneName}"
+  oldStoneHomePath="${oldGsDevKitHome}/tode/home"
+  oldStoneProjectsPath=""
 fi
 if [ "${dev_GS_HOME}x" != "x" ] ; then
-  oldClientDescriptionsPath=""
-  oldStoneHomePath=""
+  oldClientDescriptionsPath="${oldGsDevKitHome}/tode/sys/local/client/descriptions/${olStoneName}"
+  oldStoneHomePath="${oldGsDevKitHome}/tode/sys/stones/${oldStoneName}/home"
+  oldStoneProjectsPath="${oldGsDevKitHome}/tode/sys/${oldStoneName}/projects"
 fi
 
-
 $GS_HOME/bin/downloadGemStone $vers
+
+${GS_HOME}/bin/private/gsDevKitCommandLine createStoneTemplate $stoneName $vers
 
 
 
