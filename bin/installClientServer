@@ -1,0 +1,56 @@
+#! /bin/bash
+#=========================================================================
+# Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#=========================================================================
+
+echo "================="
+echo "   GsDevKit script: $(basename $0) $*"
+echo "              path: $0"
+echo "================="
+
+usage() {
+  cat <<HELP
+USAGE: $(basename $0) [-h] [-c https | ssh ] <gemstone-version> <stone-name> <client-name>
+
+OPTIONS
+  -h
+     display help
+  -c https | ssh
+     clone using https (https://github.com) or ssh (git@github.com)
+     "ssh" is the default 
+
+EXAMPLES
+   $(basename $0) -h
+   $(basename $0) -c https 3.2.9 gs_329 tode
+
+HELP
+}
+
+set -e # exit on error
+if [ "${GS_HOME}x" = "x" ] ; then
+  echo "the GS_HOME environment variable needs to be defined"; exit 1
+fi
+source ${GS_HOME}/bin/defGsDevKit.env
+
+modeArg=""
+while getopts "hc:" OPT ; do
+  case "$OPT" in
+    h) usage; exit 0;;
+    c) modeArg=" -c ${OPTARG} ";;
+    *) echo "unknown option: ${OPTARG}"; usage; exit 1;;
+  esac
+done
+shift $(($OPTIND - 1))
+
+if [ $# -ne 3 ]; then
+  echo "wrong number of arguments (3 expected)"; usage; exit 1
+fi
+stoneName=$2
+vers=$1
+clientName=$3
+$GS_HOME/bin/downloadGemStone $vers
+$GS_HOME/bin/utils/cloneSharedTodeProjects $modeArg $devKitType
+$GS_HOME/bin/createStone $stoneName $vers
+$GS_HOME/bin/createClient $clientName
+
+echo "...finished $(basename $0)"
