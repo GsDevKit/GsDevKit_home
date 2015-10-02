@@ -97,7 +97,16 @@ You now have an instance of the tODE client installed on your client machine, wi
 
 To establish the connection between the client and the server, a server process called the NetLDI listens on a well-known port, and the client must be configured to contact the server on  this port.  If the server and client  machines are not on the same local network, you will also need to setup SSH port forwarding for this port.
 
-it is recommended, but not required, to assign a port number to a named NetLDI by editing the network services database, which may be /etc/services.  
+it is recommended, but not required, to assign a reserved port number to a named NetLDI by adding an entry to the network services database, which may be /etc/services.  For example,
+```
+devKit_329_ldi          50378/tcp        # Gemstone netldi
+```
+
+To setup SSH port forwarding, 
+
+```
+ssh -L 50378:hostNameOrIp user@example.com
+```
 
 
 #Client setup
@@ -109,7 +118,7 @@ it is recommended, but not required, to assign a port number to a named NetLDI b
    export PATH=$GS_HOME/bin:$PATH
    ```
 
-these  will be needed to use tODE.
+   these  will be needed to use tODE.
 
 2.  From the server installation, copy the file
 
