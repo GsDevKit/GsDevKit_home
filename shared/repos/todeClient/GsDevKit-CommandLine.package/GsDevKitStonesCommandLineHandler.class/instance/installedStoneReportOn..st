@@ -9,5 +9,10 @@ installedStoneReportOn: stream
 				tab;
 				nextPutAll: info gsVers;
 				tab;
-				nextPutAll: info stoneName;
-				cr ]
+				nextPutAll: info stoneName.
+			info isForeignStone
+				ifTrue: [ 
+					stream
+						tab;
+						nextPutAll: '(foreign)' ].
+			stream cr ]

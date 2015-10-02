@@ -3,7 +3,7 @@ createStone
 	| stoneDirectory newStoneInfo |
 	Transcript
 		cr;
-		show: 'Creating stone ' , self stoneName.
+		show: 'Creating foreign stone ' , self stoneName.
 	stoneDirectory := self gs_stonesHome / self stoneName.
 	stoneDirectory exists
 		ifTrue: [ 
@@ -23,20 +23,15 @@ createStone
 	self
 		createProductLn: stoneDirectory;
 		createEmptySubDirectories: stoneDirectory;
-		createEmptyStatsSubDirectories: stoneDirectory;
-		copyTemplateSystemConf: stoneDirectory;
 		copyTemplateFiles: stoneDirectory;
-		createTopaziniFile: stoneDirectory;
-		createDefStoneLn: stoneDirectory;
 		yourself.
 	(newStoneInfo := self stoneInfoClass new
 		stoneName: self stoneName;
 		gsVers: self gsVers;
 		yourself) exportTo: stoneDirectory / self stoneInfoFilename.
-	self createTodeDescription: newStoneInfo.
 	Transcript
 		cr;
 		tab;
-		show: 'Finished creating stone ' , self stoneName;
+		show: 'Finished creating foreign stone' , self stoneName;
 		cr.
 	self exitSuccess
