@@ -68,4 +68,4 @@ export PATH=$GS_HOME/bin:$PATH
 $GS_HOME/bin/installClientServer 3.2.9 devKit_329 tode
 ```
 
-[1]: ./#installDevKitClient.md
+[1]: ./installDevKitClient.md
