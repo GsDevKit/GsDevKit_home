@@ -49,7 +49,7 @@ stoneName=$2
 vers=$1
 clientName=$3
 $GS_HOME/bin/downloadGemStone $vers
-$GS_HOME/bin/utils/cloneSharedTodeProjects $modeArg $devKitType
+$GS_HOME/bin/utils/cloneSharedTodeProjects $modeArg both
 $GS_HOME/bin/createStone $stoneName $vers
 $GS_HOME/bin/createClient $clientName
 

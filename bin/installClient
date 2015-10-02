@@ -48,7 +48,7 @@ fi
 vers=$1
 clientName=$2
 $GS_HOME/bin/downloadGemStone $vers
-$GS_HOME/bin/utils/cloneSharedTodeProjects $modeArg $devKitType
+$GS_HOME/bin/utils/cloneSharedTodeProjects $modeArg client
 $GS_HOME/bin/createClient $clientName
 
 echo "...finished $(basename $0)"
