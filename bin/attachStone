@@ -10,7 +10,7 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [ -d <dev-GS_HOME-path> | -m <master-GS_HOME-path ] 
+USAGE: $(basename $0) [-h] [ -s | -d <dev-GS_HOME-path> | -m <master-GS_HOME-path ] 
                       [-o <old-stone-name] <stone-name> <gemstone-version>
 
 OPTIONS
@@ -21,6 +21,7 @@ EXAMPLES
   $(basename $0) -d /export/foos1/users/dhenrich/gsDevKitHome seaside 3.2.2
   $(basename $0) -m /export/foos1/users/dhenrich/old_gsDevKitHome gs_3106 3.1.0.6
   $(basename $0) -o gs_3106 -m /export/foos1/users/dhenrich/old_gsDevKitHome gso_3106 3.1.0.6
+  $(basename $0) -s gs_3106 3.1.0.6
 
 HELP
 }
@@ -39,20 +40,27 @@ source ${GS_HOME}/bin/defGsDevKit.env
 
 master_GS_HOME="false"
 dev_GS_HOME="false"
+sessionDescriptionOnly="false"
 oldStonePath=""
-while getopts "hd:m:o:" OPT ; do
+while getopts "hsd:m:o:" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
+    s) 
+      if [ "$oldGsDevKitHome{}x" != "x" ] ; then
+        echo "only one of -s, -m or -d options may be used"; usage; exit 1
+      fi
+      oldGsDevKitHome="XXX"
+      sessionDescriptionOnly="true"
     d) 
-      if [ "${oldStonePath}x" != "x" ] ; then
-        echo "only one of -m and -d options may be used"; usage; exit 1
+      if [ "${oldGsDevKitHome}x" != "x" ] ; then
+        echo "only one of -s, -m or -d options may be used"; usage; exit 1
       fi
       oldGsDevKitHome="${OPTARG}"
       dev_GS_HOME="true"
       ;;
     m) 
-      if [ "${oldStonePath}x" != "x" ] ; then
-        echo "only one of -m and -d options may be used"; usage; exit 1
+      if [ "$oldGsDevKitHome{}x" != "x" ] ; then
+        echo "only one of -s, -m or -d options may be used"; usage; exit 1
       fi
       oldGsDevKitHome="${OPTARG}"
       master_GS_HOME="true"
@@ -78,29 +86,30 @@ if [ "${GS_SERVER}x" = "x" ] ; then
 fi
 
 if [ -d $GS_SERVER_STONES/$stoneName ] ; then
-  echo "stone $stoneName already exists. Use the -o option to rename the old stone"
+  echo "stone $stoneName already exists. Use the -o option and use a different stone name"
   usage
   exit 1
 fi
 
 echo "Attaching stone $stoneName"
 
-oldStonePath=${oldGsDevKitHome}/gemstone/stones/$stoneName
-if [ "${master_GS_HOME}x" != "x" ] ; then
-  oldClientDescriptionsPath="${oldGsDevKitHome}/tode/client/descriptions/${olStoneName}"
-  oldStoneHomePath="${oldGsDevKitHome}/tode/home"
-  oldStoneProjectsPath=""
-fi
-if [ "${dev_GS_HOME}x" != "x" ] ; then
-  oldClientDescriptionsPath="${oldGsDevKitHome}/tode/sys/local/client/descriptions/${olStoneName}"
-  oldStoneHomePath="${oldGsDevKitHome}/tode/sys/stones/${oldStoneName}/home"
-  oldStoneProjectsPath="${oldGsDevKitHome}/tode/sys/${oldStoneName}/projects"
-fi
-
 $GS_HOME/bin/downloadGemStone $vers
 
-${GS_HOME}/bin/private/gsDevKitCommandLine createStoneTemplate $stoneName $vers
-
-
+if [ "${sessionDescriptionOnly}" = "true" ] ; then
+  $GS_HOME/bin/private/gsDevKitCommandLine createSessionDescription $stoneName
+else
+  oldStonePath=${oldGsDevKitHome}/gemstone/stones/$stoneName
+  if [ "${master_GS_HOME}x" != "x" ] ; then
+    oldClientDescriptionsPath="${oldGsDevKitHome}/tode/client/descriptions/${oldStoneName}"
+    oldStoneHomePath="${oldGsDevKitHome}/tode/home"
+    oldStoneProjectsPath=""
+  fi
+  if [ "${dev_GS_HOME}x" != "x" ] ; then
+    oldClientDescriptionsPath="${oldGsDevKitHome}/tode/sys/local/client/descriptions/${odlStoneName}"
+    oldStoneHomePath="${oldGsDevKitHome}/tode/sys/stones/${oldStoneName}/home"
+    oldStoneProjectsPath="${oldGsDevKitHome}/tode/sys/${oldStoneName}/projects"
+  fi
+  cp $oldClientDescriptionsPath $GS_SHARED_SESSIONS
+fi
 
 echo "...finished $(basename $0)"
