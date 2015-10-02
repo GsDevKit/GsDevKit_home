@@ -42,15 +42,16 @@ master_GS_HOME="false"
 dev_GS_HOME="false"
 foreign="false"
 oldStonePath=""
-while getopts "hsd:m:o:" OPT ; do
+while getopts "hfd:m:o:" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
-    s) 
+    f) 
       if [ "$oldGsDevKitHome{}x" != "x" ] ; then
         echo "only one of -f, -m or -d options may be used"; usage; exit 1
       fi
       oldGsDevKitHome="XXX"
       foreign="true"
+      ;;
     d) 
       if [ "${oldGsDevKitHome}x" != "x" ] ; then
         echo "only one of -f, -m or -d options may be used"; usage; exit 1
