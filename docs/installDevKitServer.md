@@ -31,6 +31,7 @@ The following steps are involved in installing the GsDevKit server, and optional
    ```
 
 3. Set the environment
+
    The environment variable $GS_HOME and the updated $PATH are required to use DevKit, so you should add them to your `.bashrc` or another initialization script.
    ```
    export GS_HOME=`pwd`
