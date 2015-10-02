@@ -46,7 +46,7 @@ while getopts "hfd:m:o:" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     f) 
-      if [ "$oldGsDevKitHome{}x" != "x" ] ; then
+      if [ "${oldGsDevKitHome}x" != "x" ] ; then
         echo "only one of -f, -m or -d options may be used"; usage; exit 1
       fi
       oldGsDevKitHome="XXX"
@@ -60,7 +60,7 @@ while getopts "hfd:m:o:" OPT ; do
       dev_GS_HOME="true"
       ;;
     m) 
-      if [ "$oldGsDevKitHome{}x" != "x" ] ; then
+      if [ "${oldGsDevKitHome}x" != "x" ] ; then
         echo "only one of -f, -m or -d options may be used"; usage; exit 1
       fi
       oldGsDevKitHome="${OPTARG}"
