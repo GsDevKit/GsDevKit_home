@@ -22,7 +22,9 @@ The installation of GitHub on windows provides a shell environment that can be u
    ```
 
    We recommend that the client be installed in the root directory of the user's directory.  
-   You may install elsewhere, but longer paths may create problems for some tODE operations. 
+   ```
+   cd ~
+   ```
 
 ---
   
