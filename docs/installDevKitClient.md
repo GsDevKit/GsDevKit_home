@@ -2,10 +2,10 @@
 
 The GsDevKit client, tODE, can be installed on the same node as the GsDevKit server, or on a different node.  If you are installing a client on a different node, you should first [install of the Development Kit on a GemStone server][2], on the node you will use as the server.  You will need a file from the servers installation to complete the client installation.
 
-Clients may be installed on **Linux**, **Mac** or **Windows**. 
+As an alternative to a remote client, you may consider using [ssh X11 forwarding][4]. 
+With [ssh X11 forwarding][4], you install both GsDevKit server and client on the server node.  With an X11 client installed on the server, and an X11 server installed on the client, you can ssh -X to your server.  This is only practical over fast connections.
 
-**Before installing a remote client, you should seriously consider using [ssh X11 forwarding][4]. 
-With [ssh X11 forwarding][4], you install an X11 client on the server, and install an X11 server on your client, instead of installing a tODE client.**
+Clients may be installed on **Linux**, **Mac** or **Windows**. 
 
 ## Branch, clone, and install the client:
 
