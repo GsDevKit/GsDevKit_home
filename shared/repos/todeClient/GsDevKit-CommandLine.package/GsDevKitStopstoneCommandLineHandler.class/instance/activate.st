@@ -15,6 +15,6 @@ activate
 	argsArray := #().
 	Transcript
 		cr;
-		show: (self runShellCommand: (self gsBinHome / 'stopGemstone') pathString args: argsArray);
+		show: (self runShellCommand: (self gs_serverBinGs / 'stopGemstone') pathString args: argsArray);
 		cr.
 	self exitSuccess

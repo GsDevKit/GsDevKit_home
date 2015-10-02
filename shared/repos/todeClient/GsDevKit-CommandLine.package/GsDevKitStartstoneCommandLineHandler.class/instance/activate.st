@@ -17,6 +17,6 @@ activate
 		ifTrue: [ argsArray := self arguments at: 2 ].
 	Transcript
 		cr;
-		show: (self runShellCommand: (self gsBinHome / 'startGemstone') pathString args: argsArray);
+		show: (self runShellCommand: (self gs_serverBinGs / 'startGemstone') pathString args: argsArray);
 		cr.
 	self exitSuccess
