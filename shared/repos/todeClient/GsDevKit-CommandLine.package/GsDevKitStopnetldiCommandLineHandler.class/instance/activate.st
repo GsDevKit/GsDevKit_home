@@ -7,6 +7,7 @@ activate
 		ifTrue: [ 
 			self printHelp.
 			^ self exitFailure: 'Missing arguments' ].
+	self shouldNotBeForeignStone.
 	sess := self sessionDescriptionIfAbsent: [ :ignored |  ].
 	argsArray := sess ifNil: [ {(self stoneInfo netLDI)} ] ifNotNil: [ {(sess netLDI)} ].
 	Transcript
