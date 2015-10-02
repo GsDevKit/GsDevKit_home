@@ -99,7 +99,7 @@ deleteClient <clientName>
 
 
 [1]: https://windows.github.com/
-[2]: ./#installDevKitServer
+[2]: ./installDevKitServer.md
 [3]:  https://github.com/git-for-windows/git/wiki/Git-cannot-create-a-file-or-directory-with-a-long-path
 [4]: x11ForwardingForRemoteDisplays.md#x11-forwarding-for-remote-servers
 
