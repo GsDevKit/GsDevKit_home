@@ -29,6 +29,7 @@ createStone
 		stoneName: self stoneName;
 		gsVers: self gsVers;
 		yourself) exportTo: stoneDirectory / self stoneInfoFilename.
+	self createTodeDescription: newStoneInfo.
 	Transcript
 		cr;
 		tab;

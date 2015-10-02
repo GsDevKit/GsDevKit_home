@@ -9,9 +9,9 @@ copyTemplateFiles: stoneDirectory
 	self templateFiles
 		do: [ :assocOrString | 
 			| fileName destName |
-			assocOrString isAssociation
-				ifTrue: [ 
+			assocOrString isString
+				ifTrue: [ fileName := destName := assocOrString ]
+				ifFalse: [ 
 					fileName := assocOrString key.
-					destName := assocOrString value ]
-				ifFalse: [ fileName := destName := assocOrString ].
+					destName := assocOrString value ].
 			templateDir / fileName copyTo: stoneDirectory / destName ]
