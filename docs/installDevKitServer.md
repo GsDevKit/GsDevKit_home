@@ -45,13 +45,13 @@ The following steps are involved in installing the GsDevKit server, and optional
    
    Script to install the server only:
    ```
-   $GS_HOME/bin/installServer <GemStoneVersion> <myServerName>
+   $GS_HOME/bin/installServer <GemStoneVersion> <myStoneName>
    ```
    Script to install the server and the client:
    ```
-   $GS_HOME/bin/installClientServer <GemStoneVersion> <myServerName> <myClientName>
+   $GS_HOME/bin/installClientServer <GemStoneVersion> <myStoneName> <myClientName>
    ```
-   You may use any name for the <myServerName> and <myClientName>.  The examples below use *DevKit_329* and *tode*.
+   You may use any name for the <myStoneName> and <myClientName>, and note that you may later have multiple stones and multiple clients. The examples below use **devKit_329** and **tode**.
 
    The install scripts invokes the following sub-scripts:
    ```
@@ -60,14 +60,14 @@ The following steps are involved in installing the GsDevKit server, and optional
    createStone
    createClient (only installClientServer)
    ```
-   After these scripts successfully complete, you will have a stone named `<myServerName>`, of GemStone/S 64 Bit version `<GemStoneVersion>`, installed on your server node and running.  You will also have a NetLDI named `<myServerName>_ldi` running on the server, so the server is ready for a tODE client to connect.
+   After these scripts successfully complete, you will have a stone named `<myStoneName>`, of GemStone/S 64 Bit version `<GemStoneVersion>`, installed on your server node and running.  You will also have a NetLDI named `<myStoneName>_ldi` running on the server, so the server is ready for a tODE client to connect.
    
    If you have installed using installClientServer, you will also have a client named `<myClientName>` installed and ready to start. 
 
 
 ## Script to Install Server only
 
-This script installs the server components only, and installs and starts a 3.2.9 server named *devKit_329*.   
+This script installs the server components only, and installs and starts a 3.2.9 server named **devKit_329**.   
 
 ```
 git clone https://github.com/GsDevKit/GsDevKit_home.git
@@ -80,7 +80,7 @@ $GS_HOME/bin/installServer 3.2.9  devKit_329
 
 ## Script to Install both Server and Client
 
-This script installs both client and server components, and installs and starts a 3.2.9 server named *devKit_329*, and a todeClient named *tode*.  
+This script installs both client and server components, and installs and starts a 3.2.9 server named **devKit_329**, and a todeClient named **tode**.  
 
 ```
 git clone https://github.com/GsDevKit/GsDevKit_home.git
