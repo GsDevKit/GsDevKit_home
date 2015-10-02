@@ -18,8 +18,9 @@ OPTIONS
      display help
 EXAMPLES
   $(basename $0) -h
-  $(basename $0) -d /export/foos1/users/dhenrich/gsDevKitHome 
-  $(basename $0) 
+  $(basename $0) -d /export/foos1/users/dhenrich/gsDevKitHome seaside 3.2.2
+  $(basename $0) -m /export/foos1/users/dhenrich/old_gsDevKitHome gs_3106 3.1.0.6
+  $(basename $0) -o gs_3106 -m /export/foos1/users/dhenrich/old_gsDevKitHome gso_3106 3.1.0.6
 
 HELP
 }
@@ -36,9 +37,26 @@ if [ "${GS_HOME}x" = "x" ] ; then
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
-while getopts "h" OPT ; do
+master_GS_HOME="false"
+dev_GS_HOME="false"
+oldStonePath=""
+while getopts "hd:m:" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
+    d) 
+      if [ "${oldStonePath}x" != "x" ] ; then
+        echo "only one of -m and -d options may be used"; usage; exit 1
+      fi
+      oldGsDevKitHome="${OPTARG}"
+      dev_GS_HOME="true"
+      ;;
+    m) 
+      if [ "${oldStonePath}x" != "x" ] ; then
+        echo "only one of -m and -d options may be used"; usage; exit 1
+      fi
+      oldGsDevKitHome="${OPTARG}"
+      master_GS_HOME="true"
+      ;;
     *) usage; exit 1;;
   esac
 done
@@ -47,5 +65,35 @@ shift $(($OPTIND - 1))
 if [ $# -ne 2 ]; then
   usage; exit 1
 fi
+stoneName=$1
+vers=$2
+
+if [ "${GS_SERVER}x" = "x" ] ; then
+  $GS_HOME/bin/private/clone_gs_server
+  source ${GS_HOME}/bin/defGsDevKit.env
+fi
+
+if [ -d $GS_SERVER_STONES/$stoneName ] ; then
+  echo "stone $stoneName already exists. Use the -o option to rename the old stone"
+  usage
+  exit 1
+fi
+
+echo "Attaching stone $stoneName"
+
+oldStonePath=${oldGsDevKitHome}/gemstone/stones/$stoneName
+if [ "${master_GS_HOME}x" != "x" ] ; then
+  oldClientDescriptionsPath=""
+  oldStoneHomePath=""
+fi
+if [ "${dev_GS_HOME}x" != "x" ] ; then
+  oldClientDescriptionsPath=""
+  oldStoneHomePath=""
+fi
+
+
+$GS_HOME/bin/downloadGemStone $vers
+
+
 
 echo "...finished $(basename $0)"
