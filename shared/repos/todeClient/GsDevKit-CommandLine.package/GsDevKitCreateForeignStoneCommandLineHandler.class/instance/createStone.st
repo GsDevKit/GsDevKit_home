@@ -23,6 +23,7 @@ createStone
 	self
 		createProductLn: stoneDirectory;
 		createEmptySubDirectories: stoneDirectory;
+		createEmptyStatsSubDirectories: stoneDirectory;
 		copyTemplateFiles: stoneDirectory;
 		yourself.
 	(newStoneInfo := self stoneInfoClass new
