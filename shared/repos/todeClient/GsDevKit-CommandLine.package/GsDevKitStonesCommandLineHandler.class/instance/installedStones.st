@@ -15,5 +15,7 @@ installedStones
 						do: [ :infoFile | 
 							| info |
 							info := GsDevKitStoneInfo importFrom: infoFile.
+							stoneDir isSymlink
+								ifTrue: [ info isAttached: true ].
 							installedStones at: info stoneName put: info ] ] ].
 	^ installedStones

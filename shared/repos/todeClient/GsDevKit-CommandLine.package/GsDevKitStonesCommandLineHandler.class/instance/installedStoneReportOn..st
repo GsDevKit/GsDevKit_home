@@ -15,4 +15,9 @@ installedStoneReportOn: stream
 					stream
 						tab;
 						nextPutAll: '(foreign)' ].
+			info isAttached
+				ifTrue: [ 
+					stream
+						tab;
+						nextPutAll: '(attached)' ].
 			stream cr ]

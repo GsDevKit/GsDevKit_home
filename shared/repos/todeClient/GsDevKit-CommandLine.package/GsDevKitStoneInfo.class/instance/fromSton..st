@@ -1,4 +1,4 @@
-STON
+ston
 fromSton: stonReader
 	stonReader
 		parseMapDo: [ :instVarName :value | 

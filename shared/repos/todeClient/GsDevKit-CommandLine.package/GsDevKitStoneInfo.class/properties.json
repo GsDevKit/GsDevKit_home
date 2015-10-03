@@ -8,7 +8,8 @@
 	"instvars" : [
 		"stoneName",
 		"gsVers",
-		"username" ],
+		"username",
+		"isAttached" ],
 	"name" : "GsDevKitStoneInfo",
 	"pools" : [
 		 ],
