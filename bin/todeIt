@@ -10,7 +10,7 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] <stone-name> <tode-command-line>
+USAGE: $(basename $0) [-h] [-i] <stone-name> <tode-command-line>
 
 Execute the <tode-command-line> as a tODE shell command.
 
@@ -18,9 +18,11 @@ tODE must be installed in the named stone.
 
 OPTIONS
   -h show usage
+  -i launch command line image for interactive debugging
 
 EXAMPLES
   $(basename $0) -h
+  $(basename $0) -i gs_326 project load Seaside3
   $(basename $0) gs_326 project load Seaside3
   $(basename $0) gs_326 eval \`3+4\`
   $(basename $0) gs_326 eval \`3+4\`\; eval \`self == 7 ifFalse: [ System logout ]\`
@@ -38,16 +40,23 @@ set -e # exit on error
 if [ "${GS_HOME}x" = "x" ] ; then
   echo "the GS_HOME environment variable needs to be defined"; exit 1
 fi
-source ${GS_HOME}/bin/private/shFunctions
 
-getOpts_help $@ #parse standard (-h) options
+interactiveArg=""
+while getopts "hi" OPT ; do
+  case "$OPT" in
+    h) usage; exit 0;;
+    i) interactiveArg=" -i ";;
+    *) echo "unknown option: $OPT"; usage; exit 1;;
+  esac
+done
+shift $(($OPTIND - 1))
 
 stoneName="$1"
 shift
 
 # do tODE shell command
 echo "performing tode command: __$*__"
-$GS_HOME/bin/private/gsDevKitTodeCommandLine todeIt $stoneName << EOF
+$GS_HOME/bin/private/gsDevKitTodeCommandLine $interactiveArg todeIt $stoneName << EOF
 $*
 EOF
 

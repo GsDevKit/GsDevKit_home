@@ -10,7 +10,7 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] <stone-name> <backup-file>
+USAGE: $(basename $0) [-h] [-i] <stone-name> <backup-file>
 
 Create a GemStone backup for the given stone. 
 
@@ -18,7 +18,8 @@ tODE needs to be installed in the stone.
 
 OPTIONS
   -h display help
-"
+  -i launch command line image for interactive debugging
+
 EXAMPLES"
   $(basename $0) -h
   $(basename $0) gs_329 home.dbf
@@ -43,8 +44,15 @@ if [ "${GS_SERVER}x" = "x" ] ; then
   exit 1
 fi
 
-source ${GS_HOME}/bin/private/shFunctions
-getOpts_help $@
+interactiveArg=""
+while getopts "hi" OPT ; do
+  case "$OPT" in
+    h) usage; exit 0;;
+    i) interactiveArg=" -i ";;
+    *) echo "unknown option: $OPT"; usage; exit 1;;
+  esac
+done
+shift $(($OPTIND - 1))
 
 if [ $# -ne 2 ]; then
   usage; exit 1
@@ -61,6 +69,6 @@ pushd $stonePath >& /dev/null
 popd >& /dev/null
 
 # do tODE backup
-$GS_HOME/bin/private/gsDevKitTodeCommandLine backup $stoneName $backupFile
+$GS_HOME/bin/private/gsDevKitTodeCommandLine $interactiveArg backup $stoneName $backupFile
 
 echo "...finished $(basename $0)"
