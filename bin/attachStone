@@ -124,7 +124,7 @@ else
     $GS_HOME/bin/private/gsDevKitCommandLine patchTodeRoot $stoneName
     $GS_HOME/bin/todeIt $stoneName "script --script=rebuildServerTode"
     cp -R $oldStoneHomePath  $GS_TODE/sys/stones/$stoneName
-    if [ "$oldStoneProjectsPath" = "" ] ; then
+    if [ "$oldStoneProjectsPath" != "" ] ; then
       cp -R $oldStoneProjectsPath  $GS_TODE/sys/stones/$stoneName
     fi
   fi
