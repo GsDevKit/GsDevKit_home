@@ -1,0 +1,12 @@
+# Set up /sys node structure
+mount --todeRoot sys/default /sys default
+mount --todeRoot sys/local /sys local
+mount --todeRoot sys/stones /sys stones
+# rebuild --stoneRoot directory structure
+/sys/default/bin/validateStoneSysNodes --force
+mount --stoneRoot / /sys stone
+# Define /home and /projects based on a composition of the /sys nodes
+mount --stoneRoot homeComposition.ston / home
+mount --stoneRoot projectComposition.ston / projects
+commit
+cd 

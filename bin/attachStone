@@ -126,7 +126,7 @@ else
     if [ "$oldStoneProjectsPath" = "" ] ; then
       cp -R $oldStoneProjectsPath  $GS_TODE/sys/stones/$stoneName
     fi
-    $GS_HOME/bin/todeIt $stoneName "script --script=installServerTode2"
+    $GS_HOME/bin/todeIt $stoneName "script --script=rebuildServerTode"
   fi
 fi
 
