@@ -5,14 +5,14 @@
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-a] [-r]
+USAGE: $(basename $0) [-h] [-a] [-r] [-i]
 
 List information about installed products, stones, and clients.
 
 OPTIONS
   -h display help
-  -a include information about installed and running stones
-  -r include information about running stones only
+  -a | -r | -i
+     include information about installed and running stones
 
 EXAMPLES
   $(basename $0) -h
@@ -29,11 +29,12 @@ fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
 stonesArg="-i"
-while getopts "ahr" OPT ; do
+while getopts "ahir" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
-    a) stonesArg=" -a ";;
-    r) stonesArg=" -r ";;
+    a) 
+    i) 
+    r) stonesArg=" -a ";;
     *) echo "unknown option"; usage; exit 1;;
   esac
 done
