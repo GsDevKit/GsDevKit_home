@@ -64,8 +64,8 @@ do
     fi
   fi
 
-  if [ -e $GS_SHARED_TODE/sys/local/client/descriptions/$stoneName ] ; then
-    rm -rf $GS_SHARED_TODE/sys/local/client/descriptions/$stoneName
+  if [ -e $GS_SHARED_SESSIONS/$stoneName ] ; then
+    rm -rf $GS_SHARED_SESSIONS/$stoneName
   fi
 done
 
