@@ -32,7 +32,7 @@ if [ $# -ne 0 ]; then
   usage; exit 1
 fi
 
-echo "Intalled Clients:"
+echo "Installed Clients:"
 
 if [ ! -d "$GS_CLIENT_DEV_CLIENTS" ] ; then
   # no clients

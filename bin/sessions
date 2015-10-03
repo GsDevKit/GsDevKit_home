@@ -5,18 +5,16 @@
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-a]
+USAGE: $(basename $0) [-h]
 
-List information about installed products, stones, and clients.
+List information about each of the sessions
 
 OPTIONS
   -h display help
-  -a include information about running stones
 
 EXAMPLES
   $(basename $0) -h
   $(basename $0)
-  $(basename $0) -a
 
 HELP
 }
@@ -27,22 +25,23 @@ if [ "${GS_HOME}x" = "x" ] ; then
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
-stonesArg="-i"
-while getopts "ah" OPT ; do
-  case "$OPT" in
-    h) usage; exit 0;;
-    a) stonesArg=" -a ";;
-    *) echo "unknown option"; usage; exit 1;;
-  esac
-done
-shift $(($OPTIND - 1))
+source ${GS_HOME}/bin/private/shFunctions
+getOpts_help $@
 
 if [ $# -ne 0 ]; then
   usage; exit 1
 fi
 
-$GS_HOME/bin/products
-$GS_HOME/bin/clients
-$GS_HOME/bin/sessions
-$GS_HOME/bin/stones $stonesArg
+echo "Available Sessions:"
+
+
+pushd $GS_SHARED_SESSIONS >& /dev/null
+  for fileName in $(find . -maxdepth 1 -type d)
+  do
+    if [ "$fileName" != "." ] || [[ "$fileName" = README* ]] ; then
+      clientName=`echo "$fileName"
+    fi
+  done
+
+popd >& /dev/null
 
