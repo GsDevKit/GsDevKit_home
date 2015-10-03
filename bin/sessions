@@ -36,10 +36,11 @@ echo "Available Sessions:"
 
 
 pushd $GS_SHARED_SESSIONS >& /dev/null
-  for fileName in $(find . -maxdepth 1 -type d)
+  for fileName in $(find . -type f)
   do
-    if [ "$fileName" != "." ] && [[ "$fileName" != README* ]] ; then
-      echo "	$fileName"
+    if [ "$fileName" != "." ] && [[ "$fileName" != ./README* ]] ; then
+      name=`echo "$fileName" | cut -c 3-`
+      echo "	$name"
     fi
   done
 
