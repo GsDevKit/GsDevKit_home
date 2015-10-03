@@ -126,6 +126,7 @@ else
     if [ "$oldStoneProjectsPath" = "" ] ; then
       cp -R $oldStoneProjectsPath  $GS_TODE/sys/stones/$stoneName
     fi
+    $GS_HOME/bin/private/gsDevKitCommandLine patchTodeRoot $stoneName
     $GS_HOME/bin/todeIt $stoneName "script --script=rebuildServerTode"
   fi
 fi
