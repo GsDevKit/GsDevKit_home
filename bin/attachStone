@@ -112,7 +112,7 @@ else
     oldStoneHomePath="${oldGsDevKitHome}/tode/sys/stones/${oldStoneName}/home"
     oldStoneProjectsPath="${oldGsDevKitHome}/tode/sys/${oldStoneName}/projects"
   fi
-  cp $oldClientDescriptionsPath $GS_SHARED_SESSIONS
+  cp $oldClientDescriptionsPath/$stoneName $GS_SHARED_SESSIONS
   ln -s $oldStoneHomePath ${GS_SERVER_STONES}/$stoneName
   $GS_HOME/bin/startStone -b $stoneName
   if [ "$todeInstalled" = "true" ] ; then
