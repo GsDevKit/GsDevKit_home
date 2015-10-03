@@ -123,9 +123,9 @@ else
     fi
     mkdir $GS_TODE/sys/stones/$stoneName
     mkdir $GS_TODE/sys/stones/$stoneName/home
-    cp -r $oldStoneHomePath/*  $GS_TODE/sys/stones/$stoneName/home
-    mkdir $GS_TODE/sys/stones/$stoneNameprojects
-    cp -r $oldStoneProjectsPath/*  $GS_TODE/sys/stones/$stoneName/projects
+    cp -rf $oldStoneHomePath/*  $GS_TODE/sys/stones/$stoneName/home
+    mkdir $GS_TODE/sys/stones/$stoneName/projects
+    cp -rf $oldStoneProjectsPath/*  $GS_TODE/sys/stones/$stoneName/projects
     $GS_HOME/bin/todeIt $stoneName "script --script=installServerTode2"
   fi
 fi
