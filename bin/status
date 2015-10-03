@@ -5,16 +5,18 @@
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h]
+USAGE: $(basename $0) [-h] [-a]
 
-List information about products, stones, and clients.
+List information about installed products, stones, and clients.
 
 OPTIONS
   -h display help
+  -a include information about running stones
 
 EXAMPLES
   $(basename $0) -h
   $(basename $0)
+  $(basename $0) -a
 
 HELP
 }
