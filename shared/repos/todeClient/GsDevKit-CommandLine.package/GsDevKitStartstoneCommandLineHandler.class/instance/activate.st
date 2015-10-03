@@ -10,7 +10,7 @@ activate
 	self shouldNotBeForeignStone.
 	argsArray := #().
 	self arguments size = 2
-		ifTrue: [ argsArray := self arguments at: 2 ].
+		ifTrue: [ argsArray := {self arguments at: 2} ].
 	Transcript
 		cr;
 		show: (self runShellCommand: (self gs_serverBinGs / 'startGemstone') pathString args: argsArray);
