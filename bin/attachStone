@@ -10,7 +10,7 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [ -f | -d <dev-GS_HOME-path> | -m <master-GS_HOME-path ] 
+USAGE: $(basename $0) [-h] [-t] [ -f | -d <dev-GS_HOME-path> | -m <master-GS_HOME-path ] 
                       [-o <old-stone-name] <stone-name> <gemstone-version>
 
 OPTIONS
@@ -42,7 +42,8 @@ master_GS_HOME="false"
 dev_GS_HOME="false"
 foreign="false"
 oldStonePath=""
-while getopts "hfd:m:o:" OPT ; do
+todeInstalled="false"
+while getopts "hfd:m:o:t" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     f) 
@@ -67,6 +68,7 @@ while getopts "hfd:m:o:" OPT ; do
       master_GS_HOME="true"
       ;;
     o) oldStoneName="${OPTARG}";;
+    t) todeInstalled="true"
     *) usage; exit 1;;
   esac
 done
@@ -111,6 +113,21 @@ else
     oldStoneProjectsPath="${oldGsDevKitHome}/tode/sys/${oldStoneName}/projects"
   fi
   cp $oldClientDescriptionsPath $GS_SHARED_SESSIONS
+  ln -s $oldStoneHomePath ${GS_SERVER_STONES}/$stoneName
+  $GS_HOME/bin/startStone -b $stoneName
+  if [ "$todeInstalled" = "true" ] ; then
+    if [ "${GS_TODE}x" = "x" ] ; then
+      # clone tode module - needed at end of tODE install
+      $GS_HOME/bin/private/cloneTode
+      source ${GS_HOME}/bin/defGsDevKit.env
+    fi
+    mkdir $GS_TODE/sys/stones/$stoneName
+    mkdir $GS_TODE/sys/stones/$stoneName/home
+    cp -r $oldStoneHomePath/*  $GS_TODE/sys/stones/$stoneName/home
+    mkdir $GS_TODE/sys/stones/$stoneNameprojects
+    cp -r $oldStoneProjectsPath/*  $GS_TODE/sys/stones/$stoneName/projects
+    $GS_HOME/bin/todeIt $stoneName "script --script=installServerTode2"
+  fi
 fi
 
 echo "...finished $(basename $0)"
