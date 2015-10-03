@@ -68,7 +68,7 @@ while getopts "hfd:m:o:t" OPT ; do
       master_GS_HOME="true"
       ;;
     o) oldStoneName="${OPTARG}";;
-    t) todeInstalled="true"
+    t) todeInstalled="true";;
     *) usage; exit 1;;
   esac
 done
