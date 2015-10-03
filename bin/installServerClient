@@ -10,7 +10,7 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-c https | ssh ] <gemstone-version> <stone-name> <client-name>
+USAGE: $(basename $0) [-h] [-c https | ssh ] <stone-name> <client-name> <gemstone-version>
 
 OPTIONS
   -h
@@ -21,7 +21,7 @@ OPTIONS
 
 EXAMPLES
    $(basename $0) -h
-   $(basename $0) -c https 3.2.9 gs_329 tode
+   $(basename $0) -c https gs_329 tode 3.2.9
 
 HELP
 }
@@ -45,9 +45,9 @@ shift $(($OPTIND - 1))
 if [ $# -ne 3 ]; then
   echo "wrong number of arguments (3 expected)"; usage; exit 1
 fi
-stoneName=$2
-vers=$1
-clientName=$3
+stoneName=$1
+clientName=$2
+vers=$3
 $GS_HOME/bin/downloadGemStone $vers
 $GS_HOME/bin/utils/cloneSharedTodeProjects $modeArg both
 $GS_HOME/bin/createStone $stoneName $vers
