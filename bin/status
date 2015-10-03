@@ -32,8 +32,8 @@ stonesArg="-i"
 while getopts "ahir" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
-    a) 
-    i) 
+    a) stonesArg=" -a ";;
+    i) stonesArg=" -a ";;
     r) stonesArg=" -a ";;
     *) echo "unknown option"; usage; exit 1;;
   esac
