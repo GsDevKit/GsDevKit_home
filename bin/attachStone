@@ -110,7 +110,7 @@ else
   if [ "${dev_GS_HOME}x" != "x" ] ; then
     oldClientDescriptionsPath="${oldGsDevKitHome}/tode/sys/local/client/descriptions/${odlStoneName}"
     oldStoneHomePath="${oldGsDevKitHome}/tode/sys/stones/${oldStoneName}/home"
-    oldStoneProjectsPath="${oldGsDevKitHome}/tode/sys/${oldStoneName}/projects"
+    oldStoneProjectsPath="${oldGsDevKitHome}/tode/sys/stones/${oldStoneName}/projects"
   fi
   cp $oldClientDescriptionsPath/$stoneName $GS_SHARED_SESSIONS
   ln -s $oldStonePath ${GS_SERVER_STONES}/$stoneName
@@ -123,8 +123,9 @@ else
     fi
     mkdir $GS_TODE/sys/stones/$stoneName
     cp -R $oldStoneHomePath  $GS_TODE/sys/stones/$stoneName
-    mkdir $GS_TODE/sys/stones/$stoneName/projects
-    cp -R $oldStoneProjectsPath  $GS_TODE/sys/stones/$stoneName
+    if [ "$oldStoneProjectsPath" = "" ] ; then
+      cp -R $oldStoneProjectsPath  $GS_TODE/sys/stones/$stoneName
+    fi
     $GS_HOME/bin/todeIt $stoneName "script --script=installServerTode2"
   fi
 fi
