@@ -121,13 +121,12 @@ else
       $GS_HOME/bin/private/cloneTode
       source ${GS_HOME}/bin/defGsDevKit.env
     fi
-    mkdir $GS_TODE/sys/stones/$stoneName
+    $GS_HOME/bin/private/gsDevKitCommandLine patchTodeRoot $stoneName
+    $GS_HOME/bin/todeIt $stoneName "script --script=rebuildServerTode"
     cp -R $oldStoneHomePath  $GS_TODE/sys/stones/$stoneName
     if [ "$oldStoneProjectsPath" = "" ] ; then
       cp -R $oldStoneProjectsPath  $GS_TODE/sys/stones/$stoneName
     fi
-    $GS_HOME/bin/private/gsDevKitCommandLine patchTodeRoot $stoneName
-    $GS_HOME/bin/todeIt $stoneName "script --script=rebuildServerTode"
   fi
 fi
 
