@@ -5,12 +5,15 @@
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h]
+USAGE: $(basename $0) [-h] [-r] [-i] [-a]
 
 List information about the installed stones, running stones and running netldis.
 
 OPTIONS
   -h display help
+  -a list running and installed stones [DEFAULT]
+  -r list running stones
+  -i list installed stones
 
 EXAMPLES
   $(basename $0) -h
@@ -31,12 +34,6 @@ if [ "${GS_HOME}x" = "x" ] ; then
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
-source ${GS_HOME}/bin/private/shFunctions
-getOpts_help $@
-
-if [ $# -ne 0 ]; then
-  usage; exit 1
-fi
-
 # Run script
-$GS_HOME/bin/private/gsDevKitCommandLine stones
+
+$GS_HOME/bin/private/gsDevKitCommandLine stones $*

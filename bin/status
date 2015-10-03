@@ -34,5 +34,5 @@ fi
 
 $GS_HOME/bin/products
 $GS_HOME/bin/clients
-$GS_HOME/bin/stones
+$GS_HOME/bin/stones -i
 
