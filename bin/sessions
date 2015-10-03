@@ -39,7 +39,7 @@ pushd $GS_SHARED_SESSIONS >& /dev/null
   for fileName in $(find . -maxdepth 1 -type d)
   do
     if [ "$fileName" != "." ] || [[ "$fileName" = README* ]] ; then
-      clientName=`echo "$fileName"
+      echo "	$fileName"
     fi
   done
 
