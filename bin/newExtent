@@ -117,7 +117,7 @@ if [ "${noRestart}" = "false" ] ; then
   $GS_HOME/bin/startStone -b -N $stoneName
 
   if [ "${attachTode}" = "true" ] ; then
-    $GS_HOME/bin/todeIt $stoneName "script --script=installServerTode2"
+    $GS_HOME/bin/todeIt $stoneName "script --script=rebuildServer"
   fi
 else
   echo "Copy snapshot and leave tranlogs for recovery"
