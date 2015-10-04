@@ -1,0 +1,15 @@
+#!/bin/bash
+#=========================================================================
+# Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#=========================================================================
+
+updateClone() {
+  master="$1"
+  workingDir="$2"
+  theBranchName=`git --git-dir="$workingDir"rev-parse --abbrev-ref HEAD`
+  git --git-dir="$workingDir" checkout $master
+  git --git-dir="$workingDir" pull origin $master
+  git --git-dir="$workingDir" checkout $theBranchName
+  git --git-dir="$workingDir" merge $master
+}
+

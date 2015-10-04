@@ -1,6 +1,6 @@
 #! /bin/bash
 #=========================================================================
-# Copyright (c) 2014, 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+# Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
 #=========================================================================
 
 echo "================="
@@ -10,29 +10,17 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-b <working-branch-name>]
+USAGE: $(basename $0) [-h]
 
 OPTIONS
   -h 
      display help
-  -b <working-branch-name>
-     working branch name
 
 EXAMPLES
   $(basename $0) -h
   $(basename $0) 
 
 HELP
-}
-
-updateClone() {
-  master="$1"
-  theBranchName="$2"
-  workingDir="$3"
-  git --git-dir="$workingDir" checkout $master
-  git --git-dir="$workingDir" pull origin $master
-  git --git-dir="$workingDir" checkout $theBranchName
-  git --git-dir="$workingDir" merge $master
 }
 
 set -e # exit on error
@@ -42,10 +30,12 @@ if [ "${GS_HOME}x" = "x" ] ; then
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
-updateClone master $branchName "$GS_HOME"
+source ${GS_HOME}/bin/private/gitFunctions
+
+updateClone master "$GS_HOME"
 
 if [ -d "$GS_HOME/gs_server" ]; then
-  updateClone master $branchName "$GS_HOME/gs_server"
+  updateClone master "$GS_HOME/gs_server"
 fi
 
 if [ -d "$GS_HOME/gs_client_dev" ]; then
@@ -53,7 +43,7 @@ if [ -d "$GS_HOME/gs_client_dev" ]; then
 fi
 
 if [ -d "$GS_HOME/tode" ]; then
-  updateClone master $branchName "$GS_HOME/tode"
+  updateClone master "$GS_HOME/tode"
 fi
 
 echo "...finished $(basename $0)"

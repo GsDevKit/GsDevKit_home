@@ -1,4 +1,7 @@
 #!/bin/bash
+#=========================================================================
+# Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#=========================================================================
 
 win_error_exit() {
 echo "Error on or near line $1"
