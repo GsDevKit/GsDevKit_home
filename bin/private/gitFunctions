@@ -6,10 +6,10 @@
 updateClone() {
   master="$1"
   workingDir="$2"
-  theBranchName=`git --git-dir="$workingDir" rev-parse --abbrev-ref HEAD`
-  git --git-dir="$workingDir" checkout $master
-  git --git-dir="$workingDir" pull origin $master
-  git --git-dir="$workingDir" checkout $theBranchName
-  git --git-dir="$workingDir" merge $master
+  theBranchName=`git --work-tree="$workingDir" rev-parse --abbrev-ref HEAD`
+  git --work-tree="$workingDir" checkout $master
+  git --work-tree="$workingDir" pull origin $master
+  git --work-tree="$workingDir" checkout $theBranchName
+  git --work-tree="$workingDir" merge $master
 }
 
