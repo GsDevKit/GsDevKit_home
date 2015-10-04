@@ -42,7 +42,7 @@ if [ -d "$GS_HOME/gs_server" ]; then
 fi
 
 if [ -d "$GS_HOME/gs_client_dev" ]; then
-  $GS_HOME/gs_client_dev/bin/updateClone
+  $GS_HOME/gs_client_dev/bin/updateGsDevKit
 fi
 
 if [ -d "$GS_HOME/tode" ]; then
