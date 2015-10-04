@@ -8,21 +8,6 @@ echo "   GsDevKit script: $(basename $0) $*"
 echo "              path: $0"
 echo "================="
 
-usage() {
-  cat <<HELP
-USAGE: $(basename $0) [-h]
-
-OPTIONS
-  -h 
-     display help
-
-EXAMPLES
-  $(basename $0) -h
-  $(basename $0) 
-
-HELP
-}
-
 set -e # exit on error
 if [ "${GS_HOME}x" = "x" ] ; then
   echo "the GS_HOME environment variable needs to be defined"
@@ -30,9 +15,12 @@ if [ "${GS_HOME}x" = "x" ] ; then
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
-source ${GS_HOME}/bin/private/shFunctions
-getOpts_help $@
+if [ "${GS_CLIENT_DEV}x" = "x" ] ; then
+  # no cients to update
+  exit 0
+fi
 
-source ${GS_HOME}/bin/private/gitFunctions
+$GS_HOME/bin/updateClone client
+$GS_CLIENT_DEV/bin/updateClient
 
 echo "...finished $(basename $0)"
