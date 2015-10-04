@@ -13,3 +13,11 @@ updateClone() {
   git --git-dir="$workingDir/.git" --work-tree="$workingDir" merge $master
 }
 
+checkoutClone() {
+  master="$1"
+  workingDir="$2"
+  branchName="$3"
+  git --git-dir="$workingDir/.git" --work-tree="$workingDir" checkout $master
+  git --git-dir="$workingDir/.git" --work-tree="$workingDir" checkout -b $branchName
+}
+

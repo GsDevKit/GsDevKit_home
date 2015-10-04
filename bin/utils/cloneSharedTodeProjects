@@ -13,5 +13,4 @@ cloneScriptPath="${GS_SHARED_TODE}/sys/default/bin/cloneSharedTodeProjects"
 if [ -e "${GS_SHARED_TODE}/sys/local/bin/cloneSharedTodeProjects" ] ; then
   cloneScriptPath="${GS_SHARED_TODE}/sys/local/bin/cloneSharedTodeProjects"
 fi
-
 $cloneScriptPath $*

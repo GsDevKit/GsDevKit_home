@@ -12,7 +12,8 @@ usage() {
   cat <<HELP
 USAGE: $(basename $0) [-h] [-c https | ssh ] [-b <branch-name>] client|server|both
 
-Clone the Github repositories used by the tODE client to \$GS_HOME/shared/repos.
+Clone the Github repositories used by the tODE client and server into 
+\$GS_HOME/shared/repos.
 
 "client" & "server" repos:
 
@@ -119,74 +120,49 @@ case "$1" in
   *) echo "unknown argument: $1"; usage; exit 1;;
 esac
 
+source ${GS_HOME}/bin/private/gitFunctions
+
 pushd ${GS_SHARED_REPO} >& /dev/null
   if [ ! -d "metacello-work" ] ; then
     ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich metacello-work
-    cd metacello-work
-    git checkout $GS_SHARED_GIT_CHECKOUT_METACELLO
-    git checkout -b $branchName
-    cd ..
+    checkoutClone $GS_SHARED_GIT_CHECKOUT_METACELLO ${GS_SHARED_REPO}/monticello-work $branchName
   fi
   if [ ! -d "tode" ] ; then
     ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich tode
-    cd tode
-    git checkout $GS_SHARED_GIT_CHECKOUT_TODE
-    git checkout -b $branchName
-    cd ..
+    checkoutClone $GS_SHARED_GIT_CHECKOUT_TODE ${GS_SHARED_REPO}/tode $branchName
   fi
   if [ ! -d "ston" ] ; then
     ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg GsDevKit ston
-    cd ston
-    git checkout $GS_SHARED_GIT_CHECKOUT_STON
-    git checkout -b $branchName
-    cd ..
+    checkoutClone $GS_SHARED_GIT_CHECKOUT_STON ${GS_SHARED_REPO}/ston $branchName
   fi
   if [ "$loadClientRepos" = "true" ] ; then
     cd pharo3.0
     if [ ! -d "filetree" ] ; then
       ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich filetree
-      cd filetree
-      git checkout $GS_SHARED_GIT_CHECKOUT_PHARO3_FILETREE
-      git checkout -b $branchName
-      cd ..
+      checkoutClone $GS_SHARED_GIT_CHECKOUT_PHARO3_FILETREE ${GS_SHARED_REPO}/pharo3.0/filetree $branchName
       fi
     cd ..
   fi
   if [ "$loadServerRepos" = "true" ] ; then
     if [ ! -d "filetree" ] ; then
       ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich filetree
-      cd filetree
-      git checkout $GS_SHARED_GIT_CHECKOUT_GEMSTONE_FILETREE
-      git checkout -b $branchName
-      cd ..
+      checkoutClone $GS_SHARED_GIT_CHECKOUT_GEMSTONE_FILETREE ${GS_SHARED_REPO}/filetree $branchName
     fi
     if [ ! -d "Grease" ] ; then
       ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg GsDevKit Grease
-      cd Grease
-      git checkout $GS_SHARED_GIT_CHECKOUT_GREASE
-      git checkout -b $branchName
-      cd ..
+      checkoutClone $GS_SHARED_GIT_CHECKOUT_GREASE ${GS_SHARED_REPO}/Grease $branchName
     fi
     if [ ! -d "PharoCompatibility" ] ; then
       ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg glassdb PharoCompatibility
-      cd PharoCompatibility
-      git checkout $GS_SHARED_GIT_CHECKOUT_PHARO_COMPAT
-      git checkout -b $branchName
-      cd ..
+      checkoutClone $GS_SHARED_GIT_CHECKOUT_PHARO_COMPAT ${GS_SHARED_REPO}/PharoCompatibility $branchName
     fi
     if [ ! -d "glass" ] ; then
       ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg glassdb glass
-      cd glass
-      git checkout $GS_SHARED_GIT_CHECKOUT_GLASS1
-      git checkout -b $branchName
-      cd ..
+      checkoutClone $GS_SHARED_GIT_CHECKOUT_GLASS1 ${GS_SHARED_REPO}/glass $branchName
     fi
     if [ ! -d "rb" ] ; then
       ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich rb
-      cd rb
-      git checkout $GS_SHARED_GIT_CHECKOUT_RB
-      git checkout -b $branchName
-      cd ..
+      checkoutClone $GS_SHARED_GIT_CHECKOUT_RB ${GS_SHARED_REPO}/rb $branchName
     fi
   fi
 popd >& /dev/null
