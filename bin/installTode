@@ -43,6 +43,8 @@ if [ "${GS_TODE}x" = "x" ] ; then
   source ${GS_HOME}/bin/defGsDevKit.env
 fi
 
+$GS_HOME/bin/startStone -b $stoneName
+
 $GS_TODE/bin/installTode $stoneName
 
 echo "...finished $(basename $0)"
