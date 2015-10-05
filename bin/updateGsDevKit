@@ -10,11 +10,22 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h]
+USAGE: $(basename $0) [-h] [-s]
+Update the clones for each of the installed GsDevKit modules:
+  GsDevKit_home
+  GsDevKit_gs_server
+  GsDevKit_gs_client
+  GsDevKit_tode
+  GsDevKit_todeClient
+  GsDevKit_gemtools
+
+Update the GsDevKit command line image.
 
 OPTIONS
   -h 
      display help
+  -s 
+     skip update of GsDevKit command line image.
 
 EXAMPLES
   $(basename $0) -h
@@ -30,8 +41,15 @@ if [ "${GS_HOME}x" = "x" ] ; then
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
-source ${GS_HOME}/bin/private/shFunctions
-getOpts_help $@
+skipCommandLine="false"
+while getopts "h" OPT ; do
+  case "$OPT" in
+    h) usage; exit 0;;
+    s) skipCommandLine="true";;
+    *) echo "unknown option $OPT"; usage; exit 1;;
+  esac
+done
+shift $(($OPTIND - 1))
 
 source ${GS_HOME}/bin/private/gitFunctions
 
@@ -49,6 +67,8 @@ if [ -d "$GS_HOME/tode" ]; then
   updateClone master "$GS_HOME/tode"
 fi
 
-$GS_HOME/bin/private/gsDevKitCommandLine -F
+if ["$skipCommandLine" = "true" ] ; then
+  $GS_HOME/bin/private/gsDevKitCommandLine -F
+fi
 
 echo "...finished $(basename $0)"

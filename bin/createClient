@@ -63,7 +63,7 @@ source ${GS_HOME}/bin/defGsDevKit.env
 
 clientType="tode"
 forceArg=""
-while getopts ":fht:" OPT ; do
+while getopts "fht:" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     f) forceArg=" -f ";;

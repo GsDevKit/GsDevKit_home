@@ -65,11 +65,12 @@ case "$1" in
     ;;
 esac
 
+forceArg=""
 if [ "$force" = "true" ] ; then
-  rm -rf "${GS_SHARED_PHARO}/gsDevKitCommandLine.image"
+  forceArg=" -f "
 fi
 if [ ! -e "${GS_SHARED_PHARO}/gsDevKitCommandLine.image" ] ; then
-  $GS_SHARED/bin/create_gs_server_image -d $GS_SHARED_PHARO gsDevKitCommandLine
+  $GS_SHARED/bin/create_gs_server_image $forceArg -d $GS_SHARED_PHARO gsDevKitCommandLine
   if [ "$exitAfterForce" = "true" ] ; then
     exit 0
   fi
