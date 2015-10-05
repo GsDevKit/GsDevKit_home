@@ -7,7 +7,7 @@ updateClone() {
   master="$1"
   workingDir="$2"
   echo ">>>>>>"
-  echo "   Updating clone $(basename $workingDir)"
+  echo "   Updating $(basename $workingDir)"
   echo ">>>>>>"
   theBranchName=`git --git-dir="$workingDir/.git" --work-tree="$workingDir" rev-parse --abbrev-ref HEAD`
   git --git-dir="$workingDir/.git" --work-tree="$workingDir" checkout $master
@@ -21,7 +21,7 @@ checkoutClone() {
   workingDir="$2"
   branchName="$3"
   echo ">>>>>>"
-  echo "   Checkout clone $(basename $workingDir)"
+  echo "   Checkout $(basename $workingDir)"
   echo ">>>>>>"
   git --git-dir="$workingDir/.git" --work-tree="$workingDir" checkout $master
   git --git-dir="$workingDir/.git" --work-tree="$workingDir" checkout -b $branchName
