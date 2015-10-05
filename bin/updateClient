@@ -45,7 +45,7 @@ skipUpdateClone="false"
 while getopts "hs" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
-    t) skipUpdateClone="true";;
+    s) skipUpdateClone="true";;
     *) echo "unknown argument $OPT"; usage; exit 1;;
   esac
 done
