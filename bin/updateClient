@@ -10,7 +10,7 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] -s <client-name>...
+USAGE: $(basename $0) [-h] [-s] <client-name>...
 Update GsDevKit client clones and the named clients.
 
 OPTIONS

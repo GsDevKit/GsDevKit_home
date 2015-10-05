@@ -10,18 +10,30 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h]
+USAGE: $(basename $0) [-h] [-s] <stone-name>...
+Update GsDevKit server clones and the named tODE stones.
 
 OPTIONS
   -h 
      display help
+  -s
+     skip updateClone
 
 EXAMPLES
   $(basename $0) -h
-  $(basename $0) 
+  $(basename $0) tode
+  $(basename $0) -s tode
+  $(basename $0) gemtools_329
+  $(basename $0) jade_329
 
 HELP
 }
+
+PLATFORM="`uname -sm | tr ' ' '-'`"
+if [[ "$PLATFORM" == MINGW32_NT* ]] ; then
+  echo "This script is a server-only script and cannot be used on Windows"
+  exit 1
+fi
 
 set -e # exit on error
 if [ "${GS_HOME}x" = "x" ] ; then
@@ -30,8 +42,31 @@ if [ "${GS_HOME}x" = "x" ] ; then
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
-source ${GS_HOME}/bin/private/shFunctions
-getOpts_help $@
+skipUpdateClone="false"
+while getopts "hs" OPT ; do
+  case "$OPT" in
+    h) usage; exit 0;;
+    s) skipUpdateClone="true";;
+    *) echo "unknown argument $OPT"; usage; exit 1;;
+  esac
+done
+shift $(($OPTIND - 1))
 
+if [ $# -lt 1 ]; then
+  echo "missing stone name args"; usage; exit 1
+fi
+
+if [ "$skipUpdateClone" = 'false' ] ; then
+  $GS_HOME/bin/updateClone server
+fi
+
+for stoneName in "$@"
+do
+  if [ -d "${GS_SERVER_STONES}/$stoneName/" ] ; then
+    $GS_TODE/bin/updateTode $stoneName
+  else
+    echo "stone $stoneName does not exist"
+  fi
+done
 
 echo "...finished $(basename $0)"
