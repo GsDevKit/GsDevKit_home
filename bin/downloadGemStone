@@ -288,6 +288,8 @@ if [ -d "$GS_SHARED_DOWNLOADS/products/$gsvers" ] ; then
     echo "[Warning] $GS_SHARED_DOWNLOADS//products/$gsvers already exists"
     echo "to replace it, remove or rename it and rerun this script"
     echo "...finished $(basename $0)"
+    #    Copy the gci libraries to client installations
+    $GS_HOME/bin/private/installClientGciLibraries $vers
     exit 0
 fi
 
