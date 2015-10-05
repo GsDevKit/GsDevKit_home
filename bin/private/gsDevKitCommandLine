@@ -69,7 +69,7 @@ forceArg=""
 if [ "$force" = "true" ] ; then
   forceArg=" -f "
 fi
-if [ ! -e "${GS_SHARED_PHARO}/gsDevKitCommandLine.image" ] ; then
+if [ ! -e "${GS_SHARED_PHARO}/gsDevKitCommandLine.image" ] || [ "$force" = "true" ] ; then
   $GS_SHARED/bin/create_gs_server_image $forceArg -d $GS_SHARED_PHARO gsDevKitCommandLine
   if [ "$exitAfterForce" = "true" ] ; then
     exit 0
