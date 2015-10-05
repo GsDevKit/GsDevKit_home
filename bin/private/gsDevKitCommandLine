@@ -5,7 +5,7 @@
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-f] [-i] [<gsDevKit-command-line>]
+USAGE: $(basename $0) [-h] [-f | -F] [-i] [<gsDevKit-command-line>]
 
 Perform commands specified in <gsDevKit-command-line> against 
 $GS_SERVER_PHARO/gsDevKitCommandLine.image.
@@ -15,6 +15,8 @@ OPTIONS
      display help
   -f 
      rebuild gsDevKitCommandLine.image before executing <gsDevKit-command-line>
+  -F
+     rebuild gsDevKitCommandLine.image and exit
   -i
      start gsDevKitCommandLine.image interactively for development or debugging
      <gsDevKit-command-line>
@@ -23,7 +25,8 @@ EXAMPLES
   $(basename $0) -h
   $(basename $0) stopnetldi gs_329
   $(basename $0) -f stopnetldi gs_329
-  $(basename $0) -i
+  $(basename $0) -F
+  $(basename $0) -i stopnetldi gs_329
 
 HELP
 }
@@ -42,15 +45,17 @@ fi
 source ${GS_HOME}/bin/private/winRunPharoFunctions
 
 force="false"
+exitAfterForce="false"
 interactive="false"
 case "$1" in
   --*) # pass to tode
     ;;
   -*) # handle single - options here
-    while getopts "fhi" OPT ; do
+    while getopts "fFhi" OPT ; do
       case "$OPT" in
         h) usage; exit 0 ;;
         f) force="true";;
+        F) force="true"; exitAfterForce="true";;
         i) interactive="true";;
       esac
     done
@@ -65,6 +70,9 @@ if [ "$force" = "true" ] ; then
 fi
 if [ ! -e "${GS_SHARED_PHARO}/gsDevKitCommandLine.image" ] ; then
   $GS_SHARED/bin/create_gs_server_image -d $GS_SHARED_PHARO gsDevKitCommandLine
+  if [ "$exitAfterForce" = "true" ] ; then
+    exit 0
+  fi
 fi
 
 # Run script
