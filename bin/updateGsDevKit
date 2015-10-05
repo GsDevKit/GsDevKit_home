@@ -42,7 +42,7 @@ fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
 skipCommandLine="false"
-while getopts "h" OPT ; do
+while getopts "hs" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     s) skipCommandLine="true";;
