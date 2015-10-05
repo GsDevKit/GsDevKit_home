@@ -67,7 +67,7 @@ if [ -d "$GS_HOME/tode" ]; then
   updateClone master "$GS_HOME/tode"
 fi
 
-if [ "$skipCommandLine" = "true" ] ; then
+if [ "$skipCommandLine" = "false" ] ; then
   $GS_HOME/bin/private/gsDevKitCommandLine -F
 fi
 
