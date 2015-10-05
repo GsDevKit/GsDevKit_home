@@ -11,7 +11,7 @@ echo "================="
 usage() {
   cat <<HELP
 USAGE: $(basename $0) [-h] <client-name>...
-Delete the named client.
+Delete the named clients.
 
 OPTIONS
   -h 
