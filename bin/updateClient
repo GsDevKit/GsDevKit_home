@@ -10,16 +10,19 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] <client-name>...
+USAGE: $(basename $0) [-h] -s <client-name>...
 Update GsDevKit client clones and the named clients.
 
 OPTIONS
   -h 
      display help
+  -s
+     skip updateClone
 
 EXAMPLES
   $(basename $0) -h
   $(basename $0) tode
+  $(basename $0) -s tode
   $(basename $0) gemtools_329
   $(basename $0) jade_329
 
@@ -38,17 +41,23 @@ if [ "${GS_CLIENT_DEV}x" = "x" ] ; then
   exit 0
 fi
 
-source ${GS_HOME}/bin/private/shFunctions
-getOpts_help $@
+skipUpdateClone="false"
+while getopts "hs" OPT ; do
+  case "$OPT" in
+    h) usage; exit 0;;
+    t) skipUpdateClone="true";;
+    *) echo "unknown argument $OPT"; usage; exit 1;;
+  esac
+done
+shift $(($OPTIND - 1))
 
 if [ $# -lt 1 ]; then
   echo "missing client name args"; usage; exit 1
 fi
 
-$GS_HOME/bin/updateClone client
-
-source ${GS_HOME}/bin/private/shFunctions
-getOpts_help $@
+if [ "$skipUpdateClone" = 'false' ] ; then
+  $GS_HOME/bin/updateClone client
+fi
 
 for clientName in "$@"
 do
