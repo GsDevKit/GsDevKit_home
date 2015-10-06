@@ -90,7 +90,18 @@ case "$clientType" in
 esac
 
 if [ ! -e "$targetLocation/libgcirpc-${vers}-32.${libext}" ] ; then
-  cp -rf ${sourceLocation}/lib*.${libext} $targetLocation
+        case "$vers" in
+          2.4.*)
+             pushd $sourceLocation >& /dev/null
+               for libName in $(find ./libgcirpc64* -type f)
+               do
+                 targetName=`echo "$libName" | cut -c 3- | cut -f1 -d'.'`
+                 cp -rf $libName $targetLocation/${targetName}.${libext}
+               done
+             popd >& /dev/null 
+            ;;
+          *) cp -rf ${sourceLocation}/lib*.${libext} $targetLocation ;;
+        esac
 else
   echo "[Warning] gci libraries already present to replace, delete them and try again"
 fi
