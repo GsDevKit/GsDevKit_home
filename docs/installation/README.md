@@ -96,21 +96,21 @@ You can connect using X-forwarding from a Linux desktop (that is, a Linux instal
 
    5. [Start Using tODE][13]
  
-[1]:./configureOS.md#configure-linux-desktop-for-both-client-and-server
-[2]:./configureOS.md#configure-mac-for-both-client-and-server
+[1]:./configOSForSingleNode.md#configure-linux-desktop-for-both-client-and-server
+[2]:./configOSForSingleNode.md#configure-mac-for-both-client-and-server
 [3]: installation/installDevKitServerClient.md
 
-[4]:./configureOS.md#configure-linux-server-for-server
-[5]:./configureOS.md#configure-mac-for-server
+[4]:./configOSForServerAndClient.md#configure-linux-server-for-server
+[5]:./configOSForServerAndClient.md#configure-mac-for-server
 [6]: ./installation/installDevKitServer.md
 
-[7]:./configureOS.md#configure-linux-desktop-for-client
-[8]:./configureOS.md#configure-mac-for-client
-[9]:./configureOS.md#configure-windows-for-client
+[7]:./configOSForServerAndClient.md#configure-linux-desktop-for-client
+[8]:./configOSForServerAndClient.md#configure-mac-for-client
+[9]:./configOSForServerAndClient.md#configure-windows-for-client
 [10]: ./installation/installDevKitClient.md
 
-[11]:./configureOS.md#configure-linux-server-for-client-and-server
-[12]:./configureOS.md#configure-mac-as-x-forwarding-client
+[11]:./configOSForRemoteWithXForwarding.md#configure-linux-server-for-client-and-server
+[12]:./configOSForRemoteWithXForwarding.md#configure-mac-as-x-forwarding-client
 
 [13]: ../gettingStartedWithTode.md
 
