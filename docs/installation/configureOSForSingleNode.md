@@ -5,7 +5,7 @@ appropriate features are installed.   Since to begin with, you will not have git
 installation, you must manually install the appropriate packages.
 
 The requirements are different for the different possible configurations and different operating systems. 
-A description of the various options is [here][1].  
+A description of the various options is [Installation Overview][1].  
 
 These instructions are specific to the OS used for installation on a single host.  
 The instructions are provided [Installation on a single desktop][2]
