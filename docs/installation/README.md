@@ -17,23 +17,54 @@ To get started with GsDevKit, you will be installing a server and a client.  Thi
 
 ---
 # Installation on a single desktop
-   1. Configure OS for both Client and Server:  ConfigureLinuxDesktopClientServer  ConfigureMacClientServer
-   2. Install Server&Client
-   3. Start Using tODE
+You may install the client and server portions at the same time in a shared directory structure.
+This can be done on Linux (desktop) or on Mac.
+
+   1. Configure OS for both Client and Server:
+      * Linux: [Configure Linux Desktop][1]
+      * Mac OS X: [Configure Mac][2]
+   2. Install both Server and Client
+   
+   3. [Start Using tODE][10]
 
 ---
 # Installing separate server and client
-   On server, configure OS for Server:  ConfigureLinuxServerServer  ConfigureMacServer
-   On server, Install Server
-   On client, Configure OS for Client:  ConfigureLinuxDesktopClient  ConfigureMacClient ConfigureWindowsClient
-   On client, Install Client
-   On client, Start Using tODE
+   1. On server, configure OS for Server:
+      * Linux: [Configure Linux Server][3]
+      * Mac OS X: [Configure Mac][4]
+   2. On server, Install Server
+
+   3. On client, Configure OS for Client:
+      * Linux: [Configure Linux Desktop][5]
+      * Mac OS X: [Configure Mac][6]
+      * Windows: [Configure Windows][7]
+   4. On client, Install Client
+   
+   5. On client, [Start Using tODE][10]
    
 ---
 # Installing on a remote node using X forwarding
-   On remote node: configure OS for both Client and Server:   ConfigureLinuxServerClientServer
-   On remote node: Install Server&Client
-   On desktop (only needed for mac desktops): Configure desktop machine:  ConfigureMacForXForward
-   Connect from desktop to remote node 
-   Start Using tODE
+   1. On remote node: configure OS for both Client and Server:   
+      ***Linux***: [Configure Linux Server][8]
+
+   2. On remote node: Install Server&Client
+
+   3. On desktop (only needed for mac desktops): Configure desktop machine:  
+       **Linux**: no action required, since Linux desktop should have X-windows installed   
+       **Mac OS X**: [Configure Mac For X-Forwarding][9]
+
+   4. Connect from desktop to remote node 
+
+   5. [Start Using tODE][10]
  
+[1]:./configureOS.md#configure-linux-desktop-for-both-client-and-server
+[2]:./configureOS.md#configure-mac-for-both-client-and-server
+[3]:./configureOS.md#configure-linux-server-for-server
+[4]:./configureOS.md#configure-mac-for-server
+[5]:./configureOS.md#configure-linux-desktop-for-client
+[6]:./configureOS.md#configure-mac-for-client
+[7]:./configureOS.md#configure-windows-for-client
+[8]:./configureOS.md#configure-linux-server-for-client-and-server
+[9]:./configureOS.md#configure-mac-as-x-forwarding-client
+
+[10]: ../gettingStartedWithTode.md
