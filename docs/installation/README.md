@@ -88,7 +88,11 @@ You can connect using X-forwarding from a Linux desktop (that is, a Linux instal
    
        * **Mac OS X**: [Configure Mac For X-Forwarding][12]
 
-   4. Connect from desktop to remote node using X forwarding
+   4. Connect from desktop to remote node using [X11 forwarding][14], with the [compression option for ssh][15]:.  
+
+   ```
+   ssh -c arcfour,blowfish-cbc -XC
+   ```
 
    5. [Start Using tODE][13]
  
@@ -109,3 +113,6 @@ You can connect using X-forwarding from a Linux desktop (that is, a Linux instal
 [12]:./configureOS.md#configure-mac-as-x-forwarding-client
 
 [13]: ../gettingStartedWithTode.md
+
+[14]: http://unix.stackexchange.com/questions/12755/how-to-forward-x-over-ssh-from-ubuntu-machine
+[25]: http://xmodulo.com/how-to-speed-up-x11-forwarding-in-ssh.html
