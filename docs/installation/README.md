@@ -20,58 +20,86 @@ To get started with GsDevKit, you will be installing a server and a client.  Thi
 You may install the client and server portions at the same time in a shared directory structure.
 This can be done on Linux (desktop) or on Mac.
 
-   1. Configure OS for both Client and Server:
+   1. Login to your desktop, and ensure that the required OS packages are installed.
+
       * Linux: [Configure Linux Desktop][1]
+
       * Mac OS X: [Configure Mac][2]
-   2. Install both [Install Server and Client][55]
+
+   2. Install the GsDevKit Client and Server.  This is done with a single command, that installs both within the same directory structure, creates the stone (server) instance and the tODE client instance, and starts up the stone.
+    
+      * [Install Server and Client][3]
    
-   3. [Start Using tODE][10]
+   3. [Start Using tODE][13]
 
 ---
 # Installing separate server and client
-1. On server, configure OS for Server:
 
-    * Linux: [Configure Linux Server][3]   
+The server may be installed on Linux or on Mac, and the client may be on Linux desktop, Mac, or Windows.
 
-    * Mac OS X: [Configure Mac][4]   
+1. Log into the remote machine on which you will be installing the GsDevKit server, and configure the OS prerequisites specific to the Server.
 
-2. On server, [Install Server][55]
+    * Linux: [Configure Linux Server][4]   
 
-3. On client, Configure OS for Client:   
+    * Mac OS X: [Configure Mac][5]   
+
+2. Also on the remote node, install the GsdevKit server. This will create and startup the stone (the GsDevkit server instance).
+
+   * [Install Server][6]
+
+3. Log into the Desktop client, on which you will install the GsDevKit client, and configure the OS prerequities that are specific to the client.   
  
-    * Linux: [Configure Linux Desktop][5]   
+    * **Linux**: [Configure Linux Desktop][7]   
  
-    * Mac OS X: [Configure Mac][6]   
+    * **Mac OS X**: [Configure Mac][8]   
 
-    * Windows: [Configure Windows][7]   
+    * **Windows**: [Configure Windows][9]   
 
-4. On client, [Install Client][55]
+4. Install the GsDevKit client.  This will create the tODE client, but not start it up.
 
-5. On client, [Start Using tODE][10]
+    * [Install Client][10]
+
+5. [Start Using tODE][13]
    
 ---
 # Installing on a remote node using X forwarding
-   1. On remote node: configure OS for both Client and Server:   
-      * Linux: [Configure Linux Server][8]
 
-   2. On remote node: [Install Server&Client][55]
+Both GsDevKit components, client and server, are on the same node, which is generally a linux server (i.e, a linux installation with no Window Manager). This configuration in general will have performance issues, and one of the other configurations is recommended.  
 
-   3. On desktop (only needed for mac desktops): Configure desktop machine:  
-       * Linux: no action required, since Linux desktop should have X-windows installed   
-       * Mac OS X: [Configure Mac For X-Forwarding][9]
+You can connect using X-forwarding from a Linux desktop (that is, a Linux installation that includes a Window Manager), or from the Mac.  It is also possible to connect from a Windows desktop by installing cygwin or another application that provides an X11-server, but this is outside the scope of these instructions.
 
-   4. Connect from desktop to remote node 
+   1. Login to the remote linux server node, and install the OS rerequsites for both Client and Server (other than the display related requirements).
 
-   5. [Start Using tODE][10]
+      * Linux: [Configure Linux Server][11]
+
+   2. Also on the remote node, install both GsDevKit Client and Server.  This will install both within the same directory structure, and create the stone (server) instance and the tODE client instance, and start up the stone.
+    
+      * [Install Server and Client][3]
+
+   3. On the desktop, install any required OS add-ons:
+   
+       * Linux: no action required, since Linux desktop should have X-windows installed
+   
+       * Mac OS X: [Configure Mac For X-Forwarding][12]
+
+   4. Connect from desktop to remote node using X forwarding
+
+   5. [Start Using tODE][13]
  
 [1]:./configureOS.md#configure-linux-desktop-for-both-client-and-server
 [2]:./configureOS.md#configure-mac-for-both-client-and-server
-[3]:./configureOS.md#configure-linux-server-for-server
-[4]:./configureOS.md#configure-mac-for-server
-[5]:./configureOS.md#configure-linux-desktop-for-client
-[6]:./configureOS.md#configure-mac-for-client
-[7]:./configureOS.md#configure-windows-for-client
-[8]:./configureOS.md#configure-linux-server-for-client-and-server
-[9]:./configureOS.md#configure-mac-as-x-forwarding-client
+[3]: installation/installDevKitServerClient.md
 
-[10]: ../gettingStartedWithTode.md
+[4]:./configureOS.md#configure-linux-server-for-server
+[5]:./configureOS.md#configure-mac-for-server
+[6]: ./installation/installDevKitServer.md
+
+[7]:./configureOS.md#configure-linux-desktop-for-client
+[8]:./configureOS.md#configure-mac-for-client
+[9]:./configureOS.md#configure-windows-for-client
+[10]: ./installation/installDevKitClient.md
+
+[11]:./configureOS.md#configure-linux-server-for-client-and-server
+[12]:./configureOS.md#configure-mac-as-x-forwarding-client
+
+[13]: ../gettingStartedWithTode.md
