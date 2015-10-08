@@ -97,7 +97,7 @@ You can connect using X-forwarding from a Linux desktop (that is, a Linux instal
    5. [Start Using tODE][13]
  
 [1]:./configOSForSingleNode.md#configure-linux-desktop-for-both-client-and-server
-[2]:./configOSForSingleNode.md#configure-mac-for-both-client-and-server
+[2]:./configOSForSingleNode.md#configure-mac-for-client-and-server
 [3]: installation/installDevKitServerClient.md
 
 [4]:./configOSForServerAndClient.md#configure-linux-server-for-server
