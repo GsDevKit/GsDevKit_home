@@ -11,7 +11,7 @@ GsDevKit can be installed under three configurations.
 (3) Both the GUI client and the server installed on a remote machine.  The remote machine does not need a window manager, but will need to have an X11 client installed.  The local client desktop machine has a window manager (obviously) and will run an X11 server.  Using  ssh -X to connect to the remote machine allows the  GUI client to display on the local machine.  This approach may suffer from performance issues, even with ssh -X compression.  If you are familiar with cygwin or otherwise have an X11 server for windows,  this approach may be used from a Windows client machine; but this configuration is not included with these installation instructions. 
 
 ---
-# Client and Server naming
+### Client and Server naming
 
 To get started with GsDevKit, you will be installing a server and a client.  This may be done in a single step, or by installing separately on different nodes.  Since you can have multiple servers on the same node, or multiple clients, the clients and the servers (stones) are named.  In the examples, we use devKit_329 for the name of the server (stone), and tode1 for the name of the tODE client. 
 
@@ -23,35 +23,42 @@ This can be done on Linux (desktop) or on Mac.
    1. Configure OS for both Client and Server:
       * Linux: [Configure Linux Desktop][1]
       * Mac OS X: [Configure Mac][2]
-   2. Install both Server and Client
+   2. Install both [Install Server and Client][55]
    
    3. [Start Using tODE][10]
 
 ---
 # Installing separate server and client
-   1. On server, configure OS for Server:
-      * Linux: [Configure Linux Server][3]
-      * Mac OS X: [Configure Mac][4]
-   2. On server, Install Server
+1. On server, configure OS for Server:
 
-   3. On client, Configure OS for Client:
-      * Linux: [Configure Linux Desktop][5]
-      * Mac OS X: [Configure Mac][6]
-      * Windows: [Configure Windows][7]
-   4. On client, Install Client
-   
-   5. On client, [Start Using tODE][10]
+    * Linux: [Configure Linux Server][3]   
+
+    * Mac OS X: [Configure Mac][4]   
+
+2. On server, [Install Server][55]
+
+3. On client, Configure OS for Client:   
+ 
+    * Linux: [Configure Linux Desktop][5]   
+ 
+    * Mac OS X: [Configure Mac][6]   
+
+    * Windows: [Configure Windows][7]   
+
+4. On client, [Install Client][55]
+
+5. On client, [Start Using tODE][10]
    
 ---
 # Installing on a remote node using X forwarding
    1. On remote node: configure OS for both Client and Server:   
-      ***Linux***: [Configure Linux Server][8]
+      * Linux: [Configure Linux Server][8]
 
-   2. On remote node: Install Server&Client
+   2. On remote node: [Install Server&Client][55]
 
    3. On desktop (only needed for mac desktops): Configure desktop machine:  
-       **Linux**: no action required, since Linux desktop should have X-windows installed   
-       **Mac OS X**: [Configure Mac For X-Forwarding][9]
+       * Linux: no action required, since Linux desktop should have X-windows installed   
+       * Mac OS X: [Configure Mac For X-Forwarding][9]
 
    4. Connect from desktop to remote node 
 
