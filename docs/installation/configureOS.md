@@ -1,10 +1,12 @@
 #Configuring the Operating System
 
-Before you can use a particular machine as part of a GsDevKit configuration, you must ensure that the appropriate features are installed.   Since to begin with, you will not have git access to the GeDevKit installation, you must manually install the appropriate packages.
+Before you can use a particular machine as part of a GsDevKit configuration, you must ensure that the appropriate features are installed.   Since to begin with, you will not have git access to the GsDevKit installation, you must manually install the appropriate packages.
 
-The requirements are different for the different possible configurations.  
+The requirements are different for the different possible configurations and different operating systems.  Refer to the Insatllation Overview for details on what OS configuration is required for which node in the system.    
 
-##Configure Linux Desktop for both Client and Server 
+## Configurations with a Single Desktop
+
+###Configure Linux Desktop for both Client and Server 
 	See   # Installation on a single desktop
 
 ```
@@ -26,12 +28,20 @@ The requirements are different for the different possible configurations.
   sudo ln -f -s /usr/lib/i386-lin-gnu/libstdc++.so.6 /usr/lib/i386-linux-gnu/libstdc++.so 
 ```
 
-##Configure Linux Server for Server  
-	See # Installing separate server and client
+
+##Configure Mac for Client and Server
+See Installation on a single desktop
 
 
-##Configure Linux Desktop for Client  
-	See # Installing separate server and client
+
+##Configurations With Client And Server on separate nodes
+
+###Configure Linux Server for Server  
+See Installing separate server and client
+
+
+###Configure Linux Desktop for Client  
+See  Installing separate server and client
 
 ```
   sudo dpkg --add-architecture i386
@@ -45,7 +55,20 @@ The requirements are different for the different possible configurations.
 ```
 
 
-##Configure Linux Server for Client and Server
+##Configure Mac for Server
+	See # Installing separate server and client
+
+##Configure Mac for Client 
+	See # Installing separate server and client
+
+##Configure Windows for Client
+	See # Installing separate server and client
+	
+	
+	
+##Installing on a remote server node using X forwarding
+
+###Configure Linux Server for Client and Server
   See # Installing on a remote node using X forwarding
 
 ```
@@ -70,19 +93,13 @@ The requirements are different for the different possible configurations.
   sudo apt-get -y install libxcb-dri2-0:i386 
 ```
 
-##Configure Mac for Client and Server
-	See   # Installation on a single desktop
-
-##Configure Mac for Server
-	See # Installing separate server and client
-
-##Configure Mac for Client 
-	See # Installing separate server and client
-
 ##Configure Mac as X-forwarding Client
       See # Installing on a remote node using X forwarding
 
-##Configure Windows for Client
-	See # Installing separate server and client
+
+
+
+
+
 
 
