@@ -36,6 +36,10 @@ The instructions are provided [Installation on a single desktop][2]
 ---
 ###Configure Mac for Client and Server
 
+```
+TBD
+```
+---
 
 [1]: ./README.md
 [2]: ./README.md#installation-on-a-single-desktop 
