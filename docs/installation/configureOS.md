@@ -4,6 +4,7 @@ Before you can use a particular machine as part of a GsDevKit configuration, you
 
 The requirements are different for the different possible configurations and different operating systems.  Refer to the Insatllation Overview for details on what OS configuration is required for which node in the system.    
 
+---
 ## Configurations with a Single Desktop
 
 ####Configure Linux Desktop for both Client and Server 
@@ -33,8 +34,8 @@ The requirements are different for the different possible configurations and dif
 See Installation on a single desktop
 
 
-
-##Configurations With Client And Server on separate nodes
+---
+##Configurations with Client and Server on separate nodes
 
 ####Configure Linux Server for Server  
 See Installing separate server and client
@@ -65,8 +66,8 @@ See Installing separate server and client
 See Installing separate server and client
 	
 	
-	
-##Installing on a remote server node using X forwarding
+---
+##Configurations on a Remote Server Node accessed using X-forwarding
 
 ####Configure Linux Server for Client and Server
   See Installing on a remote node using X forwarding
@@ -94,7 +95,7 @@ See Installing separate server and client
 ```
 
 ####Configure Mac as X-forwarding Client
-      See Installing on a remote node using X forwarding
+  See Installing on a remote node using X forwarding
 
 
 
