@@ -6,8 +6,8 @@ The requirements are different for the different possible configurations and dif
 
 ## Configurations with a Single Desktop
 
-###Configure Linux Desktop for both Client and Server 
-	See   # Installation on a single desktop
+####Configure Linux Desktop for both Client and Server 
+  See Installation on a single desktop
 
 ```
   sudo dpkg --add-architecture i386
@@ -29,18 +29,18 @@ The requirements are different for the different possible configurations and dif
 ```
 
 
-##Configure Mac for Client and Server
+####Configure Mac for Client and Server
 See Installation on a single desktop
 
 
 
 ##Configurations With Client And Server on separate nodes
 
-###Configure Linux Server for Server  
+####Configure Linux Server for Server  
 See Installing separate server and client
 
 
-###Configure Linux Desktop for Client  
+####Configure Linux Desktop for Client  
 See  Installing separate server and client
 
 ```
@@ -55,21 +55,21 @@ See  Installing separate server and client
 ```
 
 
-##Configure Mac for Server
-	See # Installing separate server and client
+####Configure Mac for Server
+See Installing separate server and client
 
-##Configure Mac for Client 
-	See # Installing separate server and client
+####Configure Mac for Client 
+See Installing separate server and client
 
-##Configure Windows for Client
-	See # Installing separate server and client
+####Configure Windows for Client
+See Installing separate server and client
 	
 	
 	
 ##Installing on a remote server node using X forwarding
 
-###Configure Linux Server for Client and Server
-  See # Installing on a remote node using X forwarding
+####Configure Linux Server for Client and Server
+  See Installing on a remote node using X forwarding
 
 ```
   sudo dpkg --add-architecture i386
@@ -93,8 +93,8 @@ See  Installing separate server and client
   sudo apt-get -y install libxcb-dri2-0:i386 
 ```
 
-##Configure Mac as X-forwarding Client
-      See # Installing on a remote node using X forwarding
+####Configure Mac as X-forwarding Client
+      See Installing on a remote node using X forwarding
 
 
 
