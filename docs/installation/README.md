@@ -6,15 +6,15 @@ GsDevKit can be installed under three configurations.
 
 (1) **Everything on a single workstation**.  Since this machine must already have a window manager in order to display the desktop, and since the GsDevKit installation can be shared, it is the simpliest approach.  
 
-[Installation Instructions](#installation_on_a_single_desktop)
+[Installation Instructions](#installation-on-a-single-desktop)
 
 (2) **Client on a local workstation, Server on a remote host**. The GUI client (such as tODE in Pharo) on one workstation, connecting to a GsDevKit server installation on a separate node.  You will need to install twice, installing the client on one machine and the server on another machine.  The remote machine (or VM) does not need a window manager, e.g. a Linux server installation.  This is generally the solution if your desktop machine is running Windows. 
 
-[Installation Instructions](#installation_on_separate_server_and_client)
+[Installation Instructions](#installation-on-separate-server-and-client)
 
 (3) **Everything on a remote server, accessed via X-forwarding**. Both the GUI client and the server installed on a remote machine.  The remote machine does not need a window manager, but will need to have an X11 client installed.  The local client desktop machine has a window manager (obviously) and will run an X11 server.  Using  ssh -X to connect to the remote machine allows the  GUI client to display on the local machine.  This approach may suffer from performance issues, even with ssh -X compression.  If you are familiar with cygwin or otherwise have an X11 server for windows,  this approach may be used from a Windows client machine; but this configuration is not included with these installation instructions. 
 
-[Installation Instructions](#installation_on_a_remote_node_accessed_with_x_forwarding)
+[Installation Instructions](#installation-on-a-remote-node-accessed-with-x-forwarding)
 
 ---
 ### Client and Server naming
