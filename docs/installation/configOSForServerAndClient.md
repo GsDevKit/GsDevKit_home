@@ -13,8 +13,11 @@ The complete installation instructions are provided under [Installation on separ
 ---
 
 ###Configure Linux Server for Server  
+```
+TBD
+```
 
-
+---
 ###Configure Linux Desktop for Client  
 
 ```
@@ -28,13 +31,20 @@ The complete installation instructions are provided under [Installation on separ
   sudo ln -f -s /usr/lib/i386-lin-gnu/libstdc++.so.6 /usr/lib/i386-linux-gnu/libstdc++.so 
 ```
 
-
+---
 ###Configure Mac for Server
+```
+TBD
+```
 
-
+---
 ###Configure Mac for Client 
 
+```
+TBD
+```
 
+---
 ###Configure Windows for Client
 
 The installation of GitHub on windows provides a shell environment that can be used to run the GsDevKit tODE client.
