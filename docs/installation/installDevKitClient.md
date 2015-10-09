@@ -1,16 +1,8 @@
 #GsDevKit Client Installation
 
-The GsDevKit client, tODE, can be installed on the same node as the GsDevKit server, or on a different node.  If you are installing a client on a different node, you should first [install the GsDevKit server][1], on the node you will use as the server.  To complete the client installation, You will need a file from the servers installation.
-
-As an alternative to a remote client, you may consider using [ssh X11 forwarding][4]. 
-With [ssh X11 forwarding][4], you install both GsDevKit server and client on the server node.  With an X11 client installed on the server, and an X11 server installed on the client, you can ssh -X to your server.  This is only practical over fast connections.
+These instructions describe installing the GsDevKit tODE client on a desktop machine, on a different node than the GsDevKit server (stone) will be running.  You should first [install the GsDevKit server][1], on the node you will use as the server. To complete this client installation, You will need a file from the servers installation.  For the complete set of steps, including OS configuration requirements, see the [instructions to install on separate server and client][2]
 
 Clients may be installed on **Linux**, **Mac** or **Windows**. 
-
-###Configure OS
-
-Before installing, you will need to [install the required OS packages][2].  
-
 
 ##Install Client
 
@@ -132,7 +124,7 @@ ssh -L 50378:hostNameOrIp user@example.com
    startClient tode 
    ```
 
-   for further details on using tode, see [Getting started with tODE][5]
+   for further details on using tode, see [Getting started with tODE][4]
 
 
 
@@ -141,10 +133,9 @@ ssh -L 50378:hostNameOrIp user@example.com
 
 
 [1]: ./installDevKitServer.md
-[2]: ./osPrereqs/configureOS.md
+[2]: ./README.md#installation-on-separate-server-and-client
 [3]:  https://github.com/git-for-windows/git/wiki/Git-cannot-create-a-file-or-directory-with-a-long-path
-[4]: x11ForwardingForRemoteDisplays.md#x11-forwarding-for-remote-servers
-[5]: gettingStartedWithTode.md
+[4]: ../gettingStartedWithTode.md
 
 
 
