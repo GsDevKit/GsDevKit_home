@@ -5,7 +5,17 @@ A complete GsDevKit installation includes both a server and a client, which can 
 The GsDevKit server  may be installed on **Linux** or **Mac**.  The GemStone/S 64 Bit does not run 
 directly on Windows, however, you may create a Linux VM on Windows and run the GsDevKit server within that VM.
 
-###Install Server
+### Determine port handling
+
+To establish the connection between the client and the server, a server process called the NetLDI listens on a well-known port.  This port may be selected and reserved, or you may allow the system to select one.  However, if you allow the OS to select the port, on restart it will select a different port and the client will need to be updated. 
+
+To avoid this, it is recommended to assign a reserved port number to a named NetLDI by adding an entry to the network services database, which may be /etc/services, before installing.  You do need to know the name that you will use for the server installation, since the NetLDI name is derived from that.  For example, if you will install the stone server with the name devKit_329, add an entry to services.dat similar to:
+
+```
+devKit_329_ldi          50378/tcp        # Gemstone netldi
+```
+
+##Install Server
 
 The following steps are involved in installing the GsDevKit server.  For an example script to execute, see [Install GsDevKit server only](#script-to-install-server-only) 
 
@@ -54,7 +64,7 @@ The following steps are involved in installing the GsDevKit server.  For an exam
    After these scripts successfully complete, you will have a stone named `<myStoneName>`, of GemStone/S 64 Bit version `<GemStoneVersion>`, installed on your server node and running.  You will also have a NetLDI named `<myStoneName>_ldi` running on the server, so the server is ready for a tODE client to connect.
    
 
-## Script to Install Server only
+### Script to Install Server only
 
 This script installs the server components only, and installs and starts a 3.2.9 server named **devKit_329**.   
 
