@@ -1,12 +1,9 @@
 #GsDevKit Server Installation
 
-A complete GsDevKit installation includes both a server and a client, which can be on the same or on different nodes.  These instructions provide information on installing the server component, without  installing a client.  
+A complete GsDevKit installation includes both a server and a client, which can be on the same or on different nodes.  These instructions provide information on installing the server component, without installing a client.  This is part of the [instructions for installing on two separate nodes][1]; refer to these instructions for the OS configuration required and other steps.
 
 The GsDevKit server  may be installed on **Linux** or **Mac**.  The GemStone/S 64 Bit does not run 
 directly on Windows, however, you may create a Linux VM on Windows and run the GsDevKit server within that VM.
-
-###Configure OS
-Before installing, you will need to [install the required OS packages][2].  
 
 ###Install Server
 
@@ -71,6 +68,4 @@ $GS_HOME/bin/installServer 3.2.9  devKit_329
 ```
 
 
-[1]: ./installDevKitClient.md
-[2]: ./osPrereqs/configureOS.md
-
+[1]: ./README.md#installation-on-separate-server-and-client
