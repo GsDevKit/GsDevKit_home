@@ -89,10 +89,31 @@ You now have an instance of the tODE client installed on your client machine, wi
 
 To establish the connection between the client and the server, a server process called the NetLDI listens on a well-known port, and the client must be configured to contact the server on  this port.  If the server and client  machines are not on the same local network, you will also need to setup SSH port forwarding for this port.
 
-it is recommended, but not required, to assign a reserved port number to a named NetLDI by adding an entry to the network services database, which may be /etc/services.  For example,
+Before starting the server, it is recommended, but not required, to assign a reserved port number to a named NetLDI by adding an entry to the network services database, which may be /etc/services.  For example,
 ```
 devKit_329_ldi          50378/tcp        # Gemstone netldi
 ```
+
+If not, you will need to lookup the port number that the system has assigned to the NetLDI for the GsDevKit server (stone) instance that this client will connect to.  To do this, on the server node, execute the `stones` command.  this will return results similar to this: 
+
+```
+$ stones
+=================
+   GsDevKit script: stones 
+              path: /benton1/users/lalmarod/github/GsDevKit_home/bin/stones
+=================
+Installed Stones:
+        3.2.9   devKit_329
+Running Stones:
+        Status       Version    Owner    Pid   Port   Started     Type       Name
+        -------     --------- --------- ----- ----- ------------ ------      ----
+        exists      3.2.9     lalmarod  17175 45690 Oct 09 13:35 Stone       devKit_329
+Running Netldis:
+        Status       Version    Owner    Pid   Port   Started     Type       Name
+        -------     --------- --------- ----- ----- ------------ ------      ----
+        exists      3.2.9     lalmarod  15452 **48334** Oct 01 13:48 Netldi      devKit_329_ldi
+```
+The bolded value, in the Port column for the NetLDI, is the required value.
 
 To setup SSH port forwarding, 
 
@@ -112,19 +133,32 @@ ssh -L 50378:hostNameOrIp user@example.com
 
    these  will be needed to use tODE.
 
-2.  From the server installation, copy the file
+2.  From the server installation, copy the server specificaion file to the client.  This file is 
 
-   `$GS_HOME/shared/tode/sys/local/client`
+   `$GS_HOME/shared/tode/sys/local/client/descriptions/<myServerNodeName>`
+   
+   If you are using the same name as these examples, it will be named:
+   
+   `$GS_HOME/shared/tode/sys/local/client/descriptions/devKit_329`
 
    to the same path on the client node.
 
-3.  Start your client
+3.  Edit this file to specify [the server NetLDI port]{#determine-port-number-for-connection) in the line item for #netLDIPort :.  The lines in the file, for example:
+ 
+```
+...
+	#netLDI : 'devKit_329_ldi',
+	#netLDIPort : '48334',
+...
+```
+
+4.  Start your client
 
    ```
    startClient tode 
    ```
 
-   for further details on using tode, see [Getting started with tODE][4]
+5.  To confirm you are connected to your server, and for further details on using tode, see [Getting started with tODE][4]
 
 
 
