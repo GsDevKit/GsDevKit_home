@@ -19,7 +19,7 @@ devKit_329_ldi          50378/tcp        # Gemstone netldi
 
 The following steps are involved in installing the GsDevKit server.  For an example script to execute, see [Install GsDevKit server only](#script-to-install-server-only) 
 
-1. Determine your installation directory and clone GsDevKit_home to that location
+1. **Determine your installation directory and clone GsDevKit_home to that location**
 
    The following instructions clone the Development Kit to the current directory, so before starting, cd to the directory in which you want the GsDevKit checkout to be located.
 
@@ -29,12 +29,12 @@ The following steps are involved in installing the GsDevKit server.  For an exam
    cd GsDevKit_home
    ```
 
-2. Perform the git checkout and branch
+2. **Perform the git checkout and branch**
    ```
    git checkout -b gsdevkit
    ```
 
-3. Set the environment
+3. **Set the environment**
 
    The environment variable $GS_HOME and the updated $PATH are required to use DevKit, so you should add them to your `.bashrc` or another initialization script.
    ```
@@ -42,7 +42,7 @@ The following steps are involved in installing the GsDevKit server.  For an exam
    export PATH=$GS_HOME/bin:$PATH
    ```
 
-4. Perform the Server installation
+4. **Perform the Server installation**
    
     The installation is performed by a GsDevKit script.  This script takes care of cloning the required projects to your server node, installing a stone of the specified version and and specified name, and starting that stone.  You can also use a script that installs the client as well as the server, if you intend to run both components on the same node.
 
@@ -53,7 +53,7 @@ The following steps are involved in installing the GsDevKit server.  For an exam
    $GS_HOME/bin/installServer <GemStoneVersion> <myStoneName>
    ```
 
-   You may use any name for the <myStoneName> and <myClientName>, and note that you may later have multiple stones and multiple clients. The examples below use **devKit_329** and **tode**.
+   You may use any name for the <myStoneName> and <myClientName>, and note that you may later have multiple stones and multiple clients. The examples below use **devKit_329**.
 
    The install scripts invokes the following sub-scripts:
    ```
