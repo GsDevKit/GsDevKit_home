@@ -12,13 +12,13 @@ Use the name of the client you created.  The script `clients` will list all inst
 
 The image looks like this:
 
-![tode image][63]
+![tode image][2]
 
 
 ####Open a tODE shell
 Once a tode client image is open, use the following menu to open a tode shell:  
    
-![open tode shell][18]
+![open tode shell][1]
 
 *If an error occurs while attempting to open the tODE shell, see the [tODE Test Login][64] section of the [Getting Started with tODE][62] document for getting help diagnosing the problem.*
 
@@ -26,19 +26,14 @@ Once a tode client image is open, use the following menu to open a tode shell:
 
 Open a tODE a *Project List Browser* using the `project list` tODE command:
 
-![project list][19]
+![project list][3]
 
-For additional information on using tODE see the [Getting Started with tODE][62] document.
 
 
 ---
 
-[16]: http://gemtalksystems.com/products/gs64/versions32x/
-[17]: docs/clientInstallation.md#tode-client-installation
-[18]: docs/images/openTodeShell.png
-[19]: docs/images/projectList.png
-[62]: https://github.com/dalehenrich/tode/blob/master/docs/GettingStarted.md#getting-started-with-tode
-[63]: docs/images/todeClient.png
-[64]: https://github.com/dalehenrich/tode/blob/master/docs/GettingStarted.md#tode-test-login
 
-[74]: tode/sys/default/projects
+[1]: images/openTodeShell.png
+[2]: images/todeClient.png
+[3]: images/projectList.png
+
