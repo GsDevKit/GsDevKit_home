@@ -8,7 +8,13 @@ On the client node, execute:
 startClient <clientName>
 ```
 
-Use the name of the client you created.  The script `clients` will list all installed clients.
+Use the name of the client you created.  These instructions have used the client name **tode1**, in which case you can executs
+
+```
+startClient tode1
+```
+
+The script `clients` will list all installed clients.
 
 The image looks like this:
 
@@ -20,7 +26,7 @@ Once a tode client image is open, use the following menu to open a tode shell:
    
 ![open tode shell][1]
 
-*If an error occurs while attempting to open the tODE shell, see the [tODE Test Login][64] section of the [Getting Started with tODE][62] document for getting help diagnosing the problem.*
+*If an error occurs while attempting to open the tODE shell, try a [tODE Test Login][4] for getting help diagnosing the problem.*
 
 ####Open a tODE project list
 
@@ -36,4 +42,4 @@ Open a tODE a *Project List Browser* using the `project list` tODE command:
 [1]: images/openTodeShell.png
 [2]: images/todeClient.png
 [3]: images/projectList.png
-
+[4]: images/testLoginOutput.png
