@@ -4,9 +4,9 @@ These instructions describe installing the GsDevKit tODE client on a desktop mac
 
 Clients may be installed on **Linux**, **Mac** or **Windows**. 
 
-##Install Client
+## Install Client
 
-The following steps are involved in installing the GsDevKit client. For an example script to execute, see [Install GsDevKit client on Linux or Mac](#script-to-install-client) or [Install GsDevKit client on Windows](#script-to-install-client-on-windows)
+The following steps are involved in installing the GsDevKit client. For an example script to execute, see [Install GsDevKit client on Linux or Mac](#script-to-install-client-on-linux-or-mac) or [Install GsDevKit client on Windows](#script-to-install-client-on-windows)
 
 1. Determine your installation directory and clone GsDevKit_home to that location
 
@@ -52,7 +52,7 @@ The following steps are involved in installing the GsDevKit client. For an examp
    createClient 
    ```
 
-## Script to Install Client on Linux or Mac
+### Script to Install Client on Linux or Mac
 
 This script installs the GsDevKit client components and creates a client with the name **tode**.
 
@@ -67,7 +67,7 @@ export PATH=$GS_HOME/bin:$PATH
 $GS_HOME/bin/installClient -c https 3.2.9 tode
  ```
 
-## Script to Install Client on Windows
+### Script to Install Client on Windows
 
 This script installs the GsDevKit client components and creates a client with the name **tode**.
 
@@ -101,7 +101,7 @@ ssh -L 50378:hostNameOrIp user@example.com
 ```
 
 
-#Client setup
+## Client Setup
 
 1. Edit your `.bashrc`, or create another intializations file, that includes the lines:
 
