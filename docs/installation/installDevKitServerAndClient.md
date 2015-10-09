@@ -36,12 +36,12 @@ The following steps are involved in installing the GsDevKit server and client.  
    
     The installation is performed by a GsDevKit script.  This script takes care of cloning the required projects to your server node, installing a stone of the specified version and and specified name, and starting that stone.  You can also use a script that installs the client as well as the server, if you intend to run both components on the same node.
 
-   These instructions use 3.2.9 for <GemStoneVersion>; check for later GemStone/S 64 Bit releases.
+   These instructions use 3.2.9 for `<GemStoneVersion>`; check for later GemStone/S 64 Bit releases.
    
    ```
    $GS_HOME/bin/installClientServer <GemStoneVersion> <myStoneName> <myClientName>
    ```
-   You may use any name for the <myStoneName> and <myClientName>, and note that you may later have multiple stones and multiple clients. The examples below use **devKit_329** and **tode1**.
+   You may use any name for the `<myStoneName>` and `<myClientName>`, and note that you may later have multiple stones and multiple clients. The examples below use **devKit_329** and **tode1**.
 
    The install scripts invokes the following sub-scripts:
    ```
@@ -55,7 +55,7 @@ The following steps are involved in installing the GsDevKit server and client.  
 
 ## Script to Install both Server and Client
 
-This script installs both client and server components, and installs and starts a 3.2.9 server named **devKit_329**, and a todeClient named **tode**.  
+This script installs both client and server components, and installs and starts a 3.2.9 server named **devKit_329**, and a todeClient named **tode1**.  
 
 ```
 git clone https://github.com/GsDevKit/GsDevKit_home.git
