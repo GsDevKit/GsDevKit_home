@@ -26,7 +26,9 @@ Once a tode client image is open, use the following menu to open a tode shell:
    
 ![open tode shell][1]
 
-*If an error occurs while attempting to open the tODE shell, try a [tODE Test Login][4] for getting help diagnosing the problem.*
+*If an error occurs while attempting to open the tODE shell, try a 
+![tODE Test Login][4] 
+to get more information for diagnosing the problem.*
 
 ####Open a tODE project list
 
