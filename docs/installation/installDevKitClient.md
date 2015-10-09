@@ -111,14 +111,14 @@ Running Stones:
 Running Netldis:
         Status       Version    Owner    Pid   Port   Started     Type       Name
         -------     --------- --------- ----- ----- ------------ ------      ----
-        exists      3.2.9     lalmarod  15452 **48334** Oct 01 13:48 Netldi      devKit_329_ldi
+        exists      3.2.9     lalmarod  15452 48334 Oct 01 13:48 Netldi      devKit_329_ldi
 ```
-The bolded value, in the Port column for the NetLDI, is the required value.
+The value in the Port column for the NetLDI, in this case 48334, is the required value.
 
 To setup SSH port forwarding, 
 
 ```
-ssh -L 50378:hostNameOrIp user@example.com
+ssh -L 44834:hostNameOrIp user@example.com
 ```
 
 
