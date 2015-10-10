@@ -125,7 +125,7 @@ source ${GS_HOME}/bin/private/gitFunctions
 pushd ${GS_SHARED_REPO} >& /dev/null
   if [ ! -d "metacello-work" ] ; then
     ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich metacello-work
-    checkoutClone $GS_SHARED_GIT_CHECKOUT_METACELLO ${GS_SHARED_REPO}/monticello-work $branchName
+    checkoutClone $GS_SHARED_GIT_CHECKOUT_METACELLO ${GS_SHARED_REPO}/metacello-work $branchName
   fi
   if [ ! -d "tode" ] ; then
     ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich tode
