@@ -1,0 +1,7 @@
+TDRawGatewayNode{#name:'homeComposition',#contents:'(TDComposedDirectoryNode
+    pathComposedDirectoryNodeNamed: \'home\'
+    topez: self topez)
+    addPathNode: \'/sys/stone/home\';
+    addPathNode: \'/sys/local/home\';
+    addPathNode: \'/sys/default/home\' includes: #( \'tode\' \'utils\' );
+    yourself'}

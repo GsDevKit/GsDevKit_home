@@ -1,0 +1,7 @@
+TDRawGatewayNode{#name:'projectComposition',#contents:'(TDComposedProjectEntryNode
+    pathComposedDirectoryNodeNamed: \'home\'
+    topez: self topez)
+    addPathNode: \'/sys/stone/projects\';
+    addPathNode: \'/sys/local/projects\';
+    addPathNode: \'/sys/default/projects\' includes: #( \'grease\' \'gsDevKitHome\' \'metacello\' \'pharoCompat\' \'seaside\' \'sixx\' \'ston\' \'tode\' \'xml\' \'zinc\');
+    yourself'}

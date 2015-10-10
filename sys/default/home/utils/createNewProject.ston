@@ -1,0 +1,63 @@
+TDScriptLeafNode{#name:'createNewProject',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./createNewProject -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | mcTool mrTool projectTool clsTool browseTool basename description repo wc baselineName baselineClass |
+      mcTool := topez toolInstanceFor: \'mc\'.
+      mrTool := topez toolInstanceFor: \'mr\'.
+      projectTool := topez toolInstanceFor: \'project\'.
+      browseTool := topez toolInstanceFor: \'browse\'.
+      clsTool := topez toolInstanceFor: \'cls\'.
+      basename := args at: 1.
+      description := args at: 2.
+      repo := mrTool mrcreate: description.
+      baselineName := \'BaselineOf\' , basename.
+      wc := mcTool mccreate: baselineName.
+      mrTool mradd: repo to: wc.
+      baselineClass := clsTool
+        clscreate: baselineName
+        subclassOf: BaselineOf
+        category: baselineName baselineClass
+        compile: \'baseline: spec <baseline>\'
+        classified: \'baseline\'.
+      mcTool mccommit: {wc} commitMessage: \'initial commit\'.
+      TDProjectSpecEntryDefinition new
+        baseline: baselineName repository: repo loads: #(\'default\');
+        createProjectEntryNode: \'/home/stone/projects\' topez: topez.
+      projectTool projectLoad: basename.
+      browseTool browseMethodsBlock: [  ] label: \'\' ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  createNewProject - createNewProject sript utility template
+SYNOPSIS
+  createNewProject [-h|--help]
+  createNewProject <project-basename> <repository-description>
+DESCRIPTION
+   Creates new project artifacts equivalent to the following tODE
+   shell script:
+
+     mr create filetree://$GS_HOME/tode/sys/local/git/YourProject/repository
+     mc create BaselineOfYourProject
+     mr add filetree://$GS_HOME/tode/sys/local/git/YourProject/repository BaselineOfYourProject
+     cls create BaselineOfYourProject BaselineOf BaselineOfYourProject
+     eval `BaselineOfYourProject compile: \'\'baseline: spec <baseline>\'\' classified: \'\'baseline\'\'`.
+     mc commit BaselineOfYourProject `initial commit`
+     project entry --baseline=YourProject --repo=filetree://$GS_HOME/tode/sys/local/git/YourProject/repository /home/stone/projects
+     project load YourProject
+     browse method --spec BaselineOfYourProject>>baseline:
+
+EXAMPLES
+  ./createNewProject -h
+
+  ./createNewProject YourProject filetree://$GS_HOME/tode/sys/local/git/YourProject/repository
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2015-03-31T14:07:14.44775295257568-07:00'],#modificationTime:DateAndTime['2015-04-02T20:37:36.61135292053223-07:00']}
