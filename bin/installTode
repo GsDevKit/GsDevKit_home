@@ -11,7 +11,7 @@ echo "================="
 usage() {
   cat <<HELP
 USAGE: $(basename $0) [-h] <stone-name>
-Install tODE in the give sonte.
+Install tODE in the give stone.
 
 OPTIONS
   -h
