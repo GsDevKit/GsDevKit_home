@@ -46,7 +46,7 @@ done
 shift $(($OPTIND - 1))
 
 pushd ${GS_HOME} >& /dev/null
-  ${GS_HOME}/bin/private/cloneGitHubProject $modeArg GsDevKit GsDevKit_sys_local local
+  ${GS_HOME}/bin/private/cloneGitHubProject $modeArg GsDevKit GsDevKit_sys_local local gsdevkit
   ln -s ./local/local  ./sys/local
   ln -s ./local/sessions  ./sys/sessions
   ln -s ./local/stones  ./sys/stones

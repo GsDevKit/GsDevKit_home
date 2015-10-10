@@ -75,7 +75,8 @@ OPTIONS
      display help
   -b <branch-name>
      The name of the branch to create for local use, isolating your changes 
-     from the primary (master) branch. The default branch name is "gsdevkit"
+     from the primary (master) branch. If not specified, then primary branch
+     is used.
   -c https | ssh
      clone using https (https://github.com) or ssh (git@github.com)
      "ssh" is the default 
@@ -96,7 +97,7 @@ fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
 modeArg=""
-branchName="gsdevkit"
+branchName=""
 while getopts "hnb:c:" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;

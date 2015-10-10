@@ -19,11 +19,17 @@ updateClone() {
 checkoutClone() {
   master="$1"
   workingDir="$2"
-  branchName="$3"
+  branchName=""
+  if [ $# -ge 3 ]; then
+    branchName="$3"
+  fi
+
   echo ">>>>>>"
   echo "   Checkout $(basename $workingDir)"
   echo ">>>>>>"
   git --git-dir="$workingDir/.git" --work-tree="$workingDir" checkout $master
-  git --git-dir="$workingDir/.git" --work-tree="$workingDir" checkout -b $branchName
+  if [ "${branchName}x" != "x" ] ; then
+    git --git-dir="$workingDir/.git" --work-tree="$workingDir" checkout -b $branchName
+  fi
 }
 
