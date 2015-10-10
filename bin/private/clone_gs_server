@@ -46,7 +46,7 @@ done
 shift $(($OPTIND - 1))
 
 pushd ${GS_HOME} >& /dev/null
-${GS_HOME}/bin/private/cloneGitHubProject $modeArg GsDevKit GsDevKit_gs_server gs_server
+${GS_HOME}/bin/private/cloneGitHubProject $modeArg GsDevKit GsDevKit_gs_server server
 popd >& /dev/null
 
 echo "...finished $(basename $0)"

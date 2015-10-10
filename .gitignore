@@ -1,6 +1,6 @@
-/gs_server
-/gs_client_dev
-/tode
+/server
+/dev
+/local
 [._]*.s[a-w][a-z]
 [._]s[a-w][a-z]
 *.un~
