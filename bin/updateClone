@@ -15,9 +15,9 @@ if [ "${GS_HOME}x" = "x" ] ; then
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
-updateClonePath="${GS_SHARED_TODE}/sys/default/bin/updateClone"
-if [ -e "${GS_SHARED_TODE}/sys/local/bin/updateClone" ] ; then
-  updateClonePath="${GS_SHARED_TODE}/sys/local/bin/updateClone"
+updateClonePath="${GS_SYS_DEFAULT}/gsdevkit_bin/updateClone"
+if [ -e "${GS_SYS_LOCAL}/gsdevkit_bin/updateClone" ] ; then
+  updateClonePath="${GS_SYS_LOCAL}/gsdevkit_bin/updateClone"
 fi
 $updateClonePath $*
 
