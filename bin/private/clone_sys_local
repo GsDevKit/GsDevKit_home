@@ -50,9 +50,11 @@ pushd ${GS_HOME} >& /dev/null
   cd local
   git checkout -b gsdevkit
   cd ..
-  ln -s ./local/local  ./sys/local
-  ln -s ./local/sessions  ./sys/sessions
-  ln -s ./local/stones  ./sys/stones
+  pushd sys >& /dev/null
+    ln -s ../local/local .
+    ln -s ../local/sessions .
+    ln -s ../local/stones .
+  popd >& /dev/null
 popd >& /dev/null
 
 echo "...finished $(basename $0)"
