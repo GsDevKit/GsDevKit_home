@@ -15,7 +15,7 @@ Update the clones for each of the installed GsDevKit modules:
   GsDevKit_home
   GsDevKit_gs_server
   GsDevKit_gs_client
-  GsDevKit_tode
+  GsDevKit_sys_local
   GsDevKit_todeClient
   GsDevKit_gemtools
 
@@ -55,16 +55,16 @@ source ${GS_HOME}/bin/private/gitFunctions
 
 updateClone master "$GS_HOME"
 
-if [ -d "$GS_HOME/gs_server" ]; then
-  updateClone master "$GS_HOME/gs_server"
+if [ -d "$GS_SERVER" ]; then
+  updateClone master "$GS_SERVER"
 fi
 
-if [ -d "$GS_HOME/gs_client_dev" ]; then
-  $GS_HOME/gs_client_dev/bin/updateGsDevKit
+if [ -d "$GS_CLIENT_DEV" ]; then
+  $GS_CLIENT_DEV/bin/updateGsDevKit
 fi
 
-if [ -d "$GS_HOME/tode" ]; then
-  updateClone master "$GS_HOME/tode"
+if [ -d "$GS_SYS_LOCAL" ]; then
+  updateClone master "$GS_SYS_LOCAL"
 fi
 
 if [ "$skipCommandLine" = "false" ] ; then

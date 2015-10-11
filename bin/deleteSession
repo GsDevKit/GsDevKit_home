@@ -41,8 +41,8 @@ fi
 
 for stoneName in "$@"
 do
-  if [ -e $GS_SHARED_SESSIONS/$stoneName ] ; then
-    rm -rf $GS_SHARED_SESSIONS/$stoneName
+  if [ -e $GS_SYS_SESSIONS/$stoneName ] ; then
+    rm -rf $GS_SYS_SESSIONS/$stoneName
   fi
 done
 
