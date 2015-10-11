@@ -35,7 +35,7 @@ fi
 echo "Available Sessions:"
 
 
-pushd $GS_SHARED_SESSIONS >& /dev/null
+pushd $GS_SYS_SESSIONS >& /dev/null
   for fileName in $(find . -type f)
   do
     if [ "$fileName" != "." ] && [[ "$fileName" != ./README* ]] ; then
