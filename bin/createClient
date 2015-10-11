@@ -89,7 +89,6 @@ if [ "${GS_SYS_LOCAL}x" = "x" ] ; then
   source ${GS_HOME}/bin/defGsDevKit.env
 fi
 
-
 case $clientType in
   tode)
     if [ "${GS_TODE_CLIENT}x" = "x" ] ; then
