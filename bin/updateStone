@@ -63,7 +63,7 @@ fi
 for stoneName in "$@"
 do
   if [ -d "${GS_SERVER_STONES}/$stoneName/" ] ; then
-    $GS_TODE/bin/updateTode $stoneName
+    $GS_SYS/bin/updateTode $stoneName
   else
     echo "stone $stoneName does not exist"
   fi
