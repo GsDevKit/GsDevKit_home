@@ -57,7 +57,7 @@ if [ $# -lt 1 ]; then
 fi
 
 if [ "$skipUpdateClone" = 'false' ] ; then
-  $GS_HOME/bin/updateClone server
+  $GS_HOME/bin/utils/updateSharedTodeProjectsClone server
 fi
 
 for stoneName in "$@"

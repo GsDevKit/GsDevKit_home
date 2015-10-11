@@ -56,7 +56,7 @@ if [ $# -lt 1 ]; then
 fi
 
 if [ "$skipUpdateClone" = 'false' ] ; then
-  $GS_HOME/bin/updateClone client
+  $GS_HOME/bin/utils/updateSharedTodeProjectsClone client
 fi
 
 for clientName in "$@"
