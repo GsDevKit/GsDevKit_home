@@ -138,7 +138,7 @@ pushd $targetStonePath >& /dev/null
 popd >& /dev/null
 
 if [ "$runUpgrade" = "false" ] ; then
-  ######### Exit after target stone created
+  echo "$targetStoneName created"
   exit 0
 fi
 
@@ -155,91 +155,92 @@ fi
 
 $GS_HOME/bin/startStone $startStoneArg -b -w 5 $targetStoneName
 
-# start standard upgrade
-echo "STARTING standard upgradeImage "
-$GEMSTONE/bin/upgradeImage -s $GEMSTONE_NAME << EOF
-
+pushd $upgradeLogDir >& /dev/null
+  # start standard upgrade
+  echo "STARTING standard upgradeImage "
+  $GEMSTONE/bin/upgradeImage -s $GEMSTONE_NAME << EOF
+  
 EOF
-
-# Clear SystemLoginNotification #Subscriptions class variable
-echo "STARTING clear SystemLoginNotification #Subscriptions class variable"
-$GEMSTONE/bin/topaz -l -T50000 > $upgradeLogDir/topaz.out << EOF
-output pushnew $upgradeLogDir/topazClearSystemLoginNotification.out only
-set gemstone $targetStoneName
-
-display resultcheck
-level 0
-
-set user DataCurator pass swordfish
-login
-
-display oops
-iferr 1 stk
-iferr 2 stack
-iferr 3 input pop
-iferr 4 exit 1
-
-run
-(SystemLoginNotification _classVars at: #'Subscriptions') removeAll: (SystemLoginNotification _classVars at: #'Subscriptions').
-true
-%
-commit
-
-logout
-output pop
-exit 0
+  
+  # Clear SystemLoginNotification #Subscriptions class variable
+  echo "STARTING clear SystemLoginNotification #Subscriptions class variable"
+  $GEMSTONE/bin/topaz -l -T50000 > $upgradeLogDir/topaz.out << EOF
+  output pushnew $upgradeLogDir/topazClearSystemLoginNotification.out only
+  set gemstone $targetStoneName
+  
+  display resultcheck
+  level 0
+  
+  set user DataCurator pass swordfish
+  login
+  
+  display oops
+  iferr 1 stk
+  iferr 2 stack
+  iferr 3 input pop
+  iferr 4 exit 1
+  
+  run
+  (SystemLoginNotification _classVars at: #'Subscriptions') removeAll: (SystemLoginNotification _classVars at: #'Subscriptions').
+  true
+  %
+  commit
+  
+  logout
+  output pop
+  exit 0
 EOF
-
-# use default Bootstrap globals for Seaside upgrade
-# start "seaside" upgrade to upgrade GLASS to 1.0-beta.9.1
-echo "STARTING upgradeSeasideImage"
-$GEMSTONE/seaside/bin/upgradeSeasideImage -s $targetStoneName << EOF
-
+  
+  # use default Bootstrap globals for Seaside upgrade
+  # start "seaside" upgrade to upgrade GLASS to 1.0-beta.9.1
+  echo "STARTING upgradeSeasideImage"
+  $GEMSTONE/seaside/bin/upgradeSeasideImage -s $targetStoneName << EOF
+  
 EOF
-
-# Remove all BaselineOf* classes ... so that they will be reloaded during tODE installation
-echo "STARTING remove BaselineOf* classes"
-$GEMSTONE/bin/topaz -l -T50000 > $upgradeLogDir/topaz.out << EOF
-output pushnew $upgradeLogDir/topazRemoveBaselines.out only
-set gemstone $targetStoneName
-
-display resultcheck
-level 0
-
-set user DataCurator pass swordfish
-login
-
-display oops
-iferr 1 stk
-iferr 2 stack
-iferr 3 input pop
-iferr 4 exit 1
-
-run
-UserGlobals associations do: [:assoc |
-  assoc value isBehavior
-    ifTrue: [
-      | globalName |
-      globalName := assoc key asString.
-      (globalName ~= 'BaselineOf' and: [
-           (globalName _findString: 'BaselineOf' startingAt: 1 ignoreCase: false) == 1 ])
-         ifTrue: [
-           GsFile gciLogServer: '  removing the baseline ', globalName printString.
-           assoc value removeFromSystem ] ] ].
-true
-%
-
-run
-MCWorkingCopy allManagers do: [ :wc | wc packageName = 'Grease' ifTrue: [ wc unregister ] ].
-true
-%
-
-commit
-logout
-output pop
-exit 0
+  
+  # Remove all BaselineOf* classes ... so that they will be reloaded during tODE installation
+  echo "STARTING remove BaselineOf* classes"
+  $GEMSTONE/bin/topaz -l -T50000 > $upgradeLogDir/topaz.out << EOF
+  output pushnew $upgradeLogDir/topazRemoveBaselines.out only
+  set gemstone $targetStoneName
+  
+  display resultcheck
+  level 0
+  
+  set user DataCurator pass swordfish
+  login
+  
+  display oops
+  iferr 1 stk
+  iferr 2 stack
+  iferr 3 input pop
+  iferr 4 exit 1
+  
+  run
+  UserGlobals associations do: [:assoc |
+    assoc value isBehavior
+      ifTrue: [
+        | globalName |
+        globalName := assoc key asString.
+        (globalName ~= 'BaselineOf' and: [
+             (globalName _findString: 'BaselineOf' startingAt: 1 ignoreCase: false) == 1 ])
+           ifTrue: [
+             GsFile gciLogServer: '  removing the baseline ', globalName printString.
+             assoc value removeFromSystem ] ] ].
+  true
+  %
+  
+  run
+  MCWorkingCopy allManagers do: [ :wc | wc packageName = 'Grease' ifTrue: [ wc unregister ] ].
+  true
+  %
+  
+  commit
+  logout
+  output pop
+  exit 0
 EOF
-
+popd >& /dev/null  
 
 echo "Installing tODE"
 $GS_HOME/bin/installTode $targetStoneName
