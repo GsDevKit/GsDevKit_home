@@ -237,15 +237,15 @@ EOF
 
 
 echo "Installing tODE"
-$GS_SERVER/bin/installTode $targetStoneName
+$GS_HOME/bin/installTode $targetStoneName
 if [ "${createStone}" = "true" ] ; then
-  if [ -d  $GS_TODE/sys/stones/$sourceStoneName/projects ] ; then
-    cp -r $GS_TODE/sys/stones/$sourceStoneName/projects/. \
-          $GS_TODE/sys/stones/$targetStoneName/projects/
+  if [ -d  $GS_SYS_STONES/$sourceStoneName/projects ] ; then
+    cp -r $GS_SYS_STONES/$sourceStoneName/projects/. \
+          $GS_SYS_STONES/$targetStoneName/projects/
   fi
-  if [ -d  $GS_TODE/sys/stones/$sourceStoneName/home ] ; then
-    cp -r $GS_TODE/sys/stones/$sourceStoneName/home/. \
-          $GS_TODE/sys/stones/$targetStoneName/home/
+  if [ -d  $GS_SYS_STONES/$sourceStoneName/home ] ; then
+    cp -r $GS_SYS_STONES/$sourceStoneName/home/. \
+          $GS_SYS_STONES/$targetStoneName/home/
   fi
 fi
 
