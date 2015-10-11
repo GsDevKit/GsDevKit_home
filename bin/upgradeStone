@@ -94,13 +94,13 @@ cat <<EOF
 Performing the GsDevKitHome upgrade from the stone "$sourceStoneName" to the
 stone "$targetStoneName":
 
-  1. executes the $GS_HOME/bin/downloadGemStone to install GemStone $gsvers
-  2. executes the $GS_HOME/bin/createStone to create the $targetStoneName stone
+  1. executes the \$GS_HOME/bin/downloadGemStone to install GemStone $gsvers
+  2. executes the \$GS_HOME/bin/createStone to create the $targetStoneName stone
   3. copy the extent0.dbf file from "$sourceStoneName to $targetStoneName
   4. create $targetStonePath/upgradeLog
-  5. executes the $GEMSTONE/bin/upgradeImage script
-  6. executes the $GEMSTONE/seaside/bin/upgradeSeasideImage script
-  7. executes the $GS_SERVER/bin/installTode in $targetStoneName stone
+  5. executes the \$GEMSTONE/bin/upgradeImage script
+  6. executes the \$GEMSTONE/seaside/bin/upgradeSeasideImage script
+  7. executes the \$GS_SERVER/bin/installTode in $targetStoneName stone
      to complete the upgrade process
 
 If an error occurs during execution of this script, the details of the error are
@@ -143,6 +143,10 @@ fi
 
 
 source $GS_HOME/bin/defStone.env $targetStoneName
+if [ "$GEMSTONE}x" = "x" ] ; then
+  echo "\$GEMSTONE env var not set"; exit 1
+fi
+
 startStoneArg=""
 if [ "$majorMinorVersion" = "2.4" ]  ; then
   startStoneArg="-C"
