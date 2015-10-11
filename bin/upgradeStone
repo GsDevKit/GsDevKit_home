@@ -101,7 +101,8 @@ stone "$targetStoneName":
   5. executes the \$GEMSTONE/bin/upgradeImage script
   6. executes the \$GEMSTONE/seaside/bin/upgradeSeasideImage script
   7. executes the \$GS_SERVER/bin/installTode in $targetStoneName stone
-     to complete the upgrade process
+     to complete the upgrade process.
+  8. executes the <post-load-tode-script> (-l option)
 
 If an error occurs during execution of this script, the details of the error are
 available in the topazerrors.log file in the 

@@ -53,6 +53,12 @@ GsUpgrader batchErrorHandlingDo: [
   Transcript
     cr; 
     show: 'Lock and Load Grease (to ensure new repo is honored): ', greaseRepo printString.
+  (Metacello image
+    configuration: [ :spec | spec name = 'Grease' ];
+    list) do: [ :greaseSpec |
+      Metacello image
+        configuration: 'Grease';
+        unregister ].
   Metacello new
     baseline: 'Grease';
     repository: greaseRepo;
