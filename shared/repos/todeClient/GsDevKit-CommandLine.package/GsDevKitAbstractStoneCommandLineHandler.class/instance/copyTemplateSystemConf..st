@@ -5,6 +5,6 @@ copyTemplateSystemConf: stoneDirectory
 		cr;
 		tab;
 		show: 'Copying system.conf file'.
-	templateSystemConfFile := self gs_templateHome / 'system.conf'.
+	templateSystemConfFile := self gemStoneTemplateFileRefForFile: 'system.conf'.
 	systemConfFile := stoneDirectory / 'extents' / 'system.conf'.
-	templateSystemConfFile copyTo: systemConfFile.
+	templateSystemConfFile copyTo: systemConfFile
