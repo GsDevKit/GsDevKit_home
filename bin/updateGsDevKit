@@ -63,8 +63,8 @@ if [ -d "$GS_CLIENT_DEV" ]; then
   $GS_CLIENT_DEV/bin/updateGsDevKit
 fi
 
-if [ -d "$GS_SYS_LOCAL" ]; then
-  updateClone master "$GS_SYS_LOCAL"
+if [ -d "$GS_HOME/local" ]; then
+  updateClone master "$GS_HOME/local"
 fi
 
 if [ "$skipCommandLine" = "false" ] ; then
