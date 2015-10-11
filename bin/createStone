@@ -123,14 +123,6 @@ echo "Creating stone $stoneName"
 
 $GS_HOME/bin/downloadGemStone $vers
 
-if [ "$installTode" = "true" ] || [ "$todeSnapshotArg" = " -t " ] ; then
-  if [ "${GS_TODE}x" = "x" ] ; then
-    # clone tode module - needed if creating a tode stone
-    $GS_HOME/bin/private/cloneTode
-    source ${GS_HOME}/bin/defGsDevKit.env
-  fi
-fi
-
 ${GS_HOME}/bin/private/gsDevKitCommandLine createStone $stoneName $vers
 
 $GS_HOME/bin/newExtent $todeSnapshotArg $noRestartArg $snapshotFileArg $stoneName
