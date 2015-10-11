@@ -74,6 +74,7 @@ if [ "$GS_SERVER{}x" = "x" ] ; then
   exit 1
 fi
 
+source ${GS_HOME}/bin/private/shFunctions
 snapshotFile=""
 noRestart="false"
 attachTode="false"
@@ -81,7 +82,7 @@ while getopts "hns:t" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     n) noRestart="true";;
-    s) snapshotFile=`readlink -f ${OPTARG}` ;;
+    s) snapshotFile=`realpath ${OPTARG}` ;; 
     t) attachTode="true";;
     *) echo "unknown option: ${OPTARG}"; usage; exit 1;;
   esac

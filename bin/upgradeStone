@@ -1,4 +1,4 @@
-#! /bin/bash -x
+#! /bin/bash
 #=========================================================================
 # Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
 #=========================================================================
@@ -22,7 +22,7 @@ OPTIONS
      Force creation of new stone by deleting 
      $GS_HOME/gemstone/stone/<target-stone-name> directory if it exists
   -l <post-load-tode-script>
-     tODE path the to tODE script that loads your application code
+     tODE path to the tODE script that loads your application code
   -s <source-stone-extent-file-path> 
      Path to  <source-stone-name> extent file used as starting point for 
      upgrade.
