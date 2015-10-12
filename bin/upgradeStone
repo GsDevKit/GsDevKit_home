@@ -20,7 +20,7 @@ OPTIONS
      Create <target-stone-name> and exit script. Do not perform upgrade.
   -f
      Force creation of new stone by deleting 
-     $GS_HOME/gemstone/stone/<target-stone-name> directory if it exists
+     \$GS_HOME/gemstone/stone/<target-stone-name> directory if it exists
   -l <post-load-tode-script>
      tODE path to the tODE script that loads your application code
   -s <source-stone-extent-file-path> 
@@ -30,6 +30,9 @@ OPTIONS
      Skip creation of <target-stone-name> and only run the upgrade step.
 
 EXAMPLES
+  upgradeStone -h
+  upgradeStone -l /home/loadMyApplication gs_3106 gs_329 3.2.9
+  upgradeStone gs_3106 gs_329 3.2.9
 
 HELP
 }
@@ -125,9 +128,10 @@ if [ "$majorMinorVersion" = "2.4" ]  ; then
   cp $snapshotFile $targetStonePath/extents/extent0.dbf
   chmod +w $targetStonePath/extents/extent0.dbf
 else
+  rm -rf $GS_SERVER_STONES/${targetStoneName}/extents/extent0.dbf
   $GS_HOME/bin/newExtent -n -s $snapshotFile $targetStoneName
 fi
-rm $targetStonePath/tranlogs/tranlog*.dbf
+rm -rf $targetStonePath/tranlogs/tranlog*.dbf
 
 pushd $targetStonePath >& /dev/null
   if [ "${createStone}" = "true" ] ; then
@@ -183,7 +187,7 @@ EOF
   run
   (SystemLoginNotification _classVars at: #'Subscriptions') removeAll: (SystemLoginNotification _classVars at: #'Subscriptions').
   true
-  %
+%
   commit
   
   logout
@@ -228,12 +232,12 @@ EOF
              GsFile gciLogServer: '  removing the baseline ', globalName printString.
              assoc value removeFromSystem ] ] ].
   true
-  %
+%
   
   run
   MCWorkingCopy allManagers do: [ :wc | wc packageName = 'Grease' ifTrue: [ wc unregister ] ].
   true
-  %
+%
   
   commit
   logout
@@ -258,9 +262,9 @@ fi
 
 if [ "${postUpgradeLoadScriptPath}x" != "x" ] ;  then
   #install application code
-  echo "Running /home/${postUpgradeLoadScriptPath} tODE script"
+  echo "Running ${postUpgradeLoadScriptPath} tODE script"
 
-  $GS_HOME/bin/private/gsDevKitTodeCommandLine todeIt$targetStoneName << TODE
+  $GS_HOME/bin/private/gsDevKitTodeCommandLine todeIt $targetStoneName << TODE
 ${postUpgradeLoadScriptPath}
 TODE
 fi
