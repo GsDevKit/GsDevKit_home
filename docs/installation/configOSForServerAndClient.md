@@ -34,14 +34,14 @@ TBD
 ---
 ###Configure Mac for Server
 ```
-TBD
+install Xcode from the App Store
 ```
 
 ---
 ###Configure Mac for Client 
 
 ```
-TBD
+install Xcode from the App Store
 ```
 
 ---
