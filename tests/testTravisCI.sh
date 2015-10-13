@@ -7,6 +7,16 @@ set -e  # exit on error
 
 uname -a   #gather info for bug 44185
 
+osPrereqsSysSetup=$GS_HOME/bin/.osPrereqsSysSetup # if file exists, skip installation
+
+if [ -e "$osPrereqsSysSetup" ]; then
+  echo "Skip running osPrereqs, system already setup ($osPrereqsSysSetup exists)"
+else
+  # install OS prereqs which includes gdb, which should give us a C stack for 
+  # bug 44491
+  $GS_HOME/bin/installOsPrereqs
+fi
+
 # Uncomment to use alternate version of tODE for tests
 $GS_HOME/tests/todeDevBranch.sh
 
