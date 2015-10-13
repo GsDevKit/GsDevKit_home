@@ -10,7 +10,7 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-f] [-t gemtools|tode|jade] <client-name> 
+USAGE: $(basename $0) [-h] [-f] [-F] [-t gemtools|tode|jade] <client-name> 
                       [ <client-specific-args> ]
 
 Create a client of the given type and <client-name>.
@@ -29,6 +29,8 @@ OPTIONS
   -f
      Force tODE client installation, whether or not the image
      already exists.
+  -F
+     Delete entire client directory and start from scratch.
 
 EXAMPLES
   $(basename $0) -h
@@ -63,11 +65,13 @@ source ${GS_HOME}/bin/defGsDevKit.env
 
 clientType="tode"
 forceArg=""
-while getopts "fht:" OPT ; do
+deleteClientDir="false"
+while getopts "fht:F" OPT ; do
   case "$OPT" in
-    h) usage; exit 0;;
-    f) forceArg=" -f ";;
-    t) clientType="${OPTARG}";;
+    h) usage; exit 0 ;;
+    f) forceArg=" -f " ;;
+    F) deleteClientDir="true" ;;
+    t) clientType="${OPTARG}" ;;
     *) usage; exit 1;;
   esac
 done
@@ -87,6 +91,10 @@ fi
 if [ "${GS_SYS_LOCAL}x" = "x" ] ; then
   $GS_HOME/bin/private/clone_sys_local
   source ${GS_HOME}/bin/defGsDevKit.env
+fi
+
+if [ "${deleteClientDir}" = "true" ] ; then
+  $GS_HOME/bin/deleteClient $clientName
 fi
 
 case $clientType in
