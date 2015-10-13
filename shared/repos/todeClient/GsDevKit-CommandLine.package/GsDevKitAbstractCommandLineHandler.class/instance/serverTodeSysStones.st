@@ -1,3 +1,3 @@
 accessing
 serverTodeSysStones
-	^ self serverTodeSys / 'stones'
+	^ (Smalltalk os environment at: 'GS_SYS_STONES' ifAbsent: [ ^ nil ]) asFileReference

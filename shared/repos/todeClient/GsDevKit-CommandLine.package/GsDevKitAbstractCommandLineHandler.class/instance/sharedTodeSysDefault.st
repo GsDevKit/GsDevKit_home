@@ -1,3 +1,3 @@
 accessing
 sharedTodeSysDefault
-	^ self sharedTodeSys / 'default'
+	^ (Smalltalk os environment at: 'GS_SYS_DEFAULT') asFileReference 
