@@ -9,7 +9,7 @@ baseline: spec
 				baseline: 'Tode' with: [ 
                                   spec 
                                     loads: 'GemStone';
-                                    repository: 'github://dalehenrich/tode:dev_dev/repository';
+                                    repository: 'github://dalehenrich/tode:master/repository';
                                     yourself ];
 				yourself.
 			spec project: 'Tode-Common-Core' copyFrom: 'Tode' with: [ spec loads: 'Common-Core' ].
