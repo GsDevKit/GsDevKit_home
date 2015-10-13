@@ -1,3 +1,3 @@
 accessing
 sharedTodeSysLocal
-	^ self sharedTodeSys / 'local'
+	^ (Smalltalk os environment at: 'GS_SYS_LOCAL') asFileReference 

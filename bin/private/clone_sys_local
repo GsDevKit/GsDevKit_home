@@ -52,8 +52,7 @@ pushd ${GS_HOME} >& /dev/null
   cd ..
   pushd sys >& /dev/null
     ln -s ../local/local .
-    ln -s ../local/sessions .
-    ln -s ../local/stones .
+    ln -s local/server/stones .
   popd >& /dev/null
 popd >& /dev/null
 

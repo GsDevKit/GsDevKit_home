@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/bash -x
 #=========================================================================
 # Copyright (c) 2014, 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
 #=========================================================================
@@ -60,17 +60,17 @@ PLATFORM="`uname -sm | tr ' ' '-'`"
 # Download client
 case $version in
   Pharo*)
-    if [ -e "$directoryPath/pharo-vm" ]; then
-      echo "Pharo already installed in $directoryPath. To reinstall use \$GS_HOME/private/cleanPharoDirectory and try again."
+    if [ -e "$directoryPath/Pharo.image" ]; then
+      echo "Pharo already installed in $directoryPath"
       exit 0
     fi
-    if [ -e "`which wget`" ]; then
-      cmd="`which wget` -O- "
+    if [ -e "`which curl`" ] ; then
+      cmd="`which curl` "
     else
-      if [ -e "`which curl`" ] ; then
-        cmd="`which curl` "
+      if [ -e "`which wget`" ]; then
+        cmd="`which wget` -O- "
       else
-        echo "Error: wget is not available. Install wget and rerun this script."
+        echo "Error: Neither curl not wget is not available. Install wget or curl and rerun this script."
         exit 1
       fi
     fi

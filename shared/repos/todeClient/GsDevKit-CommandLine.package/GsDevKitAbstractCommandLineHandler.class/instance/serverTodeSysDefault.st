@@ -1,3 +1,3 @@
 accessing
 serverTodeSysDefault
-	^ self serverTodeSys / 'default'
+	^ (Smalltalk os environment at: 'GS_SYS_DEFAULT' ifAbsent: [ ^ nil ]) asFileReference
