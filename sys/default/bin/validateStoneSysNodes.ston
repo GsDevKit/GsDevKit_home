@@ -53,10 +53,10 @@ TDScriptLeafNode{#name:'validateStoneSysNodes',#contents:'[ :topez :objIn :token
               repair
                 ifTrue: [ 
                   | templateNodePath |
-                  templateNodePath := \'/sys/local/templates/\'.
+                  templateNodePath := \'/sys/local/server/templates/\'.
                   topez
                     lookup: templateNodePath , nodename
-                    ifAbsent: [ templateNodePath := \'/sys/default/templates/\' ].
+                    ifAbsent: [ templateNodePath := \'/sys/default/server/templates/\' ].
                   cpTool
                     cp: templateNodePath , nodename
                     to: \'/sys/stones/\' , stoneName ]

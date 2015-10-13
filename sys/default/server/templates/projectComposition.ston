@@ -2,6 +2,6 @@ TDRawGatewayNode{#name:'projectComposition',#contents:'(TDComposedProjectEntryNo
     pathComposedDirectoryNodeNamed: \'home\'
     topez: self topez)
     addPathNode: \'/sys/stone/projects\';
-    addPathNode: \'/sys/local/projects\';
-    addPathNode: \'/sys/default/projects\' includes: #( \'grease\' \'gsDevKitHome\' \'metacello\' \'pharoCompat\' \'seaside\' \'sixx\' \'ston\' \'tode\' \'xml\' \'zinc\');
+    addPathNode: \'/sys/local/server/projects\';
+    addPathNode: \'/sys/default/server/projects\' includes: #( \'grease\' \'gsDevKitHome\' \'metacello\' \'pharoCompat\' \'seaside\' \'sixx\' \'ston\' \'tode\' \'xml\' \'zinc\');
     yourself'}

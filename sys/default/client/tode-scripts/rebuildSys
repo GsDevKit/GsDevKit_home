@@ -1,7 +1,7 @@
 # Set up /sys node structure
 mount --todeRoot sys/default /sys default
 mount --todeRoot sys/local /sys local
-mount --todeRoot sys/stones /sys stones
+mount --todeRoot sys/local/server/stones /sys stones
 # rebuild --stoneRoot directory structure
 /sys/default/bin/validateStoneSysNodes --force
 mount --stoneRoot / /sys stone
