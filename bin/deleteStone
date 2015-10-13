@@ -58,8 +58,8 @@ do
     fi
   fi
 
-  if [ -d $GS_SYS_STONES/stones/$stoneName ] ; then
-    rm -rf $GS_SYS_STONES/stones/$stoneName
+  if [ -d $GS_SYS_STONES/$stoneName ] ; then
+    rm -rf $GS_SYS_STONES/$stoneName
   fi
 
   if [ -e $GS_SYS_SESSIONS/$stoneName ] ; then
