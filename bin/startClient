@@ -34,14 +34,17 @@ if [ "${GS_HOME}x" = "x" ] ; then
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
-source ${GS_HOME}/bin/private/shFunctions
-getOpts_help $@
+if [ "$1" = "-h" ] ; then
+  usage; exit 0
+fi
 
 if [ $# -lt 1 ]; then
    echo "missing required client name argument"; usage; exit 1
 fi
 clientName=$1
 shift 1
+
+
 
 if [ "${GS_CLIENT_DEV}x" = "x" ] || [ ! -d "${GS_CLIENT_DEV_CLIENTS}/$clientName" ] ; then
   echo "The requested client: $clientName does not exist"

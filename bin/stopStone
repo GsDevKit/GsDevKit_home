@@ -62,10 +62,10 @@ fi
 stoneName=$1
 stonePath=$GS_SERVER_STONES/${stoneName}
 
-if [ -d "$stonePath/stone.env" ] ; then
+if [ -d "$stonePath/defStone.env" ] ; then
 # set up stone environment
   pushd $stonePath >& /dev/null
-    source $stonePath/stone.env
+    source $stonePath/defStone.env
   popd >& /dev/null
 
   # stop the stone

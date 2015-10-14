@@ -48,7 +48,7 @@ stones
 
 stopStone ${STONENAME1}
 stopNetldi ${STONENAME1}
-updateTodeImage ${STONENAME1}
+updateStone ${STONENAME1}
 startStone ${STONENAME1}
 stopStone -b ${STONENAME1}
 
