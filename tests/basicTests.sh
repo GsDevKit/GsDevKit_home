@@ -17,8 +17,6 @@ attachOldDevKitStone -h
 clients -h
 createClient -h
 createStone -h
-defGsDevKit.env -h
-defStone.env -h
 deleteClient -h
 deleteSession -h
 deleteStone -h
