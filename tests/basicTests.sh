@@ -46,6 +46,9 @@ upgradeStone -h
 
 stones
 
+todeIt ${STONENAME1} eval \`3+4\`
+todeIt ${STONENAME1} ls /home
+
 stopStone ${STONENAME1}
 stopNetldi ${STONENAME1}
 updateStone ${STONENAME1}
@@ -55,9 +58,6 @@ stopStone -b ${STONENAME1}
 status
 
 $GS_HOME/bin/private/gsDevKitCommandLine --list
-
-todeIt ${STONENAME1} eval \`3+4\`
-todeIt ${STONENAME1} ls /home
 
 stopStone -b ${STONENAME1}
 
