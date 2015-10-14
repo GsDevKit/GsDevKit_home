@@ -16,7 +16,7 @@ The GsDevKit_home project is current in **EARLY ACDESS** mode. If you are alread
 Please read the [Installation Overview][2] for more information on the different installation options and instructions.
 
 ##FAQs
-######1. *If I am already using gsDevKitHome, why should I consider moving to GsDevKit_home?*
+#####1. *If I am already using gsDevKitHome, why should I consider moving to GsDevKit_home?*
 
 1. GsDevKit_home has been made more modular with separate git projects for the tODE client and GemStone servers.  
 
@@ -37,11 +37,11 @@ Please read the [Installation Overview][2] for more information on the different
    [Click here to read more about GsDevKit_home client installation][7]
 
 
-######2. *How do I contribute bugfixes?*
+####2. *How do I contribute bugfixes?*
 
-######3. *I don't want to have to rebuild all of the stones that I am currently using. Can I continue to use stones create withgGsDevKithome with the GsDevKit_home scripts?"
+###3. *I don't want to have to rebuild all of the stones that I am currently using. Can I continue to use stones create withgGsDevKithome with the GsDevKit_home scripts?"
 
-######3. *How do I use tODE?*
+##3. *How do I use tODE?*
 
 
 [1]: https://github.com/GsDevKit/gsDevKitHome#open-source-development-kit-for-gemstones-64-bit-
