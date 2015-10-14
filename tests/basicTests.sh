@@ -56,6 +56,9 @@ status
 
 $GS_HOME/bin/private/gsDevKitCommandLine --list
 
+todeIt ${STONENAME1} eval \`3+4\`
+todeIt ${STONENAME1} ls /home
+
 stopStone -b ${STONENAME1}
 
 # create a base stone (no tODE or GLASS1 installed)
@@ -68,8 +71,8 @@ createStone -g -s $seasideSnapshot ${STONENAME4} $GS_VERSION
 createStone -t $todeSnapshot ${STONENAME3} $GS_VERSION
 cd $GS_HOME/sys/local/stones/${STONENAME3}
 ls dirs.ston  home  homeComposition.ston  packages.ston  projectComposition.ston  projects  repos.ston
-performTodeCommand ${STONENAME3} eval \`3+4\`\; eval \`self == 7 ifFalse: [ System logout ]\`
-performTodeCommand ${STONENAME3} ls /home
+todeIt ${STONENAME3} eval \`3+4\`\; eval \`self == 7 ifFalse: [ System logout ]\`
+todeIt ${STONENAME3} ls /home
 
 stopStone -b ${STONENAME2}
 stopStone -b ${STONENAME3}

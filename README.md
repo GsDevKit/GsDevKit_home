@@ -39,6 +39,8 @@ Please read the [Installation Overview][2] for more information on the different
 
 ######2. *How do I contribute bugfixes?*
 
+######3. *I don't want to have to rebuild all of the stones that I am currently using. Can I continue to use stones create withgGsDevKithome with the GsDevKit_home scripts?"
+
 ######3. *How do I use tODE?*
 
 
