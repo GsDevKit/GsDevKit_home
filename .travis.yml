@@ -1,5 +1,7 @@
 language: erlang
 
+sudo: required
+
 env:
 
   - GS_VERSION=3.1.0.6 TEST=Basic
