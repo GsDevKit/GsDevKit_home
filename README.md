@@ -22,17 +22,23 @@ Please read the [Installation Overview][2] for more information on the different
 
 2. GsDevKit_home has been made more modular with separate git projects to manage the tODE client and GemSton servers. [Click here to read more about modularity.][3] 
 
-   - modules can be created for development clients like Jade and GemTools
-   - modules can be created for production tools like DaemonTools, Monit, Apache, nginx, lightppd, etc.
+ - project-specific files like session descriptions, tODE scripts and customized `system.conf` files are in a separate git project [(GsDevKit_local_sys][5]). The `_local_sys` project can be stored in a private [BitBucket repository][6], allowing you to isolate your teams private data from the other publicly supported GsDevKit_home scripts.
+
+ - modules can be created for development clients like Jade and GemTools
+ - modules can be created for production tools like DaemonTools, Monit, Apache, nginx, lightppd, etc.
 
 3. Better support for Windows users. The GsDevKit_home client scripts are exactly the same for Windows, Linux and OSX users.
 
 ######2. *testing 1 to 3*
 
-######3. *How do I contribute bugfixes?"
+######3. *How do I contribute bugfixes?*
+
+######4. *How do I use tODE?*
 
 
 [1]: https://github.com/GsDevKit/gsDevKitHome#open-source-development-kit-for-gemstones-64-bit-
 [2]: docs/installation#installation-overview
 [3]: docs/FAQs/moreModular.md
 [4]: docs/FAQs/localGitClones.md
+[5]: https://github.com/GsDevKit/GsDevKit_sys_local
+[6]: https://bitbucket.org/
