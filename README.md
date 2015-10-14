@@ -30,15 +30,16 @@ Please read the [Installation Overview][2] for more information on the different
 
    [Click here to read more about local git clones.][4]
 
-3. Better support for Windows users. The GsDevKit_home client scripts are exactly the same for Windows, Linux and OSX users.
+3. No longer necessary to fork project on Github as part of installation process. `https` repositories 
+
+4. Better support for Windows users. The GsDevKit_home client scripts are exactly the same for Windows, Linux and OSX users.
 
    [Click here to read more about GsDevKit_home client installation][7]
 
-######2. *testing 1 to 3*
 
-######3. *How do I contribute bugfixes?*
+######2. *How do I contribute bugfixes?*
 
-######4. *How do I use tODE?*
+######3. *How do I use tODE?*
 
 
 [1]: https://github.com/GsDevKit/gsDevKitHome#open-source-development-kit-for-gemstones-64-bit-
