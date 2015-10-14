@@ -6,7 +6,7 @@
 set -e  # exit on error
 
 # install server
-installServerClient -c https ${STONENAME1} $GS_VERSION
+installServerClient -c https ${STONENAME1} tode $GS_VERSION
 
 status
 
