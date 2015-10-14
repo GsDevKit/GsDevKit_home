@@ -20,29 +20,33 @@ Please read the [Installation Overview][2] for more information on the different
 
 1. GsDevKit_home has been made more modular with separate git projects for the tODE client and GemStone servers.  
 
-    - project-specific (private) files like session descriptions, tODE scripts and customized `system.conf` files are located in a separate git project [(GsDevKit_local_sys][5]). The *GsDevKit_local_sys* project can be forked to a private repository (i.e., [BitBucket][6], allowing you to isolate your team's private shared data from the public GsDevKit_home projects.
-    - modules can be created for development clients like Jade and GemTools
-    - modules can be created for production tools like [DaemonTools][8], [Monit][9], [Apache][10], [nginx][12], [lightppd][11], etc.
+    - With the new directory structure, project-specific (private) files like session descriptions, tODE scripts and customized `system.conf` files are located in a separate git project [(GsDevKit_local_sys][5]). The *GsDevKit_local_sys* project can be forked to a private repository (i.e., [BitBucket][6], allowing you to isolate your team's private shared data from the public GsDevKit_home projects.
+    - New modules can be created for development clients like Jade and GemTools
+    - New modules can be created for production tools like [Daemon Tools][8], [Monit][9], [Apache][10], [nginx][12], [lightppd][11], etc.
 
  [Click here to read more about modularity.][3]
 
-2. Local git clones for each of the git-based repositories used in GsDevKit_home are used to reduce reliance on network for builds. 
+2. By default, git-based repositories used by GsDevKit_home are cloned thus reducing the reliance on network and making for more reliable builds. The ulitmate goal is to move all projects used by GsDevKit to [git][13] so that builds can be done without a network connection.
 
    [Click here to read more about local git clones.][4]
 
-3. No longer necessary to fork project on Github as part of installation process. `https` repositories 
+3. No longer necessary to fork the GsDevKit_home project on Github as part of installation process. See the FAQ on [How do I contribute to the GsDevKit_home project?](#how-do-i-contribute-to-the-gsdevkithome-project) for more information.
 
 4. Better support for Windows users. The GsDevKit_home client scripts are exactly the same for Windows, Linux and OSX users.
 
    [Click here to read more about GsDevKit_home client installation][7]
 
+####2. *How do I contribute to the GsDevKit_home project?*
+With GsDevKit_home, contributing to the GsDevKit_home family of projects as well as the git-based projects used by GsDevKit_home is straightforward. 
 
-####2. *How do I contribute bugfixes?*
+When you decide that you want to contribute bugfixes or improvements to the  GsDevKit_home family of projects ([GsDevKit_home][15], [GsDevKit_gs_client_dev][16], [GsDevKit_gs_server][17], [GsDevKit_todeClient][18], [GsDevKit_sys_local][19]) or the git-based projects used by GsDevKit_home ([Metacello][20], [Tode][21], [Ston][22], [FileTree][23], [Grease][24], [GLASS1][25], [PharoCompatibility][26], [RB][27])
+
+The basic steps boil down to:
+ 1. `git remote add
 
 ####3. *I don't want to have to rebuild all of the stones that I am currently using. Can I continue to use stones create withgGsDevKithome with the GsDevKit_home scripts?"
 
 ####4. *How do I use tODE?*
-
 
 [1]: https://github.com/GsDevKit/gsDevKitHome#open-source-development-kit-for-gemstones-64-bit-
 [2]: docs/installation#installation-overview
@@ -56,3 +60,18 @@ Please read the [Installation Overview][2] for more information on the different
 [10]: https://programminggems.wordpress.com/2008/09/12/slice-4/
 [11]: https://kentreis.wordpress.com/2009/10/07/my-favorite-glass-front-end-server-lighttpd/
 [12]: http://www.monkeysnatchbanana.com/2010/08/18/using-fastcgi-with-nginx-and-seaside/
+[13]: https://git-scm.com/
+[14]: https://github.com
+[15]: https://github.com/GsDevKit/GsDevKit_home
+[16]: https://github.com/GsDevKit/GsDevKit_gs_client_dev
+[17]: https://github.com/GsDevKit/GsDevKit_gs_server
+[18]: https://github.com/GsDevKit/GsDevKit_todeClient
+[19]: https://github.com/GsDevKit/GsDevKit_sys_local
+[20]: https://github.com/dalehenrich/metacello-work
+[21]: https://github.com/dalehenrich/tode
+[22]: https://github.com/GsDevKit/ston
+[23]: https://github.com/dalehenrich/filetree
+[24]: https://github.com/GsDevKit/Grease
+[25]: https://github.com/glassdb
+[26]: https://github.com/glassdb/PharoCompatibility
+[27]: https://github.com/dalehenrich/rb
