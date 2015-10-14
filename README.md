@@ -20,9 +20,9 @@ Please read the [Installation Overview][2] for more information on the different
 
 1. GsDevKit_home has been made more modular with separate git projects for the tODE client and GemStone servers.  
 
-    - project-specific (private) files like session descriptions, tODE scripts and customized `system.conf` files are located in a separate git project [(GsDevKit_local_sys][5]). The `_local_sys` project can be stored in a private [BitBucket repository][6], allowing you to isolate your teams private data from the other publicly supported GsDevKit_home scripts.
+    - project-specific (private) files like session descriptions, tODE scripts and customized `system.conf` files are located in a separate git project [(GsDevKit_local_sys][5]). The *GsDevKit_local_sys* project can be forked to a private repository (i.e., [BitBucket][6], allowing you to isolate your team's private shared data from the public GsDevKit_home projects.
     - modules can be created for development clients like Jade and GemTools
-    - modules can be created for production tools like DaemonTools, Monit, Apache, nginx, lightppd, etc.
+    - modules can be created for production tools like [DaemonTools][8], [Monit][9], [Apache][10], [nginx][12], [lightppd][11], etc.
 
  [Click here to read more about modularity.][3]
 
@@ -51,3 +51,8 @@ Please read the [Installation Overview][2] for more information on the different
 [5]: https://github.com/GsDevKit/GsDevKit_sys_local
 [6]: https://bitbucket.org/
 [7]: docs/installation/installDevKitClient.md#install-client
+[8]: https://code.google.com/p/glassdb/wiki/GLASSDaemonTools
+[9]: http://forum.world.st/Glass-Monit-scripts-for-gemstone-td4731164.html
+[10]: https://programminggems.wordpress.com/2008/09/12/slice-4/
+[11]: https://kentreis.wordpress.com/2009/10/07/my-favorite-glass-front-end-server-lighttpd/
+[12]: http://www.monkeysnatchbanana.com/2010/08/18/using-fastcgi-with-nginx-and-seaside/
