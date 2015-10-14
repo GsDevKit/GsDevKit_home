@@ -10,7 +10,8 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-f] [-g] [-n] [-s <snapshot-file-path>] [-t] 
+USAGE: $(basename $0) [-h] [-f] [-g] [-n] [-s <snapshot-file-path>] 
+                      [-t  <tode-snapshot-file-path>] 
                       [-p <tode-project-name> [-b <backup-name>]] 
                       <stone-name> <gemstone-version>
 
