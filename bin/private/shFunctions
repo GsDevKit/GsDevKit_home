@@ -7,7 +7,7 @@ getOpts_help() {
 while getopts "h" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
-    *) usage; exit 1;;
+    *) echo "unknown option $OPT"; usage; exit 1;;
   esac
 done
 if [ "${GS_HOME}x" = "x" ] ; then

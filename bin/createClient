@@ -72,13 +72,13 @@ while getopts "fht:F" OPT ; do
     f) forceArg=" -f " ;;
     F) deleteClientDir="true" ;;
     t) clientType="${OPTARG}" ;;
-    *) usage; exit 1;;
+    *) echo "unknown option $OPT"; usage; exit 1;;
   esac
 done
 shift $(($OPTIND - 1))
 
 if [ $# -lt 1 ]; then
-  usage; exit 1
+  echo "missing cient name argument"; usage; exit 1
 fi
 clientName=$1
 shift 1
