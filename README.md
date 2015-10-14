@@ -20,13 +20,13 @@ Please read the [Installation Overview][2] for more information on the different
 
 1. GsDevKit_home has been made more modular with separate git projects for the tODE client and GemStone servers.  
 
- - project-specific (private) files like session descriptions, tODE scripts and customized `system.conf` files are located in a separate git project [(GsDevKit_local_sys][5]). The `_local_sys` project can be stored in a private [BitBucket repository][6], allowing you to isolate your teams private data from the other publicly supported GsDevKit_home scripts.
- - modules can be created for development clients like Jade and GemTools
- - modules can be created for production tools like DaemonTools, Monit, Apache, nginx, lightppd, etc.
+    - project-specific (private) files like session descriptions, tODE scripts and customized `system.conf` files are located in a separate git project [(GsDevKit_local_sys][5]). The `_local_sys` project can be stored in a private [BitBucket repository][6], allowing you to isolate your teams private data from the other publicly supported GsDevKit_home scripts.
+    - modules can be created for development clients like Jade and GemTools
+    - modules can be created for production tools like DaemonTools, Monit, Apache, nginx, lightppd, etc.
 
-   [Click here to read more about modularity.][3]
+ [Click here to read more about modularity.][3]
 
-2. Local git clones for each of the git-based repositories used in GsDevKit_home are created to reduce the reliance on network connectivity for builds. 
+2. Local git clones for each of the git-based repositories used in GsDevKit_home are used to reduce reliance on network for builds. 
 
    [Click here to read more about local git clones.][4]
 
