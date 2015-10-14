@@ -1,6 +1,6 @@
 TDObjectGatewayNode{#name:'xml',#contents:'^ TDProjectSpecEntryDefinition new
     configuration: \'XMLSupport\'
-      version: #\'1.2.2.1\'
+      version: \'1.2.2.1\'
       repository: \'http://seaside.gemtalksystems.com/ss/MetacelloRepository\'
       loads: #(\'Core\');
     status: #(#\'inactive\');
