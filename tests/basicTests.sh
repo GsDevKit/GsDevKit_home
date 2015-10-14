@@ -79,6 +79,6 @@ stopStone -b ${STONENAME3}
 stopStone -b ${STONENAME4}
 
 . $GS_HOME/bin/defStone.env ${STONENAME1}
-cd $GS_HOME/gemstone/stones/${STONENAME1}
+cd $GS_HOME/server/stones/${STONENAME1}
 . defStone.env
 
