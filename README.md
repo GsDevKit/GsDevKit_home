@@ -16,9 +16,9 @@ The GsDevKit_home project is current in **EARLY ACDESS** mode. If you are alread
 Please read the [Installation Overview][2] for more information on the different installation options and instructions.
 
 ##Early Access FAQ
-1. *If I am already using gsDevKitHome, why should I consider starting all over again with GsDevKit_home?*
+1. *If I am already using gsDevKitHome, why should I consider using GsDevKit_home?*
 
-   testing 1 to 3...
+   GsDevKit_home has been made more modular with separate \_dev (client), \_server (stones), and `_local` (project-specific tODE and bash scripts) git projects.  
 
 
 [1]: https://github.com/GsDevKit/gsDevKitHome#open-source-development-kit-for-gemstones-64-bit-
