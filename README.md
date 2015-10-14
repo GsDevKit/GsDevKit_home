@@ -16,20 +16,20 @@ The GsDevKit_home project is current in **EARLY ACDESS** mode. If you are alread
 Please read the [Installation Overview][2] for more information on the different installation options and instructions.
 
 ##FAQs
-####1. *If I am already using gsDevKitHome, why should I consider moving to GsDevKit_home?*
+######1. *If I am already using gsDevKitHome, why should I consider moving to GsDevKit_home?*
 
-   1. Local git clones for each of the git-based repositories used in GsDevKit_home are created to reduce the reliance on network connectivity for builds. [Click here to read more about local git clones.][4]
+1. Local git clones for each of the git-based repositories used in GsDevKit_home are created to reduce the reliance on network connectivity for builds. [Click here to read more about local git clones.][4]
 
-   2. GsDevKit_home has been made more modular with separate git projects to manage the tODE client and GemSton servers. [Click here to read more about modularity.][3] 
+2. GsDevKit_home has been made more modular with separate git projects to manage the tODE client and GemSton servers. [Click here to read more about modularity.][3] 
 
-      1. modules can be created for development clients like Jade and GemTools
-      2. modules can be created for production tools like DaemonTools, Monit, Apache, nginx, lightppd, etc.
+   - modules can be created for development clients like Jade and GemTools
+   - modules can be created for production tools like DaemonTools, Monit, Apache, nginx, lightppd, etc.
 
-   3. Better support for Windows users. The GsDevKit_home client scripts are exactly the same for Windows, Linux and OSX users.
+3. Better support for Windows users. The GsDevKit_home client scripts are exactly the same for Windows, Linux and OSX users.
 
-###2. *testing 1 to 3*
+######2. *testing 1 to 3*
 
-###3. *How do I contribute bugfixes?"
+######3. *How do I contribute bugfixes?"
 
 
 [1]: https://github.com/GsDevKit/gsDevKitHome#open-source-development-kit-for-gemstones-64-bit-
