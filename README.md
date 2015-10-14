@@ -18,9 +18,9 @@ Please read the [Installation Overview][2] for more information on the different
 ##FAQs
 1. *If I am already using gsDevKitHome, why should I consider using GsDevKit_home?*
 
-   GsDevKit_home has been made more modular with separate git projects for \_dev (client), \_server (stones), and \_local (project-specific tODE and bash scripts. [...click to read more about modularity][3] 
+   Local git clones for each of the git-based repositories used in GsDevKit_home are created to reduce the reliance on network connectivity for builds. [Click here to read more about local git clones.][4]
 
-   Local git clones for each of the git-based repositories used in GsDevKit_home are created to reduce the reliance on network connectivity for doing builds. Ultimately all of the standard projects used in GsDevKit_home will be moved to the [GsDevKit organization][4] and network connectivity will only be needed to pick up new versions of projects.
+   GsDevKit_home has been made more modular with separate git projects for \_dev (client), \_server (stones), and \_local (project-specific tODE and bash scripts. [Click here to read more about modularity.][3]  
 
 2. *testing 1 to 3?*
 3. *How do I contribute bugfixes?"
@@ -29,4 +29,4 @@ Please read the [Installation Overview][2] for more information on the different
 [1]: https://github.com/GsDevKit/gsDevKitHome#open-source-development-kit-for-gemstones-64-bit-
 [2]: docs/installation#installation-overview
 [3]: docs/FAQs/moreModular.md
-[4]: https://github.com/GsDevKit
+[4]: docs/FAQs/localGitClones.md
