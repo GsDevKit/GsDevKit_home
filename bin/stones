@@ -34,6 +34,8 @@ if [ "${GS_HOME}x" = "x" ] ; then
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
-# Run script
+if [ "$1" = "-h" ] ; then
+  usage; exit 0
+fi
 
 $GS_HOME/bin/private/gsDevKitCommandLine stones $*
