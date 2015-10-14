@@ -4,8 +4,11 @@ sudo: required
 
 env:
 
-  - GS_VERSION=3.1.0.6 TEST=Basic
+#
+#  - GS_VERSION=3.1.0.6 TEST=Basic
   - GS_VERSION=3.2.9   TEST=Basic
+
+
 #  - GS_VERSION=3.1.0.6 TEST=BasicTodeClient
 #  - GS_VERSION=3.2.9   TEST=BasicTodeClient
 #  - GS_VERSION=3.1.0.6 TEST=Projects1
