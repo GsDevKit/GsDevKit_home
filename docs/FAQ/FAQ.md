@@ -1,3 +1,4 @@
+----
 ####1. *If I am already using gsDevKitHome, why should I consider moving to GsDevKit_home?*
 
 1. GsDevKit_home has been made more modular with separate git projects for the tODE client and GemStone servers. With a new, modular directory structure, project-specific (private) files like session descriptions, tODE scripts and customized `system.conf` files are co-located in a separate git project [(GsDevKit_local_sys][5]) that can be managed in a private repository (i.e., [BitBucket][6]) keeping your team's private shared data private.
@@ -9,8 +10,10 @@
 
 4. Better support for Windows users. The installation process for the Windows, Linux and OSX platforms is the same.  
  
+---
 ####2. *Do I have to rebuild all of my stones to use GsDevKit_home?*
 
+---
 ####100. *How do I contribute to the GsDevKit_home project?*
 When you decide that you would like to contribute bugfixes or improvements to the  GsDevKit_home family of projects:
  - [GsDevKit_home][15]
@@ -44,6 +47,7 @@ git push dale topicBranch
 
 Then on GitHub, open a pull request from the `topicBranch` in your fork, to the `master` branch that you forked from.
 
+---
 [3]: https://github.com/jgfoster/Jade
 [4]: https://github.com/glassdb/GemTools
 [5]: https://github.com/GsDevKit/GsDevKit_sys_local
