@@ -18,9 +18,7 @@ Please read the [Installation Overview][2] for more information on the different
 ##FAQs
 ####1. *If I am already using gsDevKitHome, why should I consider moving to GsDevKit_home?*
 
-1. GsDevKit_home has been made more modular with separate git projects for the tODE client and GemStone servers.  
-
-  With a new, modular directory structure, project-specific (private) files like session descriptions, tODE scripts and customized `system.conf` files are co-located in a separate git project [(GsDevKit_local_sys][5])that can be managed in a private repository (i.e., [BitBucket][6]) keeping your team's private shared data private.
+1. GsDevKit_home has been made more modular with separate git projects for the tODE client and GemStone servers. With a new, modular directory structure, project-specific (private) files like session descriptions, tODE scripts and customized `system.conf` files are co-located in a separate git project [(GsDevKit_local_sys][5])that can be managed in a private repository (i.e., [BitBucket][6]) keeping your team's private shared data private.
   Modules for development clients like [Jade][3] and [GemTools][4] can be added to GsDevKit_home, as well as modules for production tools like [Daemon Tools][8], [Monit][9], [Apache][10], [nginx][12], [lightppd][11], etc.
 
 
