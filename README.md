@@ -27,7 +27,9 @@ Please read the [Installation Overview][2] for more information on the different
 
 4. Better support for Windows users. The installation process for the Windows, Linux and OSX platforms is the same.  
  
-####2. *How do I contribute to the GsDevKit_home project?*
+####2. *Do I have to rebuild all of my stones to use GsDevKit_home?"
+
+####3. *How do I contribute to the GsDevKit_home project?*
 When you decide that you would like to contribute bugfixes or improvements to the  GsDevKit_home family of projects:
  - [GsDevKit_home][15]
  - [GsDevKit_gs_client_dev][16]
@@ -60,9 +62,6 @@ git push dale topicBranch
 
 Then on GitHub, open a pull request from the `topicBranch` in your fork, to the `master` branch that you forked from.
 
-####3. *I don't want to have to rebuild all of the stones that I am currently using. Can I continue to use stones create withgGsDevKithome with the GsDevKit_home scripts?"
-
-####4. *How do I use tODE?*
 
 [1]: https://github.com/GsDevKit/gsDevKitHome#open-source-development-kit-for-gemstones-64-bit-
 [2]: docs/installation#installation-overview
