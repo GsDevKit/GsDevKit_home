@@ -17,8 +17,8 @@ OPTIONS
   -h
      display help
   -c https | ssh
-     clone using https (https://github.com) or ssh (git@github.com)
-     ssh is the default 
+     clone using https (https://github.com) or ssh (git@github.com).
+     https is the default.
   -o <organization-name>
      use <organization-name> instead of GsDevKit. Use this option when
      you've cloned the todeClient project

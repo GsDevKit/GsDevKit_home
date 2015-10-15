@@ -39,12 +39,12 @@ fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
 modeArg=""
-organization="GsDevKit"
+organizationArg=" -o GsDevKit "
 while getopts "ho:c:" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     c) modeArg=" -c ${OPTARG} ";;
-    o) organization="${OPTARG}";;
+    o) organizationArg=" - o ${OPTAR } ";;
     *) usage; exit 1;;
   esac
 done
@@ -63,14 +63,14 @@ case "$1" in
   *) echo "unknown argument: $1"; usage; exit 1;;
 esac
 
-$GS_HOME/bin/private/clone_sys_local -o $organization
+$GS_HOME/bin/private/clone_sys_local $modeArg $organizationArg
 if [ "$cloneClient" = "true" ] ; then
-  $GS_HOME/bin/private/clone_gs_client_dev -o $organization
-  ${GS_HOME}/bin/private/clone_todeClient -o $organization
+  $GS_HOME/bin/private/clone_gs_client_dev $modeArg $organizationArg
+  ${GS_HOME}/bin/private/clone_todeClient $modeArg $organizationArg
 fi
 
 if [ "$cloneServer" = "true" ] ; then
-  $GS_HOME/bin/private/clone_gs_client_dev -o $organization
+  $GS_HOME/bin/private/clone_gs_client_dev $modeArg $organizationArg
 fi
 
 echo "...finished $(basename $0)"

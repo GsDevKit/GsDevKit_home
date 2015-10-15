@@ -6,7 +6,8 @@
 set -e  # exit on error
 
 # install server
-installServerClient -c https ${STONENAME1} tode $GS_VERSION
+$GS_HOME/bin/private/clone_gs_client_dev -c https
+installServerClient -o GsDevKit ${STONENAME1} tode $GS_VERSION
 
 status
 

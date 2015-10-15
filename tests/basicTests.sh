@@ -49,6 +49,7 @@ stones
 todeIt ${STONENAME1} eval \`3+4\`
 todeIt ${STONENAME1} ls /home
 
+updateGsDevKit
 updateClient tode
 
 stopStone ${STONENAME1}
