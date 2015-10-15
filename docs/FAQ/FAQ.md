@@ -13,8 +13,6 @@
 ---
 ---
 ####2. *Do I have to rebuild all of my stones to use GsDevKit_home?*
-No.
-
 You have a couple of different options when it comes to stones created in gsDevKitHome:
 
 1. [Attach to Foreign Stone](#attach-to-foreign-stone)
@@ -27,7 +25,7 @@ If you have a stone with tODE installed and you'd like to continue to access tha
 attachForeignStone foreign_3106 3.1.0.6
 ```
 
-The `attachForeignStone` command, creates a valid session description for the stone and creates an entry for the stone in the $GS_SERVER_STONES directory so that the stone shows up in the `status` command:
+The `attachForeignStone` command, creates a valid session description for the stone and creates an entry for the stone in the $GS_HOME/server/stones directory so that the stone shows up in the `status` command:
 
 ```
 foos:_home> status
@@ -54,7 +52,7 @@ If you have a stone with tODE installed that was being managed under gsDevKitHom
 attachOldDevKitStone -d -t dev_329 3.2.9 /export/foos1/users/dhenrich/dev/dev_gsDevKitHome
 ```
 
-`attachOldDevKitStone` creates a symbolic link to the original stone directory, copies the original session description to the `$GS_SYS_SESSIONS` directory. When the `-t` option is specied, the script copies the stone-specific scripts and projects (basically contents of old $GS_HOME/tode/sys/stones directory) into the new location: `$GS_SYS_STONES/<stone-name>`.
+`attachOldDevKitStone` creates a symbolic link to the original stone directory, copies the original session description to the `$GS_HOME/sys/local/sessions` directory. When the `-t` option is specied, the script copies the stone-specific scripts and projects (basically contents of old $GS_HOME/tode/sys/stones directory) into the new location: `$GS_HOME/sys/stones/<stone-name>`.
 
 ```
 foos:_home>status
