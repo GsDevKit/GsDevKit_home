@@ -11,7 +11,7 @@
  
 ####2. *Do I have to rebuild all of my stones to use GsDevKit_home?*
 
-####3. *How do I contribute to the GsDevKit_home project?*
+####100. *How do I contribute to the GsDevKit_home project?*
 When you decide that you would like to contribute bugfixes or improvements to the  GsDevKit_home family of projects:
  - [GsDevKit_home][15]
  - [GsDevKit_gs_client_dev][16]

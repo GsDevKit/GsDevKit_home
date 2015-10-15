@@ -13,7 +13,7 @@ The GsDevKit_home project is current in **EARLY ACCESS** mode. If you are alread
 1. *Everything on a single workstation*
 2. *Client on a local workstation, Server on a remote host*
 
-Please read the [Installation Overview][2] for more information on the different installation options and instructions.
+Please read the [Installation Overview][2] for installation options and instructions.
 
 ##FAQs
 1. [If I am already using gsDevKitHome, why should I consider moving to GsDevKit_home?][3]
