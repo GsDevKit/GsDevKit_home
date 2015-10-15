@@ -24,18 +24,14 @@ Please read the [Installation Overview][2] for more information on the different
     - New modules can be created for development clients like Jade and GemTools
     - New modules can be created for production tools like [Daemon Tools][8], [Monit][9], [Apache][10], [nginx][12], [lightppd][11], etc.
 
- [Click here to read more about modularity.][3]
 
 2. By default, git-based repositories used by GsDevKit_home are cloned thus reducing the reliance on network and making for more reliable builds. The ulitmate goal is to move all projects used by GsDevKit to [git][13] so that builds can be done without a network connection.
 
-   [Click here to read more about local git clones.][4]
 
 3. No longer necessary to fork the GsDevKit_home project on Github as part of installation process. See the FAQ on [How do I contribute to the GsDevKit_home project?](#how-do-i-contribute-to-the-gsdevkithome-project) for more information.
 
-4. Better support for Windows users. The GsDevKit_home client scripts are exactly the same for Windows, Linux and OSX users.
-
-   [Click here to read more about GsDevKit_home client installation][7]
-
+4. Better support for Windows users. The GsDevKit_home client scripts are exactly the same for Windows, Linux and OSX users.  [Read more about GsDevKit_home client installation][7]
+ 
 ####2. *How do I contribute to the GsDevKit_home project?*
 When you decide that you would like to contribute bugfixes or improvements to the  GsDevKit_home family of projects:
  - [GsDevKit_home][15]
@@ -75,8 +71,8 @@ Then on GitHub, open a pull request from the `topicBranch` in your fork, to the 
 
 [1]: https://github.com/GsDevKit/gsDevKitHome#open-source-development-kit-for-gemstones-64-bit-
 [2]: docs/installation#installation-overview
-[3]: docs/FAQs/moreModular.md
-[4]: docs/FAQs/localGitClones.md
+
+
 [5]: https://github.com/GsDevKit/GsDevKit_sys_local
 [6]: https://bitbucket.org/
 [7]: docs/installation/installDevKitClient.md#install-client
