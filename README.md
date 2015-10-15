@@ -37,12 +37,37 @@ Please read the [Installation Overview][2] for more information on the different
    [Click here to read more about GsDevKit_home client installation][7]
 
 ####2. *How do I contribute to the GsDevKit_home project?*
-With GsDevKit_home, contributing to the GsDevKit_home family of projects as well as the git-based projects used by GsDevKit_home is straightforward. 
+When you decide that you would like to contribute bugfixes or improvements to the  GsDevKit_home family of projects:
+ - [GsDevKit_home][15]
+ - [GsDevKit_gs_client_dev][16]
+ - [GsDevKit_gs_server][17]
+ - [GsDevKit_todeClient][18]
+ - [GsDevKit_sys_local][19]) 
 
-When you decide that you want to contribute bugfixes or improvements to the  GsDevKit_home family of projects ([GsDevKit_home][15], [GsDevKit_gs_client_dev][16], [GsDevKit_gs_server][17], [GsDevKit_todeClient][18], [GsDevKit_sys_local][19]) or the git-based projects used by GsDevKit_home ([Metacello][20], [Tode][21], [Ston][22], [FileTree][23], [Grease][24], [GLASS1][25], [PharoCompatibility][26], [RB][27])
+or the git-based projects used by GsDevKit_home:
+ - [Metacello][20]
+ - [Tode][21]
+ - [Ston][22]
+ - [FileTree][23]
+ - [Grease][24]
+ - [GLASS1][25]
+ - [PharoCompatibility][26]
+ - [RB][27])
 
-The basic steps boil down to:
- 1. `git remote add
+You start by forking the project of interest on [GitHub][14], set up your GitHub account for ssh access. 
+Then you perform the following steps in your local checkout (assuming the your GitHub user-name is `dalehenrich` and the project you want to contribute to is GsDevKit_home, which you've already cloned):
+
+```shell
+git remote add dale git@github.com:dalehenrich/GsDevKit_home.git
+git fetch --all
+git checkout master
+git checkout -b topicBranch
+# do work for contribution committing along the way
+git commit -m"final commit"
+git push dale topicBranch
+```
+
+Then on GitHub, open a pull request from the `topicBranch` in your fork, to the `master` branch that you forked from.
 
 ####3. *I don't want to have to rebuild all of the stones that I am currently using. Can I continue to use stones create withgGsDevKithome with the GsDevKit_home scripts?"
 
