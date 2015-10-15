@@ -18,7 +18,6 @@ Please read the [Installation Overview][2] for installation options and instruct
 ##FAQs
 1. [If I am already using gsDevKitHome, why should I consider moving to GsDevKit_home?][3]
 2. [Do I have to rebuild all of my stones to use GsDevKit_home?][4]
-3. [How do I contribute to the GsDevKit_home project?][5]
 4. How do I share session descriptions between a local client and a remote server?
 5. How do I use GsDevKit_home to coordinate between my development, sand box and production environments?
 6. How do I get started with tODE?
@@ -28,4 +27,5 @@ Please read the [Installation Overview][2] for installation options and instruct
 [2]: docs/installation#installation-overview
 [3]: docs/FAQ/FAQ.md#1-if-i-am-already-using-gsdevkithome-why-should-i-consider-moving-to-gsdevkit_home
 [4]: docs/FAQ/FAQ.md#2-do-i-have-to-rebuild-all-of-my-stones-to-use-gsdevkit_home
-[5]: docs/FAQ/FAQ.md#3-how-do-i-contribute-to-the-gsdevkit_home-project
+
+[100]: docs/FAQ/FAQ.md#100-how-do-i-contribute-to-the-gsdevkit_home-project
