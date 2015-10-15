@@ -134,6 +134,8 @@ fi
 rm -rf $targetStonePath/tranlogs/tranlog*.dbf
 
 pushd $targetStonePath >& /dev/null
+  source $GS_HOME/bin/defStone.env "" # force null arg 1
+
   if [ "${createStone}" = "true" ] ; then
     mkdir upgradeLog
   fi
@@ -146,8 +148,6 @@ if [ "$runUpgrade" = "false" ] ; then
   exit 0
 fi
 
-
-source $GS_HOME/bin/defStone.env $targetStoneName
 if [ "$GEMSTONE}x" = "x" ] ; then
   echo "\$GEMSTONE env var not set"; exit 1
 fi

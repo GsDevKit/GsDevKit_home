@@ -63,10 +63,13 @@ stoneName=$1
 stonePath=$GS_SERVER_STONES/${stoneName}
 
 if [ -e "$stonePath/defStone.env" ] ; then
-# set up stone environment
+  # set up stone environment
   pushd $stonePath >& /dev/null
-    source $stonePath/defStone.env
+    source ./defStone.env "" # force null arg 1
   popd >& /dev/null
+  if [ "$GEMSTONE}x" = "x" ] ; then
+    echo "\$GEMSTONE env var not set"; exit 1
+  fi
 
   # stop the stone
   $GS_HOME/bin/private/gsDevKitCommandLine stopstone $stoneName
