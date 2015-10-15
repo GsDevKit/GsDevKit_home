@@ -10,30 +10,36 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-s] [-g]
-Update the clones for each of the installed GsDevKit modules:
-  GsDevKit_home
-  GsDevKit_gs_server
-  GsDevKit_gs_client
-  GsDevKit_sys_local
-  GsDevKit_todeClient
-  GsDevKit_gemtools
+USAGE: $(basename $0) [-h] [-g] [-t]
 
-Update the GsDevKit command line image.
+With the -g option, update the GsDevKit_home components:
+  update clones (if present):
+    GsDevKit_home          - \$GS_HOME
+    GsDevKit_gs_server     - \$GS_HOME/server
+    GsDevKit_gs_client_dev - \$GS_HOME/dev
+    GsDevKit_sys_local     - \$GS_HOME/local
+    GsDevKit_todeClient    - \$GS_HOME/dev/todeClient
+  rebuild GsDevKit command line image
+
+With the -t option,update the tODE components:
+  update \$GS_HOME/shared/repos/tode clone
+  rebuild GsDevKit command line image
+  rebuild GsDevKit_todeClient clients
+
+With no options present, update both GsDevKit_home and tODE components.
 
 OPTIONS
   -h 
      display help
-  -g
-     skip update of GsDevKit command line image.
-  -s 
-     skip shared project clone update
+  -g Update GsDevKit_home components
+  -t
+     Update tODE components
 
 EXAMPLES
   $(basename $0) -h
   $(basename $0) -g 
-  $(basename $0) -s
-  $(basename $0) -g -s
+  $(basename $0) -t
+  $(basename $0) -g -t
   $(basename $0) 
 
 HELP
@@ -46,40 +52,80 @@ if [ "${GS_HOME}x" = "x" ] ; then
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
-skipCommandLine="false"
-skipUpdateClone="false"
-while getopts "hgs" OPT ; do
+gsDevKitArg=""
+todeArg=""
+default="true"
+while getopts "hgt" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
-    g) skipCommandLine="true";;
-    s) skipUpdateClone="true";;
+    g) gsDevKitArg="true"; default="false";;
+    t) todeArg="true"; default="false";;
     *) echo "unknown option $OPT"; usage; exit 1;;
   esac
 done
 shift $(($OPTIND - 1))
 
+if [ "${gsDevKitArg}x" = "x" ]; then
+  gsDevKitArg=$default
+fi
+if [ "${todeArg}x" = "x" ]; then
+  todeArg=$default
+fi
+
+updateGsDevKitClones="false"
+updateTodeClone="false"
+rebuildCommandLine="false"
+rebuildTodeClient="false"
+
+if [ "${gsDevKitArg}" = "true" ]; then
+  updateGsDevKitClones="true"
+  rebuildCommandLine="true"
+fi
+
+if [ "${todeArg}" = "true" ]; then
+  rebuildCommandLine="true"
+  updateTodeClone="true"
+  rebuildTodeClient="true"
+fi
+
 source ${GS_HOME}/bin/private/gitFunctions
 
-updateClone master "$GS_HOME"
+if [ "$updateGsDevKitClones" = "true" ]; then
+  updateClone master "$GS_HOME"
 
-if [ -d "$GS_SERVER" ]; then
-  updateClone master "$GS_SERVER"
+  if [ -d "$GS_SERVER" ]; then
+    updateClone master "$GS_SERVER"
+  fi
+
+  if [ -d "$GS_CLIENT_DEV" ]; then
+    $GS_CLIENT_DEV/bin/updateGsDevKit
+  fi
+  if [ -d "$GS_HOME/local" ]; then
+    updateClone master "$GS_HOME/local"
+  fi
 fi
 
-if [ -d "$GS_CLIENT_DEV" ]; then
-  $GS_CLIENT_DEV/bin/updateGsDevKit
+if [ "$updateTodeClone" = "true" ]; then
+  if [ -d "${GS_SHARED_REPO}/tode" ] ; then
+    updateClone $GS_SHARED_GIT_CHECKOUT_TODE ${GS_SHARED_REPO}/tode
+  fi
 fi
 
-if [ -d "$GS_HOME/local" ]; then
-  updateClone master "$GS_HOME/local"
-fi
-
-if [ "$skipUpdateClone" = 'false' ] ; then
-  $GS_HOME/bin/utils/updateSharedTodeProjectsClone client
-fi
-
-if [ "$skipCommandLine" = "false" ] ; then
+if [ "$rebuildCommandLine" = "true" ]; then
   $GS_HOME/bin/private/gsDevKitCommandLine -F
+fi
+
+if [ "$rebuildTodeClient" = "true" ]; then
+  if [ -d "$GS_CLIENT_DEV" ]; then
+    for clientName in "$@"
+    do
+      if [ -d "${GS_CLIENT_DEV_CLIENTS}/$clientName/" ] ; then
+        ${GS_CLIENT_DEV_CLIENTS}/$clientName/updateClient $clientName
+      else
+        echo "client $clientName does not exist"
+      fi
+    done
+  fi  
 fi
 
 echo "...finished $(basename $0)"

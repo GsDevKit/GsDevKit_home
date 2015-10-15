@@ -39,9 +39,7 @@ todeBackup -h
 todeInstall -h
 todeIt -h
 todeRestore -h
-updateClient -h
 updateGsDevKit -h
-updateStone -h
 upgradeStone -h
 
 stones
@@ -50,11 +48,12 @@ todeIt ${STONENAME1} eval \`3+4\`
 todeIt ${STONENAME1} ls /home
 
 updateGsDevKit
-updateClient tode
+updateGsDevKit -g
+updateGsDevKit -t
+updateGsDevKit -g -t
 
 stopStone ${STONENAME1}
 stopNetldi ${STONENAME1}
-updateStone ${STONENAME1}
 startStone ${STONENAME1}
 stopStone -b ${STONENAME1}
 
