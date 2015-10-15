@@ -20,9 +20,8 @@ Please read the [Installation Overview][2] for more information on the different
 
 1. GsDevKit_home has been made more modular with separate git projects for the tODE client and GemStone servers.  
 
-    - With the new directory structure, project-specific (private) files like session descriptions, tODE scripts and customized `system.conf` files are located in a separate git project [(GsDevKit_local_sys][5]). The *GsDevKit_local_sys* project can be forked to a private repository (i.e., [BitBucket][6], allowing you to isolate your team's private shared data from the public GsDevKit_home projects.
-    - New modules can be created for development clients like Jade and GemTools
-    - New modules can be created for production tools like [Daemon Tools][8], [Monit][9], [Apache][10], [nginx][12], [lightppd][11], etc.
+  With a new, modular directory structure, project-specific (private) files like session descriptions, tODE scripts and customized `system.conf` files are co-located in a separate git project [(GsDevKit_local_sys][5])that can be managed in a private repository (i.e., [BitBucket][6]) keeping your team's private shared data private.
+  Modules for development clients like [Jade][3] and [GemTools][4] can be added to GsDevKit_home, as well as modules for production tools like [Daemon Tools][8], [Monit][9], [Apache][10], [nginx][12], [lightppd][11], etc.
 
 
 2. By default, git-based repositories used by GsDevKit_home are cloned thus reducing the reliance on network and making for more reliable builds. The ulitmate goal is to move all projects used by GsDevKit to [git][13] so that builds can be done without a network connection.
@@ -71,8 +70,8 @@ Then on GitHub, open a pull request from the `topicBranch` in your fork, to the 
 
 [1]: https://github.com/GsDevKit/gsDevKitHome#open-source-development-kit-for-gemstones-64-bit-
 [2]: docs/installation#installation-overview
-
-
+[3]: https://github.com/jgfoster/Jade
+[4]: https://github.com/glassdb/GemTools
 [5]: https://github.com/GsDevKit/GsDevKit_sys_local
 [6]: https://bitbucket.org/
 [7]: docs/installation/installDevKitClient.md#install-client
