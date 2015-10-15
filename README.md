@@ -17,9 +17,7 @@ Please read the [Installation Overview][2] for more information on the different
 
 ##FAQs
 1. [If I am already using gsDevKitHome, why should I consider moving to GsDevKit_home?](#1-if-i-am-already-using-gsdevkithome-why-should-i-consider-moving-to-gsdevkit_home)
-
 2. [Do I have to rebuild all of my stones to use GsDevKit_home?](#2-do-i-have-to-rebuild-all-of-my-stones-to-use-gsdevkit_home)
-
 3. [How do I contribute to the GsDevKit_home project?](#3-how-do-i-contribute-to-the-gsdevkit_home-project)
 
 ####1. *If I am already using gsDevKitHome, why should I consider moving to GsDevKit_home?*
