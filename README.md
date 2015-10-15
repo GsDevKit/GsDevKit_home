@@ -21,6 +21,7 @@ Please read the [Installation Overview][2] for more information on the different
 3. [How do I contribute to the GsDevKit_home project?][5]
 4. How do I share session descriptions between a local client and a remote server?
 5. How do I use GsDevKit_home to coordinate between my development, sand box and production environments?
+6. How do I get started with tODE?
 
 
 [1]: https://github.com/GsDevKit/gsDevKitHome#open-source-development-kit-for-gemstones-64-bit-
