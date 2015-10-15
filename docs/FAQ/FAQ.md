@@ -13,6 +13,65 @@
 ---
 ---
 ####2. *Do I have to rebuild all of my stones to use GsDevKit_home?*
+No.
+
+You have a couple of different options when it comes to stones created in gsDevKitHome:
+1. [Attach to Foreign Stone](#attach-to-foreign-stone)
+2. [Attach to Old DevKit Stone](#attach-to-old-devkit-stone)
+
+#####Attach to Foreign Stone
+If you have a stone with tODE installed and you'd like to continue to access that stone while you use GsDevKit_home, you can use `attachForeignStone` to create a *foreign* stone:
+
+```Shell
+attachForeignStone foreign_3106 3.1.0.6
+```
+
+The `attachForeignStone` command, creates a valid session description for the stone and creates an entry for the stone in the $GS_SERVER_STONES directory so that the stone shows up in the `status` command:
+
+```
+foos:_home> status
+Installed Products:
+	3.1.0.6
+	3.2.9
+Installed Clients:
+	tode	tODE client
+	  todeClient.image
+Available Sessions:
+	foreign_3106
+	gs_329
+Installed Stones:
+	3.1.0.6	foreign_3106	(foreign)
+	3.2.9	gs_329
+```
+
+In order to log into a foreign stone, you need to edit the session description (`vi $GS_HOME/sys/local/sessions/foreign_3106`) and defined the necessary fields.
+
+#####Attach to Old DevKit Stone
+If you have a stone with tODE installed that was being managed under gsDevKitHome, you can use the `attachOldDevKitStone` script. For example the following command attaches to a stone named `dev_329` that was created using the dev branch of GsDevKitHome (`-d` option) where `$GS_HOME` is `/export/foos1/users/dhenrich/dev/dev_gsDevKitHome`:
+
+```shell
+attachOldDevKitStone -d -t dev_329 3.2.9 /export/foos1/users/dhenrich/dev/dev_gsDevKitHome
+```
+
+`attachOldDevKitStone` creates a symbolic link to the original stone directory, copies the original session description to the `$GS_SYS_SESSIONS` directory. When the `-t` option is specied, the script copies the stone-specific scripts and projects (basically contents of old $GS_HOME/tode/sys/stones directory) into the new location: `$GS_SYS_STONES/<stone-name>`.
+
+```
+foos:_home>status
+Installed Products:
+	3.1.0.6
+	3.2.9
+Installed Clients:
+	tode	tODE client
+	  todeClient.image
+Available Sessions:
+	foreign_329
+	dev_329
+	gs_329
+Installed Stones:
+	3.2.9	dev_329
+	3.2.9	foreign_329	(foreign)
+	3.2.9	gs_329
+```
 
 ---
 ---

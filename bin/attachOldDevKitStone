@@ -62,7 +62,7 @@ source ${GS_HOME}/bin/defGsDevKit.env
 oldStoneName=""
 todeInstalledArg=""
 devKitHomeArg=""
-while getopts "hd:m:o:t" OPT ; do
+while getopts "hdmo:t" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     d) 
