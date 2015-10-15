@@ -69,7 +69,8 @@ createStone -g -s $seasideSnapshot ${STONENAME4} $GS_VERSION
 
 #create a tODE stone
 createStone -t $todeSnapshot ${STONENAME3} $GS_VERSION
-cd $GS_HOME/sys/local/stones/${STONENAME3}
+
+cd $GS_HOME/sys/stones/${STONENAME3}
 ls dirs.ston  home  homeComposition.ston  packages.ston  projectComposition.ston  projects  repos.ston
 todeIt ${STONENAME3} eval \`3+4\`\; eval \`self == 7 ifFalse: [ System logout ]\`
 todeIt ${STONENAME3} ls /home
