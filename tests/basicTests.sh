@@ -49,6 +49,8 @@ stones
 todeIt ${STONENAME1} eval \`3+4\`
 todeIt ${STONENAME1} ls /home
 
+updateClient tode
+
 stopStone ${STONENAME1}
 stopNetldi ${STONENAME1}
 updateStone ${STONENAME1}

@@ -27,7 +27,7 @@ OPTIONS
   -g
      skip update of GsDevKit command line image.
   -s 
-     skip updateClone
+     skip shared project clone update
 
 EXAMPLES
   $(basename $0) -h

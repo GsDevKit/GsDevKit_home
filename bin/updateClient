@@ -17,7 +17,7 @@ OPTIONS
   -h 
      display help
   -s
-     skip updateClone
+     skip shared project clone update
 
 EXAMPLES
   $(basename $0) -h

@@ -15,10 +15,10 @@ if [ "${GS_HOME}x" = "x" ] ; then
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
-updateClonePath="${GS_SYS_DEFAULT}/gsdevkit_bin/updateClone"
+cloneUpdatePath="${GS_SYS_DEFAULT}/gsdevkit_bin/cloneUpdate"
 if [ -e "${GS_SYS_LOCAL}/gsdevkit_bin/updateClone" ] ; then
-  updateClonePath="${GS_SYS_LOCAL}/gsdevkit_bin/updateClone"
+  cloneUpdatePath="${GS_SYS_LOCAL}/gsdevkit_bin/cloneUpdate"
 fi
-$updateClonePath $*
+$cloneUpdatePath $*
 
 echo "...finished $(basename $0)"

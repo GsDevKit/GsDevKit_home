@@ -44,6 +44,6 @@ fi
 
 $GS_HOME/bin/startStone -b $stoneName
 
-$GS_SYS/bin/installTode $stoneName
+$GS_SYS/bin/todeInstall $stoneName
 
 echo "...finished $(basename $0)"

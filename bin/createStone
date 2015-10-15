@@ -133,7 +133,7 @@ if [ "${noRestartArg}x" = "x" ] ; then
 fi
 
 if [ "$installTode" = "true" ] ; then
-  $GS_SYS/bin/installTode $stoneName
+  $GS_SYS/bin/todeInstall $stoneName
 fi
 
 if [ "$todeProjectName" != "" ] ; then
