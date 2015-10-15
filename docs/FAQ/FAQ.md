@@ -16,6 +16,7 @@
 No.
 
 You have a couple of different options when it comes to stones created in gsDevKitHome:
+
 1. [Attach to Foreign Stone](#attach-to-foreign-stone)
 2. [Attach to Old DevKit Stone](#attach-to-old-devkit-stone)
 
