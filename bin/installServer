@@ -10,7 +10,7 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-c https | ssh ] <stone-name> <gemstone-version>
+USAGE: $(basename $0) [-h] [-c https | ssh ] [-o <organization-name>] <stone-name> <gemstone-version>
 
 OPTIONS
   -h
@@ -18,6 +18,9 @@ OPTIONS
   -c https | ssh
      clone using https (https://github.com) or ssh (git@github.com)
      "ssh" is the default 
+  -o <organization-name>
+     use <organization-name> instead of GsDevKit. Use this option when
+     you've cloned the todeClient project
 
 EXAMPLES
    $(basename $0) -h
@@ -33,10 +36,12 @@ fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
 modeArg=""
-while getopts "hc:" OPT ; do
+organizationArg=""
+while getopts "hc:o:" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     c) modeArg=" -c ${OPTARG} ";;
+    o) organizationArg=" -o ${OPTARG} ";;
     *) echo "unknown option: ${OPTARG}"; usage; exit 1;;
   esac
 done
@@ -48,6 +53,7 @@ fi
 stoneName=$1
 vers=$2
 $GS_HOME/bin/downloadGemStone $vers
+$GS_HOME/bin/utils/cloneGsDevKitProjects $modeArg $organizationArg server
 $GS_HOME/bin/utils/cloneSharedTodeProjects $modeArg server
 $GS_HOME/bin/createStone $stoneName $vers
 

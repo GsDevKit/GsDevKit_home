@@ -10,7 +10,7 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-c https | ssh ]
+USAGE: $(basename $0) [-h] [-c https | ssh ] [-o <organization-name>]
 
 
 OPTIONS
@@ -19,6 +19,9 @@ OPTIONS
   -c https | ssh
      clone using https (https://github.com) or ssh (git@github.com)
      ssh is the default 
+  -o <organization-name>
+     use <organization-name> instead of GsDevKit. Use this option when
+     you've cloned the todeClient project
 
 EXAMPLES
    $(basename $0) -h
@@ -36,17 +39,19 @@ fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
 modeArg=""
-while getopts "hnc:" OPT ; do
+organization="GsDevKit"
+while getopts "hc:o:" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     c) modeArg=" -c ${OPTARG} ";;
-    *) usage; exit 1;;
+    o) organization="${OPTARG}";;
+    *) echo "unknown option $OPT"; usage; exit 1;;
   esac
 done
 shift $(($OPTIND - 1))
 
 pushd ${GS_HOME} >& /dev/null
-  ${GS_HOME}/bin/private/cloneGitHubProject $modeArg GsDevKit GsDevKit_sys_local local
+  ${GS_HOME}/bin/private/cloneGitHubProject $modeArg $organization GsDevKit_sys_local local
   cd local
   git checkout -b gsdevkit
   cd ..

@@ -10,7 +10,7 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-c https | ssh ]  [-o <organization-name>] <client-name> <gemstone-version>
+USAGE: $(basename $0) [-h] [-c https | ssh ] [-o <organization-name>] client|server|both
 
 OPTIONS
   -h
@@ -24,7 +24,10 @@ OPTIONS
 
 EXAMPLES
    $(basename $0) -h
-   $(basename $0) tode 3.2.9
+   $(basename $0) client
+   $(basename $0) -c ssh -f dalehenrich server
+   $(basename $0) -c ssh server
+   $(basename $0) -c https both
 
 HELP
 }
@@ -36,25 +39,38 @@ fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
 modeArg=""
-organizationArg=""
-while getopts "hc:o:" OPT ; do
+organization="GsDevKit"
+while getopts "ho:c:" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     c) modeArg=" -c ${OPTARG} ";;
-    o) organizationArg=" -o ${OPTARG} ";;
-    *) echo "unknown option: ${OPTARG}"; usage; exit 1;;
+    o) organization="${OPTARG}";;
+    *) usage; exit 1;;
   esac
 done
 shift $(($OPTIND - 1))
 
-if [ $# -ne 2 ]; then
-  echo "wrong number of arguments (2 expected)"; usage; exit 1
+if [ $# -lt 1 ]; then
+  echo "missing required argument"; usage; exit 1
 fi
-clientName=$1
-vers=$2
-$GS_HOME/bin/downloadGemStone $vers
-$GS_HOME/bin/utils/cloneGsDevKitProjects $modeArg $organizationArg client
-$GS_HOME/bin/utils/cloneSharedTodeProjects $modeArg client
-$GS_HOME/bin/createClient $clientName
+
+cloneClient="false"
+cloneServer="false"
+case "$1" in
+  client) cloneClient="true";;
+  server) cloneServer="true";;
+  both) cloneClient="true"; cloneServer="true" ;;
+  *) echo "unknown argument: $1"; usage; exit 1;;
+esac
+
+$GS_HOME/bin/private/clone_sys_local -o $organization
+if [ "$cloneClient" = "true" ] ; then
+  $GS_HOME/bin/private/clone_gs_client_dev -o $organization
+  ${GS_HOME}/bin/private/clone_todeClient -o $organization
+fi
+
+if [ "$cloneServer" = "true" ] ; then
+  $GS_HOME/bin/private/clone_gs_client_dev -o $organization
+fi
 
 echo "...finished $(basename $0)"

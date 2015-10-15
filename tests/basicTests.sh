@@ -24,7 +24,6 @@ downloadGemStone -h
 installClient -h
 installServer -h
 installServerClient -h
-installTode -h
 newExtent -h
 products -h
 sessions -h
@@ -37,6 +36,7 @@ stones -h
 stopNetldi -h
 stopStone -h
 todeBackup -h
+todeInstall -h
 todeIt -h
 todeRestore -h
 updateClient -h
