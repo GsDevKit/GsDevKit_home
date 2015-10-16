@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/bash -x
 #=========================================================================
 # Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
 #=========================================================================
@@ -112,7 +112,7 @@ if [ "$updateGsDevKitClones" = "true" ]; then
   fi
 
   if [ -d "$GS_SERVER" ]; then
-    updateClone $GSDEVKIT_SERVER_GIT_CHECKOUT $GSDEVKIT_SERVER_GIT_REMOTE"$GS_SERVER"
+    updateClone $GSDEVKIT_SERVER_GIT_CHECKOUT $GSDEVKIT_SERVER_GIT_REMOTE "$GS_SERVER"
   fi
 
   if [ -d "$GS_CLIENT_DEV" ]; then
