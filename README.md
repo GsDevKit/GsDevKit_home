@@ -23,6 +23,7 @@ Please read the [Installation Overview][2] for installation options and instruct
 5. [When a new version of tODE is published, how do I update my checkout and my stones?][7]
 6. How do I share session descriptions between a local client and a remote server?
 7. How do I upgrade a stone to a new version of GemStone?
+8. How do I load Seaside?
 
 [**COMMENTS**][8]
 
