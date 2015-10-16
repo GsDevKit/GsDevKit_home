@@ -4,16 +4,17 @@
 #=========================================================================
 
 updateClone() {
-  master="$1"
-  workingDir="$2"
+  branch="$1"
+  origin="$2"
+  workingDir="$3"
   echo ">>>>>>"
   echo "   Updating $(basename $workingDir)"
   echo ">>>>>>"
   theBranchName=`git --git-dir="$workingDir/.git" --work-tree="$workingDir" rev-parse --abbrev-ref HEAD`
-  git --git-dir="$workingDir/.git" --work-tree="$workingDir" checkout $master
-  git --git-dir="$workingDir/.git" --work-tree="$workingDir" pull origin $master
+  git --git-dir="$workingDir/.git" --work-tree="$workingDir" checkout $branch
+  git --git-dir="$workingDir/.git" --work-tree="$workingDir" pull $origin $branch
   git --git-dir="$workingDir/.git" --work-tree="$workingDir" checkout $theBranchName
-  git --git-dir="$workingDir/.git" --work-tree="$workingDir" merge $master
+  git --git-dir="$workingDir/.git" --work-tree="$workingDir" merge $branch
 }
 
 checkoutClone() {
