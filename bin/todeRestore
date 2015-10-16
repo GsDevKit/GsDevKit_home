@@ -64,7 +64,9 @@ echo "Restoring backup for stone: $stoneName using: $backupFile"
 
 # set up stone environment
 stonePath=$GS_SERVER_STONES/$stoneName
-source $stonePath/stone.env
+pushd >& /dev/null
+  source $stonePath/stone.env
+popd >& /dev/null
 
 # do tODE restore
 $GS_HOME/bin/private/gsDevKitTodeCommandLine $interactiveArg restoreFromBackup $stoneName $backupFile

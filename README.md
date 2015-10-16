@@ -21,10 +21,8 @@ Please read the [Installation Overview][2] for installation options and instruct
 3. [Can I use a GsDevKit_home tODE client to connect to older stones?][5]
 4. [When a new version of GsDevKit_home is published, how do I update my checkout?][6]
 5. [When a new version of tODE is published, how do I update my checkout and my stones?][7]
-4. How do I share session descriptions between a local client and a remote server?
-5. How do I use GsDevKit_home to coordinate between my development, sand box and production environments?
-6. How do I get started with tODE?
-
+6. How do I share session descriptions between a local client and a remote server?
+7. How do I upgrade a stone to a new version of GemStone?
 
 [1]: https://github.com/GsDevKit/gsDevKitHome#open-source-development-kit-for-gemstones-64-bit-
 [2]: docs/installation#installation-overview

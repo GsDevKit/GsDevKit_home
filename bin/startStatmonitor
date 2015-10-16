@@ -47,7 +47,9 @@ stoneName=$1
 
 # set up stone environment
 stonePath=$GS_SERVER_STONES/$stoneName
-source $stonePath/stone.env
+pushd >& /dev/null
+  source $stonePath/stone.env
+popd >& /dev/null
 
 # start the statmonitors
 cd $stonePath/stats/1-second

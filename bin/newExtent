@@ -100,7 +100,9 @@ stonePath=$GS_SERVER_STONES/$stoneName
 if [ ! -d "$stonePath" ] ; then
   echo "The stone $stoneName does not appear to exist."; exit 1
 fi
-source $stonePath/stone.env
+pushd >& /dev/null
+  source $stonePath/stone.env
+popd >& /dev/null
 
 echo "Shutdown stone"
 $GS_HOME/bin/stopStone $stoneName

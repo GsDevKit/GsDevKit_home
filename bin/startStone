@@ -99,7 +99,9 @@ if [ ! -d "$stonePath" ] ; then
   exit 1
 fi
 # set up stone environment
-source $stonePath/stone.env
+pushd >& /dev/null
+  source $stonePath/stone.env
+popd >& /dev/null
 
 # start the stone
 $GS_HOME/bin/private/gsDevKitCommandLine startstone $stoneName $ARG

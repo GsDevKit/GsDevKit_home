@@ -47,7 +47,9 @@ echo "starting netldi $stoneName"
 
 # set up stone environment
 stonePath=$GS_SERVER_STONES/$stoneName
-source $stonePath/stone.env
+pushd >& /dev/null
+  source $stonePath/stone.env
+popd >& /dev/null
 
 $GS_HOME/bin/private/gsDevKitCommandLine startnetldi $stoneName
 

@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/bash -x
 #=========================================================================
 # Copyright (c) 2014, 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
 #=========================================================================
@@ -64,7 +64,9 @@ stonePath=$GS_SERVER_STONES/${stoneName}
 
 if [ -e "$stonePath/stone.env" ] ; then
   # set up stone environment
-  source $stonePath/stone.env
+  pushd >& /dev/null
+    source $stonePath/stone.env
+  popd >& /dev/null
 
   # stop the stone
   $GS_HOME/bin/private/gsDevKitCommandLine stopstone $stoneName
