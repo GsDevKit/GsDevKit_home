@@ -39,6 +39,7 @@ todeBackup -h
 todeInstall -h
 todeIt -h
 todeRestore -h
+todeUpdate -h
 updateGsDevKit -h
 upgradeStone -h
 
@@ -51,6 +52,8 @@ updateGsDevKit
 updateGsDevKit -g
 updateGsDevKit -t
 updateGsDevKit -g -t
+
+todeUpdate ${STONENAME1}
 
 stopStone ${STONENAME1}
 stopNetldi ${STONENAME1}
