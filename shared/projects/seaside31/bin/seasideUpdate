@@ -35,6 +35,7 @@ if [ "${GS_SERVER}x" = "x" ] ; then
   echo "GS_SERVER environment variable has not been defined"
   exit 1
 fi
+source ${GS_HOME}/bin/defGsDevKit.env
 
 source ${GS_HOME}/bin/private/shFunctions
 getOpts_help $@

@@ -90,13 +90,13 @@ while getopts "b:fghnp:s:t:" OPT ; do
     p) todeProjectName="${OPTARG}";;
     s) snapshotFileArg=" -s ${OPTARG} ";;
     t) snapshotFileArg=" -s ${OPTARG} "; installTode="false"; todeSnapshotArg=" -t ";;
-    *) usage; exit 1;;
+    *) echo "unknown option $OPT"; usage; exit 1;;
   esac
 done
 shift $(($OPTIND - 1))
 
 if [ $# -ne 2 ]; then
-  usage; exit 1
+  echo "incorrect number of args $# (2 expected)"; usage; exit 1
 fi
 stoneName="$1"
 vers="$2"
