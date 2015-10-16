@@ -46,7 +46,8 @@ OPTIONS
      Path to snapshot file used to create stone. Path may be a relative file 
      path.
   -t
-     Attach image to the \$GS_TODE/sys/stones/<stone-name> directory structure
+     Attach image to the \$GS_TODE/sys/stones/<stone-name> directory structure,
+     be used with the -s option.
 
 EXAMPLES
   $(basename $0) -h
@@ -129,7 +130,7 @@ else
   if [ "${snapshotFile}x" = "x" ] ; then
     echo "Must specify <snapshot-file-path>, when using the -n (no restart option)"
     echo "  Tranlogs left in $GS_HOME/gemstone/stones/${stoneName}/tranlogs"
-    echo "  Are not likely to be appropriate for $GEMSTONE/bin/extent0.seaside.dbf"
+    echo "  Are not likely to be appropriate for \$GEMSTONE/bin/extent0.seaside.dbf"
     usage; exit 1
   fi
   $GS_HOME/bin/private/gsDevKitCommandLine newExtentForRecovery $stoneName $snapshotFile
