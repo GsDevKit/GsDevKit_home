@@ -106,17 +106,17 @@ fi
 source ${GS_HOME}/bin/private/gitFunctions
 
 if [ "$updateGsDevKitClones" = "true" ]; then
-  updateClone master "$GS_HOME"
+  updateClone $GS_HOME_GIT_CHECKOUT "$GS_HOME"
 
   if [ -d "$GS_SERVER" ]; then
-    updateClone master "$GS_SERVER"
+    updateClone $GS_SERVER_GIT_CHECKOUT "$GS_SERVER"
   fi
 
   if [ -d "$GS_CLIENT_DEV" ]; then
     $GS_CLIENT_DEV/bin/updateGsDevKit
   fi
   if [ -d "$GS_HOME/local" ]; then
-    updateClone master "$GS_HOME/local"
+    updateClone $GS_SYS_LOCAL_GIT_CHECKOUT "$GS_HOME/local"
   fi
 fi
 
