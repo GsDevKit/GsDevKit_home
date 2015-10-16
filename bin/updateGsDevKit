@@ -19,14 +19,16 @@ With the -g option, update the GsDevKit_home components:
     GsDevKit_gs_client_dev - \$GS_HOME/dev
     GsDevKit_sys_local     - \$GS_HOME/local
     GsDevKit_todeClient    - \$GS_HOME/dev/todeClient
-  rebuild GsDevKit command line image
 
-With the -t option,update the tODE components:
+With the -t option, update the tODE components:
   update \$GS_HOME/shared/repos/tode clone
+
+With the -i option, update the images specified by the -g and/or -t options:
   rebuild GsDevKit command line image
   rebuild GsDevKit_todeClient clients
 
-With no options present, update both GsDevKit_home and tODE components.
+With no options present, update both GsDevKit_home, tODE components and rebuild 
+the associated images.
 
 OPTIONS
   -h
@@ -42,7 +44,7 @@ EXAMPLES
   $(basename $0) -h
   $(basename $0) -g 
   $(basename $0) -t
-  $(basename $0) -g -t
+  $(basename $0) -g -t -i
   $(basename $0) 
 
 HELP
