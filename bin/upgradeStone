@@ -134,7 +134,7 @@ fi
 rm -rf $targetStonePath/tranlogs/tranlog*.dbf
 
 pushd $targetStonePath >& /dev/null
-  source $GS_HOME/bin/defStone.env "" # force null arg 1
+  source $GS_HOME/bin/stone.env
 
   if [ "${createStone}" = "true" ] ; then
     mkdir upgradeLog

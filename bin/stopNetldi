@@ -47,15 +47,10 @@ stoneName=$1
 echo "stopping netldi $stoneName"
 
 stonePath=$GS_SERVER_STONES/$stoneName
-if [ -e "$stonePath/defStone.env" ] ; then
+if [ -e "$stonePath/stone.env" ] ; then
   # set up stone environment
-  pushd $stonePath >& /dev/null
-    source ./defStone.env "" # force null arg 1
-  popd >& /dev/null
+  source $stonePath/stone.env
 
-  if [ "$GEMSTONE}x" = "x" ] ; then
-    echo "\$GEMSTONE env var not set"; exit 1
-  fi
   $GS_HOME/bin/private/gsDevKitCommandLine stopnetldi $stoneName
 else
   echo "\$GEMSTONE environment not set correctly"; exit 1

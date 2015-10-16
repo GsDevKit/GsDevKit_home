@@ -12,14 +12,15 @@ usage() {
   cat <<HELP
 USAGE: $(basename $0) [-h] <stone-name>
 
-Update tODE in the given stone.
+Update tODE in the given stone by executing `project load Tode` 
+using the \$GS_HOME/bin/todeIt script.
 
 OPTIONS
   -h display help
 
 EXAMPLES
   $(basename $0) -h
-  $(basename $0) gs_3281
+  $(basename $0) gs_329
 "
 HELP
 }
@@ -49,9 +50,7 @@ echo "Update tODE on stone: $stoneName"
 
 # set up stone environment
 stonePath=$GS_SERVER_STONES/$stoneName
-pushd $stonePath >& /dev/null
-  source $stonePath/stone.env
-popd >& /dev/null
+source $stonePath/stone.env
 
 # install tODE using gsDevKitTodeCommandLine
 $GS_HOME/bin/todeIt $stoneName project load Tode
