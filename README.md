@@ -36,6 +36,6 @@ Please read the [Installation Overview][2] for installation options and instruct
 [6]: docs/FAQ/FAQ.md#4-when-a-new-version-of-gsdevkit_home-is-published-how-do-i-update-my-checkout
 [7]: docs/FAQ/FAQ.md#5-when-a-new-version-of-tode-is-published-how-do-i-update-my-checkout-and-my-stones
 [8]: https://github.com/GsDevKit/GsDevKit_home/issues/new
-[9]: docs/FAQ/FAQ.md#6-do-i-have-to-bootstrap-glass1-and-tode-from-scratch-every-time-I-create-a-stone
+[9]: docs/FAQ/FAQ.md#6-do-i-have-to-bootstrap-glass1-and-tode-from-scratch-every-time-i-create-a-stone
 
 [100]: docs/FAQ/FAQ.md#100-how-do-i-contribute-to-the-gsdevkit_home-project
