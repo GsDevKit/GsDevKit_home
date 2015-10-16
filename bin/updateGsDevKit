@@ -1,4 +1,4 @@
-#! /bin/bash -x
+#! /bin/bash
 #=========================================================================
 # Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
 #=========================================================================
@@ -106,7 +106,10 @@ fi
 source ${GS_HOME}/bin/private/gitFunctions
 
 if [ "$updateGsDevKitClones" = "true" ]; then
-  updateClone $GSDEVKIT_HOME_GIT_CHECKOUT "$GS_HOME"
+  if [ "${GS_TRAVIS}x" = "x" ] ; then
+    # on Travis, _home is not a git checkout
+    updateClone $GSDEVKIT_HOME_GIT_CHECKOUT "$GS_HOME"
+  fi
 
   if [ -d "$GS_SERVER" ]; then
     updateClone $GSDEVKIT_SERVER_GIT_CHECKOUT "$GS_SERVER"
