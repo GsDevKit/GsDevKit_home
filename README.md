@@ -24,6 +24,8 @@ Please read the [Installation Overview][2] for installation options and instruct
 6. How do I share session descriptions between a local client and a remote server?
 7. How do I upgrade a stone to a new version of GemStone?
 
+[**COMMENTS**][28]
+
 [1]: https://github.com/GsDevKit/gsDevKitHome#open-source-development-kit-for-gemstones-64-bit-
 [2]: docs/installation/README.md#installation-overview
 [3]: docs/FAQ/FAQ.md#1-if-i-am-already-using-gsdevkithome-why-should-i-consider-moving-to-gsdevkit_home
@@ -31,5 +33,6 @@ Please read the [Installation Overview][2] for installation options and instruct
 [5]: docs/FAQ/FAQ.md#3-can-i-use-a-gsdevkit_home-tode-client-to-connect-to-older-stones
 [6]: docs/FAQ/FAQ.md#4-when-a-new-version-of-gsdevkit_home-is-published-how-do-i-update-my-checkout
 [7]: docs/FAQ/FAQ.md#5-when-a-new-version-of-tode-is-published-how-do-i-update-my-checkout-and-my-stones
+[8]: https://github.com/GsDevKit/GsDevKit_home/issues/new
 
 [100]: docs/FAQ/FAQ.md#100-how-do-i-contribute-to-the-gsdevkit_home-project
