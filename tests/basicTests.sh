@@ -53,6 +53,8 @@ updateGsDevKit -g
 updateGsDevKit -t
 updateGsDevKit -g -t
 
+$GS_HOME/bin/utils/updateSharedTodeProjectsClone both
+
 todeUpdate ${STONENAME1}
 
 stopStone ${STONENAME1}
