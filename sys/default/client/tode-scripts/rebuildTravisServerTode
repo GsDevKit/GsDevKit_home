@@ -1,4 +1,5 @@
 #no backups on travis
 bu snapshot --safely pre-rebuild.dbf # make a snapshot of repository prior to rebuild
 script --script=rebuildSys           # rebuild the in-image tODE /sys structure
+commit
 bu snapshot tode.dbf                 # make a snapshot of newly rebuilt /sys structure
