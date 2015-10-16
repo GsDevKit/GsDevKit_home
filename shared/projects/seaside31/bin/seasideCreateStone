@@ -3,10 +3,15 @@
 # Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
 #=========================================================================
 
+echo "================="
+echo "   GsDevKit script: $(basename $0) $*"
+echo "              path: $0"
+echo "================="
+
 usage() {
   cat <<HELP
 USAGE: $(basename $0) [-h] <stone-name> <gemstone-version> 
-Create a new stone named <stone-name> with tODE and Seaside3 installed.
+Create a new stone named <stone-name> with tODE and Seaside31 installed.
 
 OPTIONS
   -h display help
@@ -31,6 +36,8 @@ fi
 stoneName="$1"
 gsvers="$2"
 
-$GS_HOME/bin/createTodeStone $stoneName $gsvers
+$GS_HOME/bin/createStone $stoneName $gsvers
 
-$GS_HOME/projects/seaside31/bin/installSeasideStone $stoneName
+$GS_HOME/projects/seaside31/bin/seasideInstall $stoneName
+
+echo "...finished $(basename $0)"

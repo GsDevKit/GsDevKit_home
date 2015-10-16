@@ -3,6 +3,11 @@
 # Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
 #=========================================================================
 
+echo "================="
+echo "   GsDevKit script: $(basename $0) $*"
+echo "              path: $0"
+echo "================="
+
 usage() {
   cat <<HELP
 USAGE: $(basename $0) [-h] <stone-name>
@@ -35,6 +40,8 @@ fi
 stoneName="$1"
 
 $GS_HOME/bin/tode todeIt $stoneName << EOF
-mount @/sys/stone/dirs/gsDevKitHome/projects/seaside31 /home seaside # mount the seaside directory in tODE
+mount @/sys/stone/dirs/gsDevKitHome/shared/projects/seaside31 /home seaside # mount the seaside directory in tODE
 /home/seaside/install
 EOF
+
+echo "...finished $(basename $0)"
