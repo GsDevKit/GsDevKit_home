@@ -8,7 +8,9 @@ By default, git-based repositories used by GsDevKit_home are cloned thus reducin
 It is no longer necessary to fork the GsDevKit_home project as part of the installation process.
 
 Better support for Windows users. The installation process for the Windows, Linux and OSX platforms is the same.  
- 
+
+[**COMMENTS**][28]
+
 ---
 ---
 ---
@@ -48,6 +50,8 @@ Installed Stones:
 	3.2.9	gs_329
 ```
 
+[**COMMENTS**][28]
+
 ---
 ---
 ---
@@ -59,6 +63,8 @@ Once you have run the `$GS_HOME/bin/installClient` or `$GS_HOME/bin/installServe
 For a *master branch* checkout of gsDevKitHome, the session descriptions are found in the old `$GS_HOME/tode/client/descriptions` directory.
 
 For a *dev branch* checkout of gsDevKitHome, the session descriptions are found in the the old `$GS_HOME/tode/sys/local/client/descriptions` directory.
+
+[**COMMENTS**][28]
 
 ---
 ---
@@ -73,6 +79,8 @@ The `$GS_HOME/bin/updateGsDevKit` script:
 4. Rebuilds all of the tode clients present in the `$GS_HOME/dev/clients` directory.
 
 See  `$GS_HOME/bin/updateGsDevKit -h` for more options.
+
+[**COMMENTS**][28]
 
 ---
 ---
@@ -90,6 +98,7 @@ To update the version of tODE used in a stone, run the `$GS_HOME/bin/todeUpdate`
 todeUpdate <stone-name>
 ```
 
+[**COMMENTS**][28]
 
 ---
 ---
@@ -159,5 +168,4 @@ Then on GitHub, open a pull request from the `topicBranch` in your fork, to the 
 [25]: https://github.com/glassdb
 [26]: https://github.com/glassdb/PharoCompatibility
 [27]: https://github.com/dalehenrich/rb
-
-
+[28]: https://github.com/GsDevKit/GsDevKit_home/issues/new
