@@ -10,7 +10,7 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-g] [-t]
+USAGE: $(basename $0) [-h] [-g] [-t] [-i]
 
 With the -g option, update the GsDevKit_home components:
   update clones (if present):
@@ -33,6 +33,8 @@ OPTIONS
      display help
   -g
      Update GsDevKit_home components
+  -i
+     Update the image for the listed components
   -t
      Update tODE components
 
@@ -55,10 +57,12 @@ source ${GS_HOME}/bin/defGsDevKit.env
 
 gsDevKitArg=""
 todeArg=""
+imageArg=""
 default="true"
 while getopts "hgt" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
+    i) imageArg="true";
     g) gsDevKitArg="true"; default="false";;
     t) todeArg="true"; default="false";;
     *) echo "unknown option $OPT"; usage; exit 1;;
@@ -72,6 +76,10 @@ fi
 if [ "${todeArg}x" = "x" ]; then
   todeArg=$default
 fi
+if [ "${imageArg}x" = "x" ]; then
+  imageArg=$default
+fi
+
 
 updateGsDevKitClones="false"
 updateTodeClone="false"
@@ -80,13 +88,17 @@ rebuildTodeClient="false"
 
 if [ "${gsDevKitArg}" = "true" ]; then
   updateGsDevKitClones="true"
-  rebuildCommandLine="true"
+  if [ "$imageArg" = "true" ] ; then
+    rebuildCommandLine="true"
+  fi
 fi
 
 if [ "${todeArg}" = "true" ]; then
-  rebuildCommandLine="true"
   updateTodeClone="true"
-  rebuildTodeClient="true"
+  if [ "$imageArg" = "true" ] ; then
+    rebuildTodeClient="true"
+    rebuildCommandLine="true"
+  fi
 fi
 
 source ${GS_HOME}/bin/private/gitFunctions
