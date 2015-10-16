@@ -29,9 +29,10 @@ With the -t option,update the tODE components:
 With no options present, update both GsDevKit_home and tODE components.
 
 OPTIONS
-  -h 
+  -h
      display help
-  -g Update GsDevKit_home components
+  -g
+     Update GsDevKit_home components
   -t
      Update tODE components
 
@@ -117,14 +118,14 @@ fi
 
 if [ "$rebuildTodeClient" = "true" ]; then
   if [ -d "$GS_CLIENT_DEV" ]; then
-    for clientName in "$@"
-    do
-      if [ -d "${GS_CLIENT_DEV_CLIENTS}/$clientName/" ] ; then
-        ${GS_CLIENT_DEV_CLIENTS}/$clientName/updateClient $clientName
-      else
-        echo "client $clientName does not exist"
-      fi
-    done
+    pushd $GS_CLIENT_DEV_CLIENTS >& /dev/null
+     for clientName in $(find . -maxdepth 1 -type d)
+      do
+        if [ "$clientName" != "." ] ; then
+          ${GS_CLIENT_DEV_CLIENTS}/$clientName/updateClient $clientName
+        fi
+      done
+    popd >& /dev/null
   fi  
 fi
 
