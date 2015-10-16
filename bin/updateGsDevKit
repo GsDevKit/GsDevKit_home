@@ -64,7 +64,7 @@ default="true"
 while getopts "hgt" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
-    i) imageArg="true";
+    i) imageArg="true";;
     g) gsDevKitArg="true"; default="false";;
     t) todeArg="true"; default="false";;
     *) echo "unknown option $OPT"; usage; exit 1;;
