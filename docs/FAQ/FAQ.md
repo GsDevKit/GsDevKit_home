@@ -13,6 +13,7 @@ Better support for Windows users. The installation process for the Windows, Linu
 ---
 ---
 ####2. *Do I have to rebuild all of my stones to use GsDevKit_home?*
+No.
 If you have a stone that was created with gsDevKitHome (either dev or master branches), you can use the `attachOldDevKitStone` script to put the old stone under GsDevKit_home management. 
 
 For example the following command attaches to a stone named `dev_329` that was created using the dev branch of GsDevKitHome (`-d` option) where the old `$GS_HOME` is `/export/foos1/users/dhenrich/dev/dev_gsDevKitHome`:
@@ -62,10 +63,26 @@ For a *dev branch* checkout of gsDevKitHome, the session descriptions are found 
 ---
 ---
 ---
+####4. *When a new version of GsDevKit_home is published, how do I update my checkout?*
+The `$GS_HOME/bin/updateGsDevKit` script update all of the work. the script:
+
+1. Updates the GsDevKit_home modules that you are using to the latest version from GitHub.
+2. Updates the tode checkout in `$GS_HOME/shared/repos/tode` to the latest version.
+3. Rebuilds the command line Pharo image.
+4. Rebuilds all of the tode clients present in the `$GS_HOME/dev/clients` directory.
+
+---
+---
+---
+
+---
+---
+---
+#UNDER CONSTRUCTION
+---
+---
+---
 ####100. *How do I contribute to the GsDevKit_home project?*
-
-**UNDER CONSTRUCTION**
-
 When you decide that you would like to contribute bugfixes or improvements to the  GsDevKit_home family of projects:
  - [GsDevKit_home][15]
  - [GsDevKit_gs_client_dev][16]
