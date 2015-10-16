@@ -64,12 +64,15 @@ For a *dev branch* checkout of gsDevKitHome, the session descriptions are found 
 ---
 ---
 ####4. *When a new version of GsDevKit_home is published, how do I update my checkout?*
-The `$GS_HOME/bin/updateGsDevKit` script update all of the work. the script:
+The `$GS_HOME/bin/updateGsDevKit` script does all of the work. 
+The `$GS_HOME/bin/updateGsDevKit` script:
 
 1. Updates the GsDevKit_home modules that you are using to the latest version from GitHub.
-2. Updates the tode checkout in `$GS_HOME/shared/repos/tode` to the latest version.
+2. Updates the tode clone in `$GS_HOME/shared/repos/tode` to the latest version.
 3. Rebuilds the command line Pharo image.
 4. Rebuilds all of the tode clients present in the `$GS_HOME/dev/clients` directory.
+
+See  `$GS_HOME/bin/updateGsDevKit -h` for more options.
 
 ---
 ---
