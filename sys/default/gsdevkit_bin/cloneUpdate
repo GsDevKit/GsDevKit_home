@@ -105,7 +105,7 @@ pushd ${GS_SHARED_REPO} >& /dev/null
       updateClone $GS_SHARED_GIT_CHECKOUT_PHARO_COMPAT $GS_SHARED_GIT_REMOTE_PHARO_COMPAT ${GS_SHARED_REPO}/PharoCompatibility
     fi
     if [ -d "glass" ] ; then
-      updateClone $GS_SHARED_GIT_CHECKOUT_GLASS1 $GS_SHARED_GIT_REMOTE_GLASS1${GS_SHARED_REPO}/glass
+      updateClone $GS_SHARED_GIT_CHECKOUT_GLASS1 $GS_SHARED_GIT_REMOTE_GLASS1 ${GS_SHARED_REPO}/glass
     fi
     if [ -d "rb" ] ; then
       updateClone $GS_SHARED_GIT_CHECKOUT_RB $GS_SHARED_GIT_REMOTE_RB ${GS_SHARED_REPO}/rb
