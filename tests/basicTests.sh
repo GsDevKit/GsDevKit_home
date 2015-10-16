@@ -85,3 +85,4 @@ stopStone -b ${STONENAME4}
 cd $GS_HOME/server/stones/${STONENAME1}
 . defStone.env
 
+deleteStone ${STONENAME2} ${STONENAME3}
