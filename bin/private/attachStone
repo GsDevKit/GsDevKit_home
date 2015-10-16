@@ -103,23 +103,27 @@ if [ "${foreign}" = "true" ] ; then
 else
   oldStonePath=${oldGsDevKitHome}/gemstone/stones/$stoneName
   oldTodeRoot=${oldGsDevKitHome}/tode
-  if [ "${master_GS_HOME}x" != "x" ] ; then
+  if [ "${master_GS_HOME}" = "true" ] ; then
     oldClientDescriptionsPath="${oldGsDevKitHome}/tode/client/descriptions/${oldStoneName}"
     oldStoneHomePath="${oldGsDevKitHome}/tode/home"
     oldStoneProjectsPath=""
   fi
-  if [ "${dev_GS_HOME}x" != "x" ] ; then
+  if [ "${dev_GS_HOME}" = "true" ] ; then
     oldClientDescriptionsPath="${oldGsDevKitHome}/tode/sys/local/client/descriptions/${odlStoneName}"
     oldStoneHomePath="${oldGsDevKitHome}/tode/sys/stones/${oldStoneName}/home"
     oldStoneProjectsPath="${oldGsDevKitHome}/tode/sys/stones/${oldStoneName}/projects"
   fi
-  cp $oldClientDescriptionsPath/$stoneName $GS_SYS_SESSIONS
+  cp $oldClientDescriptionsPath $GS_SYS_SESSIONS
   ln -s $oldStonePath ${GS_SERVER_STONES}/$stoneName
   $GS_HOME/bin/startStone -b $stoneName
   if [ "$todeInstalled" = "true" ] ; then
     $GS_HOME/bin/private/gsDevKitCommandLine patchTodeRoot $stoneName
-    $GS_HOME/bin/todeIt $stoneName "script --script=rebuildServerTode"
-    $GS_HOME/bin/todeIt $stoneName "mount $oldTodeRoot / oldTodeRoot"
+    if [ "${master_GS_HOME}" = "true" ] ; then
+      $GS_HOME/bin/todeIt $stoneName "mount $oldTodeRoot / oldTodeRoot"
+    else
+      $GS_HOME/bin/todeIt $stoneName "script --script=rebuildServerTode"
+      $GS_HOME/bin/todeIt $stoneName "mount $oldTodeRoot / oldTodeRoot"
+    fi
     cp -R $oldStoneHomePath  $GS_SYS_STONES/$stoneName
     if [ "$oldStoneProjectsPath" != "" ] ; then
       cp -R $oldStoneProjectsPath  $GS_SYS_STONES/$stoneName

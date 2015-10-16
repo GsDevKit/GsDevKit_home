@@ -75,8 +75,8 @@ while getopts "hdmo:t" OPT ; do
       if [ "${devKitHomeArg}x" != "x" ] ; then
         echo "only one of -d or -m may be specified"; usage; exit 1
       fi
-       defKitHomeArg=" -m "
-       ;;
+      devKitHomeArg=" -m "
+      ;;
     o) oldStoneName="${OPTARG}";;
     t) todeInstalledArg=" -t ";;
     *) echo "unknown option $OPT"; usage; exit 1;;
