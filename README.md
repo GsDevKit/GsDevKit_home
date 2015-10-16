@@ -25,7 +25,7 @@ Please read the [Installation Overview][2] for installation options and instruct
 7. How do I upgrade a stone to a new version of GemStone?
 
 [1]: https://github.com/GsDevKit/gsDevKitHome#open-source-development-kit-for-gemstones-64-bit-
-[2]: docs/installation#installation-overview
+[2]: docs/installation/README.md#installation-overview
 [3]: docs/FAQ/FAQ.md#1-if-i-am-already-using-gsdevkithome-why-should-i-consider-moving-to-gsdevkit_home
 [4]: docs/FAQ/FAQ.md#2-do-i-have-to-rebuild-all-of-my-stones-to-use-gsdevkit_home
 [5]: docs/FAQ/FAQ.md#3-can-i-use-a-gsdevkit_home-tode-client-to-connect-to-older-stones
