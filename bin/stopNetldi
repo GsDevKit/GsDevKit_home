@@ -49,7 +49,7 @@ echo "stopping netldi $stoneName"
 stonePath=$GS_SERVER_STONES/$stoneName
 if [ -e "$stonePath/stone.env" ] ; then
   # set up stone environment
-  pushd >& /dev/null
+  pushd $stonePath >& /dev/null
     source $stonePath/stone.env
   popd >& /dev/null
 

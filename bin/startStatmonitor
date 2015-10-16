@@ -47,7 +47,7 @@ stoneName=$1
 
 # set up stone environment
 stonePath=$GS_SERVER_STONES/$stoneName
-pushd >& /dev/null
+pushd $stonePath >& /dev/null
   source $stonePath/stone.env
 popd >& /dev/null
 
