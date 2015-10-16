@@ -55,6 +55,6 @@ pushd $stonePath >& /dev/null
 popd >& /dev/null
 
 # install tODE using gsDevKitTodeCommandLine
-$GS_HOME/bin/todeIt $stoneName project load Tode
+$GS_HOME/bin/todeIt $stoneName bu backup prebuild.dbf; project load Tode; bu backup tode.dbf; bu snapshot tode.dbf
 
 echo "...finished $(basename $0)"
