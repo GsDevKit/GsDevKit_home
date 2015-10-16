@@ -26,8 +26,8 @@ attachOldDevKitStone -d -t dev_329 3.2.9 /export/foos1/users/dhenrich/dev/dev_gs
 
 If the `-t` option is specied, the script:
 
- 1. copies the tODE scripts and projects associated with the stone into the new location: `$GS_HOME/sys/stones/<stone-name>`.
- 2. makes `pre-rebuild` `backups` and `snapshots` of the stone and then rebuilds the in-image tODE structures to match the new GsDevKit_home directory structure.
+ 1. copies the tODE scripts and projects associated with the stone into the new location: `$GS_HOME/sys/stones/<stone-name>`. With the `-m` option, only the home directory is copied.
+ 2. makes `pre-rebuild` `backups` and `snapshots` of the stone and then rebuilds the in-image tODE structures to match the new GsDevKit_home directory structure. With the `-m` option no `snapshot` is made.
  3. mounts the old `$GS_HOME/tode` as `/oldTodeRoot` so that the old directory structure is accessible from with tODE.
 
 As you can see in the output of the `status` command, the stone is tucked neatly into the new GsDevKit_home system:
