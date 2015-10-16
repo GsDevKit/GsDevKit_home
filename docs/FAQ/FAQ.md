@@ -50,7 +50,22 @@ Installed Stones:
 ---
 ---
 ---
+####3. *Can I use a GsDevKit_home tODE client to connect to older stones?*
+Yes. 
+In general all tODE clients should be able to connect to older stones. 
+Once you have run the `$GS_HOME/bin/installClient` or `$GS_HOME/bin/installServerClient` scripts, all you need to do is copy the session description into your `$GS_HOME/sys/local/sessions` directory.
+
+For a *master branch* checkout of gsDevKitHome, the session descriptions are found in the old `$GS_HOME/tode/client/descriptions` directory.
+
+For a *dev branch* checkout of gsDevKitHome, the session descriptions are found in the the old `$GS_HOME/tode/sys/local/client/descriptions` directory.
+
+---
+---
+---
 ####100. *How do I contribute to the GsDevKit_home project?*
+
+**UNDER CONSTRUCTION**
+
 When you decide that you would like to contribute bugfixes or improvements to the  GsDevKit_home family of projects:
  - [GsDevKit_home][15]
  - [GsDevKit_gs_client_dev][16]
