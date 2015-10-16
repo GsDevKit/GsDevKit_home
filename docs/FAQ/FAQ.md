@@ -78,13 +78,17 @@ See  `$GS_HOME/bin/updateGsDevKit -h` for more options.
 ---
 ---
 ####5. *When a new version of tODE is published, how do I update my checkout and my stones?*
-To update your checkout, run the `$GS_HOME/bin/updateGsDevKit`  with the `-t` option:
+To update your checkout, run the `$GS_HOME/bin/updateGsDevKit` with the `-t` option:
 
 ```Shell
-`updateGsDevKit -t`
+updateGsDevKit -t
 ```
 
-To update the version of tODE used in a stone, run the todeInstall command:
+To update the version of tODE used in a stone, run the `$GS_HOME/bin/todeUpdate` command:
+
+```Shell
+todeUpdate <stone-name>
+```
 
 
 ---
