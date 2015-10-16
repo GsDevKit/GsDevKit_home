@@ -102,6 +102,7 @@ if [ "${foreign}" = "true" ] ; then
   $GS_HOME/bin/private/gsDevKitCommandLine createForeignStone $stoneName $vers 
 else
   oldStonePath=${oldGsDevKitHome}/gemstone/stones/$stoneName
+  oldTodeRoot=${oldGsDevKitHome}/tode
   if [ "${master_GS_HOME}x" != "x" ] ; then
     oldClientDescriptionsPath="${oldGsDevKitHome}/tode/client/descriptions/${oldStoneName}"
     oldStoneHomePath="${oldGsDevKitHome}/tode/home"
@@ -116,16 +117,12 @@ else
   ln -s $oldStonePath ${GS_SERVER_STONES}/$stoneName
   $GS_HOME/bin/startStone -b $stoneName
   if [ "$todeInstalled" = "true" ] ; then
-    if [ "${GS_TODE}x" = "x" ] ; then
-      # clone tode module - needed at end of tODE install
-      $GS_HOME/bin/private/cloneTode
-      source ${GS_HOME}/bin/defGsDevKit.env
-    fi
     $GS_HOME/bin/private/gsDevKitCommandLine patchTodeRoot $stoneName
     $GS_HOME/bin/todeIt $stoneName "script --script=rebuildServerTode"
-    cp -R $oldStoneHomePath  $GS_TODE/sys/stones/$stoneName
+    $GS_HOME/bin/todeIt $stoneName "mount $oldTodeRoot / oldTodeRoot"
+    cp -R $oldStoneHomePath  $GS_SYS_STONES/$stoneName
     if [ "$oldStoneProjectsPath" != "" ] ; then
-      cp -R $oldStoneProjectsPath  $GS_TODE/sys/stones/$stoneName
+      cp -R $oldStoneProjectsPath  $GS_SYS_STONES/$stoneName
     fi
   fi
 fi

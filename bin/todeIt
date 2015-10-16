@@ -59,5 +59,5 @@ echo "performing tode command: __$*__"
 $GS_HOME/bin/private/gsDevKitTodeCommandLine $interactiveArg todeIt $stoneName << EOF
 $*
 EOF
-
+echo "" # todeIt output tends to be missing trailing LF
 echo "...finished $(basename $0)"
