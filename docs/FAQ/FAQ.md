@@ -103,7 +103,7 @@ and follow the **Previous Pull Request** link:
 
 ![GsDevKit_home pull request previous pull request link][33]
 
-comparing that SHA of the *merge commit*:
+comparing the SHA of the *merge commit*:
 
 ![GsDevKit_home pull request merge detail][32]
 
