@@ -103,6 +103,48 @@ todeUpdate <stone-name>
 ---
 ---
 ---
+####6. *Do I have to bootstrap GLASS1 and tODE from scratch every time I create a stone?*
+No.
+
+When you create a stone you can specify a path to a pre-built extent file, so if you want to avoid bootstrapping GLASS1 and tODE every time you create a stone you should first create a stone that you will use to manage your pre-built extent file. The following creates a tODE stone based on GemStone 3.2.9:
+
+```
+$GS_HOME/bin/createStone prebuilt_329 3.2.9
+```
+
+When a tODE stone is created a snapshot extent named `extent0.tode.dbf` is created by the [`installServerTode2` tODE script][29].
+
+Then whenever you want to create a new tODE stone, you can use the following command to create the stone and bypass the bootstrapping process:
+
+```
+$GS_HOME/bin/createStone -t $GS_HOME/server/stones/prebuilt_329/snapshots/extent0.tode.dbf new_329 3.2.9
+```
+
+When a new version of tODE is announced, run the following"
+
+```
+$GS_HOME/bin/todeUpdate prebuilt_329
+```
+
+to update tODE in your `prebuilt_329` stone. The `$GS_HOME/bin/todeUpdate` script creates a new `extent0.tode.dbf` after the update is complete, so the next stone you create will be using the latest version of tODE.
+
+If you want to prebuild an extent file that does not contain tODE, you start by creating a stone using `$GEMSTONE/bin/extent0.seaside.dbf`:
+
+```
+$GS_HOME/bin/createStone -g prebuilt_329 3.2.9
+```
+
+Once you've create the stone, it is your responsibility to create the snapshot by following the instructions [How to make an extent snapshot backup][30]. Thereafter you use the `-s` option and specify the path to the custom extent to create a new stone:
+
+```
+$GS_HOME/bin/createStone -s <path-to-custom-snapshot> new_329 3.2.9
+```
+
+[**COMMENTS**][28]
+
+---
+---
+---
 #UNDER CONSTRUCTION
 ---
 ---
@@ -169,3 +211,5 @@ Then on GitHub, open a pull request from the `topicBranch` in your fork, to the 
 [26]: https://github.com/glassdb/PharoCompatibility
 [27]: https://github.com/dalehenrich/rb
 [28]: https://github.com/GsDevKit/GsDevKit_home/issues/new
+[29]: https://github.com/GsDevKit/GsDevKit_home/blob/master/sys/default/client/tode-scripts/installServerTode2
+[30]: https://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/9-BackupAndRestore.htm#pgfId-1069325
