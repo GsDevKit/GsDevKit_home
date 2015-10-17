@@ -61,7 +61,7 @@ gsDevKitArg=""
 todeArg=""
 imageArg=""
 default="true"
-while getopts "hgt" OPT ; do
+while getopts "hgti" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     i) imageArg="true";;
