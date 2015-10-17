@@ -70,20 +70,39 @@ For a *dev branch* checkout of gsDevKitHome, the session descriptions are found 
 ---
 ---
 ####4. *When a new version of GsDevKit_home is published, how do I update my checkout?*
-When a new version is published I send an [email announcement to the GLASS mailing list][30], where I will reference a specific pull request that was used to create the release:
+When a new version is published I send an [email announcement to the GLASS mailing list][30], where I will reference a specific pull request that was used to create the release like the following:
 
 ![GsDevKit_home pull request][31]
 
+Each of my pull requests has an **Update Scripts** section where I will describe the script or scripts that should be run to update your GsDevKit_home checkout.
+Typically the **Update Scripts** will involve running the `$GS_HOME/bin/updateGsDevScript` with a combination of the `-g`, `-t` and `-i` options.
 
-The `$GS_HOME/bin/updateGsDevKit` script does all of the work. 
-The `$GS_HOME/bin/updateGsDevKit` script:
+When the `-g` option is specified, the clones for the GsDevKit_* modules (GsDevKit_home, GsDevKit_gs_client_dev, GsDevKit_todeClient, GsDevKit_gs_server, and GsDevKit_sys_local) that are currently being used are updated by doing a `git pull` from the appropriate *remote*.
 
-1. Updates the GsDevKit_home modules that you are using to the latest version from GitHub.
-2. Updates the tode clone in `$GS_HOME/shared/repos/tode` to the latest version.
-3. Rebuilds the command line Pharo image.
-4. Rebuilds all of the tode clients present in the `$GS_HOME/dev/clients` directory.
+When the `-t` option is specified, the clone of the tODE project is updated (`$GS_HOME/shared/repos/tode`).
 
-See  `$GS_HOME/bin/updateGsDevKit -h` for more options.
+When the `-i` option is specied the command line Pharo image (when `-g` option is specified) and/or the tode client images (when the `-t` option is specified) are rebuilt.
+
+When in doubt run `$GS_HOME/bin/updateGsDevScript -g -t -i`.
+
+If you are curious about any pull requests that you might have missed, you can take note of the commit SHA in your current checkout using the `git log -1` command:
+
+```
+foos:GsDevKit_home>git log -1
+commit d4fde700cddc2356815aac684ccc340e2384d6a7
+Merge: 1876b7a 6c9c685
+Author: Dale Henrichs <dale.henrichs@gemtalksystems.com>
+Date:   Sat Oct 17 08:02:57 2015 -0700
+
+    Merge pull request #3 from GsDevKit/dev
+    
+    todeUpdate customization ... another FAQ
+```
+
+and then compare that SHA of the commit in which the merge occurred:
+
+![GsDevKit_home pull request merge detail][32]
+
 
 [**COMMENTS**][28]
 
@@ -219,3 +238,4 @@ Then on GitHub, open a pull request from the `topicBranch` in your fork, to the 
 [29]: https://github.com/GsDevKit/GsDevKit_home/blob/master/sys/default/client/tode-scripts/installServerTode2
 [30]: https://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/9-BackupAndRestore.htm#pgfId-1069325
 [31]: ../images/GsDevKit_home-pull-request.png
+[32]: ../images/GsDevKit_home-pull-request-merge-detail.png
