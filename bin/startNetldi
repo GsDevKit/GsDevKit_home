@@ -51,6 +51,6 @@ pushd $stonePath >& /dev/null
   source $stonePath/stone.env
 popd >& /dev/null
 
-$GS_HOME/bin/private/gsDevKitCommandLine startnetldi $stoneName
+$GS_HOME/bin/devKitCommandLine startnetldi $stoneName
 
 echo "...finished $(basename $0)"

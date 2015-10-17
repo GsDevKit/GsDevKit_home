@@ -70,15 +70,45 @@ For a *dev branch* checkout of gsDevKitHome, the session descriptions are found 
 ---
 ---
 ####4. *When a new version of GsDevKit_home is published, how do I update my checkout?*
-The `$GS_HOME/bin/updateGsDevKit` script does all of the work. 
-The `$GS_HOME/bin/updateGsDevKit` script:
+When a new version is published I send an [email announcement to the GLASS mailing list][30], where I will reference a specific pull request that was used to create the release like the following:
 
-1. Updates the GsDevKit_home modules that you are using to the latest version from GitHub.
-2. Updates the tode clone in `$GS_HOME/shared/repos/tode` to the latest version.
-3. Rebuilds the command line Pharo image.
-4. Rebuilds all of the tode clients present in the `$GS_HOME/dev/clients` directory.
+![GsDevKit_home pull request][31]
 
-See  `$GS_HOME/bin/updateGsDevKit -h` for more options.
+Each of my pull requests has an **Update Scripts** section where I will describe the script or scripts that should be run to update your GsDevKit_home checkout.
+Typically the **Update Scripts** will involve running the `$GS_HOME/bin/updateGsDevScript` with a combination of the `-g`, `-t` and `-i` options (when in doubt run `$GS_HOME/bin/updateGsDevScript -g -t -i`).
+
+#####updateGsDevScript options
+When the `-g` option is specified, the clones for the GsDevKit_* modules (GsDevKit_home, GsDevKit_gs_client_dev, GsDevKit_todeClient, GsDevKit_gs_server, and GsDevKit_sys_local) that are currently being used are updated by doing a `git pull` from the appropriate *remote*.
+
+When the `-t` option is specified, the clone of the tODE project is updated (`$GS_HOME/shared/repos/tode`).
+
+When the `-i` option is specied the command line Pharo image (when `-g` option is specified) and/or the tode client images (when the `-t` option is specified) are rebuilt.
+
+#####Following `Previous Pull Request` links
+If you are curious about any pull requests that you might have missed, you can take note of the commit SHA in your current checkout using the `git log -1` command:
+
+```
+foos:GsDevKit_home>git log -1
+commit d4fde700cddc2356815aac684ccc340e2384d6a7
+Merge: 1876b7a 6c9c685
+Author: Dale Henrichs <dale.henrichs@gemtalksystems.com>
+Date:   Sat Oct 17 08:02:57 2015 -0700
+
+    Merge pull request #3 from GsDevKit/dev
+    
+    todeUpdate customization ... another FAQ
+```
+
+and follow the **Previous Pull Request** link:
+
+![GsDevKit_home pull request previous pull request link][33]
+
+comparing the SHA of the *merge commit*:
+
+![GsDevKit_home pull request merge detail][32]
+
+until you find a match.
+
 
 [**COMMENTS**][28]
 
@@ -106,35 +136,39 @@ todeUpdate <stone-name>
 ####6. *Do I have to bootstrap GLASS1 and tODE from scratch every time I create a stone?*
 No.
 
+#####tODE stone
 When you create a stone you can specify a path to a pre-built extent file, so if you want to avoid bootstrapping GLASS1 and tODE every time you create a stone you should first create a stone that you will use to manage your pre-built extent file. The following creates a tODE stone based on GemStone 3.2.9:
 
 ```
 $GS_HOME/bin/createStone prebuilt_329 3.2.9
 ```
 
-When a tODE stone is created a snapshot extent named `extent0.tode.dbf` is created by the [`installServerTode2` tODE script][29].
+During the `createStone` for a tODE stone, a snapshot extent named `extent0.tode.dbf` is created.
 
-Then whenever you want to create a new tODE stone, you can use the following command to create the stone and bypass the bootstrapping process:
+This snapshot can be used as the starting point for another `createStone` thus bypassing the bootstrapping process:
 
 ```
 $GS_HOME/bin/createStone -t $GS_HOME/server/stones/prebuilt_329/snapshots/extent0.tode.dbf new_329 3.2.9
 ```
 
-When a new version of tODE is announced, run the following"
+When a new version of tODE is announced, you can update the prebuilt stone with the following:
 
 ```
 $GS_HOME/bin/todeUpdate prebuilt_329
 ```
 
-to update tODE in your `prebuilt_329` stone. The `$GS_HOME/bin/todeUpdate` script creates a new `extent0.tode.dbf` after the update is complete, so the next stone you create will be using the latest version of tODE.
+which also saves a new snapshot.
 
-If you want to prebuild an extent file that does not contain tODE, you start by creating a stone using `$GEMSTONE/bin/extent0.seaside.dbf`:
+#####Non-tODE stone
+
+If you want to prebuild an extent file that does not contain tODE, start by creating a stone using `$GEMSTONE/bin/extent0.seaside.dbf`:
 
 ```
 $GS_HOME/bin/createStone -g prebuilt_329 3.2.9
 ```
 
-Once you've create the stone, it is your responsibility to create the snapshot by following the instructions [How to make an extent snapshot backup][30]. Thereafter you use the `-s` option and specify the path to the custom extent to create a new stone:
+and then load the rest of the code that you need bootstrapped.
+You can then create the snapshot extent by following the instructions in [How to make an extent snapshot backup][30]. Thereafter you use the `-s` option and specify the path to the custom extent when you create a new stone:
 
 ```
 $GS_HOME/bin/createStone -s <path-to-custom-snapshot> new_329 3.2.9
@@ -185,6 +219,8 @@ Then on GitHub, open a pull request from the `topicBranch` in your fork, to the 
 ---
 ---
 ---
+
+
 [3]: https://github.com/jgfoster/Jade
 [4]: https://github.com/glassdb/GemTools
 [5]: https://github.com/GsDevKit/GsDevKit_sys_local
@@ -211,5 +247,8 @@ Then on GitHub, open a pull request from the `topicBranch` in your fork, to the 
 [26]: https://github.com/glassdb/PharoCompatibility
 [27]: https://github.com/dalehenrich/rb
 [28]: https://github.com/GsDevKit/GsDevKit_home/issues/new
-[29]: https://github.com/GsDevKit/GsDevKit_home/blob/master/sys/default/client/tode-scripts/installServerTode2
+
 [30]: https://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/9-BackupAndRestore.htm#pgfId-1069325
+[31]: ../images/GsDevKit_home-pull-request.png
+[32]: ../images/GsDevKit_home-pull-request-merge-detail.png
+[33]: ../images/GsDevKit_home-pull-request-previous-pull-request-link.png

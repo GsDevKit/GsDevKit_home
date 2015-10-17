@@ -33,4 +33,4 @@ if [ $# -ne 0 ]; then
 fi
 
 # Run script
-$GS_HOME/bin/private/gsDevKitCommandLine products
+$GS_HOME/bin/devKitCommandLine products

@@ -99,7 +99,7 @@ echo "Attaching stone $stoneName"
 $GS_HOME/bin/downloadGemStone $vers
 
 if [ "${foreign}" = "true" ] ; then
-  $GS_HOME/bin/private/gsDevKitCommandLine createForeignStone $stoneName $vers 
+  $GS_HOME/bin/devKitCommandLine createForeignStone $stoneName $vers 
 else
   oldStonePath=${oldGsDevKitHome}/gemstone/stones/$stoneName
   oldTodeRoot=${oldGsDevKitHome}/tode
@@ -117,7 +117,7 @@ else
   ln -s $oldStonePath ${GS_SERVER_STONES}/$stoneName
   $GS_HOME/bin/startStone -b $stoneName
   if [ "$todeInstalled" = "true" ] ; then
-    $GS_HOME/bin/private/gsDevKitCommandLine patchTodeRoot $stoneName
+    $GS_HOME/bin/devKitCommandLine patchTodeRoot $stoneName
     if [ "${master_GS_HOME}" = "true" ] ; then
       $GS_HOME/bin/todeIt $stoneName "mount $oldTodeRoot / oldTodeRoot"
     else

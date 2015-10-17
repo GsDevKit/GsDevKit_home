@@ -20,6 +20,7 @@ createStone -h
 deleteClient -h
 deleteSession -h
 deleteStone -h
+devKitCommandLine -h
 downloadGemStone -h
 installClient -h
 installServer -h
@@ -52,6 +53,7 @@ updateGsDevKit
 updateGsDevKit -g
 updateGsDevKit -t
 updateGsDevKit -g -t
+updateGsDevKit -g -t -i
 
 $GS_HOME/bin/utils/updateSharedTodeProjectsClone both
 
@@ -64,7 +66,7 @@ stopStone -b ${STONENAME1}
 
 status
 
-$GS_HOME/bin/private/gsDevKitCommandLine --list
+$GS_HOME/bin/devKitCommandLine --list
 
 stopStone -b ${STONENAME1}
 
@@ -85,6 +87,8 @@ todeIt ${STONENAME3} ls /home
 stopStone -b ${STONENAME2}
 stopStone -b ${STONENAME3}
 stopStone -b ${STONENAME4}
+
+newExtent -n -s $baseSnapshot ${STONENAME3}
 
 . $GS_HOME/bin/defStone.env ${STONENAME1}
 cd $GS_HOME/server/stones/${STONENAME1}

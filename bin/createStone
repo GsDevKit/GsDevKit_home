@@ -124,7 +124,7 @@ echo "Creating stone $stoneName"
 
 $GS_HOME/bin/downloadGemStone $vers
 
-${GS_HOME}/bin/private/gsDevKitCommandLine createStone $stoneName $vers
+${GS_HOME}/bin/devKitCommandLine createStone $stoneName $vers
 
 $GS_HOME/bin/newExtent $todeSnapshotArg $noRestartArg $snapshotFileArg $stoneName
 

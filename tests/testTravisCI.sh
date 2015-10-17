@@ -17,9 +17,6 @@ else
   $GS_HOME/bin/utils/installOsPrereqs
 fi
 
-# Uncomment to use alternate version of tODE for tests
-$GS_HOME/tests/todeDevBranch.sh
-
 if [ "${STONENAME1}x" = "x" ] ; then
   export STONENAME1="travis1"
 fi

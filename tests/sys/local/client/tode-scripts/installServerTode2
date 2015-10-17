@@ -1,6 +1,6 @@
-# no backups on travis
-# bu backup preUpdate.dbf  # backup prior to load
-project load Tode          # load the project
+#no backups on travis - https://github.com/dalehenrich/tode/issues/226
+script --script=setUpSys   # set up the in-image tODE /sys structure
+commit
 # bu backup tode.dbf       # backup of initial tODE install with /sys structures in place
 bu snapshot tode.dbf       # make a snapshot of initial tODE install with /sys structures in place
 

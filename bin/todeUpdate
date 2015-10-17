@@ -55,10 +55,6 @@ pushd $stonePath >& /dev/null
 popd >& /dev/null
 
 # install tODE using gsDevKitTodeCommandLine
-if [ "${GS_TRAVIS}x" = "x" ] ; then
-  $GS_HOME/bin/todeIt $stoneName "script --script=updateServerTode"
-else
-  $GS_HOME/bin/todeIt $stoneName "script --script=updateTravisServerTode"
-fi
+$GS_HOME/bin/todeIt $stoneName "script --script=updateServerTode"
 
 echo "...finished $(basename $0)"

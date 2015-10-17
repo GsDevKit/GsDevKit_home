@@ -52,8 +52,8 @@ OPTIONS
 EXAMPLES
   $(basename $0) -h
   $(basename $0) gs_329
-  $(basename $0) -s $GS_HOME/gs_server/snapshots/extent0.tode.3.2.9.dbf gs_329
-  $(basename $0) -t -s $GS_HOME/gs_server/snapshots/extent0.tode.3.2.9.dbf gs_329
+  $(basename $0) -s \$GS_HOME/gs_server/snapshots/extent0.tode.3.2.9.dbf gs_329
+  $(basename $0) -t -s \$GS_HOME/gs_server/snapshots/extent0.tode.3.2.9.dbf gs_329
 
 HELP
 }
@@ -111,34 +111,30 @@ $GS_HOME/bin/stopStone $stoneName
 
 if [ "${noRestart}" = "false" ] ; then
   echo "Copy snapshot and remove tranlogs"
-  $GS_HOME/bin/private/gsDevKitCommandLine newExtent $stoneName $snapshotFile
+  $GS_HOME/bin/devKitCommandLine newExtent $stoneName $snapshotFile
 
   # -N option used to ignore tranlog files during restart
   echo "Restarting stone and netldi"
   $GS_HOME/bin/startStone -b -N $stoneName
 
   if [ "${attachTode}" = "true" ] ; then
-    if [ "${GS_TRAVIS}x" = "x" ] ; then
-      $GS_HOME/bin/todeIt $stoneName "script --script=rebuildServerTode"
-    else
-      $GS_HOME/bin/todeIt $stoneName "script --script=rebuildTravisServerTode"
-    fi
+    $GS_HOME/bin/todeIt $stoneName "script --script=rebuildServerTode"
   fi
 else
   echo "Copy snapshot and leave tranlogs for recovery"
   
   if [ "${snapshotFile}x" = "x" ] ; then
     echo "Must specify <snapshot-file-path>, when using the -n (no restart option)"
-    echo "  Tranlogs left in $GS_HOME/gemstone/stones/${stoneName}/tranlogs"
+    echo "  Tranlogs left in $\GS_HOME/gemstone/stones/${stoneName}/tranlogs"
     echo "  Are not likely to be appropriate for \$GEMSTONE/bin/extent0.seaside.dbf"
     usage; exit 1
   fi
-  $GS_HOME/bin/private/gsDevKitCommandLine newExtentForRecovery $stoneName $snapshotFile
+  $GS_HOME/bin/devKitCommandLine newExtentForRecovery $stoneName $snapshotFile
 
   echo "Stone is now ready for recovery. Please read the How to Restore from Backup"
   echo "section of the manual (http://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/GS64-SysAdmin-3.2.htm?http://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/9-BackupAndRestore.htm#pgfId-999128)"
   echo ""
-  echo "In the simplest case you can just use the '$GS_HOME/startGemstone $stoneName'"
+  echo "In the simplest case you can just use the '\$GS_HOME/startGemstone $stoneName'"
   echo "and the system will automatically recover from the tranlogs in the stone's "
   echo "tranlog directory/"
 fi
