@@ -99,9 +99,15 @@ Date:   Sat Oct 17 08:02:57 2015 -0700
     todeUpdate customization ... another FAQ
 ```
 
-and then compare that SHA of the commit in which the merge occurred:
+and follow the **Previous Pull Request** link:
+
+![GsDevKit_home pull request previous pull request link][33]
+
+comparing that SHA of the *merge commit*:
 
 ![GsDevKit_home pull request merge detail][32]
+
+until you find a match.
 
 
 [**COMMENTS**][28]
@@ -239,3 +245,4 @@ Then on GitHub, open a pull request from the `topicBranch` in your fork, to the 
 [30]: https://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/9-BackupAndRestore.htm#pgfId-1069325
 [31]: ../images/GsDevKit_home-pull-request.png
 [32]: ../images/GsDevKit_home-pull-request-merge-detail.png
+[33]: ../images/GsDevKit_home-pull-request-previous-pull-request-link.png
