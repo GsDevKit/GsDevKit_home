@@ -17,8 +17,8 @@ else
   $GS_HOME/bin/utils/installOsPrereqs
 fi
 
-# Uncomment to use alternate version of tODE for tests
-$GS_HOME/tests/todeDevBranch.sh
+# Customize the scripts used by tODE (https://github.com/dalehenrich/tode/issues/226)
+$GS_HOME/tests/travisCustomize.sh
 
 if [ "${STONENAME1}x" = "x" ] ; then
   export STONENAME1="travis1"
