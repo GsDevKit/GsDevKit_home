@@ -51,14 +51,17 @@ done
 shift $(($OPTIND - 1))
 
 pushd ${GS_HOME} >& /dev/null
-  ${GS_HOME}/bin/private/cloneGitHubProject $modeArg $organization GsDevKit_sys_local local
-  cd local
-  git checkout -b gsdevkit
-  cd ..
-  pushd sys >& /dev/null
-    ln -s ../local/local .
-    ln -s local/server/stones .
-  popd >& /dev/null
+  cloneHome="local"
+  if [ ! -d "$cloneoOme" ] ; then
+    ${GS_HOME}/bin/private/cloneGitHubProject $modeArg $organization GsDevKit_sys_local $cloneHome
+    cd local
+    git checkout -b gsdevkit
+    cd ..
+    pushd sys >& /dev/null
+      ln -s ../local/local .
+      ln -s local/server/stones .
+    popd >& /dev/null
+  fi
 popd >& /dev/null
 
 echo "...finished $(basename $0)"
