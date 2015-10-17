@@ -218,4 +218,4 @@ Then on GitHub, open a pull request from the `topicBranch` in your fork, to the 
 [28]: https://github.com/GsDevKit/GsDevKit_home/issues/new
 [29]: https://github.com/GsDevKit/GsDevKit_home/blob/master/sys/default/client/tode-scripts/installServerTode2
 [30]: https://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/9-BackupAndRestore.htm#pgfId-1069325
-[31]: docs/images/GsDevKit_home-pull-request.png
+[31]: ../images/GsDevKit_home-pull-request.png
