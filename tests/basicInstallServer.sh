@@ -5,13 +5,13 @@
 
 set -e  # exit on error
 
+# pre-clone /sys/local, so that travis can install customizations (also test -c option)
+$GS_HOME/bin/private/clone_sys_local -c https
+
+# Customize the scripts used by tODE (https://github.com/dalehenrich/tode/issues/226)
+$GS_HOME/tests/travisCustomize.sh
+
 # install server
-$GS_HOME/bin/private/clone_gs_client_dev -c https
-
-#pushd $GS_HOME/dev
-#  git checkout "$TRAVIS_BRANCH"
-#popd
-
 installServerClient -o GsDevKit ${STONENAME1} tode $GS_VERSION
 
 status
