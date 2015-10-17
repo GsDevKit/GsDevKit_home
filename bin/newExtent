@@ -118,11 +118,7 @@ if [ "${noRestart}" = "false" ] ; then
   $GS_HOME/bin/startStone -b -N $stoneName
 
   if [ "${attachTode}" = "true" ] ; then
-    if [ "${GS_TRAVIS}x" = "x" ] ; then
-      $GS_HOME/bin/todeIt $stoneName "script --script=rebuildServerTode"
-    else
-      $GS_HOME/bin/todeIt $stoneName "script --script=rebuildTravisServerTode"
-    fi
+    $GS_HOME/bin/todeIt $stoneName "script --script=rebuildServerTode"
   fi
 else
   echo "Copy snapshot and leave tranlogs for recovery"
