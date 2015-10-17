@@ -130,7 +130,7 @@ if [ "$updateTodeClone" = "true" ]; then
 fi
 
 if [ "$rebuildCommandLine" = "true" ]; then
-  $GS_HOME/bin/private/gsDevKitCommandLine -F
+  $GS_HOME/bin/devKitCommandLine -F
 fi
 
 if [ "$rebuildTodeClient" = "true" ]; then

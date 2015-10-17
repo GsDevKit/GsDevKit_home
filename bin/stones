@@ -38,4 +38,4 @@ if [ "$1" = "-h" ] ; then
   usage; exit 0
 fi
 
-$GS_HOME/bin/private/gsDevKitCommandLine stones $*
+$GS_HOME/bin/devKitCommandLine stones $*

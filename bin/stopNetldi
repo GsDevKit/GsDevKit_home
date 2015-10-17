@@ -53,7 +53,7 @@ if [ -e "$stonePath/stone.env" ] ; then
     source $stonePath/stone.env
   popd >& /dev/null
 
-  $GS_HOME/bin/private/gsDevKitCommandLine stopnetldi $stoneName
+  $GS_HOME/bin/devKitCommandLine stopnetldi $stoneName
 else
   echo "\$GEMSTONE environment not set correctly"; exit 1
 fi

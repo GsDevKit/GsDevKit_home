@@ -5,7 +5,7 @@
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-f | -F] [-i] [<gsDevKit-command-line>]
+USAGE: $(basename $0) [-h] [-f | -F] [-D] [<gsDevKit-command-line>]
 
 Perform commands specified in <gsDevKit-command-line> against 
 $GS_SERVER_PHARO/gsDevKitCommandLine.image.
@@ -17,7 +17,7 @@ OPTIONS
      rebuild gsDevKitCommandLine.image before executing <gsDevKit-command-line>
   -F
      rebuild gsDevKitCommandLine.image and exit
-  -i
+  -D
      start gsDevKitCommandLine.image interactively for development or debugging
      <gsDevKit-command-line>
 
@@ -26,7 +26,7 @@ EXAMPLES
   $(basename $0) stopnetldi gs_329
   $(basename $0) -f stopnetldi gs_329
   $(basename $0) -F
-  $(basename $0) -i stopnetldi gs_329
+  $(basename $0) -D stopnetldi gs_329
 
 HELP
 }
@@ -51,12 +51,12 @@ case "$1" in
   --*) # pass to tode
     ;;
   -*) # handle single - options here
-    while getopts "fFhi" OPT ; do
+    while getopts "fFhD" OPT ; do
       case "$OPT" in
         h) usage; exit 0 ;;
         f) force="true";;
         F) force="true"; exitAfterForce="true";;
-        i) interactive="true";;
+        D) interactive="true";;
       esac
     done
     shift $(($OPTIND - 1))

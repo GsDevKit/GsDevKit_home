@@ -104,7 +104,7 @@ pushd $stonePath $stonePath >& /dev/null
 popd >& /dev/null
 
 # start the stone
-$GS_HOME/bin/private/gsDevKitCommandLine startstone $stoneName $ARG
+$GS_HOME/bin/devKitCommandLine startstone $stoneName $ARG
 
 if [ "${waitTime}x" = "x" ] ; then
   if [ "${GS_TRAVIS}x" != "x" ] ; then

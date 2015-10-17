@@ -3,8 +3,8 @@
 # Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
 #=========================================================================
 
-# forward all command invocations to gsDevKitCommandLine .. preserve unique
+# forward all command invocations to devKitCommandLine .. preserve unique
 # identity of gsDevKitTodeCommandLine to make it clear when reading scripts
 # that the callers of this script expect tODE to be installed in the server
 
-$GS_HOME/bin/private/gsDevKitCommandLine $*
+$GS_HOME/bin/devKitCommandLine $*

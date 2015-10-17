@@ -20,6 +20,7 @@ createStone -h
 deleteClient -h
 deleteSession -h
 deleteStone -h
+devKitCommandLine -h
 downloadGemStone -h
 installClient -h
 installServer -h
@@ -86,6 +87,8 @@ todeIt ${STONENAME3} ls /home
 stopStone -b ${STONENAME2}
 stopStone -b ${STONENAME3}
 stopStone -b ${STONENAME4}
+
+newExtent -n -s $baseSnapshot ${STONENAME3}
 
 . $GS_HOME/bin/defStone.env ${STONENAME1}
 cd $GS_HOME/server/stones/${STONENAME1}
