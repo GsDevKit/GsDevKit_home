@@ -75,16 +75,16 @@ When a new version is published I send an [email announcement to the GLASS maili
 ![GsDevKit_home pull request][31]
 
 Each of my pull requests has an **Update Scripts** section where I will describe the script or scripts that should be run to update your GsDevKit_home checkout.
-Typically the **Update Scripts** will involve running the `$GS_HOME/bin/updateGsDevScript` with a combination of the `-g`, `-t` and `-i` options.
+Typically the **Update Scripts** will involve running the `$GS_HOME/bin/updateGsDevScript` with a combination of the `-g`, `-t` and `-i` options (when in doubt run `$GS_HOME/bin/updateGsDevScript -g -t -i`).
 
+#####updateGsDevScript options
 When the `-g` option is specified, the clones for the GsDevKit_* modules (GsDevKit_home, GsDevKit_gs_client_dev, GsDevKit_todeClient, GsDevKit_gs_server, and GsDevKit_sys_local) that are currently being used are updated by doing a `git pull` from the appropriate *remote*.
 
 When the `-t` option is specified, the clone of the tODE project is updated (`$GS_HOME/shared/repos/tode`).
 
 When the `-i` option is specied the command line Pharo image (when `-g` option is specified) and/or the tode client images (when the `-t` option is specified) are rebuilt.
 
-When in doubt run `$GS_HOME/bin/updateGsDevScript -g -t -i`.
-
+#####Following `Previous Pull Request` links
 If you are curious about any pull requests that you might have missed, you can take note of the commit SHA in your current checkout using the `git log -1` command:
 
 ```
