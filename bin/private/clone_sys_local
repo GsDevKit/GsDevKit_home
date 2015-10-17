@@ -52,7 +52,7 @@ shift $(($OPTIND - 1))
 
 pushd ${GS_HOME} >& /dev/null
   cloneHome="local"
-  if [ ! -d "$cloneoOme" ] ; then
+  if [ ! -d "$cloneHome" ] ; then
     ${GS_HOME}/bin/private/cloneGitHubProject $modeArg $organization GsDevKit_sys_local $cloneHome
     cd local
     git checkout -b gsdevkit
