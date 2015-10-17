@@ -66,7 +66,7 @@ stopStone -b ${STONENAME1}
 
 status
 
-$GS_HOME/bin/private/gsDevKitCommandLine --list
+$GS_HOME/bin/devKitCommandLine --list
 
 stopStone -b ${STONENAME1}
 
