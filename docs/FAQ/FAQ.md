@@ -70,6 +70,11 @@ For a *dev branch* checkout of gsDevKitHome, the session descriptions are found 
 ---
 ---
 ####4. *When a new version of GsDevKit_home is published, how do I update my checkout?*
+When a new version is published I send an [email announcement to the GLASS mailing list][30], where I will reference a specific pull request that was used to create the release:
+
+![GsDevKit_home pull request][31]
+
+
 The `$GS_HOME/bin/updateGsDevKit` script does all of the work. 
 The `$GS_HOME/bin/updateGsDevKit` script:
 
@@ -213,3 +218,4 @@ Then on GitHub, open a pull request from the `topicBranch` in your fork, to the 
 [28]: https://github.com/GsDevKit/GsDevKit_home/issues/new
 [29]: https://github.com/GsDevKit/GsDevKit_home/blob/master/sys/default/client/tode-scripts/installServerTode2
 [30]: https://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/9-BackupAndRestore.htm#pgfId-1069325
+[31]: docs/images/GsDevKit_home-pull-request.png
