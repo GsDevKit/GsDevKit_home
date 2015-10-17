@@ -6,7 +6,7 @@
 set -e  # exit on error
 
 # no backups on travis
-cp $GS_HOME/tests/sys/local/client/tode-scripts* $GS_HOME/sys/local/client/tode-scripts
+cp $GS_HOME/tests/sys/local/client/tode-scripts/* $GS_HOME/sys/local/client/tode-scripts
 
 exit 0 # skip rest of steps for now ...
 
