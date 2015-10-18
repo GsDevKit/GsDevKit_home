@@ -1,0 +1,5 @@
+bu backup preUpdate.dbf           # backup prior to load
+# pull request for seaside checkout
+project load Seaside3             # load Seaside3 project
+bu backup --commit seaside3.dbf   # post build backup
+bu snapshot --commit seaside3.dbf # post build snapshot

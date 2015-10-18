@@ -50,6 +50,6 @@ $GS_HOME/bin/startStone -b $stoneName
 echo "Update Seaside31 on stone: $stoneName"
 
 # install tODE using gsDevKitTodeCommandLine
-$GS_HOME/bin/todeIt $stoneName project load Seaside3
+$GS_HOME/bin/todeIt $stoneName "script --script=updateSeasideServer"
 
 echo "...finished $(basename $0)"
