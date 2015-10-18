@@ -6,7 +6,7 @@
 set -e  # exit on error
 
 $GS_HOME/bin/downloadGemStone $GS_VERSION
-$GS_HOME/bin/utils/cloneGsDevKitProjects -c https GsDevKit both
+$GS_HOME/bin/utils/cloneGsDevKitProjects -c https -o GsDevKit both
 $GS_HOME/bin/utils/cloneSharedTodeProjects -c https both
 
 $GS_HOME/projects/seaside31/bin/seasideCreateStone seaside  $GS_VERSION
