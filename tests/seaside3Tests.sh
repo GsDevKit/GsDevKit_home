@@ -9,7 +9,7 @@ $GS_HOME/bin/downloadGemStone $GS_VERSION
 $GS_HOME/bin/utils/cloneGsDevKitProjects -c https -o GsDevKit both
 $GS_HOME/bin/utils/cloneSharedTodeProjects -c https both
 
-$GS_HOME/projects/seaside31/bin/seasideCreateStone seaside  $GS_VERSION
+$GS_HOME/shared/projects/seaside31/bin/seasideCreateStone seaside  $GS_VERSION
 
 # Run Seaside unit tests
 $GS_HOME/bin/tode devKitCommandLine seaside << EOF
@@ -17,4 +17,4 @@ test --batch project Seaside3
 eval \`self hasPassed ifFalse: [ System logout ].\`
 EOF
 
-$GS_HOME/projects/seaside31/bin/seasideUpdate seaside 
+$GS_HOME/shared/projects/seaside31/bin/seasideUpdate seaside 
