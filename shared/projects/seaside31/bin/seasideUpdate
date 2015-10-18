@@ -49,7 +49,12 @@ $GS_HOME/bin/startStone -b $stoneName
 
 echo "Update Seaside31 on stone: $stoneName"
 
-# install tODE using gsDevKitTodeCommandLine
-$GS_HOME/bin/todeIt $stoneName "script --script=updateSeasideServer"
+$GS_HOME/bin/devKitCommandLine $stoneName << EOF
+bu backup preUpdate.dbf           # backup prior to load
+                                  # pull request for seaside checkout
+project load Seaside3             # load Seaside3 project
+bu backup --commit seaside3.dbf   # post build backup
+bu snapshot --commit seaside3.dbf # post build snapshot
+EOF
 
 echo "...finished $(basename $0)"
