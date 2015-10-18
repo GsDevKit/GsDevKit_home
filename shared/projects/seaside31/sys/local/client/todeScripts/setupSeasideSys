@@ -1,0 +1,1 @@
+mount @/sys/stone/dirs/GsDevKit_home/shared/projects/seaside31 /home seaside # mount the seaside directory in tODE

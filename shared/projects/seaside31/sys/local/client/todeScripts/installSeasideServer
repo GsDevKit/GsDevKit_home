@@ -1,0 +1,4 @@
+bu backup preSeasideBuild.dbf     # make backup before installing Seaside
+project load Seaside3             # load Seaside3 project
+bu backup --commit seaside3.dbf   # post build backup
+bu snapshot --commit seaside3.dbf # post build snapshot

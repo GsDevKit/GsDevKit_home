@@ -40,7 +40,9 @@ fi
 
 stoneName="$1"
 
-$GS_HOME/bin/private/gsDevKitTodeCommandLine todeIt $stoneName << EOF
+$GS_HOME/bin/todeIt $stoneName "script --script=installSeasideServer"
+
+$GS_HOME/bin/devKitTodeCommandLine todeIt $stoneName << EOF
 mount @/sys/stone/dirs/GsDevKit_home/shared/projects/seaside31 /home seaside # mount the seaside directory in tODE
 /home/seaside/install
 EOF

@@ -60,6 +60,8 @@ gsvers="$2"
 
 $GS_HOME/bin/createStone $forceArg $noRestartArg $snapshotFileArg $stoneName $gsvers
 
+$GS_HOME/bin/todeIt $stoneName "script --script=setupSeasideHome"
+
 $GS_HOME/shared/projects/seaside31/bin/seasideInstall $stoneName
 
 echo "...finished $(basename $0)"
