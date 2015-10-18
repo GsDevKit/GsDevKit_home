@@ -5,14 +5,16 @@
 
 set -e  # exit on error
 
-$GS_HOME/bin/installGemStone $GS_VERSION
+$GS_HOME/bin/downloadGemStone $vers
+$GS_HOME/bin/utils/cloneGsDevKitProjects $modeArg $organizationArg both
+$GS_HOME/bin/utils/cloneSharedTodeProjects $modeArg both
 
-$GS_HOME/bin/createTodeImage
-
-$GS_HOME/projects/seaside31/bin/createSeasideStone seaside  $GS_VERSION
+$GS_HOME/projects/seaside31/bin/seasideCreateStone seaside  $GS_VERSION
 
 # Run Seaside unit tests
-$GS_HOME/bin/tode todeIt seaside << EOF
+$GS_HOME/bin/tode devKitCommandLine seaside << EOF
 test --batch project Seaside3
 eval \`self hasPassed ifFalse: [ System logout ].\`
 EOF
+
+$GS_HOME/projects/seaside31/bin/seasideUpdate seaside 

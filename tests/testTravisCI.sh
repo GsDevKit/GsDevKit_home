@@ -30,6 +30,12 @@ if [ "${STONENAME4}x" = "x" ] ; then
   export STONENAME4="travis4"
 fi
 
+# pre-clone /sys/local, so that travis can install customizations (also test -c option)
+$GS_HOME/bin/private/clone_sys_local -c https
+
+# Customize the scripts used by tODE (https://github.com/dalehenrich/tode/issues/226)
+$GS_HOME/tests/travisCustomize.sh
+
 case $TEST in
   Basic)
     $GS_HOME/tests/basicInstallServer.sh

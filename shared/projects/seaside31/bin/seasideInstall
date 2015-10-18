@@ -41,10 +41,7 @@ fi
 stoneName="$1"
 
 $GS_HOME/bin/devKitCommandLine $stoneName << EOF
-bu backup preUpdate.dbf          # make backup before installing Seaside
-project load Seaside3            # load Seaside3 project
-bu backup --commit seaside3.dbf  # post build backup
-bu snapshot seaside3.dbf         # post build snapshot
+/home/seaside/installSeaside
 EOF
 
 echo "...finished $(basename $0)"

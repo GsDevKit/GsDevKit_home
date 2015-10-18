@@ -7,6 +7,7 @@ env:
 #
 #  - GS_VERSION=3.1.0.6 TEST=Basic
   - GS_VERSION=3.2.9   TEST=Basic
+  - GS_VERSION=3.2.9   TEST=Seaside3
 
 
 #  - GS_VERSION=3.1.0.6 TEST=BasicTodeClient
@@ -20,7 +21,6 @@ env:
 #  - GS_VERSION=3.1.0.6 TEST=Pier300
 ##  - GS_VERSION=3.2.9   TEST=Pier300  # older versions of Seaside3.0 aren't loadable in 3.2 ... invalid UTF8 characters in WAXMLEncoder table
 #  - GS_VERSION=3.1.0.6 TEST=Seaside3
-#  - GS_VERSION=3.2.9   TEST=Seaside3
 #  - GS_VERSION=3.1.0.6 TEST=Zinc
 #  - GS_VERSION=3.2.9   TEST=Zinc
 
