@@ -11,6 +11,7 @@ installServerSeaside -h
 seasideCreateStone -h
 seasideInstall -h
 seasideUpdate -h
+seasideUpgrade -h
 seasideWebServer -h
 
 installServerSeaside -c https -z 8383 seaside  $GS_VERSION

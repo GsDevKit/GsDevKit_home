@@ -20,9 +20,9 @@ OPTIONS
 
 EXAMPLES
   $(basename $0) -h
-  $(basename $0) pier --register=swazoo --port=8585
-  $(basename $0) pier --restart
-  $(basename $0) pier --stop
+  $(basename $0) seaside --register=swazoo --port=8585
+  $(basename $0) seaside --restart
+  $(basename $0) seaside --stop
 
 HELP
 }

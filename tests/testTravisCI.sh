@@ -57,9 +57,8 @@ case $TEST in
   Projects1|Projects2)
     $GS_HOME/tests/projectTests.sh
     ;;
-  Seaside3)
-    $GS_HOME/tests/seaside3Tests.sh
-    ;;
+  Seaside3) $GS_HOME/tests/testSeaside3.sh ;;
+  Seaside3Upgrade) $GS_HOME/tests/testSeaside3Upgrade.sh ;;
   Zinc)
     $GS_HOME/tests/zincTests.sh
     ;;
