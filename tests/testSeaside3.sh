@@ -14,7 +14,7 @@ seasideUpdate -h
 seasideUpgrade -h
 seasideWebServer -h
 
-installServerSeaside -c https -z 8383 seaside  $GS_VERSION
+installServerSeaside -c https -z 8383 seaside $GS_VERSION
 
 # Run Seaside unit tests
 devKitCommandLine todeIt seaside << EOF
