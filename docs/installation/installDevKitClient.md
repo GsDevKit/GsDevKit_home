@@ -64,7 +64,7 @@ cd GsDevKit_home
 git checkout -b gsdevkit
 export GS_HOME=`pwd`
 export PATH=$GS_HOME/bin:$PATH
-$GS_HOME/bin/installClient -c https 3.2.9 tode
+$GS_HOME/bin/installClient -c https tode 3.2.9
  ```
 
 ### Script to Install Client on Windows
@@ -135,11 +135,11 @@ ssh -L 44834:hostNameOrIp user@example.com
 
 2.  From the server installation, copy the server specificaion file to the client.  This file is 
 
-   `$GS_HOME/shared/tode/sys/local/client/descriptions/<myServerNodeName>`
+   `$GS_HOME/sys/local/sessions/<myServerNodeName>`
    
    If you are using the same name as these examples, it will be named:
    
-   `$GS_HOME/shared/tode/sys/local/client/descriptions/devKit_329`
+   `$GS_HOME/sys/local/sessions/devKit_329`
 
    to the same path on the client node.
 
