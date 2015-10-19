@@ -50,7 +50,7 @@ The following steps are involved in installing the GsDevKit server.  For an exam
    
    Script to install the server only:
    ```
-   $GS_HOME/bin/installServer <GemStoneVersion> <myStoneName>
+   $GS_HOME/bin/installServer <myStoneName> <GemStoneVersion>
    ```
 
    You may use any name for the <myStoneName> and <myClientName>, and note that you may later have multiple stones and multiple clients. The examples below use **devKit_329**.
@@ -74,7 +74,7 @@ cd GsDevKit_home
 git checkout -b gsdevkit
 export GS_HOME=`pwd`
 export PATH=$GS_HOME/bin:$PATH
-$GS_HOME/bin/installServer 3.2.9  devKit_329
+$GS_HOME/bin/installServer  devKit_329 3.2.9
 ```
 
 

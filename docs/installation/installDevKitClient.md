@@ -41,7 +41,7 @@ The following steps are involved in installing the GsDevKit client. For an examp
 
    Script to install the client:
    ```
-   $GS_HOME/bin/installClient <myGemStoneVersion> <myClientName>
+   $GS_HOME/bin/installClient <myClientName> <myGemStoneVersion>
    ```
    You may use any name for `<myClientName>`, and note that you may later have multiple clients. The examples below use  **tode** as the client name.
 
@@ -80,7 +80,7 @@ git checkout -b gsdevkit
 export GS_HOME=`pwd`
 export PATH=$GS_HOME/bin:$PATH
 git config --global core.longpaths true   
-$GS_HOME/bin/installClient -c https 3.2.9 tode
+$GS_HOME/bin/installClient -c https tode 3.2.9
 
  ```
 You now have an instance of the tODE client installed on your client machine, with the name **tode** (if you used the sequence as entered here).  
