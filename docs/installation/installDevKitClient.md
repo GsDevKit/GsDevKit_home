@@ -64,7 +64,7 @@ cd GsDevKit_home
 git checkout -b gsdevkit
 export GS_HOME=`pwd`
 export PATH=$GS_HOME/bin:$PATH
-$GS_HOME/bin/installClient -c https 3.2.9 tode
+$GS_HOME/bin/installClient -c https tode 3.2.9
  ```
 
 ### Script to Install Client on Windows
