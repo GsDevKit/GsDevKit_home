@@ -7,7 +7,7 @@
 	"commentStamp" : "dkh 7/26/2014 10:08",
 	"instvars" : [
 		"stoneName" ],
-	"name" : "GsDevKitEvaluateTodeCommandLineHandler",
+	"name" : "GsDevKitTodeItCommandLineHandler",
 	"pools" : [
 		 ],
 	"super" : "GsDevKitAbstractCommandLineHandler",
