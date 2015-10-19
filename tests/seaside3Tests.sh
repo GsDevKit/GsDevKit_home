@@ -12,7 +12,7 @@ $GS_HOME/bin/utils/cloneSharedTodeProjects -c https both
 $GS_HOME/shared/projects/seaside31/bin/seasideCreateStone seaside  $GS_VERSION
 
 # Run Seaside unit tests
-$GS_HOME/bin/tode devKitCommandLine seaside << EOF
+$GS_HOME/bin/devKitCommandLine seaside << EOF
 test --batch project Seaside3
 eval \`self hasPassed ifFalse: [ System logout ].\`
 EOF
