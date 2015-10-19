@@ -11,9 +11,7 @@ echo "================="
 usage() {
   cat <<HELP
 USAGE: $(basename $0) [-h] <stone-name>
-
-Update Seaside31 in the given stone by executing `project load Seaside3` 
-using the \$GS_HOME/bin/todeIt script.
+Update Seaside31 in the given stone by executing `/home/seaside/updateSeaside` tODE script. 
 
 OPTIONS
   -h display help

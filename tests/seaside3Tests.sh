@@ -5,16 +5,19 @@
 
 set -e  # exit on error
 
-$GS_HOME/bin/downloadGemStone $GS_VERSION
-$GS_HOME/bin/utils/cloneGsDevKitProjects -c https -o GsDevKit both
-$GS_HOME/bin/utils/cloneSharedTodeProjects -c https both
+export PATH=$GS_HOME/shared/projects/seaside31/bin:$PATH
 
-$GS_HOME/shared/projects/seaside31/bin/seasideCreateStone seaside  $GS_VERSION
+installServerSeaside -h
+seasideCreateStone -h
+seasideInstall -h
+seasideUpdate -h
+
+installServerSeaside -c https seaside  $GS_VERSION
 
 # Run Seaside unit tests
-$GS_HOME/bin/devKitCommandLine todeIt seaside << EOF
+devKitCommandLine todeIt seaside << EOF
 test --batch project Seaside3
 eval \`self hasPassed ifFalse: [ System logout ].\`
 EOF
 
-$GS_HOME/shared/projects/seaside31/bin/seasideUpdate seaside 
+seasideUpdate seaside 

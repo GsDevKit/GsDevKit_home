@@ -11,6 +11,8 @@ echo "================="
 usage() {
   cat <<HELP
 USAGE: $(basename $0) [-h] [-c https | ssh ] [-o <organization-name>] <stone-name> <gemstone-version>
+Create a new stone named <stone-name> with tODE and Seaside31 installed - in a
+newly cloned GsDevKit-home project.
 
 OPTIONS
   -h
@@ -24,7 +26,7 @@ OPTIONS
 
 EXAMPLES
    $(basename $0) -h
-   $(basename $0) -c ssh gs_329 3.2.9
+   $(basename $0) -c ssh seaside_3210 3.2.10
 
 HELP
 }
@@ -53,6 +55,6 @@ fi
 stoneName=$1
 vers=$2
 $GS_HOME/bin/setupGsDevKit $modeArg $organizationArg server $vers
-$GS_HOME/bin/createStone $stoneName $vers
+$GS_HOME/shared/projects/seaside31/bin/seasideCreateStone $stoneName $vers
 
 echo "...finished $(basename $0)"

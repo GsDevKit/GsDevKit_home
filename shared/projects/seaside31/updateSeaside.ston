@@ -1,4 +1,5 @@
-TDTopezLeafNode{#name:'updateSeaside',#contents:'bu backup preUpdate.dbf         # backup prior to load
+TDTopezLeafNode{#name:'updateSeaside',#contents:'#called from the seasideUpdate shell script
+bu backup preUpdate.dbf         # backup prior to load
 project pull Seaside3           # pull request for seaside checkout
 project load Seaside3           # load Seaside3 project
 bu backup --commit seaside3.dbf # post build backup

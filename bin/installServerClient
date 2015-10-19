@@ -20,7 +20,7 @@ OPTIONS
      https is the default.
   -o <organization-name>
      use <organization-name> instead of GsDevKit. Use this option when
-     you've cloned the todeClient project
+     you've forked the other GsDevKit_* projects.
 
 EXAMPLES
    $(basename $0) -h
