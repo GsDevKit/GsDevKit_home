@@ -10,15 +10,22 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] <stone-name>
-Update Seaside31 in the given stone by executing \`/home/seaside/updateSeaside\` tODE script. 
+USAGE: $(basename $0) [-h] [-l <post-load-tode-script> ] \
+	              <source-seaside-stone-name> \
+		      <target-seaside-stone-name> <gemstone-version>
+
+Perform a GemStone upgrade of the <source-seaside-stone-name> to GemStone 
+version <gemstone-version> in a new stone named <target-seaside-stone-name>.
 
 OPTIONS
   -h display help
+  -l <post-load-tode-script>
+     tODE path to the tODE script that loads your Seaside application code
 
 EXAMPLES
   $(basename $0) -h
-  $(basename $0) gs_329
+  $(basename $0) seaside_3106 seaside_329 3.2.9
+  $(basename $0) -l /home/mySeasideApplicationInstall seaside_3106 seaside_329 3.2.9
 "
 HELP
 }
