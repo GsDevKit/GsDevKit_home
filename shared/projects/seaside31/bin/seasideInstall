@@ -11,7 +11,7 @@ echo "================="
 usage() {
   cat <<HELP
 USAGE: $(basename $0) [-h] <stone-name>
-Load Seaside31 into <stone-name> using the `/home/seaside/installSeaside` tODE script.
+Load Seaside31 into <stone-name> using the \`/home/seaside/installSeaside\` tODE script.
 
 OPTIONS
   -h show usage

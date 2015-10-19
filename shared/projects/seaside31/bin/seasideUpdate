@@ -11,7 +11,7 @@ echo "================="
 usage() {
   cat <<HELP
 USAGE: $(basename $0) [-h] <stone-name>
-Update Seaside31 in the given stone by executing `/home/seaside/updateSeaside` tODE script. 
+Update Seaside31 in the given stone by executing \`/home/seaside/updateSeaside\` tODE script. 
 
 OPTIONS
   -h display help
@@ -28,18 +28,12 @@ if [ "${GS_HOME}x" = "x" ] ; then
   echo "the GS_HOME environment variable needs to be defined"; exit 1
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
-if [ "${GS_SERVER}x" = "x" ] ; then
-  echo "the GsDevKit_server project has not been installed correctly or the"
-  echo "GS_SERVER environment variable has not been defined"
-  exit 1
-fi
-source ${GS_HOME}/bin/defGsDevKit.env
 
 source ${GS_HOME}/bin/private/shFunctions
 getOpts_help $@
 
-if [ $# -ne 1 ]; then
-  usage; exit 1
+if [ $# -lt 1 ]; then
+  echo "missing required argument"; usage; exit 1
 fi
 stoneName=$1
 
