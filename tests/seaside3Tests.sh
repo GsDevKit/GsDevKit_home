@@ -11,8 +11,9 @@ installServerSeaside -h
 seasideCreateStone -h
 seasideInstall -h
 seasideUpdate -h
+seasideWebServer -h
 
-installServerSeaside -c https seaside  $GS_VERSION
+installServerSeaside -c https -z 8383 seaside  $GS_VERSION
 
 # Run Seaside unit tests
 devKitCommandLine todeIt seaside << EOF
@@ -21,3 +22,9 @@ eval \`self hasPassed ifFalse: [ System logout ].\`
 EOF
 
 seasideUpdate seaside 
+
+# test seaside webServer
+seasideWebServer seaside --help
+seasideWebServer seaside --start
+curl http://localhost:8383
+seasideWebServer seaside --stop

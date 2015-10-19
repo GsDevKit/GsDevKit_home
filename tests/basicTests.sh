@@ -28,6 +28,7 @@ installServerClient -h
 newExtent -h
 products -h
 sessions -h
+setupGsDevKit -h
 startClient -h
 startNetldi -h
 startStatmonitor -h
