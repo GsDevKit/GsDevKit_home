@@ -81,6 +81,17 @@ export PATH=$GS_HOME/bin:$PATH
 $GS_HOME/bin/installClient -c https tode1 3.2.9
 
  ```
+
+When the install script completes, it will report lines similar to:
+```
+...finished installGci
+...finished scanProductsForInstallingGciLibs
+...finished createPharoTodeClient
+...finished createClient
+...finished createClient
+...finished installClient
+```
+
 You now have an instance of the tODE client installed on your client machine, with the name **tode1** (if you used the sequence as entered here); and you have the GemStone server components for v3.2.9.
 
 ## Determine port number for connection
