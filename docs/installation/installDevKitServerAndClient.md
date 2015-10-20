@@ -41,13 +41,14 @@ The following steps are involved in installing the GsDevKit server and client.  
    These instructions use 3.2.9 for `<GemStoneVersion>`; check for more recent [GemStone/S 64 Bit Releases](#gemstone-version-and-license).
    
    ```
-   $GS_HOME/bin/installClientServer -c <authMode> <myStoneName> <myClientName> <GemStoneVersion>
+   $GS_HOME/bin/installServerClient -c <authMode> <myStoneName> <myClientName> <GemStoneVersion>
    ```
    You may use any name for the `<myStoneName>` and `<myClientName>`, and note that you may later have multiple stones and multiple clients. The examples below use **devKit_329** and **tode1**. For `<authMode>`, use https, though ssh will also work if you have ssh authentication already set up.  
 
    The install scripts invokes the following sub-scripts:
    ```
    downloadGemStone
+   cloneGsDevKitProjects 
    cloneSharedTodeProjects
    createStone
    createClient 
@@ -65,7 +66,7 @@ cd GsDevKit_home
 git checkout -b gsdevkit
 export GS_HOME=`pwd`
 export PATH=$GS_HOME/bin:$PATH
-$GS_HOME/bin/installClientServer -c https devKit_329 tode1 3.2.9
+$GS_HOME/bin/installServerClient -c https devKit_329 tode1 3.2.9
 ```
 
 
