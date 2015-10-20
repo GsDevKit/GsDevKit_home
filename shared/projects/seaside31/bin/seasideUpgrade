@@ -36,20 +36,28 @@ if [ "${GS_HOME}x" = "x" ] ; then
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
-source ${GS_HOME}/bin/private/shFunctions
-getOpts_help $@
+while getopts "hl:" OPT ; do
+  case "$OPT" in
+    h) usage; exit 0;;
+    l) postUpgradeLoadScriptPath="${OPTARG}";;
+    *) echo "unknown option $OPT"; usage; exit 1;;
+  esac
+done
+shift $(($OPTIND - 1))
 
-if [ $# -lt 1 ]; then
-  echo "missing required argument"; usage; exit 1
+if [ $# -ne 3 ]; then
+	echo "missing arguments (3 expected)"; usage; exit 1
 fi
-stoneName=$1
 
-$GS_HOME/bin/startStone -b $stoneName
+sourceStoneName="$1"
+targetStoneName="$2"
+gsvers="$3"
 
-echo "Update Seaside31 on stone: $stoneName"
+$GS_HOME/bin/upgradeStone $sourceStoneName $targetStoneName $gsvers
 
-$GS_HOME/bin/devKitCommandLine todeIt $stoneName << EOF
-/home/seaside/updateSeaside
+$GS_HOME/bin/private/gsDevKitTodeCommandLine todeIt $targetStoneName << EOF
+project upgrade --script=/home/seaside/installSeaside
+${postUpgradeLoadScriptPath}
 EOF
 
 echo "...finished $(basename $0)"
