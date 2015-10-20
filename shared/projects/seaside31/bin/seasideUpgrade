@@ -56,7 +56,7 @@ gsvers="$3"
 $GS_HOME/bin/upgradeStone $sourceStoneName $targetStoneName $gsvers
 
 $GS_HOME/bin/private/gsDevKitTodeCommandLine todeIt $targetStoneName << EOF
-project upgrade --script=/home/seaside/installSeaside
+/home/seaside/upgradeSeaside
 ${postUpgradeLoadScriptPath}
 EOF
 
