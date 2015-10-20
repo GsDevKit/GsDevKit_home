@@ -27,5 +27,5 @@ seasideUpdate seaside
 # test seaside webServer
 seasideWebServer seaside --help
 seasideWebServer seaside --start
-curl http://localhost:8383
+curl http://127.0.0.1:8383
 seasideWebServer seaside --stop
