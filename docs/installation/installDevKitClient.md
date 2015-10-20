@@ -124,10 +124,10 @@ We are using the same port number on the client and server. In GemStone/S 64 Bit
 ```
 ssh <remoteUserId>@<remoteHost> -L <localPort>:<localhost>:<remotePort>
 ```
-for example, if your server (stone) is running on a machine with the IP address 192.168.100.129, and the user name on the server is dhenichs, you could use:
+for example, if the server (stone) is running on a machine with the IP address 192.168.100.129, and the user name on the server is lalmarod, you could use:
 
 ```
-ssh dhenrichs@192.168.100.129 -L 44834:localHost:44834 
+ssh lalmarod@192.168.100.129 -L 44834:localHost:44834 
 ```
 If you do not have passwordless ssh setup, you will be prompted for your password.
 
