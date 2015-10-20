@@ -6,6 +6,6 @@ activate
 		ifTrue: [ 
 			self printHelp.
 			^ self exitFailure: 'Missing arguments' ].
-	Author useAuthor: 'gsDevKit' during: [ self evaluate ].
+	Author useAuthor: self authorId during: [ self evaluate ].
 	Transcript cr.
 	self exitSuccess

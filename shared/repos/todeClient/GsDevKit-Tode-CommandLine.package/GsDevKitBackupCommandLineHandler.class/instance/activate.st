@@ -8,7 +8,7 @@ activate
 			^ self exitFailure: 'Missing arguments' ].
 	self shouldNotBeForeignStone.
 	Author
-		useAuthor: 'gsDevKit'
+		useAuthor: self authorId
 		during: [ self backup  ].
 	Transcript cr.
 	self exitSuccess
