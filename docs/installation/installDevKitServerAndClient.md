@@ -7,7 +7,9 @@ The GsDevKit server and client shared installation  may be installed on **Linux*
 
 ###Install Server
 
-The following steps are involved in installing the GsDevKit server and client.  For an example script to execute, see  [Install GsDevKit server and client](#script-to-install-both-server-and-client)
+The following steps are involved in installing the GsDevKit server and client.  For an example script to execute, see  [Install GsDevKit server and client](#script-to-install-both-server-and-client).
+
+Before running installing the server, please check on the [GemStone/S 64 Bit product page for the latest versions][2] and visit [the Community and Web Edition Licensing page for information on the license included with the download and other options][3]. It is a good idea to acquire a free, Limited Community License by sending email to sales@gemtalksystems.com. It is also recommended that you download and use the latest version of the GemStone/S 64 Bit product. The following instructions are for version 3.2.9.
 
 1. **Determine your installation directory and clone GsDevKit_home to that location**
 
@@ -68,4 +70,5 @@ $GS_HOME/bin/installClientServer devKit_329 tode1 3.2.9
 
 
 [1]: ./README.md#installation-on-a-single-desktop
-
+[2]: https://gemtalksystems.com/products/gs64/
+[3]: https://gemtalksystems.com/licensing/
