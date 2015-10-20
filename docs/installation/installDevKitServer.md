@@ -2,8 +2,7 @@
 
 A complete GsDevKit installation includes both a server and a client, which can be on the same or on different nodes.  These instructions provide information on installing the server component, without installing a client.  This is part of the [instructions for installing on two separate nodes][1]; refer to these instructions for the OS configuration required and other steps.
 
-The GsDevKit server  may be installed on **Linux** or **Mac**.  The GemStone/S 64 Bit does not run 
-directly on Windows, however, you may create a Linux VM on Windows and run the GsDevKit server within that VM.
+The GsDevKit server  may be installed on **Linux** or **Mac**; the process is the same on both.  The GemStone/S 64 Bit does not run directly on Windows, however, you may create a Linux VM on Windows and run the GsDevKit server within that VM.
 
 ### Determine port handling
 
@@ -17,7 +16,10 @@ devKit_329_ldi          50378/tcp        # Gemstone netldi
 
 ##Install Server
 
-The following steps are involved in installing the GsDevKit server.  For an example script to execute, see [Install GsDevKit server only](#script-to-install-server-only) 
+The following steps are involved in installing the GsDevKit server.  For an example script to execute, see [Install GsDevKit Server](#script-to-install-server-only) 
+
+####GemStone Version and License
+Before running installing the server, please check on the [GemStone/S 64 Bit product page for the latest versions][2] and visit [the Community and Web Edition Licensing page for information on the license included with the download and other options][3]. It is a good idea to acquire a free, Limited Community License by sending email to sales@gemtalksystems.com. It is also recommended that you download and use the latest version of the GemStone/S 64 Bit product. The following instructions are for version 3.2.9.
 
 1. **Determine your installation directory and clone GsDevKit_home to that location**
 
@@ -47,7 +49,7 @@ The following steps are involved in installing the GsDevKit server.  For an exam
     The installation is performed by a GsDevKit script.  This script takes care of cloning the required projects to your server node, installing a stone of the specified version and and specified name, and starting that stone.  
 
 
-   These instructions use 3.2.9 for `<GemStoneVersion>`; check for later GemStone/S 64 Bit releases.
+   These instructions use 3.2.9 for `<GemStoneVersion>`; check for more recent [GemStone/S 64 Bit Releases](#gemStone-version-and-license).
    
    Script to install the server only:
    ```
@@ -80,3 +82,5 @@ $GS_HOME/bin/installServer -c https devKit_329 3.2.9
 
 
 [1]: ./README.md#installation-on-separate-server-and-client
+[2]: https://gemtalksystems.com/products/gs64/
+[3]: https://gemtalksystems.com/licensing/
