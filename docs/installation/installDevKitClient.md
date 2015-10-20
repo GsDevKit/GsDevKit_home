@@ -6,7 +6,7 @@ Clients may be installed on **Linux**, **Mac** or **Windows**.
 
 ## Install Client
 
-The following steps are involved in installing the GsDevKit client. For an example script to execute, see [Install GsDevKit client on Linux or Mac](#script-to-install-client-on-linux-or-mac) or [Install GsDevKit client on Windows](#script-to-install-client-on-windows)
+The following steps are involved in installing the GsDevKit client. For an example script to execute, see [Install GsDevKit client on Linux or Mac](#example-script-to-install-client-on-linux-or-mac) or [Install GsDevKit client on Windows](#example-script-to-install-client-on-windows)
 
 1. Determine your installation directory and clone GsDevKit_home to that location
 
@@ -52,9 +52,9 @@ The following steps are involved in installing the GsDevKit client. For an examp
    createClient 
    ```
 
-### Script to Install Client on Linux or Mac
+### Example Script to Install Client on Linux or Mac
 
-This script installs the GsDevKit client components and creates a client with the name **tode1**.
+This script installs the GsDevKit client components for v3.2.9, and creates a client with the name **tode1**.
 
  ```
 cd <githubdirectory>
@@ -67,10 +67,9 @@ export PATH=$GS_HOME/bin:$PATH
 $GS_HOME/bin/installClient -c https tode1 3.2.9
  ```
 
-### Script to Install Client on Windows
+### Example Script to Install Client on Windows
 
-This script installs the GsDevKit client components and creates a client with the name **tode1**.
-
+This script installs the GsDevKit client components for v.3.2.9, and creates a client with the name **tode1**.
 
  ```
 cd ~
@@ -83,7 +82,7 @@ git config --global core.longpaths true
 $GS_HOME/bin/installClient -c https tode1 3.2.9
 
  ```
-You now have an instance of the tODE client installed on your client machine, with the name **tode1** (if you used the sequence as entered here).  
+You now have an instance of the tODE client installed on your client machine, with the name **tode1** (if you used the sequence as entered here); and you have the GemStone server components for v3.2.9.
 
 ## Determine port number for connection
 
