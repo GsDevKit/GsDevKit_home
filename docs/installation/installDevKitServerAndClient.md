@@ -39,12 +39,12 @@ Before running installing the server, please check on the [GemStone/S 64 Bit pro
    
     The installation is performed by a GsDevKit script.  This script takes care of cloning the required projects to your server node, installing a stone of the specified version and and specified name, and starting that stone.  You can also use a script that installs the client as well as the server, if you intend to run both components on the same node.
 
-   These instructions use 3.2.9 for `<GemStoneVersion>`; check for later [GemStone/S 64 Bit Releases](#gemStone-version-and-license).
+   These instructions use 3.2.9 for `<GemStoneVersion>`; check for more recent [GemStone/S 64 Bit Releases](#gemStone-version-and-license).
    
    ```
-   $GS_HOME/bin/installClientServer <myStoneName> <myClientName> <GemStoneVersion>
+   $GS_HOME/bin/installClientServer -c <authMode> <myStoneName> <myClientName> <GemStoneVersion>
    ```
-   You may use any name for the `<myStoneName>` and `<myClientName>`, and note that you may later have multiple stones and multiple clients. The examples below use **devKit_329** and **tode1**.
+   You may use any name for the `<myStoneName>` and `<myClientName>`, and note that you may later have multiple stones and multiple clients. The examples below use **devKit_329** and **tode1**. For `<authMode>`, use https, though ssh will also work if you have ssh authentication already set up.  
 
    The install scripts invokes the following sub-scripts:
    ```
