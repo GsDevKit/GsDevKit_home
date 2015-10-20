@@ -74,11 +74,10 @@ This script installs the GsDevKit client components for v.3.2.9, and creates a c
  ```
 cd ~
 git clone https://github.com/GsDevKit/GsDevKit_home.git
-cd gsDevKit_home
+cd GsDevKit_home
 git checkout -b gsdevkit
 export GS_HOME=`pwd`
 export PATH=$GS_HOME/bin:$PATH
-git config --global core.longpaths true   
 $GS_HOME/bin/installClient -c https tode1 3.2.9
 
  ```
