@@ -152,7 +152,7 @@ Your shell is now ssh'ed into the server.  You will need to leave this shell con
 
    to the same path on the client node.
 
-3.  Edit this file to specify [the server NetLDI port]{#determine-port-number-for-connection} in the line item for #netLDIPort :.  The lines in the file, for example:
+3.  Edit this file to specify [the server NetLDI port](#determine-port-number-for-connection) in the line item for #netLDIPort :.  The lines in the file, for example:
  
 ```
    ...
