@@ -115,12 +115,23 @@ Running Netldis:
 ```
 The value in the Port column for the NetLDI, in this case 48334, is the required value.
 
-To setup SSH port forwarding, 
+#### Setup SSH port forwarding
+
+To setup SSH port forwarding, you will connect the local port to the port on the remote server, using the -L argument to ssh; `-L <localPort>:<hostNameOrIP>:<remotePort>`. 
+
+We are using the same port number on the client and server. In GemStone/S 64 Bit v3.2 and later, you only need to connect a single port, which can be used for multiple socket connections.
 
 ```
-ssh -L 44834:hostNameOrIp user@example.com
+ssh <remoteUserId>@<remoteHost> -L <localPort>:<localhost>:<remotePort>
 ```
+for example, if your server (stone) is running on a machine with the IP address 192.168.100.129, and the user name on the server is dhenichs, you could use:
 
+```
+ssh dhenrichs@192.168.100.129 -L 44834:localHost:44834 
+```
+If you do not have passwordless ssh setup, you will be prompted for your password.
+
+Your shell is now ssh'ed into the server.  You will need to leave this shell connected in order to maintain the ssh port tunnel, so open another shell to start up the client.
 
 ## Client Setup
 
