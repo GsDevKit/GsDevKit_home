@@ -5,16 +5,18 @@ baseline: spec
 		for: #(#'pharo3.x' #'pharo4.x')
 		do: [ 
 			spec description: 'This version is for use with GsDevKit_gs_server image, part of GsDevKit_home'.
+			spec postLoadDoIt: #disableTodeSystemMenu.
 			spec
-				baseline: 'Tode' with: [ 
-                                  spec 
-                                    loads: 'GemStone';
-                                    repository: 'github://dalehenrich/tode:master/repository';
-                                    yourself ];
+				baseline: 'Tode'
+					with: [ 
+							spec
+								loads: 'GemStone';
+								repository: 'github://dalehenrich/tode:master/repository';
+								yourself ];
 				yourself.
-			spec project: 'Tode-Common-Core' copyFrom: 'Tode' with: [ spec loads: 'Common-Core' ].
+			spec project: 'Tode Common' copyFrom: 'Tode' with: [ spec loads: 'Common-Core' ].
 			spec
-				package: 'GsDevKit-CommandLine' with: [ spec requires: #('OSProcess' 'Tode-Common-Core') ];
+				package: 'GsDevKit-CommandLine' with: [ spec requires: #('OSProcess' 'Tode Common') ];
 				configuration: 'OSProcess'
 					with: [ 
 							spec
