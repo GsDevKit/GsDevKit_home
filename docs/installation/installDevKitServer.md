@@ -16,7 +16,7 @@ devKit_329_ldi          50378/tcp        # Gemstone netldi
 
 ##Install Server
 
-The following steps are involved in installing the GsDevKit server.  For an example script to execute, see [Install GsDevKit Server](#script-to-install-server-only) 
+The following steps are involved in installing the GsDevKit server.  For an example script to execute, see [Example Script to Install GsDevKit Server](#example-script-to-install-server-only) 
 
 ####GemStone Version and License
 Before running installing the server, please check on the [GemStone/S 64 Bit product page for the latest versions][2] and visit [the Community and Web Edition Licensing page for information on the license included with the download and other options][3]. It is a good idea to acquire a free, Limited Community License by sending email to sales@gemtalksystems.com. It is also recommended that you download and use the latest version of the GemStone/S 64 Bit product. The following instructions are for version 3.2.9.
@@ -49,7 +49,7 @@ Before running installing the server, please check on the [GemStone/S 64 Bit pro
     The installation is performed by a GsDevKit script.  This script takes care of cloning the required projects to your server node, installing a stone of the specified version and and specified name, and starting that stone.  
 
 
-   These instructions use 3.2.9 for `<GemStoneVersion>`; check for more recent [GemStone/S 64 Bit Releases](#gemStone-version-and-license).
+   These instructions use 3.2.9 for `<GemStoneVersion>`; check for more recent [GemStone/S 64 Bit Releases](#gemstone-version-and-license).
    
    Script to install the server only:
    ```
@@ -67,7 +67,7 @@ Before running installing the server, please check on the [GemStone/S 64 Bit pro
    After these scripts successfully complete, you will have a stone named `<myStoneName>`, of GemStone/S 64 Bit version `<GemStoneVersion>`, installed on your server node and running.  You will also have a NetLDI named `<myStoneName>_ldi` running on the server, so the server is ready for a tODE client to connect.
    
 
-### Script to Install Server only
+### Example Script to Install Server only
 
 This script installs the server components only, and installs and starts a 3.2.9 server named **devKit_329**.   
 
