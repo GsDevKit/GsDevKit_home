@@ -46,7 +46,7 @@ The following steps are involved in installing the GsDevKit server.  For an exam
 
 4. **Perform the Server installation**
    
-    The installation is performed by a GsDevKit script.  This script takes care of cloning the required projects to your server node, installing a stone of the specified version and and specified name, and starting that stone.  
+    The installation is performed by a GsDevKit script.  This script takes care of cloning the required projects to your server node, installing a stone of the specified version and and specified name, and starting that stone.  Note: this script uses sudo to install, and will prompt you for your password.
 
 
    These instructions use 3.2.9 for `<GemStoneVersion>`; check for more recent [GemStone/S 64 Bit Releases](#gemstone-version-and-license).
