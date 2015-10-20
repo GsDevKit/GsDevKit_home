@@ -14,12 +14,12 @@ To avoid this, it is recommended to assign a reserved port number to a named Net
 devKit_329_ldi          50378/tcp        # Gemstone netldi
 ```
 
+####GemStone Version and License
+Before running installing the server, please check on the [GemStone/S 64 Bit product page for the latest versions][2] and visit [the Community and Web Edition Licensing page for information on the license included with the download and other options][3]. It is a good idea to acquire a free, Limited Community License by sending email to sales@gemtalksystems.com. It is also recommended that you download and use the latest version of the GemStone/S 64 Bit product. The following instructions are for version 3.2.9.
+
 ##Install Server
 
 The following steps are involved in installing the GsDevKit server.  For an example script to execute, see [Example Script to Install GsDevKit Server](#example-script-to-install-server-only) 
-
-####GemStone Version and License
-Before running installing the server, please check on the [GemStone/S 64 Bit product page for the latest versions][2] and visit [the Community and Web Edition Licensing page for information on the license included with the download and other options][3]. It is a good idea to acquire a free, Limited Community License by sending email to sales@gemtalksystems.com. It is also recommended that you download and use the latest version of the GemStone/S 64 Bit product. The following instructions are for version 3.2.9.
 
 1. **Determine your installation directory and clone GsDevKit_home to that location**
 
