@@ -63,6 +63,9 @@ todeUpdate ${STONENAME1}
 stopStone ${STONENAME1}
 stopNetldi ${STONENAME1}
 startStone ${STONENAME1}
+startStone ${STONENAME1}
+startStone -r ${STONENAME1}
+startStatMonitor ${STONENAME1}
 stopStone -b ${STONENAME1}
 
 status
