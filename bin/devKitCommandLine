@@ -1,0 +1,98 @@
+#! /bin/bash
+#=========================================================================
+# Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#=========================================================================
+
+usage() {
+  cat <<HELP
+USAGE: $(basename $0) [-h] [-f | -F] [-D] [<gsDevKit-command-line>]
+
+Perform commands specified in <gsDevKit-command-line> against 
+$GS_SERVER_PHARO/gsDevKitCommandLine.image.
+
+OPTIONS
+  -h 
+     display help
+  -f 
+     rebuild gsDevKitCommandLine.image before executing <gsDevKit-command-line>
+  -F
+     rebuild gsDevKitCommandLine.image and exit
+  -D
+     start gsDevKitCommandLine.image interactively for development or debugging
+     <gsDevKit-command-line>
+
+EXAMPLES
+  $(basename $0) -h
+  $(basename $0) stopnetldi gs_329
+  $(basename $0) -f stopnetldi gs_329
+  $(basename $0) -F
+  $(basename $0) -D stopnetldi gs_329
+
+HELP
+}
+
+set -e # exit on error
+if [ "${GS_HOME}x" = "x" ] ; then
+  echo "the GS_HOME environment variable needs to be defined"
+  exit 1
+fi
+source ${GS_HOME}/bin/defGsDevKit.env
+if [ "$GS_SERVER{}x" = "x" ] ; then
+  echo "the GS_SERVER environment variable needs to be defined"
+  echo "Perhaps a stone has not been create yet?"
+  exit 1
+fi
+source ${GS_HOME}/bin/private/winRunPharoFunctions
+
+force="false"
+exitAfterForce="false"
+interactive="false"
+case "$1" in
+  --*) # pass to tode
+    ;;
+  -*) # handle single - options here
+    while getopts "fFhD" OPT ; do
+      case "$OPT" in
+        h) usage; exit 0 ;;
+        f) force="true";;
+        F) force="true"; exitAfterForce="true";;
+        D) interactive="true";;
+      esac
+    done
+    shift $(($OPTIND - 1))
+    ;;
+  *)  # pass everything else to tode
+    ;;
+esac
+
+forceArg=""
+if [ "$force" = "true" ] ; then
+  forceArg=" -f "
+fi
+if [ ! -e "${GS_SHARED_PHARO}/gsDevKitCommandLine.image" ] || [ "$force" = "true" ] ; then
+  $GS_SHARED/bin/create_gs_server_image $forceArg -d $GS_SHARED_PHARO gsDevKitCommandLine
+  if [ "$exitAfterForce" = "true" ] ; then
+    exit 0
+  fi
+fi
+
+# Run script
+# Detect operating system
+PLATFORM="`uname -sm | tr ' ' '-'`"
+
+case "$PLATFORM" in
+  MINGW32_NT*) 
+    vmArgs="--headless"
+    if [ "$interactive" = "true" ] ; then
+      vmArgs=""
+    fi
+    pharoCmd="win_run_pharo ${GS_SHARED_PHARO} $vmArgs" 
+    ;;
+  *)
+    pharoCmd="${GS_SHARED_PHARO}/pharo"
+    if [ "$interactive" = "true" ] ; then
+      pharoCmd="${GS_SHARED_PHARO}/pharo-ui"
+    fi
+    ;;
+esac
+$pharoCmd ${GS_SHARED_PHARO}/gsDevKitCommandLine.image $*

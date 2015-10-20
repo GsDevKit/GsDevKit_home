@@ -1,0 +1,116 @@
+#! /bin/bash
+#=========================================================================
+# Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#=========================================================================
+
+echo "================="
+echo "   GsDevKit script: $(basename $0) $*"
+echo "              path: $0"
+echo "================="
+
+usage() {
+  cat <<HELP
+USAGE: $(basename $0) [-h] client|server|both
+
+Update the Github repositories used by the GsDevKit client and servers in \$GS_HOME/shared/repos.
+
+"client" & "server" repos:
+
+  - github://dalehenrich/metacello-work:\${GS_SHARED_COMMIT_METACELLO}/repository
+  - github://dalehenrich/tode:\${GS_SHARED_COMMIT_TODE}/repository
+  - github://GsDevKit/ston:\${GS_SHARED_COMMIT_STON}/repository
+
+"client" repos:
+
+  - github://dalehenrich/filetree:\${GS_SHARED_COMMIT_PHARO3_FILETREE}/repository
+
+"server" repos:
+
+  - github://dalehenrich/filetree:\${GS_SHARED_COMMIT_GEMSTONE_FILETREE}/repository
+  - github://GsDevKit/Grease:\${GS_SHARED_COMMIT_GREASE}/repository
+  - github://glassdb/PharoCompatibility:\${GS_SHARED_COMMIT_OHARO_COMPAT}/repository
+  - github://glassdb/glass:\${GS_SHARED_COMMIT_GLASS1}/repository
+  - github://dalehenrich/rb:\${GS_SHARED_COMMIT_RB}/repository
+
+OPTIONS
+  -h
+     display help
+
+EXAMPLES
+   $(basename $0) -h
+   $(basename $0) client
+   $(basename $0) -c ssh server
+   $(basename $0) -c https both
+
+HELP
+}
+
+set -e # exit on error
+if [ "${GS_HOME}x" = "x" ] ; then
+  echo "the GS_HOME environment variable needs to be defined"
+  exit 1
+fi
+source ${GS_HOME}/bin/defGsDevKit.env
+
+modeArg=""
+while getopts "hnb:c:" OPT ; do
+  case "$OPT" in
+    h) usage; exit 0;;
+    c) modeArg=" -c ${OPTARG} ";;
+    *) usage; exit 1;;
+  esac
+done
+shift $(($OPTIND - 1))
+
+if [ $# -lt 1 ]; then
+  echo "missing required argument"; usage; exit 1
+fi
+
+updateClientRepos="false"
+updateServerRepos="false"
+case "$1" in
+  client) updateClientRepos="true";;
+  server) updateServerRepos="true";;
+  both) updateClientRepos="true"; updateServerRepos="true" ;;
+  *) echo "unknown argument: $1"; usage; exit 1;;
+esac
+
+source ${GS_HOME}/bin/private/gitFunctions
+
+pushd ${GS_SHARED_REPO} >& /dev/null
+  if [ -d "metacello-work" ] ; then
+    updateClone $GS_SHARED_GIT_CHECKOUT_METACELLO $GS_SHARED_GIT_REMOTE_METACELLO ${GS_SHARED_REPO}/metacello-work
+  fi
+  if [ -d "tode" ] ; then
+    updateClone $GS_SHARED_GIT_CHECKOUT_TODE $GS_SHARED_GIT_REMOTE_TODE ${GS_SHARED_REPO}/tode
+  fi
+  if [ -d "ston" ] ; then
+    updateClone $GS_SHARED_GIT_CHECKOUT_STON $GS_SHARED_GIT_REMOTE_STON ${GS_SHARED_REPO}/ston
+  fi
+  if [ "$updateClientRepos" = "true" ] ; then
+    cd pharo3.0
+    if [ -d "filetree" ] ; then
+      updateClone $GS_SHARED_GIT_CHECKOUT_PHARO3_FILETREE $GS_SHARED_GIT_REMOTE_PHARO3_FILETREE ${GS_SHARED_REPO}/pharo3.0/filetree
+    fi
+    cd ..
+  fi
+  if [ "$updateServerRepos" = "true" ] ; then
+    if [ -d "filetree" ] ; then
+      updateClone $GS_SHARED_GIT_CHECKOUT_GEMSTONE_FILETREE $GS_SHARED_GIT_REMOTE_GEMSTONE_FILETREE ${GS_SHARED_REPO}/filetree
+    fi
+    if [ -d "Grease" ] ; then
+      updateClone $GS_SHARED_GIT_CHECKOUT_GREASE $GS_SHARED_GIT_REMOTE_GREASE ${GS_SHARED_REPO}/Grease
+    fi
+    if [ -d "PharoCompatibility" ] ; then
+      updateClone $GS_SHARED_GIT_CHECKOUT_PHARO_COMPAT $GS_SHARED_GIT_REMOTE_PHARO_COMPAT ${GS_SHARED_REPO}/PharoCompatibility
+    fi
+    if [ -d "glass" ] ; then
+      updateClone $GS_SHARED_GIT_CHECKOUT_GLASS1 $GS_SHARED_GIT_REMOTE_GLASS1 ${GS_SHARED_REPO}/glass
+    fi
+    if [ -d "rb" ] ; then
+      updateClone $GS_SHARED_GIT_CHECKOUT_RB $GS_SHARED_GIT_REMOTE_RB ${GS_SHARED_REPO}/rb
+    fi
+  fi
+popd >& /dev/null
+
+echo "...finished $(basename $0)"

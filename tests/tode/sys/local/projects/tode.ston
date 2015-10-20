@@ -1,9 +1,0 @@
-TDObjectGatewayNode{#name:'tode',#contents:'| project |
-project := TDProjectSpecEntryDefinition new
-  baseline: \'Tode\'
-    repository: \'github://dalehenrich/tode:dev/repository\'
-    loads: \'GemStone Dev\';
-  status: #(#\'inactive\');
-  locked: true;
-  yourself.
-^ project'}

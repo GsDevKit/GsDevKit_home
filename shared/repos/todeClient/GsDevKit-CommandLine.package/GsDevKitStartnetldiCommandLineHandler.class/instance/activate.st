@@ -7,6 +7,7 @@ activate
 		ifTrue: [ 
 			self printHelp.
 			^ self exitFailure: 'Missing arguments' ].
+	self shouldNotBeForeignStone.
 	argsArray := self produceNetldiArgs.
 	Transcript
 		cr;

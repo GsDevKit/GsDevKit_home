@@ -1,0 +1,5 @@
+bu backup preUpdate.dbf  # backup prior to load
+project load Tode        # load the project
+bu backup tode.dbf       # backup of initial tODE install with /sys structures in place
+bu snapshot tode.dbf     # make a snapshot of initial tODE install with /sys structures in place
+

@@ -1,0 +1,51 @@
+#! /bin/bash
+#=========================================================================
+# Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#=========================================================================
+
+usage() {
+  cat <<HELP
+USAGE: $(basename $0) [-h] [-a] [-r] [-i]
+
+List information about installed products, stones, and clients.
+
+OPTIONS
+  -h display help
+  -a | -r | -i
+     include information about installed and running stones
+
+EXAMPLES
+  $(basename $0) -h
+  $(basename $0)
+  $(basename $0) -a
+
+HELP
+}
+
+set -e # exit on error
+if [ "${GS_HOME}x" = "x" ] ; then
+  echo "the GS_HOME environment variable needs to be defined"; exit 1
+fi
+source ${GS_HOME}/bin/defGsDevKit.env
+
+stonesArg="-i"
+while getopts "ahir" OPT ; do
+  case "$OPT" in
+    h) usage; exit 0;;
+    a) stonesArg=" -a ";;
+    i) stonesArg=" -a ";;
+    r) stonesArg=" -a ";;
+    *) echo "unknown option"; usage; exit 1;;
+  esac
+done
+shift $(($OPTIND - 1))
+
+if [ $# -ne 0 ]; then
+  usage; exit 1
+fi
+
+$GS_HOME/bin/products
+$GS_HOME/bin/clients
+$GS_HOME/bin/sessions
+$GS_HOME/bin/stones $stonesArg
+

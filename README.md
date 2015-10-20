@@ -1,94 +1,41 @@
-# Open Source Development Kit for GemStone/S 64 Bit 
+# Open Source Development Kit for GemStone/S 64 Bit [![Build Status](https://travis-ci.org/GsDevKit/GsDevKit_home.svg?branch=master)](https://travis-ci.org/GsDevKit/GsDevKit_home)
 
-The Development Kit for GemStone/S (GsDevKit) contains tools and compatiblity changes that sit on top of the GemStone/S 64 Bit product, providing a complete and powerful open-source development environment. The Development kit allows Pharo and Squeak developers to take advantage of GemStone's object persistence, along with a variety of open-source Smalltalk tools and frameworks.
+The Development Kit for GemStone/S (GsDevKit) contains tools and compatiblity changes that sit on top of the GemStone/S 64 Bit product, providing a complete and powerful open-source development environment. The Development kit allows Smalltalk developers to take advantage of GemStone's object persistence, along with a variety of open-source Smalltalk tools and frameworks.
 
 GsDevKit is a client-server system, which may both be installed on a single machine, or the server and client may be installed on separate nodes. The GsDevKit server installation includes the GemStone/S server.
 
-Detailed instructions for configuring your OS and installing GemStone/S, GsDevKit, and starting tODE: 
-* [Development Kit Installation and Configuration](#development-kit-server-installation)
+## Early Access Version
+The GsDevKit_home project is current in **EARLY ACCESS** mode. If you are already familiar with using [GsDevKit/gsDevKitHome][1] and are interested in providing feedback, then by all means continue reading. On the other hand if you are new to using GemStone, then you should use [GsDevKit/gsDevKitHome][1].
 
-Additional supporting documentation:
+##Installation
+**GsDevKit_home** offers two different install options:  
 
-* [Getting Started with tODE][62].
-* [Featured GsDevKit projects][94].
-* [GsDevKit projects][95].
-* [Remote tODE Client installation][17].
-* [Scripts for controlling stones][96].
+1. *Everything on a single workstation*
+2. *Client on a local workstation, Server on a remote host*
 
----
+Please read the [Installation Overview][2] for installation options and instructions.
 
-##Development Kit Server Installation
-The following steps will install the GemStone/S and Development Kit server, and open the tODE IDE client image:
+##FAQs
+1. [If I am already using gsDevKitHome, why should I consider moving to GsDevKit_home?][3]
+2. [Do I have to rebuild all of my stones to use GsDevKit_home?][4]
+3. [Can I use a GsDevKit_home tODE client to connect to older stones?][5]
+4. [When a new version of GsDevKit_home is published, how do I update my checkout?][6]
+5. [When a new version of tODE is published, how do I update my checkout and my stones?][7]
+6. [Do I have to bootstrap GLASS1 and tODE from scratch every time I create a stone?][9]
+7. How do I share session descriptions between a local client and a remote server?
+8. How do I upgrade a stone to a new version of GemStone?
+9. How do I load Seaside?
 
-1. [Operating System Prerequisites](#operating-system-prerequisites)
-2. [Install GsDevKit Server, and optionally Client](#install-the-gsdevkit-server)
-3. [Install GsDevKit Client, if using two nodes](#install-the-gsdevkit-client)
-3. [Define GsDevKit_home Environment Variables](#define-gsdevkithome-environment-variables)
-5. [Open a tODE client image](#open-a-tode-client-image)
+[**COMMENTS**][8]
 
-**NOTE:** *Do not use `sudo` when running any of the commands in this document, unless explicitly instructed to do so.*
+[1]: https://github.com/GsDevKit/gsDevKitHome#open-source-development-kit-for-gemstones-64-bit-
+[2]: docs/installation/README.md#installation-overview
+[3]: docs/FAQ/FAQ.md#1-if-i-am-already-using-gsdevkithome-why-should-i-consider-moving-to-gsdevkit_home
+[4]: docs/FAQ/FAQ.md#2-do-i-have-to-rebuild-all-of-my-stones-to-use-gsdevkit_home
+[5]: docs/FAQ/FAQ.md#3-can-i-use-a-gsdevkit_home-tode-client-to-connect-to-older-stones
+[6]: docs/FAQ/FAQ.md#4-when-a-new-version-of-gsdevkit_home-is-published-how-do-i-update-my-checkout
+[7]: docs/FAQ/FAQ.md#5-when-a-new-version-of-tode-is-published-how-do-i-update-my-checkout-and-my-stones
+[8]: https://github.com/GsDevKit/GsDevKit_home/issues/new
+[9]: docs/FAQ/FAQ.md#6-do-i-have-to-bootstrap-glass1-and-tode-from-scratch-every-time-i-create-a-stone
 
-###Operating System Prerequisites
-The Dev Kit server and client components can be installed on Linux or Mac OS X.  The client may be installed on Windows as well.
-
-For a detailed instructions on installing the OS prerequisites, a full list of required/recommended packages, and scripts that perform the installation, see [GsDevKit Operating System Prerequisite Installation][1].
-   
-
-
-
-###Install the GsDevKit server
-
-[Instructions on installing the server][2]
-
-
-When the scripts are finished you will have installed GemStone, created and started a GemStone server instance and installed a tODE server environment.
-
-Before running the `installServer` script, please check on the [GemStone/S 64 Bit product page for the latest versions][98] and visit [the Community and Web Edition Licensing page for information on the license included with the download and other options][99].
-It is a good idea to acquire a **free**, *Limited Community License* by sending email to `sales@gemtalksystems.com`.
-It is also recommended that you download and use the latest version of the GemStone/S 64 Bit product.
-The following creates a new stone named `gs_3281` based on [version 3.2.8.1 of GemStone/S][16]:
-
-*Note that the script will prompt you for your password because it uses `sudo` to setup up your server for running GemStone*.
-
-###Install the GsDevKit client
-
-[Instructions on installing the client][2]
-
-###Define GsDevKit_home Environment Variables
-Define the `$GS_HOME` environment variable and add `$GS_HOME/bin` to your `$PATH`:
-
-```Shell
-cd GsDevKit_home                # if you are not already located there
-export GS_HOME=`pwd`
-export PATH=$GS_HOME/bin:$PATH
-```
-
-To make sure they are always correctly defined, it's a good idea to update your `.bashrc` file with these `$GS_HOME`, and `$PATH`. 
-
-###Start up the tODE client image
-
-you can now [start up the tODE client][42].
-
-for example,
-
-```
-startClient tode
-```
-
-
----
----
-
-[1]: docs/installation/configureOS.md
-[2]: docs/installation/installDevKitServer.md
-[3]: docs/installation/installDevKitClient.md
-[4]: http://gemtalksystems.com/products/gs64/
-[5]: http://gemtalksystems.com/licensing/#CWELicensing
-[6]: http://gemtalksystems.com/products/gs64/versions32x/
-
-[17]: docs/clientInstallation.md#tode-client-installation
-[62]: https://github.com/dalehenrich/tode/blob/master/docs/GettingStarted.md#getting-started-with-tode
-
-[94]: https://github.com/GsDevKit/GsDevKit_tode/tree/master/projects#featured-gsdevkit-projects
-[95]: https://github.com/GsDevKit/GsDevKit_tode/tree/master/projects#featured-gsdevkit-projects/README.md#gsdevkit-projects
-[96]: bin/README.md
+[100]: docs/FAQ/FAQ.md#100-how-do-i-contribute-to-the-gsdevkit_home-project

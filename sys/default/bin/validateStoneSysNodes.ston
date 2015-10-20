@@ -1,0 +1,140 @@
+TDScriptLeafNode{#name:'validateStoneSysNodes',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./validateStoneSysNodes -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'files\' nil #\'none\').
+      #(\'force\' nil #\'none\').
+      #(\'repair\' nil #\'none\').
+      #(\'stone\' nil #\'required\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | validateDirBlock stoneRoot stoneRootDir homeDir projectsDir repair rootDir dir cpTool stoneName |
+      cpTool := topez toolInstanceFor: \'cp\'.
+      opts
+        at: \'stone\'
+        ifPresent: [ :name | stoneName := name ]
+        ifAbsent: [ stoneName := topez serverStoneName ].
+      stoneRoot := topez serverTodeStoneRootFor: stoneName.
+      stoneRootDir := ServerFileDirectory on: stoneRoot.
+      homeDir := stoneRootDir directoryNamed: \'home\'.
+      projectsDir := stoneRootDir directoryNamed: \'projects\'.
+      opts
+        at: \'repair\'
+        ifPresent: [ :ignored | repair := true ]
+        ifAbsent: [ repair := false ].
+      opts
+        at: \'force\'
+        ifPresent: [ :ignored | \"destroy and rebuild stoneRootDir\"
+          repair := true.
+          opts at: \'files\' put: nil.
+          stoneRootDir exists ifTrue: [ stoneRootDir recursiveDelete ] ].
+     validateDirBlock := [ :dir | 
+      dir exists
+        ifFalse: [ 
+          repair
+            ifTrue: [ dir assureExistence ]
+            ifFalse: [ nil error: \'Missing directory: \' , dir pathName printString ] ] ].
+      validateDirBlock value: stoneRootDir.
+      validateDirBlock value: homeDir.
+      validateDirBlock value: projectsDir.
+      opts
+        at: \'files\'
+        ifPresent: [ :ignored | 
+          | validateFileBlock |
+          validateFileBlock := [ :dir :filename :nodename | 
+          (dir fileExists: filename)
+            ifFalse: [ 
+              repair
+                ifTrue: [ 
+                  | templateNodePath |
+                  templateNodePath := \'/sys/local/server/templates/\'.
+                  topez
+                    lookup: templateNodePath , nodename
+                    ifAbsent: [ templateNodePath := \'/sys/default/server/templates/\' ].
+                  cpTool
+                    cp: templateNodePath , nodename
+                    to: \'/sys/stones/\' , stoneName ]
+                ifFalse: [ 
+                  nil
+                    error:
+                      \'Missing file: \' , filename printString , \' in path: \'
+                        , dir pathName printString ] ] ].
+          validateFileBlock
+            value: stoneRootDir
+            value: \'homeComposition.ston\'
+            value: \'homeComposition\'.
+          validateFileBlock
+            value: stoneRootDir
+            value: \'projectComposition.ston\'
+            value: \'projectComposition\'.
+          validateFileBlock value: stoneRootDir value: \'dirs.ston\' value: \'dirs\'.
+          validateFileBlock
+            value: stoneRootDir
+            value: \'packages.ston\'
+            value: \'packages\'.
+          validateFileBlock
+            value: stoneRootDir
+            value: \'repos.ston\'
+            value: \'repos\' ].
+      true ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  validateStoneSysNodes - validateStoneSysNodes sript utility template
+SYNOPSIS
+  validateStoneSysNodes [-h|--help] [--stone=<stone-name>] [--force] [--files] [--repair]
+
+DESCRIPTION
+  Verifies that the minimal per-stone directory structure exists for the given stone. By default
+  the currently running stone is validated. If the --stone option is used, then the directory
+  structure for <stone-name> is validated.
+
+  In the following the minimal per-stone directory structure is shown at <stone-name> and below:
+
+  +-$GS_HOME\\
+    +-tode\\
+      +-sys\\
+        +-stones\\
+          +-<stone-name>\\
+            +-dirs.ston
+            +-home\\
+            +-homeComposition.ston
+            +-packages.ston
+            +-projectComposition.ston
+            +-projects\\
+            +-repos.ston
+ 
+  The home and projects directories are empty and the *.ston and files are copies of the files in 
+  $GS_HOME/tode/sys/stones/templates.
+
+  With no options, an error is thrown if the directories are missing.
+
+  With the --files option an error is also thrown if either of the files are missing.
+
+  If the --repair option is present, missing directories are created and missing
+  files are copied from $GS_HOME/tode/sys/stones/templates.
+
+  The --force option deletes the directories, if present and then rebuilt as if both the --repair and 
+  --files options are set.
+
+EXAMPLES
+  /sys/default/bin/validateStoneSysNodes --help
+  /sys/default/bin/validateStoneSysNodes -h
+
+  /sys/default/bin/validateStoneSysNodes 
+  /sys/default/bin/validateStoneSysNodes --files
+  /sys/default/bin/validateStoneSysNodes --repair
+  /sys/default/bin/validateStoneSysNodes --files --repair
+  /sys/default/bin/validateStoneSysNodes --force
+  /sys/default/bin/validateStoneSysNodes --stone=gsDevKit --repair
+  /sys/default/bin/validateStoneSysNodes --stone=gsDevKit --files --repair
+  /sys/default/bin/validateStoneSysNodes --stone=gsDevKit --force
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-11-14T16:19:26.4569790363311-08:00'],#modificationTime:DateAndTime['2015-10-03T07:57:33.7734529972076-07:00']}

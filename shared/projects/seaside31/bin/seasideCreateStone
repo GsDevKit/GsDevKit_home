@@ -1,0 +1,65 @@
+#! /bin/bash
+#=========================================================================
+# Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#=========================================================================
+
+echo "================="
+echo "   GsDevKit script: $(basename $0) $*"
+echo "              path: $0"
+echo "================="
+
+usage() {
+  cat <<HELP
+USAGE: $(basename $0) [-h] [-f] [-n] [-t <-tode-snapshot-file-path>] <stone-name> <gemstone-version> 
+Create a new stone named <stone-name> with tODE and Seaside31 installed.
+
+OPTIONS
+  -h display help
+  -f
+     Force creation of new stone, by deleting 
+     \$GS_SERVER/stones/<stone-name> directory if it exists
+  -n
+     No startStone, no startNetldi.
+  -t <tode-snapshot-file-path>
+     path to snapshot file used to create stone. It is assumed that the snapshot
+     already has tODE installed and the snapshot will be attached to the
+     existing \$GS_TODE/sys/stones/<stone-name> structure.
+
+EXAMPLES
+  $(basename $0) -h
+  $(basename $0) seaside_329 3.2.9
+"
+HELP
+}
+
+set -e # exit on error
+if [ "${GS_HOME}x" = "x" ] ; then
+  echo "the GS_HOME environment variable needs to be defined"; exit 1
+fi
+source ${GS_HOME}/bin/defGsDevKit.env
+
+forceArg=""
+noRestartArg=""
+snapshotFileArg=""
+while getopts "fhnt:" OPT ; do
+  case "$OPT" in
+    h) usage; exit 0;;
+    f) forceArg=" -f ";; 
+    n) noRestartArg=" -n ";;
+    t) snapshotFileArg=" -t ${OPTARG} ";;
+    *) echo "unkown option $OPT"; usage; exit 1;;
+  esac
+done
+shift $(($OPTIND - 1))
+
+if [ $# -ne 2 ]; then
+  echo "missing required args"; usage; exit 1
+fi
+stoneName="$1"
+gsvers="$2"
+
+$GS_HOME/bin/createStone $forceArg $noRestartArg $snapshotFileArg $stoneName $gsvers
+
+$GS_HOME/shared/projects/seaside31/bin/seasideInstall $stoneName
+
+echo "...finished $(basename $0)"

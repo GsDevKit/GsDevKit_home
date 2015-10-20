@@ -46,13 +46,14 @@ OPTIONS
      Path to snapshot file used to create stone. Path may be a relative file 
      path.
   -t
-     Attach image to the \$GS_TODE/sys/stones/<stone-name> directory structure
+     Attach image to the \$GS_TODE/sys/stones/<stone-name> directory structure,
+     be used with the -s option.
 
 EXAMPLES
   $(basename $0) -h
   $(basename $0) gs_329
-  $(basename $0) -s $GS_HOME/gs_server/snapshots/extent0.tode.3.2.9.dbf gs_329
-  $(basename $0) -t -s $GS_HOME/gs_server/snapshots/extent0.tode.3.2.9.dbf gs_329
+  $(basename $0) -s \$GS_HOME/gs_server/snapshots/extent0.tode.3.2.9.dbf gs_329
+  $(basename $0) -t -s \$GS_HOME/gs_server/snapshots/extent0.tode.3.2.9.dbf gs_329
 
 HELP
 }
@@ -68,12 +69,13 @@ if [ "${GS_HOME}x" = "x" ] ; then
   echo "the GS_HOME environment variable needs to be defined"; exit 1
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
-if [ "$GS_GS_SERVER{}x" = "x" ] ; then
-  echo "the GS_GS_SERVER environment variable needs to be defined"
+if [ "$GS_SERVER{}x" = "x" ] ; then
+  echo "the GS_SERVER environment variable needs to be defined"
   echo "Perhaps a stone has not been create yet?"
   exit 1
 fi
 
+source ${GS_HOME}/bin/private/shFunctions
 snapshotFile=""
 noRestart="false"
 attachTode="false"
@@ -81,7 +83,7 @@ while getopts "hns:t" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     n) noRestart="true";;
-    s) snapshotFile=`readlink -f ${OPTARG}` ;;
+    s) snapshotFile=`realpath ${OPTARG}` ;; 
     t) attachTode="true";;
     *) echo "unknown option: ${OPTARG}"; usage; exit 1;;
   esac
@@ -95,13 +97,12 @@ stoneName=$1
 
 
 # set up stone environment
-stonePath=$GS_GS_SERVER_STONES/$stoneName
+stonePath=$GS_SERVER_STONES/$stoneName
 if [ ! -d "$stonePath" ] ; then
   echo "The stone $stoneName does not appear to exist."; exit 1
 fi
-
 pushd $stonePath >& /dev/null
- source $stonePath/stone.env
+  source $stonePath/stone.env
 popd >& /dev/null
 
 echo "Shutdown stone"
@@ -110,30 +111,30 @@ $GS_HOME/bin/stopStone $stoneName
 
 if [ "${noRestart}" = "false" ] ; then
   echo "Copy snapshot and remove tranlogs"
-  $GS_HOME/bin/private/gsDevKitCommandLine newExtent $stoneName $snapshotFile
+  $GS_HOME/bin/devKitCommandLine newExtent $stoneName $snapshotFile
 
   # -N option used to ignore tranlog files during restart
   echo "Restarting stone and netldi"
   $GS_HOME/bin/startStone -b -N $stoneName
 
   if [ "${attachTode}" = "true" ] ; then
-    $GS_HOME/bin/todeIt $stoneName "script --script=installServerTode2"
+    $GS_HOME/bin/todeIt $stoneName "script --script=rebuildServerTode"
   fi
 else
   echo "Copy snapshot and leave tranlogs for recovery"
   
   if [ "${snapshotFile}x" = "x" ] ; then
     echo "Must specify <snapshot-file-path>, when using the -n (no restart option)"
-    echo "  Tranlogs left in $GS_HOME/gemstone/stones/${stoneName}/tranlogs"
-    echo "  Are not likely to be appropriate for $GEMSTONE/bin/extent0.seaside.dbf"
+    echo "  Tranlogs left in $\GS_HOME/gemstone/stones/${stoneName}/tranlogs"
+    echo "  Are not likely to be appropriate for \$GEMSTONE/bin/extent0.seaside.dbf"
     usage; exit 1
   fi
-  $GS_HOME/bin/private/gsDevKitCommandLine newExtentForRecovery $stoneName $snapshotFile
+  $GS_HOME/bin/devKitCommandLine newExtentForRecovery $stoneName $snapshotFile
 
   echo "Stone is now ready for recovery. Please read the How to Restore from Backup"
   echo "section of the manual (http://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/GS64-SysAdmin-3.2.htm?http://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/9-BackupAndRestore.htm#pgfId-999128)"
   echo ""
-  echo "In the simplest case you can just use the '$GS_HOME/startGemstone $stoneName'"
+  echo "In the simplest case you can just use the '\$GS_HOME/startGemstone $stoneName'"
   echo "and the system will automatically recover from the tranlogs in the stone's "
   echo "tranlog directory/"
 fi

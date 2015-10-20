@@ -1,0 +1,37 @@
+TDScriptLeafNode{#name:'repairClasses',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./repairClasses -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'classes\' nil #\'required\').
+      }
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      opts
+        at: \'classes\'
+        ifPresent: [ :classNameList | 
+          | classes |
+          classes := Set new.
+          (classNameList findTokens: \'\')
+            do: [ :className | (Smalltalk at: className) ifNotNil: [ :cl | classes add: cl ] ].
+          GsDeployer
+            deploy: [ classes do: [ :cls | cls asClassDefinition createClass ] ] ] ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  repairClasses - repairClasses sript utility template
+SYNOPSIS
+  repairClasses [-h|--help]
+                --classes=`<class-name-list>`
+DESCRIPTION
+EXAMPLES
+  ./repairClasses -h
+  ./repairClasses --classes=`TDClassDefinitionClient TDMcClassDefinition`
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2015-02-18T11:07:26.7589609622955-08:00'],#modificationTime:DateAndTime['2015-02-18T11:17:32.0165989398956-08:00']}

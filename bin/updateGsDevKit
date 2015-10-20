@@ -1,0 +1,149 @@
+#! /bin/bash
+#=========================================================================
+# Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#=========================================================================
+
+echo "================="
+echo "   GsDevKit script: $(basename $0) $*"
+echo "              path: $0"
+echo "================="
+
+usage() {
+  cat <<HELP
+USAGE: $(basename $0) [-h] [-g] [-t] [-i]
+
+With the -g option, update the GsDevKit_home components:
+  update clones (if present):
+    GsDevKit_home          - \$GS_HOME
+    GsDevKit_gs_server     - \$GS_HOME/server
+    GsDevKit_gs_client_dev - \$GS_HOME/dev
+    GsDevKit_sys_local     - \$GS_HOME/local
+    GsDevKit_todeClient    - \$GS_HOME/dev/todeClient
+
+With the -t option, update the tODE components:
+  update \$GS_HOME/shared/repos/tode clone
+
+With the -i option, update the images specified by the -g and/or -t options:
+  rebuild GsDevKit command line image
+  rebuild GsDevKit_todeClient clients
+
+With no options present, update both GsDevKit_home, tODE components and rebuild 
+the associated images.
+
+OPTIONS
+  -h
+     display help
+  -g
+     Update GsDevKit_home components
+  -i
+     Update the image for the listed components
+  -t
+     Update tODE components
+
+EXAMPLES
+  $(basename $0) -h
+  $(basename $0) -g 
+  $(basename $0) -t
+  $(basename $0) -g -t -i
+  $(basename $0) 
+
+HELP
+}
+
+set -e # exit on error
+if [ "${GS_HOME}x" = "x" ] ; then
+  echo "the GS_HOME environment variable needs to be defined"
+  exit 1
+fi
+source ${GS_HOME}/bin/defGsDevKit.env
+
+gsDevKitArg=""
+todeArg=""
+imageArg=""
+default="true"
+while getopts "hgti" OPT ; do
+  case "$OPT" in
+    h) usage; exit 0;;
+    i) imageArg="true";;
+    g) gsDevKitArg="true"; default="false";;
+    t) todeArg="true"; default="false";;
+    *) echo "unknown option $OPT"; usage; exit 1;;
+  esac
+done
+shift $(($OPTIND - 1))
+
+if [ "${gsDevKitArg}x" = "x" ]; then
+  gsDevKitArg=$default
+fi
+if [ "${todeArg}x" = "x" ]; then
+  todeArg=$default
+fi
+if [ "${imageArg}x" = "x" ]; then
+  imageArg=$default
+fi
+
+
+updateGsDevKitClones="false"
+updateTodeClone="false"
+rebuildCommandLine="false"
+rebuildTodeClient="false"
+
+if [ "${gsDevKitArg}" = "true" ]; then
+  updateGsDevKitClones="true"
+  if [ "$imageArg" = "true" ] ; then
+    rebuildCommandLine="true"
+  fi
+fi
+
+if [ "${todeArg}" = "true" ]; then
+  updateTodeClone="true"
+  if [ "$imageArg" = "true" ] ; then
+    rebuildTodeClient="true"
+    rebuildCommandLine="true"
+  fi
+fi
+
+source ${GS_HOME}/bin/private/gitFunctions
+
+if [ "$updateGsDevKitClones" = "true" ]; then
+  if [ "${GS_TRAVIS}x" = "x" ] ; then
+    # on Travis, _home is not a git checkout
+    updateClone $GSDEVKIT_HOME_GIT_CHECKOUT $GSDEVKIT_HOME_GIT_REMOTE "$GS_HOME"
+  fi
+
+  if [ -d "$GS_SERVER" ]; then
+    updateClone $GSDEVKIT_SERVER_GIT_CHECKOUT $GSDEVKIT_SERVER_GIT_REMOTE "$GS_SERVER"
+  fi
+
+  if [ -d "$GS_CLIENT_DEV" ]; then
+    $GS_CLIENT_DEV/bin/updateGsDevKit
+  fi
+  if [ -d "$GS_HOME/local" ]; then
+    updateClone $GSDEVKIT_SYS_LOCAL_GIT_CHECKOUT $GSDEVKIT_SYS_LOCAL_GIT_REMOTE "$GS_HOME/local"
+  fi
+fi
+
+if [ "$updateTodeClone" = "true" ]; then
+  if [ -d "${GS_SHARED_REPO}/tode" ] ; then
+    updateClone $GS_SHARED_GIT_CHECKOUT_TODE $GS_SHARED_GIT_REMOTE_TODE ${GS_SHARED_REPO}/tode
+  fi
+fi
+
+if [ "$rebuildCommandLine" = "true" ]; then
+  $GS_HOME/bin/devKitCommandLine -F
+fi
+
+if [ "$rebuildTodeClient" = "true" ]; then
+  if [ -d "$GS_CLIENT_DEV" ]; then
+    pushd $GS_CLIENT_DEV_CLIENTS >& /dev/null
+     for clientName in $(find . -maxdepth 1 -type d)
+      do
+        if [ "$clientName" != "." ] ; then
+          ${GS_CLIENT_DEV_CLIENTS}/$clientName/updateClient $clientName
+        fi
+      done
+    popd >& /dev/null
+  fi  
+fi
+
+echo "...finished $(basename $0)"

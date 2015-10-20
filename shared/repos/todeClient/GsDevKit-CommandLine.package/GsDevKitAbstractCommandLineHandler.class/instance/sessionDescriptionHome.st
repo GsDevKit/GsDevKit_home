@@ -1,3 +1,3 @@
 accessing
 sessionDescriptionHome
-	^ self sharedTodeSysLocalClient / 'descriptions'
+	^ (Smalltalk os environment at: 'GS_SYS_SESSIONS') asFileReference

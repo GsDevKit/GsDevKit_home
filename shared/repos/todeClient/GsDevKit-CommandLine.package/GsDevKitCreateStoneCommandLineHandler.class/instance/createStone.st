@@ -29,7 +29,7 @@ createStone
 		createTopaziniFile: stoneDirectory;
 		createDefStoneLn: stoneDirectory;
 		yourself.
-	(newStoneInfo := GsDevKitStoneInfo new
+	(newStoneInfo := self stoneInfoClass new
 		stoneName: self stoneName;
 		gsVers: self gsVers;
 		yourself) exportTo: stoneDirectory / self stoneInfoFilename.

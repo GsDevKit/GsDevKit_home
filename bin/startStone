@@ -51,7 +51,7 @@ while getopts "bhw:CNR" OPT ; do
   case "$OPT" in
     b) startnetldi="true" ;;
     C) 
-      if [ "${ARGS}x" != "x" ] ; then 
+      if [ "${ARG}x" != "x" ] ; then 
         echo "Only one of -C -N or -R options may be specified"
         exit 1
       fi
@@ -59,14 +59,14 @@ while getopts "bhw:CNR" OPT ; do
     ;;
     h) usage; exit 0 ;;
     N)
-      if [ "${ARGS}x" != "x" ] ; then 
+      if [ "${ARG}x" != "x" ] ; then 
         echo "Only one of -C -N or -R options may be specified"
         exit 1
       fi
       ARG="-N"
     ;;
     R)
-      if [ "${ARGS}x" != "x" ] ; then 
+      if [ "${ARG}x" != "x" ] ; then 
         echo "Only one of -C -N or -R options may be specified"
         exit 1
       fi
@@ -82,8 +82,8 @@ if [ "${GS_HOME}x" = "x" ] ; then
   echo "the GS_HOME environment variable needs to be defined"; exit 1
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
-if [ "$GS_GS_SERVER{}x" = "x" ] ; then
-  echo "the GS_GS_SERVER environment variable needs to be defined"
+if [ "$GS_SERVER{}x" = "x" ] ; then
+  echo "the GS_SERVER environment variable needs to be defined"
   echo "Perhaps a stone has not been create yet?"
   exit 1
 fi
@@ -92,19 +92,19 @@ if [ $# -ne 1 ]; then
   usage; exit 1
 fi
 stoneName=$1
-stonePath=$GS_GS_SERVER_STONES/$stoneName
+stonePath=$GS_SERVER_STONES/$stoneName
 
 if [ ! -d "$stonePath" ] ; then
   echo "The stone $stoneName does not exist"
   exit 1
 fi
 # set up stone environment
-pushd $stonePath >& /dev/null
+pushd $stonePath $stonePath >& /dev/null
   source $stonePath/stone.env
 popd >& /dev/null
 
 # start the stone
-$GS_GS_SERVER/bin/gs/startGemstone $ARG
+$GS_HOME/bin/devKitCommandLine startstone $stoneName $ARG
 
 if [ "${waitTime}x" = "x" ] ; then
   if [ "${GS_TRAVIS}x" != "x" ] ; then

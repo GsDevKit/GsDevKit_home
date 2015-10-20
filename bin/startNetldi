@@ -46,11 +46,11 @@ stoneName=$1
 echo "starting netldi $stoneName"
 
 # set up stone environment
-stonePath=$GS_GS_SERVER_STONES/$stoneName
+stonePath=$GS_SERVER_STONES/$stoneName
 pushd $stonePath >& /dev/null
   source $stonePath/stone.env
 popd >& /dev/null
 
-$GS_HOME/bin/private/gsDevKitCommandLine startnetldi $stoneName
+$GS_HOME/bin/devKitCommandLine startnetldi $stoneName
 
 echo "...finished $(basename $0)"

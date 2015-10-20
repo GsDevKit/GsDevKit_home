@@ -41,7 +41,7 @@ The following steps are involved in installing the GsDevKit client. For an examp
 
    Script to install the client:
    ```
-   $GS_HOME/bin/installClient <myGemStoneVersion> <myClientName>
+   $GS_HOME/bin/installClient <myClientName> <myGemStoneVersion>
    ```
    You may use any name for `<myClientName>`, and note that you may later have multiple clients. The examples below use  **tode** as the client name.
 
@@ -64,7 +64,7 @@ cd GsDevKit_home
 git checkout -b gsdevkit
 export GS_HOME=`pwd`
 export PATH=$GS_HOME/bin:$PATH
-$GS_HOME/bin/installClient -c https 3.2.9 tode
+$GS_HOME/bin/installClient -c https tode 3.2.9
  ```
 
 ### Script to Install Client on Windows
@@ -80,7 +80,7 @@ git checkout -b gsdevkit
 export GS_HOME=`pwd`
 export PATH=$GS_HOME/bin:$PATH
 git config --global core.longpaths true   
-$GS_HOME/bin/installClient -c https 3.2.9 tode
+$GS_HOME/bin/installClient -c https tode 3.2.9
 
  ```
 You now have an instance of the tODE client installed on your client machine, with the name **tode** (if you used the sequence as entered here).  
@@ -135,11 +135,11 @@ ssh -L 44834:hostNameOrIp user@example.com
 
 2.  From the server installation, copy the server specificaion file to the client.  This file is 
 
-   `$GS_HOME/shared/tode/sys/local/client/descriptions/<myServerNodeName>`
+   `$GS_HOME/sys/local/sessions/<myServerNodeName>`
    
    If you are using the same name as these examples, it will be named:
    
-   `$GS_HOME/shared/tode/sys/local/client/descriptions/devKit_329`
+   `$GS_HOME/sys/local/sessions/devKit_329`
 
    to the same path on the client node.
 

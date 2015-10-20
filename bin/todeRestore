@@ -10,7 +10,7 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] <stone-name> <backup-file>
+USAGE: $(basename $0) [-h] [-i] <stone-name> <backup-file>
 
 Restore a backup for the given stone.
 
@@ -18,6 +18,7 @@ tODE needs to be installed in the stone.
 
 OPTIONS
   -h display help
+  -i launch command line image for interactive debugging
 
 EXAMPLES
   $(basename $0) -h
@@ -37,14 +38,21 @@ if [ "${GS_HOME}x" = "x" ] ; then
   echo "the GS_HOME environment variable needs to be defined"; exit 1
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
-if [ "$GS_GS_SERVER{}x" = "x" ] ; then
-  echo "the GS_GS_SERVER environment variable needs to be defined"
+if [ "$GS_SERVER{}x" = "x" ] ; then
+  echo "the GS_SERVER environment variable needs to be defined"
   echo "Perhaps a stone has not been create yet?"
   exit 1
 fi
 
-source ${GS_HOME}/bin/privateshFunctions
-getOpts_help $@
+interactiveArg=""
+while getopts "hi" OPT ; do
+  case "$OPT" in
+    h) usage; exit 0;;
+    i) interactiveArg=" -i ";;
+    *) echo "unknown option: $OPT"; usage; exit 1;;
+  esac
+done
+shift $(($OPTIND - 1))
 
 if [ $# -ne 2 ]; then
   usage; exit 1
@@ -55,12 +63,12 @@ backupFile=$2
 echo "Restoring backup for stone: $stoneName using: $backupFile"
 
 # set up stone environment
-stonePath=$GS_GS_SERVER_STONES/$stoneName
+stonePath=$GS_SERVER_STONES/$stoneName
 pushd $stonePath >& /dev/null
- source $stonePath/stone.env
+  source $stonePath/stone.env
 popd >& /dev/null
 
 # do tODE restore
-$GS_HOME/bin/private/gsDevKitTodeCommandLine restoreFromBackup $stoneName $backupFile
+$GS_HOME/bin/private/gsDevKitTodeCommandLine $interactiveArg restoreFromBackup $stoneName $backupFile
 
 echo "...finished $(basename $0)"

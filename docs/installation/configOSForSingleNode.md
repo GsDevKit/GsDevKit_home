@@ -37,7 +37,7 @@ The instructions are provided [Installation on a single desktop][2]
 ###Configure Mac for Client and Server
 
 ```
-TBD
+install Xcode from the App Store
 ```
 ---
 

@@ -3,11 +3,6 @@
 # Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
 #=========================================================================
 
-echo "================="
-echo "   GsDevKit script: $(basename $0) $*"
-echo "              path: $0"
-echo "================="
-
 usage() {
   cat <<HELP
 USAGE: $(basename $0) [-h]
@@ -37,18 +32,19 @@ if [ $# -ne 0 ]; then
   usage; exit 1
 fi
 
-if [ ! -d "$GS_GS_CLIENT_DEV_CLIENTS" ] ; then
+echo "Installed Clients:"
+
+if [ ! -d "$GS_CLIENT_DEV_CLIENTS" ] ; then
   # no clients
   exit 0
 fi
 
-pushd $GS_GS_CLIENT_DEV_CLIENTS >& /dev/null
-  echo "Clients:"
+pushd $GS_CLIENT_DEV_CLIENTS >& /dev/null
   for fileName in $(find . -maxdepth 1 -type d)
   do
     if [ "$fileName" != "." ] ; then
       clientName=`echo "$fileName" | cut -c 3-`
-      ${GS_GS_CLIENT_DEV_CLIENTS}/$clientName/clientInfo $clientName
+      ${GS_CLIENT_DEV_CLIENTS}/$clientName/clientInfo $clientName
     fi
   done
 

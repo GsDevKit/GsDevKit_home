@@ -1,3 +1,3 @@
 accessing
 serverTodeSysDefaultTemplates
-	^ self serverTodeSysDefault / 'templates'
+	^ self serverTodeSysDefaultServer / 'templates'

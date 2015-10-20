@@ -1,4 +1,4 @@
-STON
+ston
 exportTo: aFileReference
 	FileStream
 		forceNewFileNamed: aFileReference pathString

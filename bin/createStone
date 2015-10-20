@@ -10,7 +10,8 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-f] [-g] [-n] [-s <snapshot-file-path>] [-t] 
+USAGE: $(basename $0) [-h] [-f] [-g] [-n] [-s <snapshot-file-path>] 
+                      [-t  <tode-snapshot-file-path>] 
                       [-p <tode-project-name> [-b <backup-name>]] 
                       <stone-name> <gemstone-version>
 
@@ -35,7 +36,7 @@ OPTIONS
      after the project is installed
   -f
      Force creation of new stone, by deleting 
-     \$GS_GS_SERVER/stones/<stone-name> directory if it exists
+     \$GS_SERVER/stones/<stone-name> directory if it exists
   -g 
      Do not install tODE in stone ... use initial extent unaltered
   -n
@@ -55,8 +56,8 @@ EXAMPLES
   $(basename $0) -g gs_329 3.2.9
   $(basename $0) gs_329 3.2.9
   $(basename $0) -f gs_329 3.2.9
-  $(basename $0) -g -s \$GS_GS_SERVER/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
-  $(basename $0) -t \$GS_GS_SERVER/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
+  $(basename $0) -g -s \$GS_SERVER/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
+  $(basename $0) -t \$GS_SERVER/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
 
 HELP
 }
@@ -89,26 +90,31 @@ while getopts "b:fghnp:s:t:" OPT ; do
     p) todeProjectName="${OPTARG}";;
     s) snapshotFileArg=" -s ${OPTARG} ";;
     t) snapshotFileArg=" -s ${OPTARG} "; installTode="false"; todeSnapshotArg=" -t ";;
-    *) usage; exit 1;;
+    *) echo "unknown option $OPT"; usage; exit 1;;
   esac
 done
 shift $(($OPTIND - 1))
 
 if [ $# -ne 2 ]; then
-  usage; exit 1
+  echo "incorrect number of args $# (2 expected)"; usage; exit 1
 fi
 stoneName="$1"
 vers="$2"
 
-if [ "${GS_GS_SERVER}x" = "x" ] ; then
+if [ "${GS_SERVER}x" = "x" ] ; then
   $GS_HOME/bin/private/clone_gs_server
   source ${GS_HOME}/bin/defGsDevKit.env
 fi
 
-if [ -d $GS_GS_SERVER_STONES/$stoneName ] ; then
+if [ "${GS_SYS_LOCAL}x" = "x" ] ; then
+  $GS_HOME/bin/private/clone_sys_local
+  source ${GS_HOME}/bin/defGsDevKit.env
+fi
+
+if [ -d $GS_SERVER_STONES/$stoneName ] ; then
   if [ "${force}x" = "x" ] ; then
     echo "stone $stoneName already exists. Use the -f option to force re-creation"
-    exit 0 
+    exit 1 
   else
     $GS_HOME/bin/deleteStone $stoneName
   fi
@@ -118,15 +124,7 @@ echo "Creating stone $stoneName"
 
 $GS_HOME/bin/downloadGemStone $vers
 
-if [ "$installTode" = "true" ] || [ "$todeSnapshotArg" = " -t " ] ; then
-  if [ "${GS_TODE}x" = "x" ] ; then
-    # clone tode module - needed if creating a tode stone
-    $GS_HOME/bin/private/cloneTode
-    source ${GS_HOME}/bin/defGsDevKit.env
-  fi
-fi
-
-${GS_HOME}/bin/private/gsDevKitCommandLine createStone $stoneName $vers
+${GS_HOME}/bin/devKitCommandLine createStone $stoneName $vers
 
 $GS_HOME/bin/newExtent $todeSnapshotArg $noRestartArg $snapshotFileArg $stoneName
 
@@ -135,7 +133,7 @@ if [ "${noRestartArg}x" = "x" ] ; then
 fi
 
 if [ "$installTode" = "true" ] ; then
-  $GS_GS_SERVER/bin/installTode $stoneName
+  $GS_SYS/bin/todeInstall $stoneName
 fi
 
 if [ "$todeProjectName" != "" ] ; then

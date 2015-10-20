@@ -6,7 +6,7 @@
 set -e  # exit on error
 
 # install server
-installServer travis $GS_VERSION
+installServerClient -c https travis $GS_VERSION
 
   # builtins
 performTodeCommand travis builtIns

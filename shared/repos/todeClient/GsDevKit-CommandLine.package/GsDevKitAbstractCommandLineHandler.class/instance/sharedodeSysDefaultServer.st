@@ -1,3 +1,3 @@
 accessing
 sharedodeSysDefaultServer
-	^ self sharedTodeSysDefault / 'server'
+	^ (Smalltalk os environment at: 'GS_SYS_DEFAULT_SERVER') asFileReference 

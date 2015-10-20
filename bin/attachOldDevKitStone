@@ -1,0 +1,101 @@
+#! /bin/bash
+#=========================================================================
+# Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#=========================================================================
+
+echo "================="
+echo "   GsDevKit script: $(basename $0) $*"
+echo "              path: $0"
+echo "================="
+
+usage() {
+  cat <<HELP
+USAGE: $(basename $0) [-h] [-t] [-o <old-stone-name] ( -d | -m ) <stone-name> <gemstone-version> <old-GS_HOME-path>
+
+Attach to a stone that was created using GsDevKit/gsDevKitHome. When you attach
+to a gsDevKitHome stone, a symbolic link is created from 
+\$GS_SERVER_STONES/<stone-name> to the original directory where your stone was
+created. Then the session description for the stone is copied into the 
+\$GS_SHARED_SESSIONS directory so that GsDevKit_home clients can connect to
+stone.
+
+All of the standard stone control scripts can be used against the stone.
+
+If the -t option is specified, the stone is assumed to have tODE installed and
+tODE directory structure (home and projects) is copied to \$GS_TODE/sys 
+directory structure.
+
+If the -m option is specified, then the stone was created using the "master 
+branch" of gsDevKitHome (v0.0.4 or earlier).
+
+If the -d option is specified, then the stone was created using the "dev branch"
+of gsDevKitHome (v0.1.0 or earlier). 
+
+You are using the "dev branch" if the directory \$GS_HOME does not exist.  You 
+are using the "master branch" if the directory \$GS_HOME/tode/home exists.
+
+OPTIONS
+  -h
+     display help
+
+EXAMPLES
+  $(basename $0) -h
+  $(basename $0) -d seaside 3.2.2   /export/foos1/users/dhenrich/gsDevKitHome
+  $(basename $0) -m gs_3106 3.1.0.6 /export/foos1/users/dhenrich/old_gsDevKitHome
+  $(basename $0) -o gs_3106 -m gso_3106 3.1.0.6 /export/foos1/users/dhenrich/old_gsDevKitHome
+
+HELP
+}
+
+PLATFORM="`uname -sm | tr ' ' '-'`"
+if [[ "$PLATFORM" == MINGW32_NT* ]] ; then
+  echo "This script is a server-only script and cannot be used on Windows"
+  exit 1
+fi
+
+set -e # exit on error
+if [ "${GS_HOME}x" = "x" ] ; then
+  echo "the GS_HOME environment variable needs to be defined"; exit 1
+fi
+source ${GS_HOME}/bin/defGsDevKit.env
+
+oldStoneName=""
+todeInstalledArg=""
+devKitHomeArg=""
+while getopts "hdmo:t" OPT ; do
+  case "$OPT" in
+    h) usage; exit 0;;
+    d) 
+      if [ "${devKitHomeArg}x" != "x" ] ; then
+        echo "only one of -d or -m may be specified"; usage; exit 1
+      fi
+      devKitHomeArg=" -d "
+      ;;
+    m) 
+      if [ "${devKitHomeArg}x" != "x" ] ; then
+        echo "only one of -d or -m may be specified"; usage; exit 1
+      fi
+      devKitHomeArg=" -m "
+      ;;
+    o) oldStoneName="${OPTARG}";;
+    t) todeInstalledArg=" -t ";;
+    *) echo "unknown option $OPT"; usage; exit 1;;
+  esac
+done
+shift $(($OPTIND - 1))
+
+if [ $# -ne 3 ]; then
+  echo "missing required args"; usage; exit 1
+fi
+stoneName=$1
+vers=$2
+oldGS_HOME=$3
+
+oldStoneArg=""
+if [ "${oldStoneName}x" != "x" ] ; then
+  oldStoneArg=" -o $oldStoneName "
+fi
+
+$GS_HOME/bin/private/attachStone $todeInstalledArg $oldStoneArg $devKitHomeArg $oldGS_HOME $stoneName $vers
+
+echo "...finished $(basename $0)"

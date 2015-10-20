@@ -1,0 +1,9 @@
+TDObjectGatewayNode{#name:'tode',#contents:'| repoSpec |
+repoSpec := GsFile _expandEnvVariable: \'GS_SHARED_REPO_TODE\' isClient: false.
+^TDProjectSpecEntryDefinition new
+  baseline: \'Tode\'
+    repository: repoSpec
+    loads: \'GemStone Dev\';
+  status: #(#\'inactive\');
+  locked: true;
+  yourself'}

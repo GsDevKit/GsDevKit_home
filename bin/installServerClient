@@ -1,0 +1,62 @@
+#! /bin/bash
+#=========================================================================
+# Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#=========================================================================
+
+echo "================="
+echo "   GsDevKit script: $(basename $0) $*"
+echo "              path: $0"
+echo "================="
+
+usage() {
+  cat <<HELP
+USAGE: $(basename $0) [-h] [-c https | ssh ]  [-o <organization-name>] <stone-name> <client-name> <gemstone-version>
+
+OPTIONS
+  -h
+     display help
+  -c https | ssh
+     clone using https (https://github.com) or ssh (git@github.com).
+     https is the default.
+  -o <organization-name>
+     use <organization-name> instead of GsDevKit. Use this option when
+     you've cloned the todeClient project
+
+EXAMPLES
+   $(basename $0) -h
+   $(basename $0) -c https gs_329 tode 3.2.9
+
+HELP
+}
+
+set -e # exit on error
+if [ "${GS_HOME}x" = "x" ] ; then
+  echo "the GS_HOME environment variable needs to be defined"; exit 1
+fi
+source ${GS_HOME}/bin/defGsDevKit.env
+
+modeArg=""
+organizationArg=""
+while getopts "hc:o:" OPT ; do
+  case "$OPT" in
+    h) usage; exit 0;;
+    c) modeArg=" -c ${OPTARG} ";;
+    o) organizationArg=" -o ${OPTARG} ";;
+    *) echo "unknown option: ${OPTARG}"; usage; exit 1;;
+  esac
+done
+shift $(($OPTIND - 1))
+
+if [ $# -ne 3 ]; then
+  echo "wrong number of arguments (3 expected)"; usage; exit 1
+fi
+stoneName=$1
+clientName=$2
+vers=$3
+$GS_HOME/bin/downloadGemStone $vers
+$GS_HOME/bin/utils/cloneGsDevKitProjects $modeArg $organizationArg both
+$GS_HOME/bin/utils/cloneSharedTodeProjects $modeArg both
+$GS_HOME/bin/createStone $stoneName $vers
+$GS_HOME/bin/createClient $clientName
+
+echo "...finished $(basename $0)"

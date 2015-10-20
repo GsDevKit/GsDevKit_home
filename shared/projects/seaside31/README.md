@@ -1,19 +1,30 @@
+---
+---
+---
+#UNDER CONSTRUCTION
+---
+---
+---
+
 # Seaside31 [![gs_master branch:](https://travis-ci.org/GsDevKit/Seaside31.png?branch=gs_master)](https://travis-ci.org/GsDevKit/Seaside31)
 The [GsDevKit Seaside31 project][3] is a fork of the [Seaside project][4].
 
 ##Installation
 
-###Batch Install
+###Bash Shell Install
+Create a stone and install Seaside31:
 
 ```
-$GS_HOME/projects/seaside31/bin/createSeasideStone seaside 3.2.4
+$GS_HOME/shared/projects/seaside31/bin/seasideCreateStone seaside 3.2.9
 ```
+
+Install Seaside31 into and existing stone:
 
 ```
 $GS_HOME/projects/seaside31/bin/installSeasideSton seaside
 ```
 
-###tODE Install
+###tODE Shell Install
 
 ```
 mount @/sys/stone/dirs/gsDevKitHome/projects/seaside31 /home seaside # mount the seaside directory in tODE

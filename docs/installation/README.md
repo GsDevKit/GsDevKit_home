@@ -98,7 +98,7 @@ You can connect using X-forwarding from a Linux desktop (that is, a Linux instal
  
 [1]: ./configOSForSingleNode.md#configure-linux-desktop-for-both-client-and-server
 [2]: ./configOSForSingleNode.md#configure-mac-for-client-and-server
-[3]: ./installDevKitServerClient.md
+[3]: ./installDevKitServerAndClient.md
 
 [4]: ./configOSForServerAndClient.md#configure-linux-server-for-server
 [5]: ./configOSForServerAndClient.md#configure-mac-for-server

@@ -34,9 +34,9 @@ OPTIONS
 
 EXAMPLES
   $(basename $0) -h
-  $(basename $0) -d \$GS_GS_SERVER_PHARO
-  $(basename $0) -v Pharo3.0 -d \$GS_GS_SERVER_PHARO
-  $(basename $0) -f -d \$GS_GS_SERVER_PHARO
+  $(basename $0) -d \$GS_SERVER_PHARO
+  $(basename $0) -v Pharo3.0 -d \$GS_SERVER_PHARO
+  $(basename $0) -f -d \$GS_SERVER_PHARO
 
 HELP
 }
@@ -89,22 +89,22 @@ case "$imageType" in
     case "$PLATFORM" in
       MINGW32_NT*)
         pharoCmd="win_run_pharo $directoryPath --headless"
-        gs_serverLoadPath=$GS_SHARED_TODE/sys/default/pharo/windows/gsDevKitCommandLineLoad.st
-        if [ -e "$GS_SHARED_TODE/sys/local/pharo/gsDevKitCommandLineLoad.st" ] ; then
-          gs_serverLoadPath=$GS_SHARED_TODE/sys/local/pharo/windows/gsDevKitCommandLineLoad.st
+        gs_serverLoadPath=$GS_SYS_DEFAULT/pharo/windows/gsDevKitCommandLineLoad.st
+        if [ -e "$GS_SYS_LOCAL/pharo/gsDevKitCommandLineLoad.st" ] ; then
+          gs_serverLoadPath=$GS_SYS_LOCAL/pharo/windows/gsDevKitCommandLineLoad.st
         fi
         ;;
       *)
-        gs_serverLoadPath=$GS_SHARED_TODE/sys/default/pharo/gsDevKitCommandLineLoad.st
-        if [ -e "$GS_SHARED_TODE/sys/local/pharo/gsDevKitCommandLineLoad.st" ] ; then
-          gs_serverLoadPath=$GS_SHARED_TODE/sys/local/pharo/gsDevKitCommandLineLoad.st
+        gs_serverLoadPath=$GS_SYS_DEFAULT/pharo/gsDevKitCommandLineLoad.st
+        if [ -e "$GS_SYS_LOCAL/pharo/gsDevKitCommandLineLoad.st" ] ; then
+          gs_serverLoadPath=$GS_SYS_LOCAL/pharo/gsDevKitCommandLineLoad.st
         fi
         ;;
     esac
   ;;
   gsDevKitTodeCommandLine)
     if [ ! -e "$directoryPath/gsDevKitCommandLine.image" ] ; then
-      $GS_GS_SERVER/bin/create_gs_server_image -d $directoryPath gsDevKitCommandLine
+      $GS_SERVER/bin/create_gs_server_image -d $directoryPath gsDevKitCommandLine
     fi
     initialImageName=gsDevKitCommandLine.image
     imageBaseName=gsDevKitTodeCommandLine
@@ -115,9 +115,9 @@ case "$imageType" in
         exit 1
         ;;
       *)
-        gs_serverLoadPath=$GS_SHARED_TODE/sys/default/pharo/gsDevKitTodeCommandLineLoad.st
-        if [ -e "$GS_SHARED_TODE/sys/local/pharo/gsDevKitTodeCommandLineLoad.st" ] ; then
-          gs_serverLoadPath=$GS_SHARED_TODE/sys/local/pharo/gsDevKitTodeCommandLineLoad.st
+        gs_serverLoadPath=$GS_SYS_DEFAULT/pharo/gsDevKitTodeCommandLineLoad.st
+        if [ -e "$GS_SYS_LOCAL/pharo/gsDevKitTodeCommandLineLoad.st" ] ; then
+          gs_serverLoadPath=$GS_SYS_LOCAL/pharo/gsDevKitTodeCommandLineLoad.st
         fi
         ;;
     esac

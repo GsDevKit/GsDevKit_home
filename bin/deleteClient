@@ -11,7 +11,7 @@ echo "================="
 usage() {
   cat <<HELP
 USAGE: $(basename $0) [-h] <client-name>...
-Delete the named client.
+Delete the named clients.
 
 OPTIONS
   -h 
@@ -32,7 +32,7 @@ if [ "${GS_HOME}x" = "x" ] ; then
   exit 1
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
-if [ "${GS_GS_CLIENT_DEV}x" = "x" ] ; then
+if [ "${GS_CLIENT_DEV}x" = "x" ] ; then
   echo "no clients installed"
   exit 0
 fi
@@ -46,8 +46,8 @@ fi
 
 for clientName in "$@"
 do
-  if [ -d "${GS_GS_CLIENT_DEV_CLIENTS}/$clientName/" ] ; then
-    deleteCmd="`${GS_GS_CLIENT_DEV_CLIENTS}/$clientName/deleteClient $clientName`"
+  if [ -d "${GS_CLIENT_DEV_CLIENTS}/$clientName/" ] ; then
+    deleteCmd="`${GS_CLIENT_DEV_CLIENTS}/$clientName/deleteClient $clientName`"
     $deleteCmd
   else
     echo "client $clientName does not exist"
