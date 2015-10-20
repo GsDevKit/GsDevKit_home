@@ -10,13 +10,15 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-b] [-C] [-N] [-R] [-w <waitstone-timeout>] <stone-name>
+USAGE: $(basename $0) [-h] [-b] [-C] [-N] [-R] [-r] [-w <waitstone-timeout>] <stone-name>
 
  Start the stone process for the given stone.
 
 OPTIONS
   -b
      Start netldi
+  -r 
+     Restart stone if running
   -C 
      Startup for conversion.
   -h 
@@ -47,7 +49,8 @@ set -e # exit on error
 waitTime=""
 ARG=""
 startnetldi=""
-while getopts "bhw:CNR" OPT ; do
+restart=""
+while getopts "bhrw:CNR" OPT ; do
   case "$OPT" in
     b) startnetldi="true" ;;
     C) 
@@ -72,6 +75,7 @@ while getopts "bhw:CNR" OPT ; do
       fi
       ARG="-R"
     ;;
+    r) restart="true" ;;
     w) waitTime="${OPTARG}" ;;
     *) usage; exit 1 ;;
   esac
@@ -98,20 +102,32 @@ if [ ! -d "$stonePath" ] ; then
   echo "The stone $stoneName does not exist"
   exit 1
 fi
+
 # set up stone environment
 pushd $stonePath $stonePath >& /dev/null
   source $stonePath/stone.env
 popd >& /dev/null
+
+if [ "${restart}x" = "x" ] ; then
+  set +e
+  $stonePath/product/bin/waitstone $stoneName  -1
+  status=$?
+  if [ $status -eq 0 ] ; then
+    echo "stone $stoneName already running, to restart use -r option"
+    exit 0
+  fi
+  set -e
+fi
 
 # start the stone
 $GS_HOME/bin/devKitCommandLine startstone $stoneName $ARG
 
 if [ "${waitTime}x" = "x" ] ; then
   if [ "${GS_TRAVIS}x" != "x" ] ; then
-    $stonePath/product/bin/waitstone $GEMSTONE_NAME 2
+    $stonePath/product/bin/waitstone $stoneName 2
   fi
 else
-  $stonePath/product/bin/waitstone $GEMSTONE_NAME $waitTime
+  $stonePath/product/bin/waitstone $stoneName $waitTime
 fi
 
 if [ "${startnetldi}" = "true" ] ; then
