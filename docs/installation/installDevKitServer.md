@@ -61,6 +61,7 @@ The following steps are involved in installing the GsDevKit server.  For an exam
    The install scripts invokes the following sub-scripts:
    ```
    downloadGemStone
+   cloneGsDevKitProjects 
    cloneSharedTodeProjects
    createStone
    ```
