@@ -43,7 +43,7 @@ The following steps are involved in installing the GsDevKit client. For an examp
    ```
    $GS_HOME/bin/installClient <myClientName> <myGemStoneVersion>
    ```
-   You may use any name for `<myClientName>`, and note that you may later have multiple clients. The examples below use  **tode** as the client name.
+   You may use any name for `<myClientName>`, and note that you may later have multiple clients. The examples below use  **tode1** as the client name.
 
    The install scripts invokes the following sub-scripts:
    ```
@@ -54,7 +54,7 @@ The following steps are involved in installing the GsDevKit client. For an examp
 
 ### Script to Install Client on Linux or Mac
 
-This script installs the GsDevKit client components and creates a client with the name **tode**.
+This script installs the GsDevKit client components and creates a client with the name **tode1**.
 
  ```
 cd <githubdirectory>
@@ -64,12 +64,12 @@ cd GsDevKit_home
 git checkout -b gsdevkit
 export GS_HOME=`pwd`
 export PATH=$GS_HOME/bin:$PATH
-$GS_HOME/bin/installClient -c https tode 3.2.9
+$GS_HOME/bin/installClient -c https tode1 3.2.9
  ```
 
 ### Script to Install Client on Windows
 
-This script installs the GsDevKit client components and creates a client with the name **tode**.
+This script installs the GsDevKit client components and creates a client with the name **tode1**.
 
 
  ```
@@ -80,10 +80,10 @@ git checkout -b gsdevkit
 export GS_HOME=`pwd`
 export PATH=$GS_HOME/bin:$PATH
 git config --global core.longpaths true   
-$GS_HOME/bin/installClient -c https tode 3.2.9
+$GS_HOME/bin/installClient -c https tode1 3.2.9
 
  ```
-You now have an instance of the tODE client installed on your client machine, with the name **tode** (if you used the sequence as entered here).  
+You now have an instance of the tODE client installed on your client machine, with the name **tode1** (if you used the sequence as entered here).  
 
 ## Determine port number for connection
 
@@ -157,19 +157,21 @@ Your shell is now ssh'ed into the server.  You will need to leave this shell con
 3.  Edit this file to specify [the server NetLDI port]{#determine-port-number-for-connection) in the line item for #netLDIPort :.  The lines in the file, for example:
  
 ```
-...
-	#netLDI : 'devKit_329_ldi',
-	#netLDIPort : '48334',
-...
+   ...
+   #gemHost : 'santiam.gemtalksystems.com',
+   #netLDI : 'devKit_329_ldi',
+   #netLDIPort : '48334',
+   #gemTask : 'gemnetobject',
+   ...
 ```
 
 4.  Start your client
 
    ```
-   startClient tode 
+   startClient tode1 
    ```
 
-5.  To confirm you are connected to your server, and for further details on using tode, see [Getting started with tODE][4]
+5.  To confirm you are connected to your server, and for further details on using tODE, see [Getting started with tODE][4]
 
 
 
