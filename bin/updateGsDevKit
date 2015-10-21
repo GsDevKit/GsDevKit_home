@@ -132,6 +132,9 @@ if [ "$updateGsDevKitClones" = "true" ]; then
       if [ "${patchName}x" != "x" ] ; then
 	echo "unknown patch: $patchName (should be issue7)"
 	exit 1
+      fi
+      echo "The directory $GS_HOME/local exists ----- you need to run a patch to fix Issue #7: see https://github.com/GsDevKit/GsDevKit_home/pull/9"
+      exit 1
     fi
   fi
   if [ -d "$GS_SYS_LOCAL" ] && [ "${patchName}x" = "x" ]; then
