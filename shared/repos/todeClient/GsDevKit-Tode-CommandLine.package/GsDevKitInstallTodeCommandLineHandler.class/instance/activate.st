@@ -8,7 +8,7 @@ activate
 			^ self exitFailure: 'Missing arguments' ].
 	self shouldNotBeForeignStone.
 	Author
-		useAuthor: 'gsDevKit'
+		useAuthor: self authorId
 		during: [ 
 			self installTode.
 			self installTode2 ].

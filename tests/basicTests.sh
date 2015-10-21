@@ -28,6 +28,7 @@ installServerClient -h
 newExtent -h
 products -h
 sessions -h
+setupGsDevKit -h
 startClient -h
 startNetldi -h
 startStatmonitor -h
@@ -62,6 +63,9 @@ todeUpdate ${STONENAME1}
 stopStone ${STONENAME1}
 stopNetldi ${STONENAME1}
 startStone ${STONENAME1}
+startStone ${STONENAME1}
+startStone -r ${STONENAME1}
+startStatmonitor ${STONENAME1}
 stopStone -b ${STONENAME1}
 
 status

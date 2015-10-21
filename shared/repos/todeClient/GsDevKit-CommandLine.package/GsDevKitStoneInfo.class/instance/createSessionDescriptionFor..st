@@ -18,7 +18,6 @@ createSessionDescriptionFor: aGsDevKitCreateStoneCommanLine
 		password: 'swordfish';
 		backupDirectory: aGsDevKitCreateStoneCommanLine backupsHome pathString;
 		snapshotDirectory: aGsDevKitCreateStoneCommanLine snapshotsHome pathString;
-		serverGitRoot: aGsDevKitCreateStoneCommanLine gitHome pathString;
 		serverTodeRoot: defaultServerTodeHome;
 		yourself.
 	self addFieldsToSessionDescription: description.

@@ -1,0 +1,43 @@
+#! /bin/bash
+#=========================================================================
+# Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#=========================================================================
+
+usage() {
+  cat <<HELP
+USAGE: $(basename $0) [-h] <stone-name> [--help] [--register=zinc|fastcgi|swazoo] [--port=<port-number>] \
+                      [--start] [--stop] [--restart]
+Register/start/stop/restart a webServer for Seaside.
+
+OPTIONS
+  -h show shell script usage
+  --help                         show webServer tODE script help
+  --register=zinc|fastcgi|swazoo choose type of webServer to register. swazoo is best choice for development.
+  --port=<port-number>           define http port
+  --start                        start the registered web server
+  --stop                         stop the registered web server
+  --restart                      restart the registered web server
+
+EXAMPLES
+  $(basename $0) -h
+  $(basename $0) seaside --register=swazoo --port=8585
+  $(basename $0) seaside --restart
+  $(basename $0) seaside --stop
+
+HELP
+}
+
+set -e # exit on error
+if [ "${GS_HOME}x" = "x" ] ; then
+  echo "the GS_HOME environment variable needs to be defined"; exit 1
+fi
+source ${GS_HOME}/bin/private/shFunctions
+
+getOpts_help $@ #parse standard (-h) options
+
+stoneName="$1"
+shift
+
+$GS_HOME/bin/devKitCommandLine todeIt $stoneName << EOF
+/home/seaside/webServer $*
+EOF

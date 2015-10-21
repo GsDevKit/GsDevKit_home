@@ -30,9 +30,9 @@ OPTIONS
      Skip creation of <target-stone-name> and only run the upgrade step.
 
 EXAMPLES
-  upgradeStone -h
-  upgradeStone -l /home/loadMyApplication gs_3106 gs_329 3.2.9
-  upgradeStone gs_3106 gs_329 3.2.9
+  $(basename $0) -h
+  $(basename $0) -l /home/loadMyApplication gs_3106 gs_329 3.2.9
+  $(basename $0) gs_3106 gs_329 3.2.9
 
 HELP
 }
