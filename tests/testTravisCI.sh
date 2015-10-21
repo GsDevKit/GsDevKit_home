@@ -37,6 +37,9 @@ $GS_HOME/bin/private/clone_sys_local -c https
 $GS_HOME/tests/travisCustomize.sh
 
 case $TEST in
+  Simple)
+    # createStone should work without having done an installServer ... also tests github:// builds
+    createStone ${STONENAME2} $GS_VERSION;;
   Basic)
     $GS_HOME/tests/basicInstallServer.sh
     source $GS_HOME/bin/defGsDevKit.env

@@ -6,7 +6,7 @@ Clients may be installed on **Linux**, **Mac** or **Windows**.
 
 ## Install Client
 
-The following steps are involved in installing the GsDevKit client. For an example script to execute, see [Install GsDevKit client on Linux or Mac](#script-to-install-client-on-linux-or-mac) or [Install GsDevKit client on Windows](#script-to-install-client-on-windows)
+The following steps are involved in installing the GsDevKit client. For an example script to execute, see [Install GsDevKit client on Linux or Mac](#example-script-to-install-client-on-linux-or-mac) or [Install GsDevKit client on Windows](#example-script-to-install-client-on-windows)
 
 1. Determine your installation directory and clone GsDevKit_home to that location
 
@@ -29,7 +29,7 @@ The following steps are involved in installing the GsDevKit client. For an examp
 
    The environment variable $GS_HOME and the updated $PATH are required to use DevKit, so you should add them to your `.bashrc` or another initialization script.
    ```
-   export GS_HOME=`pwd`
+   export GS_HOME=<githubdirectory>
    export PATH=$GS_HOME/bin:$PATH
    ```
 
@@ -43,7 +43,7 @@ The following steps are involved in installing the GsDevKit client. For an examp
    ```
    $GS_HOME/bin/installClient <myClientName> <myGemStoneVersion>
    ```
-   You may use any name for `<myClientName>`, and note that you may later have multiple clients. The examples below use  **tode** as the client name.
+   You may use any name for `<myClientName>`, and note that you may later have multiple clients. The examples below use  **tode1** as the client name.
 
    The install scripts invokes the following sub-scripts:
    ```
@@ -52,9 +52,9 @@ The following steps are involved in installing the GsDevKit client. For an examp
    createClient 
    ```
 
-### Script to Install Client on Linux or Mac
+### Example Script to Install Client on Linux or Mac
 
-This script installs the GsDevKit client components and creates a client with the name **tode**.
+This script installs the GsDevKit client components for v3.2.9, and creates a client with the name **tode1**.
 
  ```
 cd <githubdirectory>
@@ -64,26 +64,35 @@ cd GsDevKit_home
 git checkout -b gsdevkit
 export GS_HOME=`pwd`
 export PATH=$GS_HOME/bin:$PATH
-$GS_HOME/bin/installClient -c https tode 3.2.9
+$GS_HOME/bin/installClient -c https tode1 3.2.9
  ```
 
-### Script to Install Client on Windows
+### Example Script to Install Client on Windows
 
-This script installs the GsDevKit client components and creates a client with the name **tode**.
-
+This script installs the GsDevKit client components for v.3.2.9, and creates a client with the name **tode1**.
 
  ```
 cd ~
 git clone https://github.com/GsDevKit/GsDevKit_home.git
-cd gsDevKit_home
+cd GsDevKit_home
 git checkout -b gsdevkit
 export GS_HOME=`pwd`
 export PATH=$GS_HOME/bin:$PATH
-git config --global core.longpaths true   
-$GS_HOME/bin/installClient -c https tode 3.2.9
+$GS_HOME/bin/installClient -c https tode1 3.2.9
 
  ```
-You now have an instance of the tODE client installed on your client machine, with the name **tode** (if you used the sequence as entered here).  
+
+When the install script completes, it will report lines similar to:
+```
+...finished installGci
+...finished scanProductsForInstallingGciLibs
+...finished createPharoTodeClient
+...finished createClient
+...finished createClient
+...finished installClient
+```
+
+You now have an instance of the tODE client installed on your client machine, with the name **tode1** (if you used the sequence as entered here); and you have the GemStone server components for v3.2.9.
 
 ## Determine port number for connection
 
@@ -115,12 +124,23 @@ Running Netldis:
 ```
 The value in the Port column for the NetLDI, in this case 48334, is the required value.
 
-To setup SSH port forwarding, 
+#### Setup SSH port forwarding
+
+To setup SSH port forwarding, you will connect the local port to the port on the remote server, using the -L argument to ssh; `-L <localPort>:<hostNameOrIP>:<remotePort>`. 
+
+We are using the same port number on the client and server. In GemStone/S 64 Bit v3.2 and later, you only need to connect a single port, which can be used for multiple socket connections.
 
 ```
-ssh -L 44834:hostNameOrIp user@example.com
+ssh <remoteUserId>@<remoteHost> -L <localPort>:<localhost>:<remotePort>
 ```
+for example, if the server (stone) is running on a machine with the IP address 192.168.100.129, and the user name on the server is lalmarod, you could use:
 
+```
+ssh lalmarod@192.168.100.129 -L 44834:localHost:44834 
+```
+If you do not have passwordless ssh setup, you will be prompted for your password.
+
+Your shell is now ssh'ed into the server.  You will need to leave this shell connected in order to maintain the ssh port tunnel, so open another shell to start up the client.
 
 ## Client Setup
 
@@ -143,22 +163,24 @@ ssh -L 44834:hostNameOrIp user@example.com
 
    to the same path on the client node.
 
-3.  Edit this file to specify [the server NetLDI port]{#determine-port-number-for-connection) in the line item for #netLDIPort :.  The lines in the file, for example:
+3.  Edit this file to specify [the server NetLDI port](#determine-port-number-for-connection) in the line item for #netLDIPort :.  The lines in the file, for example:
  
 ```
-...
-	#netLDI : 'devKit_329_ldi',
-	#netLDIPort : '48334',
-...
+   ...
+   #gemHost : 'santiam.gemtalksystems.com',
+   #netLDI : 'devKit_329_ldi',
+   #netLDIPort : '48334',
+   #gemTask : 'gemnetobject',
+   ...
 ```
 
 4.  Start your client
 
    ```
-   startClient tode 
+   startClient tode1 
    ```
 
-5.  To confirm you are connected to your server, and for further details on using tode, see [Getting started with tODE][4]
+5.  To confirm you are connected to your server, and for further details on using tODE, see [Getting started with tODE][4]
 
 
 
