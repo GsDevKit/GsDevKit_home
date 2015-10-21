@@ -118,8 +118,14 @@ if [ "$updateGsDevKitClones" = "true" ]; then
   if [ -d "$GS_CLIENT_DEV" ]; then
     $GS_CLIENT_DEV/bin/updateGsDevKit
   fi
-  if [ -d "$GS_SYS_LOCAL" ]; then
-    updateClone $GSDEVKIT_SYS_LOCAL_GIT_CHECKOUT $GSDEVKIT_SYS_LOCAL_GIT_REMOTE "$GS_SYS_LOCAL"
+  if [ -d "$GS_HOME/local" ] ; then
+    # patch https://github.com/GsDevKit/GsDevKit_home/issues/7
+    updateClone $GSDEVKIT_SYS_LOCAL_GIT_CHECKOUT $GSDEVKIT_SYS_LOCAL_GIT_REMOTE "$GS_HOME/local"
+    $GS_HOME/bin/patches/patchIssue7
+  else
+    if [ -d "$GS_SYS_LOCAL" ]; then
+      updateClone $GSDEVKIT_SYS_LOCAL_GIT_CHECKOUT $GSDEVKIT_SYS_LOCAL_GIT_REMOTE "$GS_SYS_LOCAL"
+    fi
   fi
 fi
 

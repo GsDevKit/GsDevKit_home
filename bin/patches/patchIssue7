@@ -37,9 +37,10 @@ if [ $# -ne 0 ]; then
   usage; exit 1
 fi
 
-pushd >& /dev/null
-  cd $GS_SYS
+pushd $GS_HOME >& /dev/null
+ 
 popd >& /dev/null
+exit 1
 
 
 echo "...finished $(basename $0)"
