@@ -59,12 +59,11 @@ The installation of GitHub on windows provides a shell environment that can be u
 
 4. On Windows, which has [path length limitations][3], tODE client file paths risk running up against the character limits.  To avoid issues, enable longpaths in git, and reduce overhead by choosing an installation directory with a short path. 
   
-   execute the following:
+   In your git shell, execute the following:
    ```
    git config --global core.longpaths true   
    ```
 
-	
 	
 [1]: ./README.md
 [2]: ./README.md#installation_on_separate_server_and_client

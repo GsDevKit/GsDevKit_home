@@ -13,7 +13,7 @@ The GsDevKit_home project is current in **EARLY ACCESS** mode. If you are alread
 1. *Everything on a single workstation*
 2. *Client on a local workstation, Server on a remote host*
 
-Please read the [Installation Overview][2] for installation options and instructions.
+You will need to ensure that your operating system is configured with the required packages before installing.  Please read the [Installation Overview][2] for installation options and instructions.
 
 ##FAQs
 1. [If I am already using gsDevKitHome, why should I consider moving to GsDevKit_home?][3]
