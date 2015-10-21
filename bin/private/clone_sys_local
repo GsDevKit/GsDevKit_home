@@ -55,6 +55,7 @@ pushd ${GS_HOME} >& /dev/null
   if [ ! -d "$cloneHome" ] ; then
     ${GS_HOME}/bin/private/cloneGitHubProject $modeArg $organization GsDevKit_sys_local $cloneHome
     cd local
+    git checkout v0.0.1  # tag that pre-dates bugfix for https://github.com/GsDevKit/GsDevKit_home/issues/7
     git checkout -b gsdevkit
     cd ..
     pushd sys >& /dev/null
