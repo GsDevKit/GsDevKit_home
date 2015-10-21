@@ -125,8 +125,13 @@ if [ "$updateGsDevKitClones" = "true" ]; then
   if [ -d "$GS_HOME/local" ] ; then
     if [ "$patchName" = "issue7" ] ; then
       # patch https://github.com/GsDevKit/GsDevKit_home/issues/7
+      echo "PATCHING: https://github.com/GsDevKit/GsDevKit_home/issues/7"
       updateClone $GSDEVKIT_SYS_LOCAL_GIT_CHECKOUT $GSDEVKIT_SYS_LOCAL_GIT_REMOTE "$GS_HOME/local"
       $GS_HOME/bin/patches/patchIssue7
+    else
+      if [ "${patchName}x" != "x" ] ; then
+	echo "unknown patch: $patchName (should be issue7)"
+	exit 1
     fi
   fi
   if [ -d "$GS_SYS_LOCAL" ] && [ "${patchName}x" = "x" ]; then
