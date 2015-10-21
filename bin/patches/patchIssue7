@@ -38,9 +38,18 @@ if [ $# -ne 0 ]; then
 fi
 
 pushd $GS_HOME >& /dev/null
- 
+  rm $GS_SYS_LOCAL
+  mv $GS_HOME/local $GS_SYS
+  pushd $GS_SYS_LOCAL/local >& /dev/null
+    for file in $(find . -type f) 
+     do
+       dir=$(dirname "$file")
+       echo "$file ../$dir"
+       mkdir -p "../$dir"
+       cp "$file" "../$dir"
+     done
+  popd >& /dev/null
+  rm -rf $GS_SYS_LOCAL/local
 popd >& /dev/null
-exit 1
-
 
 echo "...finished $(basename $0)"
