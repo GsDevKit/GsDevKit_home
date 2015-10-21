@@ -118,9 +118,9 @@ if [ "$updateGsDevKitClones" = "true" ]; then
   if [ -d "$GS_CLIENT_DEV" ]; then
     $GS_CLIENT_DEV/bin/updateGsDevKit
   fi
-  if [ -d "$GS_HOME/local" ]; then
-    updateClone $GSDEVKIT_SYS_LOCAL_GIT_CHECKOUT $GSDEVKIT_SYS_LOCAL_GIT_REMOTE "$GS_HOME/local"
-  fi
+#  if [ -d "$GS_HOME/local" ]; then
+#    updateClone $GSDEVKIT_SYS_LOCAL_GIT_CHECKOUT $GSDEVKIT_SYS_LOCAL_GIT_REMOTE "$GS_HOME/local"
+#  fi
 fi
 
 if [ "$updateTodeClone" = "true" ]; then
