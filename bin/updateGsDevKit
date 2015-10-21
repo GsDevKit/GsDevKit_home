@@ -64,7 +64,7 @@ todeArg=""
 imageArg=""
 default="true"
 patchName=""
-while getopts "hgti" OPT ; do
+while getopts "hgtip:" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     i) imageArg="true";;
