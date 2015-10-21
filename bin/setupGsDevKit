@@ -24,7 +24,7 @@ OPTIONS
 
 EXAMPLES
    $(basename $0) -h
-   $(basename $0) -c ssh gs_329 3.2.9
+   $(basename $0) -c ssh server 3.2.9
 
 HELP
 }
