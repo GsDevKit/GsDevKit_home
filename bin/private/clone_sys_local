@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/bash -x
 #=========================================================================
 # Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
 #=========================================================================
@@ -61,9 +61,7 @@ pushd ${GS_HOME}/sys >& /dev/null
     git checkout -b gsdevkit
     cd ..
     if [[ "$PLATFORM" !=  MINGW32_NT* ]] ; then
-      pushd sys >& /dev/null
-        ln -s local/server/stones .
-      popd >& /dev/null
+      ln -s local/server/stones .
     fi
   fi
 popd >& /dev/null
