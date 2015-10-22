@@ -85,7 +85,7 @@ while getopts "hns:t" OPT ; do
     n) noRestart="true";;
     s) snapshotFile=`realpath ${OPTARG}` ;; 
     t) attachTode="true";;
-    *) echo "unknown option: ${OPTARG}"; usage; exit 1;;
+    *) usage; exit 1;;
   esac
 done
 shift $(($OPTIND - 1))

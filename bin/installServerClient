@@ -42,7 +42,7 @@ while getopts "hc:o:" OPT ; do
     h) usage; exit 0;;
     c) modeArg=" -c ${OPTARG} ";;
     o) organizationArg=" -o ${OPTARG} ";;
-    *) echo "unknown option: ${OPTARG}"; usage; exit 1;;
+    *) usage; exit 1;;
   esac
 done
 shift $(($OPTIND - 1))

@@ -72,7 +72,7 @@ while getopts "fht:F" OPT ; do
     f) forceArg=" -f " ;;
     F) deleteClientDir="true" ;;
     t) clientType="${OPTARG}" ;;
-    *) echo "unknown option $OPT"; usage; exit 1;;
+    *) usage; exit 1;;
   esac
 done
 shift $(($OPTIND - 1))
