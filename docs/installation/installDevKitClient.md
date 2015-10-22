@@ -163,16 +163,17 @@ Your shell is now ssh'ed into the server.  You will need to leave this shell con
 
    to the same path on the client node.
 
-3.  Edit this file to specify [the server NetLDI port](#determine-port-number-for-connection) in the line item for #netLDIPort :.  The lines in the file, for example:
+3.  Edit this file to specify [the server NetLDI port](#determine-port-number-for-connection), and the gemHost localHost.  The line item #netLDIPort : should be set to the port, and the line item #gemHost set to localHost or 127.0.0.1.  The lines in this file may read, for example:
  
 ```
    ...
-   #gemHost : 'santiam.gemtalksystems.com',
+   #gemHost : 'localHost',
    #netLDI : 'devKit_329_ldi',
    #netLDIPort : '48334',
    #gemTask : 'gemnetobject',
    ...
 ```
+While your Gem will actually be hosted on the remote server, by using ssh tunnelling you have setup such that it appears to your client that the NetLDI is on the local machine at the given port; and this port is inherited by the Gem, so the Gem also appears (from the point of view of the client) to be on the local machine at the given port. By opening up this port in your firewall, your tODE client can fully communicate with the remote Gem. 
 
 4.  Start your client
 
