@@ -1,2 +1,2 @@
 TDTopezLeafNode{#name:'upgradeSeaside',#contents:'#called from seasideUpgrade script
-project upgrade --script=/home/seaside/installSeaside',#creationTime:DateAndTime['2015-10-20T15:28:55.5617671012878-07:00'],#modificationTime:DateAndTime['2015-10-20T16:16:49.9115369319915-07:00']}
+project upgrade --install=/home/seaside/installSeaside',#creationTime:DateAndTime['2015-10-20T15:28:55.5617671012878-07:00'],#modificationTime:DateAndTime['2015-10-20T16:16:49.9115369319915-07:00']}
