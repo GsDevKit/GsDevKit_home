@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/bash -x
 #=========================================================================
 # Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
 #=========================================================================
@@ -10,16 +10,17 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] <stone-name>
-Update Seaside31 in the given stone by executing \`/home/seaside/updateSeaside\` tODE script. 
+USAGE: $(basename $0) [-h]
+Patch \$GS_HOME/sys directory structure after update across bugfix for
+https://github.com/GsDevKit/GsDevKit_home/issues/7
 
 OPTIONS
   -h display help
 
 EXAMPLES
   $(basename $0) -h
-  $(basename $0) gs_329
-"
+  $(basename $0)
+
 HELP
 }
 
@@ -32,17 +33,23 @@ source ${GS_HOME}/bin/defGsDevKit.env
 source ${GS_HOME}/bin/private/shFunctions
 getOpts_help $@
 
-if [ $# -lt 1 ]; then
-  echo "missing required argument"; usage; exit 1
+if [ $# -ne 0 ]; then
+  usage; exit 1
 fi
-stoneName=$1
 
-$GS_HOME/bin/startStone -b $stoneName
-
-echo "Update Seaside31 on stone: $stoneName"
-
-$GS_HOME/bin/devKitCommandLine todeIt $stoneName << EOF
-/home/seaside/updateSeaside
-EOF
+pushd $GS_HOME >& /dev/null
+  rm $GS_SYS_LOCAL
+  mv $GS_HOME/local $GS_SYS
+  pushd $GS_SYS_LOCAL/local >& /dev/null
+    for file in $(find . -type f) 
+     do
+       dir=$(dirname "$file")
+       echo "$file ../$dir"
+       mkdir -p "../$dir"
+       cp "$file" "../$dir"
+     done
+  popd >& /dev/null
+  rm -rf $GS_SYS_LOCAL/local
+popd >& /dev/null
 
 echo "...finished $(basename $0)"

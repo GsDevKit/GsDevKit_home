@@ -1,7 +1,3 @@
 #no backups on travis - https://github.com/dalehenrich/tode/issues/226
-# bu backup --safely pre-rebuild.dbf   # make a backup of repository prior to rebuild (don't override existing backup)
-bu snapshot --safely pre-rebuild.dbf   # make a snapshot of repository prior to rebuild (don't override existing snapshot)
-script --script=rebuildSys             # rebuild the in-image tODE /sys structure
-commit
-# bu backup tode.dbf                   # backup of newly rebuilt /sys structure
-bu snapshot tode.dbf                   # make a snapshot of newly rebuilt /sys structure
+script --script=rebuildSys    # rebuild the in-image tODE /sys structure
+bu snapshot --commit tode.dbf # make a snapshot of newly rebuilt /sys structure

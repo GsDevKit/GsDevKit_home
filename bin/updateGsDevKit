@@ -10,7 +10,7 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-g] [-t] [-i]
+USAGE: $(basename $0) [-h] [-g] [-t] [-i] [-p <patch-name>]
 
 With the -g option, update the GsDevKit_home components:
   update clones (if present):
@@ -37,6 +37,8 @@ OPTIONS
      Update GsDevKit_home components
   -i
      Update the image for the listed components
+  -p <patch-name>
+     update should include patch for given <patch-name>
   -t
      Update tODE components
 
@@ -61,11 +63,13 @@ gsDevKitArg=""
 todeArg=""
 imageArg=""
 default="true"
-while getopts "hgti" OPT ; do
+patchName=""
+while getopts "hgtip:" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     i) imageArg="true";;
     g) gsDevKitArg="true"; default="false";;
+    p) patchName="${OPTARG}";;
     t) todeArg="true"; default="false";;
     *) echo "unknown option $OPT"; usage; exit 1;;
   esac
@@ -118,8 +122,23 @@ if [ "$updateGsDevKitClones" = "true" ]; then
   if [ -d "$GS_CLIENT_DEV" ]; then
     $GS_CLIENT_DEV/bin/updateGsDevKit
   fi
-  if [ -d "$GS_HOME/local" ]; then
-    updateClone $GSDEVKIT_SYS_LOCAL_GIT_CHECKOUT $GSDEVKIT_SYS_LOCAL_GIT_REMOTE "$GS_HOME/local"
+  if [ -d "$GS_HOME/local" ] ; then
+    if [ "$patchName" = "issue7" ] ; then
+      # patch https://github.com/GsDevKit/GsDevKit_home/issues/7
+      echo "PATCHING: https://github.com/GsDevKit/GsDevKit_home/issues/7"
+      updateClone $GSDEVKIT_SYS_LOCAL_GIT_CHECKOUT $GSDEVKIT_SYS_LOCAL_GIT_REMOTE "$GS_HOME/local"
+      $GS_HOME/bin/patches/patchIssue7
+    else
+      if [ "${patchName}x" != "x" ] ; then
+	echo "unknown patch: $patchName (should be issue7)"
+	exit 1
+      fi
+      echo "The directory $GS_HOME/local exists ----- you need to run a patch to fix Issue #7: see https://github.com/GsDevKit/GsDevKit_home/pull/9"
+      exit 1
+    fi
+  fi
+  if [ -d "$GS_SYS_LOCAL" ] && [ "${patchName}x" = "x" ]; then
+    updateClone $GSDEVKIT_SYS_LOCAL_GIT_CHECKOUT $GSDEVKIT_SYS_LOCAL_GIT_REMOTE "$GS_SYS_LOCAL"
   fi
 fi
 

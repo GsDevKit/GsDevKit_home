@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/bash -x
 #=========================================================================
 # Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
 #=========================================================================
@@ -50,17 +50,19 @@ while getopts "hc:o:" OPT ; do
 done
 shift $(($OPTIND - 1))
 
-pushd ${GS_HOME} >& /dev/null
+# Detect operating system
+PLATFORM="`uname -sm | tr ' ' '-'`"
+
+pushd ${GS_HOME}/sys >& /dev/null
   cloneHome="local"
   if [ ! -d "$cloneHome" ] ; then
     ${GS_HOME}/bin/private/cloneGitHubProject $modeArg $organization GsDevKit_sys_local $cloneHome
     cd local
     git checkout -b gsdevkit
     cd ..
-    pushd sys >& /dev/null
-      ln -s ../local/local .
+    if [[ "$PLATFORM" !=  MINGW32_NT* ]] ; then
       ln -s local/server/stones .
-    popd >& /dev/null
+    fi
   fi
 popd >& /dev/null
 

@@ -1,4 +1,3 @@
-script --script=setUpSys # set up the in-image tODE /sys structure
-commit
-bu backup tode.dbf       # backup of initial tODE install with /sys structures in place
-bu snapshot tode.dbf     # make a snapshot of initial tODE install with /sys structures in place
+script --script=setUpSys      # set up the in-image tODE /sys structure
+bu backup --commit tode.dbf   # backup of initial tODE install with /sys structures in place
+bu snapshot --commit tode.dbf # make a snapshot of initial tODE install with /sys structures in place

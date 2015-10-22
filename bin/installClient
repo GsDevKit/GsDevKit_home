@@ -20,7 +20,7 @@ OPTIONS
      https is the default.
   -o <organization-name>
      use <organization-name> instead of GsDevKit. Use this option when
-     you've cloned the todeClient project
+     you've forked the other GsDevKit_* projects.
 
 EXAMPLES
    $(basename $0) -h
@@ -52,9 +52,7 @@ if [ $# -ne 2 ]; then
 fi
 clientName=$1
 vers=$2
-$GS_HOME/bin/downloadGemStone $vers
-$GS_HOME/bin/utils/cloneGsDevKitProjects $modeArg $organizationArg client
-$GS_HOME/bin/utils/cloneSharedTodeProjects $modeArg client
+$GS_HOME/bin/setupGsDevKit $modeArg $organizationArg client $vers
 $GS_HOME/bin/createClient $clientName
 
 echo "...finished $(basename $0)"
