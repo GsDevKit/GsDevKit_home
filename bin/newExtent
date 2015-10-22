@@ -52,8 +52,8 @@ OPTIONS
 EXAMPLES
   $(basename $0) -h
   $(basename $0) gs_329
-  $(basename $0) -s \$GS_HOME/gs_server/snapshots/extent0.tode.3.2.9.dbf gs_329
-  $(basename $0) -t -s \$GS_HOME/gs_server/snapshots/extent0.tode.3.2.9.dbf gs_329
+  $(basename $0) -s \$GS_HOME/server/snapshots/extent0.tode.3.2.9.dbf gs_329
+  $(basename $0) -t -s \$GS_HOME/server/snapshots/extent0.tode.3.2.9.dbf gs_329
 
 HELP
 }
