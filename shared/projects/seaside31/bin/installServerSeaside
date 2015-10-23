@@ -42,13 +42,13 @@ source ${GS_HOME}/bin/defGsDevKit.env
 
 modeArg=""
 organizationArg=""
-zincHttpcPort=""
+zincHttpPort=""
 while getopts "hc:o:z:" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     c) modeArg=" -c ${OPTARG} ";;
     o) organizationArg=" -o ${OPTARG} ";;
-    z) zincHttpcPort="${OPTARG}";;
+    z) zincHttpPort="${OPTARG}";;
     *) echo "unknown option: ${OPTARG}"; usage; exit 1;;
   esac
 done
@@ -62,8 +62,8 @@ vers=$2
 $GS_HOME/bin/setupGsDevKit $modeArg $organizationArg server $vers
 $GS_HOME/shared/projects/seaside31/bin/seasideCreateStone $stoneName $vers
 
-if [ "${zincHttpcPort}x" != "x" ] ; then
-  $GS_HOME/shared/projects/seaside31/bin/seasideWebServer $stoneName --register=zinc --port=$zincHttpcPort
+if [ "${zincHttpPort}x" != "x" ] ; then
+  $GS_HOME/shared/projects/seaside31/bin/seasideWebServer $stoneName --register=zinc --port=$zincHttpPort
 fi
 
 echo "...finished $(basename $0)"

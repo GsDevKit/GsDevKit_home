@@ -46,7 +46,7 @@ while getopts "hi" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     i) interactiveArg=" -i ";;
-    *) echo "unknown option: $OPT"; usage; exit 1;;
+    *) usage; exit 1;;
   esac
 done
 shift $(($OPTIND - 1))

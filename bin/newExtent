@@ -52,8 +52,8 @@ OPTIONS
 EXAMPLES
   $(basename $0) -h
   $(basename $0) gs_329
-  $(basename $0) -s \$GS_HOME/gs_server/snapshots/extent0.tode.3.2.9.dbf gs_329
-  $(basename $0) -t -s \$GS_HOME/gs_server/snapshots/extent0.tode.3.2.9.dbf gs_329
+  $(basename $0) -s \$GS_HOME/server/snapshots/extent0.tode.3.2.9.dbf gs_329
+  $(basename $0) -t -s \$GS_HOME/server/snapshots/extent0.tode.3.2.9.dbf gs_329
 
 HELP
 }
@@ -85,7 +85,7 @@ while getopts "hns:t" OPT ; do
     n) noRestart="true";;
     s) snapshotFile=`realpath ${OPTARG}` ;; 
     t) attachTode="true";;
-    *) echo "unknown option: ${OPTARG}"; usage; exit 1;;
+    *) usage; exit 1;;
   esac
 done
 shift $(($OPTIND - 1))

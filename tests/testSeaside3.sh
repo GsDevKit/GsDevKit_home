@@ -17,10 +17,7 @@ seasideWebServer -h
 installServerSeaside -c https -z 8383 seaside $GS_VERSION
 
 # Run Seaside unit tests
-devKitCommandLine todeIt seaside << EOF
-test --batch project Seaside3
-eval \`self hasPassed ifFalse: [ System logout ].\`
-EOF
+seasideTest seaside
 
 seasideUpdate seaside 
 

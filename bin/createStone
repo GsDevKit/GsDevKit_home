@@ -56,8 +56,8 @@ EXAMPLES
   $(basename $0) -g gs_329 3.2.9
   $(basename $0) gs_329 3.2.9
   $(basename $0) -f gs_329 3.2.9
-  $(basename $0) -g -s \$GS_SERVER/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
-  $(basename $0) -t \$GS_SERVER/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
+  $(basename $0) -g -s \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
+  $(basename $0) -t \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
 
 HELP
 }
@@ -90,7 +90,7 @@ while getopts "b:fghnp:s:t:" OPT ; do
     p) todeProjectName="${OPTARG}";;
     s) snapshotFileArg=" -s ${OPTARG} ";;
     t) snapshotFileArg=" -s ${OPTARG} "; installTode="false"; todeSnapshotArg=" -t ";;
-    *) echo "unknown option $OPT"; usage; exit 1;;
+    *) usage; exit 1;;
   esac
 done
 shift $(($OPTIND - 1))
