@@ -16,16 +16,10 @@ startClient tode1
 
 Note that the script `clients` will list all installed clients.
 
-The image looks like this:
-
-![tode image][2]
+the tODE image will come up.  To get started using tODE, you'll open the tODE shell using the popup menu, and select the stone you will be using.  In this example, it's `devKit_329`.
 
 
-###Open a tODE shell
-
-Once a tode client image is open, use the following menu to open a tODE shell:  
-   
-![open tode shell][1]
+![open tode shell][2]
 
 ### Verify your connection to the server
 
