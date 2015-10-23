@@ -71,7 +71,7 @@ while getopts "hgtip:" OPT ; do
     g) gsDevKitArg="true"; default="false";;
     p) patchName="${OPTARG}";;
     t) todeArg="true"; default="false";;
-    *) echo "unknown option $OPT"; usage; exit 1;;
+    *) usage; exit 1;;
   esac
 done
 shift $(($OPTIND - 1))

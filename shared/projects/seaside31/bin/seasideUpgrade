@@ -10,7 +10,7 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-l <post-load-tode-script> ] \
+USAGE: $(basename $0) [-h] [-f] [-l <post-load-tode-script> ] \
 	              <source-seaside-stone-name> \
 		      <target-seaside-stone-name> <gemstone-version>
 
@@ -19,6 +19,9 @@ version <gemstone-version> in a new stone named <target-seaside-stone-name>.
 
 OPTIONS
   -h display help
+  -f
+     Force creation of new stone by deleting 
+     \$GS_HOME/gemstone/stone/<target-stone-name> directory if it exists
   -l <post-load-tode-script>
      tODE path to the tODE script that loads your Seaside application code
 
@@ -36,11 +39,13 @@ if [ "${GS_HOME}x" = "x" ] ; then
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
-while getopts "hl:" OPT ; do
+forceArg=""
+while getopts "hfl:" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
+    f) forceArg="-f";;
     l) postUpgradeLoadScriptPath="${OPTARG}";;
-    *) echo "unknown option $OPT"; usage; exit 1;;
+    *) usage; exit 1;;
   esac
 done
 shift $(($OPTIND - 1))
@@ -53,7 +58,9 @@ sourceStoneName="$1"
 targetStoneName="$2"
 gsvers="$3"
 
-$GS_HOME/bin/upgradeStone $sourceStoneName $targetStoneName $gsvers
+$GS_HOME/bin/upgradeStone $forceArg $sourceStoneName $targetStoneName $gsvers << EOF
+
+EOF
 
 $GS_HOME/bin/private/gsDevKitTodeCommandLine todeIt $targetStoneName << EOF
 /home/seaside/upgradeSeaside
