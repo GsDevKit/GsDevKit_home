@@ -29,6 +29,9 @@ TBD
   sudo apt-get -y install gcc-multilib libstdc++6:i386
 
   sudo ln -f -s /usr/lib/i386-lin-gnu/libstdc++.so.6 /usr/lib/i386-linux-gnu/libstdc++.so 
+
+  sudo apt-get -y install libgl1-mesa-dev:i386
+  sudo apt-get -y install libxcb-dri2-0:i386 
 ```
 
 ---

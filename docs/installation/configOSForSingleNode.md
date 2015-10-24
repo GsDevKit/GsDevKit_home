@@ -31,6 +31,9 @@ The instructions are provided [Installation on a single desktop][2]
   sudo /bin/su -c "echo 'kernel.yama.ptrace_scope = 0' >>/etc/sysctl.d/10-ptrace.conf"
 
   sudo ln -f -s /usr/lib/i386-lin-gnu/libstdc++.so.6 /usr/lib/i386-linux-gnu/libstdc++.so 
+
+  sudo apt-get -y install libgl1-mesa-dev:i386
+  sudo apt-get -y install libxcb-dri2-0:i386 
 ```
 
 ---
