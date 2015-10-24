@@ -10,7 +10,7 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-g] [-t] [-i] [-p <patch-name>]
+USAGE: $(basename $0) [-h] [-g] [-t] [-i] [-s] [-p <patch-name>]
 
 With the -g option, update the GsDevKit_home components:
   update clones (if present):
@@ -40,13 +40,25 @@ OPTIONS
   -p <patch-name>
      update should include patch for given <patch-name>
   -t
-     Update tODE components
+     Update tode project clone and tODE components
+  -s
+     Update the shared tODE project clones:
+       filetree
+       glass
+       Grease
+       metacello-work
+       PharoCompatibility
+       rb
+       ston
+       tode
 
 EXAMPLES
   $(basename $0) -h
   $(basename $0) -g 
+  $(basename $0) -s
   $(basename $0) -t
   $(basename $0) -g -t -i
+  $(basename $0) -g -t -i -s
   $(basename $0) 
 
 HELP
@@ -64,12 +76,14 @@ todeArg=""
 imageArg=""
 default="true"
 patchName=""
-while getopts "hgtip:" OPT ; do
+updateSharedClones="false"
+while getopts "hgtip:s" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     i) imageArg="true";;
     g) gsDevKitArg="true"; default="false";;
     p) patchName="${OPTARG}";;
+    s) updateSharedClones="true";;
     t) todeArg="true"; default="false";;
     *) usage; exit 1;;
   esac
@@ -142,9 +156,13 @@ if [ "$updateGsDevKitClones" = "true" ]; then
   fi
 fi
 
-if [ "$updateTodeClone" = "true" ]; then
-  if [ -d "${GS_SHARED_REPO}/tode" ] ; then
-    updateClone $GS_SHARED_GIT_CHECKOUT_TODE $GS_SHARED_GIT_REMOTE_TODE ${GS_SHARED_REPO}/tode
+if [ "$updateSharedClones" = "true" ] ; then
+  $GS_HOME/bin/utils/updateSharedTodeProjectsClone both
+else
+  if [ "$updateTodeClone" = "true" ]; then
+    if [ -d "${GS_SHARED_REPO}/tode" ] ; then
+      updateClone $GS_SHARED_GIT_CHECKOUT_TODE $GS_SHARED_GIT_REMOTE_TODE ${GS_SHARED_REPO}/tode
+    fi
   fi
 fi
 
