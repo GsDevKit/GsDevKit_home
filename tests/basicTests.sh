@@ -101,5 +101,7 @@ cd $GS_HOME/server/stones/${STONENAME1}
 deleteStone ${STONENAME2} ${STONENAME3}
 
 startStone -b ${STONENAME1}
+git config --global user.email "travis@example.com"
+git config --global user.name "Travis Ci"
 todeIt ${STONENAME1} project new Foo
 
