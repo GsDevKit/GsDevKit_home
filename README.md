@@ -22,9 +22,10 @@ You will need to ensure that your operating system is configured with the requir
 4. [When a new version of GsDevKit_home is published, how do I update my checkout?][6]
 5. [When a new version of tODE is published, how do I update my checkout and my stones?][7]
 6. [Do I have to bootstrap GLASS1 and tODE from scratch every time I create a stone?][9]
-7. How do I share session descriptions between a local client and a remote server?
-8. How do I upgrade a stone to a new version of GemStone?
-9. How do I load Seaside?
+7. [How do I create a new project from scratch in tODE?][10]
+8. How do I share session descriptions between a local client and a remote server?
+9. How do I upgrade a stone to a new version of GemStone?
+10. How do I load Seaside?
 
 [**COMMENTS**][8]
 
@@ -37,5 +38,6 @@ You will need to ensure that your operating system is configured with the requir
 [7]: docs/FAQ/FAQ.md#5-when-a-new-version-of-tode-is-published-how-do-i-update-my-checkout-and-my-stones
 [8]: https://github.com/GsDevKit/GsDevKit_home/issues/new
 [9]: docs/FAQ/FAQ.md#6-do-i-have-to-bootstrap-glass1-and-tode-from-scratch-every-time-i-create-a-stone
+[10]: docs/FAQ/FAQ.md#7-how-do-i-create-a-new-project-from-scratch-in-tode
 
 [100]: docs/FAQ/FAQ.md#100-how-do-i-contribute-to-the-gsdevkit_home-project
