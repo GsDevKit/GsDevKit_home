@@ -99,3 +99,7 @@ cd $GS_HOME/server/stones/${STONENAME1}
 . defStone.env
 
 deleteStone ${STONENAME2} ${STONENAME3}
+
+startStone -b ${STONENAME1}
+todeIt ${STONENAME1} project new Foo
+
