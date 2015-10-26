@@ -9,5 +9,7 @@ mount --stoneRoot / /sys stone
 # Define /home and /projects based on a composition of the /sys nodes
 mount --stoneRoot homeComposition.ston / home
 mount --stoneRoot projectComposition.ston / projects
+# clear the github-cache reference for old stone
+eval `MCGitHubRepository cacheDirectory: nil`
 commit
 cd 

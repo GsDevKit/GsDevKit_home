@@ -4,7 +4,7 @@
 Transcript cr; show: '---Step 2 of tODE bootstrap process: execute installMetacello.ws'.
 
 GsUpgrader batchErrorHandlingDo: [
-  | metacelloRepo filetreeRepo greaseRepo pharoCompatRepo glass1Repo rbRepo stonRepo |
+  | metacelloRepo filetreeRepo greaseRepo pharoCompatRepo glass1Repo rbRepo stonRepo zincRepo |
   metacelloRepo := GsFile _expandEnvVariable: 'GS_SHARED_REPO_METACELLO' isClient: false.
   filetreeRepo := GsFile _expandEnvVariable: 'GS_SHARED_REPO_GEMSTONE_FILETREE' isClient: false.
   greaseRepo := GsFile _expandEnvVariable: 'GS_SHARED_REPO_GREASE' isClient: false.
@@ -12,6 +12,7 @@ GsUpgrader batchErrorHandlingDo: [
   glass1Repo := GsFile _expandEnvVariable: 'GS_SHARED_REPO_GLASS1' isClient: false.
   rbRepo := GsFile _expandEnvVariable: 'GS_SHARED_REPO_RB' isClient: false.
   stonRepo := GsFile _expandEnvVariable: 'GS_SHARED_REPO_STON' isClient: false.
+  zincRepo := GsFile _expandEnvVariable: 'GS_SHARED_REPO_ZINC' isClient: false.
   Transcript 
     cr; 
     show: 'Locking Metacello: ', metacelloRepo printString;
@@ -25,6 +26,8 @@ GsUpgrader batchErrorHandlingDo: [
     show: 'Locking Ston: ',stonRepo printString;
     cr; 
     show: 'Locking RB: ', rbRepo printString;
+    cr; 
+    show: 'Locking ZincHTTPComponents: ', zincRepo printString;
     yourself.
   Metacello new
     baseline: 'Metacello';
@@ -45,6 +48,10 @@ GsUpgrader batchErrorHandlingDo: [
   Metacello new
     baseline: 'RB';
     repository: rbRepo;
+    lock.
+  Metacello new
+    baseline: 'ZincHTTPComponents';
+    repository: zincRepo;
     lock.
   Metacello new
     baseline: 'Ston';

@@ -32,6 +32,8 @@ Clone the Github repositories used by the tODE client and server into
   - github://glassdb/PharoCompatibility:\${GS_SHARED_COMMIT_OHARO_COMPAT}/repository
   - github://glassdb/glass:\${GS_SHARED_COMMIT_GLASS1}/repository
   - github://dalehenrich/rb:\${GS_SHARED_COMMIT_RB}/repository
+  - github://GsDevKit/zinc:\${GS_SHARED_COMMIT_ZINC}/repository
+
 
 If you clone these repositoris into  \$GS_HOME/shared/repos, then they will be 
 used for creating pharo images and bootstrapping tODE into stones. 
@@ -47,6 +49,7 @@ The following env vars are defined:
   \$GS_SHARED_REPO_PHARO_COMPAT
   \$GS_SHARED_REPO_GLASS1
   \$GS_SHARED_REPO_RB
+  \$GS_SHARED_REPO_ZINC
 
   \$GS_SHARED_GITHUB_COMMIT_METACELLO
   \$GS_SHARED_GITHUB_COMMIT_TODE
@@ -57,6 +60,7 @@ The following env vars are defined:
   \$GS_SHARED_GITHUB_COMMIT_PHARO_COMPAT
   \$GS_SHARED_GITHUB_COMMIT_GLASS1
   \$GS_SHARED_GITHUB_COMMIT_RB
+  \$GS_SHARED_GITHUB_COMMIT_ZINC
 
   \$GS_SHARED_GIT_CHECKOUT_METACELLO
   \$GS_SHARED_GIT_CHECKOUT_TODE
@@ -67,6 +71,7 @@ The following env vars are defined:
   \$GS_SHARED_GIT_CHECKOUT_PHARO_COMPAT
   \$GS_SHARED_GIT_CHECKOUT_GLASS1
   \$GS_SHARED_GIT_CHECKOUT_RB
+  \$GS_SHARED_GIT_CHECKOUT_ZINC
 
 If the repositories have not been cloned, the the env var points to the github repo.
 
@@ -164,6 +169,10 @@ pushd ${GS_SHARED_REPO} >& /dev/null
     if [ ! -d "rb" ] ; then
       ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich rb
       checkoutClone $GS_SHARED_GIT_CHECKOUT_RB ${GS_SHARED_REPO}/rb $branchName
+    fi
+    if [ ! -d "zinc" ] ; then
+      ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg GsDevKit zinc
+      checkoutClone $GS_SHARED_GIT_CHECKOUT_ZINC ${GS_SHARED_REPO}/zinc $branchName
     fi
   fi
 popd >& /dev/null
