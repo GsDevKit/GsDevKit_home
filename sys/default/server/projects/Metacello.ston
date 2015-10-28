@@ -1,4 +1,4 @@
-TDObjectGatewayNode{#name:'metacello',#contents:'| repoSpec |
+TDObjectGatewayNode{#name:'Metacello',#contents:'| repoSpec |
 repoSpec := GsFile _expandEnvVariable: \'GS_SHARED_REPO_Metacello\' isClient: false.
 ^ TDProjectSpecEntryDefinition new
     baseline: \'Metacello\'
