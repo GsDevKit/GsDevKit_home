@@ -5,7 +5,7 @@ start right off installing the Seaside project and building a Seaside server.
   
 A complete GsDevKit installation includes both a server and a client, which can be on the same or on different nodes.  
 These instructions provide information on installing the server Seaside component, without installing a client.  After
-you have installed the server, you will also need to install a client. 
+you have installed the server, you will also need to install a client, which you can do on the seaside server node or on another node. 
 
 These instructions are part of the [instructions for installing Seaside][1]; refer to these instructions for 
 the OS configuration required and other steps.
@@ -98,7 +98,7 @@ export GS_HOME=`pwd`
 cd $GS_HOME/shared/projects
 git clone https://github.com/GsDevKit/GsDevKit_seaside31.git
 export PATH=$GS_HOME/bin:$GS_HOME/shared/projects/GsDevKit_seaside31/bin:$PATH
-installServerSeaside -c https -z 8383 seaside_3210 3.2.10
+installServerSeaside -c https -z 8383 seaside_3211 3.2.11
 ```
 
 
