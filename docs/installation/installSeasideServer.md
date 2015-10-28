@@ -18,18 +18,18 @@ run the GsDevKit server within that VM.
 
 To establish the connection between the client and the server, a server process called the NetLDI listens on a well-known port.  This port may be selected and reserved, or you may allow the system to select one.  However, if you allow the OS to select the port, on restart it will select a different port and the client will need to be updated. 
 
-To avoid this, it is recommended to assign a reserved port number to a named NetLDI by adding an entry to the network services database, which may be /etc/services, before installing.  You do need to know the name that you will use for the server installation, since the NetLDI name is derived from that.  For example, if you will install the stone server with the name devKit_329, add an entry to services.dat similar to:
+To avoid this, it is recommended to assign a reserved port number to a named NetLDI by adding an entry to the network services database, which may be /etc/services, before installing.  You do need to know the name that you will use for the server installation, since the NetLDI name is derived from that.  For example, if you will install the stone server with the name seaside_3211, add an entry to services.dat similar to:
 
 ```
 seaside_3211_ldi          50379/tcp        # Gemstone netldi
 ```
 
 ####GemStone Version and License
-Before running installing the server, please check on the [GemStone/S 64 Bit product page for the latest versions][2] and visit [the Community and Web Edition Licensing page for information on the license included with the download and other options][3]. It is a good idea to acquire a free, Limited Community License by sending email to sales@gemtalksystems.com. It is also recommended that you download and use the latest version of the GemStone/S 64 Bit product. The following instructions are for version 3.2.9.
+Before running installing the server, please check on the [GemStone/S 64 Bit product page for the latest versions][2] and visit [the Community and Web Edition Licensing page for information on the license included with the download and other options][3]. It is a good idea to acquire a free, Limited Community License by sending email to sales@gemtalksystems.com. It is also recommended that you download and use the latest version of the GemStone/S 64 Bit product. The following instructions are for version 3.2.11.
 
 ##Install Server
 
-The following steps are involved in installing the GsDevKit server.  For an example script to execute, see [Example Script to Install GsDevKit Server](#example-script-to-install-server-only) 
+The following steps are involved in installing the GsDevKit server.  For an example script to execute, see [Example Script to Install Seaside Server](#example-script-to-install-seaside-server) 
 
 1. **Determine your installation directory and clone GsDevKit_home to that location**
 
@@ -54,13 +54,14 @@ The following steps are involved in installing the GsDevKit server.  For an exam
    export PATH=$GS_HOME/bin:$PATH
    ```
 
-4. Clone the seaside project into the projects directory.
+4. **Clone the seaside project into the projects directory**
    ```
    cd $GS_HOME/shared/projects
    git clone https://github.com/GsDevKit/GsDevKit_seaside31.git
    ```
-5. Add the seaside projects directory to your path.  This makes it easier to work with seaside-specific scripts.
-
+5. **Add the seaside projects directory to your path**
+ 
+   This makes it easier to work with seaside-specific scripts.
    ```
    export PATH=$GS_HOME/shared/projects/GsDevKit_seaside31/bin:$PATH
    ```
@@ -82,19 +83,12 @@ The following steps are involved in installing the GsDevKit server.  For an exam
    multiple clients. The examples below use **seaside_3211**.  For `<authMode>`, use https, though ssh will also 
    work if you have ssh authentication already set up.  
    
-   The install scripts invokes the following sub-scripts:
-   ```
-   downloadGemStone
-   cloneGsDevKitProjects 
-   cloneSharedTodeProjects
-   createStone
-   ```
    After these scripts successfully complete, you will have a seaside stone named `<myStoneName>`, of GemStone/S 64 Bit version `<GemStoneVersion>`, installed on your server node and running.  You will also have a NetLDI named `<myStoneName>_ldi` running on the server, so the server is ready for a tODE client to connect.
    
 
-### Example Script to Install Seaside Server only
+### Example Script to Install Seaside Server
 
-This script installs the seaside server components, and creates and starts a 3.2.11 stone server named **seaside_3211**.   
+This script installs the seaside server components, and creates and starts a 3.2.11 stone server named **seaside_3211** and a NetLDI named ***seaside_3211_ldi***.   
 
 ```
 git clone https://github.com/GsDevKit/GsDevKit_home.git
