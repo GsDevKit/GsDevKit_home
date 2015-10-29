@@ -1,0 +1,8 @@
+TDObjectGatewayLeafNode{#name:'GsDevKit_seaside31',#contents:'^ TDGitRepositoryEntryDefinition new
+    comment: \'Install script clones GsDevKit/GsDevKit_seaside31.\';
+    status: #(#\'inactive\');
+    gitRepoDirectoryPath: \'\';
+    installScript: \'
+      project clone --https --checkout=master --projects --github=GsDevKit/GsDevKit_seaside31
+      mount @/_home/projects/GsDevKit_seaside31/tode /home seaside31\';
+    yourself'}

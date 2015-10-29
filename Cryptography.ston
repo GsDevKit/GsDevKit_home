@@ -1,0 +1,7 @@
+TDObjectGatewayLeafNode{#name:'Cryptography',#contents:'^ TDProjectSpecEntryDefinition new
+    baseline: \'Cryptography\'
+      repository: \'github://GsDevKit/Cryptography:master/repository\'
+      loads: #(\'Cryptography\');
+    status: #(#\'inactive\');
+    locked: false;
+    yourself'}

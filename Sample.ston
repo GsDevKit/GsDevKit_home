@@ -1,0 +1,10 @@
+TDObjectGatewayLeafNode{#name:'Sample2',#contents:'^ TDProjectSpecEntryDefinition new
+    baseline: \'Sample\'
+      repository: \'github://dalehenrich/sample:master/repository\'
+      loads: #(\'Core\');
+    installScript: \'project clone --https --local Sample
+      mount @/_home/shared/repos/sample/tode /home sample\';
+    gitCommit: \'master\';
+    status: #(#\'inactive\');
+    locked: false;
+    yourself'}`
