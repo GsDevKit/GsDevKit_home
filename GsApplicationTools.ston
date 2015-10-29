@@ -1,7 +1,8 @@
-TDObjectGatewayLeafNode{#name:'gsApplicationTools',#contents:'^ TDProjectSpecEntryDefinition new
+TDObjectGatewayLeafNode{#name:'GsApplicationTools',#contents:'^ TDProjectSpecEntryDefinition new
     baseline: \'GsApplicationTools\'
       repository: \'github://GsDevKit/gsApplicationTools:master/repository\'
       loads: #(\'default\');
+    installScript: \'project clone --https --local GsApplicationTools\';
     status: #(#\'inactive\');
     locked: false;
     yourself'}

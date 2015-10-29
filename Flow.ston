@@ -1,8 +1,9 @@
-TDObjectGatewayLeafNode{#name:'flow',#contents:'^ TDProjectSpecEntryDefinition new
+TDObjectGatewayLeafNode{#name:'Flow',#contents:'^ TDProjectSpecEntryDefinition new
     baseline: \'Flow\'
       repository:
         \'github://GsDevKit/flow:master/backend/src\'
       loads: #(\'default\');
+    installScript: \'project clone --https --local Flow\';
     status: #(#\'inactive\');
     locked: false;
     yourself'}

@@ -6,5 +6,3 @@ TDObjectGatewayLeafNode{#name:'XMLSupport',#contents:'^ TDProjectSpecEntryDefini
     status: #(#\'inactive\');
     locked: true;
     yourself '}
-
-

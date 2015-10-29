@@ -3,6 +3,6 @@ TDObjectGatewayLeafNode{#name:'GsDevKit_seaside31',#contents:'^ TDGitRepositoryE
     status: #(#\'inactive\');
     gitRepoDirectoryPath: \'\';
     installScript: \'
-      project clone --https --checkout=master --projects --github=GsDevKit/GsDevKit_seaside31
-      mount @/_home/projects/GsDevKit_seaside31/tode /home seaside31\';
+      project clone --https --checkout=master --etc --github=GsDevKit/GsDevKit_seaside31
+      mount @/_home/etc/GsDevKit_seaside31/tode /home seaside31\';
     yourself'}

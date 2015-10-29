@@ -3,6 +3,7 @@ TDObjectGatewayLeafNode{#name:'NewJSON',#contents:'^ TDProjectSpecEntryDefinitio
       repository:
         \'github://GsDevKit/NeoJSON:gs_master/repository\'
       loads: #(\'Core\');
+    installScript: \'project clone --https --local NeoJSON\';
     status: #(#\'inactive\');
     locked: false;
     yourself'}

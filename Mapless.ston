@@ -3,6 +3,7 @@ TDObjectGatewayLeafNode{#name:'Mapless',#contents:'^ TDProjectSpecEntryDefinitio
       repository:
         \'github://GsDevKit/Mapless:master/src\'
       loads: #(\'Core\');
+    installScript: \'project clone --https --local Mapless\';
     status: #(#\'inactive\');
     locked: false;
     yourself'}
