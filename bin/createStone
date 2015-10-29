@@ -10,9 +10,9 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-f] [-g] [-n] [-s <snapshot-file-path>] 
-                      [-t  <tode-snapshot-file-path>] 
-                      [-p <tode-project-name> [-b <backup-name>]] 
+USAGE: $(basename $0) [-h] [-f] [-g] [-n] [-s <snapshot-file-path>]
+                      [-t  <tode-snapshot-file-path>]
+		      [-u <project-entry-url>] [-i <project-name>] [-l <project-name>]
                       <stone-name> <gemstone-version>
 
 Create a new stone with the given stone name. Do not install tODE. Start stone
@@ -31,9 +31,6 @@ before creation.
 OPTIONS
   -h
      display help
-  -b <backup-name>
-     Used in concert with the -p option, make a backup of the stone of the given name
-     after the project is installed
   -f
      Force creation of new stone, by deleting 
      \$GS_SERVER/stones/<stone-name> directory if it exists
@@ -41,15 +38,23 @@ OPTIONS
      Do not install tODE in stone ... use initial extent unaltered
   -n
      No startStone, no startNetldi.
-  -p <tode-project-name>
-     install <tode-project-name> into stone. tODE must already be installed via
-     -t or -s options.
   -s <snapshot-file-path> 
      path to snapshot file used to create stone.
   -t <tode-snapshot-file-path>
      path to snapshot file used to create stone. It is assumed that the snapshot
      already has tODE installed and the snapshot will be attached to the
      existing \$GS_TODE/sys/stones/<stone-name> structure.
+  -u <project-entry-url>
+     Download the project entry at the given url into 
+     \`/sys/local/stones/<stone-name/projects\`. Runs the tODE
+     \`project entry --url=<project-entry-url>\` command. tODE must already be installed via
+     -t option.
+  -i <project-name>
+     Install the given project using the tODE \`project install <project-name>\`.
+     tODE must already be installed via -t option.
+  -l <project-name>
+     Load the given project using the tODE \`project install <project-name.\`.
+     tODE must already be installed via -t option.
 
 EXAMPLES
   $(basename $0) -h
@@ -58,6 +63,15 @@ EXAMPLES
   $(basename $0) -f gs_329 3.2.9
   $(basename $0) -g -s \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
   $(basename $0) -t \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
+  $(basename $0) -u http://gsdevkit.github.io/GsDevKit_seaside31/Seaside31.ston \
+	         -t \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
+  $(basename $0) -i Seaside3 \
+                 -t \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
+  $(basename $0) -l Seaside3 \
+                 -t \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
+  $(basename $0) -u http://gsdevkit.github.io/GsDevKit_seaside31/Seaside31.ston \
+	         -i Seaside3 -l Seaside3 \
+		 -t \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
 
 HELP
 }
@@ -77,19 +91,22 @@ source ${GS_HOME}/bin/defGsDevKit.env
 snapshotFileArg=""
 noRestartArg=""
 force=""
-todeProjectName=""
 installTode="true"
 todeSnapshotArg=""
-while getopts "b:fghnp:s:t:" OPT ; do
+entryUrl=""
+installProjectName=""
+loadProjectName=""
+while getopts "fghns:t:u:i:l:" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
-    b) backupName="${OPTARG}";;
     f) force="true";; 
     g) installTode="false";;
     n) noRestartArg=" -n ";;
-    p) todeProjectName="${OPTARG}";;
     s) snapshotFileArg=" -s ${OPTARG} ";;
     t) snapshotFileArg=" -s ${OPTARG} "; installTode="false"; todeSnapshotArg=" -t ";;
+    u) entryUrl="${OPTARG}";;
+    i) installProjectName="${OPTARG}";;
+    l) loadProjectName="${OPTARG}";;
     *) usage; exit 1;;
   esac
 done
@@ -136,10 +153,21 @@ if [ "$installTode" = "true" ] ; then
   $GS_SYS/bin/todeInstall $stoneName
 fi
 
+if [ "$entryUrl" != "" ] ; then
+  $GS_HOME/bin/private/gsDevKitTodeCommandLine todeIt $stoneName << EOF
+project entry --url=${entryUrl}
+EOF
+fi
+
+if [ "$installProjectName" != "" ] ; then
+  $GS_HOME/bin/private/gsDevKitTodeCommandLine todeIt $stoneName << EOF
+project install ${installProjectName}
+EOF
+fi
+
 if [ "$todeProjectName" != "" ] ; then
   $GS_HOME/bin/private/gsDevKitTodeCommandLine todeIt $stoneName << EOF
 project load ${todeProjectName}
-bu backup ${backupName}.dbf
 EOF
 fi
 
