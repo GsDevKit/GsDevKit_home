@@ -105,6 +105,6 @@ git config --global user.email "travis@example.com"
 git config --global user.name "Travis Ci"
 todeIt ${STONENAME1} project new Foo
 
-createStone -f -u http://gsdevkit.github.io/GsDevKit_seaside31/Sample2.ston \
+createStone -f -u http://gsdevkit.github.io/GsDevKit_seaside31/TestSample2.ston \
             -i Sample -l Sample \
             -t $todeSnapshot ${STONENAME3} $GS_VERSION
