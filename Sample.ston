@@ -1,4 +1,4 @@
-TDObjectGatewayLeafNode{#name:'Sample2',#contents:'^ TDProjectSpecEntryDefinition new
+TDObjectGatewayLeafNode{#name:'Sample',#contents:'^ TDProjectSpecEntryDefinition new
     baseline: \'Sample\'
       repository: \'github://dalehenrich/sample:master/repository\'
       loads: #(\'Core\');
