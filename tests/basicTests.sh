@@ -38,7 +38,7 @@ stones -h
 stopNetldi -h
 stopStone -h
 todeBackup -h
-todeInstall -h
+todeLoad -h
 todeIt -h
 todeRestore -h
 todeUpdate -h
@@ -79,6 +79,7 @@ createStone -g -s $baseSnapshot ${STONENAME2} $GS_VERSION
 
 # create a base stone (no tODE installed)
 createStone -g -s $seasideSnapshot ${STONENAME4} $GS_VERSION
+todeLoad ${STONENAME4}
 
 #create a tODE stone
 createStone -t $todeSnapshot ${STONENAME3} $GS_VERSION
@@ -130,6 +131,6 @@ project install --local --url=http://gsdevkit.github.io/GsDevKit_home/Ston.ston
 project install --local --url=http://gsdevkit.github.io/GsDevKit_home/TestSample2.ston
 project install --local --url=http://gsdevkit.github.io/GsDevKit_home/Tode.ston
 project install --local --url=http://gsdevkit.github.io/GsDevKit_home/XMLSupport.ston
-project install --local --url=http://gsdevkit.github.io/GsDevKit_home/ZinHTTPComponents.ston
+project install --local --url=http://gsdevkit.github.io/GsDevKit_home/ZincHTTPComponents.ston
 EOF
 

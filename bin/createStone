@@ -150,7 +150,7 @@ if [ "${noRestartArg}x" = "x" ] ; then
 fi
 
 if [ "$installTode" = "true" ] ; then
-  $GS_SYS/bin/todeInstall $stoneName
+  $GS_SYS/bin/todeLoad $stoneName
 fi
 
 if [ "$entryUrl" != "" ] ; then

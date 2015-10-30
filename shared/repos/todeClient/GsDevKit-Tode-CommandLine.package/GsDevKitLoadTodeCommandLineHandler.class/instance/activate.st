@@ -10,7 +10,7 @@ activate
 	Author
 		useAuthor: self authorId
 		during: [ 
-			self installTode.
-			self installTode2 ].
+			self loadTode.
+			self loadTode2 ].
 	Transcript cr.
 	self exitSuccess
