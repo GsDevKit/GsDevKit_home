@@ -131,6 +131,6 @@ project install --local --url=http://gsdevkit.github.io/GsDevKit_home/Ston.ston
 project install --local --url=http://gsdevkit.github.io/GsDevKit_home/TestSample2.ston
 project install --local --url=http://gsdevkit.github.io/GsDevKit_home/Tode.ston
 project install --local --url=http://gsdevkit.github.io/GsDevKit_home/XMLSupport.ston
-project install --local --url=http://gsdevkit.github.io/GsDevKit_home/ZinHTTPComponents.ston
+project install --local --url=http://gsdevkit.github.io/GsDevKit_home/ZincHTTPComponents.ston
 EOF
 
