@@ -1,4 +1,4 @@
-TDObjectGatewayLeafNode{#name:'NewJSON',#contents:'^ TDProjectSpecEntryDefinition new
+TDObjectGatewayLeafNode{#name:'NeoJSON',#contents:'^ TDProjectSpecEntryDefinition new
     baseline: \'NeoJSON\'
       repository:
         \'github://GsDevKit/NeoJSON:gs_master/repository\'
