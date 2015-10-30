@@ -76,10 +76,10 @@ stopStone -b ${STONENAME1}
 
 # create a base stone (no tODE or GLASS1 installed)
 createStone -g -s $baseSnapshot ${STONENAME2} $GS_VERSION
-todeLoad ${STONENAME2}
 
 # create a base stone (no tODE installed)
 createStone -g -s $seasideSnapshot ${STONENAME4} $GS_VERSION
+todeLoad ${STONENAME4}
 
 #create a tODE stone
 createStone -t $todeSnapshot ${STONENAME3} $GS_VERSION
