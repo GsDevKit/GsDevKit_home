@@ -3,6 +3,7 @@ TDObjectGatewayLeafNode{#name:'Cryptography',#contents:'^ TDProjectSpecEntryDefi
       repository: \'github://GsDevKit/Cryptography:master/repository\'
       loads: #(\'Cryptography\');
     installScript: \'project clone --https --local Cryptography\';
+    gitCheckout: \'master\';
     status: #(#\'inactive\');
     locked: false;
     yourself'}

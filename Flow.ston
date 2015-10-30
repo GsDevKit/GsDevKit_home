@@ -4,6 +4,7 @@ TDObjectGatewayLeafNode{#name:'Flow',#contents:'^ TDProjectSpecEntryDefinition n
         \'github://GsDevKit/flow:master/backend/src\'
       loads: #(\'default\');
     installScript: \'project clone --https --local Flow\';
+    gitCheckout: \'master\';
     status: #(#\'inactive\');
     locked: false;
     yourself'}

@@ -2,12 +2,12 @@ TDObjectGatewayLeafNode{#name:'TestSample2',#contents:'^ TDProjectSpecEntryDefin
     baseline: \'Sample\'
       repository: \'github://dalehenrich/sample:master/repository\'
       loads: #(\'Core\');
-    comment: \'This puppy will clone itself on install.\';
+    comment: \'For testing ... do not do a backup on travis.\';
     installScript: \'project clone --https --local Sample
       mount @/_home/shared/repos/sample/tode /home sample\';
     preLoadScript: \'bu snapshot pre.dbf\';
     postLoadScript: \'bu snapshot post.dbf\';
-    gitCommit: \'master\';
+    gitCheckout: \'master\';
     status: #(#\'inactive\');
     locked: false;
     yourself'}`

@@ -4,7 +4,7 @@ TDObjectGatewayLeafNode{#name:'Sample',#contents:'^ TDProjectSpecEntryDefinition
       loads: #(\'Core\');
     installScript: \'project clone --https --local Sample
       mount @/_home/shared/repos/sample/tode /home sample\';
-    gitCommit: \'master\';
+    gitCheckout: \'master\';
     status: #(#\'inactive\');
     locked: false;
     yourself'}`

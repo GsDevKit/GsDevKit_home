@@ -4,5 +4,5 @@ TDObjectGatewayLeafNode{#name:'XMLSupport',#contents:'^ TDProjectSpecEntryDefini
       repository: \'http://seaside.gemtalksystems.com/ss/MetacelloRepository\'
       loads: #(\'Core\');
     status: #(#\'inactive\');
-    locked: true;
+    locked: false;
     yourself '}

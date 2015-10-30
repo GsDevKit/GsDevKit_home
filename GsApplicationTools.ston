@@ -3,6 +3,7 @@ TDObjectGatewayLeafNode{#name:'GsApplicationTools',#contents:'^ TDProjectSpecEnt
       repository: \'github://GsDevKit/gsApplicationTools:master/repository\'
       loads: #(\'default\');
     installScript: \'project clone --https --local GsApplicationTools\';
+    gitCheckout: \'master\';
     status: #(#\'inactive\');
     locked: false;
     yourself'}

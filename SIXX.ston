@@ -1,10 +1,9 @@
-TDObjectGatewayLeafNode{#name:'SIXX',#contents:'| project |
-project := TDProjectSpecEntryDefinition new
+TDObjectGatewayLeafNode{#name:'SIXX',#contents:'^TDProjectSpecEntryDefinition new
   baseline: \'SIXX\'
     repository: \'github://glassdb/SIXX:master/repository\'
     loads: \'Core\';
   installScript: \'project clone --https --local SIXX\';
+  gitCheckout: \'master\';
   status: #(#\'inactive\');
   locked: false;
-  yourself.
-^ project'}
+  yourself'}

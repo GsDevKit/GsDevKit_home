@@ -3,6 +3,7 @@ TDObjectGatewayNode{#name:'Seaside31',#contents:'^ TDProjectSpecEntryDefinition 
       repository: \'github://GsDevKit/Seaside31:3.1.?/repository\'
       loads: #(\'Development\' \'Zinc\' \'FastCGI\' \'Examples\');
     installScript: \'project clone --https --local Seaside3\';
+    gitCheckout: \`gs_master\`;
     status: #(#\'inactive\');
     locked: false;
     yourself'}
