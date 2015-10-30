@@ -1,6 +1,6 @@
-"Fourth and final step in tODE installation process: install tODE."
+"Fourth and final step in tODE load process: load tODE."
 
-Transcript cr; show: '---Step 4 of tODE bootstrap process: execute installTode.ws'.
+Transcript cr; show: '---Step 4 of tODE bootstrap process: execute loadTode.ws'.
 
 GsUpgrader batchErrorHandlingDo: [
   | todeRepo |

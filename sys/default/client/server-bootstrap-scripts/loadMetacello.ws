@@ -1,7 +1,7 @@
-"Second step in tODE installation process: lock Metacello if you want to use a non-standard repository.
- Install Metacello from local git clone."
+"Second step in tODE load process: lock Metacello if you want to use a non-standard repository.
+ load Metacello from local git clone."
 
-Transcript cr; show: '---Step 2 of tODE bootstrap process: execute installMetacello.ws'.
+Transcript cr; show: '---Step 2 of tODE bootstrap process: execute loadMetacello.ws'.
 
 GsUpgrader batchErrorHandlingDo: [
   | metacelloRepo filetreeRepo greaseRepo pharoCompatRepo glass1Repo rbRepo stonRepo zincRepo |
