@@ -1,4 +1,4 @@
-TDObjectGatewayNode{#name:'PharoCompatibility',#contents:'^ TDProjectSpecEntryDefinition new
+TDObjectGatewayLeafNode{#name:'PharoCompatibility',#contents:'^ TDProjectSpecEntryDefinition new
     baseline: \'PharoCompatibility\'
       repository: \'github://glassdb/PharoCompatibility:master/repository\'
       loads: #(\'default\');

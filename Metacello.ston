@@ -1,4 +1,4 @@
-TDObjectGatewayNode{#name:'Metacello',#contents:'^ TDProjectSpecEntryDefinition new
+TDObjectGatewayLeafNode{#name:'Metacello',#contents:'^ TDProjectSpecEntryDefinition new
     baseline: \'Metacello\'
       repository: \'github://dalehenrich/metacello-work:master/repository\'
       loads: #(\'default\');

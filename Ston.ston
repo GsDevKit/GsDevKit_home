@@ -1,4 +1,4 @@
-TDObjectGatewayNode{#name:'Ston',#contents:'^ TDProjectSpecEntryDefinition new
+TDObjectGatewayLeafNode{#name:'Ston',#contents:'^ TDProjectSpecEntryDefinition new
     baseline: \'Ston\'
       repository: \'github://GsDevKit/ston:gemstone/repository\'
       loads: #(\'Core\');

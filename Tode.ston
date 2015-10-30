@@ -1,4 +1,4 @@
-TDObjectGatewayNode{#name:'Tode',#contents:'^TDProjectSpecEntryDefinition new
+TDObjectGatewayLeafNode{#name:'Tode',#contents:'^TDProjectSpecEntryDefinition new
   baseline: \'Tode\'
     repository: \'github://dalehenrich/tode:master/repository\'
     loads: \'GemStone Dev\';
