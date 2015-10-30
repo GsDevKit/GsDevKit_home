@@ -5,5 +5,5 @@ repoSpec := GsFile _expandEnvVariable: \'GS_SHARED_REPO_PHARO_COMPAT\' isClient:
       repository: repoSpec
       loads: #(\'default\');
     status: #(#\'inactive\');
-    locked: false;
+    locked: true;
     yourself'}
