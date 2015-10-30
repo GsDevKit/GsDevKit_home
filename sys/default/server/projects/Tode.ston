@@ -1,4 +1,4 @@
-TDObjectGatewayNode{#name:'Tode',#contents:'| repoSpec gitCheckout |
+TDObjectGatewayLeafNode{#name:'Tode',#contents:'| repoSpec gitCheckout |
 gitCheckout :=  GsFile _expandEnvVariable: \'GS_SHARED_GIT_CHECKOUT_TODE\' isClient: false.
 repoSpec := GsFile _expandEnvVariable: \'GS_SHARED_REPO_TODE\' isClient: false.
 ^TDProjectSpecEntryDefinition new

@@ -1,4 +1,4 @@
-TDObjectGatewayNode{#name:'Metacello',#contents:'| repoSpec gitCheckout |
+TDObjectGatewayLeafNode{#name:'Metacello',#contents:'| repoSpec gitCheckout |
 gitCheckout :=  GsFile _expandEnvVariable: \'GS_SHARED_GIT_CHECKOUT_METACELLO\' isClient: false.
 repoSpec := GsFile _expandEnvVariable: \'GS_SHARED_REPO_METACELLO\' isClient: false.
 ^ TDProjectSpecEntryDefinition new

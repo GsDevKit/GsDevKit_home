@@ -1,4 +1,4 @@
-TDObjectGatewayNode{#name:'ZincHTTPComponents',#contents:'| repoSpec gitCheckout |
+TDObjectGatewayLeafNode{#name:'ZincHTTPComponents',#contents:'| repoSpec gitCheckout |
 gitCheckout :=  GsFile _expandEnvVariable: \'GS_SHARED_GIT_CHECKOUT_ZINC\' isClient: false.
 repoSpec := GsFile _expandEnvVariable: \'GS_SHARED_REPO_ZINC\' isClient: false.
 ^ TDProjectSpecEntryDefinition new

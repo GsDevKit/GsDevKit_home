@@ -1,4 +1,4 @@
-TDObjectGatewayNode{#name:'Grease',#contents:'| repoSpec gitCheckout |
+TDObjectGatewayLeafNode{#name:'Grease',#contents:'| repoSpec gitCheckout |
 gitCheckout :=  GsFile _expandEnvVariable: \'GS_SHARED_GIT_CHECKOUT_GREASE\' isClient: false.
 repoSpec := GsFile _expandEnvVariable: \'GS_SHARED_REPO_GREASE\' isClient: false.
 ^ TDProjectSpecEntryDefinition new

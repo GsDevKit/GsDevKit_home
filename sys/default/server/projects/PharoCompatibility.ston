@@ -1,4 +1,4 @@
-TDObjectGatewayNode{#name:'PharoCompatibility',#contents:'| repoSpec gitCheckout |
+TDObjectGatewayLeafNode{#name:'PharoCompatibility',#contents:'| repoSpec gitCheckout |
 gitCheckout :=  GsFile _expandEnvVariable: \'GS_SHARED_GIT_CHECKOUT_PHARO_COMPAT\' isClient: false.
 repoSpec := GsFile _expandEnvVariable: \'GS_SHARED_REPO_PHARO_COMPAT\' isClient: false.
 ^ TDProjectSpecEntryDefinition new
