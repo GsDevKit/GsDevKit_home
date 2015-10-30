@@ -9,7 +9,7 @@ It is no longer necessary to fork the GsDevKit_home project as part of the insta
 
 Better support for Windows users. The installation process for the Windows, Linux and OSX platforms is the same.  
 
-[**COMMENTS**][28]
+[**FEEDBACK**][28]
 
 ---
 ---
@@ -50,7 +50,7 @@ Installed Stones:
 	3.2.9	gs_329
 ```
 
-[**COMMENTS**][28]
+[**FEEDBACK**][28]
 
 ---
 ---
@@ -64,7 +64,7 @@ For a *master branch* checkout of gsDevKitHome, the session descriptions are fou
 
 For a *dev branch* checkout of gsDevKitHome, the session descriptions are found in the the old `$GS_HOME/tode/sys/local/client/descriptions` directory.
 
-[**COMMENTS**][28]
+[**FEEDBACK**][28]
 
 ---
 ---
@@ -110,7 +110,7 @@ comparing the SHA of the *merge commit*:
 until you find a match.
 
 
-[**COMMENTS**][28]
+[**FEEDBACK**][28]
 
 ---
 ---
@@ -128,7 +128,7 @@ To update the version of tODE used in a stone, run the `$GS_HOME/bin/todeUpdate`
 todeUpdate <stone-name>
 ```
 
-[**COMMENTS**][28]
+[**FEEDBACK**][28]
 
 ---
 ---
@@ -174,7 +174,7 @@ You can then create the snapshot extent by following the instructions in [How to
 $GS_HOME/bin/createStone -s <path-to-custom-snapshot> new_329 3.2.9
 ```
 
-[**COMMENTS**][28]
+[**FEEDBACK**][28]
 
 ---
 ---
@@ -235,7 +235,7 @@ Now is a good time make some modifications to your application class, update the
 
 ![Foo project list][42]
 
-[**COMMENTS**][28]
+[**FEEDBACK**][28]
 
 ---
 ---
