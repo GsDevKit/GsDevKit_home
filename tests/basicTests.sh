@@ -38,7 +38,7 @@ stones -h
 stopNetldi -h
 stopStone -h
 todeBackup -h
-todeInstall -h
+todeLoad -h
 todeIt -h
 todeRestore -h
 todeUpdate -h
@@ -76,6 +76,7 @@ stopStone -b ${STONENAME1}
 
 # create a base stone (no tODE or GLASS1 installed)
 createStone -g -s $baseSnapshot ${STONENAME2} $GS_VERSION
+loadTode ${STONENAME2}
 
 # create a base stone (no tODE installed)
 createStone -g -s $seasideSnapshot ${STONENAME4} $GS_VERSION

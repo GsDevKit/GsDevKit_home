@@ -1,9 +1,11 @@
-TDObjectGatewayNode{#name:'Ston',#contents:'| repoSpec |
+TDObjectGatewayNode{#name:'Ston',#contents:'| repoSpec gitCheckout |
+gitCheckout :=  GsFile _expandEnvVariable: \'GS_SHARED_GIT_CHECKOUT_STON\' isClient: false.
 repoSpec := GsFile _expandEnvVariable: \'GS_SHARED_REPO_STON\' isClient: false.
 ^ TDProjectSpecEntryDefinition new
     baseline: \'Ston\'
       repository: repoSpec
       loads: #(\'Core\');
+    gitCheckout: gitCheckout;
     status: #(#\'inactive\');
     locked: true;
     yourself'}
