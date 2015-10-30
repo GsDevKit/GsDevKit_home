@@ -1,0 +1,9 @@
+TDObjectGatewayNode{#name:'Metacello',#contents:'^ TDProjectSpecEntryDefinition new
+    baseline: \'Metacello\'
+      repository: \'github://dalehenrich/metacello-work:master/repository\'
+      loads: #(\'default\');
+    installScript: \'project clone --https --local Metacello\';
+    gitCheckout: \'master\';
+    status: #(#\'inactive\');
+    locked: false;
+    yourself'}

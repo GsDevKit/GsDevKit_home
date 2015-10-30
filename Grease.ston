@@ -1,0 +1,9 @@
+TDObjectGatewayNode{#name:'Grease',#contents:'^ TDProjectSpecEntryDefinition new
+    baseline: \'Grease\'
+      repository: \'github://GsDevKit/Grease:master/repository\'
+      loads: #(\'default\');
+    installScript: \'project clone --https --local Grease\';
+    gitCheckout: \'master\';
+    status: #(#\'inactive\');
+    locked: false;
+    yourself'}

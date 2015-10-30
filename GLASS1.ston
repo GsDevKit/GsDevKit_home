@@ -1,0 +1,9 @@
+TDObjectGatewayNode{#name:'GLASS1',#contents:'^TDProjectSpecEntryDefinition new
+  baseline: \'GLASS1\'
+    repository: \'github://glassdb/glass:master/repository\'
+    loads: #(\'default\');
+  installScript: \'project clone --https --local GLASS1\';
+  gitCheckout: \'master\';
+  status: #(#\'inactive\');
+  locked: false;
+  yourself'}
