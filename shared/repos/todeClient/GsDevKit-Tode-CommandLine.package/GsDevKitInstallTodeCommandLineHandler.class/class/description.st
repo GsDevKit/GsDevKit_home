@@ -1,3 +1,3 @@
 accessing
 description
-	^ 'Install tODE in the given stone.'
+	^ 'Load tODE in the given stone.'
