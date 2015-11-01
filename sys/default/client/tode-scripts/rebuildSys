@@ -13,5 +13,8 @@ mount --stoneRoot projectComposition.ston / projects
 eval `MCGitHubRepository cacheDirectory: nil`
 # flush the repository cache for old stones so that disk based caches will be rebuilt 
 eval `MCRepositoryGroup default repositoriesDo: [:rep | rep flushCache ].`
+project rehome Metacello
+project rehome GLASS1
+project rehome Grease
 commit
 cd 
