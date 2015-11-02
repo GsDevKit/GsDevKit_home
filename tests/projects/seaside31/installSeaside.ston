@@ -1,5 +1,0 @@
-TDTopezLeafNode{#name:'installSeaside',#contents:'# no backups on travis for https://github.com/dalehenrich/tode/issues/226
-# bu backup preUpdate.dbf          # make backup before installing Seaside
-project load Seaside3            # load Seaside3 project
-# bu backup --commit seaside3.dbf  # post build backup
-bu snapshot --commit seaside3.dbf         # post build snapshot',#creationTime:DateAndTime['2015-10-17T20:48:13.7510020732879-07:00'],#modificationTime:DateAndTime['2015-10-17T20:48:39.5164499282836-07:00']}

@@ -1,4 +1,5 @@
 # Set up /sys node structure
+mount --todeRoot / / _home
 mount --todeRoot sys/default /sys default
 mount --todeRoot sys/local /sys local
 mount --todeRoot sys/local/server/stones /sys stones
@@ -8,5 +9,12 @@ mount --stoneRoot / /sys stone
 # Define /home and /projects based on a composition of the /sys nodes
 mount --stoneRoot homeComposition.ston / home
 mount --stoneRoot projectComposition.ston / projects
+# clear the github-cache reference for old stone
+eval `MCGitHubRepository cacheDirectory: nil`
+# flush the repository cache for old stones so that disk based caches will be rebuilt 
+eval `MCRepositoryGroup default repositoriesDo: [:rep | rep flushCache ].`
+project rehome Metacello
+project rehome GLASS1
+project rehome Grease
 commit
 cd 

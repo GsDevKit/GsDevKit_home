@@ -10,7 +10,7 @@ echo "================="
 
 usage() {
   cat <<HELP
-usage: $0 [-c] [-f] [-u] [-s <source-stone-extent-file-path>] [-l <post-load-tode-script> ] \
+usage: $0 [-c] [-f] [-u] [-s <source-stone-extent-file-path>] [-l <post-load-tode-script> ]
 	  <source-stone-name> <target-stone-name> <gemstone-version>
 
 OPTIONS
@@ -103,7 +103,7 @@ stone "$targetStoneName":
   4. create $targetStonePath/upgradeLog
   5. executes the \$GEMSTONE/bin/upgradeImage script
   6. executes the \$GEMSTONE/seaside/bin/upgradeSeasideImage script
-  7. executes the \$GS_SERVER/bin/todeInstall in $targetStoneName stone
+  7. executes the \$GS_SERVER/bin/todeLoad in $targetStoneName stone
      to complete the upgrade process.
   8. executes the <post-load-tode-script> (-l option)
 
@@ -247,7 +247,7 @@ EOF
 popd >& /dev/null  
 
 echo "Installing tODE"
-$GS_HOME/bin/todeInstall $targetStoneName
+$GS_HOME/bin/todeLoad $targetStoneName
 if [ "${createStone}" = "true" ] ; then
   if [ -d  $GS_SYS_STONES/$sourceStoneName/projects ] ; then
     cp -r $GS_SYS_STONES/$sourceStoneName/projects/. \

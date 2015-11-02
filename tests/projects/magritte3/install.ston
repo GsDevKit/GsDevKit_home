@@ -1,5 +1,0 @@
-TDTopezLeafNode{#name:'install',#contents:'cp /home/magritte/projects/zinc /sys/stone/projects # Use  Zinc 2.4.3.1 and get gem servers
-project load --loads=`#(\'Tests\')` Magritte3       # load Magritte3 project
-project load Seaside3                               # load Seaside3 adaptors
-#bu backup magritte3.2.0.dbf                        # make a backup after load completes
-project list                                        # refresh the project list',#creationTime:DateAndTime['2015-02-22T17:16:42.70123791694641-08:00'],#modificationTime:DateAndTime['2015-02-22T17:19:33.31049394607544-08:00']}

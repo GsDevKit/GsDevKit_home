@@ -1,4 +1,4 @@
-"First step in tODE installation process: upgrade GLASS (if necessary).
+"First step in tODE load process: upgrade GLASS (if necessary).
  Should not change this script as GsUpgrader upgrades GLASS correctly."
 
 Transcript cr; show: '---Step 1 of tODE bootstrap process: execute upgradeGlass.ws'.

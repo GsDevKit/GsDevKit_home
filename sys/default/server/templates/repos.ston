@@ -7,11 +7,17 @@ TDRawGatewayNode{#name:'repos',#contents:'| dirNode projectTool monticelloTool |
   (projectTool projectRegistrationDefinitionList
     select: [ :registration | registration hasGitBasedRepo or: [ registration hasFileTreeRepo ] ])
     collect: [ :each | 
-      dirNode
-        addChildNode:
-          (TDObjectNode new
+      | node repos |
+      repos := [ each repository ]
+        on: Error
+        do: [ :ignored | 
+          \"not a valid repository, so skip it\"
+          nil ].
+      repos
+        ifNotNil: [ 
+          node := TDObjectNode new
             name: each projectName;
-            basicContents: each repository;
+            basicContents: repos;
             listBlock: [ :theNode | ((monticelloTool mrpackageNamesIn: theNode basicContents) at: 1) sorted ];
             elementBlock: [ :theNode :elementName :absentBlock | 
                   | resolvedDict versionReferences info |
@@ -34,5 +40,6 @@ TDRawGatewayNode{#name:'repos',#contents:'| dirNode projectTool monticelloTool |
                             basicContents: versionReference version;
                             yourself ];
                     yourself ];
-            yourself) ].
+            yourself.
+          dirNode addChildNode: node ] ].
   ^ dirNode'}
