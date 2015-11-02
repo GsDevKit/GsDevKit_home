@@ -1,0 +1,19 @@
+
+table.LT {
+width:100%;
+padding: 7px;
+}
+
+table.LT th {
+border: 1px solid #bbbbbb;
+padding: 7px; 
+background-color: #eeeeee;
+text-align:center;
+}
+
+table.LT td {
+border: 1px solid #bbbbbb;
+padding: 7px;
+vertical-align: top;
+text-align:left;
+}
