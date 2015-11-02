@@ -1,8 +1,9 @@
 TDObjectGatewayLeafNode{#name:'TestSample2',#contents:'^ TDProjectSpecEntryDefinition new
+    comment: \'For testing ... do not do a backup on travis.\';
+    projectUrl: \'https://github.com/dalehenrich/sample\';
     baseline: \'Sample\'
       repository: \'github://dalehenrich/sample:master/repository\'
       loads: #(\'Core\');
-    comment: \'For testing ... do not do a backup on travis.\';
     installScript: \'project clone --https --local Sample
       mount @/_home/shared/repos/sample/tode /home sample\';
     preLoadScript: \'bu snapshot pre.dbf\';

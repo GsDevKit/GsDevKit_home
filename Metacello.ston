@@ -1,4 +1,6 @@
 TDObjectGatewayLeafNode{#name:'Metacello',#contents:'^ TDProjectSpecEntryDefinition new
+    comment: \'\';
+    projectUrl: \'https://github.com/dalehenrich/metacello-work\';
     baseline: \'Metacello\'
       repository: \'github://dalehenrich/metacello-work:master/repository\'
       loads: #(\'default\');

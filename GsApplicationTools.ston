@@ -1,4 +1,6 @@
 TDObjectGatewayLeafNode{#name:'GsApplicationTools',#contents:'^ TDProjectSpecEntryDefinition new
+    comment: \'\';
+    projectUrl: \'https://github.com/GsDevKit/gsApplicationTools\';
     baseline: \'GsApplicationTools\'
       repository: \'github://GsDevKit/gsApplicationTools:master/repository\'
       loads: #(\'default\');

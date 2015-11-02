@@ -1,4 +1,6 @@
 TDObjectGatewayLeafNode{#name:'Mapless',#contents:'^ TDProjectSpecEntryDefinition new
+    comment: \'\';
+    projectUrl: \'https://github.com/GsDevKit/Mapless\';
     baseline: \'Mapless\'
       repository:
         \'github://GsDevKit/Mapless:master/src\'

@@ -1,6 +1,7 @@
 TDObjectGatewayLeafNode{#name:'GsDevKit_seaside31',#contents:'^ TDGitRepositoryEntryDefinition new
     projectName: \'GsDevKit_seaside31\';
     comment: \'Install script clones GsDevKit/GsDevKit_seaside31.\';
+    projectUrl: \'https://github.com/GsDevKit/GsDevKit_seaside31\';
     gitRepoDirectoryPath: \'$GS_HOME/etc/GsDevKit_seaside31\';
     gitCheckout: \'master\';
     installScript: \'

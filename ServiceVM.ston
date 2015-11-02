@@ -1,4 +1,6 @@
 TDObjectGatewayLeafNode{#name:'ServiceVM',#contents:'^ TDProjectSpecEntryDefinition new
+    comment: \'\';
+    projectUrl: \'https://github.com/GsDevKit/ServiceVM\';
     baseline: \'ServiceVM\'
       repository: \'github://GsDevKit/ServiceVM:master/repository\'
       loads: #(\'Core\' \'Example\' \'Tests\');

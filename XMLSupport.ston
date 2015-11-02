@@ -1,4 +1,6 @@
 TDObjectGatewayLeafNode{#name:'XMLSupport',#contents:'^ TDProjectSpecEntryDefinition new
+    comment: \'\';
+    projectUrl: \'http://www.squeaksource.com/XMLSupport.html\';
     configuration: \'XMLSupport\'
       version: \'1.2.2.1\'
       repository: \'http://seaside.gemtalksystems.com/ss/MetacelloRepository\'

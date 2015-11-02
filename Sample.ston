@@ -1,4 +1,6 @@
 TDObjectGatewayLeafNode{#name:'Sample',#contents:'^ TDProjectSpecEntryDefinition new
+    comment: \'\';
+    projectUrl: \'https://github.com/dalehenrich/sample\';
     baseline: \'Sample\'
       repository: \'github://dalehenrich/sample:master/repository\'
       loads: #(\'Core\');

@@ -1,4 +1,6 @@
 TDObjectGatewayLeafNode{#name:'ZincHTTPComponents',#contents:'^ TDProjectSpecEntryDefinition new
+    comment: \'\';
+    projectUrl: \'https://github.com/GsDevKit/zinc\';
     baseline: \'ZincHTTPComponents\'
       repository: \'github://GsDevKit/zinc:2.4.3.?/repository\'
       loads: #(\'Core\');

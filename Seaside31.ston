@@ -1,4 +1,6 @@
 TDObjectGatewayLeafNode{#name:'Seaside31',#contents:'^ TDProjectSpecEntryDefinition new
+    comment: \'\';
+    projectUrl: \'https://github.com/GsDevKit/Seaside31\';
     baseline: \'Seaside3\'
       repository: \'github://GsDevKit/Seaside31:3.1.?/repository\'
       loads: #(\'Development\' \'Zinc\' \'FastCGI\' \'Examples\');

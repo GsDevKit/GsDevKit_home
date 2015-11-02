@@ -1,4 +1,6 @@
 TDObjectGatewayLeafNode{#name:'Flow',#contents:'^ TDProjectSpecEntryDefinition new
+    comment: \'\';
+    projectUrl: \'https://github.com/GsDevKit/flow\';
     baseline: \'Flow\'
       repository:
         \'github://GsDevKit/flow:master/backend/src\'

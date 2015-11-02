@@ -1,4 +1,6 @@
 TDObjectGatewayLeafNode{#name:'Magritte3',#contents:'^ TDProjectSpecEntryDefinition new
+    comment: \'\';
+    projectUrl: \'https://github.com/magritte-metamodel/magritte\';
     configuration: \'Magritte3\'
       version: #\'release3.2\'
       repository: \'http://smalltalkhub.com/mc/Magritte/Magritte3/main\'

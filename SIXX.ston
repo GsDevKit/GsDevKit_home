@@ -1,4 +1,6 @@
 TDObjectGatewayLeafNode{#name:'SIXX',#contents:'^TDProjectSpecEntryDefinition new
+    comment: \'\';
+    projectUrl: \'https://github.com/glassdb/SIXX\';
   baseline: \'SIXX\'
     repository: \'github://glassdb/SIXX:master/repository\'
     loads: \'Core\';

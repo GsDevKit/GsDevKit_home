@@ -1,4 +1,6 @@
 TDObjectGatewayLeafNode{#name:'GLASS1',#contents:'^TDProjectSpecEntryDefinition new
+  comment: \'\';
+  projectUrl: \'https://github.com/glassdb/glass\';
   baseline: \'GLASS1\'
     repository: \'github://glassdb/glass:master/repository\'
     loads: #(\'default\');

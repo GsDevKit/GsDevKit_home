@@ -1,4 +1,6 @@
 TDObjectGatewayLeafNode{#name:'Grease',#contents:'^ TDProjectSpecEntryDefinition new
+    comment: \'\';
+    projectUrl: \'https://github.com/GsDevKit/Grease\';
     baseline: \'Grease\'
       repository: \'github://GsDevKit/Grease:master/repository\'
       loads: #(\'default\');

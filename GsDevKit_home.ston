@@ -1,4 +1,6 @@
 TDObjectGatewayLeafNode{#name:'GsDevKit_home',#contents:'^ TDGitRepositoryEntryDefinition new
+    comment: \'https://github.com/GsDevKit/GsDevKit_home\';
+    projectUrl: \'\';
     projectName: \'GsDevKit_home\';
     status: #(#\'active\');
     gitCheckout: \'master\';

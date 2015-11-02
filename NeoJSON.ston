@@ -1,4 +1,6 @@
 TDObjectGatewayLeafNode{#name:'NeoJSON',#contents:'^ TDProjectSpecEntryDefinition new
+    comment: \'\';
+    projectUrl: \'https://github.com/GsDevKit/NeoJSON\';
     baseline: \'NeoJSON\'
       repository:
         \'github://GsDevKit/NeoJSON:gs_master/repository\'

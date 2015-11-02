@@ -1,4 +1,6 @@
 TDObjectGatewayLeafNode{#name:'Cryptography',#contents:'^ TDProjectSpecEntryDefinition new
+    comment: \'https://github.com/GsDevKit/Cryptography\';
+    projectUrl: \'\';
     baseline: \'Cryptography\'
       repository: \'github://GsDevKit/Cryptography:master/repository\'
       loads: #(\'Cryptography\');
