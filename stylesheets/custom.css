@@ -9,11 +9,8 @@ pre {
   background: #FDFEFB;
   overflow: auto;
   overflow-y: hidden;
-    text-align: left;
-    text-indent: -25px;
-    white-space: pre-line;
-    
-  padding: 0 0 0 25px ;
+  letter-spacing: -0.45px;
+  padding: 0  ;
   border-radius: 0px;
   border: 0px solid #D7D8C8;
   margin: 0px;
