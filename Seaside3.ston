@@ -1,4 +1,4 @@
-TDObjectGatewayLeafNode{#name:'Seaside31',#contents:'^ TDProjectSpecEntryDefinition new
+TDObjectGatewayLeafNode{#name:'Seaside3',#contents:'^ TDProjectSpecEntryDefinition new
     comment: \'\';
     projectUrl: \'https://github.com/GsDevKit/Seaside31\';
     baseline: \'Seaside3\'
