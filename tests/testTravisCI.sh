@@ -51,21 +51,7 @@ case $TEST in
   BasicTodeClient)
     $GS_HOME/tests/basicTodeClientTests.sh
     ;;
-  Magritte)
-    $GS_HOME/tests/magritteTests.sh
-    ;;
-  Pier300)
-    $GS_HOME/tests/pier300Tests.sh
-    ;;
-  Projects1|Projects2)
-    $GS_HOME/tests/projectTests.sh
-    ;;
-  Seaside3) $GS_HOME/tests/testSeaside3.sh ;;
-  Seaside3Upgrade) $GS_HOME/tests/testSeaside3Upgrade.sh ;;
-  Zinc)
-    $GS_HOME/tests/zincTests.sh
-    ;;
-  *)
+ *)
     echo "Unknown test: $TEST"
     exit 1
     ;;

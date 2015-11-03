@@ -1,4 +1,5 @@
 # Set up /sys node structure
+mount --todeRoot / / _home
 mount --todeRoot sys/default /sys default
 mount --todeRoot sys/local /sys local
 mount --todeRoot sys/local/server/stones /sys stones

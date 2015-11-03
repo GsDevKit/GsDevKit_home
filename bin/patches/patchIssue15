@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/bash -x
 #=========================================================================
 # Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
 #=========================================================================
@@ -10,22 +10,25 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-D] <stone-name> <tode-command-line>
+USAGE: $(basename $0) [-h] [-D] <stone-name>
+Install tODE without using \`project load Tode\` ... after running 
+\`updateGsDevKit -t\`, the new project entries for each tODE stone
+require a new class that isn't present until Tode is loaded.
 
-Execute the <tode-command-line> as a tODE shell command.
+If you get an like the following:
 
-tODE must be installed in the named stone.
+  a STONReaderError occurred (error 2710), Cannot resolve class named #'TDObjectGatewayLeafNode
+
+then you need to run this script. See https://github.com/GsDevKit/GsDevKit_home/issues/13
+for more details.
 
 OPTIONS
-  -h show usage
-  -D launch command line image for interactive debugging
+  -h display help
+  -D launch patch image for interactive debugging
 
 EXAMPLES
   $(basename $0) -h
-  $(basename $0) -D gs_326 project load Seaside3
-  $(basename $0) gs_326 project load Seaside3
-  $(basename $0) gs_326 eval \`3+4\`
-  $(basename $0) gs_326 eval \`3+4\`\; eval \`self == 7 ifFalse: [ System logout ]\`
+  $(basename $0) gs_3210
 
 HELP
 }
@@ -40,6 +43,7 @@ set -e # exit on error
 if [ "${GS_HOME}x" = "x" ] ; then
   echo "the GS_HOME environment variable needs to be defined"; exit 1
 fi
+source ${GS_HOME}/bin/defGsDevKit.env
 
 interactiveArg=""
 while getopts "hD" OPT ; do
@@ -51,13 +55,15 @@ while getopts "hD" OPT ; do
 done
 shift $(($OPTIND - 1))
 
+if [ $# -ne 1 ]; then
+  usage; exit 1
+fi
 stoneName="$1"
-shift
 
-# do tODE shell command
-echo "performing tode command: __$*__"
 $GS_HOME/bin/private/gsDevKitTodeCommandLine $interactiveArg todeIt $stoneName << EOF
-$*
+eval \`GsDeployer deploy: [ Metacello image baseline: 'Tode'; get; load ]\`
+script --script=rebuildSys
+mount --todeRoot / / _home
 EOF
-echo "" # todeIt output tends to be missing trailing LF
+
 echo "...finished $(basename $0)"
