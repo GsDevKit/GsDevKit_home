@@ -19,7 +19,7 @@ You will need to ensure that your operating system is configured with the requir
 
 GsDevKit and tODE provide a development environment that is similar to Smalltalk IDEs, but with additonal functionality.  The most important capabilities are for project management, and the tODE command shell.  To get started learning about tODE features, see:
 * [Getting started with tODE][11]
-* [The tODE command line][12]
+* [The tODE command line shell][12]
 * [Projects in tODE][13]
 
 
@@ -48,8 +48,8 @@ GsDevKit and tODE provide a development environment that is similar to Smalltalk
 [9]: docs/FAQ.md#6-do-i-have-to-bootstrap-glass1-and-tode-from-scratch-every-time-i-create-a-stone
 [10]: docs/projectsInTode.md#creating-a-new-project
  
-[11]: dpcs/gettingStartedWithTode.md
-[12]: docs/todeCommandShell.md
+[11]: docs/gettingStartedWithTode.md
+[12]: docs/todeShell.md
 [13]: docs/projectsInTode.md
 
  
