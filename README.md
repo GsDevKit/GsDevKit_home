@@ -25,9 +25,9 @@ You will need to ensure that your operating system is configured with the requir
 7. [How do I create a new project from scratch in tODE?][10]
 8. How do I share session descriptions between a local client and a remote server?
 9. How do I upgrade a stone to a new version of GemStone?
-10. How do I load Seaside?
+10. [How do I load Seaside?][21]
 
-[**COMMENTS**][8]
+[**FEEDBACK**][8]
 
 [1]: https://github.com/GsDevKit/gsDevKitHome#open-source-development-kit-for-gemstones-64-bit-
 [2]: docs/installation/README.md#installation-overview
@@ -39,7 +39,7 @@ You will need to ensure that your operating system is configured with the requir
 [8]: https://github.com/GsDevKit/GsDevKit_home/issues/new
 [9]: docs/FAQ.md#6-do-i-have-to-bootstrap-glass1-and-tode-from-scratch-every-time-i-create-a-stone
 [10]: docs/projectsInTode.md#creating-a-new-project
-
+ 
 [20]: https://github.com/GsDevKit/GsDevKit_seaside31/blob/master/docs/installation/README.md
 [21]: https://github.com/GsDevKit/GsDevKit_seaside31/blob/master/docs/installation/loadSeasideProject.md
 
