@@ -9,11 +9,15 @@ The tODE shell has similarities both to the bash shell and to the GemStone topaz
 * The tODE shell uses bash posix syntax with a few exceptions: the back tick ` is used, rather than double or single quotes " or ', to escape lines of text that includes spaces.  
 
 * The tODE shell is object-in and object-out; as bash accepts input from stdin, and send output to stdout, the tODE shell accepts objects in, and returns objects.  
-*  The initial token in each tODE shell expression is a command.  Command words are registered in a lookup dictionary, which will return an instance of a Class; subcommands and options are translated to methods and arguments.  You may create your own commands as well.  
+*  The initial token in each tODE shell expression is a command, which may be followed by subcommands or arguments. 
 
 ### Commands
 
-commands include operations such as man and project, which are starting points for working with man page documentation and projects.  To execute Smalltalk code, use the eval command.  All the tODE menu items are available to execute as tODE commands.
+tODE command words are registered in a lookup dictionary, which will return an instance of a Class; subcommands and options are translated to methods and arguments.  You may create your own commands as well.  
+
+tODE commands include operations such as **man** and **project**, which are starting points for working with, respectively man page documentation and projects; each of these have many subcommands.  
+
+To execute Smalltalk code, use the eval command.  All the tODE menu items are available to execute as tODE commands.
 
 For example:
 
@@ -21,10 +25,10 @@ For example:
 
 ![tode man eval][3]
 
-Note that these expression return an object to the command line, as well as performing the operations.  
-For man eval, for example, the man page is opened, but a value is also returned.  
-You may use this to chain commands.  For example:
+#### Combining commands
 
+The tODE expressions above return an object to the command line, as well as performing the operations.  
+For `man eval`, for example, the man page is opened, but a value is also returned (the first part of the String containing the man information). You may use this to chain commands.  For example:
 
 ![tode multi line eval][4]
 
