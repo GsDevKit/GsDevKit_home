@@ -15,6 +15,14 @@ The GsDevKit_home project is current in **EARLY ACCESS** mode. If you are alread
 
 You will need to ensure that your operating system is configured with the required packages before installing.  Please read the [Installation Overview][2] for installation options and instructions.  If you are planning to use Seaside, you can install and create a Seaside Stone, using the [Seaside installation instructions][20]. You can also [install Seaside into an existing GsDevKit installation][21].
 
+##Using GsDevKit and tODE
+
+GsDevKit and tODE provide a development environment that is similar to Smalltalk IDEs, but with additonal functionality.  The most important capabilities are for project management, and the tODE command shell.  To get started learning about tODE features, see:
+* [Getting started with tODE][11]
+* [The tODE command line][12]
+* [Projects in tODE][13]
+
+
 ##FAQs
 1. [If I am already using gsDevKitHome, why should I consider moving to GsDevKit_home?][3]
 2. [Do I have to rebuild all of my stones to use GsDevKit_home?][4]
@@ -39,6 +47,11 @@ You will need to ensure that your operating system is configured with the requir
 [8]: https://github.com/GsDevKit/GsDevKit_home/issues/new
 [9]: docs/FAQ.md#6-do-i-have-to-bootstrap-glass1-and-tode-from-scratch-every-time-i-create-a-stone
 [10]: docs/projectsInTode.md#creating-a-new-project
+ 
+[11]: dpcs/gettingStartedWithTode.md
+[12]: docs/todeCommandShell.md
+[13]: docs/projectsInTode.md
+
  
 [20]: https://github.com/GsDevKit/GsDevKit_seaside31/blob/master/docs/installation/README.md
 [21]: https://github.com/GsDevKit/GsDevKit_seaside31/blob/master/docs/installation/loadSeasideProject.md
