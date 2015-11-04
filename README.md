@@ -13,7 +13,7 @@ The GsDevKit_home project is current in **EARLY ACCESS** mode. If you are alread
 1. *Everything on a single workstation*
 2. *Client on a local workstation, Server on a remote host*
 
-You will need to ensure that your operating system is configured with the required packages before installing.  Please read the [Installation Overview][2] for installation options and instructions.
+You will need to ensure that your operating system is configured with the required packages before installing.  Please read the [Installation Overview][2] for installation options and instructions.  If you are planning to use Seaside, you can install and create a Seaside Stone, use the [Seaside installation instructions][20]. You can also [install Seaside into an existing GsDevKit installation][21].
 
 ##FAQs
 1. [If I am already using gsDevKitHome, why should I consider moving to GsDevKit_home?][3]
@@ -39,5 +39,8 @@ You will need to ensure that your operating system is configured with the requir
 [8]: https://github.com/GsDevKit/GsDevKit_home/issues/new
 [9]: docs/FAQ.md#6-do-i-have-to-bootstrap-glass1-and-tode-from-scratch-every-time-i-create-a-stone
 [10]: docs/FAQ.md#7-how-do-i-create-a-new-project-from-scratch-in-tode
+
+[20]: https://github.com/GsDevKit/GsDevKit_seaside31/blob/master/docs/installation/installSeasideServer.md
+[21]: https://github.com/GsDevKit/GsDevKit_seaside31/blob/master/docs/installation/loadSeasideProject.md
 
 [100]: docs/FAQ.md#100-how-do-i-contribute-to-the-gsdevkit_home-project
