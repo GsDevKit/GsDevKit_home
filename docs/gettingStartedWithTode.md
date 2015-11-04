@@ -50,10 +50,12 @@ Documentation for tODE is provided in man pages within the tODE environment (not
 
 ![tODE Man Page][7] 
 
+---
 
 [Continue to next page: The tODE Shell][8]
 
-
+---
+[**FEEDBACK**][28]
 ---
 
 
@@ -66,5 +68,5 @@ Documentation for tODE is provided in man pages within the tODE environment (not
 [7]: images/todeMan.png
 [8]: ./todeShell.md
 
-
+[28]: https://github.com/GsDevKit/GsDevKit_home/issues/new
 
