@@ -21,7 +21,6 @@ For example:
 
 ![tode man eval][3]
 
-
 Note that these expression return an object to the command line, as well as performing the operations.  
 For man eval, for example, the man page is opened, but a value is also returned.  
 You may use this to chain commands.  For example:
