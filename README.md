@@ -38,7 +38,7 @@ You will need to ensure that your operating system is configured with the requir
 [7]: docs/FAQ.md#5-when-a-new-version-of-tode-is-published-how-do-i-update-my-checkout-and-my-stones
 [8]: https://github.com/GsDevKit/GsDevKit_home/issues/new
 [9]: docs/FAQ.md#6-do-i-have-to-bootstrap-glass1-and-tode-from-scratch-every-time-i-create-a-stone
-[10]: docs/FAQ.md#7-how-do-i-create-a-new-project-from-scratch-in-tode
+[10]: docs/projectsInTode.md#creating-a-new-project
 
 [20]: https://github.com/GsDevKit/GsDevKit_seaside31/blob/master/docs/installation/README.md
 [21]: https://github.com/GsDevKit/GsDevKit_seaside31/blob/master/docs/installation/loadSeasideProject.md
