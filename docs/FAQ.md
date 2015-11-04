@@ -180,67 +180,6 @@ $GS_HOME/bin/createStone -s <path-to-custom-snapshot> new_329 3.2.9
 ---
 ---
 
-####7. *How do I create a new project from scratch in tODE?*
-
-For a project in tODE, you need a package for managing your source code (classes and extension methods), a *BaselineOf* for specifying the load order of packages and project dependencies, a git repository to manage versions of your source code on disk, and a project entry for specifying how you want tODE to treat your project.
-The `project new` command can be used to create all of these artifacts.
-
-For example when you run the following command:
-
-```
-project new --class Foo
-```
-
-You are prompted for the attributes of a new class (by default named *Foo*):
-
-```
-Object subclass: 'Foo'
-  instVarNames: #()
-  classVars: #()
-  classInstVars: #()
-  poolDictionaries: #()
-  inDictionary: ''
-  category: 'Foo-Core'
-```
-
-The *Foo-Core* package is created and the *Foo* class is added to the package.
-The *BaselineOfFoo* is created with the following specification:
-
-```Smalltalk
-baseline: spec
-  <baseline>
-  spec for: #'common' do: [ spec package: 'Foo-Core' ]
-``` 
-
-For a bit more information on working with the *BaselineOf*, read the [Create Baseline][40] in the [Getting Started with GitHub document][41].
-The *BaselineOfFoo* package is created for storing the *BaselineOf* on disk.
-
-The directory `$GS_HOME/shared/repos/Foo` directory is created, a git repository is created in the directory and the *BaselineOfFoo* and *Foo-Core* packages are saved in the git repository.
-
-Finally a *project entry* is created:
-
-```Smalltalk
-^ TDProjectSpecEntryDefinition new
-    baseline: 'Foo'
-      repository: 'filetree://$GS_HOME/shared/repos/Foo/repository'
-      loads: #('default');
-    status: #( #'active' );
-    locked: true;
-    yourself
-```
-
-and saved on disk as `$GS_HOME/sys/local/server/projects`.
-
-Now is a good time make some modifications to your application class, update the `project list` command and play with some of the `project list` menu items:
-
-![Foo project list][42]
-
-[**FEEDBACK**][28]
-
----
----
----
-
 #UNDER CONSTRUCTION
 ---
 ---
@@ -311,10 +250,8 @@ Then on GitHub, open a pull request from the `topicBranch` in your fork, to the 
 [28]: https://github.com/GsDevKit/GsDevKit_home/issues/new
 
 [30]: https://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/9-BackupAndRestore.htm#pgfId-1069325
-[31]: ../images/GsDevKit_home-pull-request.png
-[32]: ../images/GsDevKit_home-pull-request-merge-detail.png
-[33]: ../images/GsDevKit_home-pull-request-previous-pull-request-link.png
+[31]: images/GsDevKit_home-pull-request.png
+[32]: images/GsDevKit_home-pull-request-merge-detail.png
+[33]: images/GsDevKit_home-pull-request-previous-pull-request-link.png
 
-[40]: https://github.com/dalehenrich/metacello-work/blob/master/docs/GettingStartedWithGitHub.md#create-baseline
-[41]: https://github.com/dalehenrich/metacello-work/blob/master/docs/GettingStartedWithGitHub.md#getting-started-with-github
-[42]: ../images/todeFooProjectList.png
+
