@@ -7,9 +7,9 @@ One of the most important advantages of using the tODE development environment i
 The tODE shell has similarities both to the bash shell and to the GemStone topaz command line environment. 
 
 * The tODE shell uses bash posix syntax with a few exceptions: the back tick ` is used, rather than double or single quotes " or ', to escape lines of text that includes spaces.  
-
 * The tODE shell is object-in and object-out; as bash accepts input from stdin, and send output to stdout, the tODE shell accepts objects in, and returns objects.  
 *  The initial token in each tODE shell expression is a command, which may be followed by subcommands or arguments.  All the tODE menu items are available to execute as tODE commands.
+* shell variables are not yet supported
 
 ### Commands
 
