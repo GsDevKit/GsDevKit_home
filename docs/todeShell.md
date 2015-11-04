@@ -41,6 +41,9 @@ Commands are broken up by newlines, as in these examples, or by the | or ; chara
 [Continue to the next page: Projects in tODE][10]
 
 ---
+[**FEEDBACK**][28]
+---
+
 
 [1]: images/todeShell.jpg
 [2]: images/todeManEval.jpg
@@ -49,3 +52,5 @@ Commands are broken up by newlines, as in these examples, or by the | or ; chara
 [5]: images/todeChainEval.jpg
 
 [10]: ./projectsInTode.md
+
+[28]: https://github.com/GsDevKit/GsDevKit_home/issues/new
