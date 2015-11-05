@@ -18,7 +18,7 @@ The Server Node's blue and purple ovals are GemStone processes that are expresse
 
 The Server Node's folder and disk images are a "created" GsDevKit stone.
 
-Stone commands
+####Stone commands
 
 The `stones` command lists all stones and netldis that have been created and those that are currently running.
 
