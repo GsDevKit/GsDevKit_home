@@ -14,9 +14,9 @@ The following diagram indicates some of the relationships between these:
 
 ![GsDevKit architecture][2]
 
-The Server Node's blue and purple ovals are GemStone processes that are expressed as a "running" GsDevKit stone.  Note that the Gem, which is started up when the tODE client logs in and terminated when tODE logs out, is part of the GemStone server, and is shut down when the stone shuts down.
+* The Server Node's blue and purple ovals are GemStone processes that are expressed as a "running" GsDevKit stone.  Note that the Gem, which is started up when the tODE client logs in and terminated when tODE logs out, is part of the GemStone server, and is shut down when the stone shuts down.
 
-The Server Node's folder and disk images are a "created" GsDevKit stone.
+* The Server Node's folder and disk images are a "created" GsDevKit stone.
 
 ####Stone commands
 
@@ -24,13 +24,13 @@ The `stones` command lists all stones and netldis that have been created and tho
 
 The following commands operate on stones:
 
-`createStone <stoneName> <version> ` creates the associated directory files for a stone with the given name and GemStone version.  There are a number of options to create stones based on snapshots (backups) and with certain projects loaded.
+* `createStone <stoneName> <version> ` creates the associated directory files for a stone with the given name and GemStone version.  There are a number of options to create stones based on snapshots (backups) and with certain projects loaded.
  
-`startStone -b <stoneName>` starts the stone and netldi. 
+* `startStone -b <stoneName>` starts the stone and netldi. 
 
-`stopStone -b <stoneName>` stops the stone and netldi.  Note that if there are any logged in sessions, they will be terminated.
+* `stopStone -b <stoneName>` stops the stone and netldi.  Note that if there are any logged in sessions, they will be terminated.
 
-`deleteStone <stoneName> ` stops the stone and netldi, if running, then deletes all files assocated with the given repository.
+* `deleteStone <stoneName> ` stops the stone and netldi, if running, then deletes all files assocated with the given repository.
 
 ##Maintenance Operations and Garbage Collection
 
