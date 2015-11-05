@@ -10,6 +10,16 @@ GsDevKit provides an interface to the main GemStone repository operations, simpl
 
 In the GsDevKit environment, the GemStone server and all associated underlying processes are collectively termed a "stone".  *Installing* is a process of downloading the GemStone/S server components.  *Creating a stone* involves making a directory, copying files, and creating configuration information that describe an independent repository with a specific name and version. *Starting a stone* starts up the GemStone stone process, other associated processes, and gets the repository in a state where you can login.  
 
+The following diagram indicates some of the relationships between these:
+
+![GsDevKit architecture][2]
+
+The Server Node's blue and purple ovals are GemStone processes that are expressed as a "running" GsDevKit stone.  Note that the Gem, which is started up when the tODE client logs in and terminated when tODE logs out, is part of the GemStone server, and is shut down when the stone shuts down.
+
+The Server Node's folder and disk images are a "created" GsDevKit stone.
+
+Stone commands
+
 The `stones` command lists all stones and netldis that have been created and those that are currently running.
 
 The following commands operate on stones:
@@ -61,7 +71,7 @@ Otherwise, the NetLDI will listen on a  different port each time it restarts, an
 ---
 
 [1]: https://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/GS64-SysAdmin-3.2.htm
-
+[2]: images/DevKit_ClientServer_Arch.png
 [10]: images/todeMFC.png
 
 [28]: https://github.com/GsDevKit/GsDevKit_home/issues/new
