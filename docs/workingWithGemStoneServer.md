@@ -6,6 +6,8 @@ GemStone administration is described in the [System Adminstration Guide][1].
 
 GsDevKit provides an interface to the main GemStone repository operations, simplifying the management interface available in the plain GemStone installation.  The bash command-line operations provided by GsDevKit are distinct from GemStone utility commands.  Users who have experience with GemStone will have the most difficulty. 
 
+###Working with Stones
+
 In the GsDevKit environment, the GemStone server and all associated underlying processes are collectively termed a "stone".  *Installing* is a process of downloading the GemStone/S server components.  *Creating a stone* involves making a directory, copying files, and creating configuration information that describe an independent repository with a specific name and version. *Starting a stone* starts up the GemStone stone process, other associated processes, and gets the repository in a state where you can login.  
 
 The `stones` command lists all stones and netldis that have been created and those that are currently running.
