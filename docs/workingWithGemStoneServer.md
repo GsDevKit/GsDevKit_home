@@ -39,13 +39,16 @@ The NetLDI is a process that initiates communication between sessions and GemSto
 
 Creating a stone automatically creates a Netldi, and starting a stone using startStone -b automatically start the associated netldi.
 
+You may start and stop the stone and the netldi independently, using startStone or stopStone without the -b, and using startNetldi and stopNetldi.  GemStone users should note that while the NetLDI has a name, the startNetldi and stopNetldi scripts take the name of the GsDevKit stone installation, which is also the Stone process name, not the Netldi process name.
+
+####Port user over restart
+
 In a multiple-node system (for example, if your stone is installed on Linux but your tODE client is running on Windows), the Netldi should either have an assigned port for the specific netldi name in /etc/services, or you should edit the contents of $GS_HOME/sys/local/sessions/<stoneName> to specify a specific port number on both nodes:
 
         #netLDIPort : '45678',
 
 Otherwise, the NetLDI will listen on a  different port each time it restarts, and the tODE client will not be able to connect.
 
-You may start and stop the stone and the netldi independently, using startStone or stopStone without the -b, and using startNetldi and stopNetldi.  GemStone users should note that while the NetLDI has a name, the startNetldi and stopNetldi scripts take the name of the GsDevKit stone installation, which is also the Stone process name, not the Netldi process name.
 
 
 
