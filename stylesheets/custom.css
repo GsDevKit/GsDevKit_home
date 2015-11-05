@@ -1,0 +1,48 @@
+/************************ Changes section starts *********************/
+
+h4 {
+  margin: 0px 0 8px;
+}
+
+pre {
+
+  background: #FDFEFB;
+  overflow: auto;
+  overflow-y: hidden;
+  letter-spacing: -0.45px;
+  padding: 0  ;
+  border-radius: 0px;
+  border: 0px solid #D7D8C8;
+  margin: 0px;
+ 
+  
+}
+
+
+table {
+  width:100%;
+  border: 1px solid #bbb;
+  margin-bottom: 32px;
+ margin-top: 20px;
+  text-align: left;
+  background: #bbb; 
+ }
+
+th {
+  font-family: 'Arvo', Helvetica, Arial, sans-serif;
+	font-size: 18px;
+	font-weight: normal;
+  padding: 10px;
+  background: #232323;
+  color: #FDFEFB;
+  border: 2px solid #999;
+ }
+
+td {
+  border: 2px solid #999;
+  padding: 10px 6px 10px 9px;
+  background: #FDFEFB; 
+
+ }
+
+/************************ End Changes Section *********************/
