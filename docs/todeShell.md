@@ -48,9 +48,9 @@ Commands are broken up by newlines, as in these examples, or by the | or ; chara
 
 [1]: images/todeShell.png
 [2]: images/todeManEval.png
-[3]: images/todeSingleEval.png
-[4]: images/todeMultiEval.png
-[5]: images/todeChainEval.png
+[3]: images/todeShellSingleEval.png
+[4]: images/todeShellMultiEvals.png
+[5]: images/todeShellChainEvals.png
 
 [10]: ./projectsInTode.md
 
