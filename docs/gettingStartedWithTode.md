@@ -62,8 +62,8 @@ Documentation for tODE is provided in man pages within the tODE environment (not
 [1]: images/openTodeShell.png
 [2]: images/todeClient.png
 [3]: images/projectList.png
-[4]: images/testLoginSuccess.png
-[5]: images/testLoginFail.png
+[4]: images/todeLoginSuccess.png
+[5]: images/todeLoginFail.png
 [6]: images/todeResizeMenu.png
 [7]: images/todeMan.png
 [8]: ./todeShell.md
