@@ -13,7 +13,15 @@ The GsDevKit_home project is current in **EARLY ACCESS** mode. If you are alread
 1. *Everything on a single workstation*
 2. *Client on a local workstation, Server on a remote host*
 
-You will need to ensure that your operating system is configured with the required packages before installing.  Please read the [Installation Overview][2] for installation options and instructions.
+You will need to ensure that your operating system is configured with the required packages before installing.  Please read the [Installation Overview][2] for installation options and instructions.  If you are planning to use Seaside, you can install and create a Seaside Stone, using the [Seaside installation instructions][20]. You can also [install Seaside into an existing GsDevKit installation][21].
+
+##Using GsDevKit and tODE
+
+GsDevKit and tODE provide a development environment that is similar to Smalltalk IDEs, but with additonal functionality.  The most important capabilities are for project management, and the tODE command shell.  To get started learning about tODE features, see:
+* [Getting started with tODE][11]
+* [The tODE command line shell][12]
+* [Projects in tODE][13]
+
 
 ##FAQs
 1. [If I am already using gsDevKitHome, why should I consider moving to GsDevKit_home?][3]
@@ -25,19 +33,27 @@ You will need to ensure that your operating system is configured with the requir
 7. [How do I create a new project from scratch in tODE?][10]
 8. How do I share session descriptions between a local client and a remote server?
 9. How do I upgrade a stone to a new version of GemStone?
-10. How do I load Seaside?
+10. [How do I load Seaside?][21]
 
-[**COMMENTS**][8]
+[**FEEDBACK**][8]
 
 [1]: https://github.com/GsDevKit/gsDevKitHome#open-source-development-kit-for-gemstones-64-bit-
 [2]: docs/installation/README.md#installation-overview
-[3]: docs/FAQ/FAQ.md#1-if-i-am-already-using-gsdevkithome-why-should-i-consider-moving-to-gsdevkit_home
-[4]: docs/FAQ/FAQ.md#2-do-i-have-to-rebuild-all-of-my-stones-to-use-gsdevkit_home
-[5]: docs/FAQ/FAQ.md#3-can-i-use-a-gsdevkit_home-tode-client-to-connect-to-older-stones
-[6]: docs/FAQ/FAQ.md#4-when-a-new-version-of-gsdevkit_home-is-published-how-do-i-update-my-checkout
-[7]: docs/FAQ/FAQ.md#5-when-a-new-version-of-tode-is-published-how-do-i-update-my-checkout-and-my-stones
+[3]: docs/FAQ.md#1-if-i-am-already-using-gsdevkithome-why-should-i-consider-moving-to-gsdevkit_home
+[4]: docs/FAQ.md#2-do-i-have-to-rebuild-all-of-my-stones-to-use-gsdevkit_home
+[5]: docs/FAQ.md#3-can-i-use-a-gsdevkit_home-tode-client-to-connect-to-older-stones
+[6]: docs/FAQ.md#4-when-a-new-version-of-gsdevkit_home-is-published-how-do-i-update-my-checkout
+[7]: docs/FAQ.md#5-when-a-new-version-of-tode-is-published-how-do-i-update-my-checkout-and-my-stones
 [8]: https://github.com/GsDevKit/GsDevKit_home/issues/new
-[9]: docs/FAQ/FAQ.md#6-do-i-have-to-bootstrap-glass1-and-tode-from-scratch-every-time-i-create-a-stone
-[10]: docs/FAQ/FAQ.md#7-how-do-i-create-a-new-project-from-scratch-in-tode
+[9]: docs/FAQ.md#6-do-i-have-to-bootstrap-glass1-and-tode-from-scratch-every-time-i-create-a-stone
+[10]: docs/projectsInTode.md#creating-a-new-project
+ 
+[11]: docs/gettingStartedWithTode.md
+[12]: docs/todeShell.md
+[13]: docs/projectsInTode.md
 
-[100]: docs/FAQ/FAQ.md#100-how-do-i-contribute-to-the-gsdevkit_home-project
+ 
+[20]: https://github.com/GsDevKit/GsDevKit_seaside31/blob/master/docs/installation/README.md
+[21]: https://github.com/GsDevKit/GsDevKit_seaside31/blob/master/docs/installation/loadSeasideProject.md
+
+[100]: docs/FAQ.md#100-how-do-i-contribute-to-the-gsdevkit_home-project

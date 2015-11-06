@@ -31,6 +31,7 @@ Update the Github repositories used by the GsDevKit client and servers in \$GS_H
   - github://glassdb/PharoCompatibility:\${GS_SHARED_COMMIT_OHARO_COMPAT}/repository
   - github://glassdb/glass:\${GS_SHARED_COMMIT_GLASS1}/repository
   - github://dalehenrich/rb:\${GS_SHARED_COMMIT_RB}/repository
+  - github://GsDevKit/zinc:\${GS_SHARED_COMMIT_ZINC}/repository
 
 OPTIONS
   -h
@@ -109,6 +110,9 @@ pushd ${GS_SHARED_REPO} >& /dev/null
     fi
     if [ -d "rb" ] ; then
       updateClone $GS_SHARED_GIT_CHECKOUT_RB $GS_SHARED_GIT_REMOTE_RB ${GS_SHARED_REPO}/rb
+    fi
+    if [ -d "zinc" ] ; then
+      updateClone $GS_SHARED_GIT_CHECKOUT_ZINC $GS_SHARED_GIT_REMOTE_ZINC ${GS_SHARED_REPO}/zinc
     fi
   fi
 popd >& /dev/null

@@ -1,0 +1,69 @@
+#! /bin/bash -x
+#=========================================================================
+# Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#=========================================================================
+
+echo "================="
+echo "   GsDevKit script: $(basename $0) $*"
+echo "              path: $0"
+echo "================="
+
+usage() {
+  cat <<HELP
+USAGE: $(basename $0) [-h] [-D] <stone-name>
+Install tODE without using \`project load Tode\` ... after running 
+\`updateGsDevKit -t\`, the new project entries for each tODE stone
+require a new class that isn't present until Tode is loaded.
+
+If you get an like the following:
+
+  a STONReaderError occurred (error 2710), Cannot resolve class named #'TDObjectGatewayLeafNode
+
+then you need to run this script. See https://github.com/GsDevKit/GsDevKit_home/issues/13
+for more details.
+
+OPTIONS
+  -h display help
+  -D launch patch image for interactive debugging
+
+EXAMPLES
+  $(basename $0) -h
+  $(basename $0) gs_3210
+
+HELP
+}
+
+PLATFORM="`uname -sm | tr ' ' '-'`"
+if [[ "$PLATFORM" == MINGW32_NT* ]] ; then
+  echo "This script is a server-only script and cannot be used on Windows"
+  exit 1
+fi
+
+set -e # exit on error
+if [ "${GS_HOME}x" = "x" ] ; then
+  echo "the GS_HOME environment variable needs to be defined"; exit 1
+fi
+source ${GS_HOME}/bin/defGsDevKit.env
+
+interactiveArg=""
+while getopts "hD" OPT ; do
+  case "$OPT" in
+    h) usage; exit 0;;
+    D) interactiveArg=" -i ";;
+    *) usage; exit 1;;
+  esac
+done
+shift $(($OPTIND - 1))
+
+if [ $# -ne 1 ]; then
+  usage; exit 1
+fi
+stoneName="$1"
+
+$GS_HOME/bin/private/gsDevKitTodeCommandLine $interactiveArg todeIt $stoneName << EOF
+eval \`GsDeployer deploy: [ Metacello image baseline: 'Tode'; get; load ]\`
+script --script=rebuildSys
+mount --todeRoot / / _home
+EOF
+
+echo "...finished $(basename $0)"

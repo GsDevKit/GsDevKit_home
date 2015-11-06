@@ -1,7 +1,0 @@
-TDTopezLeafNode{#name:'updateSeaside',#contents:'#called from the seasideUpdate shell script
-bu backup preUpdate.dbf         # backup prior to load
-project pull Seaside3           # pull request for seaside checkout
-project load Seaside3           # load Seaside3 project
-bu backup --commit seaside3.dbf # post build backup
-bu snapshot seaside3.dbf        # post build snapshot
-',#creationTime:DateAndTime['2015-10-17T20:49:08.631185054779-07:00'],#modificationTime:DateAndTime['2015-10-17T21:28:09.7604069709777-07:00']}

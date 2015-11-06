@@ -1,0 +1,11 @@
+TDObjectGatewayLeafNode{#name:'GLASS1',#contents:'| repoSpec gitCheckout |
+gitCheckout :=  GsFile _expandEnvVariable: \'GS_SHARED_GIT_CHECKOUT_GLASS1\' isClient: false.
+repoSpec := GsFile _expandEnvVariable: \'GS_SHARED_REPO_GLASS1\' isClient: false.
+^TDProjectSpecEntryDefinition new
+  baseline: \'GLASS1\'
+    repository: repoSpec
+    loads: #(\'default\');
+  gitCheckout: gitCheckout;
+  status: #(#\'inactive\');
+  locked: true;
+  yourself'}

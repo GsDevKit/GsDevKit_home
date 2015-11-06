@@ -1,5 +1,0 @@
-TDTopezLeafNode{#name:'cloneSeasideProjects',#contents:'# no backups on travis for https://github.com/dalehenrich/tode/issues/226
-project clone --https --checkout=gs_master --shared Seaside3           # clone the seaside project from github
-project clone --https --checkout=gs_master --shared ZincHTTPComponents    # clone the Zinc project from github
-project clone --https --checkout=master --shared GsApplicationTools # clone the GsApplicationTools project from github
-',#creationTime:DateAndTime['2015-10-18T08:58:23.1435339450836-07:00'],#modificationTime:DateAndTime['2015-10-18T18:13:08.0274319648742-07:00']}

@@ -1,10 +1,10 @@
 # Installation Overview
 
-GsDevKit is a client-server environment, involving a GUI devlopment environment (tODE) based on Pharo, and a server (stone) based on GemStone/S 64 bit.  The installation process involves cloning projects from github, downloading and configuring Pharo and GUI client components, and downloading, configuring, and starting the GemStone server (the stone process and supporting processes).  While the details are handled for you by the installations cripts, there are some decisions that  must be made  before installing.
+GsDevKit is a client-server environment, involving a GUI development environment (tODE) based on Pharo, and a server (stone) based on GemStone/S 64 bit. The installation process involves cloning projects from github, downloading and configuring Pharo and GUI client components, and downloading, configuring, and starting the GemStone server (the stone process and supporting processes). While the details are handled for you by the installation scripts, there are some decisions that must be made before installing.
 
 GsDevKit can be installed under three configurations.
 
-(1) **Everything on a single workstation**.  Since this machine must already have a window manager in order to display the desktop, and since the GsDevKit installation can be shared, it is the simpliest approach.  
+(1) **Everything on a single workstation**. Since this machine must already have a window manager in order to display the desktop, and since the GsDevKit installation can be shared, it is the simpliest approach.  
 
 [Installation Instructions](#installation-on-a-single-desktop)
 

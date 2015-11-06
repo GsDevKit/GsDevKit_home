@@ -10,7 +10,7 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-i] <stone-name> <tode-command-line>
+USAGE: $(basename $0) [-h] [-D] <stone-name> <tode-command-line>
 
 Execute the <tode-command-line> as a tODE shell command.
 
@@ -18,11 +18,11 @@ tODE must be installed in the named stone.
 
 OPTIONS
   -h show usage
-  -i launch command line image for interactive debugging
+  -D launch command line image for interactive debugging
 
 EXAMPLES
   $(basename $0) -h
-  $(basename $0) -i gs_326 project load Seaside3
+  $(basename $0) -D gs_326 project load Seaside3
   $(basename $0) gs_326 project load Seaside3
   $(basename $0) gs_326 eval \`3+4\`
   $(basename $0) gs_326 eval \`3+4\`\; eval \`self == 7 ifFalse: [ System logout ]\`
@@ -42,10 +42,10 @@ if [ "${GS_HOME}x" = "x" ] ; then
 fi
 
 interactiveArg=""
-while getopts "hi" OPT ; do
+while getopts "hD" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
-    i) interactiveArg=" -i ";;
+    D) interactiveArg=" -i ";;
     *) usage; exit 1;;
   esac
 done
