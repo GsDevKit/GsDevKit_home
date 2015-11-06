@@ -18,13 +18,15 @@ tODE command words are registered in a lookup dictionary, which will return an i
 
 tODE commands include operations such as **man** and **project**, which are starting points for working with, respectively man page documentation and projects; each of these have many subcommands.  
 
+For example, man is a command; sending eval to this command has the effect of opening the man page above the tODE shell console (replacing it, if it's already open); it also return a string with the first part of the result to the shell.
+
+![tode man eval][3]
+
 To execute Smalltalk code, use the eval command.  
 
 For example:
 
 ![tode single line eval][2]
-
-![tode man eval][3]
 
 #### Combining commands
 
