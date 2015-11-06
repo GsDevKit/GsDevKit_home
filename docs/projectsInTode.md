@@ -6,9 +6,9 @@ Using tODE, you will be working with code in projects.  To get started, open a *
 
 The typeface in the project list has the following meanings:
 
-*  italic/underlined is installed; the project is present on the local disk and registered in image), but the code is not loaded 
-*  bold is "active" and loaded
-*  normal font is loaded, but not active; the Smalltalk code was filed into the Stone
+*  italic/underlined means the project is installed; the project is present on the local disk and registered in the image, but the code is not loaded. 
+*  bold means loaded and the project has been marked active. Active projects are sorted to the beginning of the list.
+*  normal font means the project is loaded, but not marked active.  Loaded means the Smalltalk code was filed into the Stone.
 *  Asterisk * means the package is dirty in the image; the project has one or more modified packages.
 *  Plus + means dirty disk for git
 *  Bar | means the project is locked 
