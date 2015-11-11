@@ -6,12 +6,12 @@ Using tODE, you will be working with code in projects.  To get started, open a *
 
 The typeface in the project list has the following meanings:
 
-*  italic/underlined is installed (that is, the project was registered on the local disk), but not loaded
-*  bold is "active", meaning that the user can make modifications.
-*  normal font is loaded (that is, the Smalltalk code was filed into the Stone) but not active
-*  Asterisk * means the package is dirty in the image
+*  italic/underlined means the project is installed; the project is present on the local disk and registered in the image, but the code is not loaded. 
+*  bold means loaded and the project has been marked active. Active projects are sorted to the beginning of the list.
+*  normal font means the project is loaded, but not marked active.  Loaded means the Smalltalk code was filed into the Stone.
+*  Asterisk * means the package is dirty in the image; the project has one or more modified packages.
 *  Plus + means dirty disk for git
-*  Bar | means it is locked 
+*  Bar | means the project is locked 
 
 You may load an existing project, such as seaside, or create a new project based on an existing Metacello project.  
 
@@ -79,7 +79,7 @@ Finally a *project entry* is created:
     yourself
 ```
 
-and saved on disk as `$GS_HOME/sys/local/server/projects`.
+and saved in the directory `$GS_HOME/sys/local/server/projects` as Foo.ston. 
 
 Now is a good time make some modifications to your application class, update the `project list` command and play with some of the `project list` menu items:
 
