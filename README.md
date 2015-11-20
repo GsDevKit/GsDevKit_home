@@ -4,9 +4,6 @@ The Development Kit for GemStone/S (GsDevKit) contains tools and compatiblity ch
 
 GsDevKit is a client-server system, which may both be installed on a single machine, or the server and client may be installed on separate nodes. The GsDevKit server installation includes the GemStone/S server.
 
-## Early Access Version
-The GsDevKit_home project is current in **EARLY ACCESS** mode. If you are already familiar with using [GsDevKit/gsDevKitHome][1] and are interested in providing feedback, then by all means continue reading. On the other hand if you are new to using GemStone, then you should use [GsDevKit/gsDevKitHome][1].
-
 ##Installation
 **GsDevKit_home** offers two different install options:  
 
