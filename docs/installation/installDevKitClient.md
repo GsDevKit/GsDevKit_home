@@ -20,11 +20,6 @@ The following steps are involved in installing the GsDevKit client. For an examp
    cd GsDevKit_home
    ```
 
-2. Perform the git checkout and branch
-   ```
-   git checkout -b gsdevkit
-   ```
-
 3. Set the environment
 
    The environment variable $GS_HOME and the updated $PATH are required to use DevKit, so you should add them to your `.bashrc` or another initialization script.
@@ -41,7 +36,8 @@ The following steps are involved in installing the GsDevKit client. For an examp
 
    Script to install the client:
    ```
-   $GS_HOME/bin/installClient <myClientName> <myGemStoneVersion>
+   installClient <myGemStoneVersion>
+   createClient <myClientName>
    ```
    You may use any name for `<myClientName>`, and note that you may later have multiple clients. The examples below use  **tode1** as the client name.
 
@@ -49,7 +45,7 @@ The following steps are involved in installing the GsDevKit client. For an examp
    ```
    downloadGemStone
    cloneSharedTodeProjects
-   createClient 
+   setupGsDevKit 
    ```
 
 ### Example Script to Install Client on Linux or Mac
@@ -61,10 +57,10 @@ cd <githubdirectory>
 
 git clone https://github.com/GsDevKit/GsDevKit_home.git
 cd GsDevKit_home
-git checkout -b gsdevkit
 export GS_HOME=`pwd`
 export PATH=$GS_HOME/bin:$PATH
-$GS_HOME/bin/installClient -c https tode1 3.2.9
+installClient 3.2.9
+createClient tode1
  ```
 
 ### Example Script to Install Client on Windows
@@ -75,11 +71,10 @@ This script installs the GsDevKit client components for v.3.2.9, and creates a c
 cd ~
 git clone https://github.com/GsDevKit/GsDevKit_home.git
 cd GsDevKit_home
-git checkout -b gsdevkit
 export GS_HOME=`pwd`
 export PATH=$GS_HOME/bin:$PATH
-$GS_HOME/bin/installClient -c https tode1 3.2.9
-
+installClient 3.2.9
+createClient tode1
  ```
 
 When the install script completes, it will report lines similar to:

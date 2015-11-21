@@ -6,7 +6,9 @@
 set -xe  # print commands and exit on error
 
 # install server
-installServerClient -o GsDevKit ${STONENAME1} tode $GS_VERSION
+installServerClient -o GsDevKit $GS_VERSION
+createStone ${STONENAME1} $GS_VERSION
+createClient tode 
 
 status
 

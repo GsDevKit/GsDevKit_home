@@ -20,7 +20,7 @@ runningStoneReportOn: stream
 		cr.
 	result
 		linesDo: [ :line | 
-			(line includesSubstring: 'Stone')
+			(line includesSubstring: ' Stone')
 				ifTrue: [ 
 					stream
 						tab;
