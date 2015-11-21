@@ -57,7 +57,7 @@ updateGsDevKit -s
 updateGsDevKit -t
 updateGsDevKit -g -t
 updateGsDevKit -g -t -i
-uApdateGsDevKit -g -t -i -s
+updateGsDevKit -g -t -i -s
 
 $GS_HOME/bin/utils/updateSharedTodeProjectsClone both
 
