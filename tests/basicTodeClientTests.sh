@@ -6,7 +6,7 @@
 set -xe  # print commands and exit on error
 
 # install server
-installServerClient $GS_VERSION
+installServerClient
 createStone travis $GS_VERSION
 createClient travis
 

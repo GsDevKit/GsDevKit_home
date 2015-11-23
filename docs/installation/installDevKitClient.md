@@ -36,7 +36,8 @@ The following steps are involved in installing the GsDevKit client. For an examp
 
    Script to install the client:
    ```
-   installClient <myGemStoneVersion>
+   installClient 
+   downloadGemStone <myGemStoneVersion>
    createClient <myClientName>
    ```
    You may use any name for `<myClientName>`, and note that you may later have multiple clients. The examples below use  **tode1** as the client name.
@@ -44,6 +45,7 @@ The following steps are involved in installing the GsDevKit client. For an examp
    The install scripts invokes the following sub-scripts:
    ```
    downloadGemStone
+   cloneGsDevKitProjects
    cloneSharedTodeProjects
    setupGsDevKit 
    ```
@@ -59,7 +61,8 @@ git clone https://github.com/GsDevKit/GsDevKit_home.git
 cd GsDevKit_home
 export GS_HOME=`pwd`
 export PATH=$GS_HOME/bin:$PATH
-installClient 3.2.9 |& tee $GS_HOME/install.log
+installClient |& tee $GS_HOME/install.log
+dowloadGemStone 3.2.9 |& tee -a $GS_HOME/install.log
 createClient tode1 |& tee -a $GS_HOME/install.log
  ```
 
@@ -73,7 +76,8 @@ git clone https://github.com/GsDevKit/GsDevKit_home.git
 cd GsDevKit_home
 export GS_HOME=`pwd`
 export PATH=$GS_HOME/bin:$PATH
-installClient 3.2.9 |& tee $GS_HOME/install.log
+installClient |& tee $GS_HOME/install.log
+downloadGemStone 3.2.9 |& tee -a $GS_HOME/install.log
 createClient tode1 |& tee -a $GS_HOME/install.log
  ```
 

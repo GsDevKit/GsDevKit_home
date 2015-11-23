@@ -36,7 +36,7 @@ The following steps are involved in installing the GsDevKit server and client.  
    These instructions use 3.2.9 for `<GemStoneVersion>`; check for more recent [GemStone/S 64 Bit Releases](#gemstone-version-and-license).
    
    ```
-   installServerClient <GemStoneVersion>
+   installServerClient
    createStone <myStoneName> <GemStoneVersion>
    createClient <myClientName>
    ```
@@ -45,6 +45,7 @@ The following steps are involved in installing the GsDevKit server and client.  
    The install scripts invokes the following sub-scripts:
    ```
    downloadGemStone
+   installOsPrereqs
    cloneGsDevKitProjects 
    cloneSharedTodeProjects
    setupGsDevKit 
@@ -61,7 +62,7 @@ git clone https://github.com/GsDevKit/GsDevKit_home.git
 cd GsDevKit_home
 export GS_HOME=`pwd`
 export PATH=$GS_HOME/bin:$PATH
-installServerClient 3.2.9 |& tee $GS_HOME/install.log
+installServerClient |& tee $GS_HOME/install.log
 createStone devKit_329 3.2.9 |& tee -a $GS_HOME/install.log
 createClient tode1 |& tee -a $GS_HOME/install.log
 ```

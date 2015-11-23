@@ -10,7 +10,7 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-c https | ssh ] [-o <organization-name>] client|server|both <gemstone-version>
+USAGE: $(basename $0) [-h] [-c https | ssh ] [-o <organization-name>] client|server|both
 
 OPTIONS
   -h
@@ -24,7 +24,9 @@ OPTIONS
 
 EXAMPLES
    $(basename $0) -h
-   $(basename $0) -c ssh server 3.2.9
+   $(basename $0) client
+   $(basename $0) server
+   $(basename $0) both
 
 HELP
 }
@@ -47,14 +49,13 @@ while getopts "hc:o:" OPT ; do
 done
 shift $(($OPTIND - 1))
 
-if [ $# -ne 2 ]; then
+if [ $# -ne 1 ]; then
   echo "wrong number of arguments (1 expected)"; usage; exit 1
 fi
 
 setupType=$1
-vers=$2
 
-$GS_HOME/bin/downloadGemStone $vers
+$GS_HOME/bin/utils/installOsPrereqs $setupType
 $GS_HOME/bin/utils/cloneGsDevKitProjects $modeArg $organizationArg $setupType
 $GS_HOME/bin/utils/cloneSharedTodeProjects $modeArg $setupType
 

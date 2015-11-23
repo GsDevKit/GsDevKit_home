@@ -48,7 +48,7 @@ The following steps are involved in installing the GsDevKit server.  For an exam
    
    Script to install the server only:
    ```
-   installServer <GemStoneVersion>
+   installServer
    createStone <myStoneName> <GemStoneVersion>
    ```
 
@@ -57,6 +57,7 @@ The following steps are involved in installing the GsDevKit server.  For an exam
    The install scripts invokes the following sub-scripts:
    ```
    downloadGemStone
+   installOsPrereqs
    cloneGsDevKitProjects 
    cloneSharedTodeProjects
    setupGsDevKit 
@@ -73,7 +74,7 @@ git clone https://github.com/GsDevKit/GsDevKit_home.git
 cd GsDevKit_home
 export GS_HOME=`pwd`
 export PATH=$GS_HOME/bin:$PATH
-installServer 3.2.9 |& tee $GS_HOME/install.log
+installServer |& tee $GS_HOME/install.log
 createStone devKit_329 3.2.9 |& tee -a $GS_HOME/install.log
 ```
 
