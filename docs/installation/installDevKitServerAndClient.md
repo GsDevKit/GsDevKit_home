@@ -2,7 +2,7 @@
 
 A complete GsDevKit installation includes both a server and a client, which can be on the same or on different nodes.  These instructions provide information on installing both on a single node. This is part of the [instructions for installing on a single desktop machine][1]; refer to these instructions for the OS configuration required and other steps.
 
-The GsDevKit server and client shared installation  may be installed on **Linux** or **Mac**; the instructions are the same for both. 
+The GsDevKit server and client shared installation  may be installed on **Linux** or **Mac**; the instructions are the same for both. You must have 64-Bit Linux (or a 64-bit Linux VM), in order to run GemStone/S 64 Bit. Since these instructions are for installing both client and server on the same node, you cannot setup this for Windwos. If you are running Windows, you can install the server on a Linux VM, and the client on Windows; instructions are [here][4].
 
 ####GemStone Version and License
 Before running installing the server, please check on the [GemStone/S 64 Bit product page for the latest versions][2] and visit [the Community and Web Edition Licensing page for information on the license included with the download and other options][3]. It is a good idea to acquire a free, Limited Community License by sending email to sales@gemtalksystems.com. It is also recommended that you download and use the latest version of the GemStone/S 64 Bit product. The following instructions are for version 3.2.9.
@@ -73,3 +73,5 @@ $GS_HOME/bin/installServerClient -c https devKit_329 tode1 3.2.9
 [1]: ./README.md#installation-on-a-single-desktop
 [2]: https://gemtalksystems.com/products/gs64/
 [3]: https://gemtalksystems.com/licensing/
+
+[4]: ./README.md#installation-on-separate-server-and-client
