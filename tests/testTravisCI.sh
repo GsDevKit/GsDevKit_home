@@ -7,16 +7,6 @@ set -xe  # print commands and exit on error
 
 uname -a   #gather info for bug 44185
 
-osPrereqsSysSetup=$GS_HOME/bin/.osPrereqsSysSetup # if file exists, skip installation
-
-if [ -e "$osPrereqsSysSetup" ]; then
-  echo "Skip running osPrereqs, system already setup ($osPrereqsSysSetup exists)"
-else
-  # install OS prereqs which includes gdb, which should give us a C stack for 
-  # bug 44491
-  $GS_HOME/bin/utils/installOsPrereqs
-fi
-
 if [ "${STONENAME1}x" = "x" ] ; then
   export STONENAME1="travis1"
 fi
