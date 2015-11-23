@@ -26,8 +26,8 @@ OPTIONS
 
 EXAMPLES
   $(basename $0) -h
-  $(basename $0) -v Pharo3.0
-  $(basename $0)
+  $(basename $0) -v Pharo3.0 -d $GS_HOME/shared/pharo
+  $(basename $0) -d $GS_HOME/shared/pharo
 
 HELP
 }
