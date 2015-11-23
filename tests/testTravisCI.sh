@@ -27,6 +27,8 @@ $GS_HOME/bin/private/clone_sys_local -c https
 $GS_HOME/tests/travisCustomize.sh
 
 case $TEST in
+  XXX)
+    $GS_HOME/bin/private/downloadSmalltalkClient $GS_HOME/shared/pharo
   Simple)
     # createStone should work without having done an installServer ... also tests github:// builds
     createStone ${STONENAME2} $GS_VERSION;;

@@ -32,7 +32,7 @@ EXAMPLES
 HELP
 }
 
-set -e # exit on error
+set -ex # exit on error
 
 directoryPath=""
 version="Pharo3.0"
