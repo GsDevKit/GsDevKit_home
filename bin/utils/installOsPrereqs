@@ -63,9 +63,9 @@ if [ $# -ne 1 ]; then
 fi
 
 case "$1" in
-  both) x11client = "true";;
+  both) x11client="true";;
   client) ;;
-  server)x11client = "true";;
+  server)x11client="true";;
   *) echo "Unknown setup type $1"; usage; exit 1;;
 esac
 
