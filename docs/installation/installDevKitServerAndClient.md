@@ -61,9 +61,9 @@ git clone https://github.com/GsDevKit/GsDevKit_home.git
 cd GsDevKit_home
 export GS_HOME=`pwd`
 export PATH=$GS_HOME/bin:$PATH
-installServerClient 3.2.9
-createStone devKit_329 3.2.9
-createClient tode1
+installServerClient 3.2.9 |& tee $GS_HOME/install.log
+createStone devKit_329 3.2.9 |& tee -a $GS_HOME/install.log
+createClient tode1 |& tee -a $GS_HOME/install.log
 ```
 
 

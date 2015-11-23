@@ -59,8 +59,8 @@ git clone https://github.com/GsDevKit/GsDevKit_home.git
 cd GsDevKit_home
 export GS_HOME=`pwd`
 export PATH=$GS_HOME/bin:$PATH
-installClient 3.2.9
-createClient tode1
+installClient 3.2.9 |& tee $GS_HOME/install.log
+createClient tode1 |& tee -a $GS_HOME/install.log
  ```
 
 ### Example Script to Install Client on Windows
@@ -73,8 +73,8 @@ git clone https://github.com/GsDevKit/GsDevKit_home.git
 cd GsDevKit_home
 export GS_HOME=`pwd`
 export PATH=$GS_HOME/bin:$PATH
-installClient 3.2.9
-createClient tode1
+installClient 3.2.9 |& tee $GS_HOME/install.log
+createClient tode1 |& tee -a $GS_HOME/install.log
  ```
 
 When the install script completes, it will report lines similar to:

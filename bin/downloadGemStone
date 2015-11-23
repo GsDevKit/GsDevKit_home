@@ -294,16 +294,16 @@ if [ -d "$GS_SHARED_DOWNLOADS/products/$gsvers" ] ; then
 fi
 
 # Look for either wget to download GemStone
-if [ -e "`which wget`" ]; then
-    cmd="`which wget`"
-else
+#if [ -e "`which wget`" ]; then
+#    cmd="`which wget` --no-verbose"
+#else
   if [ -e "`which curl`" ]; then
-      cmd="`which curl` -O"
+      cmd="`which curl` -O -s -S"
   else
     echo "[Error] wget is not available. Install wget and rerun this script."
     exit 1
   fi
-fi
+#fi
 
 # Download GemStone
 pushd $GS_SHARED_DOWNLOADS/zip >& /dev/null
