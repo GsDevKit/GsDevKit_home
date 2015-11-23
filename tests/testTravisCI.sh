@@ -1,9 +1,9 @@
-#!/bin/bash -x
+#!/usr/bin/env bash
 #
 # Copyright (c) 2015 GemTalk Systems, LLC. All Rights Reserved <dhenrich@gemtalksystems.com>.
 #
 
-set -e  # exit on error
+set -xe  # print commands and exit on error
 
 uname -a   #gather info for bug 44185
 

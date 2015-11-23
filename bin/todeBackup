@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 #=========================================================================
 # Copyright (c) 2014, 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
 #=========================================================================
@@ -72,3 +72,4 @@ popd >& /dev/null
 $GS_HOME/bin/private/gsDevKitTodeCommandLine $interactiveArg backup $stoneName $backupFile
 
 echo "...finished $(basename $0)"
+
