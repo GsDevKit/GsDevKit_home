@@ -28,6 +28,7 @@ $GS_HOME/tests/travisCustomize.sh
 
 case $TEST in
   XXX)
+    set +e
     $GS_HOME/bin/private/downloadSmalltalkClient -d $GS_HOME/shared/pharo
     ls -l $GS_HOME/shared/pharo
     ls -l $GS_HOME/shared/pharo/pharo-vm
