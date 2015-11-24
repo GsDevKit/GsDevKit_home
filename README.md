@@ -12,6 +12,8 @@ GsDevKit is a client-server system, which may both be installed on a single mach
 
 You will need to ensure that your operating system is configured with the required packages before installing.  Please read the [Installation Overview][2] for installation options and instructions.  If you are planning to use Seaside, you can install and create a Seaside Stone, using the [Seaside installation instructions][20]. You can also [install Seaside into an existing GsDevKit installation][21].
 
+**[Installation Instructions][2]**
+
 ##Using GsDevKit and tODE
 
 GsDevKit and tODE provide a development environment that is similar to Smalltalk IDEs, but with additonal functionality.  The most important capabilities are for project management, and the tODE command shell.  To get started learning about tODE features, see:
