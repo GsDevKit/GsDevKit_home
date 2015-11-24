@@ -5,10 +5,9 @@ sudo: required
 env:
 
 #
-  - GS_VERSION=3.2.11  TEST=Simple
-#  - GS_VERSION=3.1.0.6 TEST=Basic
-#  - GS_VERSION=3.2.11  TEST=Basic
-  - GS_VERSION=3.2.11  TEST=XXX
+  - GS_VERSION=3.2.11  TEST=Error
+  - GS_VERSION=3.1.0.6 TEST=Basic
+  - GS_VERSION=3.2.11  TEST=Basic
 #  - GS_VERSION=3.2.11 TEST=BasicTodeClient
 
 before_script:

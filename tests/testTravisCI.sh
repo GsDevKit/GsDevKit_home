@@ -27,7 +27,7 @@ $GS_HOME/bin/private/clone_sys_local -c https
 $GS_HOME/tests/travisCustomize.sh
 
 case $TEST in
-  Simple)
+  Error)
     # createStone and createClient should fail without having done an installServer
     set +e
     createStone ${STONENAME2} $GS_VERSION

@@ -102,7 +102,8 @@ missing_32-bit_libs() {
 if [ -e "$GS_HOME/bin/.gsdevkitSetup" ] ; then
   echo "The 32-bit libraries required by Pharo have not been installed on this system."
 else
-  echo "The appropriate install script has not been run. Please read the Installation Overview documentation (https://github.com/GsDevKit/GsDevKit_home/blob/master/docs/installation/README.md#installation-overview) for further details"
+  echo "The appropriate install script has not been run (installClient, installClientServer or installServer)."
+  echo "Please read the Installation Overview documentation (https://github.com/GsDevKit/GsDevKit_home/blob/master/docs/installation/README.md#installation-overview) for further details."
 fi
 exit 1
 }
