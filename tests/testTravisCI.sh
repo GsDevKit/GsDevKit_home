@@ -28,10 +28,14 @@ $GS_HOME/tests/travisCustomize.sh
 
 case $TEST in
   XXX)
-    $GS_HOME/bin/private/downloadSmalltalkClient -d $GS_HOME/shared/pharo;;
+    $GS_HOME/bin/private/downloadSmalltalkClient -d $GS_HOME/shared/pharo
+    ls -l $GS_HOME/shared/pharo
+    ls -l $GS_HOME/shared/pharo/pharo-vm
+    ;;
   Simple)
     # createStone should work without having done an installServer ... also tests github:// builds
-    createStone ${STONENAME2} $GS_VERSION;;
+    createStone ${STONENAME2} $GS_VERSION
+    ;;
   Basic)
     $GS_HOME/tests/basicInstallServer.sh
     source $GS_HOME/bin/defGsDevKit.env
