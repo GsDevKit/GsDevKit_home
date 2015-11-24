@@ -35,6 +35,20 @@ case $TEST in
     $GS_HOME/shared/pharo/pharo-vm/pharo --help --vm-display-null
     $GS_HOME/shared/pharo/pharo --list
     $GS_HOME/shared/pharo/pharo-vm/pharo --no-display --list
+    set -e
+    if [ -e $GS_HOME/shared/pharo/pharo-vm/pharo ] then
+      set +e
+missing_32-bit_libs() {
+echo "Missing 32-bit libraries required by pharo"
+exit 1
+}
+      trap 'missing_32-bit_libs' ERR
+      $GS_HOME/shared/pharo/pharo-vm/pharo --help --vm-display-null >& /dev/null
+      trap - ERR
+      set -e
+    fi
+    echo "should not get here"
+    exit 1
     ;;
   Simple)
     # createStone should work without having done an installServer ... also tests github:// builds
