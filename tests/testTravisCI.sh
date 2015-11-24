@@ -31,6 +31,9 @@ case $TEST in
     $GS_HOME/bin/private/downloadSmalltalkClient -d $GS_HOME/shared/pharo
     ls -l $GS_HOME/shared/pharo
     ls -l $GS_HOME/shared/pharo/pharo-vm
+    $GS_HOME/shared/pharo/pharo-vm/pharo --help --vm-display-null
+    $GS_HOME/shared/pharo/pharo --help --vm-display-null
+    $GS_HOME/shared/pharo/pharo --no-display --list
     ;;
   Simple)
     # createStone should work without having done an installServer ... also tests github:// builds
