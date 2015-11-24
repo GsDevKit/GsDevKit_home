@@ -63,15 +63,18 @@ if [ $# -ne 1 ]; then
 fi
 
 case "$1" in
+  # always assume that x11client is needed ... only time not needed is when netldi port forwarding is exclusively used
+  # if you want to debug a headless pharo image on the server????? Folks who "know what they are doing" can install
+  # prerequisites themselves and touch $GS_HOME/bin/.osPrereqsSysSetup.
   both) x11client="true";;
-  client) ;;
-  server)x11client="true";;
+  client) x11client="true";;
+  server) x11client="true";;
   *) echo "Unknown setup type $1"; usage; exit 1;;
 esac
 
 # touch the following file, if you prefer to skip the installation of prerequisites
-osPrereqsSysSetup=$GS_HOME/bin/.osPrereqsSysSetup # if file exists, skip installation
-gsdevkitSysSetup=$GS_HOME/bin/.gsdevkitSysSetup # if file exists, system setup already completed
+osPrereqsSysSetup=$GS_HOME/bin/.osPrereqsSysSetup # if file exists, skip linux prereq installation
+gsdevkitSysSetup=$GS_HOME/bin/.gsdevkitSysSetup # if file exists, shared memory setup already completed
 
 if [ -e "$gsdevkitSysSetup" ]; then
   echo "Skip operating system configuration steps, system already setup ($gsdevkitSysSetup exists)"
@@ -282,7 +285,7 @@ EOF
 esac
 cat - > $gsdevkitSysSetup << EOF
 the presence of this file means that \$GS_HOME/bin/installOsPrereqs has 
-configured the OS for running GemStone/S 64
+configured the OS for running GemStone/S 64, including the setup of shared memory
 EOF
 # End of script
 echo "...finished $(basename $0)"

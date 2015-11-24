@@ -59,4 +59,9 @@ $GS_HOME/bin/utils/installOsPrereqs $setupType
 $GS_HOME/bin/utils/cloneGsDevKitProjects $modeArg $organizationArg $setupType
 $GS_HOME/bin/utils/cloneSharedTodeProjects $modeArg $setupType
 
+cat - > $GS_HOME/bin/.gsdevkitSetup << EOF
+the presence of this file means that \$GS_HOME/bin/setupGsDevKit has
+been successfully run.
+EOF
+
 echo "...finished $(basename $0)"

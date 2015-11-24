@@ -96,6 +96,24 @@ case $version in
           ;;
         *) usage; exit 1;;
       esac
+      if [ -e $GS_HOME/shared/pharo/pharo-vm/pharo ] ; then
+        set +e
+missing_32-bit_libs() {
+if [ -e "$GS_HOME/bin/.gsdevkitSetup" ] ; then
+  echo "The 32-bit libraries required by Pharo have not been installed on this system."
+else
+  echo "The appropriate install script has not been run. Please read the Installation Overview documentation (https://github.com/GsDevKit/GsDevKit_home/blob/master/docs/installation/README.md#installation-overview) for further details"
+fi
+exit 1
+}
+        trap 'missing_32-bit_libs' ERR
+        ./pharo-vm/pharo --help --vm-display-null &> /dev/null 2>&1
+        trap - ERR
+        set -e
+      else
+        echo "Pharo download failed --- please try again"
+	exit 1
+      fi
     popd >& /dev/null
     ;;
   *) usage; exit 1;;

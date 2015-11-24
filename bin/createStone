@@ -82,6 +82,18 @@ if [[ "$PLATFORM" == MINGW32_NT* ]] ; then
   exit 1
 fi
 
+if [ ! -e "$GS_HOME/bin/.gsdevkitSetup" ] ; then
+  # if .gsdevkitSysSetup is present, then assume install* run prior to invention of .gsdevkitSetup
+  if [ ! -e "$GS_HOME/bin/.gsdevkitSysSetup" ] ; then
+    echo "The appropriate install script has not been run. Please read the Installation Overview documentation (https://github.com/GsDevKit/GsDevKit_home/blob/master/docs/installation/README.md#installation-overview) for further details"
+    exit 1
+  fi
+  cat - > $GS_HOME/bin/.gsdevkitSetup << EOF
+the presence of this file means that \$GS_HOME/bin/setupGsDevKit is assumed to have
+been successfully run.
+EOF
+fi
+
 set -e # exit on error
 if [ "${GS_HOME}x" = "x" ] ; then
   echo "the GS_HOME environment variable needs to be defined"; exit 1

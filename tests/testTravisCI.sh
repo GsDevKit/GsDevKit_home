@@ -27,32 +27,22 @@ $GS_HOME/bin/private/clone_sys_local -c https
 $GS_HOME/tests/travisCustomize.sh
 
 case $TEST in
-  XXX)
-    set +e
-    $GS_HOME/bin/private/downloadSmalltalkClient -d $GS_HOME/shared/pharo
-    ls -l $GS_HOME/shared/pharo
-    ls -l $GS_HOME/shared/pharo/pharo-vm
-    $GS_HOME/shared/pharo/pharo-vm/pharo --help --vm-display-null
-    $GS_HOME/shared/pharo/pharo --list
-    $GS_HOME/shared/pharo/pharo-vm/pharo --no-display --list
-    set -e
-    if [ -e $GS_HOME/shared/pharo/pharo-vm/pharo ] ; then
-      set +e
-missing_32-bit_libs() {
-echo "Missing 32-bit libraries required by pharo"
-exit 1
-}
-      trap 'missing_32-bit_libs' ERR
-      $GS_HOME/shared/pharo/pharo-vm/pharo --help --vm-display-null &> /dev/null 2>&1
-      trap - ERR
-      set -e
-    fi
-    echo "should not get here"
-    exit 1
-    ;;
   Simple)
-    # createStone should work without having done an installServer ... also tests github:// builds
+    # createStone and createClient should fail without having done an installServer
+    set +e
     createStone ${STONENAME2} $GS_VERSION
+    status="$?"
+    if [ "$status" -ne 1 ] ;  then
+      echo "unexpected exit status ($status)"
+      exit 1
+    fi
+    createClient tode
+    status="$?"
+    if [ "$status" -ne 1 ] ;  then
+      echo "unexpected exit status ($status)"
+      exit 1
+    fi
+    exit 0
     ;;
   Basic)
     $GS_HOME/tests/basicInstallServer.sh
