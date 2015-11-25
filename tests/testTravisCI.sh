@@ -29,20 +29,20 @@ $GS_HOME/tests/travisCustomize.sh
 case $TEST in
   Error)
     # createStone and createClient should fail without having done an installServer
+test_exit_status() {
+  status="$1"
+  if [ "$status" -ne 1 ] ;  then
+    echo "unexpected exit status ($status)"
+    exit 1
+  fi
+}
     set +e
     createStone ${STONENAME2} $GS_VERSION
-    status="$?"
-    if [ "$status" -ne 1 ] ;  then
-      echo "unexpected exit status ($status)"
-      exit 1
-    fi
+    test_exit_status $?
     createClient tode
-    status="$?"
-    if [ "$status" -ne 1 ] ;  then
-      echo "unexpected exit status ($status)"
-      exit 1
-    fi
-    exit 0
+    test_exit_status $?
+    devKitCommandLine --list
+    test_exit_status $?
     ;;
   Basic)
     $GS_HOME/tests/basicInstallServer.sh

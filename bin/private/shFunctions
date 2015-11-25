@@ -28,3 +28,18 @@ realpath() {
   cd "$OURPWD"
   echo "$REALPATH"
 }
+
+verify_gsdevkit_installation() {
+if [ ! -e "$GS_HOME/bin/.gsdevkitSetup" ] ; then
+  # if .gsdevkitSysSetup is present, then assume install* run prior to invention of .gsdevkitSetup
+  if [ ! -e "$GS_HOME/bin/.gsdevkitSysSetup" ] ; then
+    echo "The appropriate install script has not been run (installClient, installClientServer or installServer)."
+    echo "Please read the Installation Overview documentation (https://github.com/GsDevKit/GsDevKit_home/blob/master/docs/installation/README.md#installation-overview) for further details."
+    exit 1
+  fi
+  cat - > $GS_HOME/bin/.gsdevkitSetup << EOF
+the presence of this file means that \$GS_HOME/bin/setupGsDevKit is assumed to have
+been successfully run.
+EOF
+fi
+}
