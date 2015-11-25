@@ -43,6 +43,10 @@ test_exit_status() {
     test_exit_status $?
     devKitCommandLine --list
     test_exit_status $?
+    devKitCommandLine --list
+    test_exit_status $?
+    $GS_HOME/shared/pharo/pharo --list
+    test_exit_status $?
     $GS_HOME/bin/status
     startStatmonitor ${STONENAME2}
     startStone ${STONENAME2}
