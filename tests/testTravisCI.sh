@@ -32,7 +32,7 @@ case $TEST in
     createClient tode1
     installServer
     createStone -g ${STONENAME1} $GS_VERSION
-    installClientServer
+    installServerClient
     createStone -g ${STONENAME2} $GS_VERSION
     installClient
     createClient tode2
