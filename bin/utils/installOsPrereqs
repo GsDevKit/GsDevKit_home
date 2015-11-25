@@ -311,7 +311,7 @@ case "$PLATFORM" in
       echo "Skip operating system prerequisites, operating system prerequisites already installed ($osPrereqsSysSetup exists)"
     else
       if [ -f /etc/lsb-release ]; then
-        osName=`lsb_release -ds`
+        osName=`lsb_release -ds | cut -d ' ' -f 1`
         osVersion=`lsb_release -rs`
       elif [ -f /etc/centos-release ]; then
         osName="CentOS"
