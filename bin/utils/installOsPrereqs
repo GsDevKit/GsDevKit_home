@@ -31,6 +31,22 @@ EXAMPLES
 HELP
 }
 
+installPrereqsForUbuntu(){
+    case "$osVersion" in
+      12.04)
+        installUbuntuPackages
+        sudo ln -f -s /lib/i386-linux-gnu/libpam.so.0 /lib/libpam.so.0
+        sudo ln -f -s /usr/lib/i386-lin-gnu/libstdc++.so.6 /usr/lib/i386-linux-gnu/libstdc++.so
+        ;;
+      14.04)
+        sudo dpkg --add-architecture i386
+        installUbuntuPackages
+        sudo ln -f -s /usr/lib/i386-lin-gnu/libstdc++.so.6 /usr/lib/i386-linux-gnu/libstdc++.so
+        ;;
+      *) echo "unrecognized Ubuntu version $os"; usage; exit 1;;
+    esac
+
+}
 installUbuntuPackages(){
     sudo apt-get -y update
     sudo apt-get -y install curl
@@ -49,6 +65,41 @@ installUbuntuPackages(){
       sudo apt-get -y install libxcb-dri2-0:i386
     fi
 }
+
+installPrereqsForCentOS(){
+	installCentOSPackages
+}
+
+installCentOSPackages(){
+    # IMPORTANT: This was only tested so far in CentOS 7, the latest stable release.
+	# Also, it was tested in a CentOS minimal installation so that to be sure we install everything needed.
+	
+	# Base software for gsDevKit_home
+	sudo yum -y groupinstall base
+	sudo yum -y install git
+	
+	# Base dependencies for a todeClient / Pharo VM
+	# If the below dependencies still does not work, try executing ldd and search for "not found".
+	# If there is a "no found" you can then do "sudo yum search" to search which package may contain the missing lib
+	# Remember to always use the 32 bits libs, that is, i686 variant.
+	# sudo ldd $GS_HOME/dev/clients/tode1/pharo-vm/pharo
+	# sudo ldd $GS_HOME/dev/clients/tode1/pharo-vm/vm-display-X11
+	sudo yum -y install glibc.i686
+	if [ ! -f /usr/lib/libssl.so.1.0.0 ]; then
+		sudo yum -y install openssl098e.i686
+		sudo ln -s /usr/lib/libssl.so.0.9.8e /usr/lib/libssl.so.1.0.0
+	fi
+	sudo yum -y upgrade pam.x86_64
+	sudo yum -y install pam.i686
+	
+    if [ "${X11client}x" = "1x" ] ; then
+		# To be able to do X11 forwarding you need the following libs
+		sudo yum -y install xauth
+		sudo yum -y install libX11.i686
+		sudo yum -y install mesa-libGL.i686
+    fi
+}
+
 
 while getopts "h" OPT ; do
   case "$OPT" in
@@ -259,25 +310,29 @@ case "$PLATFORM" in
     if [ -e "$osPrereqsSysSetup" ]; then
       echo "Skip operating system prerequisites, operating system prerequisites already installed ($osPrereqsSysSetup exists)"
     else
-      os=`lsb_release -rs`
-     case "$os" in
-        12.04)
-          installUbuntuPackages
-          sudo ln -f -s /lib/i386-linux-gnu/libpam.so.0 /lib/libpam.so.0
-          sudo ln -f -s /usr/lib/i386-lin-gnu/libstdc++.so.6 /usr/lib/i386-linux-gnu/libstdc++.so
-          ;;
-        14.04)
-          sudo dpkg --add-architecture i386
-          installUbuntuPackages
-          sudo ln -f -s /usr/lib/i386-lin-gnu/libstdc++.so.6 /usr/lib/i386-linux-gnu/libstdc++.so
-          ;;
+      if [ -f /etc/lsb-release ]; then
+        osName=`lsb_release -ds`
+        osVersion=`lsb_release -rs`
+      elif [ -f /etc/centos-release ]; then
+        osName="CentOS"
+        osVersion=`cat /etc/centos-release`
+      else
+        osName=$(uname -s)
+        osVersion=$(uname -r)
+      fi
+      case "$osName" in
+        Ubuntu)
+	  installPrereqsForUbuntu
+	  ;;
+	CentOS)
+	  installPrereqsForCentOS
+	  ;;
         *) echo "unrecognized Ubuntu version $os"; usage; exit 1;;
       esac
       cat - > $osPrereqsSysSetup << EOF
 the presence of this file means that \$GS_HOME/bin/installOsPrereqs has 
 installed the prerequisites for GemStone/S 64
 EOF
-
     fi
     ;;
   *) # nothing special needed
