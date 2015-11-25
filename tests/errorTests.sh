@@ -5,9 +5,17 @@
 
 set -x  # print commands and exit on error
 
+# the exit status should be 1 for all error conditions
+#   the error message should either be 
+#     "The appropriate install script has not been run..."
+#     "The stone travis2 does not exist..."
+#     "Perhaps a stone has not been created..."
+#     "the GsDevKit_server project has not bee installed..."
+#     "The reqewst client: tode1 does not exist"
+
 test_exit_status() {
   status="$1"
-  if [ "$status" -eq 0 ] ;  then
+  if [ "$status" -ne 1 ] ;  then
     echo "unexpected exit status ($status)"
     exit 1
   fi
@@ -20,8 +28,6 @@ test_exit_status $?
 devKitCommandLine --list
 test_exit_status $?
 devKitCommandLine --list
-test_exit_status $?
-$GS_HOME/shared/pharo/pharo --list
 test_exit_status $?
 $GS_HOME/bin/status
 test_exit_status $?
