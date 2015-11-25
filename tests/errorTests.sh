@@ -39,15 +39,18 @@ newExtent ${STONENAME2}
 test_exit_status $?
 stopNetldi ${STONENAME2}
 test_exit_status $?
-todeBackup ${STONENAME2}
+upgradeStone ${STONENAME1} ${STONENAME2} 3.2.9
 test_exit_status $?
-todeRestore ${STONENAME2}
+
+todeBackup ${STONENAME2} backup.dbf
+test_exit_status $?
+todeRestore ${STONENAME2} backup.dbf
 test_exit_status $?
 todeUpdate ${STONENAME2}
-test_exit_status $?
-upgradeStone ${STONENAME1} ${STONENAME2} 3.2.9
 test_exit_status $?
 
 startClient tode1
 test_exit_status $?
 
+set -e
+downloadGemStone 3.2.11

@@ -38,9 +38,9 @@ if [ "${GS_HOME}x" = "x" ] ; then
   echo "the GS_HOME environment variable needs to be defined"; exit 1
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
-if [ "$GS_SERVER{}x" = "x" ] ; then
+if [ "${GS_SERVER}x" = "x" ] ; then
   echo "the GS_SERVER environment variable needs to be defined"
-  echo "Perhaps a stone has not been create yet?"
+  echo "Perhaps a stone has not been created yet?"
   exit 1
 fi
 
