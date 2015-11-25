@@ -204,17 +204,24 @@ echo "[Info] GemStone version information:"
 cat $gs_product/version.txt
 
 if [ "${GS_TRAVIS}x" != "x" ] ; then
-  # running on travis server - have to use a custom key file
-  case "$vers" in
-    2.4.*) keyName="GemStone64Bit2.4.0-x86_64.Linux.key" ;;
-    3.0.1) keyName="GemStone64Bit3.0.0-x86_64.Linux.key" ;;
-    3.1.*) keyName="GemStone64Bit3.1.0-x86_64.Linux.key" ;;
-    3.2.*) keyName="GemStone64Bit3.2.0-x86_64.Linux.key" ;;
-    *) echo "No travis license for GemStone $vers"; exit 1;;
-  esac
-  chmod +w  $gs_product/seaside/etc/gemstone.key
-  echo "Copying $GS_HOME/travis/$keyName to $gs_product/seaside/etc/gemstone.key"
-  cp $GS_HOME/travis/$keyName $gs_product/seaside/etc/gemstone.key
+  case "$PLATFORM" in
+    Linux-x86_64)
+      # running on travis server - have to use a custom key file
+      case "$vers" in
+        2.4.*) keyName="GemStone64Bit2.4.0-x86_64.Linux.key" ;;
+        3.0.1) keyName="GemStone64Bit3.0.0-x86_64.Linux.key" ;;
+        3.1.*) keyName="GemStone64Bit3.1.0-x86_64.Linux.key" ;;
+        3.2.*) keyName="GemStone64Bit3.2.0-x86_64.Linux.key" ;;
+        *) echo "No travis license for GemStone $vers"; exit 1;;
+      esac
+      chmod +w  $gs_product/seaside/etc/gemstone.key
+      echo "Copying $GS_HOME/travis/$keyName to $gs_product/seaside/etc/gemstone.key"
+      cp $GS_HOME/travis/$keyName $gs_product/seaside/etc/gemstone.key
+      ;;
+   *)
+     # no need for special handling 
+     ;;
+   esac
 fi
 
 # End of script
