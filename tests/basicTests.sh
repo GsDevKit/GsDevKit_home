@@ -98,10 +98,6 @@ stopStone -b ${STONENAME4}
 
 newExtent -n -s $baseSnapshot ${STONENAME3}
 
-. $GS_HOME/bin/defStone.env ${STONENAME1}
-cd $GS_HOME/server/stones/${STONENAME1}
-. defStone.env
-
 deleteStone ${STONENAME2} ${STONENAME3}
 
 startStone -b ${STONENAME1}
@@ -136,4 +132,8 @@ project install --local --url=http://gsdevkit.github.io/GsDevKit_home/Tode.ston
 project install --local --url=http://gsdevkit.github.io/GsDevKit_home/XMLSupport.ston
 project install --local --url=http://gsdevkit.github.io/GsDevKit_home/ZincHTTPComponents.ston
 EOF
+
+. $GS_HOME/bin/defStone.env ${STONENAME1}
+cd $GS_HOME/server/stones/${STONENAME1}
+. defStone.env
 
