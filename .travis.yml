@@ -15,6 +15,7 @@ matrix:
    allow_failures:
    - os: osx
      env: GS_VERSION=3.1.0.6 TEST=Basic
+   allow_failures:
    - os: osx
      env: GS_VERSION=3.2.11 TEST=Basic
 
