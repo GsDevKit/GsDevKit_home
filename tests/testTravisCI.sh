@@ -31,10 +31,11 @@ case $TEST in
     # createStone and createClient should fail without having done an installServer
 test_exit_status() {
   status="$1"
-  if [ "$status" -ne 1 ] ;  then
+  if [ "$status" -eq 0 ] ;  then
     echo "unexpected exit status ($status)"
     exit 1
   fi
+  echo "EXIT STATUS: $status"
 }
     set +e
     createStone ${STONENAME2} $GS_VERSION
