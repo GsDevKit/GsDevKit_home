@@ -91,6 +91,7 @@ cd $GS_HOME/sys/stones/${STONENAME3}
 ls dirs.ston  home  homeComposition.ston  packages.ston  projectComposition.ston  projects  repos.ston
 todeIt ${STONENAME3} eval \`3+4\`\; eval \`self == 7 ifFalse: [ System logout ]\`
 todeIt ${STONENAME3} ls /home
+cd $GS_HOME
 
 stopStone -b ${STONENAME2}
 stopStone -b ${STONENAME3}
