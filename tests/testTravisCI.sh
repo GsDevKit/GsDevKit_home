@@ -27,6 +27,14 @@ $GS_HOME/bin/private/clone_sys_local -c https
 $GS_HOME/tests/travisCustomize.sh
 
 case $TEST in
+  Install)
+    installClient
+    createClient tode1
+    installServer
+    createStone -g ${STONENAME1} $GS_VERSION
+    installClientServer
+    createStone -g ${STONENAME2} $GS_VERSION
+    ;;
   Error)
    $GS_HOME/tests/errorTests.sh
    ;;
