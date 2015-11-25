@@ -16,7 +16,7 @@ matrix:
    - os: osx
      env: GS_VERSION=3.1.0.6 TEST=Basic
    - os: osx
-     env: GS_VERSION=3.1.0.6 TEST=Basic
+     env: GS_VERSION=3.2.11 TEST=Basic
 
 before_script:
   - export GS_HOME="$(pwd)"
