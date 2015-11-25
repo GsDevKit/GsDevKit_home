@@ -34,6 +34,8 @@ case $TEST in
     createStone -g ${STONENAME1} $GS_VERSION
     installClientServer
     createStone -g ${STONENAME2} $GS_VERSION
+    installClient
+    createClient tode2
     ;;
   Error)
    $GS_HOME/tests/errorTests.sh
