@@ -43,10 +43,15 @@ if [ $# -ne 1 ]; then
 fi
 stoneName=$1
 
+stonePath=$GS_SERVER_STONES/$stoneName
+if [ ! -d "$stonePath" ] ; then
+  echo "The stone $stoneName does not exist"
+  exit 1
+fi
+
 echo "starting netldi $stoneName"
 
 # set up stone environment
-stonePath=$GS_SERVER_STONES/$stoneName
 pushd $stonePath >& /dev/null
   source $stonePath/stone.env
 popd >& /dev/null

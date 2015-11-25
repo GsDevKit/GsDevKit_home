@@ -85,6 +85,11 @@ gsvers="$3"
 sourceStonePath=$GS_SERVER_STONES/$sourceStoneName
 targetStonePath=$GS_SERVER_STONES/$targetStoneName
 
+if [ ! -d "$sourceStonePath" ] ; then
+  echo "The stone $sourceStoneName does not exist"
+  exit 1
+fi
+
 sourceStoneVersion="$(sed -n '2{p;q;}' $sourceStonePath/product/version.txt| awk '{print $1;}')"
 majorMinorVersion="${sourceStoneVersion:0:3}"
 

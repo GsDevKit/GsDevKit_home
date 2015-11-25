@@ -29,11 +29,23 @@ startStatmonitor ${STONENAME2}
 test_exit_status $?
 startStone ${STONENAME2}
 test_exit_status $?
+startNetldi ${STONENAME2}
+test_exit_status $?
 stopStone ${STONENAME2}
 test_exit_status $?
 updateGsDevKit
 test_exit_status $?
 newExtent ${STONENAME2}
+test_exit_status $?
+stopNetldi ${STONENAME2}
+test_exit_status $?
+todeBackup ${STONENAME2}
+test_exit_status $?
+todeRestore ${STONENAME2}
+test_exit_status $?
+todeUpdate ${STONENAME2}
+test_exit_status $?
+upgradeStone ${STONENAME1} ${STONENAME2} 3.2.9
 test_exit_status $?
 
 startClient tode1
