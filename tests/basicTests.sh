@@ -33,6 +33,7 @@ startClient -h
 startNetldi -h
 startStatmonitor -h
 startStone -h
+startTopaz -h
 status -h
 stones -h
 stopNetldi -h
@@ -86,6 +87,14 @@ todeLoad ${STONENAME4}
 
 #create a tODE stone
 createStone -t $todeSnapshot ${STONENAME3} $GS_VERSION
+
+startTopaz ${STONENAME3} -l << EOF
+login
+run
+3+4
+%
+logout
+EOF
 
 cd $GS_HOME/sys/stones/${STONENAME3}
 ls dirs.ston  home  homeComposition.ston  packages.ston  projectComposition.ston  projects  repos.ston

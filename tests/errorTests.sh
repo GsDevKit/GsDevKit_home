@@ -47,6 +47,8 @@ stopNetldi ${STONENAME2}
 test_exit_status $?
 upgradeStone ${STONENAME1} ${STONENAME2} 3.2.9
 test_exit_status $?
+startTopaz  ${STONENAME1} -l
+test_exit_status $?
 
 todeBackup ${STONENAME2} backup.dbf
 test_exit_status $?
