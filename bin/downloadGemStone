@@ -52,7 +52,7 @@ if [ "${GS_HOME}x" = "x" ] ; then
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
-echo "Installing GemStone/S $vers"
+echo "Downloading GemStone/S $vers"
 bucket=$vers
 
 # Detect operating system
@@ -119,7 +119,7 @@ fi
 
 # We're good to go. Let user know.
 machine_name="`uname -n`"
-echo "[Info] Starting installation of $gsvers on $machine_name"
+echo "[Info] Starting download of $gsvers on $machine_name"
 
 if [ -d "$GS_SHARED_DOWNLOADS/products/$gsvers" ] ; then
     echo "[Warning] $GS_SHARED_DOWNLOADS//products/$gsvers already exists"
@@ -198,7 +198,7 @@ esac
 #    Copy the gci libraries to client installations
 $GS_HOME/bin/private/installClientGciLibraries $vers
 
-echo "[Info] Finished $gsvers installation on $machine_name"
+echo "[Info] Finished $gsvers download on $machine_name"
 echo ""
 echo "[Info] GemStone version information:"
 cat $gs_product/version.txt
@@ -215,14 +215,6 @@ if [ "${GS_TRAVIS}x" != "x" ] ; then
   chmod +w  $gs_product/seaside/etc/gemstone.key
   echo "Copying $GS_HOME/travis/$keyName to $gs_product/seaside/etc/gemstone.key"
   cp $GS_HOME/travis/$keyName $gs_product/seaside/etc/gemstone.key
-fi
-
-# If we can determine any IPv4 addresses, print them out. Otherwise be silent.
-if [[ -x /sbin/ifconfig && `/sbin/ifconfig -a | grep -sc " inet addr:.*Bcast"` -gt 0 ]]
-    then
-    echo ""
-    echo "[Info] $machine_name has the following IPv4 addresses:"
-    /sbin/ifconfig -a | grep ' inet addr:.*Bcast' | cut -f2 -d: | cut -f1 -d' '
 fi
 
 # End of script
