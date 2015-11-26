@@ -73,6 +73,12 @@ EXAMPLES
 
   ---
 
+  $(basename $0) clients
+  $(basename $0) products
+  $(basename $0) sessions
+  $(basename $0) status
+  $(basename $0) stones
+
   $(basename $0) stone --create
   $(basename $0) stone --delete
   $(basename $0) stone --start
