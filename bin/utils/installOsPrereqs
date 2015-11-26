@@ -60,7 +60,7 @@ installUbuntuPackages(){
     sudo apt-get -y install libfreetype6:i386
     sudo apt-get -y install pstack
     sudo /bin/su -c "echo 'kernel.yama.ptrace_scope = 0' >>/etc/sysctl.d/10-ptrace.conf"
-    if [ "${X11client}x" = "1x" ] ; then
+    if [ "${x11client}" = "true" ] ; then
       sudo apt-get -y install libgl1-mesa-dev:i386
       sudo apt-get -y install libxcb-dri2-0:i386
     fi
@@ -73,10 +73,6 @@ installPrereqsForCentOS(){
 installCentOSPackages(){
     # IMPORTANT: This was only tested so far in CentOS 7, the latest stable release.
 	# Also, it was tested in a CentOS minimal installation so that to be sure we install everything needed.
-	
-	# Base software for gsDevKit_home
-	sudo yum -y groupinstall base
-	sudo yum -y install git
 	
 	# Base dependencies for a todeClient / Pharo VM
 	# If the below dependencies still does not work, try executing ldd and search for "not found".
@@ -92,7 +88,7 @@ installCentOSPackages(){
 	sudo yum -y upgrade pam.x86_64
 	sudo yum -y install pam.i686
 	
-    if [ "${X11client}x" = "1x" ] ; then
+    if [ "${x11client}" = "true" ] ; then
 		# To be able to do X11 forwarding you need the following libs
 		sudo yum -y install xauth
 		sudo yum -y install libX11.i686
@@ -320,20 +316,21 @@ case "$PLATFORM" in
         osName=$(uname -s)
         osVersion=$(uname -r)
       fi
+	  echo "Installing prereqs for detect Linux named $osName and version $osVersion"
       case "$osName" in
         Ubuntu)
-	  installPrereqsForUbuntu
-	  ;;
-	CentOS)
-	  installPrereqsForCentOS
-	  ;;
-        *) echo "unrecognized Ubuntu version $os"; usage; exit 1;;
-      esac
-      cat - > $osPrereqsSysSetup << EOF
+		  installPrereqsForUbuntu
+		  ;;
+		CentOS)
+		  installPrereqsForCentOS
+		  ;;
+	    *) echo "Unrecognized Linux named $osName version $osVersion"; usage; exit 1;;
+	  esac
+	    cat - > $osPrereqsSysSetup << EOF
 the presence of this file means that \$GS_HOME/bin/installOsPrereqs has 
 installed the prerequisites for GemStone/S 64
 EOF
-    fi
+	fi
     ;;
   *) # nothing special needed
     ;;
