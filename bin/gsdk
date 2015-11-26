@@ -1,0 +1,107 @@
+#! /usr/bin/env bash
+#=========================================================================
+# Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#=========================================================================
+
+usage() {
+  cat <<HELP
+USAGE: $(basename $0) [-h] <sub-command> [<sub-command-args>]
+
+
+OPTIONS
+  -h display help
+
+
+EXAMPLES
+  $(basename $0) -h
+
+  $(basename $0) clients
+  $(basename $0) createClient tode
+  $(basename $0) createStone gs_329 3.2.9
+  $(basename $0) deleteClient tode
+  $(basename $0) deleteStone gs_329
+  $(basename $0) newExtent gs_329
+  $(basename $0) products
+  $(basename $0) sessions
+  $(basename $0) startClient tode
+  $(basename $0) startNetldi gs_329
+  $(basename $0) startStatmonitor gs_329
+  $(basename $0) startStone gs_329
+  $(basename $0) startTopaz gs_329 -l
+  $(basename $0) status
+  $(basename $0) stones
+  $(basename $0) stopNetldi gs_329
+  $(basename $0) stopStone gs_329
+  $(basename $0) todeBackup gs_329 backup.dbf
+  $(basename $0) todeIt gs_329 eval \`3+4\`
+  $(basename $0) todeLoad gs_329
+  $(basename $0) todeRestore gs_329 backup.dbf
+  $(basename $0) todeUpdate gs_329
+  $(basename $0) updateGsDevKit -gist
+  $(basename $0) upgradeStone gs_3106 gs_329 3.2.9
+
+  ---
+
+  $(basename $0) clients
+  $(basename $0) products
+  $(basename $0) sessions
+  $(basename $0) status
+  $(basename $0) stones
+
+  ---
+
+  $(basename $0) newExtent gs_329
+
+  $(basename $0) createClient tode
+  $(basename $0) createStone gs_329 3.2.9
+  $(basename $0) deleteClient tode
+  $(basename $0) deleteStone gs_329
+  $(basename $0) startClient tode
+  $(basename $0) startNetldi gs_329
+  $(basename $0) startStatmonitor gs_329
+  $(basename $0) startStone gs_329
+  $(basename $0) startTopaz gs_329 -l
+  $(basename $0) stopNetldi gs_329
+  $(basename $0) stopStone gs_329
+  $(basename $0) todeBackup gs_329 backup.dbf
+  $(basename $0) todeIt gs_329 eval \`3+4\`
+  $(basename $0) todeLoad gs_329
+  $(basename $0) todeRestore gs_329 backup.dbf
+  $(basename $0) todeUpdate gs_329
+  $(basename $0) updateGsDevKit -gist
+  $(basename $0) upgradeStone gs_3106 gs_329 3.2.9
+
+  ---
+
+  $(basename $0) stone --create
+  $(basename $0) stone --delete
+  $(basename $0) stone --start
+  $(basename $0) stone --stop
+  $(basename $0) stone --upgrade
+
+  $(basename $0) client --create
+  $(basename $0) client --delete
+  $(basename $0) client --start
+
+  $(basename $0) netldi --start
+  $(basename $0) netldi --stop
+
+  $(basename $0) statmonitor
+
+  $(basename $0) tode --backup
+  $(basename $0) tode --it
+  $(basename $0) tode --load
+  $(basename $0) tode --restore
+  $(basename $0) tode --update
+
+  $(basename $0) topaz
+
+  $(basename $0) update
+HELP
+}
+
+set -e # exit on error
+if [ "${GS_HOME}x" = "x" ] ; then
+  echo "the GS_HOME environment variable needs to be defined"; exit 1
+fi
+
