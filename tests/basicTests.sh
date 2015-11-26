@@ -94,6 +94,7 @@ run
 3+4
 %
 logout
+exit 0
 EOF
 
 cd $GS_HOME/sys/stones/${STONENAME3}
