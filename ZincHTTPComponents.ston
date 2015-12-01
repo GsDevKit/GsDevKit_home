@@ -5,7 +5,7 @@ TDObjectGatewayLeafNode{#name:'ZincHTTPComponents',#contents:'^ TDProjectSpecEnt
       repository: \'github://GsDevKit/zinc:2.4.3.?/repository\'
       loads: #(\'Core\');
     installScript: \'project clone --https --local ZincHTTPComponents\';
-    gitCheckout: \'gemstone\';
+    gitCheckout: \'gs_master\';
     status: #(#\'inactive\');
     locked: false;
     yourself '}
