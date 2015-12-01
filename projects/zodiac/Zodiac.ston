@@ -1,0 +1,8 @@
+TDObjectGatewayLeafNode{#name:'Zodiac',#contents:'^ TDProjectSpecEntryDefinition new
+    baseline: \'Zodiac\'
+      repository:
+        \'filetree:///export/foos1/users/dhenrich/dev/_home/shared/repos/zodiac/repository\'
+      loads: #(\'Core\' \'Tests\' \'Extras\');
+    status: #(#\'active\');
+    locked: true;
+    yourself'}
