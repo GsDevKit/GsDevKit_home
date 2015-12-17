@@ -1,0 +1,11 @@
+TDObjectGatewayLeafNode{#name:'Zodiac',#contents:'^ TDProjectSpecEntryDefinition new
+    comment: \'\';
+    projectUrl: \'https://github.com/GsDevKit/zodiac\';
+    baseline: \'Zodiac\'
+      repository: \'github://GsDevKit/zodiac:gs_master/repository/\'
+      loads: #(\'Core\' \'Tests\' \'Extras\');
+    installScript: \'project clone --https --local Zodiac\';
+    gitCheckout: \'gs_master\';
+    status: #(#\'inactive\');
+    locked: false;
+    yourself'}

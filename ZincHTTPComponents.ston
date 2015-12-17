@@ -4,7 +4,9 @@ TDObjectGatewayLeafNode{#name:'ZincHTTPComponents',#contents:'^ TDProjectSpecEnt
     baseline: \'ZincHTTPComponents\'
       repository: \'github://GsDevKit/zinc:2.4.3.?/repository\'
       loads: #(\'Core\');
-    installScript: \'project clone --https --local ZincHTTPComponents\';
+    installScript: \'
+      project clone --https --local ZincHTTPComponents
+      project install --local --url=http://gsdevkit.github.io/GsDevKit_home/Zodiac.ston\';
     gitCheckout: \'gs_master\';
     status: #(#\'inactive\');
     locked: false;

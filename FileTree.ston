@@ -1,0 +1,12 @@
+TDObjectGatewayLeafNode{#name:'FileTree',#contents:'^ TDProjectSpecEntryDefinition new
+    comment: \'\';
+    projectUrl: \'https://github.com/dalehenrich/filetree\';
+    baseline: \'FileTree\'
+      repository: \'github://dalehenrich/filetree:gemstone2.4/repository/\'
+      loads: #( \'default\' );
+    installScript: \'project clone --https --local FileTree\';
+    gitCheckout: \'gemstone2.4\';
+    status: #(#\'inactive\');
+    locked: false;
+    yourself.
+'}

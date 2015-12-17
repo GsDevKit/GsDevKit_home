@@ -1,0 +1,12 @@
+TDObjectGatewayLeafNode{#name:'RB',#contents:'^ TDProjectSpecEntryDefinition new
+    comment: \'\';
+    projectUrl: \'https://github.com/dalehenrich/rb\';
+    baseline: \'RB\'
+      repository: \'github://dalehenrich/rb:master/repository/\'
+      loads: #( \'AST-Core\' );
+    installScript: \'project clone --https --local RB\';
+    gitCheckout: \'master\';
+    status: #(#\'inactive\');
+    locked: false;
+    yourself.
+'}
