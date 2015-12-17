@@ -1,5 +1,6 @@
-/server
-/dev
+/server/
+/dev/
+/install.log
 [._]*.s[a-w][a-z]
 [._]s[a-w][a-z]
 *.un~

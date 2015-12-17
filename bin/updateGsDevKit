@@ -71,6 +71,9 @@ if [ "${GS_HOME}x" = "x" ] ; then
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
+source ${GS_HOME}/bin/private/shFunctions
+verify_gsdevkit_installation
+
 gsDevKitArg=""
 todeArg=""
 imageArg=""

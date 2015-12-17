@@ -7,16 +7,6 @@ set -xe  # print commands and exit on error
 
 uname -a   #gather info for bug 44185
 
-osPrereqsSysSetup=$GS_HOME/bin/.osPrereqsSysSetup # if file exists, skip installation
-
-if [ -e "$osPrereqsSysSetup" ]; then
-  echo "Skip running osPrereqs, system already setup ($osPrereqsSysSetup exists)"
-else
-  # install OS prereqs which includes gdb, which should give us a C stack for 
-  # bug 44491
-  $GS_HOME/bin/utils/installOsPrereqs
-fi
-
 if [ "${STONENAME1}x" = "x" ] ; then
   export STONENAME1="travis1"
 fi
@@ -37,9 +27,19 @@ $GS_HOME/bin/private/clone_sys_local -c https
 $GS_HOME/tests/travisCustomize.sh
 
 case $TEST in
-  Simple)
-    # createStone should work without having done an installServer ... also tests github:// builds
-    createStone ${STONENAME2} $GS_VERSION;;
+  Install)
+    installClient
+    createClient tode1
+    installServer
+    createStone -g ${STONENAME1} $GS_VERSION
+    installServerClient
+    createStone -g ${STONENAME2} $GS_VERSION
+    installClient
+    createClient tode2
+    ;;
+  Error)
+   $GS_HOME/tests/errorTests.sh
+   ;;
   Basic)
     $GS_HOME/tests/basicInstallServer.sh
     source $GS_HOME/bin/defGsDevKit.env

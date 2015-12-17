@@ -31,11 +31,6 @@ The following steps are involved in installing the GsDevKit server.  For an exam
    cd GsDevKit_home
    ```
 
-2. **Perform the git checkout and branch**
-   ```
-   git checkout -b gsdevkit
-   ```
-
 3. **Set the environment**
 
    The environment variable $GS_HOME and the updated $PATH are required to use DevKit, so you should add them to your `.bashrc` or another initialization script.
@@ -53,17 +48,19 @@ The following steps are involved in installing the GsDevKit server.  For an exam
    
    Script to install the server only:
    ```
-   $GS_HOME/bin/installServer -c <authMode> <myStoneName> <GemStoneVersion>
+   installServer
+   createStone <myStoneName> <GemStoneVersion>
    ```
 
-   You may use any name for the `<myStoneName>` and `<myClientName>`.  You may later have multiple stones and multiple clients. The examples below use **devKit_329**.  For `<authMode>`, use https, though ssh will also work if you have ssh authentication already set up.  
+   You may use any name for the `<myStoneName>` and `<myClientName>`.  You may later have multiple stones and multiple clients. The examples below use **devKit_329**.  
 
    The install scripts invokes the following sub-scripts:
    ```
    downloadGemStone
+   installOsPrereqs
    cloneGsDevKitProjects 
    cloneSharedTodeProjects
-   createStone
+   setupGsDevKit 
    ```
    After these scripts successfully complete, you will have a stone named `<myStoneName>`, of GemStone/S 64 Bit version `<GemStoneVersion>`, installed on your server node and running.  You will also have a NetLDI named `<myStoneName>_ldi` running on the server, so the server is ready for a tODE client to connect.
    
@@ -75,10 +72,10 @@ This script installs the server components only, and installs and starts a 3.2.9
 ```
 git clone https://github.com/GsDevKit/GsDevKit_home.git
 cd GsDevKit_home
-git checkout -b gsdevkit
 export GS_HOME=`pwd`
 export PATH=$GS_HOME/bin:$PATH
-$GS_HOME/bin/installServer -c https devKit_329 3.2.9
+installServer |& tee $GS_HOME/install.log
+createStone devKit_329 3.2.9 |& tee -a $GS_HOME/install.log
 ```
 
 

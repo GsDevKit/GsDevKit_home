@@ -10,7 +10,7 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-c https | ssh ]  [-o <organization-name>] <stone-name> <client-name> <gemstone-version>
+USAGE: $(basename $0) [-h] [-c https | ssh ]  [-o <organization-name>]
 
 OPTIONS
   -h
@@ -24,7 +24,7 @@ OPTIONS
 
 EXAMPLES
    $(basename $0) -h
-   $(basename $0) -c https gs_329 tode 3.2.9
+   $(basename $0)
 
 HELP
 }
@@ -47,14 +47,10 @@ while getopts "hc:o:" OPT ; do
 done
 shift $(($OPTIND - 1))
 
-if [ $# -ne 3 ]; then
-  echo "wrong number of arguments (3 expected)"; usage; exit 1
+if [ $# -ne 0 ]; then
+  echo "unexpected argument ($1)"; usage; exit 1
 fi
-stoneName=$1
-clientName=$2
-vers=$3
-$GS_HOME/bin/setupGsDevKit $modeArg $organizationArg both $vers
-$GS_HOME/bin/createStone $stoneName $vers
-$GS_HOME/bin/createClient $clientName
+
+$GS_HOME/bin/setupGsDevKit $modeArg $organizationArg both
 
 echo "...finished $(basename $0)"

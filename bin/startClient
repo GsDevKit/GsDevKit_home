@@ -48,6 +48,10 @@ shift 1
 
 if [ "${GS_CLIENT_DEV}x" = "x" ] || [ ! -d "${GS_CLIENT_DEV_CLIENTS}/$clientName" ] ; then
   echo "The requested client: $clientName does not exist"
+  if [ -Z $PS1 ] ; then
+    # client does not exist and we are in a non-interactive shell
+    exit 1 
+  fi
   created="false"
   while [ "$created" = "false" ] ; do
     read -p "Do you wish to create ${clientName}? [y/n]" yn

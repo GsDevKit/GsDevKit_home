@@ -62,6 +62,11 @@ fi
 stoneName=$1
 stonePath=$GS_SERVER_STONES/${stoneName}
 
+if [ ! -d "$stonePath" ] ; then
+  echo "The stone $stoneName does not exist"
+  exit 1
+fi
+
 if [ -e "$stonePath/stone.env" ] ; then
   # set up stone environment
   pushd $stonePath >& /dev/null

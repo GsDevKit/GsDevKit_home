@@ -14,17 +14,9 @@ usage() {
  cat <<HELP
 USAGE: $(basename $0) [-h] <gemstone-version>
 
-Does a basic install of GemStone for a developer on Mac or Linux
-Setup for manual GemStone startup rather than automatic startup upon boot
 Safe to run multiple times, as it will not overwrite existing data
-Requires root access (using sudo) to change setings and create directories
-
-If the file \$GS_HOME/bin/.gsdevkitSysSetup exists skip the steps requiring sudo access. 
 
 Actions:
-   Verify machine is capable of running GemStone 64-bit
-   Add shared memory setup to /etc/sysctl.conf
-   Add GemStone netldi service port to /etc/services
    Download the GemStone product zipfile
    Uncompress the GemStone zipfile into \$GS_HOME/shared/downloads/products
    Copy the initial GsDevKit repository to data directory
@@ -60,7 +52,7 @@ if [ "${GS_HOME}x" = "x" ] ; then
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
-echo "Installing GemStone/S $vers"
+echo "Downloading GemStone/S $vers"
 bucket=$vers
 
 # Detect operating system
@@ -71,16 +63,6 @@ PLATFORM="`uname -sm | tr ' ' '-'`"
 # Check we're on a suitable 64-bit machine and set gsvers
 case "$PLATFORM" in
     Darwin-i386)
-      OSVERSION="`sw_vers -productVersion`"
-      MAJOR="`echo $OSVERSION | cut -f1 -d.`"
-      MINOR="`echo $OSVERSION | cut -f2 -d.`"
-      CPU_CAPABLE="`sysctl hw.cpu64bit_capable | cut -f2 -d' '`"
-      #
-      # Check the CPU and Mac OS X profile.
-      if [[ $CPU_CAPABLE -ne 1 || $MAJOR -lt 10 || $MINOR -lt 5 ]] ; then
-          echo "[Error] This script requires Mac OS X 10.5 or later on a 64-bit Intel CPU."
-          exit 1
-      fi
       gsvers="GemStone64Bit${vers}-i386.Darwin"
       ;;
     Linux-x86_64)
@@ -91,7 +73,7 @@ case "$PLATFORM" in
       gsvers="GemBuilderC${vers}-x86.Windows_NT"
       ;;
     *)
-      echo "[Error] This script only works on a 64-bit Linux or Mac OS X machine"
+      echo "[Error] This script should only be run on Mac (Darwin-i386), Linux (Linux-x86_64) or Windows (Windows-x86_NT)"
       echo "The result from \"uname -sm\" is \"`uname -sm`\""
       exit 1
       ;;
@@ -137,152 +119,7 @@ fi
 
 # We're good to go. Let user know.
 machine_name="`uname -n`"
-echo "[Info] Starting installation of $gsvers on $machine_name"
-
-gsdevkitSysSetup=$GS_HOME/bin/.gsdevkitSysSetup # if file exists, system setup alrady completed
-
-if [ -e "$gsdevkitSysSetup" ]; then
-  echo "Skip operating system configuration steps, system already setup ($gsdevkitSysSetup exists)"
-else
-  case "$PLATFORM" in
-    MINGW32_NT*) #do nothing
-      ;;
-    *)
-      # Do a trivial sudo to test we can and get the password prompt out of the way
-      sudo date
-
-      echo "[Info] Setting up shared memory"
-      # Ref: http://developer.postgresql.org/pgdocs/postgres/kernel-resources.html
-      # Ref: http://www.idevelopment.info/data/Oracle/DBA_tips/Linux/LINUX_8tml
-
-      case "$PLATFORM" in
-        Linux-x86_64)
-          # use TotalMem: kB because Ubuntu doesn't have Mem: in Bytes
-          totalMemKB=`awk '/MemTotal:/{print($2);}' /proc/meminfo`
-          totalMem=$(($totalMemKB * 1024))
-          # Figure out the max shared memory segment size currently allowed
-          shmmax=`cat /proc/sys/kernel/shmmax`
-          # Figure out the max shared memory currently allowed
-          shmall=`cat /proc/sys/kernel/shmall`
-          ;;
-        Darwin-i386)
-          totalMem="`sysctl hw.memsize | cut -f2 -d' '`"
-          # Figure out the max shared memory segment size currently allowed
-          shmmax="`sysctl kern.sysv.shmmax | cut -f2 -d' '`"
-          # Figure out the max shared memory currently allowed
-          shmall="`sysctl kern.sysv.shmall | cut -f2 -d' '`"
-          ;;
-        *)
-          echo "[Error] Can't determine operating system. Check script."
-          exit 1
-          ;;
-      esac
-      totalMemMB=$(($totalMem / 1048576))
-      shmmaxMB=$(($shmmax / 1048576))
-      shmallMB=$(($shmall / 256))
-
-      # Print current values
-      echo "  Total memory available is $totalMemMB MB"
-      echo "  Max shared memory segment size is $shmmaxMB MB"
-      echo "  Max shared memory allowed is $shmallMB MB"
-
-      # Figure out the max shared memory segment size (shmmax) we want
-      # Use 75% of available memory but not more than 2GB
-      shmmaxNew=$(($totalMem * 3/4))
-      [ $shmmaxNew -gt 2147483648 ] && shmmaxNew=2147483648
-      shmmaxNewMB=$(($shmmaxNew / 1048576))
-
-      # Figure out the max shared memory allowed (shmall) we want
-      # The MacOSX default is 4MB, way too small
-      # The Linux default is 2097152 or 8GB, so we should never need this
-      # but things will certainly break if it's been reset too small
-      # so ensure it's at least big enough to hold a fullsize shared memory segment
-      shmallNew=$(($shmmaxNew / 4096))
-      [ $shmallNew -lt $shmall ] && shmallNew=$shmall
-      shmallNewMB=$(($shmallNew / 256))
-
-      # Increase shmmax if appropriate
-      if [ $shmmaxNew -gt $shmmax ]; then
-        echo "[Info] Increasing max shared memory segment size to $shmmaxNewMB MB"
-        [ $PLATFORM = "Darwin-i386" ] \
-	    && sudo sysctl -w kern.sysv.shmmax=$shmmaxNew
-        [ $PLATFORM = "Linux-x86_64" ] \
-	    && sudo bash -c "echo $shmmaxNew > /proc/sys/kernel/shmmax" \
-	    && sudo /bin/su -c "echo 'kernel.shmmax=$shmmaxNew' >>/etc/sysctl.conf"
-      else
-        echo "[Info] No need to increase max shared memory segment size"
-      fi
-
-      # Increase shmall if appropriate
-      if [ $shmallNew -gt $shmall ]; then
-        echo "[Info] Increasing max shared memory allowed to $shmallNewMB MB"
-        [ $PLATFORM = "Darwin-i386" ] && sudo sysctl -w kern.sysv.shmall=$shmallNew
-        [ $PLATFORM = "Linux-x86_64" ] && sudo bash -c "echo $shmallNew > /proc/sys/kernel/shmall"
-      else
-        echo "[Info] No need to increase max shared memory allowed"
-      fi
-
-      # At this point, shared memory settings contain the values we want, 
-      # put them in sysctl.conf so they are preserved.
-      if [[ ! -f /etc/sysctl.conf || `grep -sc "kern.*m" /etc/sysctl.conf` -eq 0 ]]; then
-        case "$PLATFORM" in
-          Linux-x86_64)
-            echo "# kernelm* settings added by GsDevKit installation" > /tmp/sysctl.conf.$$
-            echo "kernelmmax=`cat /proc/sys/kernel/shmmax`" >> /tmp/sysctl.conf.$$
-            echo "kernelmall=`cat /proc/sys/kernel/shmall`" >> /tmp/sysctl.conf.$$
-            ;;
-          Darwin-i386)
-            # On Mac OS X Leopard, you must have all five settings in sysctl.conf
-            # before they will take effect.
-            echo "# kern.sysv.shm* settings added by GsDevKit installation" > /tmp/sysctl.conf.$$
-            sysctl kern.sysv.shmmax kern.sysv.shmall kern.sysv.shmmin kern.sysv.shmmni \
-            kern.sysv.mseg  | tr ":" "=" | tr -d " " >> /tmp/sysctl.conf.$$
-            ;;
-          *)
-            echo "[Error] Can't determine operating system. Check script."
-            exit 1
-            ;;
-        esac
-        #
-        echo "[Info] Adding the following section to /etc/sysctl.conf"
-        cat /tmp/sysctl.conf.$$
-        sudo bash -c "cat /tmp/sysctl.conf.$$ >> /etc/sysctl.conf"
-        /bin/rm -f /tmp/sysctl.conf.$$
-      else
-        echo "[Info] The following shared memory settings already exist in /etc/sysctl.conf"
-        echo "To change them, remove the following lines from /etc/sysctl.conf and rerun this script"
-        grep "kern.*m" /etc/sysctl.conf
-      fi
-
-      # Now setup for NetLDI in case we ever need it.
-      echo "[Info] Setting up GemStone netldi service port"
-      if [ `grep -sc "^gs64ldi" /etc/services` -eq 0 ]; then
-        echo '[Info] Adding "gs64ldi  50377/tcp" to /etc/services'
-        sudo bash -c 'echo "gs64ldi         50377/tcp        # Gemstone netldi"  >> /etc/services'
-      else
-        echo "[Info] GemStone netldi service port is already set in /etc/services"
-        echo "To change it, remove the following line from /etc/services and rerun this script"
-        grep "^gs64ldi" /etc/services
-      fi
-
-      # Create some directories that GemStone expects; make them writable
-      echo "[Info] Creating /opt/gemstone directory"
-      if [ ! -e /opt/gemstone ]
-        then
-        sudo mkdir -p /opt/gemstone /opt/gemstone/log /opt/gemstone/locks
-        sudo chown $USER:${GROUPS[0]} /opt/gemstone /opt/gemstone/log /opt/gemstone/locks
-        sudo chmod 770 /opt/gemstone /opt/gemstone/log /opt/gemstone/locks
-      else
-        echo "[Warning] /opt/gemstone directory already exists"
-        echo "to replace it, remove or rename it and rerun this script"
-      fi
-      ;;
-  esac
-  cat - > $gsdevkitSysSetup << EOF
-the presence of this file means that $GS_HOME/bin/downloadGemStone has 
-configured the OS for running GemStone
-EOF
-fi # no sudo usage after this point
+echo "[Info] Starting download of $gsvers on $machine_name"
 
 if [ -d "$GS_SHARED_DOWNLOADS/products/$gsvers" ] ; then
     echo "[Warning] $GS_SHARED_DOWNLOADS//products/$gsvers already exists"
@@ -295,10 +132,10 @@ fi
 
 # Look for either wget to download GemStone
 if [ -e "`which wget`" ]; then
-    cmd="`which wget`"
+    cmd="`which wget` --no-verbose"
 else
   if [ -e "`which curl`" ]; then
-      cmd="`which curl` -O"
+      cmd="`which curl` -O -s -S"
   else
     echo "[Error] wget is not available. Install wget and rerun this script."
     exit 1
@@ -308,7 +145,7 @@ fi
 # Download GemStone
 pushd $GS_SHARED_DOWNLOADS/zip >& /dev/null
   if [ ! -e $gss_file ]; then
-    echo "[Info] Downloading $gss_file using ${cmd}"
+    echo "[Info] Downloading ${ftp_address}/pub/GemStone64/$bucket/$gss_file using ${cmd}"
     $cmd ${ftp_address}/pub/GemStone64/$bucket/$gss_file
   else
     echo "[Info] $gss_file already exists"
@@ -361,31 +198,30 @@ esac
 #    Copy the gci libraries to client installations
 $GS_HOME/bin/private/installClientGciLibraries $vers
 
-echo "[Info] Finished $gsvers installation on $machine_name"
+echo "[Info] Finished $gsvers download on $machine_name"
 echo ""
 echo "[Info] GemStone version information:"
 cat $gs_product/version.txt
 
 if [ "${GS_TRAVIS}x" != "x" ] ; then
-  # running on travis server - have to use a custom key file
-  case "$vers" in
-    2.4.*) keyName="GemStone64Bit2.4.0-x86_64.Linux.key" ;;
-    3.0.1) keyName="GemStone64Bit3.0.0-x86_64.Linux.key" ;;
-    3.1.*) keyName="GemStone64Bit3.1.0-x86_64.Linux.key" ;;
-    3.2.*) keyName="GemStone64Bit3.2.0-x86_64.Linux.key" ;;
-    *) echo "No travis license for GemStone $vers"; exit 1;;
-  esac
-  chmod +w  $gs_product/seaside/etc/gemstone.key
-  echo "Copying $GS_HOME/travis/$keyName to $gs_product/seaside/etc/gemstone.key"
-  cp $GS_HOME/travis/$keyName $gs_product/seaside/etc/gemstone.key
-fi
-
-# If we can determine any IPv4 addresses, print them out. Otherwise be silent.
-if [[ -x /sbin/ifconfig && `/sbin/ifconfig -a | grep -sc " inet addr:.*Bcast"` -gt 0 ]]
-    then
-    echo ""
-    echo "[Info] $machine_name has the following IPv4 addresses:"
-    /sbin/ifconfig -a | grep ' inet addr:.*Bcast' | cut -f2 -d: | cut -f1 -d' '
+  case "$PLATFORM" in
+    Linux-x86_64)
+      # running on travis server - have to use a custom key file
+      case "$vers" in
+        2.4.*) keyName="GemStone64Bit2.4.0-x86_64.Linux.key" ;;
+        3.0.1) keyName="GemStone64Bit3.0.0-x86_64.Linux.key" ;;
+        3.1.*) keyName="GemStone64Bit3.1.0-x86_64.Linux.key" ;;
+        3.2.*) keyName="GemStone64Bit3.2.0-x86_64.Linux.key" ;;
+        *) echo "No travis license for GemStone $vers"; exit 1;;
+      esac
+      chmod +w  $gs_product/seaside/etc/gemstone.key
+      echo "Copying $GS_HOME/travis/$keyName to $gs_product/seaside/etc/gemstone.key"
+      cp $GS_HOME/travis/$keyName $gs_product/seaside/etc/gemstone.key
+      ;;
+   *)
+     # no need for special handling 
+     ;;
+   esac
 fi
 
 # End of script

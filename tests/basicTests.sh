@@ -33,6 +33,7 @@ startClient -h
 startNetldi -h
 startStatmonitor -h
 startStone -h
+startTopaz -h
 status -h
 stones -h
 stopNetldi -h
@@ -52,9 +53,12 @@ todeIt ${STONENAME1} ls /home
 
 updateGsDevKit
 updateGsDevKit -g
+updateGsDevKit -i
+updateGsDevKit -s
 updateGsDevKit -t
 updateGsDevKit -g -t
 updateGsDevKit -g -t -i
+updateGsDevKit -g -t -i -s
 
 $GS_HOME/bin/utils/updateSharedTodeProjectsClone both
 
@@ -84,20 +88,26 @@ todeLoad ${STONENAME4}
 #create a tODE stone
 createStone -t $todeSnapshot ${STONENAME3} $GS_VERSION
 
+startTopaz ${STONENAME3} -l << EOF
+login
+run
+3+4
+%
+logout
+exit 0
+EOF
+
 cd $GS_HOME/sys/stones/${STONENAME3}
 ls dirs.ston  home  homeComposition.ston  packages.ston  projectComposition.ston  projects  repos.ston
 todeIt ${STONENAME3} eval \`3+4\`\; eval \`self == 7 ifFalse: [ System logout ]\`
 todeIt ${STONENAME3} ls /home
+cd $GS_HOME
 
 stopStone -b ${STONENAME2}
 stopStone -b ${STONENAME3}
 stopStone -b ${STONENAME4}
 
 newExtent -n -s $baseSnapshot ${STONENAME3}
-
-. $GS_HOME/bin/defStone.env ${STONENAME1}
-cd $GS_HOME/server/stones/${STONENAME1}
-. defStone.env
 
 deleteStone ${STONENAME2} ${STONENAME3}
 
@@ -133,4 +143,8 @@ project install --local --url=http://gsdevkit.github.io/GsDevKit_home/Tode.ston
 project install --local --url=http://gsdevkit.github.io/GsDevKit_home/XMLSupport.ston
 project install --local --url=http://gsdevkit.github.io/GsDevKit_home/ZincHTTPComponents.ston
 EOF
+
+. $GS_HOME/bin/defStone.env ${STONENAME1}
+cd $GS_HOME/server/stones/${STONENAME1}
+. defStone.env
 
