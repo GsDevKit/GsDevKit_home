@@ -1,0 +1,12 @@
+TDObjectGatewayLeafNode{#name:'RB',#contents:'| repoSpec gitCheckout |
+gitCheckout :=  GsFile _expandEnvVariable: \'GS_SHARED_GIT_CHECKOUT_RB\' isClient: false.
+repoSpec := GsFile _expandEnvVariable: \'GS_SHARED_REPO_RB\' isClient: false.
+^ TDProjectSpecEntryDefinition new
+    baseline: \'RB\'
+      repository: repoSpec
+      loads: #( \'AST-Core\' );
+    gitCheckout: gitCheckout;
+    status: #(#\'inactive\');
+    locked: true;
+    yourself.
+'}

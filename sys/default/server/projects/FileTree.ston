@@ -1,0 +1,12 @@
+TDObjectGatewayLeafNode{#name:'FileTree',#contents:'| repoSpec gitCheckout |
+gitCheckout :=  GsFile _expandEnvVariable: \'GS_SHARED_GIT_CHECKOUT_FILETREE\' isClient: false.
+repoSpec := GsFile _expandEnvVariable: \'GS_SHARED_REPO_FILETREE\' isClient: false.
+^ TDProjectSpecEntryDefinition new
+    baseline: \'FileTree\'
+      repository: repoSpec
+      loads: #( \'default\' );
+    gitCheckout: gitCheckout;
+    status: #(#\'inactive\');
+    locked: true;
+    yourself.
+'}
