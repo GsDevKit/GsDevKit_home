@@ -35,7 +35,7 @@ The remote machine does not need a window manager, but will need to have an X11 
 
 This approach may suffer from performance issues, even with ssh -X compression.  
 
-   1. Login to the remote linux server node, and install GsDevKit Client and Server as above.
+   1. Login to the remote linux server node, and [install client and server as above](#3verything-on-a-single-workstation).
 
    2. Connect from desktop to remote node using [X11 forwarding][14], with the [compression option for ssh][15]:.  
 
