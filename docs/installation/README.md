@@ -5,7 +5,7 @@ GsDevKit is a client-server environment, involving a GUI development environment
 GsDevKit can be installed under three configurations.; [single workstation](#3verything-on-a-single-workstation), [client-server](#client-on-a-local-workstation-server-on-a-remote-host), and [remote with X forwarding](#everything-on-a-remote-server-accessed-via-x-forwarding).
 
 ---
-## Everything on a single workstation
+### Everything on a single workstation
 
 Install the client and server portions at the same time in a shared directory structure. This can be done on Linux (64-bit desktop) or on Mac.
 
@@ -13,8 +13,7 @@ Install the client and server portions at the same time in a shared directory st
 
 2. You may immediately [start Using tODE][13].
 
----
-## Client on a local workstation, Server on a remote host
+### Client on a local workstation, Server on a remote host
 
 The GUI client (tODE) is on one workstation, Windows, Linux desktop or Mac; and connecting to a GsDevKit server installation on a separate node, Linux (64-bit) or Mac.   
 
@@ -28,8 +27,7 @@ The GUI client (tODE) is on one workstation, Windows, Linux desktop or Mac; and 
 
 3. You may now [start Using tODE][13]
 
----
-## Everything on a remote server, accessed via X-forwarding
+### Everything on a remote server, accessed via X-forwarding
 
 Both the GUI client and the server are installed on a remote machine, with the local client machine using X11 to view the tODE client.  
 
@@ -48,11 +46,10 @@ This approach may suffer from performance issues, even with ssh -X compression.
    3. [Start Using tODE][13]
 
 ---
-### Client and Server naming
+## Client and Server naming
 
 GsDevKit installation involves installing at least one server and one client.  Since you can have multiple servers on the same node, or multiple clients, the clients and the servers (stones) are named.  In the examples, we use **devKit_329** for the name of the server (stone), and **tode1** for the name of the tODE client.  Later, you may delete these and install stones and clients with other names and versions.
 
-----
 
 [3]: ./installDevKitServerAndClient.md
 
@@ -64,4 +61,4 @@ GsDevKit installation involves installing at least one server and one client.  S
 [13]: ../gettingStartedWithTode.md
 
 [14]: http://unix.stackexchange.com/questions/12755/how-to-forward-x-over-ssh-from-ubuntu-machine
-[25]: http://xmodulo.com/how-to-speed-up-x11-forwarding-in-ssh.html
+[15]: http://xmodulo.com/how-to-speed-up-x11-forwarding-in-ssh.html
