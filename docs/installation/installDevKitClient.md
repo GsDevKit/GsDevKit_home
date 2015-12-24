@@ -1,16 +1,16 @@
 #GsDevKit Client Installation
 
-These instructions describe installing the GsDevKit tODE client on a desktop machine, on a different node than the GsDevKit server (stone) will be running.  You should first [install the GsDevKit server][1], on the node you will use as the server. To complete this client installation, You will need a file from the servers installation.  For the complete set of steps, including OS configuration requirements, see the [instructions to install on separate server and client][2]
+These instructions describe installing the GsDevKit tODE client on a desktop machine, on a different node than the GsDevKit server (stone) will be running.  You should first [install the GsDevKit server][1], on the node you will use as the server.
 
 Clients may be installed on **Linux**, **Mac** or **Windows**. 
 
 ## Install Client
 
-The following steps are involved in installing the GsDevKit client. For an example script to execute, see [Install GsDevKit client on Linux or Mac](#example-script-to-install-client-on-linux-or-mac) or [Install GsDevKit client on Windows](#example-script-to-install-client-on-windows)
+To go straight to an script to execute, see [Install GsDevKit client on Linux or Mac](#example-script-for-linux-or-mac) or [Install GsDevKit client on Windows](#example-script-for-windows).
 
 1. Determine your installation directory and clone GsDevKit_home to that location
 
-   The following instructions clone the Development Kit to the current directory, so before starting, cd to the directory in which you want the GsDevKit checkout to be located.  On Windows, it is recommended to install in the root of the user's home directory (`cd ~`), to avoid [path length restrictions][3].
+   The following instructions clone the Development Kit to the current directory, so before starting, cd to the directory in which you want the GsDevKit checkout to be located.  On Windows, it is strongly recommended to install in the root of the user's home directory (`cd ~`), to avoid [path length restrictions][3].
    
    You must use bash or, on Windows, the Git Shell executable provided by the GitHub desktop.
 
@@ -40,17 +40,17 @@ The following steps are involved in installing the GsDevKit client. For an examp
    downloadGemStone <myGemStoneVersion>
    createClient <myClientName>
    ```
-   You may use any name for `<myClientName>`, and note that you may later have multiple clients. The examples below use  **tode1** as the client name.
+   You may use any name for `<myClientName>`, to distinguish it from other clients you may later create on this node. The examples below use  **tode1** as the client name.
 
-   The install scripts invokes the following sub-scripts:
+   The ```installClient``` script invokes the following sub-scripts:
    ```
-   downloadGemStone
+   installOsPrereqs
    cloneGsDevKitProjects
    cloneSharedTodeProjects
    setupGsDevKit 
    ```
 
-### Example Script to Install Client on Linux or Mac
+### Example Script for Linux or Mac
 
 This script installs the GsDevKit client components for v3.2.9, and creates a client with the name **tode1**.
 
@@ -66,7 +66,7 @@ dowloadGemStone 3.2.9 |& tee -a $GS_HOME/install.log
 createClient tode1 |& tee -a $GS_HOME/install.log
  ```
 
-### Example Script to Install Client on Windows
+### Example Script for Windows
 
 This script installs the GsDevKit client components for v.3.2.9, and creates a client with the name **tode1**.
 
