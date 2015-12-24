@@ -4,6 +4,8 @@ A complete GsDevKit installation includes both a server and a client, which can 
 
 The GsDevKit server  may be installed on **Linux** (64-bit) or **Mac**.  
 
+To go straight to the example script, see [Example Script to Install GsDevKit Server](#example-script) 
+
 ### Determine port handling
 
 To establish the connection between the client and the server, a server process called the NetLDI listens on a well-known port.  This port may be selected and reserved, or you may allow the system to select one.  However, if you allow the OS to select the port, on restart it will select a different port and the client will need to be updated. 
@@ -18,8 +20,6 @@ devKit_329_ldi          50378/tcp        # Gemstone netldi
 Before running installing the server, please check on the [GemStone/S 64 Bit product page for the latest versions][2] and visit [the Community and Web Edition Licensing page for information on the license included with the download and other options][3]. It is a good idea to acquire a free, Limited Community License by sending email to sales@gemtalksystems.com. We also recommended using the latest version of the GemStone/S 64 Bit product. 
 
 ##Install Server
-
-For an example script to execute, see [Example Script to Install GsDevKit Server](#example-script-to-install-server-only) 
 
 1. **Determine your installation directory and clone GsDevKit_home to that location**
 
@@ -64,7 +64,7 @@ For an example script to execute, see [Example Script to Install GsDevKit Server
    setupGsDevKit 
    ```
 
-### Example Script to Install Server only
+### Example Script
 
 This script installs the server components only, and installs and starts a 3.2.9 server named **devKit_329**.   
 
