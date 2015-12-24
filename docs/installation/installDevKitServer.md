@@ -45,15 +45,15 @@ Before running installing the server, please check on the [GemStone/S 64 Bit pro
 
    These instructions use 3.2.9 for `<GemStoneVersion>`
    
-   Script to install the server only:
+   Script to install the server:
    ```
    installServer
    createStone <myStoneName> <GemStoneVersion>
    ```
 
-   You may use any name for the `<myStoneName>` and `<myClientName>`.  You may later have multiple stones and multiple clients. These examples use **devKit_329**.  
+   You may use any name for the `<myStoneName>`, to distinguish it from other stones you may later create on this node. These examples use **devKit_329**.  
 
-   After these scripts successfully complete, you will have a stone named `<myStoneName>`, of GemStone/S 64 Bit version `<GemStoneVersion>`, installed on your server node and running.  You will also have a NetLDI named `<myStoneName>_ldi` running on the server, so the server is ready for a tODE client to connect.
+   After these scripts successfully complete, you will have a server stone installed on your server node and running, and a NetLDI running; the server is now ready for a tODE client to connect.
    
    The ```installServer``` script invokes the following sub-scripts:
    ```
