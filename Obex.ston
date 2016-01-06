@@ -4,7 +4,7 @@ TDObjectGatewayLeafNode{#name:'Obex',#contents:'^ TDProjectSpecEntryDefinition n
     baseline: \'Obex\'
       repository: \'github://dalehenrich/obex:master/repository\'
       loads: #(\'Core\');
-    installScript: \'project clone --https -local Obex\';
+    installScript: \'project clone --https --local Obex\';
     gitCheckout: \'master\';
     status: #(#\'inactive\');
     locked: false;
