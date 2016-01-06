@@ -85,8 +85,8 @@ while getopts "hgtip:s" OPT ; do
     h) usage; exit 0;;
     i) imageArg="true";;
     g) gsDevKitArg="true"; default="false";;
-    p) patchName="${OPTARG}";;
-    s) updateSharedClones="true";;
+    p) patchName="${OPTARG}"; default="false";;
+    s) updateSharedClones="true"; default="false";;
     t) todeArg="true"; default="false";;
     *) usage; exit 1;;
   esac
