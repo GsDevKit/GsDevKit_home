@@ -8,7 +8,7 @@ GsDevKit is a client-server system, which may both be installed on a single mach
 
 Before installing, you should read through the **[Installation Instructions][2]**.  There are several installation options: all on a single workstation, or with a local client and a remote server.  The script below installs GsDevKit and GemStone on a single workstation, creates and starts a Stone (server), and creates a tODE client.
 
-If you are planning to use Seaside, you can install and create a Seaside Stone, using the [Seaside installation instructions][20]. You can also [install Seaside into an existing GsDevKit installation][21].
+If you are planning to use Seaside, instead of this you can install and create a Seaside Stone using the [Seaside installation instructions][20]. You can also [install Seaside into an existing GsDevKit installation][21].
 
 ```
 git clone https://github.com/GsDevKit/GsDevKit_home.git
