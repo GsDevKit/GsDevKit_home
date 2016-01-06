@@ -13,10 +13,10 @@ For an example script to execute, see  [Example Script to Install GsDevKit serve
 
 1. **Determine your installation directory and clone GsDevKit_home to that location**
 
-   The following instructions clone the Development Kit to the current directory, so before starting, cd to the directory in which you want the GsDevKit checkout to be located.
+   The following instructions clone the Development Kit to the current directory, so before starting, cd to the directory in which you want the GsDevKit checkout to be located (`<githubdirectory>`).
 
    ```
-   cd githubdirectory            # where githubdirectory is the install directory
+   cd <githubdirectory>            
    git clone https://github.com/GsDevKit/GsDevKit_home.git
    cd GsDevKit_home
    ```
@@ -25,7 +25,7 @@ For an example script to execute, see  [Example Script to Install GsDevKit serve
 
    The environment variable $GS_HOME and the updated $PATH are required to use DevKit, so you should add them to your `.bashrc` or another initialization script.
    ```
-   export GS_HOME=`pwd`            # githubdirectory/GsDevKit_home
+   export GS_HOME=<githubdirectory>/GsDevKit_home
    export PATH=$GS_HOME/bin:$PATH
    ```
 
@@ -33,16 +33,16 @@ For an example script to execute, see  [Example Script to Install GsDevKit serve
    
     The installation is performed by a set of GsDevKit scripts.  `installServerClient` takes care of installing any required OS packages and cloning the required projects to your server node, and createStone and createClient install the stone and client fo the specified version and specified name, and starting the stone. 
 
-   These instructions use 3.2.9 for `GemStoneVersion`; check for the most recent [GemStone/S 64 Bit Releases](#gemstone-version-and-license).
+   These instructions use 3.2.12 for `GemStoneVersion`; check for the most recent [GemStone/S 64 Bit Releases](#gemstone-version-and-license).
    
    ```
    installServerClient
-   createStone myStoneName GemStoneVersion
-   createClient myClientName
+   createStone <myStoneName> <GemStoneVersion>
+   createClient <myClientName>
    ```
-   You may use any name for the `myStoneName` and `myClientName`, and note that you may later have multiple stones and multiple clients. The examples below use **devKit_329** and **tode1**. 
+   You may use any name for the `<myStoneName>` and `<myClientName>`, and note that you may later have multiple stones and multiple clients. The examples below use **devKit_3212** and **tode1**. 
    
-      After these scripts successfully complete, you will have a stone named `myStoneName`, of GemStone/S 64 Bit version `GemStoneVersion`, installed on your server node and running.  You will have a NetLDI named `myStoneName_ldi` running on the server, so the server is ready for the tODE client to connect.  You will also have a client named `myClientName` installed and ready to start. 
+      After these scripts successfully complete, you will have a stone named `<myStoneName>`, of GemStone/S 64 Bit version `<GemStoneVersion>`, installed on your server node and running.  You will have a NetLDI named `<myStoneName>_ldi` running on the server, so the server is ready for the tODE client to connect.  You will also have a client named `<myClientName>` installed and ready to start. 
 
    The ```installServerClient``` script invokes the following sub-scripts:
    ```
@@ -55,7 +55,7 @@ For an example script to execute, see  [Example Script to Install GsDevKit serve
 
 ## Example Script to Install both Server and Client
 
-This script installs both client and server components, and installs and starts a 3.2.9 server named **devKit_329**, and installs but does not start a todeClient named **tode1**.  Output is sent to a log file, in case of problems during installation.
+This script installs both client and server components, and installs and starts a 3.2.12 server named **devKit_3212**, and installs but does not start a todeClient named **tode1**.  Output is sent to a log file, in case of problems during installation.
 
 ```
 git clone https://github.com/GsDevKit/GsDevKit_home.git
@@ -63,7 +63,7 @@ cd GsDevKit_home
 export GS_HOME=`pwd`
 export PATH=$GS_HOME/bin:$PATH
 installServerClient |& tee $GS_HOME/install.log
-createStone devKit_329 3.2.9 |& tee -a $GS_HOME/install.log
+createStone devKit_3212 3.2.12 |& tee -a $GS_HOME/install.log
 createClient tode1 |& tee -a $GS_HOME/install.log
 ```
 
