@@ -40,7 +40,7 @@ The following steps are involved in installing the GsDevKit server.  For an exam
 
    The environment variable $GS_HOME and the updated $PATH are required to use DevKit, so you should add them to your `.bashrc` or another initialization script.
    ```
-   export GS_HOME=<githubdirectory>
+   export GS_HOME=<githubdirectory>/GsDevKit_home
    export PATH=$GS_HOME/bin:$PATH
    ```
 
