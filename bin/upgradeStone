@@ -141,7 +141,7 @@ rm -rf $targetStonePath/tranlogs/tranlog*.dbf
 pushd $targetStonePath >& /dev/null
   source stone.env
 
-  if [ "${createStone}" = "true" ] ; then
+  if [ ! -d "upgradeLog" ] ; then
     mkdir upgradeLog
   fi
   cd upgradeLog

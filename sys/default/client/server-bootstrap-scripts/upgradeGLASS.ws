@@ -8,7 +8,7 @@ Transcript cr; show: '---Step 1 of tODE bootstrap process: execute upgradeGlass.
     cr;
     show: '-----Install GsUpgrader-Core package '.
 
-  sysLocal := GsFile _expandEnvVariable: 'GS_SYS_LOCAL' isClient: false.
+  sysLocal := GsFile _expandEnvVariable: 'GS_SYS_LOCAL_SERVER' isClient: false.
   monticelloDir := ServerFileDirectory on: sysLocal, '/monticello'.
   gofer := Gofer new
         package: 'GsUpgrader-Core';
