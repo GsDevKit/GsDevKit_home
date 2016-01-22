@@ -1,0 +1,11 @@
+TDObjectGatewayLeafNode{#name:'GsUpgrader',#contents:'^ TDProjectSpecEntryDefinition new
+    baseline: \'GsUpgrader\'
+      repository: \'github://GsDevKit/gsUpgrader:master/repository\'
+      loads: #(\'default\');
+    installScript:
+        \'project clone --https --local GsUpgrader
+         mount @/sys/stone/dirs/GsUpgrader/tode /home gsUpgrader\';
+    gitCheckout: \'master\';
+    status: #(#\'inactive\');
+    locked: false;
+    yourself'}
