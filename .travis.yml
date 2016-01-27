@@ -26,4 +26,6 @@ before_script:
   - export GS_TRAVIS=true
 
 script:
+  - hostname
+  - cat /etc/hosts
   - tests/testTravisCI.sh
