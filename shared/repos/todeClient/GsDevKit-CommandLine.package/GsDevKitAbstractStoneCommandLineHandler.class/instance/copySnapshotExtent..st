@@ -12,7 +12,7 @@ copySnapshotExtent: stoneDirectory
 	cmdPath := (self gsVers beginsWith: '2.4')
 		ifTrue: [ 
 			"cannot use copydbf to copy extent from product tree, so unconditionally use `cp`"
-			'cp' ]
+			'/bin/cp' ]
 		ifFalse: [ (self gemstoneBin / 'copydbf') pathString ].
 	argsArray := {(snapshotExtentFile pathString).
 	(extentFile pathString)}.
