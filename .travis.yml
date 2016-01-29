@@ -10,7 +10,6 @@ env:
   - GS_VERSION=2.4.7 TEST=Basic
   - GS_VERSION=3.1.0.6 TEST=Basic
   - GS_VERSION=3.2.12  TEST=Basic
-  - GS_VERSION=3.2.11 TEST=BasicTodeClient
 
 matrix:
    allow_failures:
