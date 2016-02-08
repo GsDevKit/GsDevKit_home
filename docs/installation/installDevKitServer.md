@@ -2,7 +2,7 @@
 
 A complete GsDevKit installation includes both a server and a client, which can be on the same or on different nodes.  These instructions provide information on installing the server component, without installing a client.  This is part of the [instructions for installing on two separate nodes][1]; refer to these instructions for the OS configuration required and other steps.
 
-The GsDevKit server  may be installed on **Linux** or **Mac**; the process is the same on both.  The GemStone/S 64 Bit does not run directly on Windows, however, you may create a Linux VM on Windows and run the GsDevKit server within that VM.
+The GsDevKit server  may be installed on **Linux** or **Mac**; the process is the same on both.  The GemStone/S 64 Bit does not run directly on Windows, however, you may create a Linux VM on Windows and run the GsDevKit server within that VM. You must have 64-Bit Linux (or VM), in order to run GemStone/S 64 Bit. 
 
 ### Determine port handling
 
@@ -35,7 +35,7 @@ The following steps are involved in installing the GsDevKit server.  For an exam
 
    The environment variable $GS_HOME and the updated $PATH are required to use DevKit, so you should add them to your `.bashrc` or another initialization script.
    ```
-   export GS_HOME=<githubdirectory>
+   export GS_HOME=<githubdirectory>/GsDevKit_home
    export PATH=$GS_HOME/bin:$PATH
    ```
 
