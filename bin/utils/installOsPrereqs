@@ -57,7 +57,7 @@ installUbuntuPackages(){
     sudo apt-get -y install pstack
     sudo /bin/su -c "echo 'kernel.yama.ptrace_scope = 0' >>/etc/sysctl.d/10-ptrace.conf"
     if [ "${X11client}x" = "1x" ] ; then
-      sudo apt-get -y install libgl1-mesa-dev:i386
+      sudo apt-get -y install libgl1-mesa-glx:i386
       sudo apt-get -y install libxcb-dri2-0:i386
     fi
     if [ "${gemtools}" = "true" ] ; then
