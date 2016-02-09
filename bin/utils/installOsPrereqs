@@ -313,6 +313,9 @@ case "$PLATFORM" in
     if [ -e "$osPrereqsSysSetup" ]; then
       echo "Skip operating system prerequisites, operating system prerequisites already installed ($osPrereqsSysSetup exists)"
     else
+      # Do a trivial sudo to test we can and get the password prompt out of the way
+      sudo date
+
       if [ -f /etc/lsb-release ]; then
         osName=`lsb_release -ds | cut -d ' ' -f 1`
         osVersion=`lsb_release -rs`
