@@ -5,12 +5,21 @@ The Development Kit for GemStone/S (GsDevKit) contains tools and compatiblity ch
 GsDevKit is a client-server system, which may both be installed on a single machine, or the server and client may be installed on separate nodes. The GsDevKit server installation includes the GemStone/S server.
 
 ##Installation
-**GsDevKit_home** offers two different install options:  
 
-1. *Everything on a single workstation*
-2. *Client on a local workstation, Server on a remote host*
+Before installing, you should read through the **[Installation Instructions][2]**.  There are several installation options: all on a single workstation, or with a local client and a remote server.  The script below installs GsDevKit and GemStone on a single workstation, creates and starts a Stone (server), and creates a tODE client.
 
-You will need to ensure that your operating system is configured with the required packages before installing.  Please read the [Installation Overview][2] for installation options and instructions.  If you are planning to use Seaside, you can install and create a Seaside Stone, using the [Seaside installation instructions][20]. You can also [install Seaside into an existing GsDevKit installation][21].
+If you are planning to use Seaside, instead of this you can install and create a Seaside Stone using the [Seaside installation instructions][20]. You can also [install Seaside into an existing GsDevKit installation][21].
+
+```
+git clone https://github.com/GsDevKit/GsDevKit_home.git
+cd GsDevKit_home
+export GS_HOME=`pwd`
+export PATH=$GS_HOME/bin:$PATH
+installServerClient |& tee $GS_HOME/install.log
+createStone devKit_3212 3.2.12 |& tee -a $GS_HOME/install.log
+createClient tode1 |& tee -a $GS_HOME/install.log
+```
+
 
 ##Using GsDevKit and tODE
 
