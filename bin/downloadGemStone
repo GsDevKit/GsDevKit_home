@@ -105,7 +105,6 @@ esac
 if [ `id | cut -f2 -d= | cut -f1 -d\(` -eq 0 ]
     then
     echo "[Error] This script must be run as a normal user, not root."
-    echo "However, some steps require root access using sudo."
     exit 1
 fi
 
