@@ -51,7 +51,20 @@ case $TEST in
   Upgrade)
     installServer
     createStone -g ${STONENAME1}_2441 2.4.4.1
-    upgradeStone -f ${STONENAME1}_2441 ${STONENAME1}_${GS_VERSION} $GS_VERSION
+    upgradeStoneName="${STONENAME1}_${GS_VERSION}"
+    set +e
+    set -x
+    upgradeStone -f ${STONENAME1}_2441 ${STONENAME1}_${GS_VERSION} $GS_VERSION << EOF
+
+EOF
+    status=$?
+    if [ "$status" != "0" ] ; then
+      cat $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topazerrors.log
+      cat $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out
+      exit 1
+    else
+      exit 0
+    fi
     ;;
   BasicTodeClient)
     $GS_HOME/tests/basicTodeClientTests.sh
