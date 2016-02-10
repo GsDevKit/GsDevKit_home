@@ -60,10 +60,13 @@ EXAMPLES
   $(basename $0) -h
   $(basename $0)
   $(basename $0) -g
+  $(basename $0) -c
+  $(basename $0) -d
   $(basename $0) -s
   $(basename $0) -t
-  $(basename $0) -g -t -i
-  $(basename $0) -g -t -i -s
+  $(basename $0) -git
+  $(basename $0) -gtc
+  $(basename $0) -gtcs
 
 HELP
 }
