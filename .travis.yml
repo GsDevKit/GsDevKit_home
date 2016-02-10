@@ -6,18 +6,18 @@ os:
 
 env:
   - GS_VERSION=3.2.12 TEST=Error
-  - GS_VERSION=3.1.0.6  TEST=Upgrade
-  - GS_VERSION=3.2.12  TEST=Install
+  - GS_VERSION=3.1.0.6 TEST=Upgrade
+  - GS_VERSION=3.2.12 TEST=Install
   - GS_VERSION=2.4.7 TEST=Basic
   - GS_VERSION=3.1.0.6 TEST=Basic
-  - GS_VERSION=3.2.12  TEST=Basic
+  - GS_VERSION=3.2.12 TEST=Basic
 
 matrix:
    exclude:
      - os: osx
-       env: GS_VERSION=2.4.7
+       env: GS_VERSION=2.4.7 TEST=Basic
      - os: osx
-       env: TEST=Upgrade
+       env: GS_VERSION=3.1.0.6 TEST=Upgrade
 
 addons:
   hosts:
