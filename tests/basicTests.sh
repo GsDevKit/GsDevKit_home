@@ -62,6 +62,11 @@ updateGsDevKit -gt
 updateGsDevKit -gtc
 updateGsDevKit -gtd
 updateGsDevKit -gts
+updateGsDevKit -u 3.1.0.10
+updateGsDevKit -u preview
+updateGsDevKit -u $GS_VERSION
+updateGsDevKit -u package
+updateGsDevKit -u package-cache
 
 $GS_HOME/bin/utils/updateSharedTodeProjectsClone both
 

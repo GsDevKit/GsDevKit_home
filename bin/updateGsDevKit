@@ -10,7 +10,7 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-g] [-t] [-i] [-c] [-d] [-s] [-p <patch-name>]
+USAGE: $(basename $0) [-h] [-g] [-t] [-i] [-c] [-d] [-s] [-u <cache-name>] [-p <patch-name>]
 
 With the -g option, update the GsDevKit_home components:
   update clones (if present):
@@ -26,6 +26,12 @@ With the -t option, update the tODE components:
 With the -i option rebuild the tODE client images and the devKitCommandLine image.
 With the -c option rebuild the tODE client images.
 With the -d option rebuild the devKitCommandLine image.
+
+With the -u option, the named GsUpgrader cache is cleared:
+  -u <gs-version-number> - the cache for the named GemStone version is cleared
+  -u package-cache       - the caches for all GemStone versions is cleared
+  -u package             - the GsUpgrader-Core package is cleared
+  -u preview             - the Metacello Preview github cache is cleared
 
 With no options present, update both GsDevKit_home, tODE components, tODE client 
 images, and the devKitCommandLine image (equivalent to the \`-gcdt\` option).
@@ -43,8 +49,6 @@ OPTIONS
      Rebuild the tODE client images and the devKitCommandLine image
   -p <patch-name>
      update should include patch for given <patch-name> . Currently only \`-p issue7\` is supported.
-  -t
-     Update tode project clone and tODE components
   -s
      Update the shared tODE project clones:
        filetree
@@ -55,6 +59,10 @@ OPTIONS
        rb
        ston
        tode
+  -t
+     Update tode project clone and tODE components
+  -u <cache-name>
+     Clear the named GsUpgrader cache
 
 EXAMPLES
   $(basename $0) -h
@@ -64,6 +72,11 @@ EXAMPLES
   $(basename $0) -d
   $(basename $0) -s
   $(basename $0) -t
+  $(basename $0) -u 3.2.12
+  $(basename $0) -u package-cache
+  $(basename $0) -u package
+  $(basename $0) -u preview
+
   $(basename $0) -git
   $(basename $0) -gtc
   $(basename $0) -gtcs
@@ -71,7 +84,7 @@ EXAMPLES
 HELP
 }
 
-set -e # exit on error
+set -ex # exit on error
 if [ "${GS_HOME}x" = "x" ] ; then
   echo "the GS_HOME environment variable needs to be defined"
   exit 1
@@ -89,7 +102,8 @@ rebuildCommandLine="false"
 rebuildTodeClient="false"
 updateGsDevKitClones="false"
 updateTodeClone="false"
-while getopts "cdhgtip:s" OPT ; do
+gsUpgraderCleanCacheArg=""
+while getopts "cdhgtip:su:" OPT ; do
   noopts="false"
   case "$OPT" in
     h) usage; exit 0;;
@@ -100,6 +114,7 @@ while getopts "cdhgtip:s" OPT ; do
     p) patchName="${OPTARG}";;
     s) updateSharedClones="true";;
     t) updateTodeClone="true";;
+    u) gsUpgraderCleanCacheArg="${OPTARG}";;
     *) usage; exit 1;;
   esac
 done
@@ -154,6 +169,22 @@ else
     if [ -d "${GS_SHARED_REPO}/tode" ] ; then
       updateClone $GS_SHARED_GIT_CHECKOUT_TODE $GS_SHARED_GIT_REMOTE_TODE ${GS_SHARED_REPO}/tode
     fi
+  fi
+fi
+
+if [ "${gsUpgraderCleanCacheArg}x" != "x" ] ; then
+  if [ "${gsUpgraderCleanCacheArg}" = "preview" ] ; then
+    echo "Clearing GsUpgrader Metacello Preview cache: ${GS_SYS_DEFAULT_SERVER}/gsUpgrader/caches/upgradeGLASS/metacelloPreview/"
+    rm -rf ${GS_SYS_DEFAULT_SERVER}/gsUpgrader/caches/upgradeGLASS/metacelloPreview/*
+  elif [ "${gsUpgraderCleanCacheArg}" = "package" ] ; then
+    echo "Clearing GsUpgrader-Core package cache: ${GS_SYS_DEFAULT_SERVER}/gsUpgrader/repository/"
+    rm -rf ${GS_SYS_DEFAULT_SERVER}/gsUpgrader/repository/*
+  elif [ "${gsUpgraderCleanCacheArg}" = "package-cache" ] ; then
+    echo "Clearing GsUpgrader cache for all GemStone versions:  ${GS_SYS_DEFAULT_SERVER}/gsUpgrader/caches/upgradeGLASS/monticello/"
+    rm -rf ${GS_SYS_DEFAULT_SERVER}/gsUpgrader/caches/upgradeGLASS/monticello/*
+  else # assume gemstone version number
+    echo "Clearing GsUpgrader cache for version ${gsUpgraderCleanCacheArg}: ${GS_SYS_DEFAULT_SERVER}/gsUpgrader/caches/upgradeGLASS/monticello/${gsUpgraderCleanCacheArg}_sentinel"
+    rm -rf ${GS_SYS_DEFAULT_SERVER}/gsUpgrader/caches/upgradeGLASS/monticello/${gsUpgraderCleanCacheArg}_sentinel
   fi
 fi
 
