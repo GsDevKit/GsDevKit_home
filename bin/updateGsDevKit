@@ -10,7 +10,7 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-g] [-t] [-i] [-s] [-p <patch-name>]
+USAGE: $(basename $0) [-h] [-g] [-t] [-i] [-c] [-d] [-s] [-p <patch-name>]
 
 With the -g option, update the GsDevKit_home components:
   update clones (if present):
@@ -23,22 +23,26 @@ With the -g option, update the GsDevKit_home components:
 With the -t option, update the tODE components:
   update \$GS_HOME/shared/repos/tode clone
 
-With the -i option, update the images specified by the -g and/or -t options:
-  rebuild GsDevKit command line image
-  rebuild GsDevKit_todeClient clients
+With the -i option rebuild the tODE client images and the devKitCommandLine image.
+With the -c option rebuild the tODE client images.
+With the -d option rebuild the devKitCommandLine image.
 
-With no options present, update both GsDevKit_home, tODE components and rebuild 
-the associated images.
+With no options present, update both GsDevKit_home, tODE components, tODE client 
+images, and the devKitCommandLine image (equivalent to the \`-gcdt\` option).
 
 OPTIONS
   -h
      display help
+  -c
+     Rebuild tODE client images
+  -d
+     Rebuild the devKitCommandLine image
   -g
      Update GsDevKit_home components
   -i
-     Update the image for the listed components
+     Rebuild the tODE client images and the devKitCommandLine image
   -p <patch-name>
-     update should include patch for given <patch-name>
+     update should include patch for given <patch-name> . Currently only \`-p issue7\` is supported.
   -t
      Update tode project clone and tODE components
   -s
@@ -54,12 +58,12 @@ OPTIONS
 
 EXAMPLES
   $(basename $0) -h
-  $(basename $0) -g 
+  $(basename $0)
+  $(basename $0) -g
   $(basename $0) -s
   $(basename $0) -t
   $(basename $0) -g -t -i
   $(basename $0) -g -t -i -s
-  $(basename $0) 
 
 HELP
 }
@@ -74,54 +78,35 @@ source ${GS_HOME}/bin/defGsDevKit.env
 source ${GS_HOME}/bin/private/shFunctions
 verify_gsdevkit_installation
 
-gsDevKitArg=""
-todeArg=""
-imageArg=""
-default="true"
+noopts="true"
+
 patchName=""
 updateSharedClones="false"
-while getopts "hgtip:s" OPT ; do
+rebuildCommandLine="false"
+rebuildTodeClient="false"
+updateGsDevKitClones="false"
+updateTodeClone="false"
+while getopts "cdhgtip:s" OPT ; do
+  noopts="false"
   case "$OPT" in
     h) usage; exit 0;;
-    i) imageArg="true";;
-    g) gsDevKitArg="true"; default="false";;
-    p) patchName="${OPTARG}"; default="false";;
-    s) updateSharedClones="true"; default="false";;
-    t) todeArg="true"; default="false";;
+    c) rebuildTodeClient="true";;
+    d) rebuildCommandLine="true";;
+    i) rebuildCommandLine="true"; rebuildTodeClient="true";;
+    g) updateGsDevKitClones="true";;
+    p) patchName="${OPTARG}";;
+    s) updateSharedClones="true";;
+    t) updateTodeClone="true";;
     *) usage; exit 1;;
   esac
 done
 shift $(($OPTIND - 1))
 
-if [ "${gsDevKitArg}x" = "x" ]; then
-  gsDevKitArg=$default
-fi
-if [ "${todeArg}x" = "x" ]; then
-  todeArg=$default
-fi
-if [ "${imageArg}x" = "x" ]; then
-  imageArg=$default
-fi
-
-
-updateGsDevKitClones="false"
-updateTodeClone="false"
-rebuildCommandLine="false"
-rebuildTodeClient="false"
-
-if [ "${gsDevKitArg}" = "true" ]; then
-  updateGsDevKitClones="true"
-  if [ "$imageArg" = "true" ] ; then
-    rebuildCommandLine="true"
-  fi
-fi
-
-if [ "${todeArg}" = "true" ]; then
+if [ "${noopts}" = "true" ]; then
   updateTodeClone="true"
-  if [ "$imageArg" = "true" ] ; then
-    rebuildTodeClient="true"
-    rebuildCommandLine="true"
-  fi
+  updateGsDevKitClones="true"
+  rebuildCommandLine="true"
+  rebuildTodeClient="true"
 fi
 
 source ${GS_HOME}/bin/private/gitFunctions

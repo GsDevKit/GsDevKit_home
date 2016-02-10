@@ -54,11 +54,14 @@ todeIt ${STONENAME1} ls /home
 updateGsDevKit
 updateGsDevKit -g
 updateGsDevKit -i
+updateGsDevKit -c
+updateGsDevKit -d
 updateGsDevKit -s
 updateGsDevKit -t
-updateGsDevKit -g -t
-updateGsDevKit -g -t -i
-updateGsDevKit -g -t -i -s
+updateGsDevKit -gt
+updateGsDevKit -gtc
+updateGsDevKit -gtd
+updateGsDevKit -gts
 
 $GS_HOME/bin/utils/updateSharedTodeProjectsClone both
 
