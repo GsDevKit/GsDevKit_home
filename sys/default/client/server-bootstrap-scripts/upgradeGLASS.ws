@@ -21,7 +21,7 @@
       gofer repository: (MCDirectoryRepository new directory: monticelloDir).
       gofer load ]
     ifFalse: [ 
-      | gofer sysDefault repositoryDir oldCache |
+      | sysDefault repositoryDir |
       sysDefault := GsFile
         _expandEnvVariable: 'GS_SYS_DEFAULT_SERVER'
         isClient: false.
@@ -36,9 +36,11 @@
           gofer repository: (MCDirectoryRepository new directory: repositoryDir).
           gofer load ]
         ifFalse: [ 
+          | oldCache newCache |
           oldCache := MCCacheRepository default.
-          [ 
-          MCCacheRepository setDefault: repositoryDir.
+          [
+          newCache := MCCacheRepository new directory: repositoryDir.
+          MCCacheRepository setDefault: newCache.
           Transcript show: ' from http://ss3.gemtalksystems.com/ss/gsUpgrader'.
           gofer url: 'http://ss3.gemtalksystems.com/ss/gsUpgrader'.
           gofer load ]
