@@ -13,13 +13,11 @@ env:
   - GS_VERSION=3.2.12  TEST=Basic
 
 matrix:
-        #   allow_failures:
-        #   - os: osx
    exclude:
      - os: osx
-       env: GS_VERSION=2.4.7 TEST=Basic
+         env: GS_VERSION=2.4.7
      - os: osx
-       env: GS_VERSION=3.1.0.6 TEST=Upgrade
+         env: TEST=Upgrade
 
 addons:
   hosts:
