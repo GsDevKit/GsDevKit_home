@@ -6,7 +6,6 @@ os:
 
 env:
   - GS_VERSION=3.2.12 TEST=Error
-  - GS_VERSION=2.4.7  TEST=Upgrade
   - GS_VERSION=3.1.0.6  TEST=Upgrade
   - GS_VERSION=3.2.12  TEST=Upgrade
 #  - GS_VERSION=3.2.12  TEST=Install
