@@ -15,9 +15,9 @@ env:
 matrix:
    exclude:
      - os: osx
-         env: GS_VERSION=2.4.7
+       env: GS_VERSION=2.4.7
      - os: osx
-         env: TEST=Upgrade
+       env: TEST=Upgrade
 
 addons:
   hosts:
