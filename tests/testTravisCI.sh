@@ -51,7 +51,9 @@ case $TEST in
   Upgrade)
     installServer
     createStone -g ${STONENAME1}_2441 2.4.4.1
-    upgradeStone -f ${STONENAME1}_2441 ${STONENAME1}_${GS_VERSION} $GS_VERSION
+    upgradeStone -f ${STONENAME1}_2441 ${STONENAME1}_${GS_VERSION} $GS_VERSION << EOF
+
+EOF
     ;;
   BasicTodeClient)
     $GS_HOME/tests/basicTodeClientTests.sh
