@@ -199,6 +199,35 @@ EOF
   output pop
   exit 0
 EOF
+
+  # Setting BootstrapApplicationPostloadClassList (see https://github.com/GsDevKit/GsDevKit_home/issues/52)
+  echo "Starting set BootstrapApplicationPostloadClassList"
+  $GEMSTONE/bin/topaz -l -T50000 > $upgradeLogDir/topaz.out << EOF
+  output pushnew $upgradeLogDir/topazClearSystemLoginNotification.out only
+  set gemstone $targetStoneName
+  
+  display resultcheck
+  level 0
+  
+  set user DataCurator pass swordfish
+  login
+  
+  display oops
+  iferr 1 stk
+  iferr 2 stack
+  iferr 3 input pop
+  iferr 4 exit 1
+  
+  run
+  UserGlobals at: #BootstrapApplicationPostloadClassList put: #( #SecureHashAlgorithm #MCFileTreeFileDirectoryUtils ).
+  true
+%
+  commit
+  
+  logout
+  output pop
+  exit 0
+EOF
   
   # use default Bootstrap globals for Seaside upgrade
   # start "seaside" upgrade to upgrade GLASS to 1.0-beta.9.1
