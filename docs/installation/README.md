@@ -52,7 +52,7 @@ This approach may suffer from performance issues, even with ssh -X compression.
 
 GsDevKit installation involves installing at least one server and one client.  Since you can have multiple servers on the same node, or multiple clients, the clients and the servers (stones) are named.  In the examples, we use **devKit_329** for the name of the server (stone), and **tode1** for the name of the tODE client.  Later, you may delete these and install stones and clients with other names and versions.
 
-[1]: https://github.com/LisaAlmarode/GsDevKit_home/blob/LisaDocsChanges/docs/installation/configureOS.md
+[1]: ./installation/configureOS.md
 [3]: ./installDevKitServerAndClient.md
 
 [6]: ./installDevKitServer.md
