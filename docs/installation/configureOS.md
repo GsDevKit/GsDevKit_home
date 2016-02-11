@@ -20,7 +20,8 @@ sudo yum install git
 ---
 ### Mac
 
-install Xcode from the App Store
+install Apple's Xcode, which provides git.
+
 [Download Xcode from Apple][2] 
 
 Xcode is not strictly required, but there are [extras steps required to support git on the Mac][5].
@@ -44,6 +45,10 @@ The installation of GitHub on windows provides a shell environment that can be u
    ```
    git config --global core.longpaths true   
    ```
+
+---
+[**FEEDBACK**](https://github.com/GsDevKit/GsDevKit_home/issues/new)
+---
 
 	
 [1]: ./README.md
