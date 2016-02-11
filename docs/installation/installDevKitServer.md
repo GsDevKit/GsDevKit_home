@@ -4,7 +4,18 @@ A complete GsDevKit installation includes both a server and a client, which can 
 
 The GsDevKit server  may be installed on **Linux** (64-bit) or **Mac**.  
 
-To go straight to the example script, see [Example Script to Install GsDevKit Server](#example-script) 
+### Example Script
+
+This script installs the server components only, and installs and starts a 3.2.12 server named **devKit_3212**. You must already have git installed.  
+
+```
+git clone https://github.com/GsDevKit/GsDevKit_home.git
+cd GsDevKit_home
+export GS_HOME=`pwd`
+export PATH=$GS_HOME/bin:$PATH
+installServer |& tee $GS_HOME/install.log
+createStone devKit_3212 3.2.12 |& tee -a $GS_HOME/install.log
+```
 
 ### Determine port handling
 
@@ -17,13 +28,13 @@ devKit_329_ldi          50378/tcp        # Gemstone netldi
 ```
 
 ####GemStone Version and License
-Before running installing the server, please check on the [GemStone/S 64 Bit product page for the latest versions][2] and visit [the Community and Web Edition Licensing page for information on the license included with the download and other options][3]. It is a good idea to acquire a free, Limited Community License by sending email to sales@gemtalksystems.com. We also recommended using the latest version of the GemStone/S 64 Bit product. 
+Before installing, please check for later versions of [the GemStone/S 64 Bit product][2] and visit [the Licenses page][3] for information on the license included with the download. It is a good idea to use the latest version of GemStone, and to acquire a free, Limited Community License (by sending email to sales@gemtalksystems.com). 
 
 ##Install Server
 
-1. **Determine your installation directory and clone GsDevKit_home to that location**
+1. **Determine install directory and clone GsDevKit_home there**
 
-   The following instructions clone the Development Kit to the current directory, so before starting, cd to the directory in which you want the GsDevKit checkout to be located.
+   The following instructions clone the Development Kit to the current directory, so cd to the directory in which you want the GsDevKit checkout to be located.
 
    ```
    cd <githubdirectory>
@@ -41,19 +52,12 @@ Before running installing the server, please check on the [GemStone/S 64 Bit pro
 
 4. **Perform the Server installation**
    
-    The installation is performed by GsDevKit scripts.  The ```installServer``` script installs any required OS packages and clones the projects to your server node. *Note: this script uses sudo to install, and will prompt you for your password*. ```createStone``` installs a stone of the specified version and and specified name, and starts that stone.  
+    The ```installServer``` script installs any required OS packages and clones the projects to your server node. *Note: this script uses sudo to install, and will prompt you for your password*. ```createStone``` installs a stone of the specified version and specified name, and starts that stone.  
 
-   These instructions use 3.2.9 for `<GemStoneVersion>`
-   
    Script to install the server:
    ```
    installServer
-   createStone <myStoneName> <GemStoneVersion>
    ```
-
-   You may use any name for the `<myStoneName>`, to distinguish it from other stones you may later create on this node. These examples use **devKit_329**.  
-
-   After these scripts successfully complete, you will have a server stone installed on your server node and running, and a NetLDI running; the server is now ready for a tODE client to connect.
    
    The ```installServer``` script invokes the following sub-scripts:
    ```
@@ -63,19 +67,19 @@ Before running installing the server, please check on the [GemStone/S 64 Bit pro
    cloneSharedTodeProjects
    setupGsDevKit 
    ```
+   
+5. **Create the Stone**   
+   
+   The ```createStone``` script creates the Stone. You may use any name for the `<myStoneName>`, to distinguish it from other stones you may later create on this node. You also specify the version of GemStone/S that you want to use.
 
-### Example Script
+   ```
+   createStone <myStoneName> <GemStoneVersion>
+   ```
 
-This script installs the server components only, and installs and starts a 3.2.9 server named **devKit_329**.   
+   After these scripts successfully complete, you will have a server stone installed on your server node and running, and a NetLDI running; the server is now ready for a tODE client to connect.
+   
 
-```
-git clone https://github.com/GsDevKit/GsDevKit_home.git
-cd GsDevKit_home
-export GS_HOME=`pwd`
-export PATH=$GS_HOME/bin:$PATH
-installServer |& tee $GS_HOME/install.log
-createStone devKit_329 3.2.9 |& tee -a $GS_HOME/install.log
-```
+
 
 [2]: https://gemtalksystems.com/products/gs64/
 [3]: https://gemtalksystems.com/licensing/
