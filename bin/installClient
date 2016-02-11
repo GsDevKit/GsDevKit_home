@@ -29,6 +29,13 @@ EXAMPLES
 HELP
 }
 
+# We should run this as a normal user, not root.
+if [ `id | cut -f2 -d= | cut -f1 -d\(` -eq 0 ]
+    then
+    echo "[Error] This script must be run as a normal user, not root."
+    exit 1
+fi
+
 set -e # exit on error
 if [ "${GS_HOME}x" = "x" ] ; then
   echo "the GS_HOME environment variable needs to be defined"; exit 1
