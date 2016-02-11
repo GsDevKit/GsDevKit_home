@@ -6,7 +6,7 @@ The GsDevKit server  may be installed on **Linux** (64-bit) or **Mac**.
 
 ### Example Script
 
-This script installs the server components only, and installs and starts a 3.2.12 server named **devKit_3212**. You must already have git installed.  
+This script installs the server components only, and installs and starts a 3.2.12 server named **devKit_3212**. You must already have git installed.  Detailed instructions start [here](#install-server).
 
 ```
 git clone https://github.com/GsDevKit/GsDevKit_home.git
