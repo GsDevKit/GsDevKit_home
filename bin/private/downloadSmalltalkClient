@@ -26,13 +26,19 @@ OPTIONS
 
 EXAMPLES
   $(basename $0) -h
-  $(basename $0) -v Pharo3.0
-  $(basename $0)
+  $(basename $0) -v Pharo3.0 -d $GS_HOME/shared/pharo
+  $(basename $0) -d $GS_HOME/shared/pharo
 
 HELP
 }
 
 set -e # exit on error
+
+if [ "${GS_HOME}x" = "x" ] ; then
+  echo "the GS_HOME environment variable needs to be defined"; exit 1
+fi
+source ${GS_HOME}/bin/private/shFunctions
+verify_gsdevkit_installation
 
 directoryPath=""
 version="Pharo3.0"
@@ -96,6 +102,28 @@ case $version in
           ;;
         *) usage; exit 1;;
       esac
+      if [ -e "./pharo" ] ; then
+        set +e
+missing_32-bit_libs() {
+if [ -e "$GS_HOME/bin/.gsdevkitSetup" ] ; then
+  echo "The 32-bit libraries required by Pharo have not been installed on this system."
+else
+  echo "The appropriate install script has not been run (installClient, installClientServer or installServer)."
+  echo "Please read the Installation Overview documentation (https://github.com/GsDevKit/GsDevKit_home/blob/master/docs/installation/README.md#installation-overview) for further details."
+fi
+exit 1
+}
+        trap 'missing_32-bit_libs' ERR
+        ./pharo --help --vm-display-null &> /dev/null 2>&1
+        trap - ERR
+        set -e
+      else
+        # script needs to run on Windows where we're not concerned about 32 bit libs
+	if [ ! -e "./Pharo.exe" ] ; then
+          echo "Pharo download failed --- please try again"
+	  exit 1
+	fi
+      fi
     popd >& /dev/null
     ;;
   *) usage; exit 1;;

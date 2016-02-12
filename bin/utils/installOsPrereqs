@@ -12,37 +12,48 @@ set -e # exit on error
 
 usage() {
   cat <<HELP
-  USAGE: $(basename $0) [-h] [-X] [-G]
+  USAGE: $(basename $0) [-h] client|server|both
 
-Install os-specific required packages:
-  - 32 bit libraries
-  - git 
-  - curl
-  - unzip
-  - ssl
-  - PAM
+  Verify machine is capable of running GemStone 64-bit (Mac and Linux)
+  Add shared memory setup to /etc/sysctl.conf (Mac and Linux)
+  Add GemStone netldi service port to /etc/services (Mac and Linux)
+  Install operating system prerequisites (Ubuntu14.04 and Ubuntu12.04)
 
-and os-specific optional packages:
-  - X11
-
-If the file $GS_HOME/bin/.osPrereqsSysSetup exists, then the prerequisite installation is skipped.
-
-OPTIONS
-  -h 
-     display help
-  -G
-     install GemTools and the GemTools prerequisites
-  -X 
-     if present, X11 client installed
+  Should not be run as root \`sudo\` is used to install operating system prereqs and
+  setup shared memory (Mac and Linux)
 
 EXAMPLES
-  ./$(basename $0) -h
-  ./$(basename $0)
-  ./$(basename $0) -X
-  ./$(basename $0) -G -X
+   $(basename $0) -h
+   $(basename $0) client
+   $(basename $0) server
+   $(basename $0) both
+
 HELP
 }
 
+# We should run this as a normal user, not root.
+if [ `id | cut -f2 -d= | cut -f1 -d\(` -eq 0 ]
+    then
+    echo "[Error] This script must be run as a normal user, not root."
+    exit 1
+fi
+
+installPrereqsForUbuntu(){
+    case "$osVersion" in
+      12.04)
+        installUbuntuPackages
+        sudo ln -f -s /lib/i386-linux-gnu/libpam.so.0 /lib/libpam.so.0
+        sudo ln -f -s /usr/lib/i386-lin-gnu/libstdc++.so.6 /usr/lib/i386-linux-gnu/libstdc++.so
+        ;;
+      14.04)
+        sudo dpkg --add-architecture i386
+        installUbuntuPackages
+        sudo ln -f -s /usr/lib/i386-lin-gnu/libstdc++.so.6 /usr/lib/i386-linux-gnu/libstdc++.so
+        ;;
+      *) echo "unrecognized Ubuntu version $os"; usage; exit 1;;
+    esac
+
+}
 installUbuntuPackages(){
     sudo apt-get -y update
     sudo apt-get -y install curl
@@ -56,53 +67,280 @@ installUbuntuPackages(){
     sudo apt-get -y install libfreetype6:i386
     sudo apt-get -y install pstack
     sudo /bin/su -c "echo 'kernel.yama.ptrace_scope = 0' >>/etc/sysctl.d/10-ptrace.conf"
-    if [ "${X11client}x" = "1x" ] ; then
+    if [ "${x11client}" = "true" ] ; then
       sudo apt-get -y install libgl1-mesa-glx:i386
       sudo apt-get -y install libxcb-dri2-0:i386
     fi
-    if [ "${gemtools}" = "true" ] ; then
-      if [ ! -d "GemTools-1.0-beta.8.7-3101x.app" ] ; then
-        sudo apt-get -y install libXrender1:i386
-        sudo apt-get -y install libSM6:i386
-        sudo apt-get -y install libICE6:i386
-        curl -O  http://seaside.gemtalksystems.com/squeak/GemTools-1.0-beta.8.7-310x.zip
-        unzip GemTools-1.0-beta.8.7-310x.zip
-      fi
+}
+
+installPrereqsForCentOS(){
+	installCentOSPackages
+}
+
+installCentOSPackages(){
+    # IMPORTANT: This was only tested so far in CentOS 7, the latest stable release.
+	# Also, it was tested in a CentOS minimal installation so that to be sure we install everything needed.
+	
+	# Base dependencies for a todeClient / Pharo VM
+	# If the below dependencies still does not work, try executing ldd and search for "not found".
+	# If there is a "no found" you can then do "sudo yum search" to search which package may contain the missing lib
+	# Remember to always use the 32 bits libs, that is, i686 variant.
+	# sudo ldd $GS_HOME/dev/clients/tode1/pharo-vm/pharo
+	# sudo ldd $GS_HOME/dev/clients/tode1/pharo-vm/vm-display-X11
+	sudo yum -y install glibc.i686
+	if [ ! -f /usr/lib/libssl.so.1.0.0 ]; then
+		sudo yum -y install openssl098e.i686
+		sudo ln -s /usr/lib/libssl.so.0.9.8e /usr/lib/libssl.so.1.0.0
+	fi
+	sudo yum -y upgrade pam.x86_64
+	sudo yum -y install pam.i686
+	
+    if [ "${x11client}" = "true" ] ; then
+		# To be able to do X11 forwarding you need the following libs
+		sudo yum -y install xauth
+		sudo yum -y install libX11.i686
+		sudo yum -y install mesa-libGL.i686
     fi
 }
 
 
-os=`lsb_release -rs`
-X11client=""
-gemtools=""
-
-while getopts "h:GX" OPT ; do
+while getopts "h" OPT ; do
   case "$OPT" in
-    G) gemtools="true";;
     h) usage; exit 0 ;;
-    X) X11client="1";;
-    *) usage; exit 1 ;;
+    *) ;;
   esac
 done
 shift $(($OPTIND - 1))
 
-# touch the following file, if you prefer to skip the installation of prerequisites
-osPrereqsSysSetup=$GS_HOME/bin/.osPrereqsSysSetup # if file exists, skip installation
-
-if [ -e "$osPrereqsSysSetup" ]; then
-  echo "Skip operating system prerequisites, operating system prerequisites already installed ($osPrereqsSysSetup exists)"
-else
-  case "$os" in
-    12.04)
-      installUbuntuPackages
-      sudo ln -f -s /lib/i386-linux-gnu/libpam.so.0 /lib/libpam.so.0
-      sudo ln -f -s /usr/lib/i386-lin-gnu/libstdc++.so.6 /usr/lib/i386-linux-gnu/libstdc++.so
-      ;;
-    14.04)
-      sudo dpkg --add-architecture i386
-      installUbuntuPackages
-      sudo ln -f -s /usr/lib/i386-lin-gnu/libstdc++.so.6 /usr/lib/i386-linux-gnu/libstdc++.so
-      ;;
-    *) echo "unrecognized Ubuntu version $os"; usage; exit 1;;
-  esac
+if [ $# -ne 1 ]; then
+  echo "wrong number of arguments (1 expected)"; usage; exit 1
 fi
+
+case "$1" in
+  # always assume that x11client is needed ... only time not needed is when netldi port forwarding is exclusively used
+  # if you want to debug a headless pharo image on the server????? Folks who "know what they are doing" can install
+  # prerequisites themselves and touch $GS_HOME/bin/.osPrereqsSysSetup.
+  both) x11client="true";;
+  client) x11client="true";;
+  server) x11client="true";;
+  *) echo "Unknown setup type $1"; usage; exit 1;;
+esac
+
+# touch the following file, if you prefer to skip the installation of prerequisites
+osPrereqsSysSetup=$GS_HOME/bin/.osPrereqsSysSetup # if file exists, skip linux prereq installation
+sharedMemorySysSetup=$GS_HOME/bin/.sharedMemorySysSetup # if file exists, skip shared memory setup
+gsdevkitSysSetup=$GS_HOME/bin/.gsdevkitSysSetup # if file exists, shared memory setup already completed
+
+if [ -e "$gsdevkitSysSetup" ]; then
+  echo "Skip operating system configuration steps, system already setup ($gsdevkitSysSetup exists)"
+  echo "...finished $(basename $0)"
+  exit 0
+fi
+
+# Detect operating system
+PLATFORM="`uname -sm | tr ' ' '-'`"
+# Macs with Core i7 use the same software as older Macs
+[ $PLATFORM = "Darwin-x86_64" ] && PLATFORM="Darwin-i386"
+
+if [ -e "$sharedMemorySysSetup" ]; then
+  echo "Skip shared memory setup, shared memory setup already done, ($sharedMemorySysSetup exists)"
+else
+  case "$PLATFORM" in
+    Darwin-i386)
+      OSVERSION="`sw_vers -productVersion`"
+      MAJOR="`echo $OSVERSION | cut -f1 -d.`"
+      MINOR="`echo $OSVERSION | cut -f2 -d.`"
+      CPU_CAPABLE="`sysctl hw.cpu64bit_capable | cut -f2 -d' '`"
+      #
+      # Check the CPU and Mac OS X profile.
+      if [[ $CPU_CAPABLE -ne 1 || $MAJOR -lt 10 || $MINOR -lt 5 ]] ; then
+          echo "[Error] This script requires Mac OS X 10.5 or later on a 64-bit Intel CPU."
+          exit 1
+      fi
+      ;;
+    Linux-x86_64)
+      # Linux looks OK
+      ;;
+    MINGW32_NT*)
+      # If we are running a bash script on windows, then we are done
+      echo "No os prereqs installed for windows"
+      echo "...finished $(basename $0)"
+      exit 0
+      ;;
+    *)
+      echo "[Error] This script only works on a 64-bit Linux or Mac OS X machine"
+      echo "The result from \"uname -sm\" is \"`uname -sm`\""
+      exit 1
+      ;;
+  esac
+
+  # Do a trivial sudo to test we can and get the password prompt out of the way
+  sudo date
+
+  echo "[Info] Setting up shared memory"
+  # Ref: http://developer.postgresql.org/pgdocs/postgres/kernel-resources.html
+  # Ref: http://www.idevelopment.info/data/Oracle/DBA_tips/Linux/LINUX_8tml
+
+  case "$PLATFORM" in
+  Linux-x86_64)
+    # use TotalMem: kB because Ubuntu doesn't have Mem: in Bytes
+    totalMemKB=`awk '/MemTotal:/{print($2);}' /proc/meminfo`
+    totalMem=$(($totalMemKB * 1024))
+    # Figure out the max shared memory segment size currently allowed
+    shmmax=`cat /proc/sys/kernel/shmmax`
+    # Figure out the max shared memory currently allowed
+    shmall=`cat /proc/sys/kernel/shmall`
+    ;;
+  Darwin-i386)
+    totalMem="`sysctl hw.memsize | cut -f2 -d' '`"
+    # Figure out the max shared memory segment size currently allowed
+    shmmax="`sysctl kern.sysv.shmmax | cut -f2 -d' '`"
+    # Figure out the max shared memory currently allowed
+    shmall="`sysctl kern.sysv.shmall | cut -f2 -d' '`"
+    ;;
+  *)
+    echo "[Error] Can't determine operating system. Check script."
+    exit 1
+    ;;
+  esac
+  totalMemMB=$(($totalMem / 1048576))
+  shmmaxMB=$(($shmmax / 1048576))
+  shmallMB=$(($shmall / 256))
+
+  # Print current values
+  echo "  Total memory available is $totalMemMB MB"
+  echo "  Max shared memory segment size is $shmmaxMB MB"
+  echo "  Max shared memory allowed is $shmallMB MB"
+
+  # Figure out the max shared memory segment size (shmmax) we want
+  # Use 75% of available memory but not more than 2GB
+  shmmaxNew=$(($totalMem * 3/4))
+  [ $shmmaxNew -gt 2147483648 ] && shmmaxNew=2147483648
+  shmmaxNewMB=$(($shmmaxNew / 1048576))
+
+  # Figure out the max shared memory allowed (shmall) we want
+  # The MacOSX default is 4MB, way too small
+  # The Linux default is 2097152 or 8GB, so we should never need this
+  # but things will certainly break if it's been reset too small
+  # so ensure it's at least big enough to hold a fullsize shared memory segment
+  shmallNew=$(($shmmaxNew / 4096))
+  [ $shmallNew -lt $shmall ] && shmallNew=$shmall
+  shmallNewMB=$(($shmallNew / 256))
+
+  # Increase shmmax if appropriate
+  if [ $shmmaxNew -gt $shmmax ]; then
+    echo "[Info] Increasing max shared memory segment size to $shmmaxNewMB MB"
+    [ $PLATFORM = "Darwin-i386" ] \
+      && sudo sysctl -w kern.sysv.shmmax=$shmmaxNew
+    [ $PLATFORM = "Linux-x86_64" ] \
+      && sudo bash -c "echo $shmmaxNew > /proc/sys/kernel/shmmax" \
+      && sudo /bin/su -c "echo 'kernel.shmmax=$shmmaxNew' >>/etc/sysctl.conf"
+  else
+    echo "[Info] No need to increase max shared memory segment size"
+  fi
+
+  # Increase shmall if appropriate
+  if [ $shmallNew -gt $shmall ]; then
+    echo "[Info] Increasing max shared memory allowed to $shmallNewMB MB"
+    [ $PLATFORM = "Darwin-i386" ] && sudo sysctl -w kern.sysv.shmall=$shmallNew
+    [ $PLATFORM = "Linux-x86_64" ] \
+      && sudo bash -c "echo $shmallNew > /proc/sys/kernel/shmall" \
+      && sudo /bin/su -c "echo 'kernel.shmall=$shmallNew' >>/etc/sysctl.conf"
+  else
+    echo "[Info] No need to increase max shared memory allowed"
+  fi
+  # At this point, shared memory settings contain the values we want, 
+  # put them in sysctl.conf so they are preserved.
+  # Only needs to be done on OSX (see https://github.com/GsDevKit/GsDevKit_home/issues/46)
+  if [ "$PLATFORM" = "Darwin-i386" ] ; then
+    if [[ ! -f /etc/sysctl.conf || `grep -sc "kern.*m" /etc/sysctl.conf` -eq 0 ]]; then
+      # On Mac OS X Leopard, you must have all five settings in sysctl.conf
+      # before they will take effect.
+      echo "# kern.sysv.shm* settings added by GsDevKit installation" > /tmp/sysctl.conf.$$
+      sysctl kern.sysv.shmmax kern.sysv.shmall kern.sysv.shmmin kern.sysv.shmmni \
+        kern.sysv.shmseg  | tr ":" "=" | tr -d " " >> /tmp/sysctl.conf.$$
+      #
+      echo "[Info] Adding the following section to /etc/sysctl.conf"
+      cat /tmp/sysctl.conf.$$
+      sudo bash -c "cat /tmp/sysctl.conf.$$ >> /etc/sysctl.conf"
+      /bin/rm -f /tmp/sysctl.conf.$$
+    else
+      echo "[Info] The following shared memory settings already exist in /etc/sysctl.conf"
+      echo "To change them, remove the following lines from /etc/sysctl.conf and rerun this script"
+      grep "kern.*m" /etc/sysctl.conf
+    fi
+  fi
+
+  # Now setup for NetLDI in case we ever need it.
+  echo "[Info] Setting up GemStone netldi service port"
+  if [ `grep -sc "^gs64ldi" /etc/services` -eq 0 ]; then
+    echo '[Info] Adding "gs64ldi  50377/tcp" to /etc/services'
+    sudo bash -c 'echo "gs64ldi         50377/tcp        # Gemstone netldi"  >> /etc/services'
+  else
+    echo "[Info] GemStone netldi service port is already set in /etc/services"
+    echo "To change it, remove the following line from /etc/services and rerun this script"
+    grep "^gs64ldi" /etc/services
+  fi
+
+  # Create some directories that GemStone expects; make them writable
+  echo "[Info] Creating /opt/gemstone directory"
+  if [ ! -e /opt/gemstone ]
+    then
+    sudo mkdir -p /opt/gemstone /opt/gemstone/log /opt/gemstone/locks
+    sudo chown $USER:${GROUPS[0]} /opt/gemstone /opt/gemstone/log /opt/gemstone/locks
+    sudo chmod 770 /opt/gemstone /opt/gemstone/log /opt/gemstone/locks
+  else
+    echo "[Warning] /opt/gemstone directory already exists"
+    echo "to replace it, remove or rename it and rerun this script"
+  fi
+  cat - > $sharedMemorySysSetup << EOF
+the presence of this file means that \$GS_HOME/bin/installOsPrereqs has 
+set up shared memory for GemStone/S 64
+EOF
+fi 
+
+case "$PLATFORM" in
+  Linux-x86_64)
+    # Linux prereq installation
+    if [ -e "$osPrereqsSysSetup" ]; then
+      echo "Skip operating system prerequisites, operating system prerequisites already installed ($osPrereqsSysSetup exists)"
+    else
+      # Do a trivial sudo to test we can and get the password prompt out of the way
+      sudo date
+
+      if [ -f /etc/lsb-release ]; then
+        osName=`lsb_release -ds | cut -d ' ' -f 1`
+        osVersion=`lsb_release -rs`
+      elif [ -f /etc/centos-release ]; then
+        osName="CentOS"
+        osVersion=`cat /etc/centos-release`
+      else
+        osName=$(uname -s)
+        osVersion=$(uname -r)
+      fi
+	  echo "Installing prereqs for detect Linux named $osName and version $osVersion"
+      case "$osName" in
+        Ubuntu)
+		  installPrereqsForUbuntu
+		  ;;
+		CentOS)
+		  installPrereqsForCentOS
+		  ;;
+	    *) echo "Unrecognized Linux named $osName version $osVersion"; usage; exit 1;;
+	  esac
+	    cat - > $osPrereqsSysSetup << EOF
+the presence of this file means that \$GS_HOME/bin/installOsPrereqs has 
+installed the prerequisites for GemStone/S 64
+EOF
+	fi
+    ;;
+  *) # nothing special needed
+    ;;
+esac
+cat - > $gsdevkitSysSetup << EOF
+the presence of this file means that \$GS_HOME/bin/installOsPrereqs has 
+configured the OS for running GemStone/S 64, including the setup of shared memory
+EOF
+# End of script
+echo "...finished $(basename $0)"
+exit 0

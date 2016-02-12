@@ -1,20 +1,25 @@
-language: erlang
-
 sudo: required
 
+os:
+  - linux
+  - osx
+
 env:
-
-#
-  - GS_VERSION=3.2.10  TEST=Simple
+  - GS_VERSION=3.2.12 TEST=Error
+  - GS_VERSION=3.1.0.6 TEST=Upgrade
+  - GS_VERSION=3.2.12 TEST=Install
+  - GS_VERSION=2.4.7 TEST=Basic
   - GS_VERSION=3.1.0.6 TEST=Basic
-  - GS_VERSION=3.2.10  TEST=Basic
+  - GS_VERSION=3.2.12 TEST=Basic
 
-#  - GS_VERSION=3.1.0.6 TEST=BasicTodeClient
-#  - GS_VERSION=3.2.9   TEST=BasicTodeClient
-#  - GS_VERSION=3.1.0.6 TEST=Projects1
-#  - GS_VERSION=3.2.9   TEST=Projects1
-#  - GS_VERSION=3.1.0.6 TEST=Projects2
-#  - GS_VERSION=3.2.9   TEST=Projects2
+matrix:
+   allow_failures:
+     - os: osx
+   exclude:
+     - os: osx
+       env: GS_VERSION=2.4.7 TEST=Basic
+     - os: osx
+       env: GS_VERSION=3.1.0.6 TEST=Upgrade
 
 addons:
   hosts:
@@ -27,4 +32,6 @@ before_script:
   - export GS_TRAVIS=true
 
 script:
+  - hostname
+  - cat /etc/hosts
   - tests/testTravisCI.sh

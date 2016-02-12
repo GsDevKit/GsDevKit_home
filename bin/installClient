@@ -10,7 +10,7 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-c https | ssh ]  [-o <organization-name>] <client-name> <gemstone-version>
+USAGE: $(basename $0) [-h] [-c https | ssh ]  [-o <organization-name>]
 
 OPTIONS
   -h
@@ -24,10 +24,17 @@ OPTIONS
 
 EXAMPLES
    $(basename $0) -h
-   $(basename $0) tode 3.2.9
+   $(basename $0)
 
 HELP
 }
+
+# We should run this as a normal user, not root.
+if [ `id | cut -f2 -d= | cut -f1 -d\(` -eq 0 ]
+    then
+    echo "[Error] This script must be run as a normal user, not root."
+    exit 1
+fi
 
 set -e # exit on error
 if [ "${GS_HOME}x" = "x" ] ; then
@@ -47,12 +54,10 @@ while getopts "hc:o:" OPT ; do
 done
 shift $(($OPTIND - 1))
 
-if [ $# -ne 2 ]; then
-  echo "wrong number of arguments (2 expected)"; usage; exit 1
+if [ $# -ne 0 ]; then
+  echo "unexpected argument ($1)"; usage; exit 1
 fi
-clientName=$1
-vers=$2
-$GS_HOME/bin/setupGsDevKit $modeArg $organizationArg client $vers
-$GS_HOME/bin/createClient $clientName
+
+$GS_HOME/bin/setupGsDevKit $modeArg $organizationArg client
 
 echo "...finished $(basename $0)"

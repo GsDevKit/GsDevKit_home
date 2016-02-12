@@ -87,7 +87,7 @@ Now is a good time make some modifications to your application class, update the
 
 
 ---
-[**FEEDBACK**][28]
+[**FEEDBACK**](https://github.com/GsDevKit/GsDevKit_home/issues/new)
 ---
 
 
@@ -98,7 +98,6 @@ Now is a good time make some modifications to your application class, update the
 [5]: images/todeResizeMenu.png
 [6]: images/todeMan.png
 
-[28]: https://github.com/GsDevKit/GsDevKit_home/issues/new
 
 [40]: https://github.com/dalehenrich/metacello-work/blob/master/docs/GettingStartedWithGitHub.md#create-baseline
 [41]: https://github.com/dalehenrich/metacello-work/blob/master/docs/GettingStartedWithGitHub.md#getting-started-with-github
