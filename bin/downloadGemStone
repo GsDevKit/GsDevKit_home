@@ -205,11 +205,15 @@ if [ "${GS_TRAVIS}x" != "x" ] ; then
         3.0.1) keyName="GemStone64Bit3.0.0-x86_64.Linux.key" ;;
         3.1.*) keyName="GemStone64Bit3.1.0-x86_64.Linux.key" ;;
         3.2.*) keyName="GemStone64Bit3.2.0-x86_64.Linux.key" ;;
+        3.2.*) keyName="GemStone64Bit3.2.0-x86_64.Linux.key" ;;
+        3.3.*) keyName="" ;;
         *) echo "No travis license for GemStone $vers"; exit 1;;
       esac
-      chmod +w  $gs_product/seaside/etc/gemstone.key
-      echo "Copying $GS_HOME/travis/$keyName to $gs_product/seaside/etc/gemstone.key"
-      cp $GS_HOME/travis/$keyName $gs_product/seaside/etc/gemstone.key
+      if [ "${keyName}x" != "x" ] ; then
+        chmod +w  $gs_product/seaside/etc/gemstone.key
+        echo "Copying $GS_HOME/travis/$keyName to $gs_product/seaside/etc/gemstone.key"
+        cp $GS_HOME/travis/$keyName $gs_product/seaside/etc/gemstone.key
+      fi
       ;;
    *)
      # no need for special handling 
