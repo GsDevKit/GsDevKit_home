@@ -4,6 +4,9 @@ createStone
 	Transcript
 		cr;
 		show: 'Creating stone ' , self stoneName.
+	Transcript
+		cr;
+		show: '/bin/hostname: ' , (self runShellCommand: '/bin/hostname/' args: #()) printString.
 	stoneDirectory := self gs_stonesHome / self stoneName.
 	stoneDirectory exists
 		ifTrue: [ 
