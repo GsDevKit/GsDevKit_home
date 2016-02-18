@@ -16,9 +16,9 @@ downloadGemStone 3.3 |& tee -a $GS_HOME/install.log
 createClient tode1 |& tee -a $GS_HOME/install.log
 ```
 
-After executing this script, there are additional steps to [connect to your server](#establish-connection-toserver).  
+After executing this script, there are additional steps to [connect to your server](#establish-connection-to-server).  
 
-## Install Client Details
+### Install Client Details
 
 Clients may be installed on **Linux**, **Mac** or **Windows**. 
 
