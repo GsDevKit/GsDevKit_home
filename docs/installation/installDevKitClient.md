@@ -127,18 +127,20 @@ If you do not have passwordless ssh setup, you will be prompted for your passwor
 
 Your shell is now ssh'ed into the server.  You will need to leave this shell connected in order to maintain the ssh port tunnel, so open another shell to start up the client.
 
-## Client Setup
+If you have a firewall, you will need to open this port.
 
-1. Edit your `.bashrc`, or create another intializations file, that includes the lines:
+## Setup on Client node
+
+1. Edit your `.bashrc`, or create another intialization file, to include the lines:
 
    ```
    export GS_HOME=`pwd`
    export PATH=$GS_HOME/bin:$PATH
    ```
 
-   these  will be needed to use tODE.
+   these will be needed to use tODE.
 
-2.  From the server installation, copy the server specificaion file to the client.  This file is 
+2.  From the server installation, copy the server specification file to the client.  This file is 
 
    `$GS_HOME/sys/local/sessions/<myServerNodeName>`
    
