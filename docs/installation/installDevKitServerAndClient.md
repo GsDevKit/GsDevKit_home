@@ -10,6 +10,7 @@ Before installing, please check for later versions of [the GemStone/S 64 Bit pro
 ## Example Scriptt
 
 This script installs both client and server components, and installs and starts a 3.3 server named **devKit_33**, and installs but does not start a todeClient named **tode1**.  Output is sent to a log file, in case of problems during installation. 
+You must already have [git installed][1].
 
 ```
 git clone https://github.com/GsDevKit/GsDevKit_home.git
@@ -25,7 +26,7 @@ createClient tode1 |& tee -a $GS_HOME/install.log
 
 1. **Determine your installation directory and clone GsDevKit_home to that location**
 
-   You must already have git installed.  
+   You must already have [git installed][1].  
    These instructions clone the Development Kit to the current directory, so before starting, cd to the directory in which you want the GsDevKit checkout to be located (`<githubdirectory>`).
 
    ```
@@ -44,18 +45,13 @@ createClient tode1 |& tee -a $GS_HOME/install.log
 
 4. **Perform the Server installation**
    
-    The installation is performed by a set of GsDevKit scripts.  `installServerClient` takes care of installing any required OS packages and cloning the required projects to your server node, and createStone and createClient install the stone and client fo the specified version and specified name, and starting the stone. 
+    The installation is performed by the `installServerClient` script.  This takes care of installing any required OS packages and cloning the required projects to your server node
 
    ```
    installServerClient
-   createStone <myStoneName> <GemStoneVersion>
-   createClient <myClientName>
    ```
-   You may use any name for the `<myStoneName>` and `<myClientName>`; you may later have multiple stones and multiple clients.
+   The `installServerClient` script invokes the following sub-scripts:
    
-      After these scripts successfully complete, you will have a stone named `<myStoneName>`, of GemStone/S 64 Bit version `<GemStoneVersion>`, installed on your server node and running.  You will have a NetLDI named `<myStoneName>_ldi` running on the server, so the server is ready for the tODE client to connect.  You will also have a client named `<myClientName>` installed and ready to start. 
-
-   The ```installServerClient``` script invokes the following sub-scripts:
    ```
    downloadGemStone
    installOsPrereqs
@@ -63,10 +59,22 @@ createClient tode1 |& tee -a $GS_HOME/install.log
    cloneSharedTodeProjects
    setupGsDevKit 
    ```
+5.  Create the stone and client
+    The `createStone` and `createClient` scripts install the stone and client. 
+   
+   ```
+   createStone <myStoneName> <GemStoneVersion>
+   createClient <myClientName>
+   ```
+   You may use any name for the `<myStoneName>` and `<myClientName>`; you may later have multiple stones and multiple clients.
+   
+      After these scripts successfully complete, you will have a stone named `<myStoneName>`, of GemStone/S 64 Bit version `<GemStoneVersion>`, installed on your server node and running.  You will have a NetLDI named `<myStoneName>_ldi` running on the server, so the server is ready for the tODE client to connect.  You will also have a client named `<myClientName>` installed and ready to start. 
 
 
 
 
+
+[1]: ./configureOS.md
 [2]: https://gemtalksystems.com/products/gs64/
 [3]: https://gemtalksystems.com/licensing/
 
