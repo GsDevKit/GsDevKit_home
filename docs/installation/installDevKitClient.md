@@ -1,4 +1,4 @@
-#GsDevKit Client Installation
+# GsDevKit Client Installation
 
 These instructions describe installing the GsDevKit tODE client on a desktop machine, on a different node than the GsDevKit server (stone) will be running.  You should first [install the GsDevKit server][1], on the node you will use as the server.
 
@@ -6,6 +6,7 @@ These instructions describe installing the GsDevKit tODE client on a desktop mac
 
 You must first have [git installed][5], and be in the directory in which you want to install.  In the git bash shell on windows, to reduce issues with path length, this should be ~ (i.e., `cd ~`)
 
+```
 git clone https://github.com/GsDevKit/GsDevKit_home.git
 cd GsDevKit_home
 export GS_HOME=`pwd`
@@ -13,8 +14,9 @@ export PATH=$GS_HOME/bin:$PATH
 installClient |& tee $GS_HOME/install.log
 downloadGemStone 3.3 |& tee -a $GS_HOME/install.log
 createClient tode1 |& tee -a $GS_HOME/install.log
+```
 
-After executing this script, there are additional steps to connect to your server.  
+After executing this script, there are additional steps to [connect to your server](#establish-connection-toserver).  
 
 ## Install Client Details
 
@@ -68,6 +70,8 @@ Install from the directory in which you want the GsDevKit checkout to be located
    You may use any name for `<myClientName>`, to distinguish it from other clients you may later create on this node. The examples below use  **tode1** as the client name.
 
 You now have an instance of the tODE client installed on your client machine. 
+
+# Establish Connection to Server
 
 ## Determine port number for connection
 
