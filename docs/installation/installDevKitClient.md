@@ -2,17 +2,29 @@
 
 These instructions describe installing the GsDevKit tODE client on a desktop machine, on a different node than the GsDevKit server (stone) will be running.  You should first [install the GsDevKit server][1], on the node you will use as the server.
 
+## Example Script to Install Client
+
+You must first have [git installed][5], and be in the directory in which you want to install.  In the git bash shell on windows, to reduce issues with path length, this should be ~ (i.e., `cd ~`)
+
+git clone https://github.com/GsDevKit/GsDevKit_home.git
+cd GsDevKit_home
+export GS_HOME=`pwd`
+export PATH=$GS_HOME/bin:$PATH
+installClient |& tee $GS_HOME/install.log
+downloadGemStone 3.3 |& tee -a $GS_HOME/install.log
+createClient tode1 |& tee -a $GS_HOME/install.log
+
+After executing this script, there are additional steps to connect to your server.  
+
+## Install Client Details
+
 Clients may be installed on **Linux**, **Mac** or **Windows**. 
-
-## Install Client
-
-To go straight to an script to execute, see [Install GsDevKit client on Linux or Mac](#example-script-for-linux-or-mac) or [Install GsDevKit client on Windows](#example-script-for-windows).
 
 1. Determine your installation directory and clone GsDevKit_home to that location
 
-   The following instructions clone the Development Kit to the current directory, so before starting, cd to the directory in which you want the GsDevKit checkout to be located.  On Windows, it is strongly recommended to install in the root of the user's home directory (`cd ~`), to avoid [path length restrictions][3].
+Install from the directory in which you want the GsDevKit checkout to be located.  On Windows, it is strongly recommended to install in the root of the user's home directory (`cd ~`), to avoid [path length restrictions][3].
    
-   You must use bash or, on Windows, the Git Shell executable provided by the GitHub desktop.
+   You must use bash; on Windows, the Git Shell executable provided by the GitHub desktop.
 
    ```
    cd <githubdirectory>
@@ -30,18 +42,15 @@ To go straight to an script to execute, see [Install GsDevKit client on Linux or
 
 4. Perform the Client installation
    
-    The installation is performed by a GsDevKit script.  This script takes care of cloning the required projects to your client node and creating a client with the selected name.  
+    The installation is performed by GsDevKit scripts.  These scripts takes care of cloning the required projects to your client and downloading the GemStone client.  
 
-   you will need to know the version of the GsDevKit stone on your server.
+   you will need to know the version of the GsDevKit stone on your server; the client GemStone needs to be the compatible version.
 
    Script to install the client:
    ```
    installClient 
    downloadGemStone <myGemStoneVersion>
-   createClient <myClientName>
    ```
-   You may use any name for `<myClientName>`, to distinguish it from other clients you may later create on this node. The examples below use  **tode1** as the client name.
-
    The ```installClient``` script invokes the following sub-scripts:
    ```
    installOsPrereqs
@@ -49,49 +58,16 @@ To go straight to an script to execute, see [Install GsDevKit client on Linux or
    cloneSharedTodeProjects
    setupGsDevKit 
    ```
+   
+5.  Create the client 
+    The client (e.g., tODE) is created using the `createClient` script.
 
-### Example Script for Linux or Mac
+   ```
+   createClient <myClientName>
+   ```
+   You may use any name for `<myClientName>`, to distinguish it from other clients you may later create on this node. The examples below use  **tode1** as the client name.
 
-This script installs the GsDevKit client components for v3.2.9, and creates a client with the name **tode1**.
-
- ```
-cd <githubdirectory>
-
-git clone https://github.com/GsDevKit/GsDevKit_home.git
-cd GsDevKit_home
-export GS_HOME=`pwd`
-export PATH=$GS_HOME/bin:$PATH
-installClient |& tee $GS_HOME/install.log
-dowloadGemStone 3.2.9 |& tee -a $GS_HOME/install.log
-createClient tode1 |& tee -a $GS_HOME/install.log
- ```
-
-### Example Script for Windows
-
-This script installs the GsDevKit client components for v.3.2.9, and creates a client with the name **tode1**.
-
- ```
-cd ~
-git clone https://github.com/GsDevKit/GsDevKit_home.git
-cd GsDevKit_home
-export GS_HOME=`pwd`
-export PATH=$GS_HOME/bin:$PATH
-installClient |& tee $GS_HOME/install.log
-downloadGemStone 3.2.9 |& tee -a $GS_HOME/install.log
-createClient tode1 |& tee -a $GS_HOME/install.log
- ```
-
-When the install script completes, it will report lines similar to:
-```
-...finished installGci
-...finished scanProductsForInstallingGciLibs
-...finished createPharoTodeClient
-...finished createClient
-...finished createClient
-...finished installClient
-```
-
-You now have an instance of the tODE client installed on your client machine, with the name **tode1** (if you used the sequence as entered here); and you have the GemStone server components for v3.2.9.
+You now have an instance of the tODE client installed on your client machine. 
 
 ## Determine port number for connection
 
@@ -99,7 +75,7 @@ To establish the connection between the client and the server, a server process 
 
 Before starting the server, it is recommended, but not required, to assign a reserved port number to a named NetLDI by adding an entry to the network services database, which may be /etc/services.  For example,
 ```
-devKit_329_ldi          50378/tcp        # Gemstone netldi
+devKit_33_ldi          50378/tcp        # Gemstone netldi
 ```
 
 If not, you will need to lookup the port number that the system has assigned to the NetLDI for the GsDevKit server (stone) instance that this client will connect to.  To do this, on the server node, execute the `stones` command.  this will return results similar to this: 
@@ -192,6 +168,7 @@ While your Gem will actually be hosted on the remote server, by using ssh tunnel
 [2]: ./README.md#installation-on-separate-server-and-client
 [3]:  https://github.com/git-for-windows/git/wiki/Git-cannot-create-a-file-or-directory-with-a-long-path
 [4]: ../gettingStartedWithTode.md
+[5]: ../configureOS.md
 
 
 
