@@ -73,11 +73,17 @@ You now have an instance of the tODE client installed on your client machine.
 
 # Establish Connection to Server
 
+Connecting the client to the server is a matter of establishing a port that both the client and server can use and ensuring they look for the same port number.
+
+This diagram shows the main components of the system; the ongoing connection is to the NetLDI via the port.  
+
+![client-server architecture][6]
+
 ## Determine port number for connection
 
 To establish the connection between the client and the server, a server process called the NetLDI listens on a well-known port, and the client must be configured to contact the server on  this port.  If the server and client  machines are not on the same local network, you will also need to setup SSH port forwarding for this port.
 
-Before starting the server, it is recommended, but not required, to assign a reserved port number to a named NetLDI by adding an entry to the network services database, which may be /etc/services.  For example,
+Before starting the server, it is recommended to assign a reserved port number to a named NetLDI by adding an entry to the network services database, e.g. /etc/services.  For example,
 ```
 devKit_33_ldi          50378/tcp        # Gemstone netldi
 ```
@@ -172,7 +178,7 @@ While your Gem will actually be hosted on the remote server, by using ssh tunnel
 [2]: ./README.md#installation-on-separate-server-and-client
 [3]:  https://github.com/git-for-windows/git/wiki/Git-cannot-create-a-file-or-directory-with-a-long-path
 [4]: ../gettingStartedWithTode.md
-[5]: ../configureOS.md
-
+[5]: ./configureOS.md
+[6]: ../images/DevKit_ClientServer_Arch.png
 
 
