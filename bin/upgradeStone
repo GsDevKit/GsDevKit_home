@@ -194,6 +194,17 @@ EOF
   true
 %
   commit
+
+! patch Class>>removeFromSystem until upgrade is complete
+category: '*change-notification'
+method: Class
+removeFromSystem
+| ar |
+ar := System myUserProfile dictionaryAndSymbolOf: self.
+ar ifNotNil: [ (ar at: 1) removeKey: (ar at: 2) ].
+%
+commit
+
   
   logout
   output pop
