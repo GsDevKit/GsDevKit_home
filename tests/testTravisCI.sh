@@ -66,6 +66,24 @@ EOF
       exit 0
     fi
     ;;
+  Upgrade_71) # Issue #71: test case ... upgrade from 3.2.11
+    installServer
+    createStone -g ${STONENAME1}_3211 3.2.11
+    upgradeStoneName="${STONENAME1}_${GS_VERSION}"
+    set +e
+    set -x
+    upgradeStone -f ${STONENAME1}_3211 ${STONENAME1}_${GS_VERSION} $GS_VERSION << EOF
+
+EOF
+    status=$?
+    if [ "$status" != "0" ] ; then
+      cat $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topazerrors.log
+      cat $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out
+      exit 1
+    else
+      exit 0
+    fi
+    ;;
   BasicTodeClient)
     $GS_HOME/tests/basicTodeClientTests.sh
     ;;
