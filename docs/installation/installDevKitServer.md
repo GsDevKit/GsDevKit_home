@@ -6,7 +6,7 @@ The GsDevKit server  may be installed on **Linux** (64-bit) or **Mac**.
 
 ### Example Script
 
-This script installs the server components only, and installs and starts a 3.2.12 server named **devKit_3212**. You must already have git installed.  Detailed instructions start [here](#install-server).
+This script installs the server components only, and installs and starts a 3.2.12 server named **devKit_3212**. You must already have [git installed][1]. The details for each step are described starting [here](#install-server).
 
 ```
 git clone https://github.com/GsDevKit/GsDevKit_home.git
@@ -24,7 +24,7 @@ To establish the connection between the client and the server, a server process 
 We recommend assigning a reserved port number to a named NetLDI by adding an entry to the network services database, e.g.  /etc/services, before installing GsDevKit. You will need the stone name to do this. For example, if you will install the stone server with the name devKit_329, add an entry to services.dat similar to:
 
 ```
-devKit_329_ldi          50378/tcp        # Gemstone netldi
+devKit_3212_ldi          50378/tcp        # Gemstone netldi
 ```
 
 ####GemStone Version and License
@@ -80,6 +80,6 @@ Before installing, please check for later versions of [the GemStone/S 64 Bit pro
    
 
 
-
+[1]: ./configureOS.md
 [2]: https://gemtalksystems.com/products/gs64/
 [3]: https://gemtalksystems.com/licensing/
