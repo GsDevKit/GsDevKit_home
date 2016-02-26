@@ -1,4 +1,6 @@
-#Configuring the Operating System For GsDevKit
+# Before Installing GsDevKit
+
+##Installing git
 
 While the GsDevKit install handles most OS requirements, you must have git installed in order to 
 run the GsDevKit code that handles this.
@@ -45,6 +47,33 @@ The installation of GitHub on windows provides a shell environment that can be u
    ```
    git config --global core.longpaths true   
    ```
+
+## Confirm OS hostname
+
+GemStone requries that the result of executing `hostname` be the same name as in `/etc/hostname`, and in `/etc/hosts`. This will normally be the case on a correctly configured system.
+
+### Linux
+To check your system,
+
+```
+hostname
+cat /etc/hosts
+```
+
+If this is not correct, you will need to edit /etc/hosts and set the hostname. The hostname is read from /etc/host on boot. To correct the hostname, you should both execute hostname to set the name, and edit /etc/hostname so it will be correct after reboot.
+
+```
+sudo vi /etc/hosts
+sudo hostname <host-name>
+sudo vi /etc/hostname
+```
+#  Mac
+
+```
+sudo scutil --set <host-name>
+```
+
+
 
 ---
 [**FEEDBACK**](https://github.com/GsDevKit/GsDevKit_home/issues/new)
