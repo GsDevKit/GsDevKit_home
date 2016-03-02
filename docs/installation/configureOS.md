@@ -70,7 +70,8 @@ sudo vi /etc/hostname
 #  Mac
 
 ```
-sudo scutil --set <host-name>
+sudo hostname <host-name>
+sudo vi /etc/hosts
 ```
 
 
