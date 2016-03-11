@@ -40,6 +40,10 @@ if [[ "$PLATFORM" == MINGW32_NT* ]] ; then
   echo "This script is a server-only script and cannot be used on Windows"
   exit 1
 fi
+if [[ "$PLATFORM" == MSYS_NT* ]] ; then
+  echo "This script is a server-only script and cannot be used on Windows"
+  exit 1
+fi
 
 set -e # exit on error
 if [ "${GS_HOME}x" = "x" ] ; then

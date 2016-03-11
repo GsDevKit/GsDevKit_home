@@ -161,7 +161,7 @@ else
     Linux-x86_64)
       # Linux looks OK
       ;;
-    MINGW32_NT*)
+    MSYS_NT*|MINGW32_NT*)
       # If we are running a bash script on windows, then we are done
       echo "No os prereqs installed for windows"
       echo "...finished $(basename $0)"
