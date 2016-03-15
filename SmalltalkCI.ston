@@ -1,6 +1,6 @@
 TDObjectGatewayLeafNode{#name:'SmalltalkCI',#contents:'^ TDProjectSpecEntryDefinition new
     baseline: \'SmalltalkCI\'
-      repository: \'github://hpi-swa/smalltalkCI/gemstone/repository\'
+      repository: \'github://hpi-swa/smalltalkCI:master/repository\'
       loads: #(\'Core\');
     installScript:
         \'project clone --https --stone SmalltalkCI
