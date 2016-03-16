@@ -31,7 +31,7 @@ Xcode is not strictly required, but there are [extras steps required to support 
 
 The installation of GitHub on windows provides a shell environment that can be used to run the GsDevKit tODE client.
 
-1. Download and install *GitHub for Windows* by following the instructions on the [GitHub for Windows][2] page.
+1. Download and install *GitHub for Windows* by following the instructions on the [GitHub for Windows][6] page.
 
 2. In *GitHub for Windows*, go to the *Options page* and set your default shell to **Git Bash**.
 
@@ -57,4 +57,5 @@ The installation of GitHub on windows provides a shell environment that can be u
 [4]:  https://github.com/git-for-windows/git/wiki/Git-cannot-create-a-file-or-directory-with-a-long-path
 
 [5]: http://blog.bobbyallen.me/2014/03/07/how-to-install-git-without-having-to-install-xcode-on-macosx/
+[6]: https://desktop.github.com/
 
