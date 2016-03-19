@@ -9,7 +9,7 @@ Before installing, please check for later versions of [the GemStone/S 64 Bit pro
 
 ## Example Scriptt
 
-This script installs both client and server components, and installs and starts a 3.3 server named **devKit_33**, and installs but does not start a todeClient named **tode1**.  Output is sent to a log file, in case of problems during installation. 
+This script installs both client and server components, and installs and starts a 3.3.0 server named **devKit_330**, and installs but does not start a todeClient named **tode1**.  Output is sent to a log file, in case of problems during installation. 
 You must already have [git installed][1].
 
 ```
@@ -18,7 +18,7 @@ cd GsDevKit_home
 export GS_HOME=`pwd`
 export PATH=$GS_HOME/bin:$PATH
 installServerClient |& tee $GS_HOME/install.log
-createStone devKit_33 3.3 |& tee -a $GS_HOME/install.log
+createStone devKit_330 3.3.0 |& tee -a $GS_HOME/install.log
 createClient tode1 |& tee -a $GS_HOME/install.log
 ```
 
