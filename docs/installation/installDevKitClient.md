@@ -4,7 +4,8 @@ These instructions describe installing the GsDevKit tODE client on a desktop mac
 
 ## Example Script to Install Client
 
-You must first have [git installed][5], and be in the directory in which you want to install.  In the git bash shell on windows, to reduce issues with path length, this should be ~ (i.e., `cd ~`)
+You must first have [git installed][5], and be in the directory in which you want to install.  In the git bash shell on windows, to reduce issues with path length, this should be ~ (i.e., `cd ~`). 
+Note that you need to specify the same GemStone version (here, 3.3) as the server you installed or intend to use.
 
 ```
 git clone https://github.com/GsDevKit/GsDevKit_home.git
@@ -12,7 +13,7 @@ cd GsDevKit_home
 export GS_HOME=`pwd`
 export PATH=$GS_HOME/bin:$PATH
 installClient 2>&1 tee $GS_HOME/install.log
-downloadGemStone 3.3 2>&1 tee -a $GS_HOME/install.log
+downloadGemStone 3.3.0 2>&1 tee -a $GS_HOME/install.log
 createClient tode1 2>&1 tee -a $GS_HOME/install.log
 ```
 
@@ -97,7 +98,7 @@ $ stones
               path: /benton1/users/lalmarod/github/GsDevKit_home/bin/stones
 =================
 Installed Stones:
-        3.2.9   devKit_329
+        3.3.0   devKit_33
 Running Stones:
         Status       Version    Owner    Pid   Port   Started     Type       Name
         -------     --------- --------- ----- ----- ------------ ------      ----
