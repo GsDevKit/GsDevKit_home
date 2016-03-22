@@ -1,3 +1,5 @@
+# Updating GsDevKit and Upgrading GemStone
+
 **Updating** is the process of bringing your GsDevKit project to the newer version. This involves updates 
 from github, and make include rebuilding the command line interpreter, tode, and GsDevKit scripts, and
 loading tODE changes into the stone.
@@ -18,6 +20,6 @@ Update is done using the `gsdevkitupdate` command, with the arguements -i, -t, a
 Tode update is done using the todeupgrade script, which installs tODE changes into a specific stone.
 
 For example:
-``
+```
 todeupgrade devKit1 
 ```
