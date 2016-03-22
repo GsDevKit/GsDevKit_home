@@ -15,6 +15,24 @@ Assuming you have installed GsDevKit_home, under the installation you have a loc
 
 The following examples use the `glass` project, but you can contribute to any of the projects using this process. 
 
+GsDevKit_home family of projects:
+ - [GsDevKit_home][15]
+ - [GsDevKit_gs_client_dev][16]
+ - [GsDevKit_gs_server][17]
+ - [GsDevKit_todeClient][18]
+ - [GsDevKit_sys_local][19]
+
+git-based projects used by GsDevKit_home:
+ - [Metacello][20]
+ - [Tode][21]
+ - [Ston][22]
+ - [FileTree][23]
+ - [Grease][24]
+ - [GLASS1][25]
+ - [PharoCompatibility][26]
+ - [RB][27]
+
+
 ---
 *ON GITHUB WEBSITE*
 ###2. Fork
@@ -132,9 +150,20 @@ If you have more bug fixes to make, you'll start with step 4.
 
 
 
-
 [2]: https://github.com/
 [5]: https://help.github.com/articles/generating-ssh-keys/
 [6]: https://developer.github.com/guides/using-ssh-agent-forwarding/
 
-
+[15]: https://github.com/GsDevKit/GsDevKit_home
+[16]: https://github.com/GsDevKit/GsDevKit_gs_client_dev
+[17]: https://github.com/GsDevKit/GsDevKit_gs_server
+[18]: https://github.com/GsDevKit/GsDevKit_todeClient
+[19]: https://github.com/GsDevKit/GsDevKit_sys_local
+[20]: https://github.com/dalehenrich/metacello-work
+[21]: https://github.com/dalehenrich/tode
+[22]: https://github.com/GsDevKit/ston
+[23]: https://github.com/dalehenrich/filetree
+[24]: https://github.com/GsDevKit/Grease
+[25]: https://github.com/glassdb
+[26]: https://github.com/glassdb/PharoCompatibility
+[27]: https://github.com/dalehenrich/rb
