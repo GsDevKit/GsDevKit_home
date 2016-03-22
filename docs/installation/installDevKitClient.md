@@ -4,16 +4,17 @@ These instructions describe installing the GsDevKit tODE client on a desktop mac
 
 ## Example Script to Install Client
 
-You must first have [git installed][5], and be in the directory in which you want to install.  In the git bash shell on windows, to reduce issues with path length, this should be ~ (i.e., `cd ~`)
+You must first have [git installed][5], and be in the directory in which you want to install.  In the git bash shell on windows, to reduce issues with path length, this should be ~ (i.e., `cd ~`). 
+Note that you need to specify the same GemStone version (here, 3.3) as the server you installed or intend to use.
 
 ```
 git clone https://github.com/GsDevKit/GsDevKit_home.git
 cd GsDevKit_home
 export GS_HOME=`pwd`
 export PATH=$GS_HOME/bin:$PATH
-installClient |& tee $GS_HOME/install.log
-downloadGemStone 3.3 |& tee -a $GS_HOME/install.log
-createClient tode1 |& tee -a $GS_HOME/install.log
+installClient 2>&1 | tee $GS_HOME/install.log
+downloadGemStone 3.3.0 2>&1 | tee -a $GS_HOME/install.log
+createClient tode1 2>&1 | tee -a $GS_HOME/install.log
 ```
 
 After executing this script, there are additional steps to [connect to your server](#establish-connection-to-server).  
@@ -97,15 +98,15 @@ $ stones
               path: /benton1/users/lalmarod/github/GsDevKit_home/bin/stones
 =================
 Installed Stones:
-        3.2.9   devKit_329
+        3.3.0   devKit_33
 Running Stones:
         Status       Version    Owner    Pid   Port   Started     Type       Name
         -------     --------- --------- ----- ----- ------------ ------      ----
-        exists      3.2.9     lalmarod  17175 45690 Oct 09 13:35 Stone       devKit_329
+        exists      3.3.0     lalmarod  17175 45690 Feb 09 13:35 Stone       devKit_33
 Running Netldis:
         Status       Version    Owner    Pid   Port   Started     Type       Name
         -------     --------- --------- ----- ----- ------------ ------      ----
-        exists      3.2.9     lalmarod  15452 48334 Oct 01 13:48 Netldi      devKit_329_ldi
+        exists      3.3.0     lalmarod  15452 48334 Feb 01 13:48 Netldi      devKit_33_ldi
 ```
 The value in the Port column for the NetLDI, in this case 48334, is the required value.
 
@@ -146,7 +147,7 @@ If you have a firewall, you will need to open this port.
    
    If you are using the same name as these examples, it will be named:
    
-   `$GS_HOME/sys/local/sessions/devKit_329`
+   `$GS_HOME/sys/local/sessions/devKit_33`
 
    to the same path on the client node.
 
@@ -155,7 +156,7 @@ If you have a firewall, you will need to open this port.
 ```
    ...
    #gemHost : 'localHost',
-   #netLDI : 'devKit_329_ldi',
+   #netLDI : 'devKit_33_ldi',
    #netLDIPort : '48334',
    #gemTask : 'gemnetobject',
    ...
