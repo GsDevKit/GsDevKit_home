@@ -98,10 +98,12 @@ case "$clientType" in
   *) echo "uknown client type: $clientType"; usage; exit 1;;
 esac
 
-copyFiles="false"
+copyFiles="true"
 if [ -e "$targetLocation/libgcirpc-${vers}-32.${libext}" ] ; then
   if [ "$force" = "true" ]; then
     copyFiles="true"
+  else
+    copyFiles="false'
   fi
 fi
 

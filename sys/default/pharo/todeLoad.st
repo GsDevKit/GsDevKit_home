@@ -15,7 +15,8 @@
     baseline: 'Metacello';
     repository: metacelloRepo;
     onConflict: [:ex | ex allow];
-    load: #( 'batch' ).
+    load: #( 'batch' );
+    lock.
   Metacello new
     baseline: 'Ston';
     repository: stonRepo;
@@ -24,7 +25,8 @@
     baseline: 'Tode';
     repository: todeRepo;
     get;
-    load ]
+    load;
+    lock ]
       on: Warning, MetacelloSkipDirtyPackageLoad
       do: [:ex | 
         (ex isKindOf: MetacelloSkipDirtyPackageLoad)
