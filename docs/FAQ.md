@@ -196,6 +196,7 @@ $GS_HOME/bin/createStone -s <path-to-custom-snapshot> new_329 3.2.9
 [13]: https://git-scm.com/
 [14]: https://github.com
 
+[28]: https://github.com/GsDevKit/GsDevKit_home/issues/new
 
 [30]: https://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/9-BackupAndRestore.htm#pgfId-1069325
 [31]: images/GsDevKit_home-pull-request.png
