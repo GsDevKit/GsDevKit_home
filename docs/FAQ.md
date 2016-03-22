@@ -134,7 +134,7 @@ todeUpdate <stone-name>
 ---
 ---
 ####6. *Do I have to bootstrap GLASS1 and tODE from scratch every time I create a stone?*
-No.
+No; you can create a stone based on a existing extent file.
 
 #####tODE stone
 When you create a stone you can specify a path to a pre-built extent file, so if you want to avoid bootstrapping GLASS1 and tODE every time you create a stone you should first create a stone that you will use to manage your pre-built extent file. The following creates a tODE stone based on GemStone 3.2.9:
