@@ -103,7 +103,7 @@ if [ -e "$targetLocation/libgcirpc-${vers}-32.${libext}" ] ; then
   if [ "$force" = "true" ]; then
     copyFiles="true"
   else
-    copyFiles="false'
+    copyFiles="false"
   fi
 fi
 
