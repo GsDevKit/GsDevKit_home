@@ -9,11 +9,11 @@ under the old GsDevKit project; if it is not clear, ask on the listserv.
 
 In order to contribute code to GsDevKit_home, you first must:   
       * have a github account.  You can create a free account here: [join github][2].   
-      *  have github ssh credentials set up; create an [SSH keypair][5]. With an SSH keypair, you are not prompted for a username and password, so git interactions are     simplified. You can also use [SSH agent forwarding][6] to use your local SSH keys for server installations.   
+      * have github ssh credentials set up; create an [SSH keypair][5]. With an SSH keypair, you are not prompted for a username and password, so git interactions are simplified. You can also use [SSH agent forwarding][6] to use your local SSH keys for server installations.   
 
-Assuming you have installed GsDevKit_home, under the installation you have a local clone.  Local clones are under /shared/repos/<project>.  
-For example, $GS_HOME/shared/repos/glass.
-The following examples use glass, but you can contribute to any of the projects using this process. 
+Assuming you have installed GsDevKit_home, under the installation you have a local clone.  Local clones are under `/shared/repos/<project>`.  For example, `$GS_HOME/shared/repos/glass`.
+
+The following examples use the `glass` project, but you can contribute to any of the projects using this process. 
 
 ---
 *ON GITHUB WEBSITE*
@@ -36,17 +36,18 @@ This will be called "development"
 For example:
 ```
 cd $GS_HOME/shared/repos/glass
-git remote add development https://github.com/myaccount/glass
+git remote add development git@github.com/MYACCOUNT/glass
 ```
 You can have multiple remote names; to list the ones you have defined, execute:
 
 ```
-git remote
+git remote -v
 ```
 
 ###4. Update
 
 Make sure your local clone has the latest versions.  This step makes ure your checkout is the latest on the master, pulls changes to your local clone then pushes changes to your fork.
+
 ```
 cd $GS_HOME/shared/repos/glass
 git checkout master
@@ -101,7 +102,7 @@ Push the changes to your github repository:
 
 ```
 cd $GS_HOME/shared/repos/glass
-git push development issue_00
+git push development Issue_00
 ```
 
 ---
@@ -109,9 +110,9 @@ git push development issue_00
 
 ##10. Create a pull request
 
-Select the "issue_00" branch on github, and click on the "new pull request" button next to the branch list or under the "pull requests" tab, and fill out the information (include issue #00 in the title and body of the pull request, so it shows up in the issue information).  Click on the create pull request button.
+On github.com, select the **branches** link (above the green bar), and select the "Issue_00" branch under Your branches. Click on the "New pull request" button next to it, and fill out the information (include Issue #00 in the title or body of the pull request, so it shows up in the issue information).  Click on the create pull request button.
 
-Dale will be notified of the pull request, and travis-ci tests will be initiated.  Once the tests are clean and the changes reviewed, Dale will merge the changes in the master branch
+Dale will be notified of the pull request, and automated tests will be started. Once the tests are clean and the changes reviewed, Dale will merge the changes.
 
 ---
 *SHELL ON LOCAL DEVELOPMENT MACHINE*
@@ -120,10 +121,12 @@ Dale will be notified of the pull request, and travis-ci tests will be initiated
 
 You are still on the Issue_00 branch, and should move back to the master and update to the latest.
 
+```
 cd $GS_HOME/shared/repos/glass
 git checkout master
 git pull origin master
 git push development master
+```
 
 If you have more bug fixes to make, you'll start with step 4.  
 
