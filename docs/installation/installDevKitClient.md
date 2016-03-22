@@ -12,9 +12,9 @@ git clone https://github.com/GsDevKit/GsDevKit_home.git
 cd GsDevKit_home
 export GS_HOME=`pwd`
 export PATH=$GS_HOME/bin:$PATH
-installClient 2>&1 tee $GS_HOME/install.log
-downloadGemStone 3.3.0 2>&1 tee -a $GS_HOME/install.log
-createClient tode1 2>&1 tee -a $GS_HOME/install.log
+installClient 2>&1 | tee $GS_HOME/install.log
+downloadGemStone 3.3.0 2>&1 | tee -a $GS_HOME/install.log
+createClient tode1 2>&1 | tee -a $GS_HOME/install.log
 ```
 
 After executing this script, there are additional steps to [connect to your server](#establish-connection-to-server).  
