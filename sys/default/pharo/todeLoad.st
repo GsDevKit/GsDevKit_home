@@ -15,7 +15,10 @@
     baseline: 'Metacello';
     repository: metacelloRepo;
     onConflict: [:ex | ex allow];
-    load: #( 'batch' );
+    load: #( 'batch' ).
+  Metacello new
+    baseline: 'Metacello';
+    repository: metacelloRepo;
     lock.
   Metacello new
     baseline: 'Ston';
