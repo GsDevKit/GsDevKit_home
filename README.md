@@ -38,7 +38,7 @@ GsDevKit and tODE provide a development environment that is similar to Smalltalk
 6. [Do I have to bootstrap GLASS1 and tODE from scratch every time I create a stone?][9]
 7. [How do I create a new project from scratch in tODE?][10]
 8. [How do I share session descriptions between a local client and a remote server?][15]
-9. How do I upgrade a stone to a new version of GemStone?
+9. [How do I upgrade a stone to a new version of GemStone?][16]
 10. [How do I load Seaside?][21]
 
 [**FEEDBACK**][8]
@@ -60,6 +60,7 @@ GsDevKit and tODE provide a development environment that is similar to Smalltalk
 [14]: docs/installation/configureOS.md
  
 [15]: docs/installation/installDevKitClient.md#setup-on-client-node
+[16]: docs/updateAndUpgrade.md#upgrade
 
 [20]: https://github.com/GsDevKit/GsDevKit_seaside31/blob/master/docs/installation/README.md
 [21]: https://github.com/GsDevKit/GsDevKit_seaside31/blob/master/docs/installation/loadSeasideProject.md
