@@ -194,6 +194,24 @@ EOF
   true
 %
   commit
+
+! patch for Issue #71 (GemStone bug 46059)
+  run
+  GsPackageLibrary 
+    installMonticelloPackagesHome: (GsCurrentSession currentSession objectNamed: #'UserGlobals') 
+    during: [:globals | 
+      Class
+        compileMethod: 'removeFromSystem
+  | ar |
+  ar := System myUserProfile dictionaryAndSymbolOf: self.
+  ar ifNotNil: [ (ar at: 1) removeKey: (ar at: 2) ].'
+	dictionaries: GsCurrentSession currentSession symbolList
+	category: '*change-notification'
+    ].
+  true
+%
+  commit
+
   
   logout
   output pop

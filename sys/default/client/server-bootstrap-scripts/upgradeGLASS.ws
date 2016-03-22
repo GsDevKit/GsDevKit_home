@@ -48,7 +48,7 @@
   Transcript
     cr;
     show: '-----Upgrade GLASS using GsUpgrader class>>upgradeGLASSForGsDevKit_home'.
-  (Smalltalk at: #'GsUpgrader') upgradeGLASSForGsDevKit_home ]
+  (Smalltalk at: #'GsUpgrader') upgradeGLASS ]
     on: Error , Halt
     do: [ :ex | 
       Transcript

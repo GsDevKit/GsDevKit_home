@@ -1,7 +1,6 @@
 session descriptions
-createSessionDescriptionFor: aGsDevKitCreateStoneCommanLine
-	| description localHostName defaultServerTodeHome |
-	localHostName := NetNameResolver localHostName.
+createSessionDescriptionFor: aGsDevKitCreateStoneCommanLine for: localHostName
+	| description  defaultServerTodeHome |
 	defaultServerTodeHome := aGsDevKitCreateStoneCommanLine serverTodeHome
 		ifNil: [ nil ]
 		ifNotNil: [ :home | home pathString ].
