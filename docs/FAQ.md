@@ -180,46 +180,7 @@ $GS_HOME/bin/createStone -s <path-to-custom-snapshot> new_329 3.2.9
 ---
 ---
 
-#UNDER CONSTRUCTION
----
----
----
-####100. *How do I contribute to the GsDevKit_home project?*
-When you decide that you would like to contribute bugfixes or improvements to the  GsDevKit_home family of projects:
- - [GsDevKit_home][15]
- - [GsDevKit_gs_client_dev][16]
- - [GsDevKit_gs_server][17]
- - [GsDevKit_todeClient][18]
- - [GsDevKit_sys_local][19]) 
 
-or the git-based projects used by GsDevKit_home:
- - [Metacello][20]
- - [Tode][21]
- - [Ston][22]
- - [FileTree][23]
- - [Grease][24]
- - [GLASS1][25]
- - [PharoCompatibility][26]
- - [RB][27])
-
-You start by forking the project of interest on [GitHub][14], set up your GitHub account for ssh access. 
-Then you perform the following steps in your local checkout (assuming the your GitHub user-name is `dalehenrich` and the project you want to contribute to is GsDevKit_home, which you've already cloned):
-
-```shell
-git remote add dale git@github.com:dalehenrich/GsDevKit_home.git
-git fetch --all
-git checkout master
-git checkout -b topicBranch
-# do work for contribution committing along the way
-git commit -m"final commit"
-git push dale topicBranch
-```
-
-Then on GitHub, open a pull request from the `topicBranch` in your fork, to the `master` branch that you forked from.
-
----
----
----
 
 
 [3]: https://github.com/jgfoster/Jade
@@ -234,20 +195,7 @@ Then on GitHub, open a pull request from the `topicBranch` in your fork, to the 
 [12]: http://www.monkeysnatchbanana.com/2010/08/18/using-fastcgi-with-nginx-and-seaside/
 [13]: https://git-scm.com/
 [14]: https://github.com
-[15]: https://github.com/GsDevKit/GsDevKit_home
-[16]: https://github.com/GsDevKit/GsDevKit_gs_client_dev
-[17]: https://github.com/GsDevKit/GsDevKit_gs_server
-[18]: https://github.com/GsDevKit/GsDevKit_todeClient
-[19]: https://github.com/GsDevKit/GsDevKit_sys_local
-[20]: https://github.com/dalehenrich/metacello-work
-[21]: https://github.com/dalehenrich/tode
-[22]: https://github.com/GsDevKit/ston
-[23]: https://github.com/dalehenrich/filetree
-[24]: https://github.com/GsDevKit/Grease
-[25]: https://github.com/glassdb
-[26]: https://github.com/glassdb/PharoCompatibility
-[27]: https://github.com/dalehenrich/rb
-[28]: https://github.com/GsDevKit/GsDevKit_home/issues/new
+
 
 [30]: https://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/9-BackupAndRestore.htm#pgfId-1069325
 [31]: images/GsDevKit_home-pull-request.png
