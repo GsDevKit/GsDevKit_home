@@ -14,14 +14,14 @@ cd GsDevKit_home
 export GS_HOME=`pwd`
 export PATH=$GS_HOME/bin:$PATH
 installServer |& tee $GS_HOME/install.log
-createStone devKit_3212 3.3.0 |& tee -a $GS_HOME/install.log
+createStone devKit_33 3.3.0 |& tee -a $GS_HOME/install.log
 ```
 
 ### Determine port handling
 
 To establish the connection between the client and the server, a server process called the NetLDI listens on a well-known port.  This port may be selected and reserved, or you may allow the system to select one.  However, if you allow the OS to select the port, on restart it will select a different port and the client will need to be updated. 
 
-We recommend assigning a reserved port number to a named NetLDI by adding an entry to the network services database, e.g.  /etc/services, before installing GsDevKit. You will need the stone name to do this. For example, if you will install the stone server with the name devKit_329, add an entry to services.dat similar to:
+We recommend assigning a reserved port number to a named NetLDI by adding an entry to the network services database, e.g.  /etc/services, before installing GsDevKit. You will need the stone name to do this. For example, if you will install the stone server with the name devKit_33, add an entry to services.dat similar to:
 
 ```
 devKit_33_ldi          50378/tcp        # Gemstone netldi
