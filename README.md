@@ -16,7 +16,7 @@ cd GsDevKit_home
 export GS_HOME=`pwd`
 export PATH=$GS_HOME/bin:$PATH
 installServerClient |& tee $GS_HOME/install.log
-createStone devKit_3212 3.2.12 |& tee -a $GS_HOME/install.log
+createStone devKit_33 3.3.0 |& tee -a $GS_HOME/install.log
 createClient tode1 |& tee -a $GS_HOME/install.log
 ```
 
@@ -37,8 +37,8 @@ GsDevKit and tODE provide a development environment that is similar to Smalltalk
 5. [When a new version of tODE is published, how do I update my checkout and my stones?][7]
 6. [Do I have to bootstrap GLASS1 and tODE from scratch every time I create a stone?][9]
 7. [How do I create a new project from scratch in tODE?][10]
-8. How do I share session descriptions between a local client and a remote server?
-9. How do I upgrade a stone to a new version of GemStone?
+8. [How do I share session descriptions between a local client and a remote server?][15]
+9. [How do I upgrade a stone to a new version of GemStone?][16]
 10. [How do I load Seaside?][21]
 
 [**FEEDBACK**][8]
@@ -59,6 +59,9 @@ GsDevKit and tODE provide a development environment that is similar to Smalltalk
 [13]: docs/projectsInTode.md
 [14]: docs/installation/configureOS.md
  
+[15]: docs/installation/installDevKitClient.md#setup-on-client-node
+[16]: docs/updateAndUpgrade.md#upgrade
+
 [20]: https://github.com/GsDevKit/GsDevKit_seaside31/blob/master/docs/installation/README.md
 [21]: https://github.com/GsDevKit/GsDevKit_seaside31/blob/master/docs/installation/loadSeasideProject.md
 
