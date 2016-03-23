@@ -86,7 +86,7 @@ To establish the connection between the client and the server, a server process 
 
 Before starting the server, it is recommended to assign a reserved port number to a named NetLDI by adding an entry to the network services database, e.g. /etc/services.  For example,
 ```
-devKit_33_ldi          50378/tcp        # Gemstone netldi
+devKit_330_ldi          50378/tcp        # Gemstone netldi
 ```
 
 If not, you will need to lookup the port number that the system has assigned to the NetLDI for the GsDevKit server (stone) instance that this client will connect to.  To do this, on the server node, execute the `stones` command.  this will return results similar to this: 
