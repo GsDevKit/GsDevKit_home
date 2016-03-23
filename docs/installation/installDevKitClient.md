@@ -17,6 +17,8 @@ downloadGemStone 3.3.0 2>&1 | tee -a $GS_HOME/install.log
 createClient tode1 2>&1 | tee -a $GS_HOME/install.log
 ```
 
+Note: On Windows, a Pharo usage dialog may pop up on your desktop. Press enter and the installation will complete correctly.
+
 After executing this script, there are additional steps to [connect to your server](#establish-connection-to-server).  
 
 ### Install Client Details
@@ -69,6 +71,8 @@ Install from the directory in which you want the GsDevKit checkout to be located
    createClient <myClientName>
    ```
    You may use any name for `<myClientName>`, to distinguish it from other clients you may later create on this node. The examples below use  **tode1** as the client name.
+
+Note: On Windows, a Pharo usage dialog may pop up on your desktop. Press enter and the installation will complete correctly.
 
 You now have an instance of the tODE client installed on your client machine. 
 
