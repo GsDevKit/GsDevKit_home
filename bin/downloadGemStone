@@ -69,7 +69,7 @@ case "$PLATFORM" in
       # Linux looks OK
       gsvers="GemStone64Bit${vers}-x86_64.Linux"
       ;;
-    MINGW32_NT*)
+    MSYS_NT*|MINGW32_NT*)
       gsvers="GemBuilderC${vers}-x86.Windows_NT"
       ;;
     *)
@@ -159,7 +159,7 @@ popd >& /dev/null
 
 
 case "$PLATFORM" in
-  MINGW32_NT*) #do nothing
+  MSYS_NT*|MINGW32_NT*) #do nothing
     ;;
   *)
     # Copy initial system.conf into the Seaside data directory

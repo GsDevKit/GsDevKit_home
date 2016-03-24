@@ -18,7 +18,7 @@ cd GsDevKit_home
 export GS_HOME=`pwd`
 export PATH=$GS_HOME/bin:$PATH
 installServerClient |& tee $GS_HOME/install.log
-createStone devKit_330 3.3.0 |& tee -a $GS_HOME/install.log
+createStone devKit_33 3.3.0 |& tee -a $GS_HOME/install.log
 createClient tode1 |& tee -a $GS_HOME/install.log
 ```
 

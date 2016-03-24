@@ -4,7 +4,15 @@ GemStone is a transactional, multi-user object database.  The Stone process inte
 
 GemStone administration is described in the [System Adminstration Guide][1].
 
-GsDevKit provides an interface to the main GemStone repository operations, simplifying the management interface available in the plain GemStone installation.  The bash command-line operations provided by GsDevKit are distinct from GemStone utility commands.  Users who have experience with GemStone will have the most difficulty. 
+GsDevKit provides an interface to the main GemStone repository operations, simplifying the management interface available in the plain GemStone installation.  The bash command-line operations provided by GsDevKit are distinct from GemStone utility commands.  Users who have experience with GemStone will have the most difficulty.
+
+If you want to be able to use GemStone command-line utilities such as gslist, you can do this by executing:
+
+`
+pushd $GS_HOME/server/stones/STONE_NAME
+  source defStone.env
+popd
+`
 
 ###Working with Stones
 
@@ -49,7 +57,7 @@ To perform a garbage collection, use the tODE shell command gs mfc.  For example
 
 The NetLDI is a process that initiates communication between sessions and GemStone, and starts processes to support GemStone logins.  You must have a NetDLI running in order for tODE to login to GemStone.
 
-Creating a stone automatically creates a Netldi, and starting a stone using startStone -b automatically start the associated netldi.
+When GsDevKit is usd to create a stone, it automatically creates a Netldi, and starting a stone using startStone -b automatically starts the associated netldi.
 
 You may start and stop the stone and the netldi independently, using startStone or stopStone without the -b, and using startNetldi and stopNetldi.  GemStone users should note that while the NetLDI has a name, the startNetldi and stopNetldi scripts take the name of the GsDevKit stone installation, which is also the Stone process name, not the Netldi process name.
 
@@ -59,9 +67,7 @@ In a multiple-node system (for example, if your stone is installed on Linux but 
 
         #netLDIPort : '45678',
 
-Otherwise, the NetLDI will listen on a  different port each time it restarts, and the tODE client will not be able to connect.
-
-
+Otherwise, the NetLDI will listen on a  different port each time it restarts, and the tODE client will not be able to connect.  Setting up the client-server NetLDI connection is described in more detail in the [Client installation Instructions][11].
 
 
 
@@ -73,6 +79,7 @@ Otherwise, the NetLDI will listen on a  different port each time it restarts, an
 [1]: https://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/GS64-SysAdmin-3.2.htm
 [2]: images/DevKit_ClientServer_Arch.png
 [10]: images/todeMFC.png
+[11]: ./installation/installDevKitClient.md#establish-connection-to-server
 
 [28]: https://github.com/GsDevKit/GsDevKit_home/issues/new
 

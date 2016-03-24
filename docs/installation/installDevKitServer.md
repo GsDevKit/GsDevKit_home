@@ -6,7 +6,7 @@ The GsDevKit server  may be installed on **Linux** (64-bit) or **Mac**.
 
 ### Example Script
 
-This script installs the server components only, and installs and starts a 3.2.12 server named **devKit_3212**. You must already have [git installed][1]. The details for each step are described starting [here](#install-server).
+This script installs the server components only, and installs and starts a v3.3 server named **devKit_33**. You must already have [git installed][1]. The details for each step are described starting [here](#install-server).
 
 ```
 git clone https://github.com/GsDevKit/GsDevKit_home.git
@@ -14,17 +14,17 @@ cd GsDevKit_home
 export GS_HOME=`pwd`
 export PATH=$GS_HOME/bin:$PATH
 installServer |& tee $GS_HOME/install.log
-createStone devKit_3212 3.2.12 |& tee -a $GS_HOME/install.log
+createStone devKit_33 3.3.0 |& tee -a $GS_HOME/install.log
 ```
 
 ### Determine port handling
 
 To establish the connection between the client and the server, a server process called the NetLDI listens on a well-known port.  This port may be selected and reserved, or you may allow the system to select one.  However, if you allow the OS to select the port, on restart it will select a different port and the client will need to be updated. 
 
-We recommend assigning a reserved port number to a named NetLDI by adding an entry to the network services database, e.g.  /etc/services, before installing GsDevKit. You will need the stone name to do this. For example, if you will install the stone server with the name devKit_329, add an entry to services.dat similar to:
+We recommend assigning a reserved port number to a named NetLDI by adding an entry to the network services database, e.g.  /etc/services, before installing GsDevKit. You will need the stone name to do this. For example, if you will install the stone server with the name devKit_33, add an entry to services.dat similar to:
 
 ```
-devKit_3212_ldi          50378/tcp        # Gemstone netldi
+devKit_33_ldi          50378/tcp        # Gemstone netldi
 ```
 
 ####GemStone Version and License
