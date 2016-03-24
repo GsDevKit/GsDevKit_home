@@ -29,7 +29,7 @@ HELP
 set -e # exit on error
 
 PLATFORM="`uname -sm | tr ' ' '-'`"
-if [[ "$PLATFORM" == MINGW32_NT* ]] ; then
+if [[ "$PLATFORM" == MINGW32_NT* || "$PLATFORM" == MSYS_NT* ]] ; then
   echo "This script is a server-only script and cannot be used on Windows"
   exit 1
 fi
