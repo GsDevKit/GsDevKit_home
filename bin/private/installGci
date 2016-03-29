@@ -69,7 +69,7 @@ PLATFORM="`uname -sm | tr ' ' '-'`"
 case "$PLATFORM" in
   Linux-x86_64) gsvers="GemStone64Bit${vers}-x86_64.Linux"; libext="so" ;;
   Darwin-i386) gsvers="GemStone64Bit${vers}-i386.Darwin"; libext="dylib" ;;
-  MINGW32_NT*) gsvers="GemBuilderC${vers}-x86.Windows_NT"; libext="dll" ;;
+  MSYS_NT*|MINGW32_NT*) gsvers="GemBuilderC${vers}-x86.Windows_NT"; libext="dll" ;;
 esac
 gs_product=$GS_SHARED_DOWNLOADS/products/$gsvers
 
@@ -81,7 +81,7 @@ case "$clientType" in
     case "$PLATFORM" in
       Linux-x86_64) targetLocation="${directoryPath}/pharo-vm" ;;
       Darwin-i386) targetLocation="${directoryPath}/pharo-vm/Pharo.app/Contents/MacOS/Plugins" ;;
-      MINGW32_NT*)
+      MSYS_NT*|MINGW32_NT*)
         case "$vers" in
           2.4.*|3.0.*|3.1.*) sourceLocation="${gs_product}/bin" ;;
           *) sourceLocation="${gs_product}/bin32" ;;
@@ -98,10 +98,12 @@ case "$clientType" in
   *) echo "uknown client type: $clientType"; usage; exit 1;;
 esac
 
-copyFiles="false"
+copyFiles="true"
 if [ -e "$targetLocation/libgcirpc-${vers}-32.${libext}" ] ; then
   if [ "$force" = "true" ]; then
     copyFiles="true"
+  else
+    copyFiles="false"
   fi
 fi
 
