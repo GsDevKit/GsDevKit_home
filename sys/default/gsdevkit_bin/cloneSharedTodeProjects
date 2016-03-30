@@ -178,7 +178,7 @@ pushd ${GS_SHARED_REPO} >& /dev/null
       checkoutClone $GS_SHARED_GIT_CHECKOUT_ZINC ${GS_SHARED_REPO}/zinc $branchName
     fi
     if [ ! -d "smalltalkCI" ] ; then
-      ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg GsDevKit smalltalkCI
+      ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg hpi-swa smalltalkCI
       checkoutClone $GS_SHARED_GIT_CHECKOUT_SMALLTALKCI ${GS_SHARED_REPO}/smalltalkCI $branchName
     fi
   fi
