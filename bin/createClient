@@ -10,7 +10,7 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-f] [-F] [-t gemtools|tode|jade] <client-name> 
+USAGE: $(basename $0) [-h] [-f] [-F] [-t tode|pharo|gemtools|jade] <client-name> 
                       [ <client-specific-args> ]
 
 Create a client of the given type and <client-name>.
@@ -18,13 +18,13 @@ Create a client of the given type and <client-name>.
 If the client already exists, the installation is skipped unless the -f option 
 is specified.
 
-Currently only the "tode" type is implemented.
+Currently only the "tode" and "pharo" types are implemented.
 
 OPTIONS
   -h 
      display help
-  -t gemtools|tode|jade  <client-specific-args>
-     Start the spedcifed client using the <client-specific-args>. 
+  -t gemtools|jade|pharo|tode|<client-specific-args>
+     Create the specifed client using the <client-specific-args>. 
      DEFAULT is '-t tode'.
   -f
      Force tODE client installation, whether or not the image
@@ -36,6 +36,7 @@ EXAMPLES
   $(basename $0) -h
   $(basename $0) -t tode todeDev
   $(basename $0) -t tode todeDev -p _0
+  $(basename $0) -t pharo pharoClient -v Pharo-5.0 -s \$GS_HOME/sys/local/pharo/pharoClient.ston
   $(basename $0) -t gemtools gemtools_329 3.2.9
   $(basename $0) -t jade jade_329 3.2.9
 
@@ -44,6 +45,12 @@ EXAMPLES
   $(basename $0)
   $(basename $0) todeDev -p _0
   $(basename $0) -f todeDev -p _0
+
+  # pharo client (default)
+  $(basename $0) -t pharo pharoClient -v Pharo-5.0
+  $(basename $0) -f -t pharo pharoClient -v Pharo-5.0
+  $(basename $0) -t pharo pharoClient -v Pharo-5.0 -s \$GS_HOME/sys/local/pharo/pharoClient.ston
+  $(basename $0) -f -t pharo pharoClient -v Pharo-5.0 -s \$GS_HOME/sys/local/pharo/pharoClient.ston
 
   # gemtools client
   $(basename $0) -t gemtools gt_329 3.2.9
@@ -100,13 +107,17 @@ if [ "${deleteClientDir}" = "true" ] ; then
   $GS_HOME/bin/deleteClient $clientName
 fi
 
+todeArg=""
 case $clientType in
   tode)
+    todeArg="-t"
+    ;&
+  pharo)
     if [ "${GS_TODE_CLIENT}x" = "x" ] ; then
       ${GS_HOME}/bin/private/clone_todeClient
       source ${GS_HOME}/bin/defGsDevKit.env
     fi
-    ${GS_TODE_CLIENT}/bin/createClient $forceArg $* $clientName
+    ${GS_TODE_CLIENT}/bin/createClient $todeArg $forceArg $* $clientName
     ;;
   gemtools)
     ;;
