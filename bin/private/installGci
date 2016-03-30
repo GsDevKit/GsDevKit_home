@@ -69,7 +69,14 @@ PLATFORM="`uname -sm | tr ' ' '-'`"
 case "$PLATFORM" in
   Linux-x86_64) gsvers="GemStone64Bit${vers}-x86_64.Linux"; libext="so" ;;
   Darwin-i386) gsvers="GemStone64Bit${vers}-i386.Darwin"; libext="dylib" ;;
-  MSYS_NT*|MINGW32_NT*) gsvers="GemBuilderC${vers}-x86.Windows_NT"; libext="dll" ;;
+  
+  MSYS_NT*|MINGW32_NT*) 	
+	  if  [ "$vers" \< "3.3.0"  ] ;  then 
+			 gsvers="GemBuilderC${vers}-x86.Windows_NT"
+		else
+		 	gsvers="GemStone64BitClient${vers}-x86.Windows_NT"
+	  fi
+		libext="dll" ;;
 esac
 gs_product=$GS_SHARED_DOWNLOADS/products/$gsvers
 
