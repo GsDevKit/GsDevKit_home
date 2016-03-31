@@ -113,12 +113,8 @@ project commit --message'`Issue #00: description of change` GLASS1
 
 using #00 will cause the commit to show up on the issue page.
 
-The tODE command writes all the changes out and performs the following git commands:
-     git add <filename>
-     git commit -m "comment"
-     
-you can examine the changes using 
-     git status
+The tODE command writes all the changes out and performs git commands: `git add <filename>` and 
+`git commit -m "comment"`.  You can examine the changes using `git status`.
      
 ---
 *SHELL ON LOCAL DEVELOPMENT MACHINE*
