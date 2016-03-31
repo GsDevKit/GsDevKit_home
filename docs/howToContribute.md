@@ -54,7 +54,7 @@ This will be called "development"
 For example:
 ```
 cd $GS_HOME/shared/repos/glass
-git remote add development git@github.com/MYACCOUNT/glass
+git remote add development git@github.com:MYACCOUNT/glass.git
 ```
 You can have multiple remote names; to list the ones you have defined, execute:
 
