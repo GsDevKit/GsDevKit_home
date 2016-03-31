@@ -94,7 +94,9 @@ If you did not already have a stone, create one, and it will be built using the 
 
 Execute the following in tODE::
 
+```
 project load GLASS1  
+```
 (for other projects, see the project name here).
 
 ###7. Implement
@@ -111,6 +113,13 @@ project commit --message'`Issue #00: description of change` GLASS1
 
 using #00 will cause the commit to show up on the issue page.
 
+The tODE command writes all the changes out and performs the following git commands:
+     git add <filename>
+     git commit -m "comment"
+     
+you can examine the changes using 
+     git status
+     
 ---
 *SHELL ON LOCAL DEVELOPMENT MACHINE*
 
