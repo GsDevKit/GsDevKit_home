@@ -3,7 +3,7 @@ gitCheckout :=  GsFile _expandEnvVariable: \'GS_SHARED_GIT_CHECKOUT_SMALLTALKCI\
 repoSpec := GsFile _expandEnvVariable: \'GS_SHARED_REPO_SMALLTALKCI\' isClient: false.
 ^ TDProjectSpecEntryDefinition new
     baseline: \'SmalltalkCI\'
-      repository:a repoSpec
+      repository: repoSpec
       loads: #(\'Core\');
     installScript:
         \'project clone --https --stone SmalltalkCI
