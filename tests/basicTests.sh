@@ -51,6 +51,7 @@ stones
 todeIt ${STONENAME1} eval \`3+4\`
 todeIt ${STONENAME1} ls /home
 
+export GIT_MERGE_AUTOEDIT=no
 updateGsDevKit
 updateGsDevKit -g
 updateGsDevKit -i
