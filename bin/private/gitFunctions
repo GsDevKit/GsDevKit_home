@@ -15,7 +15,7 @@ updateClone() {
   git --git-dir="$workingDir/.git" --work-tree="$workingDir" checkout $branch
   git --git-dir="$workingDir/.git" --work-tree="$workingDir" pull $origin $branch
   git --git-dir="$workingDir/.git" --work-tree="$workingDir" checkout $theBranchName
-  git --git-dir="$workingDir/.git" --work-tree="$workingDir" merge -m"auto-merge by updateClone()" $branch
+  git --git-dir="$workingDir/.git" --work-tree="$workingDir" merge $branch
   echo "end updateClone()"
 }
 
