@@ -8,7 +8,7 @@ set -xe  # print commands and exit on error
 # needed for updateGsDevKit script test
 git config --global user.email "you@example.com"
 git config --global user.name "Your Name"
-git config --global core.mergeoptions --no-edit
+export GIT_MERGE_AUTOEDIT=no
 
 # no backups on travis
 cp $GS_HOME/tests/sys/local/client/tode-scripts/* $GS_HOME/sys/local/client/tode-scripts
