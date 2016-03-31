@@ -4,6 +4,7 @@
 #=========================================================================
 
 updateClone() {
+  set -x
   branch="$1"
   origin="$2"
   workingDir="$3"
@@ -15,6 +16,7 @@ updateClone() {
   git --git-dir="$workingDir/.git" --work-tree="$workingDir" pull $origin $branch
   git --git-dir="$workingDir/.git" --work-tree="$workingDir" checkout $theBranchName
   git --git-dir="$workingDir/.git" --work-tree="$workingDir" merge $branch
+  echo "end updateClone()"
 }
 
 checkoutClone() {
