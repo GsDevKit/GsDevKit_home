@@ -151,11 +151,7 @@ echo "Creating stone $stoneName"
 
 $GS_HOME/bin/downloadGemStone $vers
 
-if [ "${smalltalkCIConfigPath}x" = "x" ] ; then
-  ${GS_HOME}/bin/devKitCommandLine createStone $stoneName $vers
-else
-  ${GS_HOME}/bin/devKitCommandLine createSmalltalkCIStone $stoneName $vers $smalltalkCIConfigPath
-fi
+${GS_HOME}/bin/devKitCommandLine createSmalltalkCIStone $stoneName $vers $smalltalkCIConfigPath
 
 $GS_HOME/bin/newExtent $todeSnapshotArg $noRestartArg $snapshotFileArg $stoneName
 
