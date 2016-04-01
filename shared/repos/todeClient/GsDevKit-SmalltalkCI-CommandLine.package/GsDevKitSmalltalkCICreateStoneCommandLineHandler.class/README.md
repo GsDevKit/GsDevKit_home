@@ -3,7 +3,11 @@ Usage: createStone [ --help] <stone-name> <gs-version>
   <gs-version>  GemStone version with which to create stone
 	
 Documentation:
-Create stone using the GsDevKitCreateStoneCommandLineHandler class. If the environment
+Create a directory under $GS_SERVER_STONES using the given
+<stone-name> and populate directory with supporting files and directories
+based on the given <gs-version>.
+
+If the environment
 variable GS_TRAVIS_CACHE_ENABLED is set to 'true', and a bootstrap extent for GemStone 
 exists in the SmalltalkCI cache, use the cached extent to create the stone.
 

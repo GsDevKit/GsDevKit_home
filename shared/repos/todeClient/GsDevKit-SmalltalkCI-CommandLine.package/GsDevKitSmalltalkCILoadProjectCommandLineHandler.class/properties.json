@@ -10,5 +10,5 @@
 	"name" : "GsDevKitSmalltalkCILoadProjectCommandLineHandler",
 	"pools" : [
 		 ],
-	"super" : "GsDevKitSmalltalkCIAbstractCommandLineHandler",
+	"super" : "GsDevKitCreateStoneCommandLineHandler",
 	"type" : "normal" }

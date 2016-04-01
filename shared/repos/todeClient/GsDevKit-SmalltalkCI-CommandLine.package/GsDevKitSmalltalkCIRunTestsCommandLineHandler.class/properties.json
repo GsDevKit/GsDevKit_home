@@ -10,5 +10,5 @@
 	"name" : "GsDevKitSmalltalkCIRunTestsCommandLineHandler",
 	"pools" : [
 		 ],
-	"super" : "GsDevKitSmalltalkCIAbstractCommandLineHandler",
+	"super" : "GsDevKitCreateStoneCommandLineHandler",
 	"type" : "normal" }
