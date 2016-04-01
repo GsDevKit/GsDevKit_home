@@ -1,0 +1,14 @@
+{
+	"category" : "GsDevKit-SmalltalkCI-CommandLine",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"stoneName" ],
+	"name" : "GsDevKitSmalltalkCIAbstractCommandLineHandler",
+	"pools" : [
+		 ],
+	"super" : "GsDevKitAbstractCommandLineHandler",
+	"type" : "normal" }

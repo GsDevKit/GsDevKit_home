@@ -1,0 +1,14 @@
+{
+	"category" : "GsDevKit-SmalltalkCI-CommandLine",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GsDevKitSmalltalkCIRunTestsCommandLineHandler",
+	"pools" : [
+		 ],
+	"super" : "GsDevKitSmalltalkCIAbstractCommandLineHandler",
+	"type" : "normal" }
