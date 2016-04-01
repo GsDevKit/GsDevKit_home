@@ -21,7 +21,8 @@
   Metacello new
     baseline: 'Ston';
     repository: stonRepo;
-    lock.
+    lock;
+    get.
   Metacello new
     baseline: 'Tode';
     repository: todeRepo;
@@ -30,8 +31,8 @@
   Metacello new
     baseline: 'SmalltalkCI';
     repository: smalltalkCIRepo;
-    get;
-    lock.
+    lock;
+    get.
    Metacello new
     baseline: 'TodeClient';
     repository: todeClientRepo;
