@@ -176,6 +176,7 @@ if [ "$installProjectName" != "" ] ; then
   $GS_HOME/bin/private/gsDevKitTodeCommandLine todeIt $stoneName << EOF
 project install ${installProjectName}
 EOF
+fi
 
 if [ "$loadProjectName" != "" ] ; then
   $GS_HOME/bin/private/gsDevKitTodeCommandLine todeIt $stoneName << EOF
