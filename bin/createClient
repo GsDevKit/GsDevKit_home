@@ -49,8 +49,8 @@ EXAMPLES
   # pharo client (default)
   $(basename $0) -t pharo pharoClient -v Pharo-5.0
   $(basename $0) -f -t pharo pharoClient -v Pharo-5.0
-  $(basename $0) -t pharo pharoClient -v Pharo-5.0 -s \$GS_HOME/sys/local/pharo/pharoClient.ston
-  $(basename $0) -f -t pharo pharoClient -v Pharo-5.0 -s \$GS_HOME/sys/local/pharo/pharoClient.ston
+  $(basename $0) -t pharo pharoClient -v Pharo-5.0 -z \$GS_HOME/sys/local/pharo/pharoClient.ston
+  $(basename $0) -f -t pharo pharoClient -v Pharo-5.0 -z \$GS_HOME/sys/local/pharo/pharoClient.ston
 
   # gemtools client
   $(basename $0) -t gemtools gt_329 3.2.9
