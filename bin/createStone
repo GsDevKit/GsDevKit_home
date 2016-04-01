@@ -157,7 +157,9 @@ $GS_HOME/bin/newExtent $todeSnapshotArg $noRestartArg $snapshotFileArg $stoneNam
 
 if [ "${noRestartArg}x" = "x" ] ; then
   $GS_HOME/bin/startNetldi $stoneName
-  ${GS_HOME}/bin/devKitCommandLine setupRuntimeSmalltalkCIStone $stoneName $smalltalkCIConfigPath
+  if [ "${smalltalkCIConfigPath}x" != "x" ] ; then
+    ${GS_HOME}/bin/devKitCommandLine setupRuntimeSmalltalkCIStone $stoneName $smalltalkCIConfigPath
+  fi
 fi
 
 if [ "$installTode" = "true" ] ; then
@@ -174,12 +176,16 @@ if [ "$installProjectName" != "" ] ; then
   $GS_HOME/bin/private/gsDevKitTodeCommandLine todeIt $stoneName << EOF
 project install ${installProjectName}
 EOF
-fi
 
 if [ "$loadProjectName" != "" ] ; then
   $GS_HOME/bin/private/gsDevKitTodeCommandLine todeIt $stoneName << EOF
 project load ${loadProjectName}
 EOF
 fi
+
+if [ "${smalltalkCIConfigPath}x" != "x" ] ; then
+    ${GS_HOME}/bin/devKitCommandLine loadSmalltalkCIConfiguration $stoneName $smalltalkCIConfigPath
+fi
+
 
 echo "...finished $(basename $0)"
