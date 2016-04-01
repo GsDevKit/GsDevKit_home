@@ -157,6 +157,7 @@ $GS_HOME/bin/newExtent $todeSnapshotArg $noRestartArg $snapshotFileArg $stoneNam
 
 if [ "${noRestartArg}x" = "x" ] ; then
   $GS_HOME/bin/startNetldi $stoneName
+  ${GS_HOME}/bin/devKitCommandLine setupRuntimeSmalltalkCIStone $stoneName $smalltalkCIConfigPath
 fi
 
 if [ "$installTode" = "true" ] ; then

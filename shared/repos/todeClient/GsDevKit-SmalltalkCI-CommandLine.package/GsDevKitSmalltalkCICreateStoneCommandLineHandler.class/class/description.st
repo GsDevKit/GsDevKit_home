@@ -1,3 +1,3 @@
 accessing
 description
-	^ 'Create a stone for SmalltalkCI.'
+	^ 'Create a stone directory for the given version of GemStone/S 64 and apply SmalltalkCI configuration'

@@ -1,0 +1,2 @@
+activations
+applyOptionsFromConfigurationSpec: configSpec

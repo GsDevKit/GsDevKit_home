@@ -1,0 +1,8 @@
+{
+	"class" : {
+		"commandName" : "dkh 4/1/2016 11:23",
+		"description" : "dkh 4/1/2016 11:24" },
+	"instance" : {
+		"activate" : "dkh 4/1/2016 11:28",
+		"applyOptionsFromConfigurationSpec:" : "dkh 4/1/2016 11:32",
+		"applyRuntimeOptions" : "dkh 4/1/2016 11:31" } }

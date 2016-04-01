@@ -1,0 +1,3 @@
+*GsDevKit-SmalltalkCI-CommandLine
+applyOptionsFromConfigurationSpec: configSpec
+	self subclassResponsibility

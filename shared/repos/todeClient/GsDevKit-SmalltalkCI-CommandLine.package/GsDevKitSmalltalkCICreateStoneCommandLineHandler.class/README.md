@@ -8,7 +8,7 @@ Create a directory under $GS_SERVER_STONES using the given
 <stone-name> and populate directory with supporting files 
 and directories based on the given <gs-version>.
 
-If a <smalltalkCI-config-path> argument is present, extract tand apply the attributes 
+If a <smalltalkCI-config-path> argument is present, extract and apply the attributes 
 that can be applied after the stone directory has been created (i.e., #gemConfPath).
 
 Examples:
