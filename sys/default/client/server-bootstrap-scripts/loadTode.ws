@@ -13,4 +13,5 @@ GsUpgrader batchErrorHandlingDo: [
       baseline: 'Tode';
       repository: todeRepo;
       get;
+      lock;
       load: 'GemStone Dev' ] ].
