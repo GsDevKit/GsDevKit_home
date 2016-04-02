@@ -7,5 +7,5 @@ Set up runtime stone options from SmalltalkCI configuration. If a <smalltalkCI-c
 
 Examples:
     setupRuntimeSmalltalkCIStone --help
-    setupRuntimeSmalltalkCIStone sample 3.2.4
-    setupRuntimeSmalltalkCIStone sample 3.2.4 /opt/_home//sys/local/server/templates/myStoneConfig.ston
+    setupRuntimeSmalltalkCIStone sample
+    setupRuntimeSmalltalkCIStone sample /opt/_home//sys/local/server/templates/myStoneConfig.ston

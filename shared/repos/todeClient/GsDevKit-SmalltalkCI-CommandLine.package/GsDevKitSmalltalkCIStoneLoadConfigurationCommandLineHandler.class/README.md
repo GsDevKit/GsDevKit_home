@@ -7,5 +7,5 @@ Load the #gemstone projects specified in the SmalltalkCI configuration file into
 
 Examples:
     loadSmalltalkCIConfiguration --help
-    loadSmalltalkCIConfiguration sample 3.2.4
-    loadSmalltalkCIConfiguration sample 3.2.4 /opt/_home//sys/local/server/templates/myStoneConfig.ston
+    loadSmalltalkCIConfiguration sample
+    loadSmalltalkCIConfiguration sample /opt/_home//sys/local/server/templates/myStoneConfig.ston

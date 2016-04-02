@@ -7,5 +7,5 @@ Run the #gemstone tests specified in the SmalltalkCI configuration file in the n
 
 Examples:
     runSmalltalkCITests --help
-    runSmalltalkCITests sample 3.2.4
-    runSmalltalkCITests sample 3.2.4 /opt/_home//sys/local/server/templates/myStoneConfig.ston
+    runSmalltalkCITests sample
+    runSmalltalkCITests sample /opt/_home//sys/local/server/templates/myStoneConfig.ston
