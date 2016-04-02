@@ -60,7 +60,7 @@ OPTIONS
        ston
        tode
   -t
-     Update tode project clone and tODE components
+     Update tode project clone
   -u <cache-name>
      Clear the named GsUpgrader cache
 
