@@ -110,14 +110,18 @@ fi
 todeArg=""
 case $clientType in
   tode)
-    todeArg="-t"
-    ;&
+    if [ "${GS_TODE_CLIENT}x" = "x" ] ; then
+      ${GS_HOME}/bin/private/clone_todeClient
+      source ${GS_HOME}/bin/defGsDevKit.env
+    fi
+    ${GS_TODE_CLIENT}/bin/createClient -t $forceArg $* $clientName
+    ;;
   pharo)
     if [ "${GS_TODE_CLIENT}x" = "x" ] ; then
       ${GS_HOME}/bin/private/clone_todeClient
       source ${GS_HOME}/bin/defGsDevKit.env
     fi
-    ${GS_TODE_CLIENT}/bin/createClient $todeArg $forceArg $* $clientName
+    ${GS_TODE_CLIENT}/bin/createClient $forceArg $* $clientName
     ;;
   gemtools)
     ;;
