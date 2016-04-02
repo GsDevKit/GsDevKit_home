@@ -13,7 +13,7 @@ usage() {
 USAGE: $(basename $0) [-h] [-f] [-g] [-n] [-s <snapshot-file-path>]
                       [-t  <tode-snapshot-file-path>]
 		      [-u <project-entry-url>] [-i <project-name>] [-l <project-name>]
-                      [-z <smalltalkCI-smalltalk.ston-path>]
+                      [-c] [-z <smalltalkCI-smalltalk.ston-path>]
                       <stone-name> <gemstone-version>
 
 Create a new stone with the given stone name. Do not install tODE. Start stone
@@ -59,6 +59,8 @@ OPTIONS
   -z <smalltalkCI-smalltalk.ston-path>
      Customize the stone installation according to the attrbutes specified in the 
      <smalltalkCI-smalltalk.ston-path> file.
+  -c
+     Load the project specified in the <smalltalkCI-smalltalk.ston-path> file.
 
 EXAMPLES
   $(basename $0) -h
@@ -77,6 +79,7 @@ EXAMPLES
 	         -i Seaside3 -l Seaside3 \
 		 -t \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
   $(basename $0) -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329 3.2.9
+  $(basename $0) -c -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329 3.2.9
 
 HELP
 }
@@ -105,7 +108,8 @@ entryUrl=""
 installProjectName=""
 loadProjectName=""
 smalltalkCIConfigPath=""
-while getopts "fghns:t:u:i:l:z:" OPT ; do
+loadSmalltalkCIConfig="false"
+while getopts "fghns:t:u:i:l:z:c" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     f) force="true";; 
@@ -117,6 +121,7 @@ while getopts "fghns:t:u:i:l:z:" OPT ; do
     i) installProjectName="${OPTARG}";;
     l) loadProjectName="${OPTARG}";;
     z) smalltalkCIConfigPath="${OPTARG}";;
+    c) loadSmalltalkCIConfig="true";;
     *) usage; exit 1;;
   esac
 done
@@ -184,7 +189,7 @@ project load ${loadProjectName}
 EOF
 fi
 
-if [ "${smalltalkCIConfigPath}x" != "x" ] ; then
+if [ "${loadSmalltalkCIConfig}" != "true" ] ; then
     ${GS_HOME}/bin/devKitCommandLine loadSmalltalkCIConfiguration $stoneName $smalltalkCIConfigPath
 fi
 
