@@ -127,8 +127,8 @@ while getopts "fghns:t:u:i:l:z:c" OPT ; do
 done
 shift $(($OPTIND - 1))
 
-if [ $# -ne 2 ]; then
-  echo "incorrect number of args $# (2 expected)"; usage; exit 1
+if [ $# -lt 2 ]; then
+  echo "incorrect number of args $# (2 or 3 expected)"; usage; exit 1
 fi
 stoneName="$1"
 vers="$2"
