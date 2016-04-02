@@ -4,11 +4,11 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "",
+	"commentStamp" : "dkh 4/1/2016 17:24",
 	"instvars" : [
 		 ],
-	"name" : "GsDevKitSmalltalkCIRunTestsCommandLineHandler",
+	"name" : "GsDevKitSmalltalkCIStoneRunTestsCommandLineHandler",
 	"pools" : [
 		 ],
-	"super" : "GsDevKitCreateStoneCommandLineHandler",
+	"super" : "GsDevKitAbstractStoneCommandLineHandler",
 	"type" : "normal" }
