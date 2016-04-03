@@ -3,5 +3,5 @@
 		 },
 	"instance" : {
 		"applyOptionsFromConfigurationSpec:" : "dkh 4/1/2016 11:31",
-		"gsTravisCacheEnabled" : "dkh 4/1/2016 06:37",
-		"readAndProcessSmalltalkCIConfig:" : "dkh 4/1/2016 11:30" } }
+		"readAndProcessSmalltalkCIConfig:" : "dkh 4/3/2016 07:15",
+		"readSmalltalkCISpec:" : "dkh 4/3/2016 07:14" } }

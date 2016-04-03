@@ -1,2 +1,0 @@
-activations
-applyOptionsFromConfigurationSpec: configSpec
