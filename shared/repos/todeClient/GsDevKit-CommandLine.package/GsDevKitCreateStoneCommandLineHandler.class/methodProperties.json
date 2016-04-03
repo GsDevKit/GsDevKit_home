@@ -4,6 +4,7 @@
 		"description" : "dkh 10/2/2015 14:11" },
 	"instance" : {
 		"activate" : "dkh 2/17/2015 13:55",
-		"createStone" : "dkh 4/3/2016 15:43",
+		"createStone" : "dkh 4/3/2016 15:56",
+		"doCreateStone" : "dkh 4/3/2016 15:56",
 		"gsVers" : "dkh 7/17/2014 13:39",
 		"gsVers:" : "dkh 3/31/2016 17:07" } }
