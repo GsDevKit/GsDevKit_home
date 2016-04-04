@@ -4,6 +4,8 @@
 		"description" : "dkh 4/1/2016 11:24" },
 	"instance" : {
 		"applyOptionsFromConfigurationSpec:" : "dkh 4/3/2016 08:58",
-		"createConfFileLn:" : "dkh 4/3/2016 08:50",
-		"doCreateStone" : "dkh 4/3/2016 15:57",
+		"createConfFileLn:" : "dkh 4/4/2016 05:55",
+		"doCreateStone" : "dkh 4/4/2016 05:55",
+		"projectDirectoryPath" : "dkh 4/4/2016 05:54",
+		"projectDirectoryPath:" : "dkh 4/4/2016 05:54",
 		"stoneDirectory" : "dkh 4/3/2016 08:46" } }

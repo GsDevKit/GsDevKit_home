@@ -1,5 +1,9 @@
 private
-createConfFileLn: sourceFile
+createConfFileLn: confFilePath
+	| sourceFile |
+	sourceFile := confFilePath.
+	confFilePath isRelative
+		ifTrue: [ sourceFile := self projectDirectoryPath / confFilePath ].
 	Transcript
 		cr;
 		tab;

@@ -6,7 +6,7 @@
 		 ],
 	"commentStamp" : "dkh 4/1/2016 11:26",
 	"instvars" : [
-		 ],
+		"projectDirectoryPath" ],
 	"name" : "GsDevKitSmalltalkCICreateStoneCommandLineHandler",
 	"pools" : [
 		 ],
