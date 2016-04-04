@@ -154,6 +154,7 @@ fi
 
 echo "Creating stone $stoneName"
 
+$GS_HOME/bin/downloadGemStone $vers
 
 ${GS_HOME}/bin/devKitCommandLine createSmalltalkCIStone $stoneName $vers $smalltalkCIConfigPath
 
