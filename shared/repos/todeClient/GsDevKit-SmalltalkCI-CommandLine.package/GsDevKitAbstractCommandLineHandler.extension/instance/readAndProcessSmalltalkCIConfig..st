@@ -2,4 +2,4 @@
 readAndProcessSmalltalkCIConfig: aFilePathString
 	| ci |
 	ci := self readSmalltalkCISpec: aFilePathString.
-	ci compatibleConfigurations do: [ :configSpec | self applyOptionsFromConfigurationSpec: configSpec ]
+	(ci compatibleConfigurationsFor: #gemstone) do: [ :configSpec | self applyOptionsFromConfigurationSpec: configSpec ]

@@ -5,4 +5,6 @@
 	"instance" : {
 		"activate" : "dkh 4/1/2016 11:28",
 		"applyOptionsFromConfigurationSpec:" : "dkh 4/3/2016 07:09",
-		"applyRuntimeOptions" : "dkh 4/1/2016 11:31" } }
+		"applyRuntimeOptions" : "dkh 4/1/2016 11:31",
+		"projectDirectoryPath" : "dkh 4/4/2016 10:13",
+		"projectDirectoryPath:" : "dkh 4/4/2016 10:13" } }
