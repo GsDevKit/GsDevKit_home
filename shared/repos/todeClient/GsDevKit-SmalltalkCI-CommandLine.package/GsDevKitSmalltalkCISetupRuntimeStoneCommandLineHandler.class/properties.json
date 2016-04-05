@@ -10,5 +10,5 @@
 	"name" : "GsDevKitSmalltalkCISetupRuntimeStoneCommandLineHandler",
 	"pools" : [
 		 ],
-	"super" : "GsDevKitAbstractCommandLineHandler",
+	"super" : "GsDevKitAbstractStoneCommandLineHandler",
 	"type" : "normal" }
