@@ -53,6 +53,7 @@ EXAMPLES
   $(basename $0) -D -t pharo pharoClient -v Pharo5.0
   $(basename $0) -f -t pharo pharoClient -v Pharo5.0
   $(basename $0) -t pharo pharoClient -v Pharo5.0 -z \$GS_HOME/sys/local/pharo/pharoClient.ston
+  $(basename $0) -t pharo pharoClient -v Pharo5.0 -s gs_329 -z \$GS_HOME/sys/local/pharo/pharoClient.ston
   $(basename $0) -f -t pharo pharoClient -v Pharo5.0 -z \$GS_HOME/sys/local/pharo/pharoClient.ston
 
   # gemtools client
