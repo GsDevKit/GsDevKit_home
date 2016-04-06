@@ -21,6 +21,7 @@ The cloned directory is renamed to <directory-name> if present.
 OPTIONS
   -h
      display help
+  -b <branch name>
   -c https | ssh
      clone using https (https://github.com) or ssh (git@github.com).
      https is the default.
@@ -51,10 +52,12 @@ else
   mode="https"
 fi
 
+branch="master"
 gitArg=""
-while getopts ":hc:n" OPT ; do
+while getopts ":hb:c:n" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
+    b) branch="${OPTARG}";;
     c) mode="${OPTARG}";;
     n) gitArg=" -n ";;
     *) usage; exit 1;;
@@ -88,7 +91,7 @@ else
 fi
 
 if [ ! -d "${directoryName}" ] ; then
-  git clone --depth 1 $gitArg $url $directoryName
+  git clone --depth 1 --branch $branch $gitArg $url $directoryName
 fi
 
 echo "...finished $(basename $0)"

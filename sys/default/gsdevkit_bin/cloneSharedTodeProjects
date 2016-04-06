@@ -130,49 +130,39 @@ source ${GS_HOME}/bin/private/gitFunctions
 
 pushd ${GS_SHARED_REPO} >& /dev/null
   if [ ! -d "metacello-work" ] ; then
-    ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich metacello-work
-    checkoutClone $GS_SHARED_GIT_CHECKOUT_METACELLO ${GS_SHARED_REPO}/metacello-work $branchName
+    ${GS_HOME}/bin/private/cloneGitHubProject -b $GS_SHARED_GIT_CHECKOUT_METACELLO -n $modeArg dalehenrich metacello-work
   fi
   if [ ! -d "tode" ] ; then
-    ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich tode
-    checkoutClone $GS_SHARED_GIT_CHECKOUT_TODE ${GS_SHARED_REPO}/tode $branchName
+    ${GS_HOME}/bin/private/cloneGitHubProject -b $GS_SHARED_GIT_CHECKOUT_TODE -n $modeArg dalehenrich tode
   fi
   if [ ! -d "ston" ] ; then
-    ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg GsDevKit ston
-    checkoutClone $GS_SHARED_GIT_CHECKOUT_STON ${GS_SHARED_REPO}/ston $branchName
+    ${GS_HOME}/bin/private/cloneGitHubProject -b $GS_SHARED_GIT_CHECKOUT_STON -n $modeArg GsDevKit ston
   fi
   if [ "$loadClientRepos" = "true" ] ; then
     cd pharo3.0
     if [ ! -d "filetree" ] ; then
-      ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich filetree
-      checkoutClone $GS_SHARED_GIT_CHECKOUT_PHARO3_FILETREE ${GS_SHARED_REPO}/pharo3.0/filetree $branchName
+      ${GS_HOME}/bin/private/cloneGitHubProject -b $GS_SHARED_GIT_CHECKOUT_PHARO3_FILETREE -n $modeArg dalehenrich filetree
       fi
     cd ..
   fi
   if [ "$loadServerRepos" = "true" ] ; then
     if [ ! -d "filetree" ] ; then
-      ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich filetree
-      checkoutClone $GS_SHARED_GIT_CHECKOUT_GEMSTONE_FILETREE ${GS_SHARED_REPO}/filetree $branchName
+      ${GS_HOME}/bin/private/cloneGitHubProject -b $GS_SHARED_GIT_CHECKOUT_GEMSTONE_FILETREE -n $modeArg dalehenrich filetree
     fi
     if [ ! -d "Grease" ] ; then
-      ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg GsDevKit Grease
-      checkoutClone $GS_SHARED_GIT_CHECKOUT_GREASE ${GS_SHARED_REPO}/Grease $branchName
+      ${GS_HOME}/bin/private/cloneGitHubProject -b $GS_SHARED_GIT_CHECKOUT_GREASE -n $modeArg GsDevKit Grease
     fi
     if [ ! -d "PharoCompatibility" ] ; then
-      ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg glassdb PharoCompatibility
-      checkoutClone $GS_SHARED_GIT_CHECKOUT_PHARO_COMPAT ${GS_SHARED_REPO}/PharoCompatibility $branchName
+      ${GS_HOME}/bin/private/cloneGitHubProject -b $GS_SHARED_GIT_CHECKOUT_PHARO_COMPAT -n $modeArg glassdb PharoCompatibility
     fi
     if [ ! -d "glass" ] ; then
-      ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg glassdb glass
-      checkoutClone $GS_SHARED_GIT_CHECKOUT_GLASS1 ${GS_SHARED_REPO}/glass $branchName
+      ${GS_HOME}/bin/private/cloneGitHubProject -b $GS_SHARED_GIT_CHECKOUT_GLASS1 -n $modeArg glassdb glass
     fi
     if [ ! -d "rb" ] ; then
-      ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg dalehenrich rb
-      checkoutClone $GS_SHARED_GIT_CHECKOUT_RB ${GS_SHARED_REPO}/rb $branchName
+      ${GS_HOME}/bin/private/cloneGitHubProject -b $GS_SHARED_GIT_CHECKOUT_RB -n $modeArg dalehenrich rb
     fi
     if [ ! -d "zinc" ] ; then
-      ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg GsDevKit zinc
-      checkoutClone $GS_SHARED_GIT_CHECKOUT_ZINC ${GS_SHARED_REPO}/zinc $branchName
+      ${GS_HOME}/bin/private/cloneGitHubProject -b $GS_SHARED_GIT_CHECKOUT_ZINC -n $modeArg GsDevKit zinc
     fi
   fi
 popd >& /dev/null
