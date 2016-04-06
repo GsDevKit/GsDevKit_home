@@ -36,7 +36,7 @@ EXAMPLES
   $(basename $0) -h
   $(basename $0) -t tode todeDev
   $(basename $0) -t tode todeDev -p _0
-  $(basename $0) -t pharo pharoClient -v Pharo-5.0 -s \$GS_HOME/sys/local/pharo/pharoClient.ston
+  $(basename $0) -t pharo pharoClient -v Pharo5.0 -z \$GS_HOME/sys/local/pharo/pharoClient.ston
   $(basename $0) -t gemtools gemtools_329 3.2.9
   $(basename $0) -t jade jade_329 3.2.9
 
@@ -47,10 +47,10 @@ EXAMPLES
   $(basename $0) -f todeDev -p _0
 
   # pharo client (default)
-  $(basename $0) -t pharo pharoClient -v Pharo-5.0
-  $(basename $0) -f -t pharo pharoClient -v Pharo-5.0
-  $(basename $0) -t pharo pharoClient -v Pharo-5.0 -z \$GS_HOME/sys/local/pharo/pharoClient.ston
-  $(basename $0) -f -t pharo pharoClient -v Pharo-5.0 -z \$GS_HOME/sys/local/pharo/pharoClient.ston
+  $(basename $0) -t pharo pharoClient -v Pharo5.0
+  $(basename $0) -f -t pharo pharoClient -v Pharo5.0
+  $(basename $0) -t pharo pharoClient -v Pharo5.0 -z \$GS_HOME/sys/local/pharo/pharoClient.ston
+  $(basename $0) -f -t pharo pharoClient -v Pharo5.0 -z \$GS_HOME/sys/local/pharo/pharoClient.ston
 
   # gemtools client
   $(basename $0) -t gemtools gt_329 3.2.9
