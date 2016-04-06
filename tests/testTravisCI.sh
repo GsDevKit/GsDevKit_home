@@ -48,6 +48,11 @@ case $TEST in
     export seasideSnapshot=$GS_SERVER_STONES/${STONENAME1}/product/bin/extent0.seaside.dbf
     $GS_HOME/tests/basicTests.sh
     ;;
+  Clients)
+    $GS_HOME/tests/basicInstallServer.sh
+    source $GS_HOME/bin/defGsDevKit.env
+    $GS_HOME/tests/clientTests.sh
+    ;;    
   Upgrade)
     installServer
     createStone -g ${STONENAME1}_2441 2.4.4.1
