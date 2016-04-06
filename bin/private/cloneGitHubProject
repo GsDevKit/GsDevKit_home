@@ -88,7 +88,7 @@ else
 fi
 
 if [ ! -d "${directoryName}" ] ; then
-  git clone $gitArg $url $directoryName
+  git clone --depth 1 $gitArg $url $directoryName
 fi
 
 echo "...finished $(basename $0)"
