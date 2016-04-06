@@ -5,7 +5,7 @@ os:
 #  - osx
 
 env:
-  - GS_VERSION=3.2.13 TEST=Error
+  - GS_VERSION=3.2.12 TEST=Error
   - GS_VERSION=3.1.0.6 TEST=Upgrade
   - GS_VERSION=3.3.0 TEST=Upgrade_71
   - GS_VERSION=3.2.12 TEST=Install
