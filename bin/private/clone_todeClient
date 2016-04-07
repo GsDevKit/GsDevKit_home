@@ -54,6 +54,8 @@ while getopts "hc:o:" OPT ; do
 done
 shift $(($OPTIND - 1))
 
+source ${GS_HOME}/bin/defGsDevKit.env
+
 pushd ${GS_CLIENT_DEV} >& /dev/null
   ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg $organization GsDevKit_todeClient todeClient
   checkoutClone $GSDEVKIT_TODE_CLIENT_GIT_CHECKOUT "$GS_CLIENT_DEV/todeClient"
