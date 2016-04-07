@@ -55,7 +55,8 @@ done
 shift $(($OPTIND - 1))
 
 pushd ${GS_CLIENT_DEV} >& /dev/null
-  ${GS_HOME}/bin/private/cloneGitHubProject $modeArg $organization GsDevKit_todeClient todeClient
+  ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg $organization GsDevKit_todeClient todeClient
+  checkoutClone $GSDEVKIT_TODE_CLIENT_GIT_CHECKOUT "$GS_CLIENT_DEV/todeClient"
 popd >& /dev/null
 
 echo "...finished $(basename $0)"
