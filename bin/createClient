@@ -55,9 +55,13 @@ EXAMPLES
   $(basename $0) -t pharo pharoClient -v Pharo5.0
   $(basename $0) -D -t pharo pharoClient -v Pharo5.0
   $(basename $0) -f -t pharo pharoClient -v Pharo5.0
-  $(basename $0) -t pharo pharoClient -v Pharo5.0 -z \$GS_HOME/sys/local/pharo/pharoClient.ston
-  $(basename $0) -t pharo pharoClient -v Pharo5.0 -s gs_329 -z \$GS_HOME/sys/local/pharo/pharoClient.ston
-  $(basename $0) -f -t pharo pharoClient -v Pharo5.0 -z \$GS_HOME/sys/local/pharo/pharoClient.ston
+  $(basename $0) -t pharo pharoClient -v Pharo5.0 -z \$GS_HOME/shared/repos/GemStone-GCI/.smalltalk.ston
+  $(basename $0) -t pharo pharoClient -v Pharo5.0 -s gs_329 -z \$GS_HOME/shared/repos/GemStone-GCI/.smalltalk.ston
+  $(basename $0) -f -t pharo pharoClient -v Pharo5.0 -z \$GS_HOME/shared/repos/GemStone-GCI/.smalltalk.ston
+
+  $(basename $0) -t pharo pharoClient -v Pharo5.0 -y \$GS_HOME/shared/repos/GemStone-GCI -z \$GS_HOME/sys/local/pharo/customeGciClient.ston
+  $(basename $0) -t pharo pharoClient -v Pharo5.0 -s gs_329 -y \$GS_HOME/shared/repos/GemStone-GCI -z \$GS_HOME/sys/local/pharo/customeGciClient.ston
+  $(basename $0) -f -t pharo pharoClient -v Pharo5.0 -y \$GS_HOME/shared/repos/GemStone-GCI -z \$GS_HOME/sys/local/pharo/customeGciClient.ston
 
   # gemtools client (not implemented yet)
   $(basename $0) -t gemtools -h
