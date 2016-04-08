@@ -36,6 +36,8 @@ OPTIONS
 
 EXAMPLES
   $(basename $0) -h
+
+  $(basename $0) -t tode -h
   $(basename $0) -t tode todeDev
   $(basename $0) -t tode todeDev -p _0
   $(basename $0) -t pharo pharoClient -v Pharo5.0 -z \$GS_HOME/sys/local/pharo/pharoClient.ston
@@ -49,6 +51,7 @@ EXAMPLES
   $(basename $0) -f todeDev -p _0
 
   # pharo client (default)
+  $(basename $0) -t pharo -h
   $(basename $0) -t pharo pharoClient -v Pharo5.0
   $(basename $0) -D -t pharo pharoClient -v Pharo5.0
   $(basename $0) -f -t pharo pharoClient -v Pharo5.0
@@ -56,11 +59,13 @@ EXAMPLES
   $(basename $0) -t pharo pharoClient -v Pharo5.0 -s gs_329 -z \$GS_HOME/sys/local/pharo/pharoClient.ston
   $(basename $0) -f -t pharo pharoClient -v Pharo5.0 -z \$GS_HOME/sys/local/pharo/pharoClient.ston
 
-  # gemtools client
+  # gemtools client (not implemented yet)
+  $(basename $0) -t gemtools -h
   $(basename $0) -t gemtools gt_329 3.2.9
   $(basename $0) -f -t gemtools gt_329 3.2.9
 
-  # jade client
+  # jade client (not implemented yet)
+  $(basename $0) -t jade -h
   $(basename $0) -t jade j_329 3.2.9
   $(basename $0) -f -t jade j_329 3.2.9
 
@@ -81,17 +86,28 @@ clientType="tode"
 forceArg=""
 deleteClientDir="false"
 debugArg=""
+showHelp="false"
+typeArg=""
 while getopts "fht:FD" OPT ; do
   case "$OPT" in
-    h) usage; exit 0 ;;
+    h) showHelp="true" ;;
     f) forceArg=" -f " ;;
     F) deleteClientDir="true" ;;
     D) debugArg=" -D ";;
-    t) clientType="${OPTARG}" ;;
+    t) typeArg="set"; clientType="${OPTARG}" ;;
     *) usage; exit 1;;
   esac
 done
 shift $(($OPTIND - 1))
+
+if [ "${showHelp}" = "true" ]; then
+  if [ "$typeArg" = "set"  ] && [ "${GS_TODE_CLIENT}x" != "x" ]; then
+    ${GS_TODE_CLIENT}/bin/createClient -h
+    exit 0
+  fi
+  usage
+  exit 0
+fi
 
 if [ $# -lt 1 ]; then
   echo "missing cient name argument"; usage; exit 1
