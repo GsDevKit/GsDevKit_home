@@ -10,11 +10,12 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] -t <tode-snapshot-file-path> -z <smalltalkCI-smalltalk.ston-path> [-r]
+USAGE: $(basename $0) [-h] [-r] [-t <tode-snapshot-file-path>] -z <smalltalkCI-smalltalk.ston-path>
                       <stone-name>
 
 Copy a new extent into the named stone's extent directory using the snapshot 
-file specified by the -t option, load the project specified by the -z option
+file specified by the -t option (\$GS_HOME/server/stones/<stone-name>/snapshots/extent0.tode.dbf
+by default), load the project specified by the -z option
 into the stone. 
 
 Optionally run the tests specified by the -z option if the -r option is present.
@@ -22,7 +23,9 @@ Optionally run the tests specified by the -z option if the -r option is present.
 Similar to \$GS_HOME/bin/newExtent, the stone will be stopped before doing the 
 copy and after the copy is complete, the stone will be restarted with the -N option.
 
-The -t and -z options are required.
+The -z option is required.
+
+The stone is left running after the tests have completed.
 
 OPTIONS
   -h
@@ -30,7 +33,7 @@ OPTIONS
   -r 
      Run the tests specified in the -z options.
   -t <tode-snapshot-file-path>
-     path to snapshot file used to create stone. It is assumed that the snapshot
+     Path to snapshot file used to create stone. It is assumed that the snapshot
      already has tODE installed and the snapshot will be attached to the
      existing \$GS_TODE/sys/stones/<stone-name> structure.
   -z <smalltalkCI-smalltalk.ston-path>
@@ -39,6 +42,7 @@ OPTIONS
 
 EXAMPLES
   $(basename $0) -h
+  $(basename $0) -r -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329
   $(basename $0) -t \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329
   $(basename $0) -r -t \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329 
 
@@ -60,7 +64,7 @@ source ${GS_HOME}/bin/defGsDevKit.env
 source ${GS_HOME}/bin/private/shFunctions
 verify_gsdevkit_installation
 
-todeSnapshotArg=""
+snapshotFileArg=""
 smalltalkCIConfigPath=""
 runSmalltalkCITests="false"
 while getopts "t:z:r" OPT ; do
@@ -79,7 +83,11 @@ if [ $# -lt 1 ]; then
 fi
 stoneName="$1"
 
-$GS_HOME/bin/newExtent -a $snapshotFileArg $stoneName
+if [ "${snapshotFileArg}x" = "x" ] ; then
+  $GS_HOME/bin/newExtent -a -s "$GS_HOME/server/stones/${stoneName}/snapshots/extent0.tode.dbf" $stoneName
+else
+  $GS_HOME/bin/newExtent -a $snapshotFileArg $stoneName
+fi
 
 ${GS_HOME}/bin/devKitCommandLine serverDoIt  $stoneName << EOF
   GsDeployer bulkMigrate: [
