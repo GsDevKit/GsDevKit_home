@@ -190,7 +190,8 @@ EOF
 fi
 
 if [ "${loadSmalltalkCIConfig}" = "true" ] ; then
-    ${GS_HOME}/bin/devKitCommandLine serverDoIt  $stoneName << EOF
+  ${GS_HOME}/bin/devKitCommandLine serverDoIt  $stoneName << EOF
+  GsDeployer bulkMigrate: [
     [
       Metacello new
           baseline: 'SmalltalkCI';
@@ -198,7 +199,8 @@ if [ "${loadSmalltalkCIConfig}" = "true" ] ; then
           onConflict: [:ex | ex allow ];
           onLock: [:ex | ex disallow ];
           load ] on: Warning do: [:w | w resume ].
-      (Smalltalk at: #SmalltalkCI) loadCIFor: '${smalltalkCIConfigPath}' 
+      (Smalltalk at: #SmalltalkCI) loadCIFor: '${smalltalkCIConfigPath}'.
+  ]
 EOF
 fi
 

@@ -1,0 +1,103 @@
+#! /usr/bin/env bash
+#=========================================================================
+# Copyright (c) 2014, 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#=========================================================================
+
+echo "================="
+echo "   GsDevKit script: $(basename $0) $*"
+echo "              path: $0"
+echo "================="
+
+usage() {
+  cat <<HELP
+USAGE: $(basename $0) [-h] -t <tode-snapshot-file-path> -z <smalltalkCI-smalltalk.ston-path> [-r]
+                      <stone-name>
+
+Copy a new extent into the named stone's extent directory using the snapshot 
+file specified by the -t option, load the project specified by the -z option
+into the stone. 
+
+Optionally run the tests specified by the -z option if the -r option is present.
+
+Similar to \$GS_HOME/bin/newExtent, the stone will be stopped before doing the 
+copy and after the copy is complete, the stone will be restarted with the -N option.
+
+The -t and -z options are required.
+
+OPTIONS
+  -h
+     display help
+  -r 
+     Run the tests specified in the -z options.
+  -t <tode-snapshot-file-path>
+     path to snapshot file used to create stone. It is assumed that the snapshot
+     already has tODE installed and the snapshot will be attached to the
+     existing \$GS_TODE/sys/stones/<stone-name> structure.
+  -z <smalltalkCI-smalltalk.ston-path>
+     Customize the stone installation according to the attrbutes specified in the 
+     <smalltalkCI-smalltalk.ston-path> file.
+
+EXAMPLES
+  $(basename $0) -h
+  $(basename $0) -t \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329
+  $(basename $0) -r -t \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329 
+
+HELP
+}
+
+PLATFORM="`uname -sm | tr ' ' '-'`"
+if [[ "$PLATFORM" == MINGW32_NT* || "$PLATFORM" == MSYS_NT* ]] ; then
+  echo "This script is a server-only script and cannot be used on Windows"
+  exit 1
+fi
+
+set -e # exit on error
+if [ "${GS_HOME}x" = "x" ] ; then
+  echo "the GS_HOME environment variable needs to be defined"; exit 1
+fi
+source ${GS_HOME}/bin/defGsDevKit.env
+
+source ${GS_HOME}/bin/private/shFunctions
+verify_gsdevkit_installation
+
+todeSnapshotArg=""
+smalltalkCIConfigPath=""
+runSmalltalkCITests="false"
+while getopts "t:z:r" OPT ; do
+  case "$OPT" in
+    h) usage; exit 0;;
+    t) snapshotFileArg=" -s ${OPTARG} ";;
+    z) smalltalkCIConfigPath="${OPTARG}";;
+    r) runSmalltalkCITests="true";;
+    *) usage; exit 1;;
+  esac
+done
+shift $(($OPTIND - 1))
+
+if [ $# -lt 1 ]; then
+  echo "incorrect number of args $# (1 expected)"; usage; exit 1
+fi
+stoneName="$1"
+
+$GS_HOME/bin/newExtent -a $snapshotFileArg $stoneName
+
+${GS_HOME}/bin/devKitCommandLine serverDoIt  $stoneName << EOF
+  GsDeployer bulkMigrate: [
+    [
+    Metacello new
+      baseline: 'SmalltalkCI';
+      repository: '${GS_SHARED_REPO_SMALLTALKCI}';
+      onConflict: [:ex | ex allow ];
+      onLock: [:ex | ex disallow ];
+      load ] on: Warning do: [:w | w resume ].
+    (Smalltalk at: #SmalltalkCI) loadCIFor: '${smalltalkCIConfigPath}'.
+  ].
+
+EOF
+
+if [ "${runSmalltalkCITests}" = "true" ]; then
+  ${GS_HOME}/bin/devKitCommandLine serverDoIt  $stoneName << EOF
+    (Smalltalk at: #SmalltalkCI) runCIFor: '${smalltalkCIConfigPath}'
+EOF
+fi
+echo "...finished $(basename $0)"
