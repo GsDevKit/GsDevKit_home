@@ -189,8 +189,17 @@ project load ${loadProjectName}
 EOF
 fi
 
-if [ "${loadSmalltalkCIConfig}" != "true" ] ; then
-    ${GS_HOME}/bin/devKitCommandLine loadSmalltalkCIConfiguration $stoneName $smalltalkCIConfigPath
+if [ "${loadSmalltalkCIConfig}" = "true" ] ; then
+    ${GS_HOME}/bin/devKitCommandLine serverDoIt  $stoneName << EOF
+    [
+      Metacello new
+          baseline: 'SmalltalkCI';
+          repository: '${GS_SHARED_REPO_SMALLTALKCI}';
+          onConflict: [:ex | ex allow ];
+          onLock: [:ex | ex disallow ];
+          load ] on: Warning do: [:w | w resume ].
+      (Smalltalk at: #SmalltalkCI) loadCIFor: '${smalltalkCIConfigPath}' 
+EOF
 fi
 
 
