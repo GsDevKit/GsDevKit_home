@@ -14,11 +14,13 @@ env:
 #  - GS_VERSION=3.2.12 TEST=Basic
   - GS_VERSION=3.3.0 TEST=Basic
   - GS_VERSION=3.3.0 TEST=Clients
+  - GS_VERSION=3.3.0 TEST=SmalltalkCI
 
 matrix:
    allow_failures:
      - os: osx
-     - env: GS_VERSION=3.3.0 TEST=Clients # Until https://github.com/hpi-swa/smalltalkCI/issues/105 is merged
+     - env: GS_VERSION=3.3.0 TEST=Clients     # Until https://github.com/hpi-swa/smalltalkCI/issues/105 is merged
+     - env: GS_VERSION=3.3.0 TEST=SmalltalkCI # Until https://github.com/hpi-swa/smalltalkCI/issues/105 is merged
    exclude:
      - os: osx
        env: GS_VERSION=2.4.7 TEST=Basic

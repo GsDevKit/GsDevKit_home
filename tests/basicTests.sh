@@ -38,6 +38,7 @@ status -h
 stones -h
 stopNetldi -h
 stopStone -h
+smalltalkCI -h
 todeBackup -h
 todeLoad -h
 todeIt -h

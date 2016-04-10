@@ -96,8 +96,14 @@ ${GS_HOME}/bin/devKitCommandLine serverDoIt  $stoneName << EOF
 EOF
 
 if [ "${runSmalltalkCITests}" = "true" ]; then
+  if [ ! -d "$GS_HOME/server/stones/${stoneName}/ci" ] ; then
+    mkdir "$GS_HOME/server/stones/${stoneName}/ci"
+  fi
   ${GS_HOME}/bin/devKitCommandLine serverDoIt  $stoneName << EOF
-    (Smalltalk at: #SmalltalkCI) runCIFor: '${smalltalkCIConfigPath}'
+    SmalltalkCI 
+      runCIFor: '${smalltalkCIConfigPath}'
+      xmlLogDirPath: '$GS_HOME/server/stones/${stoneName}/ci'
 EOF
+  python "$GS_HOME/shared/repos/smalltalkCI/lib/junit_xml_prettfier.py" "$GS_HOME/server/stones/${stoneName}/ci" 
 fi
 echo "...finished $(basename $0)"

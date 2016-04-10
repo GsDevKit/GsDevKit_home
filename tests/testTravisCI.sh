@@ -53,6 +53,11 @@ case $TEST in
     source $GS_HOME/bin/defGsDevKit.env
     $GS_HOME/tests/clientTests.sh
     ;;    
+  SmalltalkCI)
+    $GS_HOME/tests/basicInstallServer.sh
+    source $GS_HOME/bin/defGsDevKit.env
+    $GS_HOME/tests/smalltalkCITests.sh
+    ;; 
   Upgrade)
     installServer
     createStone -g ${STONENAME1}_2441 2.4.4.1

@@ -13,6 +13,8 @@ createClient -t pharo gciClient40 -v Pharo4.0 -z $GS_HOME/shared/repos/GemStone-
 createClient -t pharo gciClient50 -v Pharo5.0 -z $GS_HOME/shared/repos/GemStone-GCI/.smalltalk.ston
 
 createClient -t pharo gciClient50 -v Pharo5.0 -y $GS_HOME/shared/repos/GemStone-GCI -z $GS_HOME/shared/repos/GemStone-GCI/.smalltalk.ston
-``
+
+createClient -t pharo gciClient50 -s ${STONENAME1} -v Pharo5.0 -y $GS_HOME/shared/repos/GemStone-GCI -z $GS_HOME/shared/repos/GemStone-GCI/.smalltalk.ston
+
 createClient -f -t pharo gciClient40 -v Pharo4.0 -z $GS_HOME/shared/repos/GemStone-GCI/.smalltalk.ston
 
