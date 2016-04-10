@@ -67,7 +67,7 @@ verify_gsdevkit_installation
 snapshotFileArg=""
 smalltalkCIConfigPath=""
 runSmalltalkCITests="false"
-while getopts "t:z:r" OPT ; do
+while getopts "ht:z:r" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     t) snapshotFileArg=" -s ${OPTARG} ";;
