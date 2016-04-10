@@ -1,0 +1,11 @@
+TDObjectGatewayLeafNode{#name:'Seaside32',#contents:'^ TDProjectSpecEntryDefinition new
+    comment: \'\';
+    projectUrl: \'https://github.com/SeasideSt/Seaside\';
+    baseline: \'Seaside3\'
+      repository: \'github://SeasideSt/Seaside:dev\\/3.2/repository\'
+      loads: #(\'Development\' \'Zinc Project\' \'Examples\');
+    installScript: \'project clone --https --local Seaside3\';
+    gitCheckout: \'dev/3.2\';
+    status: #(#\'inactive\');
+    locked: false;
+    yourself'}
