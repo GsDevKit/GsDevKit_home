@@ -79,7 +79,7 @@ EXAMPLES
 
   $(basename $0) -git
   $(basename $0) -gtc
-  $(basename $0) -gtcs
+  $(basename $0) -gdtcs
 
 HELP
 }
