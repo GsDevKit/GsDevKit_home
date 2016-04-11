@@ -42,12 +42,15 @@ installPrereqsForUbuntu(){
     case "$osVersion" in
       12.04)
         installUbuntuPackages
+        sudo apt-get -y install ttf-dejavu-core   # ensure that DejaVu Sans Mono font present (default font for tODE)
+        sudo apt-get -y install ttf-dejavu-extra  # ensure that DejaVu Sans Mono font present (default font for tODE)
         sudo ln -f -s /lib/i386-linux-gnu/libpam.so.0 /lib/libpam.so.0
         sudo ln -f -s /usr/lib/i386-lin-gnu/libstdc++.so.6 /usr/lib/i386-linux-gnu/libstdc++.so
         ;;
       14.04)
         sudo dpkg --add-architecture i386
         installUbuntuPackages
+        sudo apt-get -y install fonts-dejavu # ensure that DejaVu Sans Mono font present (default font for tODE)
         sudo ln -f -s /usr/lib/i386-lin-gnu/libstdc++.so.6 /usr/lib/i386-linux-gnu/libstdc++.so
         ;;
       *) echo "unrecognized Ubuntu version $os"; usage; exit 1;;
@@ -65,8 +68,6 @@ installUbuntuPackages(){
     sudo apt-get -y install gcc-multilib libstdc++6:i386
     sudo apt-get -y install gdb
     sudo apt-get -y install libfreetype6:i386
-    sudo apt-get -y install fonts-dejavu-core       # ensure that DejaVu Sans Mono font present (default font for tODE)
-    sudo apt-get -y install fonts-dejavu-extra      # ensure that DejaVu Sans Mono font present (default font for tODE)
     sudo apt-get -y install pstack
     sudo /bin/su -c "echo 'kernel.yama.ptrace_scope = 0' >>/etc/sysctl.d/10-ptrace.conf"
     if [ "${x11client}" = "true" ] ; then
