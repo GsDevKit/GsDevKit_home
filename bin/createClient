@@ -140,14 +140,14 @@ case $clientType in
       ${GS_HOME}/bin/private/clone_todeClient
       source ${GS_HOME}/bin/defGsDevKit.env
     fi
-    ${GS_TODE_CLIENT}/bin/createClient -t $debugArg $forceArg $* $clientName
+    ${GS_TODE_CLIENT}/bin/createClient $debugArg $forceArg $* $clientName
     ;;
   pharo)
     if [ "${GS_TODE_CLIENT}x" = "x" ] ; then
       ${GS_HOME}/bin/private/clone_todeClient
       source ${GS_HOME}/bin/defGsDevKit.env
     fi
-    ${GS_TODE_CLIENT}/bin/createClient $debugArg $forceArg $* $clientName
+    ${GS_TODE_CLIENT}/bin/createClient -c $debugArg $forceArg $* $clientName
     ;;
   gemtools)
     ;;
