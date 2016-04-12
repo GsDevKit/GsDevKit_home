@@ -70,13 +70,8 @@ case "$PLATFORM" in
       gsvers="GemStone64Bit${vers}-x86_64.Linux"
       ;;
     MSYS_NT*|MINGW32_NT*)
-	     if  [ "$vers" \< "3.3.0"  ] ;  then 
-			      gsvers="GemBuilderC${vers}-x86.Windows_NT"
-		    else
-		 	     gsvers="GemStone64BitClient${vers}-x86.Windows_NT"
-     	fi
+      gsvers="GemBuilderC${vers}-x86.Windows_NT"
       ;;
- 
     *)
       echo "[Error] This script should only be run on Mac (Darwin-i386), Linux (Linux-x86_64) or Windows (Windows-x86_NT)"
       echo "The result from \"uname -sm\" is \"`uname -sm`\""
