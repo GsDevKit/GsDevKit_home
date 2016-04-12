@@ -1,0 +1,7 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"applyOptionsFromConfigurationSpec:" : "dkh 4/1/2016 11:31",
+		"readAndProcessSmalltalkCIConfig:" : "dkh 4/4/2016 10:14",
+		"readSmalltalkCISpec:" : "dkh 4/3/2016 07:14" } }

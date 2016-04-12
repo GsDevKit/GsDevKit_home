@@ -70,7 +70,11 @@ case "$PLATFORM" in
       gsvers="GemStone64Bit${vers}-x86_64.Linux"
       ;;
     MSYS_NT*|MINGW32_NT*)
-      gsvers="GemBuilderC${vers}-x86.Windows_NT"
+      if  [ "$vers" \< "3.3.0"  ] ;  then 
+          gsvers="GemBuilderC${vers}-x86.Windows_NT"
+      else
+          gsvers="GemStone64BitClient${vers}-x86.Windows_NT"
+      fi
       ;;
     *)
       echo "[Error] This script should only be run on Mac (Darwin-i386), Linux (Linux-x86_64) or Windows (Windows-x86_NT)"
@@ -118,8 +122,8 @@ if [ -d "$GS_SHARED_DOWNLOADS/products/$gsvers" ] ; then
     echo "[Warning] $GS_SHARED_DOWNLOADS//products/$gsvers already exists"
     echo "to replace it, remove or rename it and rerun this script"
     echo "...finished $(basename $0)"
-    #    Copy the gci libraries to client installations
-    $GS_HOME/bin/private/installClientGciLibraries $vers
+#    #    Copy the gci libraries to client installations
+#     $GS_HOME/bin/private/installClientGciLibraries $vers
     exit 0
 fi
 

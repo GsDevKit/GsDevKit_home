@@ -19,6 +19,7 @@ Update the Github repositories used by the GsDevKit client and servers in \$GS_H
   - github://dalehenrich/metacello-work:\${GS_SHARED_COMMIT_METACELLO}/repository
   - github://dalehenrich/tode:\${GS_SHARED_COMMIT_TODE}/repository
   - github://GsDevKit/ston:\${GS_SHARED_COMMIT_STON}/repository
+  - github://hpi-swa/smalltalkCI:\${GS_SHARED_COMMIT_SMALLTALKCI}/repository
 
 "client" repos:
 
@@ -87,6 +88,9 @@ pushd ${GS_SHARED_REPO} >& /dev/null
   fi
   if [ -d "ston" ] ; then
     updateClone $GS_SHARED_GIT_CHECKOUT_STON $GS_SHARED_GIT_REMOTE_STON ${GS_SHARED_REPO}/ston
+  fi
+  if [ -d "smalltalkCI" ] ; then
+    updateClone $GS_SHARED_GIT_CHECKOUT_SMALLTALKCI $GS_SHARED_GIT_REMOTE_SMALLTALKCI ${GS_SHARED_REPO}/smalltalkCI
   fi
   if [ "$updateClientRepos" = "true" ] ; then
     cd pharo3.0

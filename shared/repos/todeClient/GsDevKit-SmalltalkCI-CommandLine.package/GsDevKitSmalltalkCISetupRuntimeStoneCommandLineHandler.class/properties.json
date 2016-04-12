@@ -1,0 +1,14 @@
+{
+	"category" : "GsDevKit-SmalltalkCI-CommandLine",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "dkh 4/1/2016 19:03",
+	"instvars" : [
+		"projectDirectoryPath" ],
+	"name" : "GsDevKitSmalltalkCISetupRuntimeStoneCommandLineHandler",
+	"pools" : [
+		 ],
+	"super" : "GsDevKitAbstractStoneCommandLineHandler",
+	"type" : "normal" }

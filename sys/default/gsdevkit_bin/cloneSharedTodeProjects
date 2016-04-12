@@ -50,6 +50,7 @@ The following env vars are defined:
   \$GS_SHARED_REPO_GLASS1
   \$GS_SHARED_REPO_RB
   \$GS_SHARED_REPO_ZINC
+  \$GS_SHARED_REPO_SMALLTALKCI
 
   \$GS_SHARED_GITHUB_COMMIT_METACELLO
   \$GS_SHARED_GITHUB_COMMIT_TODE
@@ -61,6 +62,7 @@ The following env vars are defined:
   \$GS_SHARED_GITHUB_COMMIT_GLASS1
   \$GS_SHARED_GITHUB_COMMIT_RB
   \$GS_SHARED_GITHUB_COMMIT_ZINC
+  \$GS_SHARED_GITHUB_COMMIT_SMALLTALKCI
 
   \$GS_SHARED_GIT_CHECKOUT_METACELLO
   \$GS_SHARED_GIT_CHECKOUT_TODE
@@ -72,6 +74,7 @@ The following env vars are defined:
   \$GS_SHARED_GIT_CHECKOUT_GLASS1
   \$GS_SHARED_GIT_CHECKOUT_RB
   \$GS_SHARED_GIT_CHECKOUT_ZINC
+  \$GS_SHARED_GIT_CHECKOUT_SMALLTALKCI
 
 If the repositories have not been cloned, the the env var points to the github repo.
 
@@ -173,6 +176,10 @@ pushd ${GS_SHARED_REPO} >& /dev/null
     if [ ! -d "zinc" ] ; then
       ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg GsDevKit zinc
       checkoutClone $GS_SHARED_GIT_CHECKOUT_ZINC ${GS_SHARED_REPO}/zinc $branchName
+    fi
+    if [ ! -d "smalltalkCI" ] ; then
+      ${GS_HOME}/bin/private/cloneGitHubProject -n $modeArg hpi-swa smalltalkCI
+      checkoutClone $GS_SHARED_GIT_CHECKOUT_SMALLTALKCI ${GS_SHARED_REPO}/smalltalkCI $branchName
     fi
   fi
 popd >& /dev/null

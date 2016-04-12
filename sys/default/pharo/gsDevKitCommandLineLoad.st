@@ -1,9 +1,10 @@
-[ | todeClientRepo filetreeRepo metacelloRepo stonRepo todeRepo |
+[ | todeClientRepo filetreeRepo metacelloRepo stonRepo todeRepo smalltalkCIRepo |
   filetreeRepo := Smalltalk os environment at: 'GS_SHARED_REPO_PHARO3_FILETREE'.
   metacelloRepo := Smalltalk os environment at: 'GS_SHARED_REPO_METACELLO'.
   stonRepo := Smalltalk os environment at: 'GS_SHARED_REPO_STON'.
   todeRepo := Smalltalk os environment at: 'GS_SHARED_REPO_TODE'.
   todeClientRepo := Smalltalk os environment at: 'GS_SHARED_REPO_TODE_CLIENT'.
+  smalltalkCIRepo := Smalltalk os environment at: 'GS_SHARED_REPO_SMALLTALKCI'.
   Metacello new
     baseline: 'FileTree';
     repository: filetreeRepo;
@@ -20,17 +21,25 @@
   Metacello new
     baseline: 'Ston';
     repository: stonRepo;
-    lock.
+    lock;
+    get.
   Metacello new
     baseline: 'Tode';
     repository: todeRepo;
     lock;
     get.
   Metacello new
+    baseline: 'SmalltalkCI';
+    repository: smalltalkCIRepo;
+    lock;
+    get.
+   Metacello new
     baseline: 'TodeClient';
     repository: todeClientRepo;
     get;
-    load:  #( 'Tode-CommandLine' ) ]
+    load:  #( 'SmalltalkCI-CommandLine' );
+    lock.
+  ]
       on: Warning, MetacelloSkipDirtyPackageLoad
       do: [:ex | 
         (ex isKindOf: MetacelloSkipDirtyPackageLoad)
