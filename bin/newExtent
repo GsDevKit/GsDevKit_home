@@ -10,7 +10,7 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-n] [-t] [-s <snapshot-file-path>] <stone-name>
+USAGE: $(basename $0) [-h] [-n] [-t|-a] [-s <snapshot-file-path>] <stone-name>
 
 Copy a new extent into the named stone's extent directory. The stone
 will be stopped before doing the copy and after the copy is complete,
@@ -47,7 +47,12 @@ OPTIONS
      path.
   -t
      Attach image to the \$GS_TODE/sys/stones/<stone-name> directory structure,
-     be used with the -s option.
+     using the rebuildServerTode client script 
+     (see \$GS_HOME/sys/default/client/tode-scripts/rebuildServerTode).
+     Should be used with the -s option.
+  -a
+     Similar to -t option, except that the rebuildSys client script is used
+     (see \$GS_HOME/sys/default/client/tode-scripts/rebuildSys)
 
 EXAMPLES
   $(basename $0) -h
@@ -79,12 +84,14 @@ source ${GS_HOME}/bin/private/shFunctions
 snapshotFile=""
 noRestart="false"
 attachTode="false"
-while getopts "hns:t" OPT ; do
+attachTodeServer="false"
+while getopts "hns:ta" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     n) noRestart="true";;
     s) snapshotFile=`realpath ${OPTARG}` ;; 
     t) attachTode="true";;
+    a) attachTodeServer="true";;
     *) usage; exit 1;;
   esac
 done
@@ -119,6 +126,10 @@ if [ "${noRestart}" = "false" ] ; then
 
   if [ "${attachTode}" = "true" ] ; then
     $GS_HOME/bin/todeIt $stoneName "script --script=rebuildServerTode"
+  else
+    if [ "${attachTodeServer}" = "true" ] ; then
+      $GS_HOME/bin/todeIt $stoneName "script --script=rebuildSys"
+    fi
   fi
 else
   echo "Copy snapshot and leave tranlogs for recovery"

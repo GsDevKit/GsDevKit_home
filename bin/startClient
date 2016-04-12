@@ -20,6 +20,8 @@ OPTIONS
 
 EXAMPLES
   $(basename $0) -h
+  $(basename $0) tode -h
+
   $(basename $0) tode
   $(basename $0) gemtools_329
   $(basename $0) jade_329

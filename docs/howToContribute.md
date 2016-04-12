@@ -54,7 +54,7 @@ This will be called "development"
 For example:
 ```
 cd $GS_HOME/shared/repos/glass
-git remote add development git@github.com/MYACCOUNT/glass
+git remote add development git@github.com:MYACCOUNT/glass.git
 ```
 You can have multiple remote names; to list the ones you have defined, execute:
 
@@ -94,7 +94,9 @@ If you did not already have a stone, create one, and it will be built using the 
 
 Execute the following in tODE::
 
+```
 project load GLASS1  
+```
 (for other projects, see the project name here).
 
 ###7. Implement
@@ -111,6 +113,9 @@ project commit --message'`Issue #00: description of change` GLASS1
 
 using #00 will cause the commit to show up on the issue page.
 
+The tODE command writes all the changes out and performs git commands: `git add <filename>` and 
+`git commit -m "comment"`.  You can examine the changes using `git status`.
+     
 ---
 *SHELL ON LOCAL DEVELOPMENT MACHINE*
 

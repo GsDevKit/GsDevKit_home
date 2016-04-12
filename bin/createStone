@@ -13,6 +13,7 @@ usage() {
 USAGE: $(basename $0) [-h] [-f] [-g] [-n] [-s <snapshot-file-path>]
                       [-t  <tode-snapshot-file-path>]
 		      [-u <project-entry-url>] [-i <project-name>] [-l <project-name>]
+                      [-c] [-z <smalltalkCI-smalltalk.ston-path>]
                       <stone-name> <gemstone-version>
 
 Create a new stone with the given stone name. Do not install tODE. Start stone
@@ -55,6 +56,11 @@ OPTIONS
   -l <project-name>
      Load the given project using the tODE \`project install <project-name.\`.
      tODE must already be installed via -t option.
+  -z <smalltalkCI-smalltalk.ston-path>
+     Customize the stone installation according to the attrbutes specified in the 
+     <smalltalkCI-smalltalk.ston-path> file.
+  -c
+     Load the project specified in the <smalltalkCI-smalltalk.ston-path> file.
 
 EXAMPLES
   $(basename $0) -h
@@ -72,6 +78,8 @@ EXAMPLES
   $(basename $0) -u http://gsdevkit.github.io/GsDevKit_seaside31/Seaside31.ston \
 	         -i Seaside3 -l Seaside3 \
 		 -t \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
+  $(basename $0) -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329 3.2.9
+  $(basename $0) -c -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329 3.2.9
 
 HELP
 }
@@ -99,7 +107,9 @@ todeSnapshotArg=""
 entryUrl=""
 installProjectName=""
 loadProjectName=""
-while getopts "fghns:t:u:i:l:" OPT ; do
+smalltalkCIConfigPath=""
+loadSmalltalkCIConfig="false"
+while getopts "fghns:t:u:i:l:z:c" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     f) force="true";; 
@@ -110,12 +120,14 @@ while getopts "fghns:t:u:i:l:" OPT ; do
     u) entryUrl="${OPTARG}";;
     i) installProjectName="${OPTARG}";;
     l) loadProjectName="${OPTARG}";;
+    z) smalltalkCIConfigPath="${OPTARG}";;
+    c) loadSmalltalkCIConfig="true";;
     *) usage; exit 1;;
   esac
 done
 shift $(($OPTIND - 1))
 
-if [ $# -ne 2 ]; then
+if [ $# -lt 2 ]; then
   echo "incorrect number of args $# (2 expected)"; usage; exit 1
 fi
 stoneName="$1"
@@ -144,12 +156,15 @@ echo "Creating stone $stoneName"
 
 $GS_HOME/bin/downloadGemStone $vers
 
-${GS_HOME}/bin/devKitCommandLine createStone $stoneName $vers
+${GS_HOME}/bin/devKitCommandLine createSmalltalkCIStone $stoneName $vers $smalltalkCIConfigPath
 
 $GS_HOME/bin/newExtent $todeSnapshotArg $noRestartArg $snapshotFileArg $stoneName
 
 if [ "${noRestartArg}x" = "x" ] ; then
   $GS_HOME/bin/startNetldi $stoneName
+  if [ "${smalltalkCIConfigPath}x" != "x" ] ; then
+    ${GS_HOME}/bin/devKitCommandLine setupRuntimeSmalltalkCIStone $stoneName $smalltalkCIConfigPath
+  fi
 fi
 
 if [ "$installTode" = "true" ] ; then
@@ -173,5 +188,21 @@ if [ "$loadProjectName" != "" ] ; then
 project load ${loadProjectName}
 EOF
 fi
+
+if [ "${loadSmalltalkCIConfig}" = "true" ] ; then
+  ${GS_HOME}/bin/devKitCommandLine serverDoIt  $stoneName << EOF
+  GsDeployer bulkMigrate: [
+    [
+      Metacello new
+          baseline: 'SmalltalkCI';
+          repository: '${GS_SHARED_REPO_SMALLTALKCI}';
+          onConflict: [:ex | ex allow ];
+          onLock: [:ex | ex disallow ];
+          load ] on: Warning do: [:w | w resume ].
+      (Smalltalk at: #SmalltalkCI) loadCIFor: '${smalltalkCIConfigPath}'.
+  ]
+EOF
+fi
+
 
 echo "...finished $(basename $0)"

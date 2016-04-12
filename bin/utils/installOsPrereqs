@@ -48,6 +48,7 @@ installPrereqsForUbuntu(){
       14.04)
         sudo dpkg --add-architecture i386
         installUbuntuPackages
+        sudo apt-get -y install fonts-dejavu # ensure that DejaVu Sans Mono font present (default font for tODE)
         sudo ln -f -s /usr/lib/i386-lin-gnu/libstdc++.so.6 /usr/lib/i386-linux-gnu/libstdc++.so
         ;;
       *) echo "unrecognized Ubuntu version $os"; usage; exit 1;;

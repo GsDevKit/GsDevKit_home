@@ -5,6 +5,10 @@
 
 set -xe  # print commands and exit on error
 
+# needed for updateGsDevKit script test
+git config --global user.email "you@example.com"
+git config --global user.name "Your Name"
+
 # no backups on travis
 cp $GS_HOME/tests/sys/local/client/tode-scripts/* $GS_HOME/sys/local/client/tode-scripts
 # use dev branch of tode

@@ -38,6 +38,7 @@ status -h
 stones -h
 stopNetldi -h
 stopStone -h
+smalltalkCI -h
 todeBackup -h
 todeLoad -h
 todeIt -h
@@ -51,6 +52,7 @@ stones
 todeIt ${STONENAME1} eval \`3+4\`
 todeIt ${STONENAME1} ls /home
 
+export GIT_MERGE_AUTOEDIT=no
 updateGsDevKit
 updateGsDevKit -g
 updateGsDevKit -i

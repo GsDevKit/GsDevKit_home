@@ -3,8 +3,6 @@
 # Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
 #=========================================================================
 
-set -x
-
 echo "================="
 echo "   GsDevKit script: $(basename $0) $*"
 echo "              path: $0"

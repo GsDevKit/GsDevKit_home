@@ -10,7 +10,7 @@ echo "================="
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-v Pharo3.0 | Pharo4.0 ] -d <full-path-to-directory>
+USAGE: $(basename $0) [-h] [-v Pharo3.0 | Pharo4.0  | Pharo5.0] -d <full-path-to-directory>
 
 Download a Linux or Mac VM, image. and changes file.
 
@@ -20,7 +20,7 @@ OPTIONS
   -d <full-path-to-directory>
      <full-path-to-directory> specifies the directory into which the chosen
      pharo version is downloaded
-  -v Pharo3.0 | Pharo4.0
+  -v Pharo3.0 | Pharo4.0 | Pharo5.0
      Choose the version of Smalltalk to use for the client. Default is 
      Pharo3.0.
 
@@ -99,6 +99,10 @@ case $version in
         Pharo4.0)
           $cmd get.pharo.org/vm40 | bash
           $cmd get.pharo.org/40 | bash
+          ;;
+        Pharo5.0)
+          $cmd get.pharo.org/vm50 | bash
+          $cmd get.pharo.org/50 | bash
           ;;
         *) usage; exit 1;;
       esac
