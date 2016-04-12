@@ -24,7 +24,7 @@ OPTIONS
   -h 
      display help
   -t gemtools|jade|pharo|tode|<client-specific-args>
-     Create the specifed client using the <client-specific-args>. 
+     Create the specified client using the <client-specific-args>. 
      DEFAULT is '-t tode'.
   -f
      Force tODE client installation, whether or not the image
@@ -36,6 +36,7 @@ OPTIONS
 
 EXAMPLES
   $(basename $0) -h
+  $(basename $0) -t -h
 
   $(basename $0) -t tode -h
   $(basename $0) -t tode todeDev
