@@ -1,0 +1,14 @@
+{
+	"category" : "GsDevKit-Tests-Structure",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GsDevKitComponentTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

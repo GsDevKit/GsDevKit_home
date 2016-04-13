@@ -1,0 +1,15 @@
+{
+	"category" : "GsDevKit-Structure",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"home",
+		"parent" ],
+	"name" : "GsDevKitComponent",
+	"pools" : [
+		 ],
+	"super" : "GsDevKitAbstractComponent",
+	"type" : "normal" }

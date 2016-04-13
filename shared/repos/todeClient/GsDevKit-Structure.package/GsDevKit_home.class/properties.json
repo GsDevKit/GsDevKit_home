@@ -1,0 +1,17 @@
+{
+	"category" : "GsDevKit-Structure",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"_home",
+		"shared",
+		"sys",
+		"server" ],
+	"name" : "GsDevKit_home",
+	"pools" : [
+		 ],
+	"super" : "GsDevKitAbstractComponent",
+	"type" : "normal" }

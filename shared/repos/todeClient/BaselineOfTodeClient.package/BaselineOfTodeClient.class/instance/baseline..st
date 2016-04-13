@@ -2,6 +2,24 @@ baseline
 baseline: spec
 	<baseline>
 	spec
+		for: #(#'pharo3.x' #'pharo4.x' #'pharo5.x')
+		do: [ 
+			spec
+				baseline: 'SmalltalkCI'
+					with: [ 
+							spec
+								repository: 'github://hpi-swa/smalltalkCI:master/repository';
+								yourself ];
+				yourself.
+			spec
+				package: 'GsDevKit-Structure';
+				package: 'GsDevKit-Tests-Structure' with: [ spec requires: 'GsDevKit-Structure' ];
+				yourself.
+			spec
+				group: 'GsDevKitClient' with: #('GsDevKit-Structure' 'SmalltalkCI');
+				group: 'CI' with: #('GsDevKit-Tests-Structure');
+				yourself ].
+	spec
 		for: #(#'pharo3.x' #'pharo4.x')
 		do: [ 
 			spec description: 'This version is for use with GsDevKit_gs_server image, part of GsDevKit_home'.
@@ -13,15 +31,10 @@ baseline: spec
 								loads: 'GemStone';
 								repository: 'github://dalehenrich/tode:master/repository';
 								yourself ];
-				baseline: 'SmalltalkCI'
-					with: [ 
-							spec
-								repository: 'github://hpi-swa/smalltalkCI:master/repository';
-								yourself ];
 				yourself.
 			spec project: 'Tode Common' copyFrom: 'Tode' with: [ spec loads: 'Common-Core' ].
 			spec
-				package: 'GsDevKit-CommandLine' with: [ spec requires: #('OSProcess' 'Tode Common') ];
+				package: 'GsDevKit-CommandLine' with: [ spec requires: #('OSProcess' 'Tode Common' 'GsDevKit-Structure') ];
 				configuration: 'OSProcess'
 					with: [ 
 							spec
