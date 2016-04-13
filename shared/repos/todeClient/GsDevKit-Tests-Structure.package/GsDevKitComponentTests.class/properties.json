@@ -10,5 +10,5 @@
 	"name" : "GsDevKitComponentTests",
 	"pools" : [
 		 ],
-	"super" : "TestCase",
+	"super" : "GsDevKitAbstractTests",
 	"type" : "normal" }

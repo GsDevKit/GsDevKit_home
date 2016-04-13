@@ -1,4 +1,5 @@
 navigating
 / aString
-	(self class instVarIndexFor: aString asString ifAbsent: [  ]) ifNotNil: [ ^ self perform: aString asSymbol ].
+	(self class instVarNames includes: aString asSymbol)
+		ifTrue: [ ^ self perform: aString asSymbol ].
 	^ self _fileReference / aString
