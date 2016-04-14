@@ -34,7 +34,7 @@ baseline: spec
 				yourself.
 			spec project: 'Tode Common' copyFrom: 'Tode' with: [ spec loads: 'Common-Core' ].
 			spec
-				package: 'GsDevKit-CommandLine' with: [ spec requires: #('OSProcess' 'Tode Common' 'GsDevKit-Structure') ];
+				package: 'GsDevKit-CommandLine' with: [ spec requires: #('OSProcess' 'Tode Common') ];
 				configuration: 'OSProcess'
 					with: [ 
 							spec
