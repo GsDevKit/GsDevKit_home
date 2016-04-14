@@ -7,7 +7,7 @@
 	"commentStamp" : "",
 	"instvars" : [
 		"repositoryName" ],
-	"name" : "GsDevKitSharedReposGit",
+	"name" : "GsDevKitSharedReposGitRepository",
 	"pools" : [
 		 ],
 	"super" : "GsDevKitComponent",

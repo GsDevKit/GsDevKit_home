@@ -3,9 +3,11 @@
 		 },
 	"instance" : {
 		"_pathName" : "dkh 4/14/2016 10:03",
+		"isGitRepository" : "dkh 4/14/2016 11:15",
 		"isSmalltalkCIRepository" : "dkh 4/14/2016 10:52",
+		"lockClientProject" : "dkh 4/14/2016 12:33",
 		"repositoryName" : "dkh 4/14/2016 10:02",
 		"repositoryName:" : "dkh 4/14/2016 10:02",
 		"smalltalkCI" : "dkh 4/14/2016 10:25",
-		"smalltalkCISpec" : "dkh 4/14/2016 10:19",
+		"smalltalkClientBaselineSpecsDo:" : "dkh 4/14/2016 12:25",
 		"smalltalkConfigFilename" : "dkh 4/14/2016 10:15" } }

@@ -1,5 +1,5 @@
 gsdevkit api
 gitRepositoryNamed: aString
-	^ (GsDevKitSharedReposGit home: self _home parent: self)
+	^ (GsDevKitSharedReposGitRepository home: self _home parent: self)
 		repositoryName: aString;
 		yourself

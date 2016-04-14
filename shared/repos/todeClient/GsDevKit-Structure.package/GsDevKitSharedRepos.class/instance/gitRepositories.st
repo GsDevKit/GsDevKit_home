@@ -1,3 +1,4 @@
 gsdevkit api
 gitRepositories
-	^ self asFileReference directories select: [ :dir | (self gitRepositoryNamed: dir basename) isGitRepository ]
+	^ (self asFileReference directories collect: [ :dir | self gitRepositoryNamed: dir basename ])
+		select: [ :each | each isGitRepository ]
