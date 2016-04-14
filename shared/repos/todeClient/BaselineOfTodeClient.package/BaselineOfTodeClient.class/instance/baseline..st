@@ -17,7 +17,7 @@ baseline: spec
 				yourself.
 			spec
 				group: 'GsDevKitClient' with: #('GsDevKit-Structure' 'SmalltalkCI');
-				group: 'CI' with: #('GsDevKit-Tests-Structure');
+				group: 'GsDevKitClient Tests' with: #('GsDevKit-Tests-Structure');
 				yourself ].
 	spec
 		for: #(#'pharo3.x' #'pharo4.x')

@@ -1,0 +1,14 @@
+{
+	"category" : "GsDevKit-Structure",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"repositoryName" ],
+	"name" : "GsDevKitSharedReposGit",
+	"pools" : [
+		 ],
+	"super" : "GsDevKitComponent",
+	"type" : "normal" }
