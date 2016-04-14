@@ -13,7 +13,7 @@ baseline: spec
 				yourself.
 			spec
 				package: 'GsDevKit-Structure';
-				package: 'GsDevKit-Tests-Structure' with: [ spec requires: 'GsDevKit-Structure' ];
+				package: 'GsDevKit-Tests-Structure' with: [ spec requires: #('GsDevKit-Structure' 'SmalltalkCI') ];
 				yourself.
 			spec
 				group: 'GsDevKitClient' with: #('GsDevKit-Structure' 'SmalltalkCI');

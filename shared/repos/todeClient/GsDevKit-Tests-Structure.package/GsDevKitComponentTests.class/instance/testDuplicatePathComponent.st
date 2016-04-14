@@ -1,5 +1,5 @@
 tests
-testDupliatePaths
+testDuplicatePathComponent
 	"make sure that instvar mapping does not get confused when superclass has same path component"
 
 	self

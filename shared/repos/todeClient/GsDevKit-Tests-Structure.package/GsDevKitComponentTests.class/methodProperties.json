@@ -2,11 +2,9 @@
 	"class" : {
 		 },
 	"instance" : {
-		"testDupliatePaths" : "dkh 4/13/2016 12:40",
+		"testDuplicatePathComponent" : "dkh 4/13/2016 17:05",
 		"testServerStones" : "dkh 4/13/2016 12:19",
 		"testSys" : "dkh 4/13/2016 11:54",
-		"testSysDefaultServerProjects" : "dkh 4/13/2016 11:56",
-		"testSysLocalServerProjects" : "dkh 4/13/2016 11:56",
 		"testSysLocalServerStones" : "dkh 4/13/2016 12:20",
 		"testSysStones" : "dkh 4/13/2016 12:20",
 		"test_home" : "dkh 4/13/2016 12:04" } }
