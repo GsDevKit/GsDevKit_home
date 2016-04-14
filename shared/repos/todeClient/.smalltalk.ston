@@ -5,7 +5,7 @@ SmalltalkCISpec {
       #load : [ 'GsDevKitClient Tests' ],
       #directory : 'repository',
       #onWarningLog : true,
-      #platforms : [ #pharo]
+      #platforms : [ #pharo ]
     }
   ]
 }
