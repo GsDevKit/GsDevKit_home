@@ -1,0 +1,9 @@
+TDObjectGatewayLeafNode{#name:'GemStoneGCI',#contents:'^ TDProjectSpecEntryDefinition new
+    baseline: \'GemStoneGCI\'
+      repository: \'github://GsDevKit/GemStone-GCI:master/repository\'
+      loads: #( \'default\' );
+    installScript: \'project clone --https --local GemStoneGCI\';
+    status: #( #\'inactive\' );
+    locked: false;
+    yourself.
+'}
