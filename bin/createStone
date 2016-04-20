@@ -48,8 +48,7 @@ OPTIONS
   -u <project-entry-url>
      Download the project entry at the given url into 
      \`/sys/local/stones/<stone-name>/projects\`. Runs the tODE
-     \`project entry --url=<project-entry-url>\` command. tODE must already be installed via
-     -t option.
+     \`project entry --url=<project-entry-url>\` command.
   -i <project-name>
      Install the given project using the tODE \`project install <project-name>\`.
      tODE must already be installed via -t option.
@@ -173,7 +172,7 @@ fi
 
 if [ "$entryUrl" != "" ] ; then
   $GS_HOME/bin/private/gsDevKitTodeCommandLine todeIt $stoneName << EOF
-project entry --url=${entryUrl} /sys//stone/projects
+project entry --url=${entryUrl} /sys/stone/projects
 EOF
 fi
 
