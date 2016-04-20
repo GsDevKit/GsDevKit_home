@@ -1,0 +1,15 @@
+{
+	"category" : "GsDevKit-Structure",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"server",
+		"sessions" ],
+	"name" : "GsDevKitSysLocal",
+	"pools" : [
+		 ],
+	"super" : "GsDevKitComponent",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "GsDevKit-Structure",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"stones" ],
+	"name" : "GsDevKitSysLocalServer",
+	"pools" : [
+		 ],
+	"super" : "GsDevKitSharedServer",
+	"type" : "normal" }

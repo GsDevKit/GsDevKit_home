@@ -1,0 +1,16 @@
+{
+	"category" : "GsDevKit-Structure",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"default",
+		"local",
+		"stones" ],
+	"name" : "GsDevKitSys",
+	"pools" : [
+		 ],
+	"super" : "GsDevKitComponent",
+	"type" : "normal" }

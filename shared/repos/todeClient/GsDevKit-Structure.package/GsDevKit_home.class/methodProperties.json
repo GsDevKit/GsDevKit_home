@@ -1,0 +1,22 @@
+{
+	"class" : {
+		"defaultStone" : "dkh 4/14/2016 11:08",
+		"defaultStoneIfAbsent:" : "dkh 4/14/2016 11:08",
+		"lockClientGsDevKitProjects" : "dkh 4/14/2016 11:17",
+		"sessionDescriptionNamed:" : "dkh 4/14/2016 11:09",
+		"sessionDescriptionNamed:ifAbsent:" : "dkh 4/14/2016 11:09",
+		"stoneNamed:" : "dkh 4/14/2016 11:09",
+		"stoneNamed:ifAbsent:" : "dkh 4/14/2016 11:09" },
+	"instance" : {
+		"_fileReference" : "dkh 4/13/2016 11:31",
+		"_home" : "dkh 4/13/2016 10:57",
+		"defaultStone" : "dkh 4/13/2016 15:50",
+		"defaultStoneIfAbsent:" : "dkh 4/13/2016 15:51",
+		"lockClientGsDevKitProjects" : "dkh 4/14/2016 11:17",
+		"server" : "dkh 4/13/2016 11:59",
+		"sessionDescriptionNamed:" : "dkh 4/13/2016 13:39",
+		"sessionDescriptionNamed:ifAbsent:" : "dkh 4/13/2016 13:38",
+		"shared" : "dkh 4/13/2016 11:34",
+		"stoneNamed:" : "dkh 4/13/2016 14:58",
+		"stoneNamed:ifAbsent:" : "dkh 4/13/2016 14:57",
+		"sys" : "dkh 4/13/2016 11:34" } }

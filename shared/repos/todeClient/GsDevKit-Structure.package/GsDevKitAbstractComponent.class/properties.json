@@ -1,0 +1,14 @@
+{
+	"category" : "GsDevKit-Structure",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GsDevKitAbstractComponent",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }
