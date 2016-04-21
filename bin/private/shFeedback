@@ -5,9 +5,9 @@
 #   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
 #=========================================================================
 
-ANSI_RED="\033[31;1m"
-ANSI_GREEN="\033[32;1m"
-ANSI_YELLOW="\033[33;1m"
+ANSI_RED="\033[91;1m"
+ANSI_GREEN="\033[92;1m"
+ANSI_YELLOW="\033[93;1m"
 ANSI_RESET="\033[0m"
 
 banner_error() {
@@ -16,6 +16,6 @@ banner_error() {
 }
 
 banner_finished() {
-  printf "${ANSI_YELLOW}%s${ANSI_RESET}\n" "$1" 1>&2
+  printf "${ANSI_GREEN}%s${ANSI_RESET}\n" "$1" 1>&2
   exit 0
 }

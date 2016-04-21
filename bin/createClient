@@ -165,4 +165,4 @@ case $clientType in
   *) usage; banner_error "Unknown client type: $clientType :: $(basename $0) $theArgs";;
 esac
 
-banner_finished: "...finished $(basename $0) $theArgs"
+banner_finished "...finished $(basename $0) $theArgs"
