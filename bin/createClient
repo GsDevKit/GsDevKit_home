@@ -1,12 +1,17 @@
 #! /usr/bin/env bash
 #=========================================================================
-# Copyright (c) 2014, 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+# Copyright (c) 2014, 2015, 2016 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#
+#   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
 #=========================================================================
 
 echo "================="
 echo "   GsDevKit script: $(basename $0) $*"
 echo "              path: $0"
 echo "================="
+
+theArgs="$*"
+source ${GS_HOME}/bin/private/shFeedback
 
 usage() {
   cat <<HELP
@@ -83,8 +88,7 @@ HELP
 
 set -e # exit on error
 if [ "${GS_HOME}x" = "x" ] ; then
-  echo "the GS_HOME environment variable needs to be defined"
-  exit 1
+  banner_error "the GS_HOME environment variable needs to be defined :: $(basename $0) $theArgs"
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
@@ -104,7 +108,7 @@ while getopts "fht:FD" OPT ; do
     F) deleteClientDir="true" ;;
     D) debugArg=" -D ";;
     t) typeArg="set"; clientType="${OPTARG}" ;;
-    *) usage; exit 1;;
+    *) usage; banner_error "Uknown option :: $(basename $0) $theArgs";;
   esac
 done
 shift $(($OPTIND - 1))
@@ -119,7 +123,7 @@ if [ "${showHelp}" = "true" ]; then
 fi
 
 if [ $# -lt 1 ]; then
-  echo "missing cient name argument"; usage; exit 1
+  usage; banner_error "missing cient name argument :: $(basename $0) $theArgs"
 fi
 clientName=$1
 shift 1
@@ -158,7 +162,7 @@ case $clientType in
     ;;
   jade)
     ;;
-  *) usage; exit 1;;
+  *) usage; banner_error "Unknown client type: $clientType :: $(basename $0) $theArgs";;
 esac
 
-echo "...finished $(basename $0)"
+banner_finished: "...finished $(basename $0) $theArgs"
