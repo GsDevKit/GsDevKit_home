@@ -64,4 +64,4 @@ fi
 
 $GS_HOME/bin/setupGsDevKit $modeArg $organizationArg server
 
-banner_finished: "...finished $(basename $0) $theArgs"
+banner_finished "...finished $(basename $0) $theArgs"
