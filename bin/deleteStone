@@ -26,6 +26,7 @@ OPTIONS
 EXAMPLES
   $(basename $0) -h
   $(basename $0) gs_326
+  $(basename $0) gs_326 seaside_329
 
 HELP
 }

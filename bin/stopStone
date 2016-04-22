@@ -11,7 +11,7 @@ start_banner
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-b] <stone-name>
+USAGE: $(basename $0) [-h] [-b] <stone-name>...
 
 Stop the named stone. Any statmonitor processes associated 
 with the stone will be stopped.
@@ -26,6 +26,8 @@ OPTIONS
 EXAMPLES
   $(basename $0) -h
   $(basename $0) gs_326
+  $(basename $0) gs_326 seaside_329
+  $(basename $0) -b gs_326 seaside_329
 
 HELP
 }
@@ -54,27 +56,30 @@ done
 shift $(($OPTIND - 1))
 
 if [ $# -ne 1 ]; then
-  usage; exit_1_banner "Missing required argument"
-fi
-stoneName=$1
-stonePath=$GS_SERVER_STONES/${stoneName}
-
-if [ ! -d "$stonePath" ] ; then
-  exit_1_banner "The stone $stoneName does not exist"
+  usage; exit_1_banner "Missing stone name argument"
 fi
 
-if [ -e "$stonePath/stone.env" ] ; then
-  # set up stone environment
-  pushd $stonePath >& /dev/null
-    source $stonePath/stone.env
-  popd >& /dev/null
+for stoneName in "$@"
+do
+  stonePath=$GS_SERVER_STONES/${stoneName}
 
-  # stop the stone
-  $GS_HOME/bin/devKitCommandLine stopstone $stoneName
+  if [ -d "$stonePath" ] ; then
+    if [ -e "$stonePath/stone.env" ] ; then
+      # set up stone environment
+      pushd $stonePath >& /dev/null
+        source $stonePath/stone.env
+      popd >& /dev/null
 
-  if [ "${stopNetldi}" = "true" ] ; then
-    $GS_HOME/bin/stopNetldi $stoneName
+      # stop the stone
+      $GS_HOME/bin/devKitCommandLine stopstone $stoneName
+
+      if [ "${stopNetldi}" = "true" ] ; then
+        $GS_HOME/bin/stopNetldi $stoneName
+      fi
+    else
+      exit_1_banner "Required file: $stonePath/stone.env does not exits for $stoneName"
+    fi
   fi
-fi
+done
 
 exit_0_banner "...finished"
