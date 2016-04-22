@@ -85,10 +85,8 @@ EXAMPLES
 HELP
 }
 
-set -e # exit on error
 if [ "${GS_HOME}x" = "x" ] ; then
-  echo "the GS_HOME environment variable needs to be defined"
-  exit 1
+  exit_1_banner "the GS_HOME environment variable needs to be defined"
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
@@ -116,7 +114,7 @@ while getopts "cdhgtip:su:" OPT ; do
     s) updateSharedClones="true";;
     t) updateTodeClone="true";;
     u) gsUpgraderCleanCacheArg="${OPTARG}";;
-    *) usage; exit 1;;
+    *) usage; exit_1_banner "Unknown option";;
   esac
 done
 shift $(($OPTIND - 1))
@@ -151,11 +149,9 @@ if [ "$updateGsDevKitClones" = "true" ]; then
       $GS_HOME/bin/patches/patchIssue7
     else
       if [ "${patchName}x" != "x" ] ; then
-	echo "unknown patch: $patchName (should be issue7)"
-	exit 1
+	exit_1_banner "unknown patch: $patchName (should be issue7)"
       fi
-      echo "The directory $GS_HOME/local exists ----- you need to run a patch to fix Issue #7: see https://github.com/GsDevKit/GsDevKit_home/pull/9"
-      exit 1
+      exit_1_banner "The directory $GS_HOME/local exists ----- you need to run a patch to fix Issue #7: see https://github.com/GsDevKit/GsDevKit_home/pull/9"
     fi
   fi
   if [ -d "$GS_SYS_LOCAL" ] && [ "${patchName}x" = "x" ]; then
@@ -206,4 +202,4 @@ if [ "$rebuildTodeClient" = "true" ]; then
   fi  
 fi
 
-echo "...finished $(basename $0)"
+exit_0_banner "...finished"
