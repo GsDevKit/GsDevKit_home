@@ -25,7 +25,7 @@ test_exit_status() {
 
   status="$1"
   if [ "$status" -ne 1 ] ;  then
-    printf "${ansi_red}Unexpected exit status ($status)${ansi_reset}"
+    printf "${ansi_red}Unexpected exit status (%s)${ansi_reset}\n" "$status"
     exit 1
   fi
 }

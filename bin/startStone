@@ -114,14 +114,14 @@ pushd $stonePath $stonePath >& /dev/null
 popd >& /dev/null
 
 if [ "${restart}x" = "x" ] ; then
-  set +e
+  trap - ERR
   $stonePath/product/bin/waitstone $stoneName  -1
   status=$?
   if [ $status -eq 0 ] ; then
     echo "stone $stoneName already running, to restart use -r option"
     exit 0
   fi
-  set -e
+  trap 'error ${LINENO}' ERR
 fi
 
 # start the stone

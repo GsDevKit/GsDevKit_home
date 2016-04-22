@@ -107,7 +107,7 @@ case $version in
         *) usage; exit 1;;
       esac
       if [ -e "./pharo" ] ; then
-        set +e
+        trap - ERR
 missing_32-bit_libs() {
 if [ -e "$GS_HOME/bin/.gsdevkitSetup" ] ; then
   echo "The 32-bit libraries required by Pharo have not been installed on this system."
@@ -120,7 +120,7 @@ exit 1
         trap 'missing_32-bit_libs' ERR
         ./pharo --help --vm-display-null &> /dev/null 2>&1
         trap - ERR
-        set -e
+        trap 'error ${LINENO}' ERR
       else
         # script needs to run on Windows where we're not concerned about 32 bit libs
 	if [ ! -e "./Pharo.exe" ] ; then
