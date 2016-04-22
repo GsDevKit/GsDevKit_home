@@ -13,8 +13,6 @@ set -x  # print commands and exit on error
 #     "the GsDevKit_server project has not bee installed..."
 #     "The reqewst client: tode1 does not exist"
 
-ANSI_RED="\033[91;1m"
-ANSI_RESET="\033[0m"
 
 run_test() {
   $1
@@ -22,9 +20,12 @@ run_test() {
 }
 
 test_exit_status() {
+  local ansi_red="\033[91;1m"
+  local ansi_reset="\033[0m"
+
   status="$1"
   if [ "$status" -ne 1 ] ;  then
-    printf "${ANSI_RED}Unexpected exit status ($status)${ANSI_RESET}"
+    printf "${ansi_red}Unexpected exit status ($status)${ansi_reset}"
     exit 1
   fi
 }
@@ -54,12 +55,6 @@ set -e
 installServerClient
 set +e
 # Now test argument error conditions
-run_test "attachStone -fd"
-run_test "attachStone -dm"
-run_test "attachStone -md"
-run_test "attachStone -A"
-run_test "attachStone xxx"
-
 run_test "createClient"
 
 run_test "createStone"
