@@ -1,12 +1,17 @@
 #! /usr/bin/env bash
 #=========================================================================
-# Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+# Copyright (c) 2015, 2016 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#
+#   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
 #=========================================================================
 
 echo "================="
 echo "   GsDevKit script: $(basename $0) $*"
 echo "              path: $0"
 echo "================="
+
+theArgs="$*"
+source ${GS_HOME}/bin/private/shFeedback
 
 usage() {
   cat <<HELP
@@ -39,19 +44,16 @@ HELP
 
 PLATFORM="`uname -sm | tr ' ' '-'`"
 if [[ "$PLATFORM" == MINGW32_NT* || "$PLATFORM" == MSYS_NT* ]] ; then
-  echo "This script is a server-only script and cannot be used on Windows"
-  exit 1
+  exit_1_banner "This script is a server-only script and cannot be used on Windows"
 fi
 
 set -e # exit on error
 if [ "${GS_HOME}x" = "x" ] ; then
-  echo "the GS_HOME environment variable needs to be defined"; exit 1
+  exit_1_banner "The GS_HOME environment variable needs to be defined :: $(basename $0) $theArgs"
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 if [ "$GS_SERVER{}x" = "x" ] ; then
-  echo "the GS_SERVER environment variable needs to be defined"
-  echo "Perhaps a stone has not been create yet?"
-  exit 1
+  exit_1_banner "The \$GS_SERVER environment variable needs to be defined. Perhaps a stone has not been created yet?"
 fi
 
 forceArg=""
@@ -69,13 +71,13 @@ while getopts "cfhl:s:u" OPT ; do
        hasSnapshotFile="true"
        ;;
     u) createStone="false";;
-    *) usage; exit 1;;
+    *) usage; exit_1_banner "Uknown option :: $(basename $0) $theArgs";;
   esac
 done
 shift $(($OPTIND - 1))
 
 if [ $# -ne 3 ]; then
-  usage; exit 1
+  usage; exit_1_banner "Three positional arguments are required :: $(basename $0) $theArgs"
 fi
 
 sourceStoneName="$1"
@@ -86,8 +88,7 @@ sourceStonePath=$GS_SERVER_STONES/$sourceStoneName
 targetStonePath=$GS_SERVER_STONES/$targetStoneName
 
 if [ ! -d "$sourceStonePath" ] ; then
-  echo "The stone $sourceStoneName does not exist"
-  exit 1
+  exit_1_banner "The stone $sourceStoneName does not exist :: $(basename $0) $theArgs"
 fi
 
 sourceStoneVersion="$(sed -n '2{p;q;}' $sourceStonePath/product/version.txt| awk '{print $1;}')"
@@ -149,12 +150,11 @@ pushd $targetStonePath >& /dev/null
 popd >& /dev/null
 
 if [ "$runUpgrade" = "false" ] ; then
-  echo "$targetStoneName created"
-  exit 0
+  exit_0_banner "$targetStoneName created :: $(basename $0) $theArgs"
 fi
 
 if [ "$GEMSTONE}x" = "x" ] ; then
-  echo "\$GEMSTONE env var not set"; exit 1
+  exit_1_banner "\$GEMSTONE env var not set"
 fi
 
 startStoneArg=""
@@ -321,5 +321,5 @@ ${postUpgradeLoadScriptPath}
 TODE
 fi
 
-echo "...finished $(basename $0)"
+exit_0_banner "...finished $(basename $0) :: $(basename $0) $theArgs"
 

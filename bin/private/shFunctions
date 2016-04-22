@@ -9,11 +9,11 @@ getOpts_help() {
 while getopts "h" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
-    *) echo "unknown option $OPT"; usage; exit 1;;
+    *) usage; exit_1_banner "Unknown option :: $(basename $0) $theArgs";;
   esac
 done
 if [ "${GS_HOME}x" = "x" ] ; then
-  echo "the GS_HOME environment variable needs to be defined"; exit 1
+  exit_1_banner "The GS_HOME environment variable needs to be defined :: $(basename $0) $theArgs"
 fi
 }
 

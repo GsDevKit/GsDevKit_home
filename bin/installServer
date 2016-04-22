@@ -37,12 +37,12 @@ HELP
 # We should run this as a normal user, not root.
 if [ `id | cut -f2 -d= | cut -f1 -d\(` -eq 0 ]
     then
-    banner_error "This script must be run as a normal user, not root."
+    exit_1_banner "This script must be run as a normal user, not root."
 fi
 
 set -e # exit on error
 if [ "${GS_HOME}x" = "x" ] ; then
-   banner_error "the GS_HOME environment variable needs to be defined"
+   exit_1_banner "The GS_HOME environment variable needs to be defined"
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
@@ -53,15 +53,15 @@ while getopts "hc:o:" OPT ; do
     h) usage; exit 0;;
     c) modeArg=" -c ${OPTARG} ";;
     o) organizationArg=" -o ${OPTARG} ";;
-    *) usage; banner_error "Uknown option :: $(basename $0) $theArgs";;
+    *) usage; exit_1_banner "Uknown option :: $(basename $0) $theArgs";;
   esac
 done
 shift $(($OPTIND - 1))
 
 if [ $# -ne 0 ]; then
-  usage; banner_error "unexpected argument ($1) :: $(basename $0) $theArgs"
+  usage; exit_1_banner "Unexpected argument ($1) :: $(basename $0) $theArgs"
 fi
 
 $GS_HOME/bin/setupGsDevKit $modeArg $organizationArg server
 
-banner_finished "...finished $(basename $0) $theArgs"
+exit_0_banner "...finished $(basename $0) $theArgs"
