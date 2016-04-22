@@ -53,7 +53,7 @@ shift 1
 stonePath=$GS_SERVER_STONES/$stoneName
 
 if [ ! -d "$stonePath" ] ; then
-  exit_1 banner "The stone $stoneName does not exist"
+  exit_1_banner "The stone $stoneName does not exist"
 fi
 
 # set up stone environment
