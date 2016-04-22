@@ -13,52 +13,59 @@ set -x  # print commands and exit on error
 #     "the GsDevKit_server project has not bee installed..."
 #     "The reqewst client: tode1 does not exist"
 
+ANSI_RED="\033[91;1m"
+ANSI_RESET="\033[0m"
+
+run_test() {
+  $1
+  test_exit_status $?
+}
+
 test_exit_status() {
   status="$1"
   if [ "$status" -ne 1 ] ;  then
-    echo "unexpected exit status ($status)"
+    printf "${ANSI_RED}Unexpected exit status ($status)${ANSI_RESET}"
     exit 1
   fi
 }
 set +e
-createStone ${STONENAME2} $GS_VERSION
-test_exit_status $?
-createClient tode
-test_exit_status $?
-devKitCommandLine --list
-test_exit_status $?
-devKitCommandLine --list
-test_exit_status $?
-$GS_HOME/bin/status
-test_exit_status $?
-startStatmonitor ${STONENAME2}
-test_exit_status $?
-startStone ${STONENAME2}
-test_exit_status $?
-startNetldi ${STONENAME2}
-test_exit_status $?
-stopStone ${STONENAME2}
-test_exit_status $?
-updateGsDevKit
-test_exit_status $?
-newExtent ${STONENAME2}
-test_exit_status $?
-stopNetldi ${STONENAME2}
-test_exit_status $?
-upgradeStone ${STONENAME1} ${STONENAME2} 3.2.9
-test_exit_status $?
-startTopaz  ${STONENAME1} -l
-test_exit_status $?
+run_test "createStone ${STONENAME2} $GS_VERSION"
+run_test "createClient tode"
+run_test "devKitCommandLine --list"
+run_test "devKitCommandLine --list"
+run_test "$GS_HOME/bin/status"
+run_test "startStatmonitor ${STONENAME2}"
+run_test "startStone ${STONENAME2}"
+run_test "startNetldi ${STONENAME2}"
+run_test "stopStone ${STONENAME2}"
+run_test "updateGsDevKit"
+run_test "newExtent ${STONENAME2}"
+run_test "stopNetldi ${STONENAME2}"
+run_test "upgradeStone ${STONENAME1} ${STONENAME2} 3.2.9"
+run_test "startTopaz  ${STONENAME1} -l"
 
-todeBackup ${STONENAME2} backup.dbf
-test_exit_status $?
-todeRestore ${STONENAME2} backup.dbf
-test_exit_status $?
-todeUpdate ${STONENAME2}
-test_exit_status $?
+run_test "todeBackup ${STONENAME2} backup.dbf"
+run_test "todeRestore ${STONENAME2} backup.dbf"
+run_test "todeUpdate ${STONENAME2}"
 
-startClient tode1
-test_exit_status $?
+run_test "startClient tode1"
 
 set -e
-downloadGemStone 3.2.11
+installServerClient
+set +e
+# Now test argument error conditions
+run_test "attachStone -fd"
+run_test "attachStone -dm"
+run_test "attachStone -md"
+run_test "attachStone -A"
+run_test "attachStone xxx"
+
+run_test "createClient"
+
+run_test "createStone"
+
+run_test "deleteClient"
+
+run_test "installServer arg"
+
+run_test "upgradeStone"

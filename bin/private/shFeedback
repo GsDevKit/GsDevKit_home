@@ -11,17 +11,17 @@ ANSI_YELLOW="\033[93;1m"
 ANSI_RESET="\033[0m"
 
 exit_1_banner() {
-  printf "${ANSI_RED}%s${ANSI_RESET}\n" "$1" 1>&2
+  printf "${ANSI_RED}%s :: $(basename $0) ${theArgs}${ANSI_RESET}\n" "$1" 1>&2
   exit 1
 }
 
 exit_0_banner() {
-  printf "${ANSI_GREEN}%s${ANSI_RESET}\n" "$1" 1>&2
+  printf "${ANSI_GREEN}%s :: $(basename $0) ${theArgs}${ANSI_RESET}\n" "$1" 1>&2
   exit 0
 }
 
 interrupted() {
-  printf "${ANSI_YELLOW}%s${ANSI_RESET}\n" "$1" 1>&2
+  printf "${ANSI_YELLOW}%s :: $(basename $0) ${theArgs}${ANSI_RESET}\n" "$1" 1>&2
   exit 1
 }
 

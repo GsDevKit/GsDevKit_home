@@ -88,7 +88,7 @@ HELP
 
 set -e # exit on error
 if [ "${GS_HOME}x" = "x" ] ; then
-  exit_1_banner "The GS_HOME environment variable needs to be defined :: $(basename $0) $theArgs"
+  exit_1_banner "The GS_HOME environment variable needs to be defined"
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
@@ -108,7 +108,7 @@ while getopts "fht:FD" OPT ; do
     F) deleteClientDir="true" ;;
     D) debugArg=" -D ";;
     t) typeArg="set"; clientType="${OPTARG}" ;;
-    *) usage; exit_1_banner "Uknown option :: $(basename $0) $theArgs";;
+    *) usage; exit_1_banner "Uknown option";;
   esac
 done
 shift $(($OPTIND - 1))
@@ -123,7 +123,7 @@ if [ "${showHelp}" = "true" ]; then
 fi
 
 if [ $# -lt 1 ]; then
-  usage; exit_1_banner "Missing cient name argument :: $(basename $0) $theArgs"
+  usage; exit_1_banner "Missing cient name argument"
 fi
 clientName=$1
 shift 1
@@ -162,7 +162,7 @@ case $clientType in
     ;;
   jade)
     ;;
-  *) usage; exit_1_banner "Unknown client type: $clientType :: $(basename $0) $theArgs";;
+  *) usage; exit_1_banner "Unknown client type: $clientType";;
 esac
 
-exit_0_banner "...finished $(basename $0) $theArgs"
+exit_0_banner "...finished"

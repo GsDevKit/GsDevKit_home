@@ -90,11 +90,11 @@ HELP
 
 PLATFORM="`uname -sm | tr ' ' '-'`"
 if [[ "$PLATFORM" == MINGW32_NT* || "$PLATFORM" == MSYS_NT* ]] ; then
-  exit_1_banner "This script is a server-only script and cannot be used on Windows :: $(basename $0) $theArgs"
+  exit_1_banner "This script is a server-only script and cannot be used on Windows "
 fi
 
 if [ "${GS_HOME}x" = "x" ] ; then
-  exit_1_banner "The \$GS_HOME environment variable needs to be defined :: $(basename $0) $theArgs"
+  exit_1_banner "The \$GS_HOME environment variable needs to be defined"
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
@@ -130,7 +130,7 @@ done
 shift $(($OPTIND - 1))
 
 if [ $# -lt 2 ]; then
-  usage; exit_1_banner "Incorrect number of positional args $# (2 expected) :: $(basename $0) $theArgs"
+  usage; exit_1_banner "Incorrect number of positional args $# (2 expected)"
 fi
 stoneName="$1"
 vers="$2"
@@ -147,7 +147,7 @@ fi
 
 if [ -d $GS_SERVER_STONES/$stoneName ] ; then
   if [ "${force}x" = "x" ] ; then
-    exit_1_banner "The stone $stoneName already exists. Use the -f option to force re-creation :: $(basename $0) $theArgs"
+    exit_1_banner "The stone $stoneName already exists. Use the -f option to force re-creation"
   else
     $GS_HOME/bin/deleteStone $stoneName
   fi
@@ -206,4 +206,4 @@ EOF
 fi
 
 
-exit_0_banner "...finished $(basename $0) $theArgs"
+exit_0_banner "...finished"

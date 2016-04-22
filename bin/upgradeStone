@@ -49,7 +49,7 @@ fi
 
 set -e # exit on error
 if [ "${GS_HOME}x" = "x" ] ; then
-  exit_1_banner "The GS_HOME environment variable needs to be defined :: $(basename $0) $theArgs"
+  exit_1_banner "The GS_HOME environment variable needs to be defined"
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 if [ "$GS_SERVER{}x" = "x" ] ; then
@@ -71,13 +71,13 @@ while getopts "cfhl:s:u" OPT ; do
        hasSnapshotFile="true"
        ;;
     u) createStone="false";;
-    *) usage; exit_1_banner "Uknown option :: $(basename $0) $theArgs";;
+    *) usage; exit_1_banner "Uknown option";;
   esac
 done
 shift $(($OPTIND - 1))
 
 if [ $# -ne 3 ]; then
-  usage; exit_1_banner "Three positional arguments are required :: $(basename $0) $theArgs"
+  usage; exit_1_banner "Three positional arguments are required"
 fi
 
 sourceStoneName="$1"
@@ -88,7 +88,7 @@ sourceStonePath=$GS_SERVER_STONES/$sourceStoneName
 targetStonePath=$GS_SERVER_STONES/$targetStoneName
 
 if [ ! -d "$sourceStonePath" ] ; then
-  exit_1_banner "The stone $sourceStoneName does not exist :: $(basename $0) $theArgs"
+  exit_1_banner "The stone $sourceStoneName does not exist"
 fi
 
 sourceStoneVersion="$(sed -n '2{p;q;}' $sourceStonePath/product/version.txt| awk '{print $1;}')"
@@ -150,7 +150,7 @@ pushd $targetStonePath >& /dev/null
 popd >& /dev/null
 
 if [ "$runUpgrade" = "false" ] ; then
-  exit_0_banner "$targetStoneName created :: $(basename $0) $theArgs"
+  exit_0_banner "$targetStoneName created"
 fi
 
 if [ "$GEMSTONE}x" = "x" ] ; then
@@ -321,5 +321,5 @@ ${postUpgradeLoadScriptPath}
 TODE
 fi
 
-exit_0_banner "...finished $(basename $0) :: $(basename $0) $theArgs"
+exit_0_banner "...finished"
 

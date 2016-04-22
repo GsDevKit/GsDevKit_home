@@ -32,18 +32,18 @@ HELP
 }
 
 if [ "${GS_HOME}x" = "x" ] ; then
-  exit_1_banner "The GS_HOME environment variable needs to be defined :: $(basename $0) $theArgs"
+  exit_1_banner "The GS_HOME environment variable needs to be defined"
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 if [ "${GS_CLIENT_DEV}x" = "x" ] ; then
-  exit_0_banner "No clients installed :: $(basename $0) $theArgs"
+  exit_0_banner "No clients installed"
 fi
 
 source ${GS_HOME}/bin/private/shFunctions
 getOpts_help $@
 
 if [ $# -lt 1 ]; then
-  usage; exit_1_banner "Missing cient name argument :: $(basename $0) $theArgs"
+  usage; exit_1_banner "Missing cient name argument"
 fi
 
 for clientName in "$@"
@@ -56,4 +56,4 @@ do
   fi
 done
 
-exit_0_banner "...finished: $(basename $0) $theArgs"
+exit_0_banner "...finished"
