@@ -7,11 +7,7 @@
 
 theArgs="$*"
 source ${GS_HOME}/bin/private/shFeedback
-
-echo "================="
-echo "   GsDevKit script: $(basename $0) $*"
-echo "              path: $0"
-echo "================="
+start_banner
 
 usage() {
   cat <<HELP

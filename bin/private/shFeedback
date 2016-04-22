@@ -8,6 +8,7 @@
 ANSI_RED="\033[91;1m"
 ANSI_GREEN="\033[92;1m"
 ANSI_YELLOW="\033[93;1m"
+ANSI_BLUE="\033[96;1m"
 ANSI_RESET="\033[0m"
 
 exit_1_banner() {
@@ -20,8 +21,16 @@ exit_0_banner() {
   exit 0
 }
 
+start_banner() {
+  printf "${ANSI_BLUE}=================${ANSI_RESET}\n" 1>&2
+  printf "${ANSI_BLUE}   GsDevKit script: $(basename $0) ${theArgs}${ANSI_RESET}\n" 1>&2
+  printf "${ANSI_BLUE}              path: $0${ANSI_RESET}\n" 1>&2
+  printf "${ANSI_BLUE}=================${ANSI_RESET}\n" 1>&2
+}
+
 interrupted() {
-  printf "${ANSI_YELLOW}%s :: $(basename $0) ${theArgs}${ANSI_RESET}\n" "$1" 1>&2
+  local lineno="$1"
+  printf "${ANSI_YELLOW}^C detected (line ${lineno}) :: $(basename $0) ${theArgs}${ANSI_RESET}\n" 1>&2
   exit 1
 }
 
@@ -30,5 +39,5 @@ error() {
   exit_1_banner "Error on or near line ${lineno} :: $(basename $0) $theArgs"
 }
 
-trap interrupted INT
+trap 'interrupted ${LINENO}' INT
 trap 'error ${LINENO}' ERR
