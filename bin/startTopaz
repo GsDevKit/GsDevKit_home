@@ -63,4 +63,4 @@ popd >& /dev/null
 
 $GEMSTONE/bin/topaz -I $stonePath/.topazini $*
 
-exit_o_banner "...finished"
+exit_0_banner "...finished"

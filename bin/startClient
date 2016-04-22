@@ -61,7 +61,7 @@ if [ "${GS_CLIENT_DEV}x" = "x" ] || [ ! -d "${GS_CLIENT_DEV_CLIENTS}/$clientName
         ${GS_HOME}/bin/createClient -t tode $clientName $*
         source ${GS_HOME}/bin/defGsDevKit.env
         created="true" ;;
-      [Nn]* ) exit 1;;
+      [Nn]* ) exit_1_banner "Skipping create client";;
       * ) echo "Please answer yes or no.";;
     esac
   done
