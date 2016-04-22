@@ -12,7 +12,7 @@ env:
 #  - GS_VERSION=2.4.8 TEST=Basic
 #  - GS_VERSION=3.1.0.6 TEST=Basic
 #  - GS_VERSION=3.2.14 TEST=Basic
-  - GS_VERSION=3.3.0 TEST=Basic
+#  - GS_VERSION=3.3.0 TEST=Basic
 #  - GS_VERSION=3.3.0 TEST=Clients
 #  - GS_VERSION=3.3.0 TEST=SmalltalkCI
 

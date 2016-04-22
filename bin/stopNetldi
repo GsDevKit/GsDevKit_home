@@ -58,6 +58,8 @@ do
     else
       exit_1_banner "Required file: $stonePath/stone.env does not exits for $stoneName"
     fi
+  else
+    exit_1_banner "The stone $stoneName does not exist"
   fi
 done
 
