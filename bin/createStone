@@ -120,7 +120,7 @@ while getopts "fghns:t:u:i:l:z:c" OPT ; do
     l) loadProjectName="${OPTARG}";;
     z) smalltalkCIConfigPath="${OPTARG}";;
     c) loadSmalltalkCIConfig="true";;
-    *) usage; exit_1_banner "Uknown option :: $(basename $0) $theArgs";;
+    *) usage; exit_1_banner "Uknown option";;
   esac
 done
 shift $(($OPTIND - 1))
@@ -200,6 +200,5 @@ if [ "${loadSmalltalkCIConfig}" = "true" ] ; then
   ]
 EOF
 fi
-
 
 exit_0_banner "...finished"

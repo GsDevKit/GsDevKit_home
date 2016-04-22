@@ -3,7 +3,7 @@
 # Copyright (c) 2015 GemTalk Systems, LLC. All Rights Reserved <dhenrich@gemtalksystems.com>.
 #
 
-set -x  # print commands and exit on error
+set -x  # print commands
 
 # the exit status should be 1 for all error conditions
 #   the error message should either be 
@@ -12,8 +12,6 @@ set -x  # print commands and exit on error
 #     "Perhaps a stone has not been created..."
 #     "the GsDevKit_server project has not bee installed..."
 #     "The reqewst client: tode1 does not exist"
-
-
 run_test() {
   $1
   test_exit_status $?
@@ -29,6 +27,7 @@ test_exit_status() {
     exit 1
   fi
 }
+# test that these commands fail gracefully if installServer has not been run yet
 set +e
 run_test "createStone ${STONENAME2} $GS_VERSION"
 run_test "createClient tode"
@@ -55,12 +54,107 @@ set -e
 installServerClient
 set +e
 # Now test argument error conditions
+run_test "attachForeignStone"
+
+run_test "attachOldDevKitStone"
+run_test "attachOldDevKitStone -Z"
+run_test "attachOldDevKitStone -dm"
+run_test "attachOldDevKitStone -md"
+
+run_test "clients x"
+
 run_test "createClient"
+run_test "createClient -Z"
+run_test "createClient -t xxx"
 
 run_test "createStone"
+run_test "createStone -Z"
 
 run_test "deleteClient"
 
-run_test "installServer arg"
+run_test "deleteSession"
+
+run_test "deleteStone"
+
+run_test "downloadGemStone"
+
+run_test "installClient x"
+run_test "installClient -Z"
+
+run_test "installServer x"
+run_test "installServer -Z"
+
+run_test "installServerClient x"
+run_test "installServerClient -Z"
+
+run_test "newExtent"
+run_test "newExtent -Z"
+run_test "newExtent foo"
+
+run_test "products x"
+
+run_test "sessions x"
+
+run_test "setupGsDevKit"
+run_test "setupGsDevKit -Z"
+
+run_test "smalltalkCI"
+run_test "smalltalkCI -Z"
+
+run_test "startClient"
+
+run_test "startNetldi"
+run_test "startNetldi foo"
+
+run_test "startStatmonitor"
+run_test "startStatmonitor foo"
+
+run_test "startStone"
+run_test "startStone foo"
+run_test "startStone -NC"
+run_test "startStone -NR"
+run_test "startStone -CN"
+run_test "startStone -CR"
+run_test "startStone -RC"
+run_test "startStone -RN"
+run_test "startStone -Z"
+
+run_test "startTopaz"
+run_test "startTopaz foo"
+
+run_test "status x"
+run_test "status -Z"
+
+run_test "stones x"
+
+run_test "stopNetldi"
+run_test "stopNetldi foo"
+
+run_test "stopStone"
+run_test "stopStone -Z"
+run_test "stopStone foo"
+
+run_test "todeBackup"
+run_test "todeBackup -Z"
+run_test "todeBackup foo"
+
+run_test "todeIt -Z"
+
+run_test "todeLoad"
+
+run_test "todeRestore"
+run_test "todeRestore foo"
+run_test "todeRestore -Z"
+
+run_test "todeUpdate"
+run_test "todeUpdate foo"
+
+run_test "updateGsDevKit -Z"
+
+run_test "upgradeStone"
+run_test "upgradeStone foo"
+run_test "upgradeStone -Z"
+
+#======= full test complement above the line
 
 run_test "upgradeStone"

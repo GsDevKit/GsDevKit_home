@@ -36,13 +36,11 @@ HELP
 
 PLATFORM="`uname -sm | tr ' ' '-'`"
 if [[ "$PLATFORM" == MINGW32_NT* || "$PLATFORM" == MSYS_NT* ]] ; then
-  echo "This script is a server-only script and cannot be used on Windows"
-  exit 1
+  exit_1_banner "This script is a server-only script and cannot be used on Windows"
 fi
 
-set -e # exit on error
 if [ "${GS_HOME}x" = "x" ] ; then
-  echo "the GS_HOME environment variable needs to be defined"; exit 1
+  exit_1_banner "the GS_HOME environment variable needs to be defined"
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
@@ -50,11 +48,11 @@ source ${GS_HOME}/bin/private/shFunctions
 getOpts_help $@
 
 if [ $# -ne 2 ]; then
-  usage; exit 1
+  usage; exit_1_banner "Two positional arguments required."
 fi
 stoneName=$1
 vers=$2
 
 $GS_HOME/bin/private/attachStone -f $stoneName $vers
 
-exit_0_banner "...finished $(basename $0) $theArgs"
+exit_0_banner "...finished"

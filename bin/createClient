@@ -82,7 +82,6 @@ EXAMPLES
 HELP
 }
 
-set -e # exit on error
 if [ "${GS_HOME}x" = "x" ] ; then
   exit_1_banner "The GS_HOME environment variable needs to be defined"
 fi

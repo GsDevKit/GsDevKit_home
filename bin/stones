@@ -1,7 +1,12 @@
 #! /usr/bin/env bash
 #=========================================================================
-# Copyright (c) 2014, 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+# Copyright (c) 2014, 2015, 2016 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#
+#   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
 #=========================================================================
+
+theArgs="$*"
+source ${GS_HOME}/bin/private/shFeedback
 
 usage() {
   cat <<HELP
@@ -24,13 +29,11 @@ HELP
 
 PLATFORM="`uname -sm | tr ' ' '-'`"
 if [[ "$PLATFORM" == MINGW32_NT* || "$PLATFORM" == MSYS_NT* ]] ; then
-  echo "This script is a server-only script and cannot be used on Windows"
-  exit 1
+  exit_1_banner "This script is a server-only script and cannot be used on Windows"
 fi
 
-set -e # exit on error
 if [ "${GS_HOME}x" = "x" ] ; then
-  echo "the GS_HOME environment variable needs to be defined"; exit 1
+  exit_1_banner "the GS_HOME environment variable needs to be defined"
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 

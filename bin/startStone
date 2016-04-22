@@ -42,8 +42,7 @@ HELP
 
 PLATFORM="`uname -sm | tr ' ' '-'`"
 if [[ "$PLATFORM" == MINGW32_NT* || "$PLATFORM" == MSYS_NT* ]] ; then
-  echo "This script is a server-only script and cannot be used on Windows"
-  exit 1
+  exit_1_banner "This script is a server-only script and cannot be used on Windows"
 fi
 
 waitTime=""
@@ -55,52 +54,46 @@ while getopts "bhrw:CNR" OPT ; do
     b) startnetldi="true" ;;
     C) 
       if [ "${ARG}x" != "x" ] ; then 
-        echo "Only one of -C -N or -R options may be specified"
-        exit 1
+        exit_1_banner "Only one of -C -N or -R options may be specified"
       fi
       ARG="-C"
     ;;
     h) usage; exit 0 ;;
     N)
       if [ "${ARG}x" != "x" ] ; then 
-        echo "Only one of -C -N or -R options may be specified"
-        exit 1
+        exit_1_banner "Only one of -C -N or -R options may be specified"
       fi
       ARG="-N"
     ;;
     R)
       if [ "${ARG}x" != "x" ] ; then 
-        echo "Only one of -C -N or -R options may be specified"
-        exit 1
+        exit_1_banner "Only one of -C -N or -R options may be specified"
       fi
       ARG="-R"
     ;;
     r) restart="true" ;;
     w) waitTime="${OPTARG}" ;;
-    *) usage; exit 1 ;;
+    *) usage; exit_1_banner "Unknown option" ;;
   esac
 done
 shift $(($OPTIND - 1))
 
 if [ "${GS_HOME}x" = "x" ] ; then
-  echo "the GS_HOME environment variable needs to be defined"; exit 1
+  exit_1_banner "the GS_HOME environment variable needs to be defined"
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 if [ "$GS_SERVER{}x" = "x" ] ; then
-  echo "the GS_SERVER environment variable needs to be defined"
-  echo "Perhaps a stone has not been create yet?"
-  exit 1
+  exit_1_banner "The GS_SERVER environment variable needs to be defined. Perhaps a stone has not been create yet?"
 fi
 
 if [ $# -ne 1 ]; then
-  usage; exit 1
+  usage; exit_1_banner "Required argument missing"
 fi
 stoneName=$1
 stonePath=$GS_SERVER_STONES/$stoneName
 
 if [ ! -d "$stonePath" ] ; then
-  echo "The stone $stoneName does not exist"
-  exit 1
+  exit_1_banner "The stone $stoneName does not exist"
 fi
 
 # set up stone environment
@@ -113,8 +106,7 @@ if [ "${restart}x" = "x" ] ; then
   $stonePath/product/bin/waitstone $stoneName  -1
   status=$?
   if [ $status -eq 0 ] ; then
-    echo "stone $stoneName already running, to restart use -r option"
-    exit 0
+    exit_0_banner "stone $stoneName already running, to restart use -r option"
   fi
   trap 'error ${LINENO}' ERR
 fi
@@ -134,4 +126,4 @@ if [ "${startnetldi}" = "true" ] ; then
   $GS_HOME/bin/startNetldi $stoneName
 fi
 
-echo "...finished $(basename $0)"
+exit_0_banner "...finished"

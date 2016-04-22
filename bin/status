@@ -27,9 +27,8 @@ EXAMPLES
 HELP
 }
 
-set -e # exit on error
 if [ "${GS_HOME}x" = "x" ] ; then
-  echo "the GS_HOME environment variable needs to be defined"; exit 1
+  exit_1_banner "the GS_HOME environment variable needs to be defined"
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
@@ -40,13 +39,13 @@ while getopts "ahir" OPT ; do
     a) stonesArg=" -a ";;
     i) stonesArg=" -a ";;
     r) stonesArg=" -a ";;
-    *) usage; exit 1;;
+    *) usage; exit_1_banner "Unknown option";;
   esac
 done
 shift $(($OPTIND - 1))
 
 if [ $# -ne 0 ]; then
-  usage; exit 1
+  usage; exit_1_banner "No arguments allowed"
 fi
 
 $GS_HOME/bin/products
