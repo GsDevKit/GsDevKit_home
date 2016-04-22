@@ -1,12 +1,13 @@
 #! /usr/bin/env bash
 #=========================================================================
-# Copyright (c) 2014, 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+# Copyright (c) 2014, 2015, 2016 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#
+#   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
 #=========================================================================
 
-echo "================="
-echo "   GsDevKit script: $(basename $0) $*"
-echo "              path: $0"
-echo "================="
+theArgs="$*"
+source ${GS_HOME}/bin/private/shFeedback
+start_banner
 
 usage() {
   cat <<HELP
@@ -32,10 +33,8 @@ EXAMPLES
 HELP
 }
 
-set -e # exit on error
-
 if [ "${GS_HOME}x" = "x" ] ; then
-  echo "the GS_HOME environment variable needs to be defined"; exit 1
+  exit_1_banner "the GS_HOME environment variable needs to be defined"
 fi
 source ${GS_HOME}/bin/private/shFunctions
 verify_gsdevkit_installation
@@ -47,15 +46,15 @@ while getopts ":hd:v:" OPT ; do
     h) usage; exit 0;;
     d) directoryPath="${OPTARG}";;
     v) version="${OPTARG}";;
-   *) usage; exit 1;;
+   *) usage; exit_1_banner "Unknown option";;
   esac
 done
 shift $(($OPTIND - 1))
 if [ $# -ne 0 ]; then
-  usage; exit 1
+  usage; exit_1_banner "No positional arguments expected $*"
 fi
 if [ "${directoryPath}x" = "x" ]; then
-  usage; exit 1
+  usage; exit_1_banner "Required option -d not supplied"
 fi
 
 echo "Installing $version"
@@ -67,8 +66,7 @@ PLATFORM="`uname -sm | tr ' ' '-'`"
 case $version in
   Pharo*)
     if [ -e "$directoryPath/Pharo.image" ]; then
-      echo "Pharo already installed in $directoryPath"
-      exit 0
+      exit_0_banner "Pharo already installed in $directoryPath"
     fi
     if [ -e "`which curl`" ] ; then
       cmd="`which curl` "
@@ -76,8 +74,7 @@ case $version in
       if [ -e "`which wget`" ]; then
         cmd="`which wget` -O- "
       else
-        echo "Error: Neither curl not wget is not available. Install wget or curl and rerun this script."
-        exit 1
+        exit_1_banner "Error: Neither curl not wget is not available. Install wget or curl and rerun this script."
       fi
     fi
     pushd $directoryPath >& /dev/null
@@ -104,18 +101,16 @@ case $version in
           $cmd get.pharo.org/vm50 | bash
           $cmd get.pharo.org/50 | bash
           ;;
-        *) usage; exit 1;;
+        *) usage; exit_1_banner "Unknown Pharo version $version" ;;
       esac
       if [ -e "./pharo" ] ; then
         trap - ERR
 missing_32-bit_libs() {
 if [ -e "$GS_HOME/bin/.gsdevkitSetup" ] ; then
-  echo "The 32-bit libraries required by Pharo have not been installed on this system."
+  exit_1_banner "The 32-bit libraries required by Pharo have not been installed on this system."
 else
-  echo "The appropriate install script has not been run (installClient, installClientServer or installServer)."
-  echo "Please read the Installation Overview documentation (https://github.com/GsDevKit/GsDevKit_home/blob/master/docs/installation/README.md#installation-overview) for further details."
+  exit_1_banner "The appropriate install script has not been run (installClient, installClientServer or installServer).. Please read the Installation Overview documentation (https://github.com/GsDevKit/GsDevKit_home/blob/master/docs/installation/README.md#installation-overview) for further details."
 fi
-exit 1
 }
         trap 'missing_32-bit_libs' ERR
         ./pharo --help --vm-display-null &> /dev/null 2>&1
@@ -124,13 +119,12 @@ exit 1
       else
         # script needs to run on Windows where we're not concerned about 32 bit libs
 	if [ ! -e "./Pharo.exe" ] ; then
-          echo "Pharo download failed --- please try again"
-	  exit 1
+          exit_1_banner "Pharo download failed --- please try again"
 	fi
       fi
     popd >& /dev/null
     ;;
-  *) usage; exit 1;;
+  *) usage; exit_1_banner "Unsupported client Smalltalk $version";;
 esac
 
-echo "...finished $(basename $0)"
+exit_0_banner "...finished"
