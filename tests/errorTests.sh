@@ -13,7 +13,18 @@ set -x  # print commands
 #     "the GsDevKit_server project has not bee installed..."
 #     "The reqewst client: tode1 does not exist"
 run_test() {
-  $1
+  local status
+
+  $1  2>&1 /tmp/gsDevKit_test
+  status=$?
+  cat /tmp/gsDevKit_test | grep "Error on or near line"
+  if [ "$?" -ne 1 ] ; then
+    # should not get an 'Error on or near line' during these tests
+    cat /tmp/gsDevKit_test
+    echo "Unexpected unhandled error"
+    exit 1
+  fi
+  cat /tmp/gsDevKit_test
   test_exit_status $?
 }
 
