@@ -28,6 +28,11 @@ run_test() {
   test_exit_status $status
 }
 
+run_simple_test() {
+  $1
+  test_exit_status $?
+}
+
 test_exit_status() {
   local ansi_red="\033[91;1m"
   local ansi_reset="\033[0m"
@@ -42,8 +47,7 @@ test_exit_status() {
 set +e
 run_test "createStone ${STONENAME2} $GS_VERSION"
 run_test "createClient tode"
-run_test "devKitCommandLine --list"
-run_test "devKitCommandLine --list"
+run_simple_test "devKitCommandLine --list"
 run_test "$GS_HOME/bin/status"
 run_test "startStatmonitor ${STONENAME2}"
 run_test "startStone ${STONENAME2}"
