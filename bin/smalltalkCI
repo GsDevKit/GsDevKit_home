@@ -78,7 +78,7 @@ done
 shift $(($OPTIND - 1))
 
 if [ $# -lt 1 ]; then
-  usage; exit1_banner "incorrect number of args $# (1 expected)"
+  usage; exit_1_banner "incorrect number of args $# (1 expected)"
 fi
 stoneName="$1"
 
