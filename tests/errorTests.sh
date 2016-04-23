@@ -48,7 +48,7 @@ set +e
 run_test "createStone ${STONENAME2} $GS_VERSION"
 run_test "createClient tode"
 run_simple_test "devKitCommandLine --list"
-run_test "$GS_HOME/bin/status"
+run_simple_test "$GS_HOME/bin/status"
 run_test "startStatmonitor ${STONENAME2}"
 run_test "startStone ${STONENAME2}"
 run_test "startNetldi ${STONENAME2}"
@@ -137,8 +137,8 @@ run_test "startStone -Z"
 run_test "startTopaz"
 run_test "startTopaz foo"
 
-run_test "status x"
-run_test "status -Z"
+run_test "$GS_HOME/bin/status x"
+run_test "$GS_HOME/bin/status -Z"
 
 run_test "stones x"
 
@@ -172,4 +172,3 @@ run_test "upgradeStone -Z"
 
 #======= full test complement above the line
 
-run_test "upgradeStone"
