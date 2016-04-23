@@ -25,7 +25,7 @@ run_test() {
     exit 1
   fi
   cat /tmp/gsDevKit_test
-  test_exit_status $?
+  test_exit_status $status
 }
 
 test_exit_status() {
