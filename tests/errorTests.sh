@@ -15,7 +15,7 @@ set -x  # print commands
 run_test() {
   local status
 
-  bash -c "$1" 2>&1 /tmp/gsDevKit_test
+  bash -c "$1" &> /tmp/gsDevKit_test
   status=$?
   cat /tmp/gsDevKit_test | grep "Error on or near line"
   if [ "$?" -ne 1 ] ; then
