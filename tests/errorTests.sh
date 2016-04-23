@@ -140,7 +140,7 @@ run_test "startTopaz foo"
 run_test "$GS_HOME/bin/status x"
 run_test "$GS_HOME/bin/status -Z"
 
-run_test "stones x"
+run_simple_test "stones x"
 
 run_test "stopNetldi"
 run_test "stopNetldi foo"
