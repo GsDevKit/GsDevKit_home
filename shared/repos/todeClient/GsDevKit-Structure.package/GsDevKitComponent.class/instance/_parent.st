@@ -1,0 +1,3 @@
+accessing
+_parent
+	^ parent

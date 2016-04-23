@@ -1,0 +1,3 @@
+private
+smalltalkConfigFilename
+	^ '.smalltalk.ston'

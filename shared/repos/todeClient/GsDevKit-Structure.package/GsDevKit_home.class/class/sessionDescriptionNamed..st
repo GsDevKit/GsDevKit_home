@@ -1,0 +1,3 @@
+gsdevkit api
+sessionDescriptionNamed: aSessionDescriptionOrStoneName
+	^ self new sessionDescriptionNamed: aSessionDescriptionOrStoneName
