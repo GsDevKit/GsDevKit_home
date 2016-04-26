@@ -32,10 +32,10 @@ if [ "${GS_HOME}x" = "x" ] ; then
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
-while getopts ":fhp:v:" OPT ; do
+while getopts "h" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
-    *) uage; exit_1_banner "Unknown option";;
+    *) usage; exit_1_banner "Unknown option";;
   esac
 done
 shift $(($OPTIND - 1))
