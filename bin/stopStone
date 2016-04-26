@@ -55,8 +55,8 @@ while getopts "bhns:" OPT ; do
 done
 shift $(($OPTIND - 1))
 
-if [ $# -ne 1 ]; then
-  usage; exit_1_banner "Missing stone name argument"
+if [ $# -lt 1 ]; then
+  usage; exit_1_banner "Missing required argument"
 fi
 
 for stoneName in "$@"

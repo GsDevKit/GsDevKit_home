@@ -196,7 +196,8 @@ run_test "$GS_HOME/bin/private/downloadSmalltalkClient"
 run_test "$GS_HOME/bin/private/downloadSmalltalkClient foo"
 run_test "$GS_HOME/bin/private/downloadSmalltalkClient -Z"
 run_test "$GS_HOME/bin/private/downloadSmalltalkClient -v XXX -d $GS_HOME/shared/pharo"
-run_test "$GS_HOME/bin/private/downloadSmalltalkClient -v Pharo0.5 -d $GS_HOME/shared/pharo"
+
+run_test "mkdir /tmp/pharo$$; $GS_HOME/bin/private/downloadSmalltalkClient -v Pharo0.5 -d /tmp/pharo$$"
 
 run_test "$GS_HOME/bin/private/installGci"
 run_test "$GS_HOME/bin/private/installGci -d /tmp -t xxx 3.3.0"
