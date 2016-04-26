@@ -170,5 +170,41 @@ run_test "upgradeStone"
 run_test "upgradeStone foo"
 run_test "upgradeStone -Z"
 
+run_test "$GS_HOME/bin/utils/cloneGsDevKitProjects"
+run_test "$GS_HOME/bin/utils/cloneGsDevKitProjects -Z"
+
+run_test "$GS_HOME/bin/utils/installOsPrereqs x"
+
+run_test "$GS_HOME/bin/private/attachStone"
+run_test "$GS_HOME/bin/private/attachStone -fm"
+run_test "$GS_HOME/bin/private/attachStone -df"
+run_test "$GS_HOME/bin/private/attachStone -md"
+run_test "$GS_HOME/bin/private/attachStone -Z"
+
+run_test "$GS_HOME/bin/private/clone_gs_client_dev -Z"
+
+run_test "$GS_HOME/bin/private/clone_gs_server -Z"
+
+run_test "$GS_HOME/bin/private/clone_sys_local -Z"
+
+run_test "$GS_HOME/bin/private/clone_todeClient -Z"
+
+run_test "$GS_HOME/bin/private/cloneGitHubProject"
+run_test "$GS_HOME/bin/private/cloneGitHubProject -Z"
+
+run_test "$GS_HOME/bin/private/downloadSmalltalkClient"
+run_test "$GS_HOME/bin/private/downloadSmalltalkClient foo"
+run_test "$GS_HOME/bin/private/downloadSmalltalkClient -Z"
+run_test "$GS_HOME/bin/private/downloadSmalltalkClient -v XXX -d $GS_HOME/shared/pharo"
+run_test "$GS_HOME/bin/private/downloadSmalltalkClient -v Pharo0.5 -d $GS_HOME/shared/pharo"
+
+run_test "$GS_HOME/bin/private/installGci"
+run_test "$GS_HOME/bin/private/installGci -d /tmp -t xxx 3.3.0"
+run_test "$GS_HOME/bin/private/installGci -t pharo 3.3.0"
+run_test "$GS_HOME/bin/private/installGci -Z"
+
+run_test "$GS_HOME/bin/private/scanProductsForInstallingGciLibs"
+run_test "$GS_HOME/bin/private/scanProductsForInstallingGciLibs -Z"
+
 #======= full test complement above the line
 
