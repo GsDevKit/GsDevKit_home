@@ -2,7 +2,7 @@ sudo: required
 
 os:
   - linux
-  - osx
+#  - osx
 
 env:
   - GS_VERSION=3.2.14 TEST=Error
@@ -19,9 +19,11 @@ env:
 matrix:
    exclude:
      - os: osx
-       env: GS_VERSION=2.4.7 TEST=Basic
+       env: GS_VERSION=2.4.8 TEST=Basic
      - os: osx
        env: GS_VERSION=3.1.0.6 TEST=Upgrade
+#   allow_failures:
+#     - os: osx
 
 addons:
   hosts:
