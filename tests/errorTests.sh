@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
-#
 # Copyright (c) 2015 GemTalk Systems, LLC. All Rights Reserved <dhenrich@gemtalksystems.com>.
 #
+#   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
+#=========================================================================
 
 set -x  # print commands
 
@@ -211,6 +212,13 @@ run_test "$GS_HOME/bin/patches/patchIssue15"
 run_test "$GS_HOME/bin/patches/patchIssue15 -Z"
 
 run_test "$GS_HOME/bin/patches/patchIssue7 x"
+
+run_test "$GS_HOME/shared/bin/create_gs_server_image"
+run_test "$GS_HOME/shared/bin/create_gs_server_image -d /tmp xx"
+run_test "$GS_HOME/shared/bin/create_gs_server_image -v Pharo3.0"
+run_test "$GS_HOME/shared/bin/create_gs_server_image -Z"
+
+run_test "$GS_HOME/shared/bin/installClientGciLibraries"
 
 #======= full test complement above the line
 
