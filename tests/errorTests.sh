@@ -207,5 +207,10 @@ run_test "$GS_HOME/bin/private/installGci -Z"
 run_test "$GS_HOME/bin/private/scanProductsForInstallingGciLibs"
 run_test "$GS_HOME/bin/private/scanProductsForInstallingGciLibs -Z"
 
+run_test "$GS_HOME/bin/patches/patchIssue15"
+run_test "$GS_HOME/bin/patches/patchIssue15 -Z"
+
+run_test "$GS_HOME/bin/patches/patchIssue7 x"
+
 #======= full test complement above the line
 
