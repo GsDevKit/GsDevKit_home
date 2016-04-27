@@ -221,5 +221,16 @@ run_test "$GS_HOME/shared/bin/create_gs_server_image -Z"
 
 run_test "$GS_HOME/shared/bin/installClientGciLibraries"
 
+run_test "$GS_HOME/sys/bin/todeLoad"
+
+
+run_test "$GS_HOME/sys/default/gsdevkit_bin/cloneSharedTodeProjects"
+run_test "$GS_HOME/sys/default/gsdevkit_bin/cloneSharedTodeProjects -Z"
+run_test "$GS_HOME/sys/default/gsdevkit_bin/cloneSharedTodeProjects foo"
+
+run_test "$GS_HOME/sys/default/gsdevkit_bin/cloneUpdate"
+run_test "$GS_HOME/sys/default/gsdevkit_bin/cloneUpdate -Z"
+run_test "$GS_HOME/sys/default/gsdevkit_bin/cloneUpdate foo"
+
 #======= full test complement above the line
 
