@@ -90,7 +90,9 @@ EOF
     status=$?
     if [ "$status" != "0" ] ; then
       # cat $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topazerrors.log
-      cat $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out
+      # cat $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out
+      cat $GS_HOME/server/stones/$upgradeStoneName/logs/${upgradeStoneName}.log
+      cat $GS_HOME/server/stones/$upgradeStoneName/logs/netldi.log
       exit 1
     else
       exit 0
