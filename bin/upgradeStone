@@ -162,7 +162,8 @@ $GS_HOME/bin/startStone $startStoneArg -b -w 5 $targetStoneName
 pushd $upgradeLogDir >& /dev/null
   # start standard upgrade
   echo "STARTING standard upgradeImage "
-  $GEMSTONE/bin/upgradeImage -s $GEMSTONE_NAME << EOF
+#  $GEMSTONE/bin/upgradeImage -s $GEMSTONE_NAME << EOF
+  $GS_HOME/bin/upgradeImage -s $GEMSTONE_NAME << EOF
   
 EOF
   

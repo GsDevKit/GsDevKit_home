@@ -1,0 +1,179 @@
+#! /bin/sh
+set -xv
+#=========================================================================
+# Copyright (C) GemTalk Systems 1986-2016.  All Rights Reserved.
+#
+# Name - upgradeImage
+# Installed as - upgradeImage
+#
+# Purpose - 
+#
+# This script does a fresh filein of all the kernel classes.
+# The filein of the GemStone/S 64 kernel classes will wipe out all the existing 
+# methods in kernel classes. Therefore, if users have added methods to 
+# kernel classes, they should file them out before running this script. 
+# After this  script has been run, those methods should be filed in again.
+#
+# Requirements:
+# 
+# The following environment variables should be set: 
+#	GEMSTONE 	- set to the GemStone/S 64 product tree.
+#       upgradeLogDir   - a writable scratch directory.
+#       GEMSTONE_SYS_CONF - 
+#
+# CUSTOMER UPGRADE PROCEDURE
+#   Please refer to the GemStone/S 64 Bit 3.x Installation Guide and/or
+#   release notes for detailed instructions.
+#
+# $Id: upgradeImage.sh 38383 2016-01-08 18:22:35Z lalmarod $
+#
+#=========================================================================
+
+theArgs="$*"
+source ${GS_HOME}/bin/private/shFeedback
+start_banner
+
+if [ "a$GEMSTONE" = "a" ]; then
+  echo "ERROR: GemStone scripts require a GEMSTONE environment variable."
+  echo "       Please set it to the directory where GemStone resides."
+  exit 1
+fi
+
+upgradeDir=$GEMSTONE/upgrade
+export upgradeDir
+
+# maintenance symbols
+comid="upgradeImage"              # this script's name
+
+# make sure of a minimum path
+PATH=:/bin:/usr/bin:/usr/ucb:$PATH; export PATH
+
+. $GEMSTONE/bin/misc.sh
+
+usage() {
+  cat <<EOF
+Usage:
+$comid [-c <tempObjCacheSize>][-s <stoneName>]
+Environment Requirements:
+    GEMSTONE          set to a 3.x GemStone/S 64 Bit product tree
+    upgradeLogDir     set to a writable directory used in previous steps
+Parameters:
+    -s <stoneName>
+        where <stoneName> is the name of a running 3.x stone.
+        Default: gs64stone
+    -c <tempObjCacheSize>
+        size of temp obj cache to use in KB.
+        Default: 100000
+EOF
+}
+
+
+defaultErrorControl
+
+# default GEM_TEMPOBJ_CACHE_SIZE -- default to 100000
+tmpObjSize=100000
+stoneName=gs64stone
+
+# process command line
+while getopts "c:s:" opt; do
+  case $opt in 
+    c ) tmpObjSize=$OPTARG ;;
+    s ) stoneName=$OPTARG ;;
+   \? ) usage; exit 1 ;;   
+  esac
+done
+export stoneName
+
+# make sure tmpObjSize is within legal limits
+if [ $tmpObjSize -gt 1000000 ] || [ $tmpObjSize -lt 1000 ]; then
+  echo "ERROR: Cannot set GEM_TEMPOBJ_CACHE_SIZE to $tmpObjSize."
+  echo "ERROR: This value must be between 1000 and 1000000."
+  usage
+  exit 1
+fi
+
+# make sure $upgradeLogDir has been set
+if [ a$upgradeLogDir = "a" ]; then
+  echo "ERROR: The environment variable upgradeLogDir has not been set."
+  usage
+  exit 1
+elif [ ! -d $upgradeLogDir ]; then
+  echo "ERROR: $upgradeLogDir is not a directory."
+  usage
+  exit 1
+fi
+
+# make sure $upgradeLogDir is writable
+touch $upgradeLogDir/tmp$$ 2>/dev/null 
+if [ "$?" != "0" ]; then
+  echo "ERROR: $upgradeLogDir is not writable."
+  usage
+  exit 1
+fi
+rm $upgradeLogDir/tmp$$
+
+# Make sure the topazerrors.log file goes into $upgradeLogDir, not pwd.
+GS_TOPAZ_ERROR_LOG_DIR=$upgradeLogDir
+export GS_TOPAZ_ERROR_LOG_DIR
+# create a gem config file to use; note that this will also be used in postconv
+
+cat <<EOF >$upgradeLogDir/conversion.conf
+GEM_TEMPOBJ_CACHE_SIZE = $tmpObjSize;
+GEM_TEMPOBJ_INITIAL_SIZE = $tmpObjSize;
+EOF
+
+cat <<EOF
+
+Starting GemStone/S 64 3.x kernel class filein.
+
+Note: All user defined changes and additions to kernel classes will be
+removed. It is therefore advised that all such changes be filed out before
+starting conversion and filed back in after conversion is complete. Layered
+products which change the kernel classes, such as GemConnect, will also lose
+the changes. All such products must be reinstalled following the upgrade.
+
+Stone name is $stoneName.
+
+Press the return key to continue...
+EOF
+read prompt
+
+$GEMSTONE/bin/waitstone "$stoneName" -1 > /dev/null
+waitstone_stat="$?"
+if [ $waitstone_stat -eq 2 ]; then
+  echo "INFO: Waiting for $stoneName to complete startup..."
+  $GEMSTONE/bin/waitstone "$stoneName" 1 > /dev/null
+  waitstone_stat="$?"
+fi
+if [ $waitstone_stat -ne 0 ]; then
+  echo "ERROR: no stone named $stoneName running on this machine."
+  usage
+  exit 1
+fi
+
+echo `date`
+echo 'Starting upgrade...'
+
+
+# Disable extended character tables for image upgrade.
+GS_DISABLE_CHARACTER_TABLE_LOAD=1
+export GS_DISABLE_CHARACTER_TABLE_LOAD
+
+# ensure topazerrors.log only contains errors for this run
+rm -f $upgradeLogDir/topazerrors.log
+
+$GEMSTONE/bin/topaz -i -l -e $upgradeLogDir/conversion.conf < $upgradeDir/upgradeImage.topaz> $upgradeLogDir/topaz.out 2>&1
+
+topaz_stat=$?
+if [ $topaz_stat -eq 0 ]; then
+  echo "Upgrade completed. No errors detected."
+  exit 0
+else
+  echo "ERROR: topaz exited with status $topaz_stat."
+  echo "Please check these files for errors:"
+  echo "  $upgradeLogDir/topazerrors.log"
+  echo "  $upgradeLogDir/topaz.out"
+  echo "  $upgradeLogDir/upgradeImage.out"
+  echo " "
+  exit $topaz_stat
+fi
