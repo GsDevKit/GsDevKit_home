@@ -91,6 +91,7 @@ EOF
     if [ "$status" != "0" ] ; then
       # cat $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topazerrors.log
       # cat $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out
+      $GS_HOME/server/stones/$upgradeStoneName/product/bin/gslist -lc
       cat $GS_HOME/server/stones/$upgradeStoneName/logs/${upgradeStoneName}.log
       cat $GS_HOME/server/stones/$upgradeStoneName/logs/netldi.log
       exit 1
