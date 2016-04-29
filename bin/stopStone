@@ -1,16 +1,17 @@
 #! /usr/bin/env bash
 #=========================================================================
-# Copyright (c) 2014, 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+# Copyright (c) 2014, 2015, 2016 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#
+#   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
 #=========================================================================
 
-echo "================="
-echo "   GsDevKit script: $(basename $0) $*"
-echo "              path: $0"
-echo "================="
+theArgs="$*"
+source ${GS_HOME}/bin/private/shFeedback
+start_banner
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-b] <stone-name>
+USAGE: $(basename $0) [-h] [-b] <stone-name>...
 
 Stop the named stone. Any statmonitor processes associated 
 with the stone will be stopped.
@@ -25,25 +26,23 @@ OPTIONS
 EXAMPLES
   $(basename $0) -h
   $(basename $0) gs_326
+  $(basename $0) gs_326 seaside_329
+  $(basename $0) -b gs_326 seaside_329
 
 HELP
 }
 
 PLATFORM="`uname -sm | tr ' ' '-'`"
 if [[ "$PLATFORM" == MINGW32_NT* || "$PLATFORM" == MSYS_NT* ]] ; then
-  echo "This script is a server-only script and cannot be used on Windows"
-  exit 1
+  exit_1_banner "This script is a server-only script and cannot be used on Windows"
 fi
 
-set -e # exit on error
 if [ "${GS_HOME}x" = "x" ] ; then
-  echo "the GS_HOME environment variable needs to be defined"; exit 1
+  exit_1_banner "the GS_HOME environment variable needs to be defined"
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 if [ "$GS_SERVER{}x" = "x" ] ; then
-  echo "the GS_SERVER environment variable needs to be defined"
-  echo "Perhaps a stone has not been create yet?"
-  exit 1
+  exit_1_banner "the GS_SERVER environment variable needs to be defined. Perhaps a stone has not been create yet?"
 fi
 
 stopNetldi=""
@@ -51,34 +50,38 @@ while getopts "bhns:" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     b) stopNetldi="true";;
-    *) usage; exit 1;;
+    *) usage; exit_1_banner "Unknown option";;
   esac
 done
 shift $(($OPTIND - 1))
 
-if [ $# -ne 1 ]; then
-  usage; exit 1
-fi
-stoneName=$1
-stonePath=$GS_SERVER_STONES/${stoneName}
-
-if [ ! -d "$stonePath" ] ; then
-  echo "The stone $stoneName does not exist"
-  exit 1
+if [ $# -lt 1 ]; then
+  usage; exit_1_banner "Missing required argument"
 fi
 
-if [ -e "$stonePath/stone.env" ] ; then
-  # set up stone environment
-  pushd $stonePath >& /dev/null
-    source $stonePath/stone.env
-  popd >& /dev/null
+for stoneName in "$@"
+do
+  stonePath=$GS_SERVER_STONES/${stoneName}
 
-  # stop the stone
-  $GS_HOME/bin/devKitCommandLine stopstone $stoneName
+  if [ -d "$stonePath" ] ; then
+    if [ -e "$stonePath/stone.env" ] ; then
+      # set up stone environment
+      pushd $stonePath >& /dev/null
+        source $stonePath/stone.env
+      popd >& /dev/null
 
-  if [ "${stopNetldi}" = "true" ] ; then
-    $GS_HOME/bin/stopNetldi $stoneName
+      # stop the stone
+      $GS_HOME/bin/devKitCommandLine stopstone $stoneName
+
+      if [ "${stopNetldi}" = "true" ] ; then
+        $GS_HOME/bin/stopNetldi $stoneName
+      fi
+    else
+      exit_1_banner "Required file: $stonePath/stone.env does not exits for $stoneName"
+    fi
+  else
+    exit_1_banner "The stone $stoneName does not exist"
   fi
-fi
+done
 
-echo "...finished $(basename $0)"
+exit_0_banner "...finished"

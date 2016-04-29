@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
+#=========================================================================
+# Copyright (c) 2015, 2016 GemTalk Systems, LLC. All Rights Reserved <dhenrich@gemtalksystems.com>.
 #
-# Copyright (c) 2015 GemTalk Systems, LLC. All Rights Reserved <dhenrich@gemtalksystems.com>.
-#
+#   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
+#=========================================================================
 
 set -xe  # print commands and exit on error
 
@@ -113,9 +115,8 @@ todeIt ${STONENAME3} eval \`3+4\`\; eval \`self == 7 ifFalse: [ System logout ]\
 todeIt ${STONENAME3} ls /home
 cd $GS_HOME
 
-stopStone -b ${STONENAME2}
-stopStone -b ${STONENAME3}
-stopStone -b ${STONENAME4}
+stopNetldi ${STONENAME2} ${STONENAME3}  ${STONENAME4}
+stopStone -b ${STONENAME2} ${STONENAME3}  ${STONENAME4}
 
 newExtent -n -s $baseSnapshot ${STONENAME3}
 

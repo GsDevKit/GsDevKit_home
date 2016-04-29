@@ -1,13 +1,14 @@
 #! /usr/bin/env bash
 #=========================================================================
 # Copyright (C) VMware, Inc. 1986-2011.  All Rights Reserved.
-# Copyright (c) 2013-2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+# Copyright (c) 2013-2015,2016 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#
+#   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
 #=========================================================================
 
-echo "================="
-echo "   GsDevKit script: $(basename $0) $*"
-echo "              path: $0"
-echo "================="
+theArgs="$*"
+source ${GS_HOME}/bin/private/shFeedback
+start_banner
 
 # help function
 usage() {
@@ -33,22 +34,19 @@ EXAMPLES
 HELP
 }
 
-set -e # exit on error
 while getopts "h" OPT ; do
   case "$OPT" in
     h) usage ; exit 0 ;;
-    *) usage ; exit 1 ;;
+    *) usage ; exit_1_banner "Unknown option" ;;
   esac
 done
 
 if [ "$1x" = "x" ] ; then
-  usage
-  exit 1
+  usage; exit_1_banner "Required positional argument missing"
 fi 
 vers="$1"
 if [ "${GS_HOME}x" = "x" ] ; then
-  echo "the GS_HOME environment variable needs to be defined"
-  exit 1
+  exit_1_banner "the GS_HOME environment variable needs to be defined"
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
@@ -77,9 +75,7 @@ case "$PLATFORM" in
       fi
       ;;
     *)
-      echo "[Error] This script should only be run on Mac (Darwin-i386), Linux (Linux-x86_64) or Windows (Windows-x86_NT)"
-      echo "The result from \"uname -sm\" is \"`uname -sm`\""
-      exit 1
+      exit_1_banner "This script should only be run on Mac (Darwin-i386), Linux (Linux-x86_64) or Windows (Windows-x86_NT). The result from \"uname -sm\" is \"`uname -sm`\""
       ;;
 esac
 
@@ -109,9 +105,8 @@ esac
 # Check that the current directory is writable
 if [ ! -w "." ]
     then
-    echo "[Error] This script requires write permission on your current directory."
     /bin/ls -ld "`pwd`"
-    exit 1
+    exit_1_banner "This script requires write permission on your current directory."
 fi
 
 # We're good to go. Let user know.
@@ -119,12 +114,7 @@ machine_name="`uname -n`"
 echo "[Info] Starting download of $gsvers on $machine_name"
 
 if [ -d "$GS_SHARED_DOWNLOADS/products/$gsvers" ] ; then
-    echo "[Warning] $GS_SHARED_DOWNLOADS//products/$gsvers already exists"
-    echo "to replace it, remove or rename it and rerun this script"
-    echo "...finished $(basename $0)"
-#    #    Copy the gci libraries to client installations
-#     $GS_HOME/bin/private/installClientGciLibraries $vers
-    exit 0
+    exit_0_banner "$GS_SHARED_DOWNLOADS//products/$gsvers already exists to replace it, remove or rename it and rerun this script"
 fi
 
 # Look for either wget to download GemStone
@@ -134,8 +124,7 @@ else
   if [ -e "`which curl`" ]; then
       cmd="`which curl` -O -s -S"
   else
-    echo "[Error] wget is not available. Install wget and rerun this script."
-    exit 1
+    exit_1_banner "wget or curl is not available. Install wget or curl and rerun this script."
   fi
 fi
 
@@ -211,7 +200,7 @@ if [ "${GS_TRAVIS}x" != "x" ] ; then
         3.2.*) keyName="GemStone64Bit3.2.0-x86_64.Linux.key" ;;
         3.2.*) keyName="GemStone64Bit3.2.0-x86_64.Linux.key" ;;
         3.3.*) keyName="GemStone64Bit3.3.0-x86_64.Linux.key" ;;
-        *) echo "No travis license for GemStone $vers"; exit 1;;
+        *) exit_1_banner "No travis license for GemStone $vers";;
       esac
       if [ "${keyName}x" != "x" ] ; then
         chmod +w  $gs_product/seaside/etc/gemstone.key
@@ -226,5 +215,4 @@ if [ "${GS_TRAVIS}x" != "x" ] ; then
 fi
 
 # End of script
-echo "...finished $(basename $0)"
-exit 0
+exit_0_banner "...finished"

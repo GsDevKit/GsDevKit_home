@@ -1,6 +1,8 @@
 #! /usr/bin/env bash
 #=========================================================================
 # Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#
+#   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
 #=========================================================================
 
 usage() {
@@ -106,8 +108,7 @@ EXAMPLES
 HELP
 }
 
-set -e # exit on error
 if [ "${GS_HOME}x" = "x" ] ; then
-  echo "the GS_HOME environment variable needs to be defined"; exit 1
+  exit_1_banner "the GS_HOME environment variable needs to be defined"
 fi
 

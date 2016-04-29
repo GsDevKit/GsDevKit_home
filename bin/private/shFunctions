@@ -1,17 +1,19 @@
 #!/usr/bin/env bash
 #=========================================================================
-# Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+# Copyright (c) 2015, 2016 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#
+#   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
 #=========================================================================
 
 getOpts_help() {
 while getopts "h" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
-    *) echo "unknown option $OPT"; usage; exit 1;;
+    *) usage; exit_1_banner "Unknown option :: $(basename $0) $theArgs";;
   esac
 done
 if [ "${GS_HOME}x" = "x" ] ; then
-  echo "the GS_HOME environment variable needs to be defined"; exit 1
+  exit_1_banner "The GS_HOME environment variable needs to be defined :: $(basename $0) $theArgs"
 fi
 }
 
@@ -33,9 +35,8 @@ verify_gsdevkit_installation() {
 if [ ! -e "$GS_HOME/bin/.gsdevkitSetup" ] ; then
   # if .gsdevkitSysSetup is present, then assume install* run prior to invention of .gsdevkitSetup
   if [ ! -e "$GS_HOME/bin/.gsdevkitSysSetup" ] ; then
-    echo "The appropriate install script has not been run (installClient, installServerClient or installServer)."
-    echo "Please read the Installation Overview documentation (https://github.com/GsDevKit/GsDevKit_home/blob/master/docs/installation/README.md#installation-overview) for further details."
-    exit 1
+    exit_1_banner "The appropriate install script has not been run (installClient, installServerClient or installServer).
+    Please read the Installation Overview documentation (https://github.com/GsDevKit/GsDevKit_home/blob/master/docs/installation/README.md#installation-overview) for further details."
   fi
   cat - > $GS_HOME/bin/.gsdevkitSetup << EOF
 the presence of this file means that \$GS_HOME/bin/setupGsDevKit is assumed to have

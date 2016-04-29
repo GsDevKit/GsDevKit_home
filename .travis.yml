@@ -7,7 +7,7 @@ os:
 env:
   - GS_VERSION=3.2.14 TEST=Error
   - GS_VERSION=3.1.0.6 TEST=Upgrade
-  - GS_VERSION=3.3.0 TEST=Upgrade_71
+#  - GS_VERSION=3.3.0 TEST=Upgrade_71 # remove until https://github.com/GsDevKit/GsDevKit_home/issues/108 fixed
   - GS_VERSION=3.2.14 TEST=Install
   - GS_VERSION=2.4.8 TEST=Basic
   - GS_VERSION=3.1.0.6 TEST=Basic
@@ -19,9 +19,11 @@ env:
 matrix:
    exclude:
      - os: osx
-       env: GS_VERSION=2.4.7 TEST=Basic
+       env: GS_VERSION=2.4.8 TEST=Basic
      - os: osx
        env: GS_VERSION=3.1.0.6 TEST=Upgrade
+#   allow_failures:
+#     - os: osx
 
 addons:
   hosts:
