@@ -1,12 +1,13 @@
 #! /usr/bin/env bash
 #=========================================================================
-# Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+# Copyright (c) 2015, 2016 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#
+#   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
 #=========================================================================
 
-echo "================="
-echo "   GsDevKit script: $(basename $0) $*"
-echo "              path: $0"
-echo "================="
+theArgs="$*"
+source ${GS_HOME}/bin/private/shFeedback
+start_banner
 
 usage() {
   cat <<HELP
@@ -41,10 +42,8 @@ EXAMPLES
 HELP
 }
 
-set -e # exit on error
 if [ "${GS_HOME}x" = "x" ] ; then
-  echo "the GS_HOME environment variable needs to be defined"
-  exit 1
+  exit_1_banner "the GS_HOME environment variable needs to be defined"
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 source ${GS_HOME}/bin/private/winRunPharoFunctions
@@ -58,20 +57,19 @@ while getopts "d:fhv:" OPT ; do
     f) force="true";;
     d) directoryPath="${OPTARG}";;
     v) version="${OPTARG}";;
-    *) usage; exit 1;;
+    *) usage; exit_1_banner "Unknown option";;
   esac
 done
 shift $(($OPTIND - 1))
 
 if [ $# -ne 1 ]; then
-  usage; exit 1
+  usage; exit_1_banner "Missing required argument"
 fi
 imageType=$1
 shift 1
 
 if [ "${directoryPath}x" = "x" ] ; then
-  echo "required argument -d missing"
-  usage; exit 1
+  usage; exit_1_banner "required argument -d missing"
 fi
 
 if [ ! -e "${directoryPath}/pharo" ] ; then 
@@ -110,9 +108,7 @@ case "$imageType" in
     imageBaseName=gsDevKitTodeCommandLine
     case "$PLATFORM" in
       MINGW32_NT*) 
-        echo "gsDevKitTodeCommandLine not applicable for a windows installation"
-        usage
-        exit 1
+        usage; exit_1_banner"gsDevKitTodeCommandLine not applicable for a windows installation"
         ;;
       *)
         gs_serverLoadPath=$GS_SYS_DEFAULT/pharo/gsDevKitTodeCommandLineLoad.st
@@ -122,15 +118,14 @@ case "$imageType" in
         ;;
     esac
   ;;
-  *) usage; exit 1;;
+  *) usage; exit_1_banner "Unknown image type";;
 esac
 imageName=${imageBaseName}.image
 
 message="create"
 if [ -e $directoryPath/$imageName ] ; then
   if [ "${force}x" = "x" ] ; then
-    echo "$imageName image already created, use -f to force update"
-    exit 0
+    exit_0_banner "$imageName image already created, use -f to force update"
   else
     message="update"
   fi
@@ -153,4 +148,4 @@ rm -f $directoryPath/gsDevKitTmp.* $directoryPath/*.zip
 
 $GS_HOME/bin/private/scanProductsForInstallingGciLibs $directoryPath
 
-echo "...finished $(basename $0)"
+exit_0_banner "...finished"

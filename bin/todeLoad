@@ -1,12 +1,13 @@
 #! /usr/bin/env bash
 #=========================================================================
 # Copyright (c) 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#
+#   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
 #=========================================================================
 
-echo "================="
-echo "   GsDevKit script: $(basename $0) $*"
-echo "              path: $0"
-echo "================="
+theArgs="$*"
+source ${GS_HOME}/bin/private/shFeedback
+start_banner
 
 usage() {
   cat <<HELP
@@ -24,9 +25,8 @@ EXAMPLES
 HELP
 }
 
-set -e # exit on error
 if [ "${GS_HOME}x" = "x" ] ; then
-  echo "the GS_HOME environment variable needs to be defined"; exit 1
+  exit_1_banner "the GS_HOME environment variable needs to be defined"
 fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
@@ -34,7 +34,7 @@ source ${GS_HOME}/bin/private/shFunctions
 getOpts_help $@
 
 if [ $# -ne 1 ]; then
-  echo "wrong number of arguments (1 expected)"; usage; exit 1
+  usage; exit_1_banner "wrong number of arguments (1 expected)"
 fi
 stoneName=$1
 
@@ -47,4 +47,4 @@ $GS_HOME/bin/startStone -b $stoneName
 
 $GS_SYS/bin/todeLoad $stoneName
 
-echo "...finished $(basename $0)"
+exit_0_banner "...finished"

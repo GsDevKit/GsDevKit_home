@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
+#=========================================================================
+# Copyright (c) 2015, 2016 GemTalk Systems, LLC. All Rights Reserved <dhenrich@gemtalksystems.com>.
 #
-# Copyright (c) 2015 GemTalk Systems, LLC. All Rights Reserved <dhenrich@gemtalksystems.com>.
-#
+#   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
+#=========================================================================
 
 set -xe  # print commands and exit on error
 
@@ -87,8 +89,11 @@ EOF
 EOF
     status=$?
     if [ "$status" != "0" ] ; then
-      cat $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topazerrors.log
-      cat $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out
+      # cat $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topazerrors.log
+      # cat $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out
+      $GS_HOME/server/stones/$upgradeStoneName/product/bin/gslist -lc
+      cat $GS_HOME/server/stones/$upgradeStoneName/logs/${upgradeStoneName}.log
+      cat $GS_HOME/server/stones/$upgradeStoneName/logs/netldi.log
       exit 1
     else
       exit 0
