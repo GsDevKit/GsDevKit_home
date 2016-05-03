@@ -112,13 +112,15 @@ if [ "${restart}x" = "x" ] ; then
   trap 'error ${LINENO}' ERR
 fi
 
+set -x
+
 # start the stone
 $GS_HOME/bin/devKitCommandLine startstone $stoneName $ARG
 
 if [ "${waitTime}x" = "x" ] ; then
   if [ "${GS_TRAVIS}x" != "x" ] ; then
     trap - ERR
-    $stonePath/product/bin/waitstone $stoneName 10
+    $stonePath/product/bin/waitstone $stoneName 120
     status=$?
     if [ $status -ne 0 ] ; then
       exit_1_banner "stone $stoneName did not start"
