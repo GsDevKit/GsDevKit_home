@@ -1,4 +1,3 @@
 actions
-removeTranlogs:
-	tranlogDirectory 
-	tranlogDirectory deleteAllChildren.
+removeTranlogs: tranlogDirectory
+	tranlogDirectory deleteAllChildren

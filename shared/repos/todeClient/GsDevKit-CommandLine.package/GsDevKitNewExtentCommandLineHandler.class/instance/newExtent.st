@@ -8,11 +8,9 @@ newExtent
 	extentFile := stoneDirectory / 'extents' / 'extent0.dbf'.
 	extentFile exists
 		ifTrue: [ extentFile delete ].
-	self
-		copySnapshotExtent: stoneDirectory;
-		yourself.
+	self copySnapshotExtent: stoneDirectory.
 	Transcript
 		cr;
 		tab;
 		show: 'Finished copying new extent for ' , self stoneName;
-		cr.
+		cr

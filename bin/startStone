@@ -5,6 +5,8 @@
 #   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
 #=========================================================================
 
+set -x
+
 theArgs="$*"
 source ${GS_HOME}/bin/private/shFeedback
 start_banner
@@ -117,10 +119,22 @@ $GS_HOME/bin/devKitCommandLine startstone $stoneName $ARG
 
 if [ "${waitTime}x" = "x" ] ; then
   if [ "${GS_TRAVIS}x" != "x" ] ; then
+    trap - ERR
     $stonePath/product/bin/waitstone $stoneName 2
+    status=$?
+    if [ $status -eq 0 ] ; then
+      exit_0_banner "stone $stoneName already running, to restart use -r option"
+    fi
+    trap 'error ${LINENO}' ERR
   fi
 else
+  trap - ERR
   $stonePath/product/bin/waitstone $stoneName $waitTime
+  status=$?
+  if [ $status -eq 0 ] ; then
+    exit_0_banner "stone $stoneName already running, to restart use -r option"
+  fi
+  trap 'error ${LINENO}' ERR
 fi
 
 if [ "${startnetldi}" = "true" ] ; then

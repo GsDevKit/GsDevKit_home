@@ -1,0 +1,3 @@
+activations
+upgradeUnicodeStone
+	self upgradeBasicStone
