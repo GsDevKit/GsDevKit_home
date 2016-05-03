@@ -1,6 +1,6 @@
 activations
 upgradeUnicodeStone
-	"Move and rename the icu libraries to the target stone's lib directory"
+	"Rename and move the icu libraries to the target stone's lib directory"
 
 	| targetLibDir sourceLibDir |
 	sourceLibDir := self gs_stonesHome / self sourceStoneName / 'product' / 'lib'.
@@ -11,6 +11,14 @@ upgradeUnicodeStone
 			(targetLibDir filesMatching: pattern)
 				do: [ :icuLibFile | 
 					| sourceLibFile |
-					icuLibFile moveTo: targetLibDir / (icuLibFile basename , '.orig').
+					self
+						runShellCommand: '/bin/mv'
+						args:
+							{(icuLibFile pathString).
+							((targetLibDir / (icuLibFile basename , '.orig')) pathString)}.
 					sourceLibFile := (sourceLibDir filesMatching: pattern) first.
-					sourceLibFile copyTo: targetLibDir / icuLibFile basename ] ]
+					self
+						runShellCommand: '/bin/cp'
+						args:
+							{(sourceLibFile pathString).
+							((targetLibDir / icuLibFile basename) pathString)} ] ]
