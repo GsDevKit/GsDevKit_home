@@ -9,8 +9,6 @@ theArgs="$*"
 source ${GS_HOME}/bin/private/shFeedback
 start_banner
 
-set -x 
-
 usage() {
   cat <<HELP
 USAGE: $(basename $0) [-h] [-b] [-C] [-N] [-R] [-r] [-w <waitstone-timeout>] <stone-name>
@@ -120,7 +118,7 @@ $GS_HOME/bin/devKitCommandLine startstone $stoneName $ARG
 if [ "${waitTime}x" = "x" ] ; then
   if [ "${GS_TRAVIS}x" != "x" ] ; then
     trap - ERR
-    $stonePath/product/bin/waitstone $stoneName 2
+    $stonePath/product/bin/waitstone $stoneName 10
     status=$?
     if [ $status -ne 0 ] ; then
       exit_1_banner "stone $stoneName did not start"
