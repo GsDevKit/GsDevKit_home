@@ -22,7 +22,8 @@ matrix:
        env: GS_VERSION=2.4.8 TEST=Basic
      - os: osx
        env: GS_VERSION=3.1.0.6 TEST=Upgrade
-#   allow_failures:
+   allow_failures:
+     - env: GS_VERSION=3.3.0 TEST=Upgrade_71
 #     - os: osx
 
 addons:
