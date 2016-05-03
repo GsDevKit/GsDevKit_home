@@ -152,6 +152,8 @@ if [ "$GEMSTONE}x" = "x" ] ; then
   exit_1_banner "\$GEMSTONE env var not set"
 fi
 
+$GS_HOME/bin/devKitCommandLine upgradeStonePrep $sourceStoneName $targetStoneName $gsvers
+
 startStoneArg=""
 if [ "$majorMinorVersion" = "2.4" ]  ; then
   startStoneArg="-C"
