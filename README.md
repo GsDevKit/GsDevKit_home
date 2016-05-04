@@ -63,6 +63,6 @@ GsDevKit and tODE provide a development environment that is similar to Smalltalk
 [16]: docs/updateAndUpgrade.md#upgrade
 
 [20]: https://github.com/GsDevKit/GsDevKit_seaside31/blob/master/docs/installation/README.md
-[21]: https://github.com/GsDevKit/GsDevKit_seaside31/blob/master/docs/installation/loadSeasideProject.md
+[21]: docs/gettingStartedWithSeaside.md
 
 [100]: docs/FAQ.md#100-how-do-i-contribute-to-the-gsdevkit_home-project
