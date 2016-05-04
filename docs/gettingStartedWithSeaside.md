@@ -17,7 +17,7 @@ Then you load the [Seaside projcet](https://github.com/GsDevKit/Seaside31) using
 project load --loads=`#('Seaside-Welcome' 'Zinc' 'Development' 'Examples')` Seaside3
 ```
 
-The `mount` command makes the tODE scripts directory available from with tODE as `/home/seaside`:
+The `mount` command makes the Seaside tODE scripts directory available from with tODE as `/home/seaside`:
 
 ```
 mount @/sys/stone/dirs/Seaside3/tode /home seaside
