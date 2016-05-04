@@ -1,5 +1,5 @@
-activations
-upgradeUnicodeStone
+pre-upgrade tasks
+preUpgradeUnicodeStone
 	"Rename and move the icu libraries to the target stone's lib directory"
 
 	| targetLibDir sourceLibDir |

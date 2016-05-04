@@ -102,11 +102,13 @@ stone "$targetStoneName":
   2. executes the \$GS_HOME/bin/createStone to create the $targetStoneName stone
   3. copy the extent0.dbf file from "$sourceStoneName to $targetStoneName
   4. create $targetStonePath/upgradeLog
-  5. executes the \$GEMSTONE/bin/upgradeImage script
-  6. executes the \$GEMSTONE/seaside/bin/upgradeSeasideImage script
-  7. executes the \$GS_SERVER/bin/todeLoad in $targetStoneName stone
+  5. perform pre-upgrade tasks
+  6. executes the \$GEMSTONE/bin/upgradeImage script
+  7. executes the \$GEMSTONE/seaside/bin/upgradeSeasideImage script
+  8. executes the \$GS_SERVER/bin/todeLoad in $targetStoneName stone
      to complete the upgrade process.
-  8. executes the <post-load-tode-script> (-l option)
+  9. executes the <post-load-tode-script> (-l option)
+ 10. perform post-upgrade tasks
 
 If an error occurs during execution of this script, the details of the error are
 available in the topazerrors.log file in the 
@@ -152,7 +154,8 @@ if [ "$GEMSTONE}x" = "x" ] ; then
   exit_1_banner "\$GEMSTONE env var not set"
 fi
 
-$GS_HOME/bin/devKitCommandLine upgradeStonePrep $sourceStoneName $targetStoneName $gsvers
+echo "Performing pre upgrade tasks"
+$GS_HOME/bin/devKitCommandLine preUpgradeStone $sourceStoneName $targetStoneName $gsvers
 
 startStoneArg=""
 if [ "$majorMinorVersion" = "2.4" ]  ; then
@@ -317,6 +320,9 @@ if [ "${postUpgradeLoadScriptPath}x" != "x" ] ;  then
 ${postUpgradeLoadScriptPath}
 TODE
 fi
+
+echo "Performing post upgrade tasks"
+$GS_HOME/bin/devKitCommandLine postUpgradeStone $sourceStoneName $targetStoneName $gsvers
 
 exit_0_banner "...finished"
 

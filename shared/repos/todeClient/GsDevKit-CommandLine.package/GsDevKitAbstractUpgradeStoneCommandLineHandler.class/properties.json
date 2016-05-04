@@ -4,12 +4,12 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "dkh 5/2/2016 17:02",
+	"commentStamp" : "",
 	"instvars" : [
 		"sourceGsVers",
 		"targetGsVers",
 		"targetStoneName" ],
-	"name" : "GsDevKitUpgradePrepStoneCommandLineHandler",
+	"name" : "GsDevKitAbstractUpgradeStoneCommandLineHandler",
 	"pools" : [
 		 ],
 	"super" : "GsDevKitAbstractStoneCommandLineHandler",

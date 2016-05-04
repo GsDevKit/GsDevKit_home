@@ -1,0 +1,9 @@
+{
+	"class" : {
+		"commandName" : "dkh 5/4/2016 08:07",
+		"description" : "dkh 5/4/2016 08:08" },
+	"instance" : {
+		"performUpgradeActions" : "dkh 5/4/2016 07:35",
+		"postUpgradeSortedCollections" : "dkh 5/4/2016 07:47",
+		"postUpgradeUnicodeIndexes" : "dkh 5/4/2016 07:48",
+		"sessionDescription" : "dkh 5/4/2016 07:47" } }
