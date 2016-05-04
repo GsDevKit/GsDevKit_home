@@ -14,7 +14,7 @@ This command downloads the project entry for Seaside3 and clones the [Seaside pr
 Then you load the [Seaside projcet](https://github.com/GsDevKit/Seaside31) using the `project list` menu item **load**, or by executing the following in the tODE shell:
 
 ```
-project load Seaside3
+project load --loads=`#('Seaside-Welcome' 'Zinc' 'Development' 'Examples')` Seaside3
 ```
 
 The `mount` command makes the tODE scripts directory available from with tODE as `/home/seaside`:
