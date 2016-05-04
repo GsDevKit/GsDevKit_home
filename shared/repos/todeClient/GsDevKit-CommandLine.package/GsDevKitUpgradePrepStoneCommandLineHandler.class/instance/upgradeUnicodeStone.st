@@ -6,19 +6,37 @@ upgradeUnicodeStone
 	sourceLibDir := self gs_stonesHome / self sourceStoneName / 'product' / 'lib'.
 	targetLibDir := self gs_stonesHome / self targetStoneName / 'product' / 'lib'.
 	OSProcess command: 'chmod +w ' , targetLibDir pathString.
-	#('libicu*data*' 'libicu*i18n*' 'libicu*uc*')
-		do: [ :pattern | 
-			(targetLibDir filesMatching: pattern)
-				do: [ :icuLibFile | 
-					| sourceLibFile |
+	self libIcuPatterns
+		do: [ :patterns | 
+			| targetPattern sourcePattern |
+			sourcePattern := patterns at: 1.
+			targetPattern := patterns at: 2.
+			(targetLibDir filesMatching: targetPattern)
+				do: [ :targetLibFile | 
+					| sourceLibFile target originalTarget sourceTarget |
+					sourceLibFile := (sourceLibDir filesMatching: sourcePattern) first.
+					sourceTarget := targetLibDir / sourceLibFile basename.
+					sourceTarget exists
+						ifFalse: [ 
+							self
+								runShellCommand: '/bin/cp'
+								args:
+									{(sourceLibFile pathString).
+									(sourceTarget pathString)} ].
+					originalTarget := targetLibDir / (targetLibFile basename , '.orig').
+					originalTarget exists
+						ifFalse: [ 
+							self
+								runShellCommand: '/bin/mv'
+								args:
+									{(targetLibFile pathString).
+									(originalTarget pathString)} ].
+					target := targetLibDir / targetLibFile basename.
+					target exists
+						ifTrue: [ target delete ].
 					self
-						runShellCommand: '/bin/mv'
+						runShellCommand: '/bin/ln'
 						args:
-							{(icuLibFile pathString).
-							((targetLibDir / (icuLibFile basename , '.orig')) pathString)}.
-					sourceLibFile := (sourceLibDir filesMatching: pattern) first.
-					self
-						runShellCommand: '/bin/cp'
-						args:
-							{(sourceLibFile pathString).
-							((targetLibDir / icuLibFile basename) pathString)} ] ]
+							{'-s'.
+							(sourceTarget pathString).
+							(target pathString)} ] ]
