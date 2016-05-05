@@ -31,6 +31,7 @@ TDScriptLeafNode{#name:'upgradeUnicodeIndexes',#contents:'[ :topez :objIn :token
               \'/home/utils/upgrade/patch; /home/utils/upgrade/rebuild\'.
           patched := reportDict at: \'patched\'.
           rebuilt := reportDict at: \'rebuilt\'.
+stream := WriteStream on: String new.
           stream
             nextPutAll: patched size printString , \' indexes patched\';
             cr;
@@ -72,4 +73,4 @@ EXAMPLES
 
   ./upgradeUnicodeIndexes --sourceVersion=3.2.9 --save=Index_Upgrade_Report
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-04T19:39:23.29172396659851-07:00'],#modificationTime:DateAndTime['2016-05-04T21:41:51.08382201194763-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-04T19:39:23.29172396659851-07:00'],#modificationTime:DateAndTime['2016-05-04T21:47:16.9960310459137-07:00']}
