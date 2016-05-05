@@ -12,18 +12,66 @@ TDScriptLeafNode{#name:'upgradeSortedCollections',#contents:'[ :topez :objIn :to
   opts
     at: \'help\'
     ifAbsent: [ 
-      \'this is not the droid you are looking for\'
-       ]
+      | gsTool sourceStoneVersion currentStoneVersion report |
+      report := \'No SortedCollection instances found\'.
+      gsTool := topez toolInstanceFor: \'gs\'.
+      currentStoneVersion := ((gsTool gsversion: #\'stone\') at: \'gsVersion\')
+        asMetacelloVersionNumber.
+      opts
+        at: \'sourceVersion\'
+        ifPresent: [ :sourceVersionString | sourceStoneVersion := sourceVersionString asMetacelloVersionNumber ]
+        ifAbsent: [ self error: \'Required option --sourceVersion not present\' ].
+      (currentStoneVersion > \'3.3.0\' asMetacelloVersionNumber
+        and: [ sourceStoneVersion < \'3.3.0\' asMetacelloVersionNumber ])
+        ifTrue: [ 
+          | userId stream upgradeLogDir |
+          \"Find all instances of SortedCollection, recompile sortBlocks and resort\"
+          userId := GsCurrentSession currentSession userProfile userId.
+          System commit.
+          SortedCollection findAllSortedCollectionsForUser: userId.
+          SortedCollection initializeForConversion.
+          SortedCollection convertInstancesFromFilesForGem: 1 of: 1.
+          SortedCollection writeTotalsFiles.
+          upgradeLogDir := ServerFileDirectory
+            on: (System gemEnvironmentVariable: \'upgradeLogDir\').
+          stream := WriteStream on: String new.
+          stream nextPutAll: \'SortedCollection conversion results: \'.
+          upgradeLogDir
+            readOnlyFileNamed: \'sc_ok.txt\'
+            do: [ :fStream | stream nextPutAll: fStream contents ].
+          stream nextPutAll: \' sortBlocks recompiled successfully, \'.
+          upgradeLogDir
+            readOnlyFileNamed: \'sc_failed.txt\'
+            do: [ :fStream | stream nextPutAll: fStream contents ].
+          stream nextPutAll: \' sortBlocks had errors, \'.
+          SortedCollection createConversionResultFileForTotalGems: 1 .
+report := stream contents].
+      report ]
     ifPresent: [ :ignored | 
       TDManPage
         viewManPage:
           \'NAME
   upgradeSortedCollections - upgradeSortedCollections script utility template
 SYNOPSIS
-  upgradeSortedCollections [-h|--help]
+  upgradeSortedCollections [-h|--help] --sourceVersion=<source-gemstone-version> \\
+                           [--save=<global-name>]
+
 DESCRIPTION
+  Recompile simple sortBlocks for SortedCollections and resort SortedCollections as described in
+Bug Note 46056 (https://gemtalksystems.com/data/bugnotes/46056.html):
+    1. ICU collation sequence changed which may have an impact on SortedCollections, requiring
+       that those SortedCollections with Unicode strings to be resorted.
+
+  If the --save option is present, a dictionary with detailed information about the indexes 
+  patched and rebuilt is save in UserGlobals, using the given <global-name>.  
+
+  The environment variable $upgradeLogDir is expected to be set -- normally set by 
+  $GS_HOME/bin/upgradeStone.
 EXAMPLES
-  ./upgradeSortedCollections --help
   ./upgradeSortedCollections -h
+
+  ./upgradeSortedCollections --sourceVersion=3.2.9 
+
+  ./upgradeSortedCollections --sourceVersion=3.2.9 --save=Index_Upgrade_Report
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-04T19:38:57.28930902481079-07:00'],#modificationTime:DateAndTime['2016-05-04T20:33:54.85056090354919-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-04T19:38:57.28930902481079-07:00'],#modificationTime:DateAndTime['2016-05-04T22:53:02.895905017852783-07:00']}
