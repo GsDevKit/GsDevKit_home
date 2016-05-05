@@ -2,8 +2,11 @@ accessing
 sourceGsVers
 	sourceGsVers
 		ifNil: [ 
-			| info infoFile |
+			| info infoFile verString |
 			infoFile := self gs_stonesHome / self sourceStoneName / self stoneInfoFilename.
 			info := GsDevKitStoneInfo importFrom: infoFile.
-			sourceGsVers := info gsVers asMetacelloVersionNumber ].
+			verString := info gsVers.
+			(verString includesSubstring: '_')
+				ifTrue: [ verString := verString copyUpTo: $_ ].
+			sourceGsVers := verString asMetacelloVersionNumber ].
 	^ sourceGsVers

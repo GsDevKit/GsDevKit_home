@@ -136,6 +136,8 @@ else
 fi
 rm -rf $targetStonePath/tranlogs/tranlog*.dbf
 
+$GS_HOME/bin/private/preUpgradeStone $sourceStoneName $targetStoneName $gsvers
+
 pushd $targetStonePath >& /dev/null
   source stone.env
 
@@ -149,13 +151,6 @@ popd >& /dev/null
 if [ "$runUpgrade" = "false" ] ; then
   exit_0_banner "$targetStoneName created"
 fi
-
-if [ "$GEMSTONE}x" = "x" ] ; then
-  exit_1_banner "\$GEMSTONE env var not set"
-fi
-
-echo "Performing pre upgrade tasks"
-$GS_HOME/bin/devKitCommandLine preUpgradeStone $sourceStoneName $targetStoneName $gsvers
 
 startStoneArg=""
 if [ "$majorMinorVersion" = "2.4" ]  ; then
