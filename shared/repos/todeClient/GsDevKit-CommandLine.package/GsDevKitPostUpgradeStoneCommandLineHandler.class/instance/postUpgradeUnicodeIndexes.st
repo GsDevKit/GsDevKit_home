@@ -13,4 +13,5 @@ postUpgradeUnicodeIndexes
 	result := TDShell sessionDescription: self sessionDescription evaluate: cmdLine.
 	Transcript
 		cr;
-		show: result asString
+		show: result asString;
+		cr
