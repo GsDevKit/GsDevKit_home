@@ -1,0 +1,90 @@
+TDScriptLeafNode{#name:'patch',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./patch -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | unicodeIndexes patchedIndexes patchBlock auditBlock sentinel indexesNeedingRebuild previousKey |
+      patchedIndexes := IdentitySet new.
+      indexesNeedingRebuild := IdentitySet new.
+      sentinel := Object new.
+      patchBlock := [ :theIndex :btreeNode | 
+      btreeNode numElements > 0
+        ifTrue: [ 
+          | leafNode |
+          leafNode := btreeNode.
+          [ 
+          \"_encryptionFor: only implemented in BtreeBasicLeafNode .... so find a leafNode\"
+          leafNode isLeaf ]
+            whileFalse: [ leafNode := leafNode _at: 1 ].
+          1 to: btreeNode numElements * btreeNode entrySize by:
+            btreeNode entrySize do: [ :i | 
+            | key encryptedEntry newEncryptedEntry |
+            key := btreeNode _at: i + 1.
+            encryptedEntry := {(btreeNode _at: i + 2).
+            (btreeNode _at: i + 3)}.
+            newEncryptedEntry := leafNode _encryptionFor: key.
+            newEncryptedEntry ~= encryptedEntry
+              ifTrue: [ 
+                patchedIndexes add: theIndex.\t\"rewrite encryption entry\"
+                btreeNode _at: i + 2 put: (newEncryptedEntry at: 1).
+                btreeNode _at: i + 3 put: (newEncryptedEntry at: 2) ] ] ] ].
+      auditBlock := [ :theIndex :btreeNode | 
+      | comparisonForSort |
+      comparisonForSort := BtreeComparisonForCompare
+        newForSort: btreeNode collator.
+      1 to: btreeNode numElements * btreeNode entrySize by: btreeNode entrySize
+      do: [ :i | 
+        | key |
+        key := btreeNode _at: i + 1.
+        previousKey == sentinel
+          ifFalse: [ 
+            (comparisonForSort compareKey: previousKey lessThanOrEqualTo: key)
+              ifFalse: [ indexesNeedingRebuild add: theIndex. patchedIndexes remove: theIndex ifAbsent: [] ] ].
+        previousKey := key ] ].
+      unicodeIndexes := IndexManager current getAllIndexes
+        select: [ :index | 
+          (index isKindOf: RcUnicodeRangeEqualityIndex)
+            or: [ index isKindOf: UnicodeRangeEqualityIndex ] ].
+      unicodeIndexes
+        do: [ :index | 
+          index btreeRoot
+            _preOrderDo: [ :btreeNode | 
+              previousKey := sentinel.\t\"auditBlock ensures that the keys within each node are in proper sort order\"
+              (indexesNeedingRebuild includes: index)
+                ifFalse: [ 
+                  \"As long as index is not going to be rebuilt, patch and audit the btree nodes\"
+                  patchBlock value: index value: btreeNode.
+                  auditBlock value: index value: btreeNode.
+                  System commit ] ] ].
+      Dictionary new
+        at: \'patched\' put: patchedIndexes;
+        at: \'rebuild\' put: indexesNeedingRebuild;
+        yourself ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  patch - patch script utility template
+SYNOPSIS
+  patch [-h|--help] 
+
+  Patch sortKeys for upgraded unicode indexes and identify any unicode indexes that
+  need to be rebuilt, because of sort order changes in Unicode 7.0.
+
+  Returns a Dictionary with \'\'patched\'\'  indexes and `rebuild` indexes which need to be
+  rebuilt.
+
+DESCRIPTION
+EXAMPLES
+  ./patch --help
+  ./patch -h
+
+  ./patch; edit  
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-04T20:12:43.73715496063232-07:00'],#modificationTime:@2}

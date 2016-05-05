@@ -1,0 +1,6 @@
+TDRawGatewayNode{#name:'upgrade',#contents:'(TDComposedDirectoryNode
+    pathComposedDirectoryNodeNamed: \'upgrade\'
+    topez: self topez)
+    addPathNode: \'/sys/local/server/upgrade\';
+    addPathNode: \'/sys/default/server/upgrade\';
+    yourself'}

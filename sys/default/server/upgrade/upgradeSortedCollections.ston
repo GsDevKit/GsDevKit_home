@@ -1,0 +1,29 @@
+TDScriptLeafNode{#name:'upgradeSortedCollections',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./upgradeSortedCollections -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'sourceVersion\' nil #\'required\').
+      #(\'save\' nil #\'required\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      \'this is not the droid you are looking for\'
+       ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  upgradeSortedCollections - upgradeSortedCollections script utility template
+SYNOPSIS
+  upgradeSortedCollections [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./upgradeSortedCollections --help
+  ./upgradeSortedCollections -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-04T19:38:57.28930902481079-07:00'],#modificationTime:DateAndTime['2016-05-04T20:33:54.85056090354919-07:00']}
