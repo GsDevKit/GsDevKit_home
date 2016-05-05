@@ -32,9 +32,9 @@ TDScriptLeafNode{#name:'upgradeUnicodeIndexes',#contents:'[ :topez :objIn :token
           patched := reportDict at: \'patched\'.
           rebuilt := reportDict at: \'rebuilt\'.
           stream
-            nextPutAll: patched size , \' indexes patched\';
+            nextPutAll: patched size printString , \' indexes patched\';
             cr;
-            nextPutAll: rebuilt size , \'indexes rebuilt\';
+            nextPutAll: rebuilt size printString , \'indexes rebuilt\';
             cr.
           opts
             at: \'save\'
@@ -46,7 +46,7 @@ TDScriptLeafNode{#name:'upgradeUnicodeIndexes',#contents:'[ :topez :objIn :token
                   \'See `UserGlobals at: #\' , globalName printString
                     ,
                       \'` for detailed information about patched and rebuilt indexes\' ].
-report := stream contents ].
+          report := stream contents ].
       report ]
     ifPresent: [ :ignored | 
       TDManPage
@@ -72,4 +72,4 @@ EXAMPLES
 
   ./upgradeUnicodeIndexes --sourceVersion=3.2.9 --save=Index_Upgrade_Report
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-04T19:39:23.29172396659851-07:00'],#modificationTime:DateAndTime['2016-05-04T20:32:12.74790906906128-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-04T19:39:23.29172396659851-07:00'],#modificationTime:DateAndTime['2016-05-04T21:41:51.08382201194763-07:00']}

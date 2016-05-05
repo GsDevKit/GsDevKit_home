@@ -1,5 +1,16 @@
 post-upgrade tasks
 postUpgradeUnicodeIndexes
-	TDShell
-		sessionDescription: self sessionDescription
-		evaluate: '/home/utils/upgrade/upgradeUnicodeIndexes --sourceVersion=' , self sourceGsVers, ' --save=Post_Upgrade_UnicodeIndexes_Report'
+	| cmdLine result |
+	cmdLine := '/home/utils/upgrade/upgradeUnicodeIndexes --sourceVersion=' , self sourceGsVers printString
+		, ' --save=Post_Upgrade_UnicodeIndexes_Report'.
+	Transcript
+		cr;
+		show: 'Performing: ';
+		cr;
+		tab;
+		show: cmdLine;
+		cr.
+	result := TDShell sessionDescription: self sessionDescription evaluate: cmdLine.
+	Transcript
+		cr;
+		show: result asString
