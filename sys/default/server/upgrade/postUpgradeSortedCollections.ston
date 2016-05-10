@@ -1,11 +1,10 @@
-TDScriptLeafNode{#name:'upgradeSortedCollections',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+TDScriptLeafNode{#name:'postUpgradeSortedCollections',#contents:'[ :topez :objIn :tokens :command :commandNode | 
   | opts args |
-  \"for help: ./upgradeSortedCollections -h\"
+  \"for help: ./postUpgradeSortedCollections -h\"
   command
     getOptsMixedLongShort:
       {#(\'help\' $h #\'none\').
-      #(\'sourceVersion\' nil #\'required\').
-      #(\'save\' nil #\'required\')}
+      #(\'sourceVersion\' nil #\'required\')}
     optionsAndArguments: [ :options :operands | 
       opts := options.
       args := operands ].
@@ -25,7 +24,7 @@ TDScriptLeafNode{#name:'upgradeSortedCollections',#contents:'[ :topez :objIn :to
         and: [ sourceStoneVersion < \'3.3.0\' asMetacelloVersionNumber ])
         ifTrue: [ 
           | userId stream upgradeLogDir |
-          \"Find all instances of SortedCollection, recompile sortBlocks and resort\"
+          \"Find all instances of SortedCollection, recompile sortBlocks\"
           userId := GsCurrentSession currentSession userProfile userId.
           System commit.
           SortedCollection findAllSortedCollectionsForUser: userId.
@@ -44,34 +43,25 @@ TDScriptLeafNode{#name:'upgradeSortedCollections',#contents:'[ :topez :objIn :to
             readOnlyFileNamed: \'sc_failed.txt\'
             do: [ :fStream | stream nextPutAll: fStream contents ].
           stream nextPutAll: \' sortBlocks had errors, \'.
-          SortedCollection createConversionResultFileForTotalGems: 1 .
-report := stream contents].
+          SortedCollection createConversionResultFileForTotalGems: 1.
+          report := stream contents ].
       report ]
     ifPresent: [ :ignored | 
       TDManPage
         viewManPage:
           \'NAME
-  upgradeSortedCollections - upgradeSortedCollections script utility template
+  postUpgradeSortedCollections - Post-upgrade recompile sortBlocks for SortedCollections
 SYNOPSIS
-  upgradeSortedCollections [-h|--help] --sourceVersion=<source-gemstone-version> \\
-                           [--save=<global-name>]
+  postUpgradeSortedCollections [-h|--help] --sourceVersion=<source-gemstone-version>
 
 DESCRIPTION
-  Recompile simple sortBlocks for SortedCollections and resort SortedCollections as described in
-Bug Note 46056 (https://gemtalksystems.com/data/bugnotes/46056.html):
-    1. ICU collation sequence changed which may have an impact on SortedCollections, requiring
-       that those SortedCollections with Unicode strings to be resorted.
-
-  If the --save option is present, a dictionary with detailed information about the indexes 
-  patched and rebuilt is save in UserGlobals, using the given <global-name>.  
+  Recompile simple sortBlocks for SortedCollections as described in BugNote 46055 (https://gemtalksystems.com/data/bugnotes/46055.html).
 
   The environment variable $upgradeLogDir is expected to be set -- normally set by 
   $GS_HOME/bin/upgradeStone.
 EXAMPLES
-  ./upgradeSortedCollections -h
+  ./postUpgradeSortedCollections -h
 
-  ./upgradeSortedCollections --sourceVersion=3.2.9 
-
-  ./upgradeSortedCollections --sourceVersion=3.2.9 --save=Index_Upgrade_Report
+  ./postUpgradeSortedCollections --sourceVersion=3.2.9 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-04T19:38:57.28930902481079-07:00'],#modificationTime:DateAndTime['2016-05-04T22:53:02.895905017852783-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-04T19:38:57.28930902481079-07:00'],#modificationTime:DateAndTime['2016-05-10T12:14:42.18962597846985-07:00']}

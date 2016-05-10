@@ -1,0 +1,46 @@
+TDScriptLeafNode{#name:'postUpgrade',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./postUpgrade -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'sourceVersion\' nil #\'required\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | sourceStoneVersion report |
+      opts
+        at: \'sourceVersion\'
+        ifPresent: [ :sourceVersionString | sourceStoneVersion := sourceVersionString asMetacelloVersionNumber ]
+        ifAbsent: [ self error: \'Required option --sourceVersion not present\' ].
+      report := topez
+        evaluateCommandString:
+          \'/home/utils/upgrade/postUpgradeSortedCollections --sourceVersion=\'
+            , sourceStoneVersion printString.
+      report ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  postUpgrade - Post upgrade processing script. 
+SYNOPSIS
+  postUpgrade [-h|--help] --sourceVersion=<source-gemstone-version>
+
+DESCRIPTION
+  Called at end of $GS_HOME/bin/upgradeStone process to allow for custom post-upgrade processing.
+
+  By default the /home/utils/upgrade/postUpgradeSortedCollections script is called, but you
+  can customize this script by placing a copy of the script in /sys/local/server/upgrade and 
+  add or modify steps.
+
+  The environment variable $upgradeLogDir is expected to be set -- normally set by 
+  $GS_HOME/bin/upgradeStone.
+EXAMPLES
+  ./postUpgrade -h
+
+  ./postUpgrade --sourceVersion=3.2.9 
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-04T19:38:57.28930902481079-07:00'],#modificationTime:DateAndTime['2016-05-10T14:06:00.0286400318145752-07:00']}

@@ -152,8 +152,8 @@ if [ "$runUpgrade" = "false" ] ; then
   exit_0_banner "$targetStoneName created"
 fi
 
-$GS_HOME/bin/stopNetLdi $targetStoneName
-$GS_HOME/bin/startNetLdi $targetStoneName  # pick up $upgradeLogDir
+$GS_HOME/bin/stopNetldi $targetStoneName
+$GS_HOME/bin/startNetldi $targetStoneName  # pick up $upgradeLogDir
 
 startStoneArg=""
 if [ "$majorMinorVersion" = "2.4" ]  ; then
