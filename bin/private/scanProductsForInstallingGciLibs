@@ -7,7 +7,6 @@
 
 theArgs="$*"
 source ${GS_HOME}/bin/private/shFeedback
-start_banner
 
 usage() {
   cat <<HELP
@@ -65,5 +64,3 @@ pushd $GS_SHARED_DOWNLOADS/products >& /dev/null
   done
 
 popd >& /dev/null
-
-exit_0_banner "...finished"
