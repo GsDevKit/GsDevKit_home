@@ -4,4 +4,4 @@ netldiArgsOn: netldiArgs
 	logDir := OSPlatform current environment getEnv: 'GEMSTONE_LOGDIR'.
 	netldiArgs
 		add: '-l';
-		add: logDir , '/netldi.log '
+		add: logDir , '/netldi.log'
