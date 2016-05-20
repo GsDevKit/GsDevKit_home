@@ -51,10 +51,16 @@ pushd $GS_SHARED_DOWNLOADS/products >& /dev/null
   do
     echo "$productName"
 
-    if [[ "$productName" == ./GemStone64Bit* ]] ; then 
-      vers=`echo "$productName" | cut -d'-' -f1 | cut -c16-`
+    if [[ "$productName" == ./GemStone64BitClient* ]] ; then
+      vers=`echo "$productName" | cut -d'-' -f1 | cut -c22-`
       echo "$productName --> $vers"
       ${GS_HOME}/bin/private/installGci -d $directoryPath -t pharo $vers
+    else 
+      if [[ "$productName" == ./GemStone64Bit* ]] ; then 
+        vers=`echo "$productName" | cut -d'-' -f1 | cut -c16-`
+        echo "$productName --> $vers"
+        ${GS_HOME}/bin/private/installGci -d $directoryPath -t pharo $vers
+      fi
     fi
     if [[ "$productName" == ./GemBuilderC* ]] ; then 
       vers=`echo "$productName" | cut -d'-' -f1 | cut -c14-`
