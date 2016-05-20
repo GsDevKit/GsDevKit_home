@@ -12,7 +12,7 @@ TDScriptLeafNode{#name:'postUpgradeSortedCollections',#contents:'[ :topez :objIn
     at: \'help\'
     ifAbsent: [ 
       | gsTool sourceStoneVersion currentStoneVersion report |
-      report := \'No SortedCollection instances found\'.
+      report := \'No SortedCollection conversion needed\'.
       gsTool := topez toolInstanceFor: \'gs\'.
       currentStoneVersion := ((gsTool gsversion: #\'stone\') at: \'gsVersion\')
         asMetacelloVersionNumber.
@@ -23,28 +23,28 @@ TDScriptLeafNode{#name:'postUpgradeSortedCollections',#contents:'[ :topez :objIn
       (currentStoneVersion > \'3.3.0\' asMetacelloVersionNumber
         and: [ sourceStoneVersion < \'3.3.0\' asMetacelloVersionNumber ])
         ifTrue: [ 
-          | userId stream upgradeLogDir |
+          | userId   scInstances |
           \"Find all instances of SortedCollection, recompile sortBlocks\"
           userId := GsCurrentSession currentSession userProfile userId.
+          Transcript
+            cr;
+            show: \'Finding sorted collections...\'.
           System commit.
           SortedCollection findAllSortedCollectionsForUser: userId.
           SortedCollection initializeForConversion.
-          SortedCollection convertInstancesFromFilesForGem: 1 of: 1.
+          scInstances := SortedCollection _loadHiddenSet: 41.
+          Transcript
+            cr;
+            show:
+                \'Converting \' , scInstances printString , \' sorted collections...\'.
+          System hiddenSetReinit: 41.
+          report := SortedCollection convertInstancesFromFilesForGem: 1 of: 1.
+          Transcript
+            cr;
+            show: report.
           SortedCollection writeTotalsFiles.
-          upgradeLogDir := ServerFileDirectory
-            on: (System gemEnvironmentVariable: \'upgradeLogDir\').
-          stream := WriteStream on: String new.
-          stream nextPutAll: \'SortedCollection conversion results: \'.
-          upgradeLogDir
-            readOnlyFileNamed: \'sc_ok.txt\'
-            do: [ :fStream | stream nextPutAll: fStream contents ].
-          stream nextPutAll: \' sortBlocks recompiled successfully, \'.
-          upgradeLogDir
-            readOnlyFileNamed: \'sc_failed.txt\'
-            do: [ :fStream | stream nextPutAll: fStream contents ].
-          stream nextPutAll: \' sortBlocks had errors, \'.
           SortedCollection createConversionResultFileForTotalGems: 1.
-          report := stream contents ].
+           ].
       report ]
     ifPresent: [ :ignored | 
       TDManPage
@@ -64,4 +64,4 @@ EXAMPLES
 
   ./postUpgradeSortedCollections --sourceVersion=3.2.9 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-04T19:38:57.28930902481079-07:00'],#modificationTime:DateAndTime['2016-05-10T12:14:42.18962597846985-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-04T19:38:57.28930902481079-07:00'],#modificationTime:DateAndTime['2016-05-20T14:55:52.93078303337097-07:00']}
