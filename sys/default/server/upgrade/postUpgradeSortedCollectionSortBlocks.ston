@@ -29,7 +29,7 @@ TDScriptLeafNode{#name:'postUpgradeSortedCollectionSortBlocks',#contents:'[ :top
       scInstances := SortedCollection _loadHiddenSet: 41.
       Transcript
         cr;
-        show: \'Converting \' , scInstances printString , \' sorted collections...\'.
+        show: \'Recompiling sort blocks for \' , scInstances printString , \' sorted collections...\'.
       System hiddenSetReinit: 41.
       report := SortedCollection convertInstancesFromFilesForGem: 1 of: 1.
       Transcript
@@ -57,4 +57,4 @@ EXAMPLES
 
   ./postUpgradeSortedCollectionSortBlocks --sourceVersion=3.2.9 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:31:54.3779799938201-07:00'],#modificationTime:DateAndTime['2016-05-23T12:02:56.7544639110565-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:31:54.3779799938201-07:00'],#modificationTime:DateAndTime['2016-05-23T12:07:45.5250840187072-07:00']}

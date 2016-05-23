@@ -29,9 +29,9 @@ TDScriptLeafNode{#name:'postUpgradeResortSortedCollection',#contents:'[ :topez :
       scInstances := SortedCollection _loadHiddenSet: 41.
       Transcript
         cr;
-        show: \'Converting \' , scInstances printString , \' sorted collections...\'.
+        show: \'Resorting \' , scInstances printString , \' sorted collections...\'.
       System hiddenSetReinit: 41.
-      report := SortedCollection convertInstancesFromFilesForGem: 1 of: 1.
+      report := SortedCollection resortInstancesFromFilesForGem: 1 of: 1.
       Transcript
         cr;
         show: report.
@@ -62,4 +62,4 @@ EXAMPLES
 
   ./postUpgradeResortSortedCollection --sourceVersion=3.2.9 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T11:55:33.2293720245361-07:00'],#modificationTime:DateAndTime['2016-05-23T12:02:45.2191860675811-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T11:55:33.2293720245361-07:00'],#modificationTime:DateAndTime['2016-05-23T12:08:41.2543709278106-07:00']}

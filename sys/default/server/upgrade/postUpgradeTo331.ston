@@ -18,8 +18,8 @@ TDScriptLeafNode{#name:'postUpgradeTo331',#contents:'[ :topez :objIn :tokens :co
       opts
         at: \'sourceVersion\'
         ifPresent: [ :sourceVersionString | sourceStoneVersion := sourceVersionString asMetacelloVersionNumber ]
-        ifAbsent: [ self error: \'Required option --sourceVersion not present\' ].
-      ^ sourceStoneVersion >= \'3.3.0\' asMetacelloVersionNumber
+        ifAbsent: [ nil error: \'Required option --sourceVersion not present\' ].
+      sourceStoneVersion >= \'3.3.0\' asMetacelloVersionNumber
         ifTrue: [ 
           \'No post conversion processing defined for conversion from \'
             , sourceStoneVersion printString , \' to \'
@@ -54,7 +54,10 @@ TDScriptLeafNode{#name:'postUpgradeTo331',#contents:'[ :topez :objIn :tokens :co
                         , sourceStoneVersion printString.
                   strm nextPutAll: res.
                   strm contents ]
-                ifFalse: [  ] ] ] ]
+                ifFalse: [  
+          \'No post conversion processing defined for conversion from \'
+            , sourceStoneVersion printString , \' to \'
+            , currentStoneVersion printString  ] ] ] ]
     ifPresent: [ :ignored | 
       TDManPage
         viewManPage:
@@ -75,4 +78,4 @@ EXAMPLES
 
   ./postUpgradeTo331 --sourceVersion=3.2.9 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:10:46.6388928890228-07:00'],#modificationTime:DateAndTime['2016-05-23T12:02:00.0280439853668-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:10:46.6388928890228-07:00'],#modificationTime:DateAndTime['2016-05-23T13:49:04.80809092521667-07:00']}
