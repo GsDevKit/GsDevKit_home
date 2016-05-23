@@ -1,6 +1,6 @@
-TDScriptLeafNode{#name:'postUpgradeSortedCollections',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+TDScriptLeafNode{#name:'postUpgradeSortedCollectionSortBlocks',#contents:'[ :topez :objIn :tokens :command :commandNode | 
   | opts args |
-  \"for help: ./postUpgradeSortedCollections -h\"
+  \"for help: ./postUpgradeSortedCollectionSortBlocks -h\"
   command
     getOptsMixedLongShort:
       {#(\'help\' $h #\'none\').
@@ -18,7 +18,7 @@ TDScriptLeafNode{#name:'postUpgradeSortedCollections',#contents:'[ :topez :objIn
       opts
         at: \'sourceVersion\'
         ifPresent: [ :sourceVersionString | sourceStoneVersion := sourceVersionString asMetacelloVersionNumber ]
-        ifAbsent: [ self error: \'Required option --sourceVersion not present\' ].\t
+        ifAbsent: [ self error: \'Required option --sourceVersion not present\' ].
       userId := GsCurrentSession currentSession userProfile userId.
       Transcript
         cr;
@@ -42,18 +42,18 @@ TDScriptLeafNode{#name:'postUpgradeSortedCollections',#contents:'[ :topez :objIn
       TDManPage
         viewManPage:
           \'NAME
-  postUpgradeSortedCollections - Post-upgrade recompile sortBlocks for SortedCollections
+  postUpgradeSortedCollectionSortBlocks - Post-upgrade recompile sortBlocks for SortedCollections
 SYNOPSIS
-  postUpgradeSortedCollections [-h|--help] --sourceVersion=<source-gemstone-version>
+  postUpgradeSortedCollectionSortBlocks [-h|--help] --sourceVersion=<source-gemstone-version>
 
 DESCRIPTION
-  Recompile simple sortBlocks for SortedCollections as described in BugNote 46055 (https://gemtalksystems.com/data/bugnotes/46055.html).
+  Recompile sortBlocks for SortedCollections.
 
   The environment variable $upgradeLogDir is expected to be set -- normally set by 
   $GS_HOME/bin/upgradeStone.
 EXAMPLES
-  ./postUpgradeSortedCollections -h
+  ./postUpgradeSortedCollectionSortBlocks -h
 
-  ./postUpgradeSortedCollections --sourceVersion=3.2.9 
+  ./postUpgradeSortedCollectionSortBlocks --sourceVersion=3.2.9 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-04T19:38:57.28930902481079-07:00'],#modificationTime:DateAndTime['2016-05-23T10:31:23.0723268985748-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:31:54.3779799938201-07:00'],#modificationTime:DateAndTime['2016-05-23T10:33:04.0891749858856-07:00']}

@@ -11,16 +11,32 @@ TDScriptLeafNode{#name:'postUpgrade',#contents:'[ :topez :objIn :tokens :command
   opts
     at: \'help\'
     ifAbsent: [ 
-      | sourceStoneVersion report |
+      | sourceStoneVersion gsTool currentStoneVersion commandString |
+      gsTool := topez toolInstanceFor: \'gs\'.
+      currentStoneVersion := ((gsTool gsversion: #\'stone\') at: \'gsVersion\')
+        asMetacelloVersionNumber.
       opts
         at: \'sourceVersion\'
         ifPresent: [ :sourceVersionString | sourceStoneVersion := sourceVersionString asMetacelloVersionNumber ]
         ifAbsent: [ self error: \'Required option --sourceVersion not present\' ].
-      report := topez
-        evaluateCommandString:
-          \'/home/utils/upgrade/postUpgradeSortedCollections --sourceVersion=\'
-            , sourceStoneVersion printString.
-      report ]
+      currentStoneVersion > \'3.3.0\' asMetacelloVersionNumber
+        ifTrue: [ commandString := \'/home/utils/upgrade/postUpgradeTo331\' ]
+        ifFalse: [ 
+          currentStoneVersion = \'3.3.0\' asMetacelloVersionNumber
+            ifTrue: [ commandString := \'/home/utils/upgrade/postUpgradeTo330\' ]
+            ifFalse: [ 
+              currentStoneVersion >= \'3.2.0\' asMetacelloVersionNumber
+                ifTrue: [ commandString := \'/home/utils/upgrade/postUpgradeTo320\' ]
+                ifFalse: [ 
+                  currentStoneVersion >= \'3.1.0\' asMetacelloVersionNumber
+                    ifTrue: [ commandString := \'/home/utils/upgrade/postUpgradeTo310\' ]
+                    ifFalse: [ Transcript cr; show: \'Post conversion processing defined for upgrade to 3.0.x\' ] ] ] ].
+      commandString isNil
+        ifTrue: [ \'No post conversion processing performed\' ]
+        ifFalse: [ 
+          topez
+            evaluateCommandString:
+              commandString , \' --sourceVersion=\' , sourceStoneVersion printString ] ]
     ifPresent: [ :ignored | 
       TDManPage
         viewManPage:
@@ -43,4 +59,4 @@ EXAMPLES
 
   ./postUpgrade --sourceVersion=3.2.9 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-04T19:38:57.28930902481079-07:00'],#modificationTime:DateAndTime['2016-05-10T14:06:00.0286400318145752-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-04T19:38:57.28930902481079-07:00'],#modificationTime:DateAndTime['2016-05-23T10:23:36.8837249279022-07:00']}

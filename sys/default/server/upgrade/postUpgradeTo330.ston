@@ -1,0 +1,42 @@
+TDScriptLeafNode{#name:'postUpgradeTo330',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./postUpgradeTo320 -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'sourceVersion\' nil #\'required\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | sourceStoneVersion gsTool currentStoneVersion |
+      gsTool := topez toolInstanceFor: \'gs\'.
+      currentStoneVersion := ((gsTool gsversion: #\'stone\') at: \'gsVersion\')
+        asMetacelloVersionNumber.
+      opts
+        at: \'sourceVersion\'
+        ifPresent: [ :sourceVersionString | sourceStoneVersion := sourceVersionString asMetacelloVersionNumber ]
+        ifAbsent: [ self error: \'Required option --sourceVersion not present\' ].
+      \'\' ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  postUpgradeTo320 - Post upgrade processing script for upgrade to 3.2.0 and later. 
+SYNOPSIS
+  postUpgradeTo320 [-h|--help] --sourceVersion=<source-gemstone-version>
+
+DESCRIPTION
+  Intended to be called from /home/utils/upgrade/postUpgrade to perform post upgrade
+  processing to GemStone 3.2.0 and later.
+
+  The environment variable $upgradeLogDir is expected to be set -- normally set by 
+  $GS_HOME/bin/upgradeStone.
+EXAMPLES
+  ./postUpgradeTo320 -h
+
+  ./postUpgradeTo320 --sourceVersion=3.1.0.6 
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:20:57.8364939689636-07:00'],#modificationTime:@2}
