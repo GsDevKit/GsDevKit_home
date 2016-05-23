@@ -34,9 +34,10 @@ DESCRIPTION
 
   The environment variable $upgradeLogDir is expected to be set -- normally set by 
   $GS_HOME/bin/upgradeStone.
+
 EXAMPLES
   ./postUpgradeTo320 -h
 
   ./postUpgradeTo320 --sourceVersion=3.1.0.6 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:23:54.7771561145782-07:00'],#modificationTime:@2}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:23:54.7771561145782-07:00'],#modificationTime:DateAndTime['2016-05-23T12:03:19.3646318912506-07:00']}

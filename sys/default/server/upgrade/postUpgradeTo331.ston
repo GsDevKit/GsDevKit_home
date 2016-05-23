@@ -26,12 +26,35 @@ TDScriptLeafNode{#name:'postUpgradeTo331',#contents:'[ :topez :objIn :tokens :co
             , currentStoneVersion printString ]
         ifFalse: [ 
           sourceStoneVersion >= \'3.2.0\' asMetacelloVersionNumber
-            ifTrue: [ \"SortedCollection sortBlocks need to be recompiled\"
+            ifTrue: [ 
+              \"SortedCollection sortBlocks need to be recompiled\"
               topez
                 evaluateCommandString:
                   \'/home/utils/upgrade/postUpgradeSortedCollectionSortBlocks --sourceVersion=\'
                     , sourceStoneVersion printString ]
-            ifFalse: [  ] ] ]
+            ifFalse: [ 
+              sourceStoneVersion >= \'3.1.0\' asMetacelloVersionNumber
+                ifTrue: [ 
+                  | strm res |
+                  \"SortedCollection sortBlocks need to be recompiled, SortedCollections need to b resorted and CharacterCollection indexes need to rebuilt\"
+                  strm := WriteStream on: String new.
+                  res := topez
+                    evaluateCommandString:
+                      \'/home/utils/upgrade/postUpgradeSortedCollectionSortBlocks --sourceVersion=\'
+                        , sourceStoneVersion printString.
+                  strm nextPutAll: res.
+                  res := topez
+                    evaluateCommandString:
+                      \'/home/utils/upgrade/postUpgradeResortSortedCollection --sourceVersion=\'
+                        , sourceStoneVersion printString.
+                  strm nextPutAll: res.
+                  res := topez
+                    evaluateCommandString:
+                      \'/home/utils/upgrade/postUpgradeRebuildCharacterCollectionIndexes --sourceVersion=\'
+                        , sourceStoneVersion printString.
+                  strm nextPutAll: res.
+                  strm contents ]
+                ifFalse: [  ] ] ] ]
     ifPresent: [ :ignored | 
       TDManPage
         viewManPage:
@@ -46,9 +69,10 @@ DESCRIPTION
 
   The environment variable $upgradeLogDir is expected to be set -- normally set by 
   $GS_HOME/bin/upgradeStone.
+
 EXAMPLES
   ./postUpgradeTo331 -h
 
   ./postUpgradeTo331 --sourceVersion=3.2.9 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:10:46.6388928890228-07:00'],#modificationTime:DateAndTime['2016-05-23T10:33:47.2931430339813-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:10:46.6388928890228-07:00'],#modificationTime:DateAndTime['2016-05-23T12:02:00.0280439853668-07:00']}

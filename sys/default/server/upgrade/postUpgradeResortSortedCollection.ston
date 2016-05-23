@@ -1,6 +1,6 @@
-TDScriptLeafNode{#name:'postUpgradeSortedCollectionSortBlocks',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+TDScriptLeafNode{#name:'postUpgradeResortSortedCollection',#contents:'[ :topez :objIn :tokens :command :commandNode | 
   | opts args |
-  \"for help: ./postUpgradeSortedCollectionSortBlocks -h\"
+  \"for help: ./postUpgradeResortSortedCollection -h\"
   command
     getOptsMixedLongShort:
       {#(\'help\' $h #\'none\').
@@ -42,19 +42,24 @@ TDScriptLeafNode{#name:'postUpgradeSortedCollectionSortBlocks',#contents:'[ :top
       TDManPage
         viewManPage:
           \'NAME
-  postUpgradeSortedCollectionSortBlocks - Post-upgrade recompile sortBlocks for SortedCollections
+  postUpgradeResortSortedCollection - Post-upgrade resort SortedCollections
 SYNOPSIS
-  postUpgradeSortedCollectionSortBlocks [-h|--help] --sourceVersion=<source-gemstone-version>
+  postUpgradeResortSortedCollection [-h|--help] --sourceVersion=<source-gemstone-version>
 
 DESCRIPTION
-  Recompile sortBlocks for SortedCollections.
+  Resort SortedCollections. Techinically we need to only resort SortedCollections that
+  include Unicode7, Unicode16 or Unicode32 instances, but since we can\'\'t tell the
+  difference, we\'\'ll resort them all.
+
+  If you can filter the SortedCollections better, then copy this script to 
+  /sys/local/server/upgrade and modify as you see fit.
 
   The environment variable $upgradeLogDir is expected to be set -- normally set by 
   $GS_HOME/bin/upgradeStone.
 
 EXAMPLES
-  ./postUpgradeSortedCollectionSortBlocks -h
+  ./postUpgradeResortSortedCollection -h
 
-  ./postUpgradeSortedCollectionSortBlocks --sourceVersion=3.2.9 
+  ./postUpgradeResortSortedCollection --sourceVersion=3.2.9 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:31:54.3779799938201-07:00'],#modificationTime:DateAndTime['2016-05-23T12:02:56.7544639110565-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T11:55:33.2293720245361-07:00'],#modificationTime:DateAndTime['2016-05-23T12:02:45.2191860675811-07:00']}

@@ -30,7 +30,11 @@ TDScriptLeafNode{#name:'postUpgrade',#contents:'[ :topez :objIn :tokens :command
                 ifFalse: [ 
                   currentStoneVersion >= \'3.1.0\' asMetacelloVersionNumber
                     ifTrue: [ commandString := \'/home/utils/upgrade/postUpgradeTo310\' ]
-                    ifFalse: [ Transcript cr; show: \'Post conversion processing defined for upgrade to 3.0.x\' ] ] ] ].
+                    ifFalse: [ 
+                      Transcript
+                        cr;
+                        show:
+                            \'Post conversion processing defined for upgrade to 3.0.x\' ] ] ] ].
       commandString isNil
         ifTrue: [ \'No post conversion processing performed\' ]
         ifFalse: [ 
@@ -54,9 +58,10 @@ DESCRIPTION
 
   The environment variable $upgradeLogDir is expected to be set -- normally set by 
   $GS_HOME/bin/upgradeStone.
+
 EXAMPLES
   ./postUpgrade -h
 
   ./postUpgrade --sourceVersion=3.2.9 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-04T19:38:57.28930902481079-07:00'],#modificationTime:DateAndTime['2016-05-23T10:23:36.8837249279022-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-04T19:38:57.28930902481079-07:00'],#modificationTime:DateAndTime['2016-05-23T12:02:13.8621380329132-07:00']}

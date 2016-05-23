@@ -1,6 +1,6 @@
-TDScriptLeafNode{#name:'postUpgradeSortedCollectionSortBlocks',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+TDScriptLeafNode{#name:'postUpgradeRebuildCharacterCollectionIndexes',#contents:'[ :topez :objIn :tokens :command :commandNode | 
   | opts args |
-  \"for help: ./postUpgradeSortedCollectionSortBlocks -h\"
+  \"for help: ./postUpgradeRebuildCharacterCollectionIndexes -h\"
   command
     getOptsMixedLongShort:
       {#(\'help\' $h #\'none\').
@@ -42,19 +42,19 @@ TDScriptLeafNode{#name:'postUpgradeSortedCollectionSortBlocks',#contents:'[ :top
       TDManPage
         viewManPage:
           \'NAME
-  postUpgradeSortedCollectionSortBlocks - Post-upgrade recompile sortBlocks for SortedCollections
+  postUpgradeRebuildCharacterCollectionIndexes - Post-upgrade rebuild CharacterCollection indexes
 SYNOPSIS
-  postUpgradeSortedCollectionSortBlocks [-h|--help] --sourceVersion=<source-gemstone-version>
+  postUpgradeRebuildCharacterCollectionIndexes [-h|--help] --sourceVersion=<source-gemstone-version>
 
 DESCRIPTION
-  Recompile sortBlocks for SortedCollections.
+  Rebuild CharacterCollection indexes. 
 
   The environment variable $upgradeLogDir is expected to be set -- normally set by 
   $GS_HOME/bin/upgradeStone.
 
 EXAMPLES
-  ./postUpgradeSortedCollectionSortBlocks -h
+  ./postUpgradeRebuildCharacterCollectionIndexes -h
 
-  ./postUpgradeSortedCollectionSortBlocks --sourceVersion=3.2.9 
+  ./postUpgradeRebuildCharacterCollectionIndexes --sourceVersion=3.2.9 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:31:54.3779799938201-07:00'],#modificationTime:DateAndTime['2016-05-23T12:02:56.7544639110565-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T12:00:04.4277639389038-07:00'],#modificationTime:DateAndTime['2016-05-23T12:01:52.3492970466613-07:00']}
