@@ -11,7 +11,7 @@ TDScriptLeafNode{#name:'postUpgradeRebuildCharacterCollectionIndexes',#contents:
   opts
     at: \'help\'
     ifAbsent: [ 
-      | gsTool sourceStoneVersion currentStoneVersion report userId scInstances |
+      | gsTool sourceStoneVersion currentStoneVersion report nscCount |
       gsTool := topez toolInstanceFor: \'gs\'.
       currentStoneVersion := ((gsTool gsversion: #\'stone\') at: \'gsVersion\')
         asMetacelloVersionNumber.
@@ -19,25 +19,29 @@ TDScriptLeafNode{#name:'postUpgradeRebuildCharacterCollectionIndexes',#contents:
         at: \'sourceVersion\'
         ifPresent: [ :sourceVersionString | sourceStoneVersion := sourceVersionString asMetacelloVersionNumber ]
         ifAbsent: [ self error: \'Required option --sourceVersion not present\' ].
-      userId := GsCurrentSession currentSession userProfile userId.
       Transcript
         cr;
-        show: \'Finding sorted collections...\'.
+        show: \'Rebuilding CharacterCollection indexes\';
+        cr;
+        show: \'----------------------------\';
+        cr;
+        show: \'Finding CharacterCollection indexes...\'.
       System commit.
-      SortedCollection findAllSortedCollectionsForUser: userId.
+      IndexManager findAllSortedCollectionsForUser: nil.
       SortedCollection initializeForConversion.
-      scInstances := SortedCollection _loadHiddenSet: 41.
+      nscCount := IndexManager _loadHiddenSet: 41.
       Transcript
         cr;
-        show: \'Converting \' , scInstances printString , \' sorted collections...\'.
+        show:
+            \'Rebuilding indexes for \' , nscCount printString
+                , \' nscs with CharacterCollection indexes...\'.
       System hiddenSetReinit: 41.
-      report := SortedCollection convertInstancesFromFilesForGem: 1 of: 1.
+      report := IndexManager rebuildCharacterCollectionIndexesFromFilesForGem: 1 of: 1.
       Transcript
         cr;
         show: report.
-      SortedCollection writeTotalsFiles.
-      SortedCollection createConversionResultFileForTotalGems: 1.
-      report ]
+      IndexManager writeTotalsFiles.
+      IndexManager createConversionResultFileForTotalGems: 1.      report ]
     ifPresent: [ :ignored | 
       TDManPage
         viewManPage:
@@ -57,4 +61,4 @@ EXAMPLES
 
   ./postUpgradeRebuildCharacterCollectionIndexes --sourceVersion=3.2.9 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T12:00:04.4277639389038-07:00'],#modificationTime:DateAndTime['2016-05-23T12:01:52.3492970466613-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T12:00:04.4277639389038-07:00'],#modificationTime:DateAndTime['2016-05-23T17:01:50.81357908248901-07:00']}

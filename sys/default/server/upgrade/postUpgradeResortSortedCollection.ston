@@ -22,6 +22,10 @@ TDScriptLeafNode{#name:'postUpgradeResortSortedCollection',#contents:'[ :topez :
       userId := GsCurrentSession currentSession userProfile userId.
       Transcript
         cr;
+        show: \'Resorting Sorted Collections\';
+        cr;
+        show: \'----------------------------\';
+        cr;
         show: \'Finding sorted collections...\'.
       System commit.
       SortedCollection findAllSortedCollectionsForUser: userId.
@@ -62,4 +66,4 @@ EXAMPLES
 
   ./postUpgradeResortSortedCollection --sourceVersion=3.2.9 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T11:55:33.2293720245361-07:00'],#modificationTime:DateAndTime['2016-05-23T12:08:41.2543709278106-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T11:55:33.2293720245361-07:00'],#modificationTime:DateAndTime['2016-05-23T15:59:49.17622709274292-07:00']}

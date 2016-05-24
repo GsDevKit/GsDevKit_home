@@ -42,22 +42,22 @@ TDScriptLeafNode{#name:'postUpgradeTo331',#contents:'[ :topez :objIn :tokens :co
                     evaluateCommandString:
                       \'/home/utils/upgrade/postUpgradeSortedCollectionSortBlocks --sourceVersion=\'
                         , sourceStoneVersion printString.
-                  strm nextPutAll: res.
+                  strm nextPutAll: res; cr.
                   res := topez
                     evaluateCommandString:
                       \'/home/utils/upgrade/postUpgradeResortSortedCollection --sourceVersion=\'
                         , sourceStoneVersion printString.
-                  strm nextPutAll: res.
+                  strm nextPutAll: res; cr.
                   res := topez
                     evaluateCommandString:
                       \'/home/utils/upgrade/postUpgradeRebuildCharacterCollectionIndexes --sourceVersion=\'
                         , sourceStoneVersion printString.
-                  strm nextPutAll: res.
+                  strm nextPutAll: res; cr.
                   strm contents ]
-                ifFalse: [  
-          \'No post conversion processing defined for conversion from \'
-            , sourceStoneVersion printString , \' to \'
-            , currentStoneVersion printString  ] ] ] ]
+                ifFalse: [ 
+                  \'No post conversion processing defined for conversion from \'
+                    , sourceStoneVersion printString , \' to \'
+                    , currentStoneVersion printString ] ] ] ]
     ifPresent: [ :ignored | 
       TDManPage
         viewManPage:
@@ -78,4 +78,4 @@ EXAMPLES
 
   ./postUpgradeTo331 --sourceVersion=3.2.9 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:10:46.6388928890228-07:00'],#modificationTime:DateAndTime['2016-05-23T13:49:04.80809092521667-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:10:46.6388928890228-07:00'],#modificationTime:DateAndTime['2016-05-23T15:56:23.88556599617004-07:00']}
