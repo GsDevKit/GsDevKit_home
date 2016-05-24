@@ -27,7 +27,7 @@ TDScriptLeafNode{#name:'postUpgradeRebuildCharacterCollectionIndexes',#contents:
         cr;
         show: \'Finding CharacterCollection indexes...\'.
       System commit.
-      IndexManager findAllSortedCollectionsForUser: nil.
+      IndexManager findAllCharacterCollectionIndexesForUser: nil.
       SortedCollection initializeForConversion.
       nscCount := IndexManager _loadHiddenSet: 41.
       Transcript
@@ -36,12 +36,15 @@ TDScriptLeafNode{#name:'postUpgradeRebuildCharacterCollectionIndexes',#contents:
             \'Rebuilding indexes for \' , nscCount printString
                 , \' nscs with CharacterCollection indexes...\'.
       System hiddenSetReinit: 41.
-      report := IndexManager rebuildCharacterCollectionIndexesFromFilesForGem: 1 of: 1.
+      report := IndexManager
+        rebuildCharacterCollectionIndexesFromFilesForGem: 1
+        of: 1.
       Transcript
         cr;
         show: report.
       IndexManager writeTotalsFiles.
-      IndexManager createConversionResultFileForTotalGems: 1.      report ]
+      IndexManager createConversionResultFileForTotalGems: 1.
+      report ]
     ifPresent: [ :ignored | 
       TDManPage
         viewManPage:
@@ -59,6 +62,6 @@ DESCRIPTION
 EXAMPLES
   ./postUpgradeRebuildCharacterCollectionIndexes -h
 
-  ./postUpgradeRebuildCharacterCollectionIndexes --sourceVersion=3.2.9 
+  ./postUpgradeRebuildCharacterCollectionIndexes --sourceVersion=3.1.0.6 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T12:00:04.4277639389038-07:00'],#modificationTime:DateAndTime['2016-05-23T17:01:50.81357908248901-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T12:00:04.4277639389038-07:00'],#modificationTime:DateAndTime['2016-05-24T11:45:29.89896893501282-07:00']}
