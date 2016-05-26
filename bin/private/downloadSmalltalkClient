@@ -103,8 +103,11 @@ case $version in
           ;;
         *) usage; exit_1_banner "Unknown Pharo version $version" ;;
       esac
-      if [ -e "./pharo" ] ; then
-        trap - ERR
+      if [ -e "./Pharo.exe" ] ; then
+          # script needs to run on Windows where we're not concerned about 32 bit libs
+      else
+        if [ -e "./pharo" ] ; then
+          trap - ERR
 missing_32-bit_libs() {
 if [ -e "$GS_HOME/bin/.gsdevkitSetup" ] ; then
   exit_1_banner "The 32-bit libraries required by Pharo have not been installed on this system."
@@ -112,13 +115,11 @@ else
   exit_1_banner "The appropriate install script has not been run (installClient, installClientServer or installServer).. Please read the Installation Overview documentation (https://github.com/GsDevKit/GsDevKit_home/blob/master/docs/installation/README.md#installation-overview) for further details."
 fi
 }
-        trap 'missing_32-bit_libs' ERR
-        ./pharo --help --vm-display-null &> /dev/null 2>&1
-        trap - ERR
-        trap 'error ${LINENO}' ERR
-      else
-        # script needs to run on Windows where we're not concerned about 32 bit libs
-	if [ ! -e "./Pharo.exe" ] ; then
+          trap 'missing_32-bit_libs' ERR
+          ./pharo --help --vm-display-null &> /dev/null 2>&1
+          trap - ERR
+          trap 'error ${LINENO}' ERR
+        else
           exit_1_banner "Pharo download failed --- please try again"
 	fi
       fi
