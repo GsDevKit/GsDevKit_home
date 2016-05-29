@@ -104,7 +104,8 @@ case $version in
         *) usage; exit_1_banner "Unknown Pharo version $version" ;;
       esac
       if [ -e "./Pharo.exe" ] ; then
-          # script needs to run on Windows where we're not concerned about 32 bit libs
+#		script needs to run on Windows where we're not concerned about 32 bit libs
+        echo "Windows needs no special OS prerequisites to run Pharo."
       else
         if [ -e "./pharo" ] ; then
           trap - ERR
