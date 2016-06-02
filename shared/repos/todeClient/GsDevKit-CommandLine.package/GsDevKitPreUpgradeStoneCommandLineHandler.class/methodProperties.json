@@ -3,5 +3,6 @@
 		"commandName" : "dkh 5/4/2016 08:08",
 		"description" : "dkh 5/4/2016 08:08" },
 	"instance" : {
-		"performUpgradeActions" : "dkh 6/2/2016 14:03",
+		"copySourceStoneSystemConf" : "dkh 6/2/2016 15:08",
+		"performUpgradeActions" : "dkh 6/2/2016 15:05",
 		"updateStoneConfForIcuLibraryVersion:" : "dkh 5/10/2016 11:46" } }

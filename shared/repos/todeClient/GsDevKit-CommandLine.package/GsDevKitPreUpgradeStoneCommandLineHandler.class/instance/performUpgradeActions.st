@@ -1,5 +1,6 @@
 activation
 performUpgradeActions
+	self copySourceStoneSystemConf.
 	self targetGsVers < '3.3.1' asMetacelloVersionNumber
 		ifTrue: [ ^ self exitSuccess ].
 	(self sourceGsVers < '3.2.0' asMetacelloVersionNumber or: [ self sourceGsVers = '3.3.0' asMetacelloVersionNumber ])
