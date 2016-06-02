@@ -19,18 +19,68 @@ TDScriptLeafNode{#name:'postUpgradeTo320',#contents:'[ :topez :objIn :tokens :co
         at: \'sourceVersion\'
         ifPresent: [ :sourceVersionString | sourceStoneVersion := sourceVersionString asMetacelloVersionNumber ]
         ifAbsent: [ self error: \'Required option --sourceVersion not present\' ].
-      \'\' ]
+      sourceStoneVersion >= \'3.2.0\' asMetacelloVersionNumber
+        ifTrue: [ 
+          \'No post conversion processing needed for conversion from \'
+            , sourceStoneVersion printString , \' to \'
+            , currentStoneVersion printString ]
+        ifFalse: [ 
+          sourceStoneVersion >= \'3.1.0\' asMetacelloVersionNumber
+            ifTrue: [ 
+              | strm res |
+              \"SortedCollection sortBlocks need to be recompiled, SortedCollections need to b resorted and CharacterCollection indexes need to rebuilt\"
+              strm := WriteStream on: String new.
+              res := topez
+                evaluateCommandString:
+                  \'/home/utils/upgrade/postUpgradeSortedCollectionSortBlocks --sourceVersion=\'
+                    , sourceStoneVersion printString.
+              strm
+                nextPutAll: res;
+                cr.
+              res := topez
+                evaluateCommandString:
+                  \'/home/utils/upgrade/postUpgradeResortSortedCollection --sourceVersion=\'
+                    , sourceStoneVersion printString.
+              strm
+                nextPutAll: res;
+                cr.
+              res := topez
+                evaluateCommandString:
+                  \'/home/utils/upgrade/postUpgradeRebuildCharacterCollectionIndexes --sourceVersion=\'
+                    , sourceStoneVersion printString.
+              strm
+                nextPutAll: res;
+                cr.
+              strm contents ]
+            ifFalse: [ 
+              sourceStoneVersion >= \'3.0.0\' asMetacelloVersionNumber
+                ifTrue: [ 
+                  \'No post conversion processing defined for conversion from \'
+                    , sourceStoneVersion printString , \' to \'
+                    , currentStoneVersion printString ]
+                ifFalse: [ 
+                  | strm res |
+                  \"Upgrade from 2.4.x; SortedCollection sortBlocks need to be recompiled.\"
+                  strm := WriteStream on: String new.
+                  res := topez
+                    evaluateCommandString:
+                      \'/home/utils/upgrade/postUpgradeSortedCollectionSortBlocks --sourceVersion=\'
+                        , sourceStoneVersion printString.
+                  strm
+                    nextPutAll: res;
+                    cr.
+                  strm contents ] ] ] ]
     ifPresent: [ :ignored | 
       TDManPage
         viewManPage:
           \'NAME
-  postUpgradeTo320 - Post upgrade processing script for upgrade to 3.2.0 and later. 
+  postUpgradeTo320 - Post upgrade processing script for upgrade to 3.2.x. 
 SYNOPSIS
   postUpgradeTo320 [-h|--help] --sourceVersion=<source-gemstone-version>
 
 DESCRIPTION
   Intended to be called from /home/utils/upgrade/postUpgrade to perform post upgrade
-  processing to GemStone 3.2.0 and later.
+  processing to GemStone 3.2.x.
 
   The environment variable $upgradeLogDir is expected to be set -- normally set by 
   $GS_HOME/bin/upgradeStone.
@@ -40,4 +90,4 @@ EXAMPLES
 
   ./postUpgradeTo320 --sourceVersion=3.1.0.6 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:15:08.8803629875183-07:00'],#modificationTime:DateAndTime['2016-05-23T12:03:30.8246779441833-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:15:08.8803629875183-07:00'],#modificationTime:DateAndTime['2016-06-02T14:17:15.84073996543884-07:00']}

@@ -1,6 +1,6 @@
 TDScriptLeafNode{#name:'postUpgradeTo310',#contents:'[ :topez :objIn :tokens :command :commandNode | 
   | opts args |
-  \"for help: ./postUpgradeTo320 -h\"
+  \"for help: ./postUpgradeTo310 -h\"
   command
     getOptsMixedLongShort:
       {#(\'help\' $h #\'none\').
@@ -19,25 +19,47 @@ TDScriptLeafNode{#name:'postUpgradeTo310',#contents:'[ :topez :objIn :tokens :co
         at: \'sourceVersion\'
         ifPresent: [ :sourceVersionString | sourceStoneVersion := sourceVersionString asMetacelloVersionNumber ]
         ifAbsent: [ self error: \'Required option --sourceVersion not present\' ].
-      \'\' ]
+      sourceStoneVersion >= \'3.1.0\' asMetacelloVersionNumber
+        ifTrue: [ 
+          \'No post conversion processing needed for conversion from \'
+            , sourceStoneVersion printString , \' to \'
+            , currentStoneVersion printString ]
+        ifFalse: [ 
+              sourceStoneVersion >= \'3.0.0\' asMetacelloVersionNumber
+                ifTrue: [ 
+                  \'No post conversion processing defined for conversion from \'
+                    , sourceStoneVersion printString , \' to \'
+                    , currentStoneVersion printString ]
+                ifFalse: [ 
+                  | strm res |
+                  \"Upgrade from 2.4.x; SortedCollection sortBlocks need to be recompiled.\"
+                  strm := WriteStream on: String new.
+                  res := topez
+                    evaluateCommandString:
+                      \'/home/utils/upgrade/postUpgradeSortedCollectionSortBlocks --sourceVersion=\'
+                        , sourceStoneVersion printString.
+                  strm
+                    nextPutAll: res;
+                    cr.
+                  strm contents ]  ] ]
     ifPresent: [ :ignored | 
       TDManPage
         viewManPage:
           \'NAME
-  postUpgradeTo320 - Post upgrade processing script for upgrade to 3.2.0 and later. 
+  postUpgradeTo310 - Post upgrade processing script for upgrade to 3.1.x. 
 SYNOPSIS
-  postUpgradeTo320 [-h|--help] --sourceVersion=<source-gemstone-version>
+  postUpgradeTo310 [-h|--help] --sourceVersion=<source-gemstone-version>
 
 DESCRIPTION
   Intended to be called from /home/utils/upgrade/postUpgrade to perform post upgrade
-  processing to GemStone 3.2.0 and later.
+  processing to GemStone 3.1.x.
 
   The environment variable $upgradeLogDir is expected to be set -- normally set by 
   $GS_HOME/bin/upgradeStone.
 
 EXAMPLES
-  ./postUpgradeTo320 -h
+  ./postUpgradeTo310 -h
 
-  ./postUpgradeTo320 --sourceVersion=3.1.0.6 
+  ./postUpgradeTo310 --sourceVersion=2.4.8 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:23:54.7771561145782-07:00'],#modificationTime:DateAndTime['2016-05-23T12:03:19.3646318912506-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:23:54.7771561145782-07:00'],#modificationTime:DateAndTime['2016-06-02T14:19:15.88864803314209-07:00']}

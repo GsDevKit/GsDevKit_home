@@ -1,0 +1,43 @@
+TDScriptLeafNode{#name:'postUpgradeTo240',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./postUpgradeTo240 -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'sourceVersion\' nil #\'required\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | sourceStoneVersion gsTool currentStoneVersion |
+      gsTool := topez toolInstanceFor: \'gs\'.
+      currentStoneVersion := ((gsTool gsversion: #\'stone\') at: \'gsVersion\')
+        asMetacelloVersionNumber.
+      opts
+        at: \'sourceVersion\'
+        ifPresent: [ :sourceVersionString | sourceStoneVersion := sourceVersionString asMetacelloVersionNumber ]
+        ifAbsent: [ self error: \'Required option --sourceVersion not present\' ].
+      \'\' ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  postUpgradeTo240 - Post upgrade processing script for upgrade to 2.4.x. 
+SYNOPSIS
+  postUpgradeTo240 [-h|--help] --sourceVersion=<source-gemstone-version>
+
+DESCRIPTION
+  Intended to be called from /home/utils/upgrade/postUpgrade to perform post upgrade
+  processing to GemStone 2.4.x
+
+  The environment variable $upgradeLogDir is expected to be set -- normally set by 
+  $GS_HOME/bin/upgradeStone.
+
+EXAMPLES
+  ./postUpgradeTo240 -h
+
+  ./postUpgradeTo240 --sourceVersion=2.4.4.1 
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:23:54.7771561145782-07:00'],#modificationTime:DateAndTime['2016-06-02T14:21:09.31310510635376-07:00']}
