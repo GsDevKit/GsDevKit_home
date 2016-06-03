@@ -19,7 +19,10 @@ TDScriptLeafNode{#name:'postUpgradeTo240',#contents:'[ :topez :objIn :tokens :co
         at: \'sourceVersion\'
         ifPresent: [ :sourceVersionString | sourceStoneVersion := sourceVersionString asMetacelloVersionNumber ]
         ifAbsent: [ self error: \'Required option --sourceVersion not present\' ].
-      \'\' ]
+       
+          \'No post conversion processing needed for conversion from \'
+            , sourceStoneVersion printString , \' to \'
+            , currentStoneVersion printString  ]
     ifPresent: [ :ignored | 
       TDManPage
         viewManPage:
@@ -40,4 +43,4 @@ EXAMPLES
 
   ./postUpgradeTo240 --sourceVersion=2.4.4.1 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:23:54.7771561145782-07:00'],#modificationTime:DateAndTime['2016-06-02T14:21:09.31310510635376-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:23:54.7771561145782-07:00'],#modificationTime:DateAndTime['2016-06-02T15:56:14.31006288528442-07:00']}

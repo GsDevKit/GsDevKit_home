@@ -26,21 +26,21 @@ TDScriptLeafNode{#name:'postUpgradeTo330',#contents:'[ :topez :objIn :tokens :co
           strm := WriteStream on: String new.
           res := topez
             evaluateCommandString:
-              \'/home/utils/upgrade/postUpgradeSortedCollectionSortBlocks --sourceVersion=\'
+              \'/home/utils/upgrade/postUpgrade330SortedCollectionSortBlocks --sourceVersion=\'
                 , sourceStoneVersion printString.
           strm
             nextPutAll: res;
             cr.
           res := topez
             evaluateCommandString:
-              \'/home/utils/upgrade/postUpgradeResortSortedCollection --sourceVersion=\'
+              \'/home/utils/upgrade/postUpgrade330ResortSortedCollection --sourceVersion=\'
                 , sourceStoneVersion printString.
           strm
             nextPutAll: res;
             cr.
           res := topez
             evaluateCommandString:
-              \'/home/utils/upgrade/postUpgradeRebuildCharacterCollectionIndexes --sourceVersion=\'
+              \'/home/utils/upgrade/postUpgrade330RebuildCharacterCollectionIndexes --sourceVersion=\'
                 , sourceStoneVersion printString.
           strm
             nextPutAll: res;
@@ -84,4 +84,4 @@ EXAMPLES
 
   ./postUpgradeTo330 --sourceVersion=3.1.0.6 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:20:57.8364939689636-07:00'],#modificationTime:DateAndTime['2016-06-02T14:16:47.24749302864075-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:20:57.8364939689636-07:00'],#modificationTime:DateAndTime['2016-06-03T15:19:49.37420010566711-07:00']}

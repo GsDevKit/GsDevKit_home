@@ -1,0 +1,76 @@
+TDScriptLeafNode{#name:'postUpgrade330RebuildCharacterCollectionIndexes',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./postUpgrade330RebuildCharacterCollectionIndexes -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'sourceVersion\' nil #\'required\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | gsTool sourceStoneVersion currentStoneVersion report nscs oldAutoCommit |
+      gsTool := topez toolInstanceFor: \'gs\'.
+      currentStoneVersion := ((gsTool gsversion: #\'stone\') at: \'gsVersion\')
+        asMetacelloVersionNumber.
+      opts
+        at: \'sourceVersion\'
+        ifPresent: [ :sourceVersionString | sourceStoneVersion := sourceVersionString asMetacelloVersionNumber ]
+        ifAbsent: [ self error: \'Required option --sourceVersion not present\' ].
+      Transcript
+        cr;
+        show: \'Rebuilding CharacterCollection indexes\';
+        cr;
+        show: \'----------------------------\';
+        cr;
+        show: \'Finding CharacterCollection indexes...\'.
+      nscs := IdentitySet new.
+      IndexManager current getAllIndexes
+        do: [ :index | 
+          | lec |
+          lec := index lastElementClass.
+          (lec == CharacterCollection
+            or: [ lec inheritsFrom: CharacterCollection ])
+            ifTrue: [ nscs add: index nscRoot ] ].
+      Transcript
+        cr;
+        show:
+            \'Rebuilding indexes for \' , nscs size printString
+                , \' nscs with CharacterCollection indexes...\'.
+      oldAutoCommit := IndexManager autoCommit.
+      [ 
+      IndexManager autoCommit: true.
+      nscs
+        do: [ :nsc | 
+          | indexSpec |
+          indexSpec := nsc indexSpec.
+          nsc removeAllIndexes.
+          indexSpec createIndexesOn: nsc ] ]
+        ensure: [ 
+          IndexManager autoCommit: oldAutoCommit.
+          System commit ].
+      \'Rebuilt \' , nscs size printString , \' indexes.\' ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  postUpgrade330RebuildCharacterCollectionIndexes - Post-upgrade rebuild CharacterCollection indexes
+SYNOPSIS
+  postUpgrade330RebuildCharacterCollectionIndexes [-h|--help] --sourceVersion=<source-gemstone-version>
+
+DESCRIPTION
+  Rebuild CharacterCollection indexes. 
+
+  The environment variable $upgradeLogDir is expected to be set -- normally set by 
+  $GS_HOME/bin/upgradeStone.
+
+  3.3.0 variant, where we don\'\'t use the IndexManger helper methods.
+  
+EXAMPLES
+  ./postUpgrade330RebuildCharacterCollectionIndexes -h
+
+  ./postUpgrade330RebuildCharacterCollectionIndexes --sourceVersion=3.1.0.6 
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2016-06-02T16:06:38.78321504592896-07:00'],#modificationTime:DateAndTime['2016-06-03T16:10:07.236947059631348-07:00']}
