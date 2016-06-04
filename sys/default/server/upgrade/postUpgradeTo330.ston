@@ -22,7 +22,7 @@ TDScriptLeafNode{#name:'postUpgradeTo330',#contents:'[ :topez :objIn :tokens :co
       sourceStoneVersion >= \'3.1.0\' asMetacelloVersionNumber
         ifTrue: [ 
           | strm res |
-          \"SortedCollection sortBlocks need to be recompiled, SortedCollections need to b resorted and CharacterCollection indexes need to rebuilt\"
+          \"SortedCollection sortBlocks need to be recompiled, Since we are switching to unicode mode, SortedCollections need to be resorted and CharacterCollection indexes need to rebuilt.\"
           strm := WriteStream on: String new.
           res := topez
             evaluateCommandString:
@@ -54,11 +54,25 @@ TDScriptLeafNode{#name:'postUpgradeTo330',#contents:'[ :topez :objIn :tokens :co
                 , currentStoneVersion printString ]
             ifFalse: [ 
               | strm res |
-              \"Upgrade from 2.4.x; SortedCollection sortBlocks need to be recompiled.\"
+              \"Upgrade from 2.4.x; SortedCollection sortBlocks need to be recompiled. Since we are switching to unicode mode, SortedCollections need to be resorted and CharacterCollection indexes need to rebuilt.\"
               strm := WriteStream on: String new.
               res := topez
                 evaluateCommandString:
                   \'/home/utils/upgrade/postUpgradeSortedCollectionSortBlocks --sourceVersion=\'
+                    , sourceStoneVersion printString.
+              strm
+                nextPutAll: res;
+                cr.
+              res := topez
+                evaluateCommandString:
+                  \'/home/utils/upgrade/postUpgrade330ResortSortedCollection --sourceVersion=\'
+                    , sourceStoneVersion printString.
+              strm
+                nextPutAll: res;
+                cr.
+              res := topez
+                evaluateCommandString:
+                  \'/home/utils/upgrade/postUpgrade330RebuildCharacterCollectionIndexes --sourceVersion=\'
                     , sourceStoneVersion printString.
               strm
                 nextPutAll: res;
@@ -84,4 +98,4 @@ EXAMPLES
 
   ./postUpgradeTo330 --sourceVersion=3.1.0.6 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:20:57.8364939689636-07:00'],#modificationTime:DateAndTime['2016-06-03T15:19:49.37420010566711-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:20:57.8364939689636-07:00'],#modificationTime:DateAndTime['2016-06-04T12:27:33.45435905456543-07:00']}

@@ -36,7 +36,7 @@ TDScriptLeafNode{#name:'postUpgradeTo331',#contents:'[ :topez :objIn :tokens :co
               sourceStoneVersion >= \'3.1.0\' asMetacelloVersionNumber
                 ifTrue: [ 
                   | strm res |
-                  \"SortedCollection sortBlocks need to be recompiled, SortedCollections need to b resorted and CharacterCollection indexes need to rebuilt\"
+                  \"SortedCollection sortBlocks need to be recompiled, Since we are switching to unicode mode, SortedCollections need to be resorted and CharacterCollection indexes need to rebuilt.\"
                   strm := WriteStream on: String new.
                   res := topez
                     evaluateCommandString:
@@ -68,7 +68,7 @@ TDScriptLeafNode{#name:'postUpgradeTo331',#contents:'[ :topez :objIn :tokens :co
                         , currentStoneVersion printString ]
                     ifFalse: [ 
                       | strm res |
-                      \"Upgrade from 2.4.x; SortedCollection sortBlocks need to be recompiled. Since we are switching to unicode mode, SortedCollections need to b resorted and CharacterCollection indexes need to rebuilt.\"
+                      \"Upgrade from 2.4.x; SortedCollection sortBlocks need to be recompiled. Since we are switching to unicode mode, SortedCollections need to be resorted and CharacterCollection indexes need to rebuilt.\"
                       strm := WriteStream on: String new.
                       res := topez
                         evaluateCommandString:
@@ -77,20 +77,20 @@ TDScriptLeafNode{#name:'postUpgradeTo331',#contents:'[ :topez :objIn :tokens :co
                       strm
                         nextPutAll: res;
                         cr.
-                  res := topez
-                    evaluateCommandString:
-                      \'/home/utils/upgrade/postUpgradeResortSortedCollection --sourceVersion=\'
-                        , sourceStoneVersion printString.
-                  strm
-                    nextPutAll: res;
-                    cr.
-                  res := topez
-                    evaluateCommandString:
-                      \'/home/utils/upgrade/postUpgradeRebuildCharacterCollectionIndexes --sourceVersion=\'
-                        , sourceStoneVersion printString.
-                  strm
-                    nextPutAll: res;
-                    cr.
+                      res := topez
+                        evaluateCommandString:
+                          \'/home/utils/upgrade/postUpgradeResortSortedCollection --sourceVersion=\'
+                            , sourceStoneVersion printString.
+                      strm
+                        nextPutAll: res;
+                        cr.
+                      res := topez
+                        evaluateCommandString:
+                          \'/home/utils/upgrade/postUpgradeRebuildCharacterCollectionIndexes --sourceVersion=\'
+                            , sourceStoneVersion printString.
+                      strm
+                        nextPutAll: res;
+                        cr.
                       strm contents ] ] ] ] ]
     ifPresent: [ :ignored | 
       TDManPage
@@ -112,4 +112,4 @@ EXAMPLES
 
   ./postUpgradeTo331 --sourceVersion=3.2.9 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:10:46.6388928890228-07:00'],#modificationTime:DateAndTime['2016-06-02T14:28:58.49928402900696-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:10:46.6388928890228-07:00'],#modificationTime:DateAndTime['2016-06-04T12:27:39.74871611595154-07:00']}

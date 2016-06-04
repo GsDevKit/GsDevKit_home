@@ -28,7 +28,7 @@ TDScriptLeafNode{#name:'postUpgradeTo320',#contents:'[ :topez :objIn :tokens :co
           sourceStoneVersion >= \'3.1.0\' asMetacelloVersionNumber
             ifTrue: [ 
               | strm res |
-              \"SortedCollections need to be resorted and CharacterCollection indexes need to rebuilt\"
+              \"Since we are switching to unicode mode, SortedCollections need to be resorted and CharacterCollection indexes need to rebuilt.\"
               strm := WriteStream on: String new.
               res := topez
                 evaluateCommandString:
@@ -53,11 +53,25 @@ TDScriptLeafNode{#name:'postUpgradeTo320',#contents:'[ :topez :objIn :tokens :co
                     , currentStoneVersion printString ]
                 ifFalse: [ 
                   | strm res |
-                  \"Upgrade from 2.4.x; SortedCollection sortBlocks need to be recompiled.\"
+                  \"Upgrade from 2.4.x; SortedCollection sortBlocks need to be recompiled. Since we are switching to unicode mode, SortedCollections need to be resorted and CharacterCollection indexes need to rebuilt.\"
                   strm := WriteStream on: String new.
                   res := topez
                     evaluateCommandString:
                       \'/home/utils/upgrade/postUpgradeSortedCollectionSortBlocks --sourceVersion=\'
+                        , sourceStoneVersion printString.
+                  strm
+                    nextPutAll: res;
+                    cr.
+                  res := topez
+                    evaluateCommandString:
+                      \'/home/utils/upgrade/postUpgrade330ResortSortedCollection --sourceVersion=\'
+                        , sourceStoneVersion printString.
+                  strm
+                    nextPutAll: res;
+                    cr.
+                  res := topez
+                    evaluateCommandString:
+                      \'/home/utils/upgrade/postUpgrade330RebuildCharacterCollectionIndexes --sourceVersion=\'
                         , sourceStoneVersion printString.
                   strm
                     nextPutAll: res;
@@ -83,4 +97,4 @@ EXAMPLES
 
   ./postUpgradeTo320 --sourceVersion=3.1.0.6 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:15:08.8803629875183-07:00'],#modificationTime:DateAndTime['2016-06-03T17:35:39.49037003517151-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:15:08.8803629875183-07:00'],#modificationTime:DateAndTime['2016-06-04T12:26:43.41300892829895-07:00']}
