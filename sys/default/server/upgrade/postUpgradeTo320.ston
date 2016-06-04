@@ -28,15 +28,8 @@ TDScriptLeafNode{#name:'postUpgradeTo320',#contents:'[ :topez :objIn :tokens :co
           sourceStoneVersion >= \'3.1.0\' asMetacelloVersionNumber
             ifTrue: [ 
               | strm res |
-              \"SortedCollection sortBlocks need to be recompiled, SortedCollections need to b resorted and CharacterCollection indexes need to rebuilt\"
+              \"SortedCollections need to be resorted and CharacterCollection indexes need to rebuilt\"
               strm := WriteStream on: String new.
-              res := topez
-                evaluateCommandString:
-                  \'/home/utils/upgrade/postUpgrade330SortedCollectionSortBlocks --sourceVersion=\'
-                    , sourceStoneVersion printString.
-              strm
-                nextPutAll: res;
-                cr.
               res := topez
                 evaluateCommandString:
                   \'/home/utils/upgrade/postUpgrade330ResortSortedCollection --sourceVersion=\'
@@ -90,4 +83,4 @@ EXAMPLES
 
   ./postUpgradeTo320 --sourceVersion=3.1.0.6 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:15:08.8803629875183-07:00'],#modificationTime:DateAndTime['2016-06-03T16:11:38.0461699962616-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:15:08.8803629875183-07:00'],#modificationTime:DateAndTime['2016-06-03T17:35:39.49037003517151-07:00']}

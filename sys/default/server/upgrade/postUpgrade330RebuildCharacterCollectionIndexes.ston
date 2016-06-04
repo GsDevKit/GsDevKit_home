@@ -44,8 +44,27 @@ TDScriptLeafNode{#name:'postUpgrade330RebuildCharacterCollectionIndexes',#conten
       IndexManager autoCommit: true.
       nscs
         do: [ :nsc | 
-          | indexSpec |
+          | indexSpec specs |
           indexSpec := nsc indexSpec.
+          specs := indexSpec specs copy.
+          indexSpec specs _basicSize: 0.
+          specs
+            do: [ :spec | 
+              (spec indexType == #\'equality\'
+                and: [ 
+                  (spec lastElementClass == CharacterCollection
+                    or: [ spec lastElementClass inheritsFrom: CharacterCollection ])
+                    and: [ spec indexTypePrintString ~= \'unicodeIndex\' ] ])
+                ifTrue: [ 
+                  | newSpec |
+                  newSpec := spec class == EqualityIndexSpecification
+                    ifTrue: [ UnicodeIndexSpecification path: spec path collator: IcuCollator default ]
+                    ifFalse: [ 
+                      spec class == RcEqualityIndexSpecification
+                        ifTrue: [ RcUnicodeIndexSpecification path: spec path collator: IcuCollator default ]
+                        ifFalse: [ self error: \'Unexpected spec class: \' , spec class printString ] ].
+                  indexSpec specs add: newSpec ]
+                ifFalse: [ indexSpec specs add: spec ] ].
           nsc removeAllIndexes.
           indexSpec createIndexesOn: nsc ] ]
         ensure: [ 
@@ -67,10 +86,12 @@ DESCRIPTION
   $GS_HOME/bin/upgradeStone.
 
   3.3.0 variant, where we don\'\'t use the IndexManger helper methods.
+
+  Used by 3.1.x to 3.2.x and 3.1.x to 3.3.0 upgrades.
   
 EXAMPLES
   ./postUpgrade330RebuildCharacterCollectionIndexes -h
 
   ./postUpgrade330RebuildCharacterCollectionIndexes --sourceVersion=3.1.0.6 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-06-02T16:06:38.78321504592896-07:00'],#modificationTime:DateAndTime['2016-06-03T16:10:07.236947059631348-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-06-02T16:06:38.78321504592896-07:00'],#modificationTime:DateAndTime['2016-06-03T18:57:33.19796299934387-07:00']}
