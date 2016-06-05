@@ -31,13 +31,12 @@ TDScriptLeafNode{#name:'postUpgrade',#contents:'[ :topez :objIn :tokens :command
                   currentStoneVersion >= \'3.1.0\' asMetacelloVersionNumber
                     ifTrue: [ commandString := \'/home/utils/upgrade/postUpgradeTo310\' ]
                     ifFalse: [ 
-                      currentStoneVersion >= \'3.0.0\' asMetacelloVersionNumber
-                        ifTrue: [ 
+                        
                           Transcript
                             cr;
                             show:
-                                \'No post conversion processing defined for upgrade to 3.0.x\' ] 
-                    ifFalse: [ commandString := \'/home/utils/upgrade/postUpgradeTo240\' ] ]] ] ].
+                                \'No post conversion processing defined for upgrade to 3.0.x or 2.4.x\' 
+                          ] ] ]].
       commandString isNil
         ifTrue: [ \'No post conversion processing performed\' ]
         ifFalse: [ 
@@ -67,4 +66,4 @@ EXAMPLES
 
   ./postUpgrade --sourceVersion=3.2.9 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-04T19:38:57.28930902481079-07:00'],#modificationTime:DateAndTime['2016-06-04T12:12:07.741767883300781-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-04T19:38:57.28930902481079-07:00'],#modificationTime:DateAndTime['2016-06-05T14:26:42.27223300933838-07:00']}
