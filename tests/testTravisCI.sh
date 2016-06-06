@@ -81,6 +81,9 @@ EOF
       if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeTo3x.out" ] ; then 
         tail -1000 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeTo3x.out
       fi
+      if [ -e "$GS_HOME/server/stones/$upgradeStoneName/logs/${upgradeStoneName}.log" ] ; then 
+        tail -1000 $GS_HOME/server/stones/$upgradeStoneName/logs/${upgradeStoneName}.log
+      fi
       exit 1
     else
       exit 0
@@ -103,6 +106,9 @@ EOF
       fi
       if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeTo3x.out" ] ; then 
         tail -1000 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeTo3x.out
+      fi
+      if [ -e "$GS_HOME/server/stones/$upgradeStoneName/logs/${upgradeStoneName}.log" ] ; then 
+        tail -1000 $GS_HOME/server/stones/$upgradeStoneName/logs/${upgradeStoneName}.log
       fi
       exit 1
     else
