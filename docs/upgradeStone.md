@@ -1,7 +1,7 @@
 # Upgrading stones with $GS_HOME/bin/upgradeStone
 
-1. [Create upgrade stone](#create-upgrade-stone)
-2. [Run preUpgradeStone script](#run-preupgradestone-script)
+1. [Create upgrade target stone](#create-upgrade-target-stone)
+2. [Run `devKitCommandLine preUpgradeStone` command](#run-devkitcommandline-preupgradestone-command)
 3. [Create upgradeLog directory](#create-upgradelog-directory)
 4. [Run upgradeImage script](#run-upgradeimage-script)
 5. [GsDevKit pre-conversion steps](#gsdevkit-pre-conversion-steps)
@@ -10,21 +10,15 @@
 8. [Run user application load script](#run-user-application-load-script)
 9. [Run `devKitCommandLine postUpgradeStone` command](#run-devkitcommandline-postupgradestone-command)
 
-## Create upgrade stone
+## Create upgrade target stone
 1. Stop the source stone
 2. Create target stone using `$GS_HOME/bin/createStone`
 3. Stop the target stone
 4. Copy the extent from the source stone to the target stone
 5. Remove tranlogs from target stone
 
-## Run preUpgradeStone script
-Run **devKitCommandline** *preUpgradeStone* command:
-
-```
-$GS_HOME/bin/devKitCommandLine preUpgradeStone <sourceStoneName> <targetStoneName> <targetStoneVersion>
-```
-
-to copy the source `extents/system.conf`, `custom_stone.env`, `maint.conf` and `gem.conf` files to the target stone. For upgrades to 3.3.1 and beyond, the system.conf (after copying) is modified to set the `STN_GEM_LIBICU_VERSION` to match the source stone's LIBICU version:
+## Run `devKitCommandLine preUpgradeStone` command
+The `devKitCommandLine preUpgradeStone` command copies the source `extents/system.conf`, `custom_stone.env`, `maint.conf` and `gem.conf` files to the target stone. For upgrades to 3.3.1 and beyond, the target system.conf is modified to set the `STN_GEM_LIBICU_VERSION` to match the source stone's LIBICU version:
 
 - 3.3.x uses 54.1
 - 3.2.x uses 51.2

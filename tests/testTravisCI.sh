@@ -75,8 +75,12 @@ EOF
     status=$?
     if [ "$status" != "0" ] ; then
       tail -1000 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topazerrors.log
-      tail -1000 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out
-      tail -1000 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeTo3x.out
+      if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out" ] ; then 
+        tail -1000 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out
+      fi
+      if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeTo3x.out" ] ; then 
+        tail -1000 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeTo3x.out
+      fi
       exit 1
     else
       exit 0
@@ -94,8 +98,12 @@ EOF
     status=$?
     if [ "$status" != "0" ] ; then
       tail -1000 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topazerrors.log
-      tail -1000 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out
-      tail -1000 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeTo3x.out
+      if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out" ] ; then 
+        tail -1000 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out
+      fi
+      if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeTo3x.out" ] ; then 
+        tail -1000 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeTo3x.out
+      fi
       exit 1
     else
       exit 0
