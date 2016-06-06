@@ -7,6 +7,8 @@
 5. [GsDevKit pre-conversion steps](#gsdevkit-pre-conversion-steps)
 6. [Run upgradeSeasideImage script](#run-upgradeseasideimage-script)
 7. [GsDevKit post-conversion steps](#gsdevkit-post-conversion-steps)
+8. [Run user application load script](#run-user-application-load-script)
+9. [Run `devKitCommandLine postUpgradeStone` command](#run-devkitcommandline-postupgradestone-command)
 
 ## Create upgrade stone
 1. Stop the source stone
@@ -49,4 +51,34 @@ Before running the standard `$GEMSTONE/seaside/bin/upgradeSeasideImage` script, 
 
 ##GsDevKit post-conversion steps
 
+- remove all BaselineOf classes -- will be reloaded during tODE/project installation
+- copy the contents of the tODE nodes: `/sys/stone/home` and `/sys/stone/projects` from the source stone to the target stone, preserving all stone-specific scripts and project entries during upgrade.
 
+## Run user application load script
+The *user appliation load script* is specificed by the `-l` option on the `upgradeStone` command line. This script is used to reload the application code present in the image. It is recommended that you create a `loadApp` script locatined in `/sys/stone/home` that contains the tODE commands necessary to load all of the optional code into the upgraded image. 
+
+The  *user application load script* is loaded using the `project upgrade` command. The `project upgrade` command disables class initialization for all classes during load. Your application classes stay *initialized* during the upgrade, but the methods must be reloaded. If you have specific classes that must be initialized post-upgrade, use the `project upgrade` command in your custom load script to list the classes that need to be initialized. See `man project upgrade` for more information.
+
+## Run `devKitCommandLine postUpgradeStone` command
+The `devKitCommandLine postUpgradeStone` command performs the necessary post-upgrade image conversion steps:
+- recompile SortedCollection sort blocks when compiled methods change shape (2.x to 3.x upgrades and 3.x to 3.3.x upgrades).
+- Resort SortedCollections and rebuild Character indexes when upgrading when upgrading from pre 3.2.x to 3.2.x or upgrading from 3.2.x to 3.3.0. Starting with version 3.2.x the GsDevKit/GLASS extents are put into [Unicode Comparison Mode][1] where Legacy Strings and Unicode Strings are compared and sorted using the default ICU collator. This change in collation sequence means that when you upgrade from a pre-3.2.x stone, Character collection indexes and SortedCollections with CharacerCollection contents need to be rebuilt/resorted.
+
+These operations are controlled by a collection of tODE scripts that can be found in `'home/uitils/upgrade`. 
+
+The `/home/utils/upgrade/postUpgrade` script is the primary driver and calls different scripts depending upon which version of GemStone you are upgrading to:
+
+  - postUpgradeTo310
+  - postUpgradeTo320
+  - postUpgradeTo330
+  - postUpgradeTo331 	
+
+Each of those scripts calls a script for performing one or more of the standard post upgrade conversion operations based on which version you are upgrading from:
+
+  - recompile SortedCollection sort blocks
+  - resort SortedCollection instances
+  - rebuild CharacterCollection indexes
+
+If you find that you need to customize one or more of the scripts and/or add additional post upgrade conversion steps, you can do so by copying the script and making the necessary changes. The default versions of the scripts are found in `/sys/default/server/upgrade`. You can specify a *local, site-wide* implementations of any one of these scripts by copying the script to `/sys/local/server/upgrade` or you can specify a *stone-specific* implementation by copying the script to `/sys/stone/upgrade`.
+
+[1]: https://downloads.gemtalksystems.com/docs/GemStone64/3.3.x/GS64-ProgGuide-3.3/GS64-ProgGuide-3.3.htm?https://downloads.gemtalksystems.com/docs/GemStone64/3.3.x/GS64-ProgGuide-3.3/5-Strings.htm
