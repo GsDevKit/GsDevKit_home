@@ -4,7 +4,7 @@ copySourceStoneSystemConf
 	Transcript
 		cr;
 		tab;
-		show: 'Copying system.conf file from ' , self sourceStoneName , ' to ' , self targetStoneName.
+		show: 'Copying extents/system.conf file from ' , self sourceStoneName , ' to ' , self targetStoneName.
 	sourceStoneSystemConfFile := self gs_stonesHome / self sourceStoneName / 'extents' / 'system.conf'.
 	targetSystemConfFile := self gs_stonesHome / self targetStoneName / 'extents' / 'system.conf'.
 	targetSystemConfFile exists
