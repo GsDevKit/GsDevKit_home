@@ -11,14 +11,14 @@ TDScriptLeafNode{#name:'postUpgradeSortedCollectionSortBlocks',#contents:'[ :top
   opts
     at: \'help\'
     ifAbsent: [ 
-      | gsTool sourceStoneVersion currentStoneVersion report userId scInstances |
+      | gsTool sourceStoneVersion currentStoneVersion report userId scInstances result |
       gsTool := topez toolInstanceFor: \'gs\'.
       currentStoneVersion := ((gsTool gsversion: #\'stone\') at: \'gsVersion\')
         asMetacelloVersionNumber.
       opts
         at: \'sourceVersion\'
         ifPresent: [ :sourceVersionString | sourceStoneVersion := sourceVersionString asMetacelloVersionNumber ]
-        ifAbsent: [ self error: \'Required option --sourceVersion not present\' ].
+        ifAbsent: [ nil error: \'Required option --sourceVersion not present\' ].
       userId := GsCurrentSession currentSession userProfile userId.
       Transcript
         cr;
@@ -28,16 +28,30 @@ TDScriptLeafNode{#name:'postUpgradeSortedCollectionSortBlocks',#contents:'[ :top
         cr;
         show: \'Finding sorted collections...\'.
       System commit.
-      SortedCollection findAllSortedCollectionsForUser: userId.
+      result := SortedCollection findAllSortedCollectionsForUser: userId.
       SortedCollection initializeForConversion.
-      scInstances := SortedCollection _loadHiddenSet: 41.
-      Transcript
-        cr;
-        show:
-            \'Recompiling sort blocks for \' , scInstances printString
-                , \' sorted collections...\'.
-      System hiddenSetReinit: 41.
-      report := SortedCollection convertInstancesFromFilesForGem: 1 of: 1.
+      (SortedCollection respondsTo: #\'_loadHiddenSet:\')
+        ifTrue: [ 
+          scInstances := SortedCollection _loadHiddenSet: 41.
+          Transcript
+            cr;
+            show:
+                \'Recompiling sort blocks for \' , scInstances printString
+                    , \' sorted collections...\'.
+          System hiddenSetReinit: 41 ].
+      report := (SortedCollection
+        respondsTo: #\'convertInstancesFromFilesForGem:of:\')
+        ifTrue: [ SortedCollection convertInstancesFromFilesForGem: 1 of: 1 ]
+        ifFalse: [ 
+          | filename |
+          \"3.1.x\"
+          Transcript
+            cr;
+            show:
+                \'Recompiling sort blocks for \' , result printString
+                    , \' sorted collections...\'.
+          filename := \'$upgradeLogDir/AllSortedCollections.bms\'.
+          SortedCollection convertInstancesFromFile: filename forGem: 1 of: 1 ].
       Transcript
         cr;
         show: report.
@@ -63,4 +77,4 @@ EXAMPLES
 
   ./postUpgradeSortedCollectionSortBlocks --sourceVersion=3.2.9 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:31:54.3779799938201-07:00'],#modificationTime:DateAndTime['2016-05-23T15:59:01.977339029312134-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:31:54.3779799938201-07:00'],#modificationTime:DateAndTime['2016-06-06T13:54:13.02052307128906-07:00']}
