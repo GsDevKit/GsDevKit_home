@@ -62,17 +62,21 @@ case $TEST in
     ;; 
   Upgrade)
     installServer
-    createStone -g ${STONENAME1}_2441 2.4.4.1
+    if [ "${UPGRADE_FROM}" = "2.4.4.1" ] ; then
+      opt="-g"
+    fi
+    createStone $opt ${STONENAME1}_${UPGRADE_FROM} ${UPGRADE_FROM}
     upgradeStoneName="${STONENAME1}_${GS_VERSION}"
     set +e
     set -x
-    upgradeStone -f ${STONENAME1}_2441 ${STONENAME1}_${GS_VERSION} $GS_VERSION << EOF
+    upgradeStone -f ${STONENAME1}_${UPGRADE_FROM} ${STONENAME1}_${GS_VERSION} $GS_VERSION << EOF
 
 EOF
     status=$?
     if [ "$status" != "0" ] ; then
-      cat $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topazerrors.log
-      cat $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out
+      tail -1000 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topazerrors.log
+      tail -1000 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out
+      tail -1000 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeTo3x.out
       exit 1
     else
       exit 0
@@ -89,7 +93,9 @@ EOF
 EOF
     status=$?
     if [ "$status" != "0" ] ; then
-      # cat $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out
+      tail -1000 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topazerrors.log
+      tail -1000 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out
+      tail -1000 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeTo3x.out
       exit 1
     else
       exit 0
