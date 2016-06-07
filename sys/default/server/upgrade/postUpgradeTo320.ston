@@ -19,6 +19,9 @@ TDScriptLeafNode{#name:'postUpgradeTo320',#contents:'[ :topez :objIn :tokens :co
         at: \'sourceVersion\'
         ifPresent: [ :sourceVersionString | sourceStoneVersion := sourceVersionString asMetacelloVersionNumber ]
         ifAbsent: [ self error: \'Required option --sourceVersion not present\' ].
+     Transcript
+        cr;
+        show: \'Running \' , command command printString.
       sourceStoneVersion >= \'3.2.0\' asMetacelloVersionNumber
         ifTrue: [ 
           \'No post conversion processing needed for conversion from \'
@@ -97,4 +100,4 @@ EXAMPLES
 
   ./postUpgradeTo320 --sourceVersion=3.1.0.6 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:15:08.8803629875183-07:00'],#modificationTime:DateAndTime['2016-06-04T12:26:43.41300892829895-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:15:08.8803629875183-07:00'],#modificationTime:DateAndTime['2016-06-07T14:55:11.80730009078979-07:00']}

@@ -22,7 +22,7 @@ TDScriptLeafNode{#name:'postUpgradeSortedCollectionSortBlocks',#contents:'[ :top
       userId := GsCurrentSession currentSession userProfile userId.
       Transcript
         cr;
-        show: \'Recompiling Sort Blocks\';
+        show: \'Recompiling Sort Blocks using \' , command command printString;
         cr;
         show: \'-----------------------\';
         cr;
@@ -48,8 +48,7 @@ TDScriptLeafNode{#name:'postUpgradeSortedCollectionSortBlocks',#contents:'[ :top
           Transcript
             cr;
             show:
-                \'Recompiling sort blocks for \' , result printString
-                    , \' sorted collections...\'.
+                \'Recompiling sort blocks for \' , result printString , \' sorted collections...\'.
           filename := \'$upgradeLogDir/AllSortedCollections.bms\'.
           SortedCollection convertInstancesFromFile: filename forGem: 1 of: 1 ].
       Transcript
@@ -77,4 +76,4 @@ EXAMPLES
 
   ./postUpgradeSortedCollectionSortBlocks --sourceVersion=3.2.9 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:31:54.3779799938201-07:00'],#modificationTime:DateAndTime['2016-06-06T13:54:13.02052307128906-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:31:54.3779799938201-07:00'],#modificationTime:DateAndTime['2016-06-07T14:53:13.51614189147949-07:00']}

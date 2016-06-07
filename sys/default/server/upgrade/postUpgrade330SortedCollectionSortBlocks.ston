@@ -22,7 +22,7 @@ TDScriptLeafNode{#name:'postUpgrade330SortedCollectionSortBlocks',#contents:'[ :
       userId := GsCurrentSession currentSession userProfile userId.
       Transcript
         cr;
-        show: \'Recompiling Sort Blocks\';
+        show: \'Recompiling Sort Blocks using \' , command command printString;
         cr;
         show: \'-----------------------\';
         cr;
@@ -60,7 +60,7 @@ TDScriptLeafNode{#name:'postUpgrade330SortedCollectionSortBlocks',#contents:'[ :
                     ifTrue: [ 
                       | str val |
                       str := aBlock _sourceString.
-                      val := str evaluate .
+                      val := str evaluate.
                       val
                         ifNotNil: [ sc _sortBlock: val ]
                         ifNil: [ self error: \'Could not recompile sortBlock \' , aBlock asOop printString ] ] ].
@@ -91,4 +91,4 @@ EXAMPLES
 
   ./postUpgrade330SortedCollectionSortBlocks --sourceVersion=3.2.9 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:31:54.3779799938201-07:00'],#modificationTime:DateAndTime['2016-06-03T16:00:52.66917490959167-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:31:54.3779799938201-07:00'],#modificationTime:DateAndTime['2016-06-07T14:51:31.06256008148193-07:00']}

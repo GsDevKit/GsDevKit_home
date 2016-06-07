@@ -21,7 +21,7 @@ TDScriptLeafNode{#name:'postUpgradeRebuildCharacterCollectionIndexes',#contents:
         ifAbsent: [ self error: \'Required option --sourceVersion not present\' ].
       Transcript
         cr;
-        show: \'Rebuilding CharacterCollection indexes\';
+        show: \'Rebuilding CharacterCollection indexes using \' , command command printString;
         cr;
         show: \'----------------------------\';
         cr;
@@ -64,4 +64,4 @@ EXAMPLES
 
   ./postUpgradeRebuildCharacterCollectionIndexes --sourceVersion=3.1.0.6 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T12:00:04.4277639389038-07:00'],#modificationTime:DateAndTime['2016-05-24T11:45:29.89896893501282-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T12:00:04.4277639389038-07:00'],#modificationTime:DateAndTime['2016-06-07T14:51:57.11459302902222-07:00']}

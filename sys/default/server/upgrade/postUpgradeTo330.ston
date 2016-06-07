@@ -19,6 +19,9 @@ TDScriptLeafNode{#name:'postUpgradeTo330',#contents:'[ :topez :objIn :tokens :co
         at: \'sourceVersion\'
         ifPresent: [ :sourceVersionString | sourceStoneVersion := sourceVersionString asMetacelloVersionNumber ]
         ifAbsent: [ self error: \'Required option --sourceVersion not present\' ].
+     Transcript
+        cr;
+        show: \'Running \' , command command printString.
       sourceStoneVersion >= \'3.1.0\' asMetacelloVersionNumber
         ifTrue: [ 
           | strm res |
@@ -98,4 +101,4 @@ EXAMPLES
 
   ./postUpgradeTo330 --sourceVersion=3.1.0.6 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:20:57.8364939689636-07:00'],#modificationTime:DateAndTime['2016-06-04T12:27:33.45435905456543-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:20:57.8364939689636-07:00'],#modificationTime:DateAndTime['2016-06-07T14:55:24.50254607200623-07:00']}

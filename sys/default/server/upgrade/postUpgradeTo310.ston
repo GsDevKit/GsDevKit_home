@@ -19,29 +19,30 @@ TDScriptLeafNode{#name:'postUpgradeTo310',#contents:'[ :topez :objIn :tokens :co
         at: \'sourceVersion\'
         ifPresent: [ :sourceVersionString | sourceStoneVersion := sourceVersionString asMetacelloVersionNumber ]
         ifAbsent: [ self error: \'Required option --sourceVersion not present\' ].
+Transcript cr; show: \'Running \' , command command printString.
       sourceStoneVersion >= \'3.1.0\' asMetacelloVersionNumber
         ifTrue: [ 
           \'No post conversion processing needed for conversion from \'
             , sourceStoneVersion printString , \' to \'
             , currentStoneVersion printString ]
         ifFalse: [ 
-              sourceStoneVersion >= \'3.0.0\' asMetacelloVersionNumber
-                ifTrue: [ 
-                  \'No post conversion processing defined for conversion from \'
-                    , sourceStoneVersion printString , \' to \'
-                    , currentStoneVersion printString ]
-                ifFalse: [ 
-                  | strm res |
-                  \"Upgrade from 2.4.x; SortedCollection sortBlocks need to be recompiled.\"
-                  strm := WriteStream on: String new.
-                  res := topez
-                    evaluateCommandString:
-                      \'/home/utils/upgrade/postUpgradeSortedCollectionSortBlocks --sourceVersion=\'
-                        , sourceStoneVersion printString.
-                  strm
-                    nextPutAll: res;
-                    cr.
-                  strm contents ]  ] ]
+          sourceStoneVersion >= \'3.0.0\' asMetacelloVersionNumber
+            ifTrue: [ 
+              \'No post conversion processing defined for conversion from \'
+                , sourceStoneVersion printString , \' to \'
+                , currentStoneVersion printString ]
+            ifFalse: [ 
+              | strm res |
+              \"Upgrade from 2.4.x; SortedCollection sortBlocks need to be recompiled.\"
+              strm := WriteStream on: String new.
+              res := topez
+                evaluateCommandString:
+                  \'/home/utils/upgrade/postUpgradeSortedCollectionSortBlocks --sourceVersion=\'
+                    , sourceStoneVersion printString.
+              strm
+                nextPutAll: res;
+                cr.
+              strm contents ] ] ]
     ifPresent: [ :ignored | 
       TDManPage
         viewManPage:
@@ -62,4 +63,4 @@ EXAMPLES
 
   ./postUpgradeTo310 --sourceVersion=2.4.8 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:23:54.7771561145782-07:00'],#modificationTime:DateAndTime['2016-06-02T14:19:15.88864803314209-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:23:54.7771561145782-07:00'],#modificationTime:DateAndTime['2016-06-07T14:54:28.66027402877808-07:00']}

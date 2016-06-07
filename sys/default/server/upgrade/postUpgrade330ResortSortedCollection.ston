@@ -22,7 +22,7 @@ TDScriptLeafNode{#name:'postUpgrade330ResortSortedCollection',#contents:'[ :tope
       userId := GsCurrentSession currentSession userProfile userId.
       Transcript
         cr;
-        show: \'Resorting Sorted Collections\';
+        show: \'Resorting Sorted Collections using \' , command command printString;
         cr;
         show: \'----------------------------\';
         cr;
@@ -74,4 +74,4 @@ EXAMPLES
 
   ./postUpgrade330ResortSortedCollection --sourceVersion=3.2.9 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2016-06-02T15:51:35.24474310874939-07:00'],#modificationTime:DateAndTime['2016-06-03T15:34:09.287364959716797-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2016-06-02T15:51:35.24474310874939-07:00'],#modificationTime:DateAndTime['2016-06-07T14:51:03.064722061157227-07:00']}
