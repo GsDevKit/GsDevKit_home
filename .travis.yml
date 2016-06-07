@@ -4,24 +4,25 @@ os:
   - linux
 
 env:
-#  - GS_VERSION=3.2.15 TEST=Error
-#  - GS_VERSION=2.4.8 TEST=Basic
-#  - GS_VERSION=3.1.0.6 TEST=Basic
-#  - GS_VERSION=3.2.15 TEST=Basic
-#  - GS_VERSION=3.3.0 TEST=Basic
-#  - GS_VERSION=3.2.15 TEST=Install
-#  - GS_VERSION=3.3.0 TEST=Clients
-#  - GS_VERSION=3.3.0 TEST=SmalltalkCI
-#  - GS_VERSION=3.1.0.6 UPGRADE_FROM=2.4.4.1 TEST=Upgrade
-#  - GS_VERSION=3.2.15 UPGRADE_FROM=3.2.9 TEST=Upgrade
+  - GS_VERSION=3.2.15 TEST=Error
+  - GS_VERSION=2.4.8 TEST=Basic
+  - GS_VERSION=3.1.0.6 TEST=Basic
+  - GS_VERSION=3.2.15 TEST=Basic
+  - GS_VERSION=3.3.0 TEST=Basic
+  - GS_VERSION=3.2.15 TEST=Install
+  - GS_VERSION=3.3.0 TEST=Clients
+  - GS_VERSION=3.3.0 TEST=SmalltalkCI
+  - GS_VERSION=3.1.0.6 UPGRADE_FROM=2.4.4.1 TEST=Upgrade
+  - GS_VERSION=3.2.15 UPGRADE_FROM=3.2.9 TEST=Upgrade
   - GS_VERSION=3.3.0 UPGRADE_FROM=3.1.0.6 TEST=Upgrade
   - GS_VERSION=3.3.0 UPGRADE_FROM=3.2.15 TEST=Upgrade
-#  - GS_VERSION=3.3.0 TEST=Upgrade_71 
+  - GS_VERSION=3.3.0 TEST=Upgrade_71 
 
 matrix:
    allow_failures:
      - env: GS_VERSION=3.3.0 TEST=Upgrade_71 # until https://github.com/GsDevKit/GsDevKit_home/issues/108 fixed
-#     - os: osx
+     - env: GS_VERSION=3.3.0 UPGRADE_FROM=3.1.0.6 TEST=Upgrade
+     - env: GS_VERSION=3.3.0 UPGRADE_FROM=3.2.15 TEST=Upgrade
 
 addons:
   hosts:
