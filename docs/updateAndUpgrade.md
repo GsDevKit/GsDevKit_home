@@ -41,4 +41,4 @@ For example, to ugprade your stone named devKit_329 to version 3.3, creating a n
 
 See [Upgrading stones with $GS_HOME/bin/upgradeStone][1] for additional information about the operations performed during `upgradeStone`
 
-[1]: upgradeStone.md
+[1]: upgradeStone.md#upgrading-stones-with-gs_homebinupgradestone
