@@ -1,4 +1,5 @@
 # Upgrading stones with $GS_HOME/bin/upgradeStone
+The ` $GS_HOME/binupgradeStone` script can be used to upgrade from GemStone versions 2.4.4.1 through 2.4.8, 3.1.x, 3.2.x, 3.3.x and beyond to GemStone versions 3.1.0.6, 3.2.x, 3.3.x and beyond.
 
 1. [Create upgrade target stone](#create-upgrade-target-stone)
 2. [Run `devKitCommandLine preUpgradeStone` command](#run-devkitcommandline-preupgradestone-command)
@@ -40,7 +41,7 @@ Before running the standard `$GEMSTONE/seaside/bin/upgradeSeasideImage` script, 
 
 ##Run upgradeSeasideImage script
 `$GEMSTONE/seaside/bin/upgradeSeasideImage` performs the standard steps for upgrading a GsDevKit/GLASS image:
-1. ..
+1. As SytemUser install [Legacy Streams][2] and [Unicode Comparison Mode][1].
 2. ..
 
 ##GsDevKit post-conversion steps
@@ -76,3 +77,4 @@ Each of those scripts calls a script for performing one or more of the standard 
 If you find that you need to customize one or more of the scripts and/or add additional post upgrade conversion steps, you can do so by copying the script and making the necessary changes. The default versions of the scripts are found in `/sys/default/server/upgrade`. You can specify a *local, site-wide* implementations of any one of these scripts by copying the script to `/sys/local/server/upgrade` or you can specify a *stone-specific* implementation by copying the script to `/sys/stone/upgrade`.
 
 [1]: https://downloads.gemtalksystems.com/docs/GemStone64/3.3.x/GS64-ProgGuide-3.3/GS64-ProgGuide-3.3.htm?https://downloads.gemtalksystems.com/docs/GemStone64/3.3.x/GS64-ProgGuide-3.3/5-Strings.htm
+[2]: https://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-ProgGuide-3.2/4-Collections.htm#pgfId-485477

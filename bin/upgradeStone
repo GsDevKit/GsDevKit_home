@@ -409,7 +409,7 @@ if [ "${postUpgradeLoadScriptPath}x" != "x" ] ;  then
   echo "Running ${postUpgradeLoadScriptPath} tODE script"
 
   $GS_HOME/bin/private/gsDevKitTodeCommandLine todeIt $targetStoneName << TODE
-${postUpgradeLoadScriptPath}
+project upgrade --install=${postUpgradeLoadScriptPath}
 TODE
 fi
 
