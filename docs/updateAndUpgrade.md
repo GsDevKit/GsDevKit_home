@@ -39,3 +39,6 @@ For example, to ugprade your stone named devKit_329 to version 3.3, creating a n
    upgradeStone devKit_329 devKit_33 3.3.0 |& tee -a $GS_HOME/upgrade.log
 ```
 
+See [Upgrading stones with $GS_HOME/bin/upgradeStone][1] for additional information about the operations performed during `upgradeStone`
+
+[1]: upgradeStone.md
