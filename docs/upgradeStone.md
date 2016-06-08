@@ -1,6 +1,31 @@
 # Upgrading stones with $GS_HOME/bin/upgradeStone
 The ` $GS_HOME/binupgradeStone` script can be used to upgrade from GemStone versions 2.4.4.1 through 2.4.8, 3.1.x, 3.2.x, 3.3.x and beyond to GemStone versions 3.1.0.6, 3.2.x, 3.3.x and beyond.
 
+For example, to ugprade your stone named devKit_329 to version 3.3, creating a new stone named devKit_33, execute the following:
+
+```
+   $GS_HOME/bin/upgradeStone -l/home/loadApplication devKit_329 devKit_33 3.3.0 |& tee -a $GS_HOME/upgrade.log
+```
+
+where `/home/loadApplication` is the path to a tODE script that loads your application that might look like the following:
+
+```
+project load --loads=`#('Tests')` Seaside3
+```
+
+If you need to arrange for one or more application classes to be initialized during the [post upgrade load](#run-user-application-load-script), create a script `/home/upradeApplication` in addition to `/home/loadApplication` that looks like the following:
+
+```
+project upgrade --install=/home/loadApplication MyClassNeedingInitialization
+```
+
+and call `upgradeStone` using the `/home/upgradeAppliation` script:
+
+```
+   $GS_HOME/bin/upgradeStone -l/home/upgradeApplication devKit_329 devKit_33 3.3.0 |& tee -a $GS_HOME/upgrade.log
+```
+
+
 1. [Create upgrade target stone](#create-upgrade-target-stone)
 2. [Run `devKitCommandLine preUpgradeStone` command](#run-devkitcommandline-preupgradestone-command)
 3. [Create upgradeLog directory](#create-upgradelog-directory)
@@ -41,8 +66,9 @@ Before running the standard `$GEMSTONE/seaside/bin/upgradeSeasideImage` script, 
 
 ##Run upgradeSeasideImage script
 `$GEMSTONE/seaside/bin/upgradeSeasideImage` performs the standard steps for upgrading a GsDevKit/GLASS image:
-1. As SytemUser install [Legacy Streams][2] and [Unicode Comparison Mode][1].
-2. ..
+1. As SytemUser install [Legacy Streams][2], [Unicode Comparison Mode][1], and convert obsolete 2.4.x classes into ObsoleteClasses.
+2. As DataCurator
+   *Note that as of 3.3.0 and 3.2.14 it is possible to supply an alternate username to the `$GEMSTONE/seaside/bin/upgradeSeasideImage` script, however GsDevKit_home does not yet support alternate user names)*
 
 ##GsDevKit post-conversion steps
 
