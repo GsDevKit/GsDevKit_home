@@ -4,7 +4,7 @@ The ` $GS_HOME/binupgradeStone` script can be used to upgrade from GemStone vers
 For example, to ugprade your stone named devKit_329 to version 3.3, creating a new stone named devKit_33, execute the following:
 
 ```
-   $GS_HOME/bin/upgradeStone -l/home/loadApplication devKit_329 devKit_33 3.3.0 |& tee -a $GS_HOME/upgrade.log
+$GS_HOME/bin/upgradeStone -l/home/loadApplication devKit_329 devKit_33 3.3.0 |& tee -a $GS_HOME/upgrade.log
 ```
 
 where `/home/loadApplication` is the path to a tODE script that loads your application that might look like the following:
@@ -22,7 +22,7 @@ project upgrade --install=/home/loadApplication MyClassNeedingInitialization
 and call `upgradeStone` using the `/home/upgradeAppliation` script:
 
 ```
-   $GS_HOME/bin/upgradeStone -l/home/upgradeApplication devKit_329 devKit_33 3.3.0 |& tee -a $GS_HOME/upgrade.log
+$GS_HOME/bin/upgradeStone -l/home/upgradeApplication devKit_329 devKit_33 3.3.0 |& tee -a $GS_HOME/upgrade.log
 ```
 
 
@@ -66,8 +66,16 @@ Before running the standard `$GEMSTONE/seaside/bin/upgradeSeasideImage` script, 
 
 ##Run upgradeSeasideImage script
 `$GEMSTONE/seaside/bin/upgradeSeasideImage` performs the standard steps for upgrading a GsDevKit/GLASS image:
-1. As SytemUser install [Legacy Streams][2], [Unicode Comparison Mode][1], and convert obsolete 2.4.x classes into ObsoleteClasses.
-2. As DataCurator
+1. As SytemUser:
+   - install [Legacy Streams][2], [Unicode Comparison Mode][1], and convert obsolete 2.4.x classes into ObsoleteClasses.
+2. As DataCurator:
+   - Enable SessionMethods.
+   - Clear the Monticello and Metacello caches.
+   - Remove all methods from Behaviors in UserGlobals.
+   - Bootstrap the basic GLASS classes and methods (for the target GemStone version) into the image, so that Metacello and FileTree can be loaded, so that the classes and methods making up the GsDevKit classes and methods can be loaded.
+   - remove all ConfigurationOf classes from image. The will be reloaded when the GsDevKit classes and methods are loaded.
+   - Explicitly load ConfigurationOf classes specified in BootstrapApplicationLoadSpecs.
+   - Load the configurations specified in the BootstrapApplicationLoadSpecs.
    *Note that as of 3.3.0 and 3.2.14 it is possible to supply an alternate username to the `$GEMSTONE/seaside/bin/upgradeSeasideImage` script, however GsDevKit_home does not yet support alternate user names)*
 
 ##GsDevKit post-conversion steps
