@@ -13,18 +13,15 @@ usage() {
   cat <<HELP
 USAGE: $(basename $0) [-h] [-n] [-t|-a] [-s <snapshot-file-path>] <stone-name>
 
-Copy a new extent into the named stone's extent directory. The stone
-will be stopped before doing the copy and after the copy is complete,
-the stone will be restarted with the -N option.
+Copy a new extent into the named stone's extent directory and delete tranlogs in
+the tralogs directory. The stone will be stopped before doing the copy and after
+the copy is complete, the stone will be restarted with the -N option.
 
 If the -s option is not specified, \$GEMSTONE/bin/extent0.seaside.dbf will be 
 used as the initial extent.
 
-If the -n option is not specified, the tranlogs in the stone's tranlog 
-directory will be removed before the stone is restarted.
-
 With the -n option, the stone is not restarted, the <snapshot-file-path> is 
-required and tranlogs are not removed
+required and tranlogs are not removed.
 
 Please read the 'How to Restore from Backup' section of the System 
 Administration manual (http://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/GS64-SysAdmin-3.2.htm?http://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/9-BackupAndRestore.htm#pgfId-999128)
