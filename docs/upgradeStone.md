@@ -66,8 +66,10 @@ Before running the standard `$GEMSTONE/seaside/bin/upgradeSeasideImage` script, 
 
 ##Run upgradeSeasideImage script
 `$GEMSTONE/seaside/bin/upgradeSeasideImage` performs the standard steps for upgrading a GsDevKit/GLASS image:
+
 1. As SytemUser:
    - install [Legacy Streams][2], [Unicode Comparison Mode][1], and convert obsolete 2.4.x classes into ObsoleteClasses.
+
 2. As DataCurator:
    - Enable SessionMethods.
    - Clear the Monticello and Metacello caches.
@@ -76,6 +78,7 @@ Before running the standard `$GEMSTONE/seaside/bin/upgradeSeasideImage` script, 
    - remove all ConfigurationOf classes from image. The will be reloaded when the GsDevKit classes and methods are loaded.
    - Explicitly load ConfigurationOf classes specified in BootstrapApplicationLoadSpecs.
    - Load the configurations specified in the BootstrapApplicationLoadSpecs.
+
    *Note that as of 3.3.0 and 3.2.14 it is possible to supply an alternate username to the `$GEMSTONE/seaside/bin/upgradeSeasideImage` script, however GsDevKit_home does not yet support alternate user names)*
 
 ##GsDevKit post-conversion steps
