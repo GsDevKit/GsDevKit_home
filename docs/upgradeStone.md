@@ -75,11 +75,11 @@ Before running the standard `$GEMSTONE/seaside/bin/upgradeSeasideImage` script, 
    - Clear the Monticello and Metacello caches.
    - Remove all methods from Behaviors in UserGlobals.
    - Bootstrap the basic GLASS classes and methods (for the target GemStone version) into the image, so that Metacello and FileTree can be loaded, so that the classes and methods making up the GsDevKit classes and methods can be loaded.
-   - remove all ConfigurationOf classes from image. The will be reloaded when the GsDevKit classes and methods are loaded.
+   - remove all ConfigurationOf classes from image. The will be reloaded when the GsDevKit classes and methods are loaded and when your application classes are reloaded.
    - Explicitly load ConfigurationOf classes specified in BootstrapApplicationLoadSpecs.
-   - Load the configurations specified in the BootstrapApplicationLoadSpecs.
+   - Load the configurations specified in the BootstrapApplicationLoadSpecs. The class initializers are skipped for all classes except those listed in BootstrapApplicationPostloadClassList.
 
-   *Note that as of 3.3.0 and 3.2.14 it is possible to supply an alternate username to the `$GEMSTONE/seaside/bin/upgradeSeasideImage` script, however GsDevKit_home does not yet support alternate user names)*
+   *Note that as of 3.3.0 and 3.2.14 it is possible to supply an alternate username to the `$GEMSTONE/seaside/bin/upgradeSeasideImage` script, however GsDevKit_home does not yet support alternate user names*
 
 ##GsDevKit post-conversion steps
 
