@@ -1,0 +1,11 @@
+{
+	"class" : {
+		"commandName" : "dkh 5/4/2016 07:24",
+		"description" : "dkh 5/4/2016 07:24" },
+	"instance" : {
+		"activate" : "dkh 5/4/2016 07:30",
+		"performUpgradeActions" : "dkh 5/4/2016 07:31",
+		"sourceGsVers" : "dkh 5/4/2016 16:38",
+		"sourceStoneName" : "dkh 5/4/2016 07:24",
+		"targetGsVers" : "dkh 5/4/2016 07:24",
+		"targetStoneName" : "dkh 5/4/2016 07:24" } }

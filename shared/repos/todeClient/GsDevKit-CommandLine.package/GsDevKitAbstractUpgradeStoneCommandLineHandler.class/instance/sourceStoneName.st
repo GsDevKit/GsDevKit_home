@@ -1,0 +1,3 @@
+accessing
+sourceStoneName
+	^ self stoneName

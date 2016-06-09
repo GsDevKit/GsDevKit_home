@@ -20,7 +20,6 @@ createStone devKit_33 3.3.0
 createClient tode1
 ```
 
-
 ##Using GsDevKit and tODE
 
 GsDevKit and tODE provide a development environment that is similar to Smalltalk IDEs, but with additonal functionality.  The most important capabilities are for project management, and the tODE command shell.  To get started learning about tODE features, see:

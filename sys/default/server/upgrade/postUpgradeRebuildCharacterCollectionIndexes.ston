@@ -1,0 +1,67 @@
+TDScriptLeafNode{#name:'postUpgradeRebuildCharacterCollectionIndexes',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./postUpgradeRebuildCharacterCollectionIndexes -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'sourceVersion\' nil #\'required\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | gsTool sourceStoneVersion currentStoneVersion report nscCount |
+      gsTool := topez toolInstanceFor: \'gs\'.
+      currentStoneVersion := ((gsTool gsversion: #\'stone\') at: \'gsVersion\')
+        asMetacelloVersionNumber.
+      opts
+        at: \'sourceVersion\'
+        ifPresent: [ :sourceVersionString | sourceStoneVersion := sourceVersionString asMetacelloVersionNumber ]
+        ifAbsent: [ self error: \'Required option --sourceVersion not present\' ].
+      Transcript
+        cr;
+        show: \'Rebuilding CharacterCollection indexes using \' , command command printString;
+        cr;
+        show: \'----------------------------\';
+        cr;
+        show: \'Finding CharacterCollection indexes...\'.
+      System commit.
+      IndexManager findAllCharacterCollectionIndexesForUser: nil.
+      SortedCollection initializeForConversion.
+      nscCount := IndexManager _loadHiddenSet: 41.
+      Transcript
+        cr;
+        show:
+            \'Rebuilding indexes for \' , nscCount printString
+                , \' nscs with CharacterCollection indexes...\'.
+      System hiddenSetReinit: 41.
+      report := IndexManager
+        rebuildCharacterCollectionIndexesFromFilesForGem: 1
+        of: 1.
+      Transcript
+        cr;
+        show: report.
+      IndexManager writeTotalsFiles.
+      IndexManager createConversionResultFileForTotalGems: 1.
+      report ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  postUpgradeRebuildCharacterCollectionIndexes - Post-upgrade rebuild CharacterCollection indexes
+SYNOPSIS
+  postUpgradeRebuildCharacterCollectionIndexes [-h|--help] --sourceVersion=<source-gemstone-version>
+
+DESCRIPTION
+  Rebuild CharacterCollection indexes. 
+
+  The environment variable $upgradeLogDir is expected to be set -- normally set by 
+  $GS_HOME/bin/upgradeStone.
+
+EXAMPLES
+  ./postUpgradeRebuildCharacterCollectionIndexes -h
+
+  ./postUpgradeRebuildCharacterCollectionIndexes --sourceVersion=3.1.0.6 
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T12:00:04.4277639389038-07:00'],#modificationTime:DateAndTime['2016-06-07T14:51:57.11459302902222-07:00']}

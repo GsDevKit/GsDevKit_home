@@ -1,0 +1,69 @@
+TDScriptLeafNode{#name:'postUpgradeResortSortedCollection',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./postUpgradeResortSortedCollection -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'sourceVersion\' nil #\'required\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | gsTool sourceStoneVersion currentStoneVersion report userId scInstances |
+      gsTool := topez toolInstanceFor: \'gs\'.
+      currentStoneVersion := ((gsTool gsversion: #\'stone\') at: \'gsVersion\')
+        asMetacelloVersionNumber.
+      opts
+        at: \'sourceVersion\'
+        ifPresent: [ :sourceVersionString | sourceStoneVersion := sourceVersionString asMetacelloVersionNumber ]
+        ifAbsent: [ self error: \'Required option --sourceVersion not present\' ].
+      userId := GsCurrentSession currentSession userProfile userId.
+      Transcript
+        cr;
+        show: \'Resorting Sorted Collections using \' , command command printString;
+        cr;
+        show: \'----------------------------\';
+        cr;
+        show: \'Finding sorted collections...\'.
+      System commit.
+      SortedCollection findAllSortedCollectionsForUser: userId.
+      SortedCollection initializeForConversion.
+      scInstances := SortedCollection _loadHiddenSet: 41.
+      Transcript
+        cr;
+        show: \'Resorting \' , scInstances printString , \' sorted collections...\'.
+      System hiddenSetReinit: 41.
+      report := SortedCollection resortInstancesFromFilesForGem: 1 of: 1.
+      Transcript
+        cr;
+        show: report.
+      SortedCollection writeTotalsFiles.
+      SortedCollection createConversionResultFileForTotalGems: 1.
+      report ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  postUpgradeResortSortedCollection - Post-upgrade resort SortedCollections
+SYNOPSIS
+  postUpgradeResortSortedCollection [-h|--help] --sourceVersion=<source-gemstone-version>
+
+DESCRIPTION
+  Resort SortedCollections. Techinically we need to only resort SortedCollections that
+  include Unicode7, Unicode16 or Unicode32 instances, but since we can\'\'t tell the
+  difference, we\'\'ll resort them all.
+
+  If you can filter the SortedCollections better, then copy this script to 
+  /sys/local/server/upgrade and modify as you see fit.
+
+  The environment variable $upgradeLogDir is expected to be set -- normally set by 
+  $GS_HOME/bin/upgradeStone.
+
+EXAMPLES
+  ./postUpgradeResortSortedCollection -h
+
+  ./postUpgradeResortSortedCollection --sourceVersion=3.2.9 
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T11:55:33.2293720245361-07:00'],#modificationTime:DateAndTime['2016-06-07T14:52:26.97256898880005-07:00']}

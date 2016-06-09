@@ -102,11 +102,13 @@ stone "$targetStoneName":
   2. executes the \$GS_HOME/bin/createStone to create the $targetStoneName stone
   3. copy the extent0.dbf file from "$sourceStoneName to $targetStoneName
   4. create $targetStonePath/upgradeLog
-  5. executes the \$GEMSTONE/bin/upgradeImage script
-  6. executes the \$GEMSTONE/seaside/bin/upgradeSeasideImage script
-  7. executes the \$GS_SERVER/bin/todeLoad in $targetStoneName stone
+  5. perform pre-upgrade tasks
+  6. executes the \$GEMSTONE/bin/upgradeImage script
+  7. executes the \$GEMSTONE/seaside/bin/upgradeSeasideImage script
+  8. executes the \$GS_SERVER/bin/todeLoad in $targetStoneName stone
      to complete the upgrade process.
-  8. executes the <post-load-tode-script> (-l option)
+  9. executes the <post-load-tode-script> (-l option)
+ 10. perform post-upgrade tasks
 
 If an error occurs during execution of this script, the details of the error are
 available in the topazerrors.log file in the 
@@ -134,6 +136,8 @@ else
 fi
 rm -rf $targetStonePath/tranlogs/tranlog*.dbf
 
+$GS_HOME/bin/private/preUpgradeStone $sourceStoneName $targetStoneName $gsvers
+
 pushd $targetStonePath >& /dev/null
   source stone.env
 
@@ -148,9 +152,8 @@ if [ "$runUpgrade" = "false" ] ; then
   exit_0_banner "$targetStoneName created"
 fi
 
-if [ "$GEMSTONE}x" = "x" ] ; then
-  exit_1_banner "\$GEMSTONE env var not set"
-fi
+$GS_HOME/bin/stopNetldi $targetStoneName
+$GS_HOME/bin/startNetldi $targetStoneName  # pick up $upgradeLogDir
 
 startStoneArg=""
 if [ "$majorMinorVersion" = "2.4" ]  ; then
@@ -162,11 +165,97 @@ $GS_HOME/bin/startStone $startStoneArg -b -w 5 $targetStoneName
 pushd $upgradeLogDir >& /dev/null
   # start standard upgrade
   echo "STARTING standard upgradeImage "
-#  $GEMSTONE/bin/upgradeImage -s $GEMSTONE_NAME << EOF
-  $GS_HOME/bin/upgradeImage -s $GEMSTONE_NAME << EOF
+  $GEMSTONE/bin/upgradeImage -s $GEMSTONE_NAME << EOF
   
 EOF
   
+  # Patch BUG 46217 -- needed for 3.3.0 and pre-3.2.16 GemStone versions.
+  echo "Install patch for Bug 46217"
+  $GEMSTONE/bin/topaz -l -T50000 > $upgradeLogDir/topaz.out << EOF
+  output pushnew $upgradeLogDir/topazPatchBug46217.out only
+  set gemstone $targetStoneName
+  
+  display resultcheck
+  level 0
+
+  display oops
+  iferr 1 stk
+  iferr 2 stack
+  iferr 3 input pop
+  iferr 4 exit 1
+
+! need to patch the the Monticello bootstrap class  MCGemStonePlatform for Bug 46217
+  set user SystemUser pass swordfish
+  login
+  
+  run
+| package symbolDict class theSymbolList gsVersion |
+  gsVersion := System gemVersionAt: 'gsRelease'.
+  (gsVersion matchPattern: #('3.2.' \$*))
+    ifTrue: [
+      (gsVersion matchPattern: #('3.2.1' \$*))
+        ifTrue: [
+          (gsVersion size > 5 and: [ #($7 $8 $9) includes: (gsVersion at: 6) ])
+	    ifTrue: [
+	      "GemStone version 3.2.16 or later - patch not needed"
+	      ^ true ] ] ]
+    ifFalse: [
+      (gsVersion matchPattern: #('3.3.' \$*))
+        ifTrue: [
+          (gsVersion matchPattern: #('3.3.0' \$*))
+            ifFalse: [ 
+	      "GemStone 3.3.1 or later patch not needed"
+	      ^ true ] ]
+	ifFalse: [ 
+	  "no patch available for GemStone versions preceding 3,2.x"
+	  ^true ] ].
+  "patch needed: 3.2.0 thru 3.2.15, and 3.3.0"
+  package := GsPackageLibrary packageNamed: #'Monticello_Globals'.
+  symbolDict := package symbolDict.
+  class := symbolDict at: #'MCGemStonePlatform'.
+  theSymbolList := GsCurrentSession currentSession symbolList.
+  class
+    compileMethod: 'removeClassFromSystem: aClass
+
+  ((GsSession currentSession objectNamed: #UserGlobals) 
+      at: #''GS_BOOTSTRAP_MONTICELLO_SKIP_REMOVE_CLASS'' ifAbsent: [ false ]) 
+    ifTrue: [
+      "Bug 46217 - during bootstrap don''t remove any classes.
+        during initial bootstrap no classes will be removed
+        during upgrade unexpected classes should not be removed during the
+          bootstrap operation" ]
+    ifFalse: [
+	| ar |
+	aClass subclasses isEmpty not ifTrue: [ ^self error: ''class has subclasses'' ].
+	ar := System myUserProfile dictionaryAndSymbolOf: aClass.
+	ar ifNil: [ ^self error: ''class not found in current user profile'' ].
+	(ar at: 1) removeKey: (ar at: 2) ]'
+    dictionaries: theSymbolList
+    category: #'patch bug 46217'
+    intoMethodDict: nil
+    intoCategories: nil
+    intoPragmas: {}
+    environmentId: 0.
+  true
+%
+  commit
+  logout
+
+  set user DataCurator pass swordfish
+  login
+
+  run
+  "Bug 46217 - add for versions pre-dating 3.2.16 and 3.3.0"
+  UserGlobals at: #'GS_BOOTSTRAP_MONTICELLO_SKIP_REMOVE_CLASS' put: true.
+  true
+%
+  commit
+  logout
+
+  output pop
+  exit 0
+EOF
+ 
   # Clear SystemLoginNotification #Subscriptions class variable
   echo "STARTING clear SystemLoginNotification #Subscriptions class variable"
   $GEMSTONE/bin/topaz -l -T50000 > $upgradeLogDir/topaz.out << EOF
@@ -175,7 +264,7 @@ EOF
   
   display resultcheck
   level 0
-  
+
   set user DataCurator pass swordfish
   login
   
@@ -268,6 +357,13 @@ EOF
   iferr 3 input pop
   iferr 4 exit 1
   
+  run 
+  "Bug 46217 - remove for versions pre-dating 3.2.16 and 3.3.0" 
+  UserGlobals removeKey: #'GS_BOOTSTRAP_MONTICELLO_SKIP_REMOVE_CLASS' ifAbsent: []. 
+  true. 
+%
+  commit
+
   run
   UserGlobals associations do: [:assoc |
     assoc value isBehavior
@@ -313,9 +409,12 @@ if [ "${postUpgradeLoadScriptPath}x" != "x" ] ;  then
   echo "Running ${postUpgradeLoadScriptPath} tODE script"
 
   $GS_HOME/bin/private/gsDevKitTodeCommandLine todeIt $targetStoneName << TODE
-${postUpgradeLoadScriptPath}
+project upgrade --install=${postUpgradeLoadScriptPath}
 TODE
 fi
+
+echo "Performing post upgrade tasks"
+$GS_HOME/bin/devKitCommandLine postUpgradeStone $sourceStoneName $targetStoneName $gsvers
 
 exit_0_banner "...finished"
 

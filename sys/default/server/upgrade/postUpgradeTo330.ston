@@ -1,0 +1,104 @@
+TDScriptLeafNode{#name:'postUpgradeTo330',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./postUpgradeTo330 -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'sourceVersion\' nil #\'required\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | sourceStoneVersion gsTool currentStoneVersion |
+      gsTool := topez toolInstanceFor: \'gs\'.
+      currentStoneVersion := ((gsTool gsversion: #\'stone\') at: \'gsVersion\')
+        asMetacelloVersionNumber.
+      opts
+        at: \'sourceVersion\'
+        ifPresent: [ :sourceVersionString | sourceStoneVersion := sourceVersionString asMetacelloVersionNumber ]
+        ifAbsent: [ self error: \'Required option --sourceVersion not present\' ].
+     Transcript
+        cr;
+        show: \'Running \' , command command printString.
+      sourceStoneVersion >= \'3.1.0\' asMetacelloVersionNumber
+        ifTrue: [ 
+          | strm res |
+          \"SortedCollection sortBlocks need to be recompiled, Since we are switching to unicode mode, SortedCollections need to be resorted and CharacterCollection indexes need to rebuilt.\"
+          strm := WriteStream on: String new.
+          res := topez
+            evaluateCommandString:
+              \'/home/utils/upgrade/postUpgrade330SortedCollectionSortBlocks --sourceVersion=\'
+                , sourceStoneVersion printString.
+          strm
+            nextPutAll: res;
+            cr.
+          res := topez
+            evaluateCommandString:
+              \'/home/utils/upgrade/postUpgrade330ResortSortedCollection --sourceVersion=\'
+                , sourceStoneVersion printString.
+          strm
+            nextPutAll: res;
+            cr.
+          res := topez
+            evaluateCommandString:
+              \'/home/utils/upgrade/postUpgrade330RebuildCharacterCollectionIndexes --sourceVersion=\'
+                , sourceStoneVersion printString.
+          strm
+            nextPutAll: res;
+            cr.
+          strm contents ]
+        ifFalse: [ 
+          sourceStoneVersion >= \'3.0.0\' asMetacelloVersionNumber
+            ifTrue: [ 
+              \'No post conversion processing defined for conversion from \'
+                , sourceStoneVersion printString , \' to \'
+                , currentStoneVersion printString ]
+            ifFalse: [ 
+              | strm res |
+              \"Upgrade from 2.4.x; SortedCollection sortBlocks need to be recompiled. Since we are switching to unicode mode, SortedCollections need to be resorted and CharacterCollection indexes need to rebuilt.\"
+              strm := WriteStream on: String new.
+              res := topez
+                evaluateCommandString:
+                  \'/home/utils/upgrade/postUpgradeSortedCollectionSortBlocks --sourceVersion=\'
+                    , sourceStoneVersion printString.
+              strm
+                nextPutAll: res;
+                cr.
+              res := topez
+                evaluateCommandString:
+                  \'/home/utils/upgrade/postUpgrade330ResortSortedCollection --sourceVersion=\'
+                    , sourceStoneVersion printString.
+              strm
+                nextPutAll: res;
+                cr.
+              res := topez
+                evaluateCommandString:
+                  \'/home/utils/upgrade/postUpgrade330RebuildCharacterCollectionIndexes --sourceVersion=\'
+                    , sourceStoneVersion printString.
+              strm
+                nextPutAll: res;
+                cr.
+              strm contents ] ] ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  postUpgradeTo330 - Post upgrade processing script for upgrade to 3.3.0. 
+SYNOPSIS
+  postUpgradeTo330 [-h|--help] --sourceVersion=<source-gemstone-version>
+
+DESCRIPTION
+  Intended to be called from /home/utils/upgrade/postUpgrade to perform post upgrade
+  processing to GemStone 3.3.0.
+
+  The environment variable $upgradeLogDir is expected to be set -- normally set by 
+  $GS_HOME/bin/upgradeStone.
+
+EXAMPLES
+  ./postUpgradeTo330 -h
+
+  ./postUpgradeTo330 --sourceVersion=3.1.0.6 
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2016-05-23T10:20:57.8364939689636-07:00'],#modificationTime:DateAndTime['2016-06-07T14:55:24.50254607200623-07:00']}

@@ -14,7 +14,7 @@ TDScriptLeafNode{#name:'validateStoneSysNodes',#contents:'[ :topez :objIn :token
   opts
     at: \'help\'
     ifAbsent: [ 
-      | validateDirBlock stoneRoot stoneRootDir homeDir projectsDir repair rootDir dir cpTool stoneName |
+      | validateDirBlock stoneRoot stoneRootDir homeDir projectsDir upgradeDir repair rootDir dir cpTool stoneName |
       cpTool := topez toolInstanceFor: \'cp\'.
       opts
         at: \'stone\'
@@ -24,6 +24,7 @@ TDScriptLeafNode{#name:'validateStoneSysNodes',#contents:'[ :topez :objIn :token
       stoneRootDir := ServerFileDirectory on: stoneRoot.
       homeDir := stoneRootDir directoryNamed: \'home\'.
       projectsDir := stoneRootDir directoryNamed: \'projects\'.
+      upgradeDir := stoneRootDir directoryNamed: \'upgrade\'.
       opts
         at: \'repair\'
         ifPresent: [ :ignored | repair := true ]
@@ -50,6 +51,7 @@ TDScriptLeafNode{#name:'validateStoneSysNodes',#contents:'[ :topez :objIn :token
       validateDirBlock value: stoneRootDir.
       validateDirBlock value: homeDir.
       validateDirBlock value: projectsDir.
+      validateDirBlock value: upgradeDir.
       opts
         at: \'files\'
         ifPresent: [ :ignored | 

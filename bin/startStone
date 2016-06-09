@@ -117,10 +117,22 @@ $GS_HOME/bin/devKitCommandLine startstone $stoneName $ARG
 
 if [ "${waitTime}x" = "x" ] ; then
   if [ "${GS_TRAVIS}x" != "x" ] ; then
-    $stonePath/product/bin/waitstone $stoneName 2
+    trap - ERR
+    $stonePath/product/bin/waitstone $stoneName 5
+    status=$?
+    if [ $status -ne 0 ] ; then
+      exit_1_banner "stone $stoneName did not start"
+    fi
+    trap 'error ${LINENO}' ERR
   fi
 else
+  trap - ERR
   $stonePath/product/bin/waitstone $stoneName $waitTime
+  status=$?
+  if [ $status -ne 0 ] ; then
+    exit_1_banner "stone $stoneName did not start"
+  fi
+  trap 'error ${LINENO}' ERR
 fi
 
 if [ "${startnetldi}" = "true" ] ; then

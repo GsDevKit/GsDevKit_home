@@ -15,7 +15,7 @@ fi
 source ${GS_HOME}/bin/defGsDevKit.env
 
 cloneUpdatePath="${GS_SYS_DEFAULT}/gsdevkit_bin/cloneUpdate"
-if [ -e "${GS_SYS_LOCAL}/gsdevkit_bin/updateClone" ] ; then
+if [ -e "${GS_SYS_LOCAL}/gsdevkit_bin/cloneUpdate" ] ; then
   cloneUpdatePath="${GS_SYS_LOCAL}/gsdevkit_bin/cloneUpdate"
 fi
 $cloneUpdatePath $*

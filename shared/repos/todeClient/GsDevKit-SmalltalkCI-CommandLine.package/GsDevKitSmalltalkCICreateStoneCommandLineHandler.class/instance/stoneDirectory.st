@@ -1,4 +1,3 @@
 private
 stoneDirectory
-
-^self gs_stonesHome / self stoneName
+	^ self gs_stonesHome / self stoneName

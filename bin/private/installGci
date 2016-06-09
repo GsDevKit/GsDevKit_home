@@ -7,7 +7,6 @@
 
 theArgs="$*"
 source ${GS_HOME}/bin/private/shFeedback
-start_banner
 
 usage() {
   cat <<HELP
@@ -128,7 +127,5 @@ if [ "$copyFiles" = "true" ] ; then
           *) cp -rf ${sourceLocation}/lib*.${libext} $targetLocation ;;
         esac
 else
-  echo "[Warning] gci libraries already present to replace, delete them and try again"
+  echo "[Warning] gci libraries already present in $targetLocation. To replace, delete them and try again"
 fi
-
-exit_0_banner "...finished"

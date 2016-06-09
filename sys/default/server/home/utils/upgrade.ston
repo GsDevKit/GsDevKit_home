@@ -1,0 +1,7 @@
+TDRawGatewayNode{#name:'upgrade',#contents:'(TDComposedDirectoryNode
+    pathComposedDirectoryNodeNamed: \'upgrade\'
+    topez: self topez)
+"    addPathNode: \'/sys/stone/upgrade\';" "uncomment (and use a recent version of tODE in all stoness, if you need to have stone-specific upgrade scripts"
+    addPathNode: \'/sys/local/server/upgrade\';
+    addPathNode: \'/sys/default/server/upgrade\';
+    yourself'}

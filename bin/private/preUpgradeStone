@@ -1,0 +1,57 @@
+#! /usr/bin/env bash
+#=========================================================================
+# Copyright (c) 2016 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#
+#   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
+#=========================================================================
+
+theArgs="$*"
+source ${GS_HOME}/bin/private/shFeedback
+start_banner
+
+usage() {
+  cat <<HELP
+USAGE: $(basename $0) [-h] <source-stone-name> <target-stone-name>  <gemstone-version>
+
+  Run pre-upgrade in environement of the source stone.
+
+OPTIONS
+  -h
+     display help
+
+EXAMPLES
+   $(basename $0) -h
+   $(basename $0) gs_sample gs_sample_331 3.3.1
+HELP
+}
+
+if [ "${GS_HOME}x" = "x" ] ; then
+  exit_1_banner "the GS_HOME environment variable needs to be defined"
+fi
+source ${GS_HOME}/bin/defGsDevKit.env
+
+while getopts "h" OPT ; do
+  case "$OPT" in
+    h) usage; exit 0;;
+    *) usage; exit_1_banner "Uknown option";;
+  esac
+done
+shift $(($OPTIND - 1))
+
+if [ $# -ne 3 ]; then
+  usage; exit_1_banner "Three positional arguments are required"
+fi
+
+sourceStoneName="$1"
+targetStoneName="$2"
+gsvers="$3"
+
+sourceStonePath=$GS_SERVER_STONES/$sourceStoneName
+
+pushd $sourceStonePath >& /dev/null
+  source stone.env
+popd >& /dev/null
+
+$GS_HOME/bin/devKitCommandLine preUpgradeStone $sourceStoneName $targetStoneName $gsvers
+
+exit_0_banner "...finished"
