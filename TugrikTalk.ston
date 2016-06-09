@@ -1,9 +1,0 @@
-TDObjectGatewayLeafNode{#name:'TugrikTalk',#contents:'^ TDProjectSpecEntryDefinition new
-    baseline: \'TugrikTalk\'
-      repository: \'github://dalehenrich/Tugrik:master/repository\'
-      loads: #( \'default\' );
-    installScript: \'project clone --https --local TugrikTalk\';
-    status: #( #\'inactive\' );
-    locked: false;
-    yourself.
-'}
