@@ -82,7 +82,7 @@ fi
 PLATFORM="`uname -sm | tr ' ' '-'`"
 
 case "$PLATFORM" in
-  MSYS_NT*|MINGW32_NT*) 
+  MSYS_NT*|MINGW32_NT*|MINGW64_NT*) 
     vmArgs="--headless"
     if [ "$interactive" = "true" ] ; then
       vmArgs=""
