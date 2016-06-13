@@ -58,7 +58,7 @@ GsDevKit installation involves installing at least one server and one client.  S
 
 [6]: ./installDevKitServer.md
 
-[9]: ./configOSForServerAndClient.md#configure-windows-for-client
+[9]: ./configureOS.md#windows
 [10]:./installDevKitClient.md
 
 [13]: ../gettingStartedWithTode.md
