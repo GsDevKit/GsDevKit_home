@@ -97,7 +97,7 @@ ${GS_HOME}/bin/devKitCommandLine serverDoIt  $stoneName << EOF
       onConflict: [:ex | ex allow ];
       onLock: [:ex | ex disallow ];
       load ] on: Warning do: [:w | w resume ].
-    (Smalltalk at: #SmalltalkCI) loadCIFor: '${smalltalkCIConfigPath}'.
+    (Smalltalk at: #SmalltalkCI) load: '${smalltalkCIConfigPath}'.
   ].
 
 EOF
@@ -107,8 +107,8 @@ if [ "${runSmalltalkCITests}" = "true" ]; then
     mkdir "$GS_HOME/server/stones/${stoneName}/ci"
   fi
   ${GS_HOME}/bin/devKitCommandLine serverDoIt  $stoneName << EOF
-    SmalltalkCI 
-      runCIFor: '${smalltalkCIConfigPath}'
+    SmalltalkCIGemstone 
+      loadAndTest: '${smalltalkCIConfigPath}'
       xmlLogDirPath: '$GS_HOME/server/stones/${stoneName}/ci'
 EOF
   python "$GS_HOME/shared/repos/smalltalkCI/lib/junit_xml_prettfier.py" "$GS_HOME/server/stones/${stoneName}/ci" 

@@ -196,7 +196,7 @@ if [ "${loadSmalltalkCIConfig}" = "true" ] ; then
           onConflict: [:ex | ex allow ];
           onLock: [:ex | ex disallow ];
           load ] on: Warning do: [:w | w resume ].
-      (Smalltalk at: #SmalltalkCI) loadCIFor: '${smalltalkCIConfigPath}'.
+      (Smalltalk at: #SmalltalkCI) load: '${smalltalkCIConfigPath}'.
   ]
 EOF
 fi
