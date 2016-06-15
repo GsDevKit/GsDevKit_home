@@ -35,7 +35,7 @@ HELP
 }
 
 PLATFORM="`uname -sm | tr ' ' '-'`"
-if [[ "$PLATFORM" == MINGW32_NT* || "$PLATFORM" == MSYS_NT* ]] ; then
+if [[ "$PLATFORM" == MINGW32_NT* || "$PLATFORM" == MSYS_NT* || "$PLATFORM" == MINGW64_NT* ]] ; then
   exit_1_banner "This script is a server-only script and cannot be used on Windows"
 fi
 
