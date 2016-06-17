@@ -86,7 +86,7 @@ installCentOSPackages(){
 	# Remember to always use the 32 bits libs, that is, i686 variant.
 	# sudo ldd $GS_HOME/dev/clients/tode1/pharo-vm/pharo
 	# sudo ldd $GS_HOME/dev/clients/tode1/pharo-vm/vm-display-X11
-	yum install -y deltarpm
+	sudo yum -y install deltarpm
 	sudo yum -y install unzip
 	sudo yum -y install glibc.i686
 	if [ ! -f /usr/lib/libssl.so.1.0.0 ]; then
