@@ -81,7 +81,7 @@ case $version in
       case $version in
         Pharo3.0)
           case "$PLATFORM" in
-            MSYS_NT*|MINGW32_NT*)
+            MSYS_NT*|MINGW32_NT*|MINGW64_NT*)
               cmd=`which curl`
               $cmd -O http://files.pharo.org/platform/Pharo3.0-win.zip
               unzip -j -q Pharo3.0-win.zip
