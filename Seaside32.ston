@@ -2,10 +2,11 @@ TDObjectGatewayLeafNode{#name:'Seaside32',#contents:'^ TDProjectSpecEntryDefinit
     comment: \'\';
     projectUrl: \'https://github.com/SeasideSt/Seaside\';
     baseline: \'Seaside3\'
-      repository: \'github://SeasideSt/Seaside:dev\\/3.2/repository\'
+      repository: \'github://SeasideSt/Seaside:master/repository\'
       loads: #(\'Development\' \'Zinc Project\' \'Examples\');
-    installScript: \'project clone --https --local Seaside3\';
-    gitCheckout: \'dev/3.2\';
+    installScript: \'project clone --https --local Seaside3
+      project install --local --url=http://gsdevkit.github.io/GsDevKit_home/GsApplicationTools.ston\';
+    gitCheckout: \'master\';
     status: #(#\'inactive\');
     locked: false;
     yourself'}
