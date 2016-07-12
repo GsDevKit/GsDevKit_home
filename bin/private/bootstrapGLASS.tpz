@@ -1,0 +1,64 @@
+#=========================================================================
+# Copyright (c) 2016 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#
+#   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
+#=========================================================================
+
+! run with topaz -l -T50000 or larger
+
+display resultcheck
+
+output pushnew seasidetst.out only
+
+level 1
+iferr 1 stk
+iferr 2 stack
+
+set user SystemUser pass swordfish
+login
+run
+"GLASS is not yet ready for Portable streams, nor Legacy streams with ANSI polarity"
+Stream installLegacyStreamImplementation.
+(Globals at: #'PositionableStream_position') == #'ANSI'
+   ifTrue: [
+     Globals at: #'PositionableStream_position' put: #'Legacy'.
+     PositionableStream compilePositionMethods ].
+Globals at: #StringConfiguration put: Unicode16.
+true
+%
+commit
+logout
+
+set user DataCurator pass swordfish
+login
+input $l2tests/util/resultcheck.tpz
+
+!
+! Define which SymbolDictionary into which all classes are to be installed.
+!
+run
+UserGlobals at: #BootstrapSymbolDictionaryName put: #UserGlobals.
+true
+%
+commit
+errorCount
+
+input $GEMSTONE/upgrade/installMaster30.topaz
+
+commit
+errorCount
+
+# set autoCommit to true, so that Seaside initialization functions correctly
+
+run
+MCPlatformSupport autoCommit: true.
+true
+%
+
+commit
+errorCount
+
+logout
+
+time
+output pop
