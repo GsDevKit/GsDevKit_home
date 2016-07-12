@@ -9,7 +9,7 @@ TDObjectGatewayLeafNode{#name:'Seaside3',#contents:'^ TDProjectSpecEntryDefiniti
       project install --local --url=http://gsdevkit.github.io/GsDevKit_home/ZincHTTPComponents.ston
       project install --local --url=http://gsdevkit.github.io/GsDevKit_home/GsApplicationTools.ston\';
     postLoadScript: \'
-      mount @/sys/stone/dirs/Seaside3/tode /home seaside3\';
+      mount @/sys/stone/dirs/Seaside3/tode /home seaside\';
     gitCheckout: \'gs_master\';
     status: #(#\'inactive\');
     locked: false;
