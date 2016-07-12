@@ -37,6 +37,12 @@ if [ $# -ne 1 ]; then
   usage; exit_1_banner "wrong number of arguments (1 expected)"
 fi
 stoneName=$1
+shift 1
+
+stonePath=$GS_SERVER_STONES/$stoneName
+if [ ! -d "$stonePath" ] ; then
+  exit_1_banner "The stone $stoneName does not exist"
+fi
 
 if [ "${GS_SYS_LOCAL}x" = "x" ] ; then
   $GS_HOME/bin/private/clone_sys_local
@@ -44,6 +50,11 @@ if [ "${GS_SYS_LOCAL}x" = "x" ] ; then
 fi
 
 $GS_HOME/bin/startStone -b $stoneName
+
+# set up stone environment
+pushd $stonePath $stonePath >& /dev/null
+  source $stonePath/stone.env
+popd >& /dev/null
 
 export upgradeDir=$GEMSTONE/upgrade
 

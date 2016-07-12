@@ -6,13 +6,10 @@
 
 ! run with topaz -l -T50000 or larger
 
-display resultcheck
-
-output pushnew seasidetst.out only
-
 level 1
 iferr 1 stk
 iferr 2 stack
+iferr 3 exit 1
 
 set user SystemUser pass swordfish
 login
@@ -31,7 +28,6 @@ logout
 
 set user DataCurator pass swordfish
 login
-input $l2tests/util/resultcheck.tpz
 
 !
 ! Define which SymbolDictionary into which all classes are to be installed.
@@ -61,4 +57,5 @@ errorCount
 logout
 
 time
-output pop
+
+exit 0
