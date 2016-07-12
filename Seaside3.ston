@@ -8,6 +8,8 @@ TDObjectGatewayLeafNode{#name:'Seaside3',#contents:'^ TDProjectSpecEntryDefiniti
       project clone --https --local Seaside3
       project install --local --url=http://gsdevkit.github.io/GsDevKit_home/ZincHTTPComponents.ston
       project install --local --url=http://gsdevkit.github.io/GsDevKit_home/GsApplicationTools.ston\';
+    postLoadScript: \'
+      mount @/sys/stone/dirs/Seaside3/tode /home seaside3\';
     gitCheckout: \'gs_master\';
     status: #(#\'inactive\');
     locked: false;
