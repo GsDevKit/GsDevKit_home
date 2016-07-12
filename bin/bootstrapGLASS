@@ -48,7 +48,7 @@ $GS_HOME/bin/startStone -b $stoneName
 export upgradeDir=$GEMSTONE/upgrade
 
 $GS_HOME/bin/startTopaz $stoneName -l << EOF
-input $GS_HOME/bin/bootstrapGLASS.tpz
+input $GS_HOME/bin/private/bootstrapGLASS.tpz
 EOF
 
 exit_0_banner "...finished $(basename $0)"
