@@ -16,6 +16,7 @@ stones
     # help
 attachForeignStone -h
 attachOldDevKitStone -h
+bootstrapGLASS -h
 clients -h
 createClient -h
 createStone -h
@@ -121,6 +122,10 @@ stopStone -b ${STONENAME2} ${STONENAME3}  ${STONENAME4}
 newExtent -n -s $baseSnapshot ${STONENAME3}
 
 deleteStone ${STONENAME2} ${STONENAME3}
+
+createStone -g ${STONENAME3} $GS_VERSION
+bootstrapGLASS ${STONENAME3}
+deleteStone ${STONENAME3}
 
 startStone -b ${STONENAME1}
 git config --global user.email "travis@example.com"
