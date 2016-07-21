@@ -1,0 +1,11 @@
+TDObjectGatewayLeafNode{#name:'Voyage',#contents:'^ TDProjectSpecEntryDefinition new
+    baseline: \'Voyage\'
+      repository: \'github://dalehenrich/voyage:tugrik/repository\'
+      loads: #( \'gemstone\' );
+    installScript: \'
+      project clone --https --local VoyageMongo
+      mount @/sys/stone/dirs/voyage/gsdevkit/tode /home voyage\';
+    status: #( #\'inactive\' );
+    locked: false;
+    yourself.
+'}

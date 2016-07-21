@@ -2,7 +2,9 @@ TDObjectGatewayLeafNode{#name:'Tugrik',#contents:'^ TDProjectSpecEntryDefinition
     baseline: \'Tugrik\'
       repository: \'github://dalehenrich/Tugrik:master/repository\'
       loads: #( \'default\' );
-    installScript: \'project clone --https --local Tugrik\';
+    installScript: \'
+      project clone --https --local Tugrik
+      mount @/sys/stone/dirs/Tugrik/gsdevkit/tode /home tugrik\';
     status: #( #\'inactive\' );
     locked: false;
     yourself.
