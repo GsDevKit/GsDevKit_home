@@ -1,5 +1,5 @@
 TDObjectGatewayLeafNode{#name:'VoyageMongo',#contents:'^ TDProjectSpecEntryDefinition new
-    baseline: \'Voyage\'
+    baseline: \'VoyageMongo\'
       repository: \'github://dalehenrich/voyage:tugrik/mc\'
       loads: #( \'gemstone\' );
     installScript: \'
