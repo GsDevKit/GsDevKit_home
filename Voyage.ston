@@ -3,6 +3,8 @@ TDObjectGatewayLeafNode{#name:'Voyage',#contents:'^ TDProjectSpecEntryDefinition
       repository: \'github://dalehenrich/voyage:tugrik/repository\'
       loads: #( \'gemstone\' );
     installScript: \'
+      project clone --https --local --checkout=tugrik --github=dalehenrich/mongotalk
+      project install --local --url=http://gsdevkit.github.io/GsDevKit_home/Tugrik.ston
       project clone --https --local VoyageMongo
       mount @/sys/stone/dirs/voyage/gsdevkit/tode /home voyage\';
     status: #( #\'inactive\' );
