@@ -5,8 +5,8 @@ TDObjectGatewayLeafNode{#name:'VoyageMongo',#contents:'^ TDProjectSpecEntryDefin
     installScript: \'
       project clone --https --local --etc --gitRoot=$GS_HOME/shared/repos --checkout=tugrik --github=dalehenrich/mongotalk
       project install --local --url=http://gsdevkit.github.io/GsDevKit_home/Tugrik.ston
-      project clone --https --local VoyageMongo
-      mount @/sys/stone/dirs/VoyageMongo/gsdevkit/tode /home voyage\';
+      project clone --https --local VoyageMongo\';
+    postLoadScript: \'mount @/sys/stone/dirs/VoyageMongo/gsdevkit/tode /home voyage\';
     status: #( #\'inactive\' );
     locked: false;
     yourself.
