@@ -14,12 +14,14 @@ iferr 3 exit 1
 set user SystemUser pass swordfish
 login
 run
-"GLASS is not yet ready for Portable streams, nor Legacy streams with ANSI polarity"
-Stream installLegacyStreamImplementation.
-(Globals at: #'PositionableStream_position') == #'ANSI'
-   ifTrue: [
-     Globals at: #'PositionableStream_position' put: #'Legacy'.
-     PositionableStream compilePositionMethods ].
+(Stream respondsTo: #installLegacyStreamImplementation)
+  ifTrue: [
+    "GLASS is not yet ready for Portable streams, nor Legacy streams with ANSI polarity"
+    Stream installLegacyStreamImplementation.
+    (Globals at: #'PositionableStream_position') == #'ANSI'
+       ifTrue: [
+         Globals at: #'PositionableStream_position' put: #'Legacy'.
+         PositionableStream compilePositionMethods  ]].
 (Globals at: #Unicode16 ifAbsent: [])
   ifNotNil: [:unicode16Class | Globals at: #StringConfiguration put: unicode16Class ].
 true
