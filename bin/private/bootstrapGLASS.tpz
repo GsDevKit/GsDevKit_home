@@ -20,7 +20,8 @@ Stream installLegacyStreamImplementation.
    ifTrue: [
      Globals at: #'PositionableStream_position' put: #'Legacy'.
      PositionableStream compilePositionMethods ].
-Globals at: #StringConfiguration put: Unicode16.
+(Globals at: #Unicode16 ifAbsent: [])
+  ifNotNil: [:unicode16Class | Globals at: #StringConfiguration put: unicode16Class ].
 true
 %
 commit
