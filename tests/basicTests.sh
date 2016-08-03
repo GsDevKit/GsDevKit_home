@@ -124,7 +124,10 @@ newExtent -n -s $baseSnapshot ${STONENAME3}
 deleteStone ${STONENAME2} ${STONENAME3}
 
 createStone -g ${STONENAME3} $GS_VERSION
-bootstrapGLASS ${STONENAME3}
+case "$GS_VERSION" in
+  3.*) bootstrapGLASS ${STONENAME3};;
+  *) echo "skipping bootstrapGLASS for version $GS_VERSION";;
+esac
 deleteStone ${STONENAME3}
 
 startStone -b ${STONENAME1}
