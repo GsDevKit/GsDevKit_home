@@ -2,7 +2,7 @@ TDObjectGatewayLeafNode{#name:'Magritte3',#contents:'^ TDProjectSpecEntryDefinit
     baseline: \'Magritte3\'
       repository: \'github://GsDevKit/Magritte3:master/repository\'
       loads: #( \'Core\' );
-    installScript: \'project clone --https --local Magritte3\';
+    installScript: \'project clone --https Magritte3\';
     gitCheckout: \'master\';
     status: #( #\'inactive\' );
     locked: false;
