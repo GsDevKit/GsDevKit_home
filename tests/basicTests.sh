@@ -125,8 +125,8 @@ deleteStone ${STONENAME2} ${STONENAME3}
 
 createStone -g ${STONENAME3} $GS_VERSION
 case "$GS_VERSION" in
-  3.*) bootstrapGLASS ${STONENAME3};;
-  *) echo "skipping bootstrapGLASS for version $GS_VERSION";;
+  2.4.*) echo "skipping bootstrapGLASS for version $GS_VERSION";;
+  *) bootstrapGLASS ${STONENAME3};;
 esac
 deleteStone ${STONENAME3}
 
