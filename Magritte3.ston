@@ -1,10 +1,8 @@
 TDObjectGatewayLeafNode{#name:'Magritte3',#contents:'^ TDProjectSpecEntryDefinition new
     baseline: \'Magritte3\'
       repository: \'github://GsDevKit/Magritte3:master/repository\'
-      loads: #( \'Seaside\' );
-    installScript: \'
-      project clone --https --local Magritte3
-      project install --local --url=http://gsdevkit.github.io/GsDevKit_home/Seaside3.ston\';
+      loads: #( \'Core\' );
+    installScript: \'project clone --https Magritte3\';
     gitCheckout: \'master\';
     status: #( #\'inactive\' );
     locked: false;
