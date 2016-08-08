@@ -1,12 +1,12 @@
-TDObjectGatewayLeafNode{#name:'VoyageMongo',#contents:'^ TDProjectSpecEntryDefinition new
-    baseline: \'VoyageMongo\'
-      repository: \'github://dalehenrich/voyage:tugrik/mc\'
+TDObjectGatewayLeafNode{#name:'Voyage',#contents:'^ TDProjectSpecEntryDefinition new
+    baseline: \'Voyage\'
+      repository: \'github://dalehenrich/voyage:classmapper/mc\'
       loads: #( \'gemstone\' );
     installScript: \'
       project clone --https --local --etc --gitRoot=$GS_HOME/shared/repos --checkout=tugrik --github=dalehenrich/mongotalk
       project install --local --url=http://gsdevkit.github.io/GsDevKit_home/Tugrik.ston
-      project clone --https --local VoyageMongo\';
-    postLoadScript: \'mount @/sys/stone/dirs/VoyageMongo/gsdevkit/tode /home voyage\';
+      project clone --https --local Voyage\';
+    postLoadScript: \'mount @/sys/stone/dirs/Voyage/gsdevkit/tode /home voyage\';
     status: #( #\'inactive\' );
     locked: false;
     yourself.
