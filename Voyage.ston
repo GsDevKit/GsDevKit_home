@@ -3,7 +3,7 @@ TDObjectGatewayLeafNode{#name:'Voyage',#contents:'^ TDProjectSpecEntryDefinition
       repository: \'github://dalehenrich/voyage:tugrik/mc\'
       loads: #( \'tugrik\' \'tugrik tests\' );
     installScript: \'
-      project load --local --url=http://gsdevkit.github.io/GsDevKit_home/Tugrik.ston
+      project install--local --url=http://gsdevkit.github.io/GsDevKit_home/Tugrik.ston
       project clone --https --local Voyage\';
     postLoadScript: \'mount @/sys/stone/dirs/Voyage/gsdevkit/tode /home voyage\';
     status: #( #\'inactive\' );
