@@ -1,0 +1,7 @@
+TDObjectGatewayLeafNode{#name:'MongoTalk',#contents:'^ TDProjectSpecEntryDefinition new
+    baseline: \'MongoTalk\'
+      repository: \'filetree://$GS_HOME/shared/repos/mongotalk/mc\'
+      loads: #(\'Core\' \'Tests\');
+    status: #(#\'active\');
+    locked: true;
+    yourself'}
