@@ -1,9 +1,8 @@
 TDObjectGatewayLeafNode{#name:'Voyage',#contents:'^ TDProjectSpecEntryDefinition new
     baseline: \'Voyage\'
-      repository: \'github://dalehenrich/voyage:classmapper/mc\'
-      loads: #( \'gemstone\' );
+      repository: \'github://dalehenrich/voyage:tugrik/mc\'
+      loads: #( \'tugrik\' \'tugrik tests\' );
     installScript: \'
-      project clone --https --local --etc --gitRoot=$GS_HOME/shared/repos --checkout=tugrik --github=dalehenrich/mongotalk
       project install --local --url=http://gsdevkit.github.io/GsDevKit_home/Tugrik.ston
       project clone --https --local Voyage\';
     postLoadScript: \'mount @/sys/stone/dirs/Voyage/gsdevkit/tode /home voyage\';
