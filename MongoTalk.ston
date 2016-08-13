@@ -2,7 +2,7 @@ TDObjectGatewayLeafNode{#name:'MongoTalk',#contents:'^ TDProjectSpecEntryDefinit
     baseline: \'MongoTalk\'
       repository: \'github://dalehenrich/mongotalk:tugrik/mc\'
       loads: #(\'Core\' \'Tests\');
-    installScript: \'project clone --https --local MongoTalk\';
+    installScript: \'project clone --https --local --checkout=tugrik MongoTalk\';
     status: #(#\'inactive\');
     locked: false;
     yourself'}
