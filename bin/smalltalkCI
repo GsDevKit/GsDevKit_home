@@ -106,10 +106,15 @@ if [ "${runSmalltalkCITests}" = "true" ]; then
   if [ ! -d "$GS_HOME/server/stones/${stoneName}/ci" ] ; then
     mkdir "$GS_HOME/server/stones/${stoneName}/ci"
   fi
-  ${GS_HOME}/bin/devKitCommandLine serverDoIt  $stoneName << EOF
+  ${GS_HOME}/bin/startTopaz "${stoneName}" -l -T 100000 << EOF
+  login
+  run
     SmalltalkCIGemstone 
       test: '${smalltalkCIConfigPath}'
       xmlLogDirPath: '$GS_HOME/server/stones/${stoneName}/ci'
+%
+  logout
+  exit 0
 EOF
 fi
 
