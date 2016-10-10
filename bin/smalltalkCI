@@ -88,11 +88,6 @@ else
   $GS_HOME/bin/newExtent -a $snapshotFileArg $stoneName
 fi
 
-buildEnvironment="unknown"
-if [[ "${TRAVIS:-}" = "true" ]]; then
-  buildEnvironment="travis"
-fi
-
 ${GS_HOME}/bin/devKitCommandLine serverDoIt  $stoneName << EOF
   GsDeployer bulkMigrate: [
     [
@@ -102,7 +97,7 @@ ${GS_HOME}/bin/devKitCommandLine serverDoIt  $stoneName << EOF
       onConflict: [:ex | ex allow ];
       onLock: [:ex | ex disallow ];
       load ] on: Warning do: [:w | w resume ].
-    (Smalltalk at: #SmalltalkCI) load: '${smalltalkCIConfigPath}' env: '${buildEnvironment}'.
+    (Smalltalk at: #SmalltalkCI) load: '${smalltalkCIConfigPath}'.
   ].
 
 EOF
@@ -114,7 +109,6 @@ if [ "${runSmalltalkCITests}" = "true" ]; then
   ${GS_HOME}/bin/devKitCommandLine serverDoIt  $stoneName << EOF
     SmalltalkCIGemstone 
       test: '${smalltalkCIConfigPath}'
-      env: '${buildEnvironment}'
       xmlLogDirPath: '$GS_HOME/server/stones/${stoneName}/ci'
 EOF
 fi
