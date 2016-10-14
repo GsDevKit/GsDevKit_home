@@ -62,9 +62,4 @@ $GS_HOME/bin/startTopaz $stoneName -l << EOF
 input $GS_HOME/bin/private/bootstrapGLASS.tpz
 EOF
 
-# dump logs so I can see who's disconnecting
-cat netldi.log
-cat $GS_HOME/server/stones/$stoneName/logs/${stoneName}*.log
-exit_1_banner "need to re-enable 'iferr 3 exit 1' in bootstrapBLASS.tpz"
-
 exit_0_banner "...finished $(basename $0)"
