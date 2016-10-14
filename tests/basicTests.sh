@@ -123,6 +123,7 @@ newExtent -n -s $baseSnapshot ${STONENAME3}
 
 deleteStone ${STONENAME2} ${STONENAME3}
 
+stones # get a reading on possible reasons for login failing
 createStone -g ${STONENAME3} $GS_VERSION
 case "$GS_VERSION" in
   2.4.*) echo "skipping bootstrapGLASS for version $GS_VERSION";;
