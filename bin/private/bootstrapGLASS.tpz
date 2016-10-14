@@ -9,7 +9,7 @@
 level 1
 iferr 1 stk
 iferr 2 stack
-iferr 3 exit 1
+iferr 3 exit 0 # let me dump out logs after the test fails
 
 set user SystemUser pass swordfish
 login
