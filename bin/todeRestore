@@ -11,7 +11,7 @@ start_banner
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-i] <stone-name> <backup-file>
+USAGE: $(basename $0) [-h] [-i] <stone-name-URL> <backup-file>
 
 Restore a backup for the given stone.
 

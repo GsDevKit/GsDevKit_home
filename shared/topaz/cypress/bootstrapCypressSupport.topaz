@@ -1,17 +1,19 @@
-input $upgradeDir/cypress/Cypress-GemStoneCompatibilityLayer.gs
+input $GS_HOME/shared/topaz/cypress/Pragma.gs
 errorCount
-input $upgradeDir/cypress/Cypress-Definitions.gs
+input $GS_HOME/shared/topaz/cypress/Cypress-GemStoneCompatibilityLayer.gs
 errorCount
-input $upgradeDir/cypress/Cypress-Structure.gs
+input $GS_HOME/shared/topaz/cypress/Cypress-Definitions.gs
 errorCount
-input $upgradeDir/cypress/Cypress-GemStoneFileServer.gs
+input $GS_HOME/shared/topaz/cypress/Cypress-Structure.gs
 errorCount
-input $upgradeDir/cypress/Network-Url.gs
+input $GS_HOME/shared/topaz/cypress/Cypress-GemStoneFileServer.gs
 errorCount
-input $upgradeDir/cypress/Cypress-MesssageDigest.gs
+input $GS_HOME/shared/topaz/cypress/Network-Url.gs
 errorCount
-input $upgradeDir/cypress/Cypress-PackageManagement.gs
+input $GS_HOME/shared/topaz/cypress/Cypress-MesssageDigest.gs
 errorCount
-input $upgradeDir/cypress/Cypress-Comparison.gs
+input $GS_HOME/shared/topaz/cypress/Cypress-PackageManagement.gs
+errorCount
+input $GS_HOME/shared/topaz/cypress/Cypress-Comparison.gs
 errorCount
 

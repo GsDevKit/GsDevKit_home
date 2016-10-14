@@ -11,7 +11,7 @@ start_banner
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] <stone-name>
+USAGE: $(basename $0) [-h] <stone-name-URL>
 
 Update tODE in the given stone by executing `project load Tode` 
 using the \$GS_HOME/bin/todeIt script.

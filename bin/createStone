@@ -11,20 +11,17 @@ start_banner
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-f] [-g] [-n] [-s <snapshot-file-path>]
-                      [-t  <tode-snapshot-file-path>]
+USAGE: $(basename $0) [-h] [-f] [-g] [-B] [-n] [-s <snapshot-file-path>]
+                      [-t <tode-snapshot-file-path>]
 		      [-u <project-entry-url>] [-i <project-name>] [-l <project-name>]
-                      [-c] [-z <smalltalkCI-smalltalk.ston-path>]
-                      <stone-name> <gemstone-version>
+                      [-c|-C] [-z <smalltalkCI-smalltalk.ston-path>]
+                      <stone-name-URL> <gemstone-version>
 
 Create a new stone with the given stone name. Do not install tODE. Start stone
 and netldi unless -n is specified.
 
 If the -s option is not specified, \$GEMSTONE/bin/extent0.seaside.dbf will be used as 
 the initial extent.
-
-If you create a stone from an extent snapshot, you should use the -N
-option to start the stone, the first time.
 
 If the stone already exists, creation is skipped unless the -f otion is specified,
 in which case the stone and netldi are stopped and the existing stone directory removed
@@ -38,6 +35,9 @@ OPTIONS
      \$GS_SERVER/stones/<stone-name> directory if it exists
   -g 
      Do not install tODE in stone ... use initial extent unaltered
+  -B
+     Ensure that Cypress is installed as SystemUser. Used with the -g option
+     only.
   -n
      No startStone, no startNetldi.
   -s <snapshot-file-path> 
@@ -58,9 +58,13 @@ OPTIONS
      tODE must already be installed via -t option.
   -z <smalltalkCI-smalltalk.ston-path>
      Customize the stone installation according to the attrbutes specified in the 
-     <smalltalkCI-smalltalk.ston-path> file.
+     <smalltalkCI-smalltalk.ston-path> file -- Assume that tODE is installed.
   -c
      Load the project specified in the <smalltalkCI-smalltalk.ston-path> file.
+     Assume tODE is installed.
+  -C
+     Load the project specified in the <smalltalkCI-smalltalk.ston-path> file.
+     Assume tODE is not installed.
 
 EXAMPLES
   $(basename $0) -h
@@ -68,6 +72,7 @@ EXAMPLES
   $(basename $0) gs_329 3.2.9
   $(basename $0) -f gs_329 3.2.9
   $(basename $0) -g -s \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
+  $(basename $0) -B -g -s \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
   $(basename $0) -t \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
   $(basename $0) -u http://gsdevkit.github.io/GsDevKit_seaside31/Seaside31.ston \
 	         -t \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
@@ -80,6 +85,7 @@ EXAMPLES
 		 -t \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
   $(basename $0) -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329 3.2.9
   $(basename $0) -c -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329 3.2.9
+  $(basename $0) -B -g -C -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329 3.2.9
 
 HELP
 }
@@ -107,7 +113,9 @@ installProjectName=""
 loadProjectName=""
 smalltalkCIConfigPath=""
 loadSmalltalkCIConfig="false"
-while getopts "fghns:t:u:i:l:z:c" OPT ; do
+loadSmalltalkCIConfigUsingCypress="false"
+bootstrapCypress="false"
+while getopts "fghns:t:u:i:l:z:cBC" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     f) force="true";; 
@@ -120,6 +128,8 @@ while getopts "fghns:t:u:i:l:z:c" OPT ; do
     l) loadProjectName="${OPTARG}";;
     z) smalltalkCIConfigPath="${OPTARG}";;
     c) loadSmalltalkCIConfig="true";;
+    C) loadSmalltalkCIConfigUsingCypress="true";;
+    B) bootstrapCypress="true";;
     *) usage; exit_1_banner "Uknown option";;
   esac
 done
@@ -166,6 +176,27 @@ fi
 
 if [ "$installTode" = "true" ] ; then
   $GS_SYS/bin/todeLoad $stoneName
+else
+  if [ "${bootstrapCypress}" = "true" ] ; then
+    ${GS_HOME}/bin/startTopaz $stoneName -l << EOF
+    iferr 1 exit 1
+    set u SystemUser p swordfish
+    login
+    input $GS_HOME/shared/topaz/cypress/bootstrapCypressSupport.topaz
+    commit
+    run
+    UserGlobals at: #Metacello_BOOTSTRAP_REPO put: '$GS_HOME/shared/repos/metacello-work/repository/'
+%
+    input $GS_HOME/shared/topaz/metacello/bootstrapMetacelloSupport.topaz
+    commit
+    run
+    UserGlobals removeKey: #Metacello_BOOTSTRAP_REPO
+%
+    commit
+    logout
+    exit 0
+EOF
+  fi
 fi
 
 if [ "$entryUrl" != "" ] ; then
@@ -198,6 +229,28 @@ if [ "${loadSmalltalkCIConfig}" = "true" ] ; then
           load ] on: Warning do: [:w | w resume ].
       (Smalltalk at: #SmalltalkCI) load: '${smalltalkCIConfigPath}'.
   ]
+EOF
+fi
+
+if [ "${loadSmalltalkCIConfigUsingCypress}" = "true" ] ; then
+  ${GS_HOME}/bin/startTopaz $stoneName -l << EOF
+  iferr 1 exit 1
+  set u SystemUser p swordfish
+  login
+  run
+  UserGlobals at: #SmalltalkCI_BOOTSTRAP_REPO put: '$GS_HOME/shared/repos/smalltalkCI/repository/'
+%
+  input $GS_HOME/shared/topaz/smalltalkCI/bootstrapSmalltalkCISupport.topaz
+  commit
+  run
+  UserGlobals removeKey: #SmalltalkCI_BOOTSTRAP_REPO
+%
+  commit
+  run
+  SmalltalkCI load: '${smalltalkCIConfigPath}'.
+%
+  logout
+  exit 0
 EOF
 fi
 

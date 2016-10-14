@@ -11,7 +11,7 @@ start_banner
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] <stone-name>
+USAGE: $(basename $0) [-h] <stone-name-URL>
 Install tODE in the give stone.
 
 OPTIONS

@@ -1,0 +1,6 @@
+run
+Metacello new
+  baseline: 'SmalltalkCI';
+  repository: 'cypressfiletree:', SmalltalkCI_BOOTSTRAP_REPO;
+  load.
+%

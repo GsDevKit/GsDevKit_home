@@ -12,7 +12,7 @@ start_banner
 usage() {
   cat <<HELP
 usage: $0 [-c] [-f] [-u] [-s <source-stone-extent-file-path>] [-l <post-load-tode-script> ]
-	  <source-stone-name> <target-stone-name> <gemstone-version>
+	  <source-stone-URL> <target-stone-URL> <gemstone-version>
 
 OPTIONS
   -h
