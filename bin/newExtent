@@ -11,11 +11,7 @@ start_banner
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-n] [-t|-a] [-s <snapshot-file-path>] <stone-name-URL>
-
-If the <stone-name-URL> starts with \`stone:\`, the arg is expected to be a 
-stone URL: stone:[//[username:password@]]stonename which makes it possible to
-specify a username and password to be used when logging into the stone.
+USAGE: $(basename $0) [-h] [-n] [-t|-a] [-s <snapshot-file-path>] <stone-name>
 
 Copy a new extent into the named stone's extent directory and delete tranlogs in
 the tralogs directory. The stone will be stopped before doing the copy and after

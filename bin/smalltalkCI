@@ -11,11 +11,11 @@ start_banner
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-r] [-t|-a] [-s <snapshot-file-path>] -z <smalltalkCI-smalltalk.ston-path>
-                      <stone-name-URL>
+USAGE: $(basename $0) [-h] [-r] [-t <tode-snapshot-file-path>] -z <smalltalkCI-smalltalk.ston-path>
+                      <stone-name>
 
 Copy a new extent into the named stone's extent directory using the snapshot 
-file specified by the -s option (\$GS_HOME/server/stones/<stone-name>/snapshots/extent0.tode.dbf
+file specified by the -t option (\$GS_HOME/server/stones/<stone-name>/snapshots/extent0.tode.dbf
 by default), load the project specified by the -z option
 into the stone. 
 
@@ -28,38 +28,24 @@ The -z option is required.
 
 The stone is left running after the tests have completed.
 
-If the <stone-name-URL> starts with \`stone:\`, the arg is expected to be a 
-stone URL: stone:[//[username:password@]]stonename which makes it possible to
-specify a username and password to be used when logging into the stone.
-
 OPTIONS
   -h
      display help
-  -a
-     Similar to -t option, except that the rebuildSys client script is used
-     (see \$GS_HOME/sys/default/client/tode-scripts/rebuildSys)
   -r 
      Run the tests specified in the -z options.
-  -s <snapshot-file-path> 
-     Path to snapshot file used to create stone. Path may be a relative file 
-     path.
-  -t
-     Attach image to the \$GS_TODE/sys/stones/<stone-name> directory structure,
-     using the rebuildServerTode client script 
-     (see \$GS_HOME/sys/default/client/tode-scripts/rebuildServerTode).
-     Should be used with the -s option.
+  -t <tode-snapshot-file-path>
+     Path to snapshot file used to create stone. It is assumed that the snapshot
+     already has tODE installed and the snapshot will be attached to the
+     existing \$GS_TODE/sys/stones/<stone-name> structure.
   -z <smalltalkCI-smalltalk.ston-path>
      Customize the stone installation according to the attrbutes specified in the 
-     <smalltalkCI-smalltalk.ston-path> file
-
+     <smalltalkCI-smalltalk.ston-path> file.
 
 EXAMPLES
   $(basename $0) -h
-  $(basename $0) -r -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_331
-  $(basename $0) -t -s \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_331
-  $(basename $0) -r -t -s \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_331
-
-   $(basename $0) -s \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston stone://SystemUser:swordfish@gs331
+  $(basename $0) -r -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329
+  $(basename $0) -t \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329
+  $(basename $0) -r -t \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329 
 
 HELP
 }
@@ -80,13 +66,10 @@ verify_gsdevkit_installation
 snapshotFileArg=""
 smalltalkCIConfigPath=""
 runSmalltalkCITests="false"
-todeExtentArg=""
-while getopts "ahts:z:r" OPT ; do
+while getopts "ht:z:r" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
-    s) snapshotFileArg=" -s ${OPTARG} ";;
-    a) todeExtentArg="-a";;
-    t) todeExtentArg="-t";;
+    t) snapshotFileArg=" -s ${OPTARG} ";;
     z) smalltalkCIConfigPath="${OPTARG}";;
     r) runSmalltalkCITests="true";;
     *) usage; exit_1_banner "Unknown option";;
@@ -100,9 +83,9 @@ fi
 stoneName="$1"
 
 if [ "${snapshotFileArg}x" = "x" ] ; then
-  $GS_HOME/bin/newExtent ${todeExtentArg} -s "$GS_HOME/server/stones/${stoneName}/snapshots/extent0.tode.dbf" $stoneName
+  $GS_HOME/bin/newExtent -a -s "$GS_HOME/server/stones/${stoneName}/snapshots/extent0.tode.dbf" $stoneName
 else
-  $GS_HOME/bin/newExtent ${todeExtentArg} $snapshotFileArg $stoneName
+  $GS_HOME/bin/newExtent -a $snapshotFileArg $stoneName
 fi
 
 ${GS_HOME}/bin/devKitCommandLine serverDoIt  $stoneName << EOF

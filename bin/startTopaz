@@ -11,7 +11,7 @@ start_banner
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] <stone-name-URL> [<topaz-commandLine-args>]
+USAGE: $(basename $0) [-h] <stone-name> [<topaz-commandLine-args>]
 
 Run topaz for the given stone.
 
