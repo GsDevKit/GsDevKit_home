@@ -26,11 +26,11 @@ classmethod: FastUUIDGenerator
 default
 
 	| d |
-	d := MCPlatformSupport transientGlobalForKey: #UUID_DEFUALT.
+	d := SessionTemps current at: #UUID_DEFAULT otherwise: nil.
 	d == nil 
 		ifTrue: [
 		 	d := self new initialize.
-			MCPlatformSupport transientGlobalForKey: #UUID_DEFUALT value: d.
+			SessionTemps current at: #UUID_DEFAULT put: d.
 		].
 	^d
 %
@@ -38,7 +38,7 @@ category: 'initialization'
 classmethod: FastUUIDGenerator
 initialize
 
-	MCPlatformSupport transientGlobalForKey: #UUID_DEFUALT value: nil.
+	SessionTemps current at: #UUID_DEFAULT put: nil.
 %
 category: 'instance creation'
 classmethod: FastUUIDGenerator
