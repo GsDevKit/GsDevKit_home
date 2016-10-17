@@ -1,0 +1,7 @@
+run
+Metacello new
+  baseline: 'Cypress';
+  repository: 'cypress:', Cypress_SUPPORT_REPO;
+  load;
+  lock.
+%

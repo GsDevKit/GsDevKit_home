@@ -178,12 +178,18 @@ if [ "$installTode" = "true" ] ; then
   $GS_SYS/bin/todeLoad $stoneName
 else
   if [ "${bootstrapCypress}" = "true" ] ; then
+    if [ "$vers" != "3.4.0" ] ; then
+      exit_1_banner "Bootstrapping Cypress is only support for GemStone 3.4.0"
+    fi 
     ${GS_HOME}/bin/startTopaz $stoneName -l << EOF
-    iferr 1 exit 1
+    iferr 1 stk
+    iferr 2 stack
+    iferr 3 exit 1
     set u SystemUser p swordfish
     login
-    input $GS_HOME/shared/topaz/cypress/bootstrapCypressSupport.topaz
-    commit
+#   This step is skipped for 3.4.0 stones
+#   input $GS_HOME/shared/topaz/cypress/bootstrapCypressSupport.topaz
+#   commit
     run
     UserGlobals at: #Metacello_BOOTSTRAP_REPO put: '$GS_HOME/shared/repos/metacello-work/repository/'
 %
@@ -191,6 +197,30 @@ else
     commit
     run
     UserGlobals removeKey: #Metacello_BOOTSTRAP_REPO
+%
+    commit
+    run
+    UserGlobals at: #Cypress_SUPPORT_REPO put: '$GS_HOME/shared/repos/CypressReferenceImplementation/cypress/'
+%
+    input $GS_HOME/shared/topaz/cypress/loadCypressSupport.topaz
+    commit
+    run
+    UserGlobals removeKey: #Cypress_SUPPORT_REPO
+%
+    run
+    UserGlobals at: #Metacello_SUPPORT_REPO put: '$GS_SHARED_REPO_METACELLO'
+%
+    input $GS_HOME/shared/topaz/metacello/loadMetacelloSupport.topaz
+    commit
+    run
+    UserGlobals removeKey: #Metacello_SUPPORT_REPO
+%
+    commit
+    run
+    Metacello new
+      baseline: 'Ston';
+      repository: 'filetree:///opt/git/ston/repository';
+      lock
 %
     commit
     logout
@@ -234,7 +264,10 @@ fi
 
 if [ "${loadSmalltalkCIConfigUsingCypress}" = "true" ] ; then
   ${GS_HOME}/bin/startTopaz $stoneName -l << EOF
-  iferr 1 exit 1
+  iferr 1 stk
+  iferr 2 stack
+  iferr 3 exit 1
+  level 1
   set u SystemUser p swordfish
   login
   run
