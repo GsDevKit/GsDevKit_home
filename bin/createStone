@@ -291,6 +291,9 @@ if [ "${loadSmalltalkCIConfigUsingCypress}" = "true" ] ; then
   commit
   run
   SmalltalkCI load: '${smalltalkCIConfigPath}'.
+  true
+    ifTrue: [ "run tests until port complete"
+      SmalltalkCI test: '${smalltalkCIConfigPath}' ].
 %
   logout
   exit 0

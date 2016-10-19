@@ -45,7 +45,7 @@ category: 'running'
 method: AbstractUUIDTest
 tearDown
   super tearDown.
-  UUID generatorClass: currentUuidGeneratorClass
+  currentUuidGeneratorClass ifNotNil: [ UUID generatorClass: currentUuidGeneratorClass ]
 %
 category: 'tests'
 method: AbstractUUIDTest
@@ -132,7 +132,11 @@ testCreationNil
 category: 'tests'
 method: AbstractUUIDTest
 testCreationNodeBased
-  (UUID new asString last: 12) = (UUID new asString last: 12)
+  | uuid1String uuid2String |
+  uuid1String := UUID new asString.
+  uuid2String := UUID new asString.
+  (uuid1String copyFrom: uuid1String size -12 + 1 to: uuid1String size)
+        = (uuid2String copyFrom: uuid2String size -12 + 1 to: uuid2String size)
     ifFalse: [ ^ self ].
   1000
     timesRepeat: [ 
@@ -159,10 +163,13 @@ method: AbstractUUIDTest
 testOrder
   100
     timesRepeat: [ 
-      | uuid1 uuid2 |
+      | uuid1 uuid2 uuid1String uuid2String |
       uuid1 := UUID new.
       uuid2 := UUID new.
-      (uuid1 asString last: 12) = (uuid2 asString last: 12)
+      uuid1String := uuid1 asString.
+      uuid2String := uuid2 asString.
+      (uuid1String copyFrom: uuid1String size -12 + 1 to: uuid1String size)
+        = (uuid2String copyFrom: uuid2String size -12 + 1 to: uuid2String size)
         ifTrue: [ 
           self should: [ uuid1 < uuid2 ].
           self should: [ uuid2 > uuid1 ].

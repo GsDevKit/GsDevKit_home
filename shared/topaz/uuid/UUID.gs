@@ -38,7 +38,7 @@ fromString: aString
 category: 'accessing'
 classmethod: UUID
 generatorClass
-  self _generatorClass ifNil: [ ^ FastUUIDGenerator ].
+  self _generatorClass ifNil: [ GeneratorClass := FastUUIDGenerator ].
   ^ self _generatorClass
 %
 category: 'accessing'

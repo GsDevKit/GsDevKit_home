@@ -29,7 +29,7 @@ default
 	d := SessionTemps current at: #UUID_DEFAULT otherwise: nil.
 	d == nil 
 		ifTrue: [
-		 	d := self new initialize.
+		 	d := self new.
 			SessionTemps current at: #UUID_DEFAULT put: d.
 		].
 	^d
@@ -44,7 +44,7 @@ category: 'instance creation'
 classmethod: FastUUIDGenerator
 new
   ^self basicNew
-    initilize;
+    initialize;
     yourself
 %
 ! ------------------- Instance methods for FastUUIDGenerator
