@@ -224,13 +224,8 @@ else
     commit
     run
     Metacello new
-      baseline: 'Ston';
-      repository: 'filetree:///export/foos1/users/dhenrich/dev/_home/server/stones/m_340/git/ston/repository';
-      load: #( 'Core' 'Tests' );
-      lock.
-    Metacello new
-      baseline: 'Smalltalk80Compat';
-      repository: 'filetree:///export/foos1/users/dhenrich/dev/_home/shared/repos/smalltalk80Compat/repository';
+      baseline: 'SmalltalkCompat';
+      repository: 'filetree:///export/foos1/users/dhenrich/dev/_home/shared/repos/smalltalkCompat/repository';
       load: #( 'Core' 'Tests');
       lock.
 %
@@ -282,17 +277,18 @@ if [ "${loadSmalltalkCIConfigUsingCypress}" = "true" ] ; then
   level 1
   set u SystemUser p swordfish
   login
-  run
-  UserGlobals at: #SmalltalkCI_BOOTSTRAP_REPO put: '/export/foos1/users/dhenrich/dev/_home/server/stones/m_340/git/smalltalkCI/repository/'
-%
-  input $GS_HOME/shared/topaz/smalltalkCI/bootstrapSmalltalkCISupport.topaz
-  commit
-  run
-  UserGlobals removeKey: #SmalltalkCI_BOOTSTRAP_REPO
+run
+  Metacello new
+    baseline: 'SmalltalkCI';
+    repository: 'gitfiletree://github.com/dalehenrich/smalltalkCI:gs_port/repository';
+    load.
 %
   commit
   run
-  SmalltalkCI load: '${smalltalkCIConfigPath}'.
+  false 
+    ifTrue: [ 
+      "we've already loaded smalltalkCI in the above step ..."
+      SmalltalkCI load: '${smalltalkCIConfigPath}' ].
   true
     ifTrue: [ "run tests until port complete"
       SmalltalkCI test: '${smalltalkCIConfigPath}' ].
