@@ -226,10 +226,12 @@ else
     Metacello new
       baseline: 'Ston';
       repository: 'filetree:///export/foos1/users/dhenrich/dev/_home/server/stones/m_340/git/ston/repository';
+      load: #( 'Core' 'Tests' );
       lock.
     Metacello new
       baseline: 'Smalltalk80Compat';
       repository: 'filetree:///export/foos1/users/dhenrich/dev/_home/shared/repos/smalltalk80Compat/repository';
+      load: #( 'Core' 'Tests');
       lock.
 %
     commit
