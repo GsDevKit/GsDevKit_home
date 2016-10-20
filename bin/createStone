@@ -11,23 +11,20 @@ start_banner
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-f] [-g|-G] [-B] [-n] [-s <snapshot-file-path>]
-                      [-t <tode-snapshot-file-path>]
+USAGE: $(basename $0) [-h] [-f] [-g|-G] [-B] [-U <gemstone-user-id>]
+                      [-n] [-s <snapshot-file-path>] [-t <tode-snapshot-file-path>]
 		      [-u <project-entry-url>] [-i <project-name>] [-l <project-name>]
                       [-c|-C] [-z <smalltalkCI-smalltalk.ston-path>]
                       <stone-name-URL> <gemstone-version>
 
-Create a new stone with the given stone name. Do not install tODE. Start stone
-and netldi unless -n is specified.
-
-If the -s option is not specified, \$GEMSTONE/bin/extent0.seaside.dbf will be used as 
-the initial extent.
+Create a new stone with the given stone name.
 
 If the stone already exists, creation is skipped unless the -f otion is specified,
 in which case the stone and netldi are stopped and the existing stone directory removed
 before creation.
 
-With no -s option specified, the extent0.seaside.dbf extent file for the given version is used.
+With no options, tODE is installed using extent9.seaside.dbf as a startup and DataCurator 
+as the default <gemstone-user-id>.
 
 OPTIONS
   -h
@@ -37,10 +34,10 @@ OPTIONS
      \$GS_SERVER/stones/<stone-name> directory if it exists
   -g 
      Do not install tODE in stone ... use initial extent unaltered. Default extent is extent0.seaside.dbf
-     for the given GemStone version.
+     for the given GemStone version. Default <gemstone-user-id> is DataCurator.
   -G 
      Do not install tODE in stone ... use initial extent unaltered. Default extent is extent0.dbf
-     for the given GemStone version.
+     for the given GemStone version. Default <gemstone-user-id> is SystemUser.
   -B
      Ensure that Cypress is installed as SystemUser. Used with the -g option
      only.
@@ -71,6 +68,9 @@ OPTIONS
   -C
      Load the project specified in the <smalltalkCI-smalltalk.ston-path> file.
      Assume tODE is not installed.
+  -U <gemstone-user-name>
+     Use <gemstone-user-id> in session description. If the user does not exist in GemStone,
+     then create the user after the stone has been started.
 
 EXAMPLES
   $(basename $0) -h
@@ -125,12 +125,13 @@ loadSmalltalkCIConfig="false"
 loadSmalltalkCIConfigUsingCypress="false"
 bootstrapCypress="false"
 defaultExtentName="extent0.seaside.dbf"
-while getopts "fghns:t:u:i:l:z:cBCG" OPT ; do
+defaultGemstoneUserId="DataCurator"
+while getopts "fghns:t:u:i:l:z:cBCGU:" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     f) force="true";; 
     g) installTode="false";;
-    G) installTode="false"; defaultExtentName="extent0.dbf";;
+    G) installTode="false"; defaultExtentName="extent0.dbf"; defaultGemstoneUserId="SystemUser";;
     n) noRestartArg=" -n ";;
     s) snapshotFileArg=" -s ${OPTARG} ";;
     t) snapshotFileArg=" -s ${OPTARG} "; installTode="false"; todeSnapshotArg=" -t ";;
@@ -141,6 +142,7 @@ while getopts "fghns:t:u:i:l:z:cBCG" OPT ; do
     c) loadSmalltalkCIConfig="true";;
     C) loadSmalltalkCIConfigUsingCypress="true";;
     B) bootstrapCypress="true";;
+    U) gemstoneUserId="${OPTARG}";;
     *) usage; exit_1_banner "Uknown option";;
   esac
 done
@@ -168,6 +170,10 @@ if [ -d $GS_SERVER_STONES/$stoneName ] ; then
   else
     $GS_HOME/bin/deleteStone $stoneName
   fi
+fi
+
+if [ "${gemstoneUserId}x" = "x" ] ; then
+   gemstoneUserId="$defaultGemstoneUserId"
 fi
 
 echo "Creating stone $stoneName"
