@@ -11,7 +11,7 @@ start_banner
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-f] [-g] [-B] [-n] [-s <snapshot-file-path>]
+USAGE: $(basename $0) [-h] [-f] [-g|-G] [-B] [-n] [-s <snapshot-file-path>]
                       [-t <tode-snapshot-file-path>]
 		      [-u <project-entry-url>] [-i <project-name>] [-l <project-name>]
                       [-c|-C] [-z <smalltalkCI-smalltalk.ston-path>]
@@ -27,6 +27,8 @@ If the stone already exists, creation is skipped unless the -f otion is specifie
 in which case the stone and netldi are stopped and the existing stone directory removed
 before creation.
 
+With no -s option specified, the extent0.seaside.dbf extent file for the given version is used.
+
 OPTIONS
   -h
      display help
@@ -34,7 +36,11 @@ OPTIONS
      Force creation of new stone, by deleting 
      \$GS_SERVER/stones/<stone-name> directory if it exists
   -g 
-     Do not install tODE in stone ... use initial extent unaltered
+     Do not install tODE in stone ... use initial extent unaltered. Default extent is extent0.seaside.dbf
+     for the given GemStone version.
+  -G 
+     Do not install tODE in stone ... use initial extent unaltered. Default extent is extent0.dbf
+     for the given GemStone version.
   -B
      Ensure that Cypress is installed as SystemUser. Used with the -g option
      only.
@@ -58,7 +64,7 @@ OPTIONS
      tODE must already be installed via -t option.
   -z <smalltalkCI-smalltalk.ston-path>
      Customize the stone installation according to the attrbutes specified in the 
-     <smalltalkCI-smalltalk.ston-path> file -- Assume that tODE is installed.
+     <smalltalkCI-smalltalk.ston-path> file.
   -c
      Load the project specified in the <smalltalkCI-smalltalk.ston-path> file.
      Assume tODE is installed.
@@ -69,10 +75,12 @@ OPTIONS
 EXAMPLES
   $(basename $0) -h
   $(basename $0) -g gs_329 3.2.9
+  $(basename $0) -G gs_329 3.2.9
+  $(basename $0) -BG gs_329 3.2.9
   $(basename $0) gs_329 3.2.9
   $(basename $0) -f gs_329 3.2.9
   $(basename $0) -g -s \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
-  $(basename $0) -B -g -s \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
+  $(basename $0) -BG -s \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
   $(basename $0) -t \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
   $(basename $0) -u http://gsdevkit.github.io/GsDevKit_seaside31/Seaside31.ston \
 	         -t \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
@@ -85,7 +93,8 @@ EXAMPLES
 		 -t \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
   $(basename $0) -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329 3.2.9
   $(basename $0) -c -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329 3.2.9
-  $(basename $0) -B -g -C -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329 3.2.9
+  $(basename $0) -BG -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329 3.2.9
+  $(basename $0) -BGC -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329 3.2.9
 
 HELP
 }
@@ -115,11 +124,13 @@ smalltalkCIConfigPath=""
 loadSmalltalkCIConfig="false"
 loadSmalltalkCIConfigUsingCypress="false"
 bootstrapCypress="false"
-while getopts "fghns:t:u:i:l:z:cBC" OPT ; do
+defaultExtentName="extent0.seaside.dbf"
+while getopts "fghns:t:u:i:l:z:cBCG" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     f) force="true";; 
     g) installTode="false";;
+    G) installTode="false"; defaultExtentName="extent0.dbf";;
     n) noRestartArg=" -n ";;
     s) snapshotFileArg=" -s ${OPTARG} ";;
     t) snapshotFileArg=" -s ${OPTARG} "; installTode="false"; todeSnapshotArg=" -t ";;
@@ -164,6 +175,10 @@ echo "Creating stone $stoneName"
 $GS_HOME/bin/downloadGemStone $vers
 
 ${GS_HOME}/bin/devKitCommandLine createSmalltalkCIStone $stoneName $vers $smalltalkCIConfigPath
+
+if [ "${snapshotFileArg}x" = "x" ] ; then
+   snapshotFileArg=" -s $GS_HOME/server/stones/${stoneName}/product/bin/${defaultExtentName} "
+fi
 
 $GS_HOME/bin/newExtent $todeSnapshotArg $noRestartArg $snapshotFileArg $stoneName
 
@@ -285,7 +300,7 @@ run
 %
   commit
   run
-  false 
+  true 
     ifTrue: [ 
       "we've already loaded smalltalkCI in the above step ..."
       SmalltalkCI load: '${smalltalkCIConfigPath}' ].
