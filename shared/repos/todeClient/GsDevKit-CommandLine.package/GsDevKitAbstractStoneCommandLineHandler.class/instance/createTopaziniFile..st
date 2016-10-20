@@ -12,7 +12,7 @@ createTopaziniFile: stoneDirectory
 			stream
 				nextPutAll: 'SET GEMSTONE ' , self stoneName;
 				lf;
-				nextPutAll: 'set user DataCurator';
+				nextPutAll: 'set user ', self gemstoneUserId;
 				lf;
 				nextPutAll: 'set password swordfish';
 				lf ]

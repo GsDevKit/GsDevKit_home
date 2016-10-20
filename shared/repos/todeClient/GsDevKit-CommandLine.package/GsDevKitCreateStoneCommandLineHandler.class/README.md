@@ -1,6 +1,7 @@
 Usage: createStone [ --help] <stone-name> <gs-version>
-  <stone-name>  name of the stone to be created
-  <gs-version>  GemStone version with which to create stone
+  <stone-name> name of the stone to be created
+  <gs-version> GemStone version with which to create stone
+
 	
 Documentation:
 Create a directory under $GS_SERVER_STONES using the given

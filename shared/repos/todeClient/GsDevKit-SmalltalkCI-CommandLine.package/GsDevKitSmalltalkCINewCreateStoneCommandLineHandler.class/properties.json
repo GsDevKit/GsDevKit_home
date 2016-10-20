@@ -1,0 +1,14 @@
+{
+	"category" : "GsDevKit-SmalltalkCI-CommandLine",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "dkh 10/20/2016 10:18",
+	"instvars" : [
+		"gemstoneUserId" ],
+	"name" : "GsDevKitSmalltalkCINewCreateStoneCommandLineHandler",
+	"pools" : [
+		 ],
+	"super" : "GsDevKitSmalltalkCICreateStoneCommandLineHandler",
+	"type" : "normal" }
