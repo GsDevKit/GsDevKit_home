@@ -15,9 +15,12 @@ USAGE: $(basename $0) [-h] [-f] [-g|-G] [-B] [-U <gemstone-user-id>]
                       [-n] [-s <snapshot-file-path>] [-t <tode-snapshot-file-path>]
 		      [-u <project-entry-url>] [-i <project-name>] [-l <project-name>]
                       [-c|-C] [-z <smalltalkCI-smalltalk.ston-path>]
-                      <stone-name-URL> <gemstone-version>
+                      <stone-name> <gemstone-version>
 
 Create a new stone with the given stone name.
+
+If you create a stone from an extent snapshot, you should use the -N
+option to start the stone, the first time.
 
 If the stone already exists, creation is skipped unless the -f otion is specified,
 in which case the stone and netldi are stopped and the existing stone directory removed

@@ -11,7 +11,7 @@ start_banner
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-D] <stone-name-URL> <tode-command-line>
+USAGE: $(basename $0) [-h] [-D] <stone-name> <tode-command-line>
 
 Execute the <tode-command-line> as a tODE shell command.
 
