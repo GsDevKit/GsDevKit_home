@@ -7,4 +7,5 @@ activate
 			self printHelp.
 			^ self exitFailure: 'Missing <stone-name> argument' ].
 	Transcript cr.
-	self applyRuntimeOptions
+	self doSetOptions.
+	self exitSuccess

@@ -193,9 +193,7 @@ $GS_HOME/bin/newExtent $todeSnapshotArg $noRestartArg $snapshotFileArg $stoneNam
 
 if [ "${noRestartArg}x" = "x" ] ; then
   $GS_HOME/bin/startNetldi $stoneName
-  if [ "${smalltalkCIConfigPath}x" != "x" ] ; then
-    ${GS_HOME}/bin/devKitCommandLine setupRuntimeSmalltalkCIStone $stoneName $smalltalkCIConfigPath
-  fi
+  ${GS_HOME}/bin/devKitCommandLine setupRuntimeSmalltalkCIStoneNew $stoneName $gemstoneUserId $smalltalkCIConfigPath
 fi
 
 if [ "$installTode" = "true" ] ; then
@@ -246,14 +244,6 @@ else
     UserGlobals removeKey: #Metacello_SUPPORT_REPO
 %
     commit
-    run
-    Metacello new
-      baseline: 'SmalltalkCompat';
-      repository: 'filetree:///export/foos1/users/dhenrich/dev/_home/shared/repos/smalltalkCompat/repository';
-      load: #( 'Core' 'Tests');
-      lock.
-%
-    commit
     logout
     exit 0
 EOF
@@ -299,9 +289,17 @@ if [ "${loadSmalltalkCIConfigUsingCypress}" = "true" ] ; then
 #  iferr 2 stack
   iferr 3 exit 1
   level 1
-  set u SystemUser p swordfish
+#  set u SystemUser p swordfish
   login
-run
+  run
+    Metacello new
+      baseline: 'SmalltalkCompat';
+      repository: 'filetree:///export/foos1/users/dhenrich/dev/_home/shared/repos/smalltalkCompat/repository';
+      load: #( 'Core' 'Tests');
+      lock.
+%
+  commit
+  run
   Metacello new
     baseline: 'SmalltalkCI';
     repository: 'gitfiletree://github.com/dalehenrich/smalltalkCI:gs_port/repository';
