@@ -94,22 +94,12 @@ if [ "${snapshotFileArg}x" = "x" ] ; then
 fi
 $GS_HOME/bin/newExtent ${attachTodeArgs} $snapshotFileArg $stoneName
 
-if [ "${attachTodeArgs}x" = "x" ] ; then
-  $GS_HOME/bin/startTopaz $stoneName -l << EOF
-  run
-    Metacello new
-      baseline: 'SmalltalkCI';
-      repository: '${GS_SHARED_REPO_SMALLTALKCI}';
-      onConflict: [:ex | ex allow ];
-      onLock: [:ex | ex disallow ];
-      load ] on: Warning do: [:w | w resume ].
-    (Smalltalk at: #SmalltalkCI) load: '${smalltalkCIConfigPath}'.
-%
-  logout
-  exit 0
-EOF
-else
+if [ "${attachTodeArgs}x" != "x" ] ; then
   ${GS_HOME}/bin/devKitCommandLine serverDoIt  $stoneName << EOF
+  iferr 1 stk
+  iferr 2 stack
+  iferr 3 exit 1
+  login
   GsDeployer bulkMigrate: [
     [
     Metacello new
@@ -120,7 +110,7 @@ else
       load ] on: Warning do: [:w | w resume ].
     (Smalltalk at: #SmalltalkCI) load: '${smalltalkCIConfigPath}'.
   ].
-
+  exit 0
 EOF
 fi
 
@@ -128,6 +118,11 @@ if [ "${runSmalltalkCITests}" = "true" ]; then
   if [ ! -d "$GS_HOME/server/stones/${stoneName}/ci" ] ; then
     mkdir "$GS_HOME/server/stones/${stoneName}/ci"
   fi
+  stonePath=$GS_SERVER_STONES/$stoneName
+  # set up stone environment
+  pushd $stonePath $stonePath >& /dev/null
+  source $stonePath/stone.env
+  popd >& /dev/null
   export upgradeDir="$GEMSTONE/upgrade/"
   $GS_HOME/bin/startTopaz $stoneName -l -T 100000 << EOF
   iferr 1 stk
@@ -135,16 +130,22 @@ if [ "${runSmalltalkCITests}" = "true" ]; then
   iferr 3 exit 1
   login
 # BootStrap UUID into Base --- eventually part of 3.4.0 base
+  output push bootstrapUUID.log only
   input $GS_HOME/shared/topaz/uuid/bootstrapUUIDSupport.topaz
   commit
+  output pop
+  output push bootstrapCypess.log only
   input $upgradeDir/bootstrapCypressSupport.topaz
+  output pop
   commit
+  output push bootstrapMetacello.log only
   input $upgradeDir/bootstrapMetacelloSupport.topaz
   commit
+  output pop
   run
   Metacello new
     baseline: 'Cypress';
-    repository: 'gitcypress://github.com/rjsargent/CypressReferenceImplementation/cypress/';
+    repository: 'gitcypress://github.com/dalehenrich/CypressReferenceImplementation:portability/cypress/';
     load: #( 'Core' );
     lock.
 %
@@ -152,13 +153,23 @@ if [ "${runSmalltalkCITests}" = "true" ]; then
   run
   Metacello new
     baseline: 'Metacello';
-    repository: 'gitcypress://github.com/dalehenrich/metacello-work/repository/';
+    repository: 'gitfiletree://github.com/dalehenrich/metacello-work:gs_port/repository/';
     load: #( 'batch' );
     lock.
 %
   commit
   run
-    SmalltalkCIGemstone 
+  Metacello new
+    baseline: 'SmalltalkCI';
+    repository: 'gitfiletree://github.com/dalehenrich/smalltalkCI:gs_port/repository/';
+    load;
+    lock.
+%
+  commit
+  run
+    SmalltalkCI platformClass
+      load: '${smalltalkCIConfigPath}'.
+    SmalltalkCI platformClass
       test: '${smalltalkCIConfigPath}'
       xmlLogDirPath: '$GS_HOME/server/stones/${stoneName}/ci'
 %
