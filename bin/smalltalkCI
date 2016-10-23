@@ -118,54 +118,64 @@ if [ "${runSmalltalkCITests}" = "true" ]; then
   if [ ! -d "$GS_HOME/server/stones/${stoneName}/ci" ] ; then
     mkdir "$GS_HOME/server/stones/${stoneName}/ci"
   fi
-  stonePath=$GS_SERVER_STONES/$stoneName
-  # set up stone environment
-  pushd $stonePath $stonePath >& /dev/null
-  source $stonePath/stone.env
-  popd >& /dev/null
-  export upgradeDir="$GEMSTONE/upgrade/"
+  if [ "${attachTodeArgs}x" = "x" ] ; then
+    stonePath=$GS_SERVER_STONES/$stoneName
+    # set up stone environment
+    pushd $stonePath $stonePath >& /dev/null
+    source $stonePath/stone.env
+    popd >& /dev/null
+    export upgradeDir="$GEMSTONE/upgrade/"
+    $GS_HOME/bin/startTopaz $stoneName -l -T 100000 << EOF
+    iferr 1 stk
+    iferr 2 stack
+    iferr 3 exit 1
+    login
+#   BootStrap UUID into Base --- eventually part of 3.4.0 base
+    output push bootstrapUUID.log only
+    input $GS_HOME/shared/topaz/uuid/bootstrapUUIDSupport.topaz
+    commit
+    output pop
+    output push bootstrapCypess.log only
+    input $upgradeDir/bootstrapCypressSupport.topaz
+    output pop
+    commit
+    output push bootstrapMetacello.log only
+    input $upgradeDir/bootstrapMetacelloSupport.topaz
+    commit
+    output pop
+   run
+    Metacello new
+      baseline: 'Cypress';
+      repository: 'gitcypress://github.com/dalehenrich/CypressReferenceImplementation:portability/cypress/';
+      load: #( 'Core' );
+      lock.
+%
+    commit
+    run
+    Metacello new
+      baseline: 'Metacello';
+      repository: 'gitfiletree://github.com/dalehenrich/metacello-work:gs_port/repository/';
+      load: #( 'batch' );
+      lock.
+%
+    commit
+    run
+    Metacello new
+      baseline: 'SmalltalkCI';
+      repository: 'gitfiletree://github.com/dalehenrich/smalltalkCI:gs_port/repository/';
+      load;
+      lock.
+%
+    commit
+    logout
+    exit 0
+EOF
+  fi
   $GS_HOME/bin/startTopaz $stoneName -l -T 100000 << EOF
   iferr 1 stk
   iferr 2 stack
   iferr 3 exit 1
   login
-# BootStrap UUID into Base --- eventually part of 3.4.0 base
-  output push bootstrapUUID.log only
-  input $GS_HOME/shared/topaz/uuid/bootstrapUUIDSupport.topaz
-  commit
-  output pop
-  output push bootstrapCypess.log only
-  input $upgradeDir/bootstrapCypressSupport.topaz
-  output pop
-  commit
-  output push bootstrapMetacello.log only
-  input $upgradeDir/bootstrapMetacelloSupport.topaz
-  commit
-  output pop
-  run
-  Metacello new
-    baseline: 'Cypress';
-    repository: 'gitcypress://github.com/dalehenrich/CypressReferenceImplementation:portability/cypress/';
-    load: #( 'Core' );
-    lock.
-%
-  commit
-  run
-  Metacello new
-    baseline: 'Metacello';
-    repository: 'gitfiletree://github.com/dalehenrich/metacello-work:gs_port/repository/';
-    load: #( 'batch' );
-    lock.
-%
-  commit
-  run
-  Metacello new
-    baseline: 'SmalltalkCI';
-    repository: 'gitfiletree://github.com/dalehenrich/smalltalkCI:gs_port/repository/';
-    load;
-    lock.
-%
-  commit
   run
     SmalltalkCI platformClass
       load: '${smalltalkCIConfigPath}'.
@@ -177,5 +187,4 @@ if [ "${runSmalltalkCITests}" = "true" ]; then
   exit 0
 EOF
 fi
-
 exit_0_banner "...finished"
