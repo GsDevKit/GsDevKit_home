@@ -96,10 +96,6 @@ $GS_HOME/bin/newExtent ${attachTodeArgs} $snapshotFileArg $stoneName
 
 if [ "${attachTodeArgs}x" != "x" ] ; then
   ${GS_HOME}/bin/devKitCommandLine serverDoIt  $stoneName << EOF
-  iferr 1 stk
-  iferr 2 stack
-  iferr 3 exit 1
-  login
   GsDeployer bulkMigrate: [
     [
     Metacello new
@@ -110,7 +106,6 @@ if [ "${attachTodeArgs}x" != "x" ] ; then
       load ] on: Warning do: [:w | w resume ].
     (Smalltalk at: #SmalltalkCI) load: '${smalltalkCIConfigPath}'.
   ].
-  exit 0
 EOF
 fi
 
