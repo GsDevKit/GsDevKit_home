@@ -130,8 +130,8 @@ case "$GS_VERSION" in
 esac
 deleteStone ${STONENAME3}
 
-createStone -b -U bozo ${STONENAME2} ${STONENAME3}
-deleteStone ${STONENAME3}
+createStone -b -U bozo ${STONENAME2} $GS_VERSION
+deleteStone ${STONENAME2}
 
 startStone -b ${STONENAME1}
 git config --global user.email "travis@example.com"
