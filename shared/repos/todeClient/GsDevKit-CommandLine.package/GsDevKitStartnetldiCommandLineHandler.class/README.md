@@ -1,4 +1,4 @@
-Usage: startnetldi [ --help] <stone-name>
+Usage: startnetldi [ --help] <stone-name> [netldi-args]
 	
 Documentation:
 start the netldi process for the given stone.

@@ -4,5 +4,8 @@ produceNetldiArgs
 	sess := self sessionDescription.
 	netldiArgs := OrderedCollection new.
 	self netldiArgsOn: netldiArgs.
-	sess netldiArgsOn: netldiArgs.
-	^ netldiArgs asArray
+	^ (self arguments size = 1
+		ifTrue: [ 
+			sess netldiArgsOn: netldiArgs.
+			netldiArgs ]
+		ifFalse: [ netldiArgs , (self arguments copyFrom: 2 to: self arguments size) ]) asArray
