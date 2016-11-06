@@ -132,7 +132,11 @@ deleteStone ${STONENAME3}
 
 case "$GS_VERSION" in
   2.4.*) echo "skipping username and password createStone test for version $GS_VERSION";;
-  *) createStone -b -U bozo -P theClown ${STONENAME2} $GS_VERSION;;
+  *) 
+     createStone -b -U bozo -P theClown ${STONENAME2} $GS_VERSION
+     stopNetldi ${STONENAME2}
+     startNetldi ${STONENAME2} -g  -A ::1 ${STONENAME2}_ldi
+     ;;
 esac
 deleteStone ${STONENAME2}
 
