@@ -14,7 +14,7 @@ createSessionDescriptionFor: aGsDevKitCreateStoneCommanLine for: localHostName
 		netLDIPort: '';
 		gemTask: 'gemnetobject';
 		userId: aGsDevKitCreateStoneCommanLine gemstoneUserId;
-		password: 'swordfish';
+		password: aGsDevKitCreateStoneCommanLine gemstonePassword;
 		backupDirectory: aGsDevKitCreateStoneCommanLine backupsHome pathString;
 		snapshotDirectory: aGsDevKitCreateStoneCommanLine snapshotsHome pathString;
 		serverTodeRoot: defaultServerTodeHome;

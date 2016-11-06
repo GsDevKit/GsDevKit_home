@@ -11,7 +11,7 @@ start_banner
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-f] [-g|-G] [-b] [-B] [-U <gemstone-user-id>]
+USAGE: $(basename $0) [-h] [-f] [-g|-G] [-b] [-B] [-U <gemstone-user-id>] [-P <gemstone-password>]
                       [-n] [-s <snapshot-file-path>] [-t <tode-snapshot-file-path>]
 		      [-u <project-entry-url>] [-i <project-name>] [-l <project-name>]
                       [-c|-C] [-z <smalltalkCI-smalltalk.ston-path>]
@@ -75,6 +75,9 @@ OPTIONS
   -U <gemstone-user-name>
      Use <gemstone-user-id> in session description. If the user does not exist in GemStone,
      then create the user after the stone has been started.
+  -P <gemstone-password>
+     Use <gemstone-password> as the password for the user specified in -U option. Default 
+     password is swordfish. If -U not specified the -P option has no effect.
 
 EXAMPLES
   $(basename $0) -h
@@ -100,6 +103,7 @@ EXAMPLES
   $(basename $0) -BG -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329 3.2.9
   $(basename $0) -BGC -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329 3.2.9
   $(basename $0) -b -U bozo gs_329 3.2.9
+  $(basename $0) -b -U bozo -P theClown gs_329 3.2.9
 
 HELP
 }
@@ -132,7 +136,8 @@ bootstrapCypress="false"
 bootstrapGLASS="false"
 defaultExtentName="extent0.seaside.dbf"
 defaultGemstoneUserId="DataCurator"
-while getopts "fghns:t:u:i:l:z:cBCGU:b" OPT ; do
+gemstonePassword="swordfish"
+while getopts "fghns:t:u:i:l:z:cBCGU:P:b" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     f) force="true";; 
@@ -150,6 +155,7 @@ while getopts "fghns:t:u:i:l:z:cBCGU:b" OPT ; do
     B) bootstrapCypress="true";;
     b) bootstrapGLASS="true"; defaultExtentName="extent0.dbf" ;;
     U) gemstoneUserId="${OPTARG}";;
+    P) gemstonePassword="${OPTARG}";;
     *) usage; exit_1_banner "Uknown option";;
   esac
 done
@@ -187,7 +193,7 @@ echo "Creating stone $stoneName"
 
 $GS_HOME/bin/downloadGemStone $vers
 
-${GS_HOME}/bin/devKitCommandLine createSmalltalkCIStoneNew $stoneName $vers $gemstoneUserId $smalltalkCIConfigPath
+${GS_HOME}/bin/devKitCommandLine createSmalltalkCIStoneNew $stoneName $vers $gemstoneUserId $gemstonePassword $smalltalkCIConfigPath
 
 if [ "${snapshotFileArg}x" = "x" ] ; then
    snapshotFileArg=" -s $GS_HOME/server/stones/${stoneName}/product/bin/${defaultExtentName} "
@@ -197,7 +203,7 @@ $GS_HOME/bin/newExtent $todeSnapshotArg $noRestartArg $snapshotFileArg $stoneNam
 
 if [ "${noRestartArg}x" = "x" ] ; then
   $GS_HOME/bin/startNetldi $stoneName
-  ${GS_HOME}/bin/devKitCommandLine setupRuntimeSmalltalkCIStoneNew $stoneName $gemstoneUserId $smalltalkCIConfigPath
+  ${GS_HOME}/bin/devKitCommandLine setupRuntimeSmalltalkCIStoneNew $stoneName $gemstoneUserId $gemstonePassword $smalltalkCIConfigPath
 fi
 
 if [ "$installTode" = "true" ] ; then

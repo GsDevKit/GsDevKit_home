@@ -6,7 +6,8 @@
 		 ],
 	"commentStamp" : "dkh 10/20/2016 11:34",
 	"instvars" : [
-		"gemstoneUserId" ],
+		"gemstoneUserId",
+		"gemstonePassword" ],
 	"name" : "GsDevKitSmalltalkCISetupRuntimeStoneCommandLineHandlerNew",
 	"pools" : [
 		 ],

@@ -6,7 +6,8 @@
 		 ],
 	"commentStamp" : "dkh 10/20/2016 10:18",
 	"instvars" : [
-		"gemstoneUserId" ],
+		"gemstoneUserId",
+		"gemstonePassword" ],
 	"name" : "GsDevKitSmalltalkCINewCreateStoneCommandLineHandler",
 	"pools" : [
 		 ],

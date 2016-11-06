@@ -14,7 +14,7 @@ createSessionDescriptionFor: aGsDevKitCreateStoneCommanLine for: localHostName
 		netLDIPort: '';
 		gemTask: 'gemnetobject';
 		userId: aGsDevKitCreateStoneCommanLine gemstoneUserId;
-		password: 'swordfish';
+		password: aGsDevKitCreateStoneCommanLine gemstonePassword;
 		yourself.
 	self addFieldsToSessionDescription: description.
 	^ description

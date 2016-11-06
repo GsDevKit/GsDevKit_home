@@ -130,7 +130,10 @@ case "$GS_VERSION" in
 esac
 deleteStone ${STONENAME3}
 
-createStone -b -U bozo ${STONENAME2} $GS_VERSION
+case "$GS_VERSION" in
+  2.4.*) echo "skipping username and password createStone test for version $GS_VERSION";;
+  *) createStone -b -U bozo -P theClown ${STONENAME2} $GS_VERSION;;
+esac
 deleteStone ${STONENAME2}
 
 startStone -b ${STONENAME1}

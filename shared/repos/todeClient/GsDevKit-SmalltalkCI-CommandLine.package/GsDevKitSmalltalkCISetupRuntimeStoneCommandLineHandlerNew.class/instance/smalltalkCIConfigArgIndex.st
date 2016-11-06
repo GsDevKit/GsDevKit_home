@@ -1,3 +1,3 @@
 private
 smalltalkCIConfigArgIndex
-	^ 3
+	^ 4

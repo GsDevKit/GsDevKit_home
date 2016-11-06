@@ -14,5 +14,5 @@ createTopaziniFile: stoneDirectory
 				lf;
 				nextPutAll: 'set user ', self gemstoneUserId;
 				lf;
-				nextPutAll: 'set password swordfish';
+				nextPutAll: 'set password ', self gemstonePassword;
 				lf ]

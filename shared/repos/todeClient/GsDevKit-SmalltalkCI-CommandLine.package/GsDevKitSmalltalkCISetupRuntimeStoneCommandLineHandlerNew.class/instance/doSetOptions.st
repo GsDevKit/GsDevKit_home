@@ -19,7 +19,7 @@ newUser ~~ nil
   addNewUserWithId: ' , newUserId printString
 						,
 							'
-  password: ''swordfish'')
+  password: ', self gemstonePassword printString,')
     addPrivilege: #CodeModification;
     addPrivilege: #UserPassword;
     addPrivilege: #OtherPassword;
