@@ -44,8 +44,7 @@ OPTIONS
   -b
      Bootstrap GLASS into the given extent as the given user. Default extent is exten0.dbf.
   -B
-     Ensure that Cypress is installed as SystemUser. Used with the -g option
-     only.
+     Ensure that Cypress is installed as SystemUser. Used with the -G option only.
   -n
      No startStone, no startNetldi.
   -s <snapshot-file-path> 
@@ -208,31 +207,25 @@ if [ "$installTode" = "true" ] ; then
   $GS_SYS/bin/todeLoad $stoneName
 else
   if [ "${bootstrapCypress}" = "true" ] ; then
-    if [ "$vers" != "3.4.0_d" ] ; then
-      exit_1_banner "Bootstrapping Cypress is only support for GemStone 3.4.0"
+    if [ "$vers" != "3.4.0_e" ] ; then
+      exit_1_banner "Bootstrapping Cypress is only support for GemStone 3.4.0_e"
     fi 
+    stonePath=$GS_SERVER_STONES/$stoneName
+    # set up stone environment
+    pushd $stonePath $stonePath >& /dev/null
+    source $stonePath/stone.env
+    popd >& /dev/null
+    export upgradeDir="$GEMSTONE/upgrade/"
     ${GS_HOME}/bin/startTopaz $stoneName -l << EOF
     iferr 1 stk
     iferr 2 stack
     iferr 3 exit 1
     set u SystemUser p swordfish
     login
-#   This step is skipped for 3.4.0 stones
-#   Bootstrap Cypress into Base
-#   input $GS_HOME/shared/topaz/cypress/bootstrapCypressSupport.topaz
-#   commit
 #   BootStrap UUID into Base --- eventually part of 3.4.0 base
     input $GS_HOME/shared/topaz/uuid/bootstrapUUIDSupport.topaz
     commit
-    run
-    UserGlobals at: #Metacello_BOOTSTRAP_REPO put: '$GS_HOME/shared/repos/metacello-work/repository/'.
-    UserGlobals at: #Metacello_BOOTSTRAP_REPO put: '/export/foos1/users/dhenrich/dev/_home/server/stones/metacello/git/metacello-work/repository/'
-%
-    input $GS_HOME/shared/topaz/metacello/bootstrapMetacelloSupport.topaz
-    commit
-    run
-    UserGlobals removeKey: #Metacello_BOOTSTRAP_REPO
-%
+    input $upgradeDir/bootstrapMetacelloSupport.topaz
     commit
     run
     UserGlobals at: #Cypress_SUPPORT_REPO put: '$GS_HOME/shared/repos/CypressReferenceImplementation/cypress/'
@@ -294,10 +287,9 @@ fi
 if [ "${loadSmalltalkCIConfigUsingCypress}" = "true" ] ; then
   ${GS_HOME}/bin/startTopaz $stoneName -l << EOF
   iferr 1 stk
-#  iferr 2 stack
+  iferr 2 stack
   iferr 3 exit 1
   level 1
-#  set u SystemUser p swordfish
   login
   run
     Metacello new
