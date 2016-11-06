@@ -28,6 +28,6 @@ newUser ~~ nil
     addPrivilege: #SessionAccess;
     addPrivilege: #FileControl;
     addPrivilege: #SessionPriority;
-    addPGroup: ''DataCuratorGroup'';
+    addGroup: ''DataCuratorGroup'';
     yourself.
 System commitTransaction.' ]
