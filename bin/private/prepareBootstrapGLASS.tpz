@@ -1,0 +1,37 @@
+#=========================================================================
+# Copyright (c) 2016 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#
+#   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
+#=========================================================================
+
+! run with topaz -l -T50000 or larger
+
+level 1
+iferr 1 stk
+iferr 2 stack
+iferr 3 exit 1
+
+set user SystemUser pass swordfish
+login
+run
+| unicode16Class |
+(Stream respondsTo: #installLegacyStreamImplementation)
+  ifTrue: [
+    "GLASS is not yet ready for Portable streams, nor Legacy streams with ANSI polarity"
+    Stream installLegacyStreamImplementation.
+    (Globals at: #'PositionableStream_position') == #'ANSI'
+       ifTrue: [
+         Globals at: #'PositionableStream_position' put: #'Legacy'.
+         PositionableStream compilePositionMethods  ] ].
+unicode16Class := Globals at: #Unicode16 ifAbsent: [].
+unicode16Class ~~ nil
+  ifTrue: [ Globals at: #StringConfiguration put: unicode16Class ].
+true
+%
+commit
+
+errorCount
+
+logout
+
+exit 0

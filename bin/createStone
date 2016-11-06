@@ -11,7 +11,7 @@ start_banner
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-f] [-g|-G] [-B] [-U <gemstone-user-id>]
+USAGE: $(basename $0) [-h] [-f] [-g|-G] [-b] [-B] [-U <gemstone-user-id>]
                       [-n] [-s <snapshot-file-path>] [-t <tode-snapshot-file-path>]
 		      [-u <project-entry-url>] [-i <project-name>] [-l <project-name>]
                       [-c|-C] [-z <smalltalkCI-smalltalk.ston-path>]
@@ -41,6 +41,8 @@ OPTIONS
   -G 
      Do not install tODE in stone ... use initial extent unaltered. Default extent is extent0.dbf
      for the given GemStone version. Default <gemstone-user-id> is SystemUser.
+  -b
+     Bootstrap GLASS into the given extent as the given user. Default extent is exten0.dbf.
   -B
      Ensure that Cypress is installed as SystemUser. Used with the -g option
      only.
@@ -98,6 +100,7 @@ EXAMPLES
   $(basename $0) -c -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329 3.2.9
   $(basename $0) -BG -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329 3.2.9
   $(basename $0) -BGC -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329 3.2.9
+  $(basename $0) -b -U bozo gs_329 3.2.9
 
 HELP
 }
@@ -127,9 +130,10 @@ smalltalkCIConfigPath=""
 loadSmalltalkCIConfig="false"
 loadSmalltalkCIConfigUsingCypress="false"
 bootstrapCypress="false"
+bootstrapGLASS="false"
 defaultExtentName="extent0.seaside.dbf"
 defaultGemstoneUserId="DataCurator"
-while getopts "fghns:t:u:i:l:z:cBCGU:" OPT ; do
+while getopts "fghns:t:u:i:l:z:cBCGU:b" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     f) force="true";; 
@@ -145,6 +149,7 @@ while getopts "fghns:t:u:i:l:z:cBCGU:" OPT ; do
     c) loadSmalltalkCIConfig="true";;
     C) loadSmalltalkCIConfigUsingCypress="true";;
     B) bootstrapCypress="true";;
+    b) bootstrapGLASS="true"; defaultExtentName="extent0.dbf" ;;
     U) gemstoneUserId="${OPTARG}";;
     *) usage; exit_1_banner "Uknown option";;
   esac
@@ -197,6 +202,9 @@ if [ "${noRestartArg}x" = "x" ] ; then
 fi
 
 if [ "$installTode" = "true" ] ; then
+  if [ "$bootstrapGLASS" = "true" ] ; then
+    $GS_HOME/bin/bootstrapGLASS $stoneName
+  fi
   $GS_SYS/bin/todeLoad $stoneName
 else
   if [ "${bootstrapCypress}" = "true" ] ; then

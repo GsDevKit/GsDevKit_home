@@ -59,6 +59,10 @@ popd >& /dev/null
 export upgradeDir=$GEMSTONE/upgrade
 
 $GS_HOME/bin/startTopaz $stoneName -l << EOF
+input $GS_HOME/bin/private/prepareBootstrapGLASS.tpz
+EOF
+
+$GS_HOME/bin/startTopaz $stoneName -l << EOF
 input $GS_HOME/bin/private/bootstrapGLASS.tpz
 EOF
 

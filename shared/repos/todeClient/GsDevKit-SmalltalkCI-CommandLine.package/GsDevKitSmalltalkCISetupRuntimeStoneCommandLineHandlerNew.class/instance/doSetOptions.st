@@ -23,5 +23,11 @@ newUser ~~ nil
     addPrivilege: #CodeModification;
     addPrivilege: #UserPassword;
     addPrivilege: #OtherPassword;
+    addPrivilege: #GarbageCollection;
+    addPrivilege: #SystemControl;
+    addPrivilege: #SessionAccess;
+    addPrivilege: #FileControl;
+    addPrivilege: #SessionPriority;
+    addPGroup: ''DataCuratorGroup'';
     yourself.
 System commitTransaction.' ]
