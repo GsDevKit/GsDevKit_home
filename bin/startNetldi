@@ -69,11 +69,6 @@ pushd $stonePath >& /dev/null
   source $stonePath/stone.env
 popd >& /dev/null
 
-cmdLine="$GS_HOME/bin/devKitCommandLine startnetldi $stoneName $*"
-if [ "${GS_OS_USER}x" = "x" ] ; then
- $cmdLine
-else
- sudo su -m $GS_OS_USER -c "export GS_HOME=$GS_HOME; $cmdLine"
-fi
+$GS_HOME/bin/devKitCommandLine startnetldi $stoneName $*
 
 exit_0_banner "...finished"
