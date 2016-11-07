@@ -135,7 +135,7 @@ case "$GS_VERSION" in
   *) 
      createStone -b -U bozo -P theClown ${STONENAME2} $GS_VERSION
      stopNetldi ${STONENAME2}
-     startNetldi ${STONENAME2} -g  -A ::1 ${STONENAME2}_ldi
+     startNetldi ${STONENAME2} -g -A ::1 ${STONENAME2}_ldi
      ;;
 esac
 deleteStone ${STONENAME2}
