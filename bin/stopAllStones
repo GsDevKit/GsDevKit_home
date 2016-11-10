@@ -1,0 +1,114 @@
+#! /usr/bin/env bash
+#=========================================================================
+# Copyright (c) 2014, 2015, 2016 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#
+#   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
+#=========================================================================
+
+theArgs="$*"
+source ${GS_HOME}/bin/private/shFeedback
+start_banner
+
+usage() {
+  cat <<HELP
+USAGE: $(basename $0) [-h] [-b]
+
+Stop all stones. Any statmonitor processes associated
+with the stones will be stopped as well.
+
+The netldi for the stones are left running unless the -b option
+is specified.
+
+If the stone or netldi was started with a different Operatying System user than the one running GsDevKit_Home,
+then such a user must be defined in the variable GS_OS_USER in the custom_stone.env file of the stone. For example:
+
+export GS_OS_USER="osUser"
+
+If GS_OS_USER is defined, then the stop of the netldi and stone will require sudo permission to do the su to the given user. 
+To get this sudo permission, this script must be called with the root user or else using sudo but making sure to presever environment variables
+with the -E argument. For example:
+
+sudo -E $GS_HOME/bin/stopAllStones
+
+Note that we assume that the sudo user does have GS_HOME correctly set prior to this call.
+
+
+OPTIONS
+  -h display help
+  -b stop the netldi for the stone
+
+EXAMPLES
+  $(basename $0) -h
+  $(basename $0) -b
+
+HELP
+}
+
+PLATFORM="`uname -sm | tr ' ' '-'`"
+if [[ "$PLATFORM" == MINGW32_NT* || "$PLATFORM" == MSYS_NT* ]] ; then
+  exit_1_banner "This script is a server-only script and cannot be used on Windows"
+fi
+
+if [ "${GS_HOME}x" = "x" ] ; then
+  exit_1_banner "the GS_HOME environment variable needs to be defined"
+fi
+source ${GS_HOME}/bin/defGsDevKit.env
+if [ "$GS_SERVER{}x" = "x" ] ; then
+  exit_1_banner "the GS_SERVER environment variable needs to be defined. Perhaps a stone has not been create yet?"
+fi
+
+stopNetldi=""
+while getopts "bh" OPT ; do
+  case "$OPT" in
+    h) usage; exit 0;;
+    b) stopNetldi="true";;
+    *) usage; exit_1_banner "Unknown option";;
+  esac
+done
+shift $(($OPTIND - 1))
+
+
+if [ $# -ne 0 ]; then
+  usage; exit_1_banner "No arguments allowed"
+fi
+
+stoneList=`find $GS_SERVER_STONES -maxdepth 1 -mindepth 1  \( -name '.*' \! -name '.' -prune \) -o -type d -exec basename {} \;`
+
+echo "Stone list found in $GS_SERVER_STONES: $stoneList"
+
+for stoneName in "$stoneList"
+do
+  stonePath=$GS_SERVER_STONES/${stoneName}
+
+  if [ -d "$stonePath" ] ; then
+    if [ -e "$stonePath/stone.env" ] ; then
+      # set up stone environment
+      pushd $stonePath >& /dev/null
+        source $stonePath/stone.env
+      popd >& /dev/null
+
+      # stop the stone
+      if [ "${GS_OS_USER}x" = "x" ] ; then
+        $GS_HOME/bin/devKitCommandLine stopstone $stoneName
+      else
+        su $GS_OS_USER -c "$GS_HOME/bin/devKitCommandLine stopstone $stoneName" 
+      fi  
+
+      if [ "${stopNetldi}" = "true" ] ; then
+        if [ "${GS_OS_USER}x" = "x" ] ; then
+          $GS_HOME/bin/stopNetldi $stoneName
+        else
+          su $GS_OS_USER -c "$GS_HOME/bin/stopNetldi $stoneName"
+        fi  
+      fi	 
+
+    else
+      exit_1_banner "Required file: $stonePath/stone.env does not exits for $stoneName"
+    fi
+  else
+    exit_1_banner "The stone $stoneName does not exist"
+  fi
+done
+
+exit_0_banner "...finished"
+
