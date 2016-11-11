@@ -24,7 +24,7 @@ then such a user must be defined in the variable GS_OS_USER in the custom_stone.
 
 export GS_OS_USER="osUser"
 
-If GS_OS_USER is defined, then the stop of the netldi and stone will require sudo permission to do the su to the given user. 
+If GS_OS_USER is defined, then the stop of the netldi and stone will require sudo permission to do the su to the given user.
 To get this sudo permission, this script must be called with the root user or else using sudo but making sure to presever environment variables
 with the -E argument. For example:
 
@@ -65,43 +65,32 @@ while getopts "bh" OPT ; do
     *) usage; exit_1_banner "Unknown option";;
   esac
 done
-shift $(($OPTIND - 1))
 
+# In this case,
+# shift $(($OPTIND - 1))
 
-if [ $# -ne 0 ]; then
-  usage; exit_1_banner "No arguments allowed"
-fi
 
 stoneList=`find $GS_SERVER_STONES -maxdepth 1 -mindepth 1  \( -name '.*' \! -name '.' -prune \) -o -type d -exec basename {} \;`
-
 echo "Stone list found in $GS_SERVER_STONES: $stoneList"
+
+
 
 for stoneName in "$stoneList"
 do
   stonePath=$GS_SERVER_STONES/${stoneName}
-
   if [ -d "$stonePath" ] ; then
     if [ -e "$stonePath/stone.env" ] ; then
       # set up stone environment
       pushd $stonePath >& /dev/null
-        source $stonePath/stone.env
+      source $stonePath/stone.env
       popd >& /dev/null
 
-      # stop the stone
+      # Stop stone
       if [ "${GS_OS_USER}x" = "x" ] ; then
-        $GS_HOME/bin/devKitCommandLine stopstone $stoneName
+        $GS_HOME/bin/stopStone $* $stoneName
       else
-        su $GS_OS_USER -c "$GS_HOME/bin/devKitCommandLine stopstone $stoneName" 
-      fi  
-
-      if [ "${stopNetldi}" = "true" ] ; then
-        if [ "${GS_OS_USER}x" = "x" ] ; then
-          $GS_HOME/bin/stopNetldi $stoneName
-        else
-          su $GS_OS_USER -c "$GS_HOME/bin/stopNetldi $stoneName"
-        fi  
-      fi	 
-
+        su $GS_OS_USER -c "$GS_HOME/bin/stopStone $* $stoneName"
+      fi
     else
       exit_1_banner "Required file: $stonePath/stone.env does not exits for $stoneName"
     fi
@@ -111,4 +100,3 @@ do
 done
 
 exit_0_banner "...finished"
-

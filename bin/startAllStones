@@ -13,18 +13,16 @@ usage() {
   cat <<HELP
 USAGE: $(basename $0) [-h] [-b]
 
-Start all stones. Any statmonitor processes associated
-with the stones will be started as well.
+Start all stones. Any statmonitor processes associated with the stones will be started as well.
 
-The netldi for the stones are not started unless the -b option
-is specified. If specified, the netldi will be started with all default parameters.
+The netldi for the stones are not started unless the -b option is specified. If specified, the netldi will be started with all default parameters.
 
 If the stone or netldi was started with a different Operatying System user than the one running GsDevKit_Home,
 then such a user must be defined in the variable GS_OS_USER in the custom_stone.env file of the stone. For example:
 
 export GS_OS_USER="osUser"
 
-If GS_OS_USER is defined, then the start of the netldi and stone will require sudo permission to do the su to the given user. 
+If GS_OS_USER is defined, then the start of the netldi and stone will require sudo permission to do the su to the given user.
 To get this sudo permission, this script must be called with the root user or else using sudo but making sure to presever environment variables
 with the -E argument. For example:
 
@@ -65,12 +63,9 @@ while getopts "bh" OPT ; do
     *) usage; exit_1_banner "Unknown option";;
   esac
 done
-shift $(($OPTIND - 1))
 
 
-if [ $# -ne 0 ]; then
-  usage; exit_1_banner "No arguments allowed"
-fi
+#shift $(($OPTIND - 1))
 
 stoneList=`find $GS_SERVER_STONES -maxdepth 1 -mindepth 1  \( -name '.*' \! -name '.' -prune \) -o -type d -exec basename {} \;`
 
@@ -84,53 +79,15 @@ do
     if [ -e "$stonePath/stone.env" ] ; then
       # set up stone environment
       pushd $stonePath >& /dev/null
-        source $stonePath/stone.env
+      source $stonePath/stone.env
       popd >& /dev/null
 
-
-
-# start the stone
-if [ "${GS_OS_USER}x" = "x" ] ; then
-  $GS_HOME/bin/devKitCommandLine startstone $stoneName $ARG
-else
-  su $GS_OS_USER -c "$GS_HOME/bin/devKitCommandLine startstone $stoneName $ARG"
-fi
-
-# Wait for it 
-if [ "${waitTime}x" = "x" ] ; then
-  if [ "${GS_TRAVIS}x" != "x" ] ; then
-    trap - ERR
-    $stonePath/product/bin/waitstone $stoneName 5
-    status=$?
-    if [ $status -ne 0 ] ; then
-      exit_1_banner "stone $stoneName did not start"
-    fi
-    trap 'error ${LINENO}' ERR
-  fi
-else
-  trap - ERR
-  $stonePath/product/bin/waitstone $stoneName $waitTime
-  status=$?
-  if [ $status -ne 0 ] ; then
-    exit_1_banner "stone $stoneName did not start"
-  fi
-  trap 'error ${LINENO}' ERR
-fi
-
-
-
-# Start netldi
-if [ "${startNetldi}" = "true" ] ; then
-   if [ "${GS_OS_USER}x" = "x" ] ; then
-     $GS_HOME/bin/devKitCommandLine startnetldi $stoneName
-   else
-     su $GS_OS_USER -c "$GS_HOME/bin/devKitCommandLine startnetldi $stoneName"
-   fi
- fi     
-
-
-
-
+      # Start stone
+      if [ "${GS_OS_USER}x" = "x" ] ; then
+        $GS_HOME/bin/startStone $* $stoneName
+      else
+        su $GS_OS_USER -c "$GS_HOME/bin/startStone $* $stoneName"
+      fi
     else
       exit_1_banner "Required file: $stonePath/stone.env does not exits for $stoneName"
     fi
@@ -140,4 +97,3 @@ if [ "${startNetldi}" = "true" ] ; then
 done
 
 exit_0_banner "...finished"
-
