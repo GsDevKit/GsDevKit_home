@@ -41,7 +41,7 @@ GsDevKit and tODE provide a development environment that is similar to Smalltalk
 10. [How do I load Seaside?][21]
 
 ##Talks
-Smalltalks 2015: Announcing GsDevKit_home And tODE [video][30]
+Smalltalks 2015: Announcing GsDevKit_home And tODE ([video][30], [slides][31])
 
 [**FEEDBACK**][8]
 
@@ -68,5 +68,6 @@ Smalltalks 2015: Announcing GsDevKit_home And tODE [video][30]
 [21]: docs/gettingStartedWithSeaside.md
 
 [30]: https://www.youtube.com/watch?v=QshDlH1ADZQ
+[31]: http://fast.org.ar/live/wp-content/uploads/2015/10/DaleHenrichs-TheLightAtTheEndOfTheTunnel.pdf
 
 [100]: docs/FAQ.md#100-how-do-i-contribute-to-the-gsdevkit_home-project
