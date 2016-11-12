@@ -40,6 +40,9 @@ GsDevKit and tODE provide a development environment that is similar to Smalltalk
 9. [How do I upgrade a stone to a new version of GemStone?][16]
 10. [How do I load Seaside?][21]
 
+##Talks
+Smalltalks 2015: Announcing GsDevKit_home And tODE [video][30]
+
 [**FEEDBACK**][8]
 
 [1]: https://github.com/GsDevKit/gsDevKitHome#open-source-development-kit-for-gemstones-64-bit-
@@ -63,5 +66,7 @@ GsDevKit and tODE provide a development environment that is similar to Smalltalk
 
 [20]: https://github.com/GsDevKit/GsDevKit_seaside31/blob/master/docs/installation/README.md
 [21]: docs/gettingStartedWithSeaside.md
+
+[30]: https://www.youtube.com/watch?v=QshDlH1ADZQ
 
 [100]: docs/FAQ.md#100-how-do-i-contribute-to-the-gsdevkit_home-project
