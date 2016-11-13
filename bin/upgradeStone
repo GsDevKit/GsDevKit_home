@@ -11,7 +11,8 @@ start_banner
 
 usage() {
   cat <<HELP
-usage: $0 [-c] [-f] [-u] [-s <source-stone-extent-file-path>] [-l <post-load-tode-script> ]
+usage: $0 [-c] [-f] [-u] [-s <source-stone-extent-file-path>] [-l <post-load-tode-script>]
+          [-m <tempObjCacheSize>]
 	  <source-stone-name> <target-stone-name> <gemstone-version>
 
 OPTIONS
@@ -24,6 +25,9 @@ OPTIONS
      \$GS_HOME/gemstone/stone/<target-stone-name> directory if it exists
   -l <post-load-tode-script>
      tODE path to the tODE script that loads your application code
+  -m <tempObjCacheSize>
+     size of temp obj cache to use in KB.
+      Default: 100000
   -s <source-stone-extent-file-path> 
      Path to  <source-stone-name> extent file used as starting point for 
      upgrade.
@@ -55,12 +59,14 @@ forceArg=""
 createStone="true"
 runUpgrade="true"
 hasSnapshotFile="false"
-while getopts "cfhl:s:u" OPT ; do
+tempObjCacheSize="100000"
+while getopts "cfhl:s:um:" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     c) runUpgrade="false";;
     f) forceArg="-f";; 
     l) postUpgradeLoadScriptPath="${OPTARG}";;
+    m) tempObjCacheSize="${OPTARG}" ;;
     s) 
        snapshotFile="${OPTARG}"
        hasSnapshotFile="true"
@@ -335,13 +341,25 @@ EOF
   # use default Bootstrap globals for Seaside upgrade
   # start "seaside" upgrade to upgrade GLASS to 1.0-beta.9.1
   echo "STARTING upgradeSeasideImage"
-  $GEMSTONE/seaside/bin/upgradeSeasideImage -s $targetStoneName << EOF
+  case "$targetStoneName" in
+    3.2.16|3.3.1|3.4.*)
+      $GS_HOME/bin/startTopaz $stoneName -l -T${tempObjCacheSize} > $upgradeLogDir/topaz.out 2>&1 << EOF
+        input $upgradeDir/prepareSeasideImage.topaz
+EOF
+      $GS_HOME/bin/startTopaz $stoneName -l -T${tempObjCacheSize} > $upgradeLogDir/topaz.out 2>&1 << EOF
+        input $upgradeDir/bootstrapSeasideImage.topaz
+EOF
+      ;;
+    *)
+      $GEMSTONE/seaside/bin/upgradeSeasideImage -s $targetStoneName > $upgradeLogDir/topaz.out 2>&1 << EOF
   
 EOF
+      ;;
+  esac
   
   # Remove all BaselineOf* classes ... so that they will be reloaded during tODE installation
   echo "STARTING remove BaselineOf* classes"
-  $GEMSTONE/bin/topaz -l -T50000 > $upgradeLogDir/topaz.out << EOF
+  $GS_HOME/bin/startTopaz $stoneName -l -T${tempObjCacheSize} > $upgradeLogDir/topaz.out  2>&1 << EOF
   output pushnew $upgradeLogDir/topazRemoveBaselines.out only
   set gemstone $targetStoneName
   
