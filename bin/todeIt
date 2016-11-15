@@ -44,7 +44,7 @@ interactiveArg=""
 while getopts "hD" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
-    D) interactiveArg=" -i ";;
+    D) interactiveArg=" -D ";;
     *) usage; exit_1_banner "Unknown option";;
   esac
 done
