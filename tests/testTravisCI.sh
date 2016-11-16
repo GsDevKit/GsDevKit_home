@@ -89,6 +89,16 @@ EOF
       exit 0
     fi
     ;;
+  Upgrade_User)
+    installServer
+    createStone $opt -U bozo -P theClown ${STONENAME1}_${UPGRADE_FROM} ${UPGRADE_FROM}
+    upgradeStoneName="${STONENAME1}_${GS_VERSION}"
+    set +e
+    set -x
+    upgradeStone -f  -U bozo -P theClown ${STONENAME1}_${UPGRADE_FROM} ${STONENAME1}_${GS_VERSION} $GS_VERSION << EOF
+
+EOF
+    ;;
   Upgrade_71) # Issue #71: test case ... upgrade from 3.2.11
     installServer
     createStone -g ${STONENAME1}_3211 3.2.11

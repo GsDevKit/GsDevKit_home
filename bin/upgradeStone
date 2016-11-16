@@ -354,10 +354,10 @@ EOF
   echo "STARTING upgradeSeasideImage"
   case "$targetStoneName" in
     3.2.16|3.3.1|3.4.*)
-      $GS_HOME/bin/startTopaz $stoneName -l -T${tempObjCacheSize} > $upgradeLogDir/topaz.out 2>&1 << EOF
+      $GS_HOME/bin/startTopaz $stoneName -l -T ${tempObjCacheSize} > $upgradeLogDir/topaz.out 2>&1 << EOF
         input $upgradeDir/prepareSeasideImage.topaz
 EOF
-      $GS_HOME/bin/startTopaz $stoneName -l -T${tempObjCacheSize} > $upgradeLogDir/topaz.out 2>&1 << EOF
+      $GS_HOME/bin/startTopaz $stoneName -l -T ${tempObjCacheSize} > $upgradeLogDir/topaz.out 2>&1 << EOF
         input $upgradeDir/bootstrapSeasideImage.topaz
 EOF
       ;;
@@ -370,7 +370,7 @@ EOF
   
   # Remove all BaselineOf* classes ... so that they will be reloaded during tODE installation
   echo "STARTING remove BaselineOf* classes"
-  $GS_HOME/bin/startTopaz $stoneName -l -T${tempObjCacheSize} > $upgradeLogDir/topaz.out  2>&1 << EOF
+  $GS_HOME/bin/startTopaz $stoneName -l -T ${tempObjCacheSize} > $upgradeLogDir/topaz.out  2>&1 << EOF
   output pushnew $upgradeLogDir/topazRemoveBaselines.out only
   set gemstone $targetStoneName
   
