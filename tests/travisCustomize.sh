@@ -5,11 +5,18 @@
 #   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
 #=========================================================================
 
+# needed for updateGsDevKit script test
+email=`git config --global --get user.email`
+name=`git config --global --get user.name`
+
 set -xe  # print commands and exit on error
 
-# needed for updateGsDevKit script test
-git config --global user.email "you@example.com"
-git config --global user.name "Your Name"
+if [ "${email}x" = "x" ] ; then
+  git config --global user.email "you@example.com"
+fi
+if [ "${name}x" = "x" ] ; then
+  git config --global user.name "Your Name"
+fi
 
 # no backups on travis
 cp $GS_HOME/tests/sys/local/client/tode-scripts/* $GS_HOME/sys/local/client/tode-scripts
