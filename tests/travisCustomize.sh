@@ -8,8 +8,14 @@
 set -xe  # print commands and exit on error
 
 # needed for updateGsDevKit script test
-git config --global user.email "you@example.com"
-git config --global user.name "Your Name"
+email=`git config --global --get user.email`
+if [ "${email}x" = "x" ] ; then
+  git config --global user.email "you@example.com"
+fi
+name=`git config --global --get user.name`
+if [ "${name}x" = "x" ] ; then
+  git config --global user.name "Your Name"
+fi
 
 # no backups on travis
 cp $GS_HOME/tests/sys/local/client/tode-scripts/* $GS_HOME/sys/local/client/tode-scripts
