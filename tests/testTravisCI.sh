@@ -91,7 +91,7 @@ EOF
     ;;
   Upgrade_User)
     installServer
-    createStone $opt -U bozo -P theClown ${STONENAME1}_${UPGRADE_FROM} ${UPGRADE_FROM}
+    createStone -b $opt -U bozo -P theClown ${STONENAME1}_${UPGRADE_FROM} ${UPGRADE_FROM}
     upgradeStoneName="${STONENAME1}_${GS_VERSION}"
     set +e
     set -x
