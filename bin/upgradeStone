@@ -188,10 +188,7 @@ EOF
   
   # Patch BUG 46217 -- needed for 3.3.0 and pre-3.2.16 GemStone versions.
   echo "Install patch for Bug 46217"
-  $GEMSTONE/bin/topaz -l -T50000 > $upgradeLogDir/topaz.out << EOF
-  output pushnew $upgradeLogDir/topazPatchBug46217.out only
-  set gemstone $targetStoneName
-  
+  $GS_HOME/bin/startTopaz $targetStoneName -l -T50000 > $upgradeLogDir/topaz.out << EOF
   display resultcheck
   level 0
 
@@ -258,7 +255,18 @@ EOF
   commit
   logout
 
-  set user DataCurator pass swordfish
+  exit 0
+EOF
+
+$GS_HOME/bin/startTopaz $targetStoneName -l -T50000 >> $upgradeLogDir/topaz.out << EOF
+  display resultcheck
+  level 0
+
+  display oops
+  iferr 1 stk
+  iferr 2 stack
+  iferr 3 input pop
+  iferr 4 exit 1
   login
 
   run
@@ -269,20 +277,16 @@ EOF
   commit
   logout
 
-  output pop
   exit 0
 EOF
  
   # Clear SystemLoginNotification #Subscriptions class variable
   echo "STARTING clear SystemLoginNotification #Subscriptions class variable"
-  $GEMSTONE/bin/topaz -l -T50000 > $upgradeLogDir/topaz.out << EOF
-  output pushnew $upgradeLogDir/topazClearSystemLoginNotification.out only
-  set gemstone $targetStoneName
+  $GS_HOME/bin/startTopaz $targetStoneName -l -T50000 >> $upgradeLogDir/topaz.out << EOF
   
   display resultcheck
   level 0
 
-  set user DataCurator pass swordfish
   login
   
   display oops
@@ -316,20 +320,16 @@ EOF
 
   
   logout
-  output pop
   exit 0
 EOF
 
   # Setting BootstrapApplicationPostloadClassList (see https://github.com/GsDevKit/GsDevKit_home/issues/52)
   echo "Starting set BootstrapApplicationPostloadClassList"
-  $GEMSTONE/bin/topaz -l -T50000 > $upgradeLogDir/topaz.out << EOF
-  output pushnew $upgradeLogDir/topazClearSystemLoginNotification.out only
-  set gemstone $targetStoneName
+  $GS_HOME/bin/startTopaz $targetStoneName -l -T50000 >> $upgradeLogDir/topaz.out << EOF
   
   display resultcheck
   level 0
   
-  set user DataCurator pass swordfish
   login
   
   display oops
@@ -345,24 +345,45 @@ EOF
   commit
   
   logout
-  output pop
   exit 0
 EOF
   
   # use default Bootstrap globals for Seaside upgrade
   # start "seaside" upgrade to upgrade GLASS to 1.0-beta.9.1
   echo "STARTING upgradeSeasideImage"
-  case "$targetStoneName" in
+  case "$gsvers" in
     3.2.16|3.3.1|3.4.*)
-      $GS_HOME/bin/startTopaz $stoneName -l -T ${tempObjCacheSize} > $upgradeLogDir/topaz.out 2>&1 << EOF
-        input $upgradeDir/prepareSeasideImage.topaz
+      export upgradeDir=$GEMSTONE/upgrade      
+      $GS_HOME/bin/startTopaz $targetStoneName -l -T ${tempObjCacheSize} >> $upgradeLogDir/topaz.out 2>&1 << EOF
+        set user SystemUser p swordfish
+        display resultcheck
+        level 0
+
+        login
+        display oops
+        iferr 1 stk
+        iferr 2 stack
+
+        status
+        time
+
+!       comment out following for debugging
+        iferr 4 exit
+
+        run
+	UserGlobals at: #SeasideUpgradeUser put: '$gemstoneUserId'.
+	System commitTransaction.
+%
+        input $GEMSTONE/upgrade/prepareSeasideImage.topaz
+	exit 0
 EOF
-      $GS_HOME/bin/startTopaz $stoneName -l -T ${tempObjCacheSize} > $upgradeLogDir/topaz.out 2>&1 << EOF
-        input $upgradeDir/bootstrapSeasideImage.topaz
+      $GS_HOME/bin/startTopaz $targetStoneName -l -T ${tempObjCacheSize} >> $upgradeLogDir/topaz.out 2>&1 << EOF
+        input $GEMSTONE/upgrade/bootstrapSeasideImage.topaz
+	exit 0
 EOF
       ;;
     *)
-      $GEMSTONE/seaside/bin/upgradeSeasideImage -s $targetStoneName > $upgradeLogDir/topaz.out 2>&1 << EOF
+      $GEMSTONE/seaside/bin/upgradeSeasideImage -s $targetStoneName >> $upgradeLogDir/topaz.out 2>&1 << EOF
   
 EOF
       ;;
@@ -370,14 +391,11 @@ EOF
   
   # Remove all BaselineOf* classes ... so that they will be reloaded during tODE installation
   echo "STARTING remove BaselineOf* classes"
-  $GS_HOME/bin/startTopaz $stoneName -l -T ${tempObjCacheSize} > $upgradeLogDir/topaz.out  2>&1 << EOF
-  output pushnew $upgradeLogDir/topazRemoveBaselines.out only
-  set gemstone $targetStoneName
+  $GS_HOME/bin/startTopaz $targetStoneName -l -T ${tempObjCacheSize} >> $upgradeLogDir/topaz.out  2>&1 << EOF
   
   display resultcheck
   level 0
   
-  set user DataCurator pass swordfish
   login
   
   display oops
@@ -414,7 +432,6 @@ EOF
   
   commit
   logout
-  output pop
   exit 0
 EOF
 popd >& /dev/null  

@@ -74,15 +74,15 @@ case $TEST in
 EOF
     status=$?
     if [ "$status" != "0" ] ; then
-      tail -1000 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topazerrors.log
+      tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topazerrors.log
       if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out" ] ; then 
-        tail -1000 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out
+        tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out
       fi
       if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeTo3x.out" ] ; then 
-        tail -1000 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeTo3x.out
+        tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeTo3x.out
       fi
-      if [ -e "$GS_HOME/server/stones/$upgradeStoneName/logs/${upgradeStoneName}.log" ] ; then 
-        tail -1000 $GS_HOME/server/stones/$upgradeStoneName/logs/${upgradeStoneName}.log
+      if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topaz.out" ] ; then 
+        tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topaz.out
       fi
       exit 1
     else
@@ -110,15 +110,15 @@ EOF
 EOF
     status=$?
     if [ "$status" != "0" ] ; then
-      tail -1000 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topazerrors.log
+      tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topazerrors.log
       if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out" ] ; then 
-        tail -1000 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out
+        tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out
       fi
       if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeTo3x.out" ] ; then 
-        tail -1000 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeTo3x.out
+        tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeTo3x.out
       fi
-      if [ -e "$GS_HOME/server/stones/$upgradeStoneName/logs/${upgradeStoneName}.log" ] ; then 
-        tail -1000 $GS_HOME/server/stones/$upgradeStoneName/logs/${upgradeStoneName}.log
+      if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topaz.out" ] ; then 
+        tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topaz.out
       fi
       exit 1
     else
