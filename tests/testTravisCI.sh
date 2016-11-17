@@ -73,6 +73,8 @@ case $TEST in
 
 EOF
     status=$?
+    stopStone -b ${STONENAME1}_${UPGRADE_FROM}
+    stopStone -b ${STONENAME1}_${GS_VERSION}
     if [ "$status" != "0" ] ; then
       tail -1000 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topazerrors.log
       if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out" ] ; then 
@@ -99,6 +101,8 @@ EOF
 
 EOF
     status=$?
+    stopStone -b ${STONENAME1}_3211
+    stopStone -b ${STONENAME1}_${GS_VERSION}
     if [ "$status" != "0" ] ; then
       tail -1000 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topazerrors.log
       if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out" ] ; then 
