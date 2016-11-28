@@ -1,0 +1,57 @@
+#! /usr/bin/env bash
+#=========================================================================
+# Copyright (c) 2014, 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#
+#   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
+#=========================================================================
+
+theArgs=( "$@" )
+source ${GS_HOME}/bin/private/shFeedback
+start_banner
+
+usage() {
+  cat <<HELP
+USAGE: $(basename $0) [-h] <client-name> <script> [ <client-specific-args> ] 
+
+Execute code on the client named <client-name>, and save image before exiting.
+
+OPTIONS
+  -h 
+     display help
+
+EXAMPLES
+  $(basename $0) -h
+  $(basename $0) tode -h
+
+  $(basename $0) tode "Gofer new url:'http://squeaksource.com/MyProject'; package:'MyPackage'; load."
+  $(basename $0) seaside "WAAdmin applicationDefaults addParent: WADevelopmentConfiguration instance"
+
+HELP
+}
+
+if [ "${GS_HOME}x" = "x" ] ; then
+  exit_1_banner "the GS_HOME environment variable needs to be defined"
+fi
+source ${GS_HOME}/bin/defGsDevKit.env
+
+if [ "$1" = "-h" ] ; then
+  usage; exit 0
+fi
+
+if [ $# -lt 1 ]; then
+   usage; exit_1_banner "Missing required client name argument"
+fi
+clientName=$1
+script=$2
+shift 2
+
+
+
+if [ "${GS_CLIENT_DEV}x" = "x" ] || [ ! -d "${GS_CLIENT_DEV_CLIENTS}/$clientName" ] ; then
+  # client does not exist and we are in a non-interactive shell
+  exit_1_banner "The requested client: $clientName does not exist"
+fi
+
+${GS_CLIENT_DEV_CLIENTS}/$clientName/editClient $* "${clientName}" "${script}"
+
+exit_0_banner "...finished"
