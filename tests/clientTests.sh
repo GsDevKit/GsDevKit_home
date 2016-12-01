@@ -25,3 +25,6 @@ createClient -t pharo gciClient50 -l -s ${STONENAME1} -v Pharo5.0 -y $GS_HOME/sh
 createClient -f -t pharo gciClient40 -v Pharo4.0 -z $GS_HOME/shared/repos/GemStone-GCI/.smalltalk.ston
 createClient -f -t pharo gciClient40 -l -v Pharo4.0 -z $GS_HOME/shared/repos/GemStone-GCI/.smalltalk.ston
 
+startClient gciClient50 -n
+stopClient gciClient50
+editClient gciClient50 "Smalltalk at: #GCIGemStoneClientTestTimeStamp put: DateAndTime current."
