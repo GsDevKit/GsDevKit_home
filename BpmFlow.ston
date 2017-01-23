@@ -1,0 +1,12 @@
+TDObjectGatewayLeafNode{#name:'BpmFlow',#contents:'^ TDProjectSpecEntryDefinition new
+    baseline: \'BpmFlow\'
+      repository: \'github://brunobuzzi/BpmFlow:master/repository\'
+      loads: #( \'default\' );
+    installScript: \'
+      project install --local --url=http://gsdevkit.github.io/GsDevKit_home/BpmFlow.ston
+      project clone --https --local BpmFlow\';
+    postLoadScript: \'mount @/sys/stone/dirs/BpmFlow/gsdevkit/tode /home BpmFlow\';
+    status: #( #\'inactive\' );
+    locked: false;
+    yourself.
+'}
