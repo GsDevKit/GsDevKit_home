@@ -1,0 +1,12 @@
+TDObjectGatewayLeafNode{#name:'OrbeonPersistenceLayer',#contents:'^ TDProjectSpecEntryDefinition new
+    baseline: \'OrbeonPersistenceLayer\'
+      repository: \'github://brunobuzzi/OrbeonPersistenceLayer:master/repository\'
+      loads: #( \'default\' );
+    installScript: \'
+      project install --local --url=http://gsdevkit.github.io/GsDevKit_home/OrbeonPersistenceLayer.ston
+      project clone --https --local OrbeonPersistenceLayer\';
+    postLoadScript: \'mount @/sys/stone/dirs/OrbeonPersistenceLayer/gsdevkit/tode /home OrbeonPersistenceLayer\';
+    status: #( #\'inactive\' );
+    locked: false;
+    yourself.
+'}
