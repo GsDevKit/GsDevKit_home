@@ -33,6 +33,8 @@ products -h
 sessions -h
 setupGsDevKit -h
 startClient -h
+stopClient -h
+editClient -h
 startNetldi -h
 startStatmonitor -h
 startStone -h
