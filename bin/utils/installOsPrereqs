@@ -322,7 +322,7 @@ case "$PLATFORM" in
       sudo date
 
       if [ -f /etc/lsb-release ] || [ -f `which lsb_release` ]; then
-        osName=`lsb_release -ds | cut -d ' ' -f 1`
+        osName=`lsb_release -ds | cut -d ' ' -f 1` | cut -d '"' -f 2
         osVersion=`lsb_release -rs`
       elif [ -f /etc/centos-release ]; then
         osName="CentOS"
