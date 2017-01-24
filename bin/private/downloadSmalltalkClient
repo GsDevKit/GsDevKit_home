@@ -121,6 +121,20 @@ case $version in
               $cmd get.pharo.org/50 | bash
           esac
           ;;
+        Pharo6.0)
+          case "$PLATFORM" in
+            MSYS_NT*|MINGW32_NT*|MINGW64_NT**)
+              cmd=`which curl`
+              $cmd -O http://files.pharo.org/platform/Pharo6.0-win.zip
+              unzip -j -q Pharo6.0-win.zip
+              mv Pharo6.0.image Pharo.image
+              mv Pharo6.0.changes Pharo.changes
+            ;;
+            *) 
+              $cmd get.pharo.org/vm60 | bash
+              $cmd get.pharo.org/60 | bash
+          esac
+          ;;
         *) usage; exit_1_banner "Unknown Pharo version $version" ;;
       esac
       if [ -e "./Pharo.exe" ] ; then
