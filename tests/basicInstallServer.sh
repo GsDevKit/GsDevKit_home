@@ -7,8 +7,6 @@
 
 set -xe  # print commands and exit on error
 
-foo # force a test failure here ..
-
 # install server
 installServerClient -o GsDevKit
 createStone ${STONENAME1} $GS_VERSION
