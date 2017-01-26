@@ -7,6 +7,8 @@
 
 set -xe  # print commands and exit on error
 
+foo # this should fail the test right?
+
 uname -a   #gather info for bug 44185
 
 if [ "${STONENAME1}x" = "x" ] ; then
