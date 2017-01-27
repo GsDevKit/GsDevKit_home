@@ -18,6 +18,7 @@ env:
   - GS_VERSION=3.3.1 UPGRADE_FROM=3.1.0.6 TEST=Upgrade
   - GS_VERSION=3.3.1 UPGRADE_FROM=3.2.15 TEST=Upgrade
   - GS_VERSION=3.3.1 TEST=Upgrade_71 
+  - GS_VERSION=3.3.1 UPGRADE_FROM=3.2.15 TEST=Upgrade_User
 
 matrix:
    allow_failures:
@@ -25,6 +26,7 @@ matrix:
      - env: GS_VERSION=3.2.15 UPGRADE_FROM=3.2.9 TEST=Upgrade
      - env: GS_VERSION=3.3.1 UPGRADE_FROM=3.1.0.6 TEST=Upgrade
      - env: GS_VERSION=3.3.1 UPGRADE_FROM=3.2.15 TEST=Upgrade
+     - env: GS_VERSION=3.3.1 UPGRADE_FROM=3.2.15 TEST=Upgrade_User
 
 addons:
   hosts:

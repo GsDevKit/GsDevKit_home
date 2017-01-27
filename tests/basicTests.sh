@@ -34,6 +34,8 @@ sessions -h
 setupGsDevKit -h
 startAllStones -h
 startClient -h
+stopClient -h
+editClient -h
 startNetldi -h
 startStatmonitor -h
 startStone -h

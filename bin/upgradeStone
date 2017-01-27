@@ -11,7 +11,8 @@ start_banner
 
 usage() {
   cat <<HELP
-usage: $0 [-c] [-f] [-u] [-s <source-stone-extent-file-path>] [-l <post-load-tode-script> ]
+usage: $0 [-c] [-f] [-u] [-s <source-stone-extent-file-path>] [-l <post-load-tode-script>]
+          [-m <tempObjCacheSize>] [-U <gemstone-user-id>] [-P <gemstone-password>]
 	  <source-stone-name> <target-stone-name> <gemstone-version>
 
 OPTIONS
@@ -24,15 +25,25 @@ OPTIONS
      \$GS_HOME/gemstone/stone/<target-stone-name> directory if it exists
   -l <post-load-tode-script>
      tODE path to the tODE script that loads your application code
+  -m <tempObjCacheSize>
+     size of temp obj cache to use in KB.
+      Default: 100000
   -s <source-stone-extent-file-path> 
      Path to  <source-stone-name> extent file used as starting point for 
      upgrade.
   -u 
      Skip creation of <target-stone-name> and only run the upgrade step.
+  -U <gemstone-user-name>
+     Use <gemstone-user-id> in session description. If the user does not exist in GemStone,
+     then create the user after the stone has been started.
+  -P <gemstone-password>
+     Use <gemstone-password> as the password for the user specified in -U option. Default 
+     password is swordfish. If -U not specified the -P option has no effect.
 
 EXAMPLES
   $(basename $0) -h
   $(basename $0) -l /home/loadMyApplication gs_3106 gs_329 3.2.9
+  $(basename $0) -U bozo -P theClown gs_3106 gs_329 3.2.9
   $(basename $0) gs_3106 gs_329 3.2.9
 
 HELP
@@ -55,17 +66,23 @@ forceArg=""
 createStone="true"
 runUpgrade="true"
 hasSnapshotFile="false"
-while getopts "cfhl:s:u" OPT ; do
+tempObjCacheSize="100000"
+gemstoneUserId="DataCurator"
+gemstonePassword="swordfish"
+while getopts "cfhl:s:um:U:P:" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     c) runUpgrade="false";;
     f) forceArg="-f";; 
     l) postUpgradeLoadScriptPath="${OPTARG}";;
+    m) tempObjCacheSize="${OPTARG}" ;;
     s) 
        snapshotFile="${OPTARG}"
        hasSnapshotFile="true"
        ;;
     u) createStone="false";;
+    U) gemstoneUserId="${OPTARG}";;
+    P) gemstonePassword="${OPTARG}";;
     *) usage; exit_1_banner "Uknown option";;
   esac
 done
@@ -122,7 +139,7 @@ read prompt
 $GS_HOME/bin/stopStone $sourceStoneName
 if [ "${createStone}" = "true" ] ; then
   $GS_HOME/bin/downloadGemStone $gsvers
-  $GS_HOME/bin/createStone $forceArg -g $targetStoneName $gsvers
+  $GS_HOME/bin/createStone $forceArg -g -U $gemstoneUserId -P $gemstonePassword $targetStoneName $gsvers
   $GS_HOME/bin/stopStone $targetStoneName
 fi
 
@@ -171,10 +188,7 @@ EOF
   
   # Patch BUG 46217 -- needed for 3.3.0 and pre-3.2.16 GemStone versions.
   echo "Install patch for Bug 46217"
-  $GEMSTONE/bin/topaz -l -T50000 > $upgradeLogDir/topaz.out << EOF
-  output pushnew $upgradeLogDir/topazPatchBug46217.out only
-  set gemstone $targetStoneName
-  
+  $GS_HOME/bin/startTopaz $targetStoneName -l -T50000 > $upgradeLogDir/topaz.out << EOF
   display resultcheck
   level 0
 
@@ -241,7 +255,18 @@ EOF
   commit
   logout
 
-  set user DataCurator pass swordfish
+  exit 0
+EOF
+
+$GS_HOME/bin/startTopaz $targetStoneName -l -T50000 >> $upgradeLogDir/topaz.out << EOF
+  display resultcheck
+  level 0
+
+  display oops
+  iferr 1 stk
+  iferr 2 stack
+  iferr 3 input pop
+  iferr 4 exit 1
   login
 
   run
@@ -252,20 +277,16 @@ EOF
   commit
   logout
 
-  output pop
   exit 0
 EOF
  
   # Clear SystemLoginNotification #Subscriptions class variable
   echo "STARTING clear SystemLoginNotification #Subscriptions class variable"
-  $GEMSTONE/bin/topaz -l -T50000 > $upgradeLogDir/topaz.out << EOF
-  output pushnew $upgradeLogDir/topazClearSystemLoginNotification.out only
-  set gemstone $targetStoneName
+  $GS_HOME/bin/startTopaz $targetStoneName -l -T50000 >> $upgradeLogDir/topaz.out << EOF
   
   display resultcheck
   level 0
 
-  set user DataCurator pass swordfish
   login
   
   display oops
@@ -299,20 +320,16 @@ EOF
 
   
   logout
-  output pop
   exit 0
 EOF
 
   # Setting BootstrapApplicationPostloadClassList (see https://github.com/GsDevKit/GsDevKit_home/issues/52)
   echo "Starting set BootstrapApplicationPostloadClassList"
-  $GEMSTONE/bin/topaz -l -T50000 > $upgradeLogDir/topaz.out << EOF
-  output pushnew $upgradeLogDir/topazClearSystemLoginNotification.out only
-  set gemstone $targetStoneName
+  $GS_HOME/bin/startTopaz $targetStoneName -l -T50000 >> $upgradeLogDir/topaz.out << EOF
   
   display resultcheck
   level 0
   
-  set user DataCurator pass swordfish
   login
   
   display oops
@@ -328,27 +345,57 @@ EOF
   commit
   
   logout
-  output pop
   exit 0
 EOF
   
   # use default Bootstrap globals for Seaside upgrade
   # start "seaside" upgrade to upgrade GLASS to 1.0-beta.9.1
   echo "STARTING upgradeSeasideImage"
-  $GEMSTONE/seaside/bin/upgradeSeasideImage -s $targetStoneName << EOF
+  case "$gsvers" in
+    3.2.16|3.3.[1-9]*|3.4.*)
+      export upgradeDir=$GEMSTONE/upgrade      
+      $GS_HOME/bin/startTopaz $targetStoneName -l -T ${tempObjCacheSize} >> $upgradeLogDir/topaz.out 2>&1 << EOF
+        set user SystemUser p swordfish
+        display resultcheck
+        level 0
+
+        login
+        display oops
+        iferr 1 stk
+        iferr 2 stack
+
+        status
+        time
+
+!       comment out following for debugging
+        iferr 4 exit
+
+        run
+	UserGlobals at: #SeasideUpgradeUser put: '$gemstoneUserId'.
+	System commitTransaction.
+%
+        input $GEMSTONE/upgrade/prepareSeasideImage.topaz
+	exit 0
+EOF
+      $GS_HOME/bin/startTopaz $targetStoneName -l -T ${tempObjCacheSize} >> $upgradeLogDir/topaz.out 2>&1 << EOF
+        input $GEMSTONE/upgrade/bootstrapSeasideImage.topaz
+	exit 0
+EOF
+      ;;
+    *)
+      $GEMSTONE/seaside/bin/upgradeSeasideImage -s $targetStoneName >> $upgradeLogDir/topaz.out 2>&1 << EOF
   
 EOF
+      ;;
+  esac
   
   # Remove all BaselineOf* classes ... so that they will be reloaded during tODE installation
   echo "STARTING remove BaselineOf* classes"
-  $GEMSTONE/bin/topaz -l -T50000 > $upgradeLogDir/topaz.out << EOF
-  output pushnew $upgradeLogDir/topazRemoveBaselines.out only
-  set gemstone $targetStoneName
+  $GS_HOME/bin/startTopaz $targetStoneName -l -T ${tempObjCacheSize} >> $upgradeLogDir/topaz.out  2>&1 << EOF
   
   display resultcheck
   level 0
   
-  set user DataCurator pass swordfish
   login
   
   display oops
@@ -385,7 +432,6 @@ EOF
   
   commit
   logout
-  output pop
   exit 0
 EOF
 popd >& /dev/null  

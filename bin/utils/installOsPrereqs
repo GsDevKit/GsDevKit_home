@@ -43,7 +43,7 @@ installPrereqsForUbuntu(){
         sudo ln -f -s /lib/i386-linux-gnu/libpam.so.0 /lib/libpam.so.0
         sudo ln -f -s /usr/lib/i386-lin-gnu/libstdc++.so.6 /usr/lib/i386-linux-gnu/libstdc++.so
         ;;
-      14.04)
+      14.04|16.04)
         sudo dpkg --add-architecture i386
         installUbuntuPackages
         sudo apt-get -y install fonts-dejavu # ensure that DejaVu Sans Mono font present (default font for tODE)
@@ -71,6 +71,24 @@ installUbuntuPackages(){
       sudo apt-get -y install libxcb-dri2-0:i386
     fi
 }
+
+
+installPrereqsForDebian(){
+  case "$osVersion" in
+    testing)
+      installDebianPackages
+      sudo dpkg --add-architecture i386
+      installUbuntuPackages
+      sudo apt-get -y install fonts-dejavu # ensure that DejaVu Sans Mono font present (default font for tODE)
+      sudo ln -f -s /usr/lib/i386-lin-gnu/libstdc++.so.6 /usr/lib/i386-linux-gnu/libstdc++.so
+      ;;
+    *) usage; exit_1_banner "unrecognized Debian version $os";;
+  esac
+}
+installDebianPackages(){
+  installUbuntuPackages
+}
+
 
 installPrereqsForCentOS(){
 	installCentOSPackages
@@ -303,8 +321,8 @@ case "$PLATFORM" in
       # Do a trivial sudo to test we can and get the password prompt out of the way
       sudo date
 
-      if [ -f /etc/lsb-release ]; then
-        osName=`lsb_release -ds | cut -d ' ' -f 1`
+      if [ -f /etc/lsb-release ] || [ -f `which lsb_release` ]; then
+        osName=`lsb_release -ds | cut -d ' ' -f 1 | cut -d '"' -f 2`
         osVersion=`lsb_release -rs`
       elif [ -f /etc/centos-release ]; then
         osName="CentOS"
@@ -317,6 +335,9 @@ case "$PLATFORM" in
       case "$osName" in
         Ubuntu)
 		  installPrereqsForUbuntu
+		  ;;
+        Debian)
+		  installPrereqsForDebian
 		  ;;
 		CentOS)
 		  installPrereqsForCentOS

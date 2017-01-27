@@ -73,21 +73,33 @@ case $TEST in
 
 EOF
     status=$?
+    stopStone -b ${STONENAME1}_${UPGRADE_FROM}
+    stopStone -b ${STONENAME1}_${GS_VERSION}
     if [ "$status" != "0" ] ; then
-      tail -1000 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topazerrors.log
+      tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topazerrors.log
       if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out" ] ; then 
-        tail -1000 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out
+        tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out
       fi
       if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeTo3x.out" ] ; then 
-        tail -1000 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeTo3x.out
+        tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeTo3x.out
       fi
-      if [ -e "$GS_HOME/server/stones/$upgradeStoneName/logs/${upgradeStoneName}.log" ] ; then 
-        tail -1000 $GS_HOME/server/stones/$upgradeStoneName/logs/${upgradeStoneName}.log
+      if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topaz.out" ] ; then 
+        tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topaz.out
       fi
       exit 1
     else
       exit 0
     fi
+    ;;
+  Upgrade_User)
+    installServer
+    createStone -b $opt -U bozo -P theClown ${STONENAME1}_${UPGRADE_FROM} ${UPGRADE_FROM}
+    upgradeStoneName="${STONENAME1}_${GS_VERSION}"
+    set +e
+    set -x
+    upgradeStone -f  -U bozo -P theClown ${STONENAME1}_${UPGRADE_FROM} ${STONENAME1}_${GS_VERSION} $GS_VERSION << EOF
+
+EOF
     ;;
   Upgrade_71) # Issue #71: test case ... upgrade from 3.2.11
     installServer
@@ -99,16 +111,18 @@ EOF
 
 EOF
     status=$?
+    stopStone -b ${STONENAME1}_3211
+    stopStone -b ${STONENAME1}_${GS_VERSION}
     if [ "$status" != "0" ] ; then
-      tail -1000 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topazerrors.log
+      tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topazerrors.log
       if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out" ] ; then 
-        tail -1000 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out
+        tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out
       fi
       if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeTo3x.out" ] ; then 
-        tail -1000 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeTo3x.out
+        tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeTo3x.out
       fi
-      if [ -e "$GS_HOME/server/stones/$upgradeStoneName/logs/${upgradeStoneName}.log" ] ; then 
-        tail -1000 $GS_HOME/server/stones/$upgradeStoneName/logs/${upgradeStoneName}.log
+      if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topaz.out" ] ; then 
+        tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topaz.out
       fi
       exit 1
     else

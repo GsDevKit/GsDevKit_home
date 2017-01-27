@@ -4,6 +4,8 @@ The Development Kit for GemStone/S (GsDevKit) contains tools and compatiblity ch
 
 GsDevKit is a client-server system, which may both be installed on a single machine, or the server and client may be installed on separate nodes. The GsDevKit server installation includes the GemStone/S server.
 
+The Development Kit for GemStone/S for client and server is known to work on Ubuntu, Centos, Debian, and MacOS. The Development Kit for GemStone/S for client is known to work on Windows.
+
 ##Installation
 
 Before installing, you should read through the **[Installation Instructions][2]**.  There are several installation options: all on a single workstation, or with a local client and a remote server.  The script below installs GsDevKit and GemStone on a single workstation, creates and starts a Stone (server), and creates a tODE client.  You must [install git][14] before you can execute this script.
@@ -40,6 +42,9 @@ GsDevKit and tODE provide a development environment that is similar to Smalltalk
 9. [How do I upgrade a stone to a new version of GemStone?][16]
 10. [How do I load Seaside?][21]
 
+##Talks
+Smalltalks 2015: Announcing GsDevKit_home And tODE ([video][30], [slides][31])
+
 [**FEEDBACK**][8]
 
 [1]: https://github.com/GsDevKit/gsDevKitHome#open-source-development-kit-for-gemstones-64-bit-
@@ -63,5 +68,8 @@ GsDevKit and tODE provide a development environment that is similar to Smalltalk
 
 [20]: https://github.com/GsDevKit/GsDevKit_seaside31/blob/master/docs/installation/README.md
 [21]: docs/gettingStartedWithSeaside.md
+
+[30]: https://www.youtube.com/watch?v=QshDlH1ADZQ
+[31]: http://fast.org.ar/live/wp-content/uploads/2015/10/DaleHenrichs-TheLightAtTheEndOfTheTunnel.pdf
 
 [100]: docs/FAQ.md#100-how-do-i-contribute-to-the-gsdevkit_home-project
