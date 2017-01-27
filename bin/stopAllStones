@@ -57,22 +57,12 @@ if [ "$GS_SERVER{}x" = "x" ] ; then
   exit_1_banner "the GS_SERVER environment variable needs to be defined. Perhaps a stone has not been create yet?"
 fi
 
-while getopts "h" OPT ; do
-  case "$OPT" in
-    h) usage; exit 0;;
-    *) usage; exit_1_banner "Unknown option";;
-  esac
-done
-
 
 # In this case we do not want to shift arguments as we want to pass them all to startStone.
 #shift $(($OPTIND - 1))
 
-stoneList=`find $GS_SERVER_STONES -maxdepth 1 -mindepth 1  \( -name '.*' \! -name '.' -prune \) -o -type d -exec basename {} \;`
-echo "Stone list found in $GS_SERVER_STONES: $stoneList"
 
-for stoneName in "$stoneList"
-do
+find $GS_SERVER_STONES -maxdepth 1 -mindepth 1  \( -name '.*' \! -name '.' -prune \) -o -type d -exec basename {} \; | while read stoneName; do
   stonePath=$GS_SERVER_STONES/${stoneName}
   if [ -d "$stonePath" ] ; then
     if [ -e "$stonePath/stone.env" ] ; then
@@ -83,8 +73,10 @@ do
 
       # Stop stone
       if [ "${GS_OS_USER}x" = "x" ] ; then
-        $GS_HOME/bin/stopStone $* $stoneName
+        echo "no user defined"
+	$GS_HOME/bin/stopStone $* $stoneName
       else
+	echo "$GS_OS_USER"
         su $GS_OS_USER -c "$GS_HOME/bin/stopStone $* $stoneName"
       fi
     else
