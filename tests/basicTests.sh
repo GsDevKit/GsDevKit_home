@@ -105,6 +105,17 @@ todeLoad ${STONENAME4}
 #create a tODE stone
 createStone -t $todeSnapshot ${STONENAME3} $GS_VERSION
 
+# RPC login (Issue #161)
+startTopaz ${STONENAME3} << EOF
+login
+run
+3+4
+%
+logout
+exit 0
+EOF
+
+# Linked login
 startTopaz ${STONENAME3} -l << EOF
 login
 run
@@ -113,6 +124,7 @@ run
 logout
 exit 0
 EOF
+
 
 cd $GS_HOME/sys/stones/${STONENAME3}
 ls dirs.ston  home  homeComposition.ston  packages.ston  projectComposition.ston  projects  repos.ston
