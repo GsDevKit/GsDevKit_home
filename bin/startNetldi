@@ -23,7 +23,7 @@ If a port number is specified in the session description then the following comm
 
   startnetldi -l $GEMSTONE_LOGDIR -g -a $USER -P <port-number> <netldi-name>
 
-If you specify any <startnetldi-commandLine-args>, then the <startnetldi-commandLine-args> are passed 
+If you specify any <startnetldi-commandLine-args>, then the <startnetldi-commandLine-args> are passed
 to the startnetldi command and none of the above defaults apply (except for the -l option):
 
   startnetldi -l $GEMSTONE_LOGDIR <startnetldi-commandLine-args>
