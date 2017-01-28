@@ -41,8 +41,13 @@ OPTIONS
      (http://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/GS64-SysAdmin-3.2.htm?http://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/9-BackupAndRestore.htm#pgfId-999128)
      before using the -n option.
   -s <snapshot-file-path> 
-     Path to snapshot file used to create stone. Path may be a relative file 
-     path.
+     Path to snapshot file used to create stone. Path may be a relative file
+     path. The snapshot file may be an extent file (raw, zipped (.zip) or 
+     gzipped (.gz)) or a backup file. If the file is compressed, it will be
+     uncompressed into the target extents directory. If the file is a backup
+     file, a \$GEMSTONE/bin/extent0.dbf will be copied into the target
+     extents directory and then the backup will be restored without replaying 
+     tranlogs.
   -t
      Attach image to the \$GS_TODE/sys/stones/<stone-name> directory structure,
      using the rebuildServerTode client script 
