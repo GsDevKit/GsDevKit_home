@@ -126,7 +126,7 @@ if [ "${noRestart}" = "false" ] ; then
       echo "Restarting stone and netldi"
       $GS_HOME/bin/startStone -b -N $stoneName
       ;;
-    *) usage; exit_1_banner "Unknown filetype: ${filetype}. Expecting backup or extent";;
+    *) usage; exit_1_banner "Unknown filetype: '${filetype}'. Expecting backup or extent";;
   esac
 
 
@@ -144,9 +144,9 @@ else
     usage
     exit_1_banner "Must specify <snapshot-file-path>, when using the -n (no restart option). Tranlogs left in $\GS_HOME/gemstone/stones/${stoneName}/tranlogs are not likely to be appropriate for \$GEMSTONE/bin/extent0.seaside.dbf"
   fi
-  filetype=`copydbf -i $snapshotFile | sed -n '2p' | cut -d : -f 2 | xargs | cut -d \  -f 1`
+  filetype=`$GEMSTONE/bin/copydbf -i $snapshotFile | sed -n '2p' | cut -d : -f 2 | xargs | cut -d \  -f 1`
   if [ "${filetype}" != "extent" ] ; then
-    usage; exit_1_banner "snapshot file must be an extent if -n option specified"
+    usage; exit_1_banner "snapshot file type ('${filetype}') must be 'extent' if -n option specified"
   fi
   mimeType=`file -b --mime-type $snapshotFile | cut -d / -f 2`
   $GS_HOME/bin/devKitCommandLine newExtentForRecovery $stoneName $snapshotFile $mimeType
