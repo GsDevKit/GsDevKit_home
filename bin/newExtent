@@ -112,11 +112,25 @@ $GS_HOME/bin/stopStone $stoneName
 
 if [ "${noRestart}" = "false" ] ; then
   echo "Copy snapshot and remove tranlogs"
-  $GS_HOME/bin/devKitCommandLine newExtent $stoneName $snapshotFile
+  filetype=`copydbf -i $snapshotFile | sed -n '2p' | cut -d : -f 2 | xargs | cut -d \  -f 1`
+  case "$filetype" in
+    backup) 
+      $GS_HOME/bin/devKitCommandLine newExtent $stoneName $stonePath/product/bin/extent0.dbf
+      echo "Restarting stone and netldi"
+      $GS_HOME/bin/startStone -b -N $stoneName
+      echo "Restoring from backup"
+      $GS_HOME/bin/devKitCommandLine restoreFromBackup $stoneName $snapshotFile
+      ;;
+    extent) 
+      mimeType=`file -b --mime-type $snapshotFile | cut -d / -f 2`
+      $GS_HOME/bin/devKitCommandLine newExtent $stoneName $snapshotFile $mimeType
+      # -N option used to ignore tranlog files during restart
+      echo "Restarting stone and netldi"
+      $GS_HOME/bin/startStone -b -N $stoneName
+      ;;
+    *) usage; exit_1_banner "Unknown filetype: ${filetype}. Expecting backup or extent";;
+  esac
 
-  # -N option used to ignore tranlog files during restart
-  echo "Restarting stone and netldi"
-  $GS_HOME/bin/startStone -b -N $stoneName
 
   if [ "${attachTode}" = "true" ] ; then
     $GS_HOME/bin/todeIt $stoneName "script --script=rebuildServerTode"
@@ -132,7 +146,12 @@ else
     usage
     exit_1_banner "Must specify <snapshot-file-path>, when using the -n (no restart option). Tranlogs left in $\GS_HOME/gemstone/stones/${stoneName}/tranlogs are not likely to be appropriate for \$GEMSTONE/bin/extent0.seaside.dbf"
   fi
-  $GS_HOME/bin/devKitCommandLine newExtentForRecovery $stoneName $snapshotFile
+  filetype=`copydbf -i $snapshotFile | sed -n '2p' | cut -d : -f 2 | xargs | cut -d \  -f 1`
+  if [ "${filetype}" != "extent" ] ; then
+    usage; exit_1_banner "snapshot file must be an extent if -n option specified"
+  fi
+  mimeType=`file -b --mime-type $snapshotFile | cut -d / -f 2`
+  $GS_HOME/bin/devKitCommandLine newExtentForRecovery $stoneName $snapshotFile $mimeType
 
   echo "Stone is now ready for recovery. Please read the How to Restore from Backup"
   echo "section of the manual (http://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/GS64-SysAdmin-3.2.htm?http://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/9-BackupAndRestore.htm#pgfId-999128)"
