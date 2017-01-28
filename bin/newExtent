@@ -112,12 +112,10 @@ $GS_HOME/bin/stopStone $stoneName
 
 if [ "${noRestart}" = "false" ] ; then
   echo "Copy snapshot and remove tranlogs"
-  filetype=`copydbf -i $snapshotFile | sed -n '2p' | cut -d : -f 2 | xargs | cut -d \  -f 1`
+  filetype=`$GEMSTONE/bin/copydbf -i $snapshotFile | sed -n '2p' | cut -d : -f 2 | xargs | cut -d \  -f 1`
   case "$filetype" in
     backup) 
       $GS_HOME/bin/devKitCommandLine newExtent $stoneName $stonePath/product/bin/extent0.dbf
-      echo "Restarting stone and netldi"
-      $GS_HOME/bin/startStone -b -N $stoneName
       echo "Restoring from backup"
       $GS_HOME/bin/devKitCommandLine restoreFromBackup $stoneName $snapshotFile
       ;;
