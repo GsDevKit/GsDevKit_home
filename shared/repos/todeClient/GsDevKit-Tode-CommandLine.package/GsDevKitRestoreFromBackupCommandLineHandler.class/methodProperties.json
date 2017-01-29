@@ -5,5 +5,7 @@
 	"instance" : {
 		"activate" : "dkh 10/19/2015 20:25",
 		"backupfile" : "dkh 7/19/2014 17:56",
-		"restoreFromBackup" : "dkh 1/28/2017 16:04",
+		"restoreFromBackup" : "dkh 1/28/2017 17:04",
+		"restoreFromBackup:" : "dkh 1/28/2017 17:03",
+		"restoreFromBackup:restoreSessionDescription:commitRestoreSessionDescription:" : "dkh 1/28/2017 17:02",
 		"stoneName" : "dkh 7/19/2014 17:37" } }
