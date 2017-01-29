@@ -31,7 +31,7 @@ OPTIONS
   -s <source-stone-extent-file-path> 
      Path to  <source-stone-name> extent file used as starting point for 
      upgrade. Path may be a relative file path. The snapshot file may be
-     an extent file (raw, zipped (.zip) or gzipped (.gz)) or a backup file.
+     an extent file (raw or gzipped (.gz)) or a backup file.
      If the file is compressed, it will be uncompressed into the target
      extents directory. If the file is a backup file, a 
      \$GEMSTONE/bin/extent0.dbf will be copied into the target extents

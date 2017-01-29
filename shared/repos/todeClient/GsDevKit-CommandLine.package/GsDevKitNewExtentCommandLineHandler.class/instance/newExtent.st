@@ -8,7 +8,9 @@ newExtent
 	extentFile := stoneDirectory / 'extents' / 'extent0.dbf'.
 	extentFile exists
 		ifTrue: [ extentFile delete ].
-	self copySnapshotExtent: stoneDirectory.
+	self mediaType = 'x-gzip'
+		ifTrue: [ self gunzipSnapshotExtent: stoneDirectory ]
+		ifFalse: [ self copySnapshotExtent: stoneDirectory ].
 	Transcript
 		cr;
 		tab;

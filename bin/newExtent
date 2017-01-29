@@ -42,8 +42,8 @@ OPTIONS
      before using the -n option.
   -s <snapshot-file-path> 
      Path to snapshot file used to create stone. Path may be a relative file
-     path. The snapshot file may be an extent file (raw, zipped (.zip) or 
-     gzipped (.gz)) or a backup file. If the file is compressed, it will be
+     path. The snapshot file may be an extent file (raw, or gzipped (.gz)) or
+     a backup file. If the file is compressed, it will be
      uncompressed into the target extents directory. If the file is a backup
      file, a \$GEMSTONE/bin/extent0.dbf will be copied into the target
      extents directory and then the backup will be restored without replaying 
@@ -121,8 +121,11 @@ if [ "${noRestart}" = "false" ] ; then
   case "$filetype" in
     backup) 
       $GS_HOME/bin/devKitCommandLine newExtent $stoneName $stonePath/product/bin/extent0.dbf
+      # -N option used to ignore tranlog files during restart
+      echo "Restarting stone and netldi"
+      $GS_HOME/bin/startStone -b -N $stoneName
       echo "Restoring from backup"
-      $GS_HOME/bin/devKitCommandLine restoreFromBackup $stoneName $snapshotFile
+      $GS_HOME/bin/devKitCommandLine restoreFromBackupAltUser $stoneName $snapshotFile DataCurator swordfish
       ;;
     extent) 
       mimeType=`file -b --mime-type $snapshotFile | cut -d / -f 2`
