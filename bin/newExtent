@@ -117,7 +117,10 @@ $GS_HOME/bin/stopStone $stoneName
 
 if [ "${noRestart}" = "false" ] ; then
   echo "Copy snapshot and remove tranlogs"
-  filetype=`$GEMSTONE/bin/copydbf -i $snapshotFile | sed -n '2p' | cut -d : -f 2 | xargs | cut -d \  -f 1`
+  filetype="extent"
+  if [ "${snapshotFile}x" != "x" ] ; then
+    filetype=`$GEMSTONE/bin/copydbf -i $snapshotFile | sed -n '2p' | cut -d : -f 2 | xargs | cut -d \  -f 1`
+  fi
   case "$filetype" in
     backup) 
       $GS_HOME/bin/devKitCommandLine newExtent $stoneName $stonePath/product/bin/extent0.dbf
