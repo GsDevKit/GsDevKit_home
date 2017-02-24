@@ -131,8 +131,12 @@ if [ "${noRestart}" = "false" ] ; then
       $GS_HOME/bin/devKitCommandLine restoreFromBackupAltUser $stoneName $snapshotFile DataCurator swordfish
       ;;
     extent) 
-      mimeType=`file -b --mime-type $snapshotFile | cut -d / -f 2`
-      $GS_HOME/bin/devKitCommandLine newExtent $stoneName $snapshotFile $mimeType
+      if [ "${snapshotFile}x" != "x" ] ; then
+        mimeType=`file -b --mime-type $snapshotFile | cut -d / -f 2`
+        $GS_HOME/bin/devKitCommandLine newExtent $stoneName $snapshotFile $mimeType
+      else
+        $GS_HOME/bin/devKitCommandLine newExtent $stoneName
+      fi
       # -N option used to ignore tranlog files during restart
       echo "Restarting stone and netldi"
       $GS_HOME/bin/startStone -b -N $stoneName
