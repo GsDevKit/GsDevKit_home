@@ -86,7 +86,7 @@ installPrereqsForDebian(){
   esac
 }
 installDebianPackages(){
-  installUbuntuPackages
+  # no Debian specific prereqs at the moment
 }
 
 
