@@ -75,7 +75,7 @@ installUbuntuPackages(){
 
 installPrereqsForDebian(){
   case "$osVersion" in
-    testing)
+    testing | 8.3)
       installDebianPackages
       sudo dpkg --add-architecture i386
       installUbuntuPackages
