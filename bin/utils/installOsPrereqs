@@ -317,7 +317,7 @@ case "$PLATFORM" in
       # Do a trivial sudo to test we can and get the password prompt out of the way
       sudo date
 
-      if [ -f /etc/lsb-release ] || [ -f `which lsb_release` ]; then
+	  if [ -f /etc/lsb-release ] || [ `which lsb_release 2> /dev/null > /dev/null; echo $?` = "0" ]; then
         osName=`lsb_release -ds | cut -d ' ' -f 1 | cut -d '"' -f 2`
         osVersion=`lsb_release -rs`
       elif [ -f /etc/centos-release ]; then
