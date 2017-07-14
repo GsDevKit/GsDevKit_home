@@ -67,6 +67,7 @@ find $GS_SERVER_STONES -maxdepth 1 -mindepth 1  \( -name '.*' \! -name '.' -prun
 
   if [ -d "$stonePath" ] ; then
     if [ -e "$stonePath/stone.env" ] ; then
+      cd $stonePath
       # set up stone environment. We need to source stone.env in order to read GS_OS_USER
       pushd $stonePath >& /dev/null
       source $stonePath/stone.env
