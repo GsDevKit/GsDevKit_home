@@ -20,5 +20,6 @@ createTopaziniFile: stoneDirectory sessionDescription: aSessionDescriptionOrNil
 				ifNotNil: [ 
 					stream
 						nextPutAll: '# uncomment the following line before attempting to login using RPC gems';
+						lf;
 						nextPutAll: '# set gemnetid ' , aSessionDescriptionOrNil gemNRS;
 						lf ] ]
