@@ -41,8 +41,13 @@ OPTIONS
      (http://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/GS64-SysAdmin-3.2.htm?http://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/9-BackupAndRestore.htm#pgfId-999128)
      before using the -n option.
   -s <snapshot-file-path> 
-     Path to snapshot file used to create stone. Path may be a relative file 
-     path.
+     Path to snapshot file used to create stone. Path may be a relative file
+     path. The snapshot file may be an extent file (raw, or gzipped (.gz)) or
+     a backup file. If the file is compressed, it will be
+     uncompressed into the target extents directory. If the file is a backup
+     file, a \$GEMSTONE/bin/extent0.dbf will be copied into the target
+     extents directory and then the backup will be restored without replaying 
+     tranlogs.
   -t
      Attach image to the \$GS_TODE/sys/stones/<stone-name> directory structure,
      using the rebuildServerTode client script 
@@ -112,11 +117,33 @@ $GS_HOME/bin/stopStone $stoneName
 
 if [ "${noRestart}" = "false" ] ; then
   echo "Copy snapshot and remove tranlogs"
-  $GS_HOME/bin/devKitCommandLine newExtent $stoneName $snapshotFile
+  filetype="extent"
+  if [ "${snapshotFile}x" != "x" ] ; then
+    filetype=`$GEMSTONE/bin/copydbf -i $snapshotFile | sed -n '/File type:/p' | cut -d : -f 2 | xargs | cut -d \  -f 1`
+  fi
+  case "$filetype" in
+    backup) 
+      $GS_HOME/bin/devKitCommandLine newExtent $stoneName $stonePath/product/bin/extent0.dbf
+      # -N option used to ignore tranlog files during restart
+      echo "Restarting stone and netldi"
+      $GS_HOME/bin/startStone -b -N $stoneName
+      echo "Restoring from backup"
+      $GS_HOME/bin/devKitCommandLine restoreFromBackupAltUser $stoneName $snapshotFile DataCurator swordfish
+      ;;
+    extent) 
+      if [ "${snapshotFile}x" != "x" ] ; then
+        mimeType=`file -b --mime-type $snapshotFile | cut -d / -f 2`
+        $GS_HOME/bin/devKitCommandLine newExtent $stoneName $snapshotFile $mimeType
+      else
+        $GS_HOME/bin/devKitCommandLine newExtent $stoneName
+      fi
+      # -N option used to ignore tranlog files during restart
+      echo "Restarting stone and netldi"
+      $GS_HOME/bin/startStone -b -N $stoneName
+      ;;
+    *) usage; exit_1_banner "Unknown filetype: '${filetype}'. Expecting backup or extent";;
+  esac
 
-  # -N option used to ignore tranlog files during restart
-  echo "Restarting stone and netldi"
-  $GS_HOME/bin/startStone -b -N $stoneName
 
   if [ "${attachTode}" = "true" ] ; then
     $GS_HOME/bin/todeIt $stoneName "script --script=rebuildServerTode"
@@ -132,7 +159,12 @@ else
     usage
     exit_1_banner "Must specify <snapshot-file-path>, when using the -n (no restart option). Tranlogs left in $\GS_HOME/gemstone/stones/${stoneName}/tranlogs are not likely to be appropriate for \$GEMSTONE/bin/extent0.seaside.dbf"
   fi
-  $GS_HOME/bin/devKitCommandLine newExtentForRecovery $stoneName $snapshotFile
+  filetype=`$GEMSTONE/bin/copydbf -i $snapshotFile | sed -n '2p' | cut -d : -f 2 | xargs | cut -d \  -f 1`
+  if [ "${filetype}" != "extent" ] ; then
+    usage; exit_1_banner "snapshot file type ('${filetype}') must be 'extent' if -n option specified"
+  fi
+  mimeType=`file -b --mime-type $snapshotFile | cut -d / -f 2`
+  $GS_HOME/bin/devKitCommandLine newExtentForRecovery $stoneName $snapshotFile $mimeType
 
   echo "Stone is now ready for recovery. Please read the How to Restore from Backup"
   echo "section of the manual (http://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/GS64-SysAdmin-3.2.htm?http://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/9-BackupAndRestore.htm#pgfId-999128)"

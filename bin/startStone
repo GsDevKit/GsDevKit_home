@@ -98,6 +98,7 @@ if [ ! -d "$stonePath" ] ; then
 fi
 
 # set up stone environment
+
 pushd $stonePath >& /dev/null
   source $stonePath/stone.env
 popd >& /dev/null

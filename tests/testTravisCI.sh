@@ -42,13 +42,21 @@ case $TEST in
   Error)
    $GS_HOME/tests/errorTests.sh
    ;;
-  Basic)
+  BasicA)
     $GS_HOME/tests/basicInstallServer.sh
     source $GS_HOME/bin/defGsDevKit.env
     export todeSnapshot=$GS_SERVER_STONES/${STONENAME1}/snapshots/extent0.tode.dbf
     export baseSnapshot=$GS_SERVER_STONES/${STONENAME1}/product/bin/extent0.dbf
     export seasideSnapshot=$GS_SERVER_STONES/${STONENAME1}/product/bin/extent0.seaside.dbf
-    $GS_HOME/tests/basicTests.sh
+    $GS_HOME/tests/basicTestA.sh
+    ;;
+  BasicB)
+    $GS_HOME/tests/basicInstallServer.sh
+    source $GS_HOME/bin/defGsDevKit.env
+    export todeSnapshot=$GS_SERVER_STONES/${STONENAME1}/snapshots/extent0.tode.dbf
+    export baseSnapshot=$GS_SERVER_STONES/${STONENAME1}/product/bin/extent0.dbf
+    export seasideSnapshot=$GS_SERVER_STONES/${STONENAME1}/product/bin/extent0.seaside.dbf
+    $GS_HOME/tests/basicTestB.sh
     ;;
   Clients)
     $GS_HOME/tests/basicInstallServer.sh

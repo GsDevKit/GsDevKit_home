@@ -30,7 +30,14 @@ OPTIONS
      already has tODE installed and the snapshot attached to the existing 
      \$GS_TODE/sys/stones/<stone-name> structure before installing SmalltalkCI
   -s <snapshot-file-path>
-     Path to snapshot file used to create stone. Extent is used without doing anything other than install SmalltalkCI.
+     Path to snapshot file used to create stone. Extent is used without doing 
+     anything other than install SmalltalkCI. Path may be a relative file
+     path. The snapshot file may be an extent file (raw, zipped (.zip) or 
+     gzipped (.gz)) or a backup file. If the file is compressed, it will be
+     uncompressed into the target extents directory. If the file is a backup
+     file, a \$GEMSTONE/bin/extent0.dbf will be copied into the target
+     extents directory and then the backup will be restored without replaying 
+     tranlogs.
   -z <smalltalkCI-smalltalk.ston-path>
      Customize the stone installation according to the attrbutes specified in the 
      <smalltalkCI-smalltalk.ston-path> file.
