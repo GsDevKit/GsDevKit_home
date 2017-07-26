@@ -117,9 +117,10 @@ $GS_HOME/bin/stopStone $stoneName
 
 if [ "${noRestart}" = "false" ] ; then
   echo "Copy snapshot and remove tranlogs"
+
   filetype="extent"
   if [ "${snapshotFile}x" != "x" ] ; then
-    filetype=`$GEMSTONE/bin/copydbf -i $snapshotFile | sed -n '/File type:/p' | cut -d : -f 2 | xargs | cut -d \  -f 1`
+    filetype=`$GEMSTONE/bin/copydbf -i $snapshotFile 2>&1 | sed -n '/File type:/p' | cut -d : -f 2 | xargs | cut -d \  -f 1`
   fi
   case "$filetype" in
     backup) 
@@ -159,7 +160,7 @@ else
     usage
     exit_1_banner "Must specify <snapshot-file-path>, when using the -n (no restart option). Tranlogs left in $\GS_HOME/gemstone/stones/${stoneName}/tranlogs are not likely to be appropriate for \$GEMSTONE/bin/extent0.seaside.dbf"
   fi
-  filetype=`$GEMSTONE/bin/copydbf -i $snapshotFile | sed -n '2p' | cut -d : -f 2 | xargs | cut -d \  -f 1`
+  filetype=`$GEMSTONE/bin/copydbf -i $snapshotFile 2>&1 | sed -n '/File type:/p' | cut -d : -f 2 | xargs | cut -d \  -f 1`
   if [ "${filetype}" != "extent" ] ; then
     usage; exit_1_banner "snapshot file type ('${filetype}') must be 'extent' if -n option specified"
   fi
