@@ -120,7 +120,19 @@ if [ "${noRestart}" = "false" ] ; then
 
   filetype="extent"
   if [ "${snapshotFile}x" != "x" ] ; then
-    filetype=`$GEMSTONE/bin/copydbf -i $snapshotFile 2>&1 | sed -n '/File type:/p' | cut -d : -f 2 | xargs | cut -d \  -f 1`
+    tempFile=`mktemp`
+handleCopyDbfError() {
+  echo "===================== ERROR output from $GEMSTONE/bin/copydbf:"
+  cat $tempFile
+  echo "====================="
+  exit_1_banner "error while running copydbf"
+}
+    trap - ERR
+    trap 'handleCopyDbfError' ERR
+    $GEMSTONE/bin/copydbf -i $snapshotFile >> $tempFile 2>&1
+    trap - ERR
+    trap 'error ${LINENO}' ERR
+    filetype=`cat $tempFile | sed -n '/File type:/p' | cut -d : -f 2 | xargs | cut -d \  -f 1`
   fi
   case "$filetype" in
     backup) 
@@ -142,7 +154,7 @@ if [ "${noRestart}" = "false" ] ; then
       echo "Restarting stone and netldi"
       $GS_HOME/bin/startStone -b -N $stoneName
       ;;
-    *) usage; exit_1_banner "Unknown filetype: '${filetype}'. Expecting backup or extent";;
+    *) usage; exit_1_banner "Unknown filetype: '${filetype}'. Expecting backup or extent" ;;
   esac
 
 
