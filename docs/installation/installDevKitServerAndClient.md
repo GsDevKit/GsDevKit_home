@@ -1,10 +1,10 @@
-#GsDevKit Server and Client Installation
+# GsDevKit Server and Client Installation
 
 While you can install GsDevKit server and client on two different nodes, the simpliest installation is to have both on a single node.  
 
 The GsDevKit single-code installation  may be on **Linux** (64 bit) or **Mac**. If you are running Windows, you can install the server on a Linux VM, and the client on Windows; instructions are [here][4].
 
-####GemStone Version and License
+#### GemStone Version and License
 Before installing, please check for later versions of [the GemStone/S 64 Bit product][2] and visit [the Licenses page][3] for information on the license included with the download. It is a good idea to use the latest version of GemStone, and to acquire a free, Limited Community License (by sending email to sales@gemtalksystems.com). 
 
 ## Example Scriptt
@@ -22,7 +22,7 @@ createStone devKit_33 3.3.0 |& tee -a $GS_HOME/install.log
 createClient tode1 |& tee -a $GS_HOME/install.log
 ```
 
-###Install Server
+### Install Server
 
 1. **Determine your installation directory and clone GsDevKit_home to that location**
 
