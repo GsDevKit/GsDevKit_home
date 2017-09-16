@@ -6,7 +6,7 @@
 #=========================================================================
 
 theArgs="$*"
-source ${GS_HOME}/bin/private/shFeedback
+source "${GS_HOME}/bin/private/shFeedback"
 start_banner
 
 usage() {
@@ -36,7 +36,7 @@ HELP
 if [ "${GS_HOME}x" = "x" ] ; then
   exit_1_banner "the GS_HOME environment variable needs to be defined"
 fi
-source ${GS_HOME}/bin/defGsDevKit.env
+source "${GS_HOME}/bin/defGsDevKit.env"
 
 modeArg=""
 organizationArg=" -o GsDevKit "
@@ -63,14 +63,14 @@ case "$1" in
   *) usage; exit_1_banner "unknown argument: $1 should be: client|server|both";;
 esac
 
-$GS_HOME/bin/private/clone_sys_local $modeArg $organizationArg
+"$GS_HOME/bin/private/clone_sys_local" $modeArg $organizationArg
 if [ "$cloneClient" = "true" ] ; then
-  $GS_HOME/bin/private/clone_gs_client_dev $modeArg $organizationArg
-  ${GS_HOME}/bin/private/clone_todeClient $modeArg $organizationArg
+  "$GS_HOME/bin/private/clone_gs_client_dev" $modeArg $organizationArg
+  "${GS_HOME}/bin/private/clone_todeClient" $modeArg $organizationArg
 fi
 
 if [ "$cloneServer" = "true" ] ; then
-  $GS_HOME/bin/private/clone_gs_client_dev $modeArg $organizationArg
+  "$GS_HOME/bin/private/clone_gs_client_dev" $modeArg $organizationArg
 fi
 
 exit_0_banner "...finished"
