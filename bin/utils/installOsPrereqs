@@ -302,7 +302,7 @@ else
     echo "[Warning] /opt/gemstone directory already exists"
     echo "to replace it, remove or rename it and rerun this script"
   fi
-  cat - > $sharedMemorySysSetup << EOF
+  cat - > "$sharedMemorySysSetup" << EOF
 the presence of this file means that \$GS_HOME/bin/installOsPrereqs has 
 set up shared memory for GemStone/S 64
 EOF
