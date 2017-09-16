@@ -124,7 +124,7 @@ if [ "$copyFiles" = "true" ] ; then
                done
              popd >& /dev/null 
             ;;
-          *) cp -rf "${sourceLocation}/lib*.${libext}" "$targetLocation" ;;
+          *) cp -rf "${sourceLocation}/"lib*.${libext} "$targetLocation" ;;
         esac
 else
   echo "[Warning] gci libraries already present in $targetLocation. To replace, delete them and try again"
