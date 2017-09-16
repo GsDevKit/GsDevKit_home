@@ -113,8 +113,8 @@ while getopts "fghns:t:u:i:l:z:c" OPT ; do
     f) force="true";; 
     g) installTode="false";;
     n) noRestartArg=" -n ";;
-    s) snapshotFileArg=" -s ${OPTARG} ";;
-    t) snapshotFileArg=" -s ${OPTARG} "; installTode="false"; todeSnapshotArg=" -t ";;
+    s) snapshotFileArg=" -s \"${OPTARG}\" ";;
+    t) snapshotFileArg=" -s \"${OPTARG}\" "; installTode="false"; todeSnapshotArg=" -t ";;
     u) entryUrl="${OPTARG}";;
     i) installProjectName="${OPTARG}";;
     l) loadProjectName="${OPTARG}";;
@@ -155,7 +155,7 @@ echo "Creating stone $stoneName"
 
 "${GS_HOME}/bin/devKitCommandLine" createSmalltalkCIStone $stoneName $vers "$smalltalkCIConfigPath"
 
-"$GS_HOME/bin/newExtent" "$todeSnapshotArg" $noRestartArg "$snapshotFileArg" $stoneName
+"$GS_HOME/bin/newExtent" $todeSnapshotArg $noRestartArg $snapshotFileArg $stoneName
 
 if [ "${noRestartArg}x" = "x" ] ; then
   "$GS_HOME/bin/startNetldi" $stoneName
