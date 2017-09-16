@@ -6,7 +6,7 @@
 #=========================================================================
 
 theArgs="$*"
-source ${GS_HOME}/bin/private/shFeedback
+source "${GS_HOME}/bin/private/shFeedback"
 start_banner 
 
 usage() {
@@ -69,12 +69,12 @@ fi
 if [ "${GS_HOME}x" = "x" ] ; then
   exit_1_banner "the GS_HOME environment variable needs to be defined"
 fi
-source ${GS_HOME}/bin/defGsDevKit.env
+source "${GS_HOME}/bin/defGsDevKit.env"
 if [ "$GS_SERVER{}x" = "x" ] ; then
   exit_1_banner "the GS_SERVER environment variable needs to be defined. Perhaps a stone has not been create yet?"
 fi
 
-source ${GS_HOME}/bin/private/shFunctions
+source "${GS_HOME}/bin/private/shFunctions"
 snapshotFile=""
 noRestart="false"
 attachTode="false"
@@ -83,7 +83,7 @@ while getopts "hns:ta" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     n) noRestart="true";;
-    s) snapshotFile=`realpath ${OPTARG}` ;; 
+    s) snapshotFile=`realpath "${OPTARG}"` ;; 
     t) attachTode="true";;
     a) attachTodeServer="true";;
     *) usage; exit_1_banner "Unknown option";;
@@ -98,31 +98,31 @@ stoneName=$1
 
 
 # set up stone environment
-stonePath=$GS_SERVER_STONES/$stoneName
+stonePath="$GS_SERVER_STONES/$stoneName"
 if [ ! -d "$stonePath" ] ; then
   exit_1_banner "The stone $stoneName does not appear to exist."
 fi
-pushd $stonePath >& /dev/null
-  source $stonePath/stone.env
+pushd "$stonePath" >& /dev/null
+  source "$stonePath/stone.env"
 popd >& /dev/null
 
 echo "Shutdown stone"
-$GS_HOME/bin/stopStone $stoneName
+"$GS_HOME/bin/stopStone" $stoneName
 
 
 if [ "${noRestart}" = "false" ] ; then
   echo "Copy snapshot and remove tranlogs"
-  $GS_HOME/bin/devKitCommandLine newExtent $stoneName $snapshotFile
+  "$GS_HOME/bin/devKitCommandLine" newExtent $stoneName "$snapshotFile"
 
   # -N option used to ignore tranlog files during restart
   echo "Restarting stone and netldi"
-  $GS_HOME/bin/startStone -b -N $stoneName
+  "$GS_HOME/bin/startStone" -b -N $stoneName
 
   if [ "${attachTode}" = "true" ] ; then
-    $GS_HOME/bin/todeIt $stoneName "script --script=rebuildServerTode"
+    "$GS_HOME/bin/todeIt" $stoneName "script --script=rebuildServerTode"
   else
     if [ "${attachTodeServer}" = "true" ] ; then
-      $GS_HOME/bin/todeIt $stoneName "script --script=rebuildSys"
+      "$GS_HOME/bin/todeIt" $stoneName "script --script=rebuildSys"
     fi
   fi
 else
@@ -132,7 +132,7 @@ else
     usage
     exit_1_banner "Must specify <snapshot-file-path>, when using the -n (no restart option). Tranlogs left in $\GS_HOME/gemstone/stones/${stoneName}/tranlogs are not likely to be appropriate for \$GEMSTONE/bin/extent0.seaside.dbf"
   fi
-  $GS_HOME/bin/devKitCommandLine newExtentForRecovery $stoneName $snapshotFile
+  "$GS_HOME/bin/devKitCommandLine" newExtentForRecovery $stoneName" $snapshotFile"
 
   echo "Stone is now ready for recovery. Please read the How to Restore from Backup"
   echo "section of the manual (http://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/GS64-SysAdmin-3.2.htm?http://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/9-BackupAndRestore.htm#pgfId-999128)"

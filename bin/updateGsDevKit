@@ -6,7 +6,7 @@
 #=========================================================================
 
 theArgs="$*"
-source ${GS_HOME}/bin/private/shFeedback
+source "${GS_HOME}/bin/private/shFeedback"
 start_banner
 
 usage() {
@@ -88,9 +88,9 @@ HELP
 if [ "${GS_HOME}x" = "x" ] ; then
   exit_1_banner "the GS_HOME environment variable needs to be defined"
 fi
-source ${GS_HOME}/bin/defGsDevKit.env
+source "${GS_HOME}/bin/defGsDevKit.env"
 
-source ${GS_HOME}/bin/private/shFunctions
+source "${GS_HOME}/bin/private/shFunctions"
 verify_gsdevkit_installation
 
 noopts="true"
@@ -126,27 +126,27 @@ if [ "${noopts}" = "true" ]; then
   rebuildTodeClient="true"
 fi
 
-source ${GS_HOME}/bin/private/gitFunctions
+source "${GS_HOME}/bin/private/gitFunctions"
 
 if [ "$updateGsDevKitClones" = "true" ]; then
   if [ "${GS_TRAVIS}x" = "x" ] ; then
     # on Travis, _home is not a git checkout
-    updateClone $GSDEVKIT_HOME_GIT_CHECKOUT $GSDEVKIT_HOME_GIT_REMOTE "$GS_HOME"
+    updateClone "$GSDEVKIT_HOME_GIT_CHECKOUT" "$GSDEVKIT_HOME_GIT_REMOTE" "$GS_HOME"
   fi
 
   if [ -d "$GS_SERVER" ]; then
-    updateClone $GSDEVKIT_SERVER_GIT_CHECKOUT $GSDEVKIT_SERVER_GIT_REMOTE "$GS_SERVER"
+    updateClone "$GSDEVKIT_SERVER_GIT_CHECKOUT" "$GSDEVKIT_SERVER_GIT_REMOTE" "$GS_SERVER"
   fi
 
   if [ -d "$GS_CLIENT_DEV" ]; then
-    $GS_CLIENT_DEV/bin/updateGsDevKit
+    "$GS_CLIENT_DEV/bin/updateGsDevKit"
   fi
   if [ -d "$GS_HOME/local" ] ; then
     if [ "$patchName" = "issue7" ] ; then
       # patch https://github.com/GsDevKit/GsDevKit_home/issues/7
       echo "PATCHING: https://github.com/GsDevKit/GsDevKit_home/issues/7"
-      updateClone $GSDEVKIT_SYS_LOCAL_GIT_CHECKOUT $GSDEVKIT_SYS_LOCAL_GIT_REMOTE "$GS_HOME/local"
-      $GS_HOME/bin/patches/patchIssue7
+      updateClone "$GSDEVKIT_SYS_LOCAL_GIT_CHECKOUT" "$GSDEVKIT_SYS_LOCAL_GIT_REMOTE" "$GS_HOME/local"
+      "$GS_HOME/bin/patches/patchIssue7"
     else
       if [ "${patchName}x" != "x" ] ; then
 	exit_1_banner "unknown patch: $patchName (should be issue7)"
@@ -155,16 +155,16 @@ if [ "$updateGsDevKitClones" = "true" ]; then
     fi
   fi
   if [ -d "$GS_SYS_LOCAL" ] && [ "${patchName}x" = "x" ]; then
-    updateClone $GSDEVKIT_SYS_LOCAL_GIT_CHECKOUT $GSDEVKIT_SYS_LOCAL_GIT_REMOTE "$GS_SYS_LOCAL"
+    updateClone "$GSDEVKIT_SYS_LOCAL_GIT_CHECKOUT" "$GSDEVKIT_SYS_LOCAL_GIT_REMOTE" "$GS_SYS_LOCAL"
   fi
 fi
 
 if [ "$updateSharedClones" = "true" ] ; then
-  $GS_HOME/bin/utils/updateSharedTodeProjectsClone both
+  "$GS_HOME/bin/utils/updateSharedTodeProjectsClone" both
 else
   if [ "$updateTodeClone" = "true" ]; then
     if [ -d "${GS_SHARED_REPO}/tode" ] ; then
-      updateClone $GS_SHARED_GIT_CHECKOUT_TODE $GS_SHARED_GIT_REMOTE_TODE ${GS_SHARED_REPO}/tode
+      updateClone "$GS_SHARED_GIT_CHECKOUT_TODE" "$GS_SHARED_GIT_REMOTE_TODE" "${GS_SHARED_REPO}/tode"
     fi
   fi
 fi
@@ -172,30 +172,30 @@ fi
 if [ "${gsUpgraderCleanCacheArg}x" != "x" ] ; then
   if [ "${gsUpgraderCleanCacheArg}" = "preview" ] ; then
     echo "Clearing GsUpgrader Metacello Preview cache: ${GS_SYS_DEFAULT_SERVER}/gsUpgrader/caches/upgradeGLASS/metacelloPreview/"
-    rm -rf ${GS_SYS_DEFAULT_SERVER}/gsUpgrader/caches/upgradeGLASS/metacelloPreview/*
+    rm -rf "${GS_SYS_DEFAULT_SERVER}/gsUpgrader/caches/upgradeGLASS/metacelloPreview/*"
   elif [ "${gsUpgraderCleanCacheArg}" = "package" ] ; then
     echo "Clearing GsUpgrader-Core package cache: ${GS_SYS_DEFAULT_SERVER}/gsUpgrader/repository/"
-    rm -rf ${GS_SYS_DEFAULT_SERVER}/gsUpgrader/repository/*
+    rm -rf "${GS_SYS_DEFAULT_SERVER}/gsUpgrader/repository/*"
   elif [ "${gsUpgraderCleanCacheArg}" = "package-cache" ] ; then
     echo "Clearing GsUpgrader cache for all GemStone versions:  ${GS_SYS_DEFAULT_SERVER}/gsUpgrader/caches/upgradeGLASS/monticello/"
-    rm -rf ${GS_SYS_DEFAULT_SERVER}/gsUpgrader/caches/upgradeGLASS/monticello/*
+    rm -rf "${GS_SYS_DEFAULT_SERVER}/gsUpgrader/caches/upgradeGLASS/monticello/*"
   else # assume gemstone version number
     echo "Clearing GsUpgrader cache for version ${gsUpgraderCleanCacheArg}: ${GS_SYS_DEFAULT_SERVER}/gsUpgrader/caches/upgradeGLASS/monticello/${gsUpgraderCleanCacheArg}_sentinel"
-    rm -rf ${GS_SYS_DEFAULT_SERVER}/gsUpgrader/caches/upgradeGLASS/monticello/${gsUpgraderCleanCacheArg}_sentinel
+    rm -rf "${GS_SYS_DEFAULT_SERVER}/gsUpgrader/caches/upgradeGLASS/monticello/${gsUpgraderCleanCacheArg}_sentinel"
   fi
 fi
 
 if [ "$rebuildCommandLine" = "true" ]; then
-  $GS_HOME/bin/devKitCommandLine -F
+  "$GS_HOME/bin/devKitCommandLine" -F
 fi
 
 if [ "$rebuildTodeClient" = "true" ]; then
   if [ -d "$GS_CLIENT_DEV" ]; then
-    pushd $GS_CLIENT_DEV_CLIENTS >& /dev/null
+    pushd "$GS_CLIENT_DEV_CLIENTS" >& /dev/null
      for clientName in $(find . -maxdepth 1 -type d)
       do
         if [ "$clientName" != "." ] ; then
-          ${GS_CLIENT_DEV_CLIENTS}/$clientName/updateClient $(basename $clientName)
+          "${GS_CLIENT_DEV_CLIENTS}/$clientName/updateClient" $(basename $clientName)
         fi
       done
     popd >& /dev/null
