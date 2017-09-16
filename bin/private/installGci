@@ -6,7 +6,7 @@
 #=========================================================================
 
 theArgs="$*"
-source ${GS_HOME}/bin/private/shFeedback
+source "${GS_HOME}/bin/private/shFeedback"
 
 usage() {
   cat <<HELP
@@ -33,7 +33,7 @@ if [ "${GS_HOME}x" = "x" ] ; then
   exit_1_banner "the GS_HOME environment variable needs to be defined"
 fi
 if [ "${GS_SHARED_DOWNLOADS}x" = "x" ] ; then
-  source ${GS_HOME}/bin/defGsDevKit.env
+  source "${GS_HOME}/bin/defGsDevKit.env"
 fi
 
 directoryPath=""
@@ -77,7 +77,7 @@ case "$PLATFORM" in
 	fi
 		libext="dll" ;;
 esac
-gs_product=$GS_SHARED_DOWNLOADS/products/$gsvers
+gs_product="$GS_SHARED_DOWNLOADS/products/$gsvers"
 
 case "$clientType" in
   gemtools) ;;
@@ -94,7 +94,7 @@ case "$clientType" in
         esac
         targetLocation="${directoryPath}"
         if [ ! -e "$targetLocation/msvcr*.dll" ] ; then
-          cp ${sourceLocation}/msvcr* $targetLocation
+          cp "${sourceLocation}/msvcr*" $targetLocation
         else
           echo "[Warning]  ${sourceLocation}/msvcrXXX.dll already present to replace, delete and try again"
         fi
@@ -116,15 +116,15 @@ fi
 if [ "$copyFiles" = "true" ] ; then
         case "$vers" in
           2.4.*)
-             pushd $sourceLocation >& /dev/null
+             pushd "$sourceLocation" >& /dev/null
                for libName in $(find ./libgcirpc64* -type f)
                do
                  targetName=`echo "$libName" | cut -c 3- | cut -f1 -d'.'`
-                 cp -rf $libName $targetLocation/${targetName}.${libext}
+                 cp -rf $libName "$targetLocation/${targetName}.${libext}"
                done
              popd >& /dev/null 
             ;;
-          *) cp -rf ${sourceLocation}/lib*.${libext} $targetLocation ;;
+          *) cp -rf "${sourceLocation}/lib*.${libext}" "$targetLocation" ;;
         esac
 else
   echo "[Warning] gci libraries already present in $targetLocation. To replace, delete them and try again"
