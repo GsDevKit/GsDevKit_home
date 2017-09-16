@@ -141,7 +141,7 @@ if [ "${GS_SYS_LOCAL}x" = "x" ] ; then
   source "${GS_HOME}/bin/defGsDevKit.env"
 fi
 
-if [ -d $GS_SERVER_STONES/$stoneName ] ; then
+if [ -d "$GS_SERVER_STONES/$stoneName" ] ; then
   if [ "${force}x" = "x" ] ; then
     exit_1_banner "The stone $stoneName already exists. Use the -f option to force re-creation"
   else
