@@ -13,4 +13,4 @@ createConfFileLn: confFilePath as: confFileName
 						, lnPath pathString printString.
 	sourceFile exists not
 		ifTrue: [ self exitFailure: 'The specified conf file: ' , sourceFile pathString printString , ' does not exist' ].
-	OSProcess command: 'ln -sf ' , sourceFile pathString , ' ' , lnPath pathString
+	OSProcess command: 'ln -sf "' , sourceFile pathString , '" "' , lnPath pathString, '"'

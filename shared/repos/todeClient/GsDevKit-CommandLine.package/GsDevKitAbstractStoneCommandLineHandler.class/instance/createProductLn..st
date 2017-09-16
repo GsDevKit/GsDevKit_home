@@ -9,4 +9,4 @@ createProductLn: stoneDirectory
 	gsProductDir := self productsHome / gsProductName.
 	gsProductDir exists not
 		ifTrue: [ self exitFailure: 'The specified product directory: ' , gsProductDir pathString printString , ' does not exist' ].
-	OSProcess command: 'ln -sf ' , gsProductDir pathString , ' ' , (stoneDirectory / 'product') pathString
+	OSProcess command: 'ln -sf "' , gsProductDir pathString , '" "' , (stoneDirectory / 'product') pathString, '"'
