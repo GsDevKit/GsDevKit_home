@@ -133,6 +133,10 @@ handleCopyDbfError() {
     trap - ERR
     trap 'error ${LINENO}' ERR
     filetype=`cat $tempFile | sed -n '/File type:/p' | cut -d : -f 2 | xargs | cut -d \  -f 1`
+    if [ "${filetype}x" = "x" ] ; then
+      # possibly 2.x copydbf
+      filetype=`cat $tempFile | sed -n '/file type:/p' | cut -d : -f 2 | xargs | cut -d \  -f 1`
+    fi
   fi
   case "$filetype" in
     backup) 
