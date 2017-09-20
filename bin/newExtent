@@ -120,7 +120,7 @@ if [ "${noRestart}" = "false" ] ; then
 
   filetype="extent"
   if [ "${snapshotFile}x" != "x" ] ; then
-    tempFile=`mktemp`
+    tempFile=`mktemp /tmp/gsd.XXXXXXXXXXX`
 handleCopyDbfError() {
   echo "===================== ERROR output from $GEMSTONE/bin/copydbf:"
   cat $tempFile
