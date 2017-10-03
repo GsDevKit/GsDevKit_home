@@ -6,7 +6,7 @@
 4. [Port Forwarding Session Description](#port-forwarding-session-description)
 5. [Login with tODE Client](#login-with-tode-client)
 
-##Intro
+## Intro
 Sometimes when I am working from home I am interested in connecting a tODE client that is running on my laptop to a stone that is running in a virtual machine that itself is running on a workstation located in the office.
 In my case the virtual machine is configured to use host-only networking, so I cannot connect directly to the ip address of my virtual machine from my laptop at home.
 
@@ -14,7 +14,7 @@ I'm sure there are other ways to skin my network connectivity cat, but this does
 This same technique can be used to run connect a local tODE client to any GsDevKit server running in a remote data center to which you have ssh access.
 The main advantage being that you do not have to poke holes in the server firewall to be able to connect a tODE client.
 
-##Netldi Setup
+## Netldi Setup
 Since we are running the `netldi` with an non-standard set of parameters, we will start the `netdli` directly using the `$GEMSTONE/bin/startnetldi` program directly instead of using the `$GS_HOME/bin/startNetldi` script.
 
 To set up the port forwarding we need to know which ports are going to be used by GemStone to connect the local tODE client to the remote stone.
@@ -26,7 +26,7 @@ Normally the *child process port* is randomly assigned, but since we need to set
 In our case the *port range* will be a single port number and we'll use `55325` in this example.
 Before starting a `netldi` you need to make sure that all of the required environmental variables (**GEMSTONE**, **GEMSTONE_NRS_ALL**, etc.) are defined.
 
-##SSH Port Forwarding Server-side
+## SSH Port Forwarding Server-side
 
 Assuming that you have a stone named `devKit` running on your server, that the server login is `dhenrich`, and that the ip address of the server is 192.168.100.129, the following commands can be used to set up the SSH port forwarding and start the `netldi`:
 
@@ -39,7 +39,7 @@ $GEMSTONE/bin/startnetldi -a dhenrich -g -p 55325:55325 -P 55320 devKit_ldi     
 
 You'll need to leave the ssh connection open to keep the ports open while you use tODE.
 
-##Port Forwarding Session Description
+## Port Forwarding Session Description
 The take the following session description:
 
 ```ston
@@ -69,7 +69,7 @@ With port forwarding it looks to GemStone as though the tODEClient process is ru
 Edit any of the remaining fields it to match your installation (`gemstoneVersion`, `serverGitRoot` and `serverTodeRoot` at a minimum).
 Save the session description in a file named `$GS_HOME/tode/sys/local/client/descriptions/devKit`.
 
-##Login with tODE Client
+## Login with tODE Client
 Launch the todeClient on your local machine:
 
 ```
@@ -94,4 +94,3 @@ Tode:
 
 [1]: https://help.ubuntu.com/community/SSH/OpenSSH/PortForwarding
 [2]: http://lists.gemtalksystems.com/mailman/listinfo/glass
-
