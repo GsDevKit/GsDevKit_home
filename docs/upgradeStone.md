@@ -50,11 +50,11 @@ The `devKitCommandLine preUpgradeStone` command copies the source `extents/syste
 - 3.2.x uses 51.2
 - versions prior to 3.2.x use 54.1
 
-##Create upgradeLog directory
+## Create upgradeLog directory
 `upgradeLog` directory created in `$GS_HOME/server/stones/<target-stone-name>` directory.
-The upgrade process stores log files and intermediate results in the `upgradeLog` directory. 
+The upgrade process stores log files and intermediate results in the `upgradeLog` directory.
 
-##Run upgradeImage script
+## Run upgradeImage script
 `$GEMSTONE/bin/upgradeImage` performs the necessary to upgrade the objects and base classes to the target version. If any errors occur while the upgradeImage script is running, check in the `upgradeLog` directory for error information. The `upgradeLog/topazerrors.log` will often contain the line number of file name where additional error information can be found.
 
 ## GsDevKit pre-conversion steps
@@ -64,7 +64,7 @@ Before running the standard `$GEMSTONE/seaside/bin/upgradeSeasideImage` script, 
 - patch GemStone Bug 46059 (Recently added class GsFailedMethodCompilationDuringCopyMethodToNewClass causes upgradeSeasideImage to fail)
 - set default BootstrapApplicationPostloadClassList (see https://github.com/GsDevKit/GsDevKit_home/issues/52)
 
-##Run upgradeSeasideImage script
+## Run upgradeSeasideImage script
 `$GEMSTONE/seaside/bin/upgradeSeasideImage` performs the standard steps for upgrading a GsDevKit/GLASS image:
 
 1. As SytemUser:
@@ -81,13 +81,13 @@ Before running the standard `$GEMSTONE/seaside/bin/upgradeSeasideImage` script, 
 
    *Note that as of 3.3.0 and 3.2.14 it is possible to supply an alternate username to the `$GEMSTONE/seaside/bin/upgradeSeasideImage` script, however GsDevKit_home does not yet support alternate user names*
 
-##GsDevKit post-conversion steps
+## GsDevKit post-conversion steps
 
 - remove all BaselineOf classes -- will be reloaded during tODE/project installation
 - copy the contents of the tODE nodes: `/sys/stone/home` and `/sys/stone/projects` from the source stone to the target stone, preserving all stone-specific scripts and project entries during upgrade.
 
 ## Run user application load script
-The *user appliation load script* is specificed by the `-l` option on the `upgradeStone` command line. This script is used to reload the application code present in the image. It is recommended that you create a `loadApp` script locatined in `/sys/stone/home` that contains the tODE commands necessary to load all of the optional code into the upgraded image. 
+The *user appliation load script* is specificed by the `-l` option on the `upgradeStone` command line. This script is used to reload the application code present in the image. It is recommended that you create a `loadApp` script locatined in `/sys/stone/home` that contains the tODE commands necessary to load all of the optional code into the upgraded image.
 
 The  *user application load script* is loaded using the `project upgrade` command. The `project upgrade` command disables class initialization for all classes during load. Your application classes stay *initialized* during the upgrade, but the methods must be reloaded. If you have specific classes that must be initialized post-upgrade, use the `project upgrade` command in your custom load script to list the classes that need to be initialized. See `man project upgrade` for more information.
 
@@ -96,7 +96,7 @@ The `devKitCommandLine postUpgradeStone` command performs the necessary post-upg
 - recompile SortedCollection sort blocks when compiled methods change shape (2.x to 3.x upgrades and 3.x to 3.3.x upgrades).
 - Resort SortedCollections and rebuild Character indexes when upgrading when upgrading from pre 3.2.x to 3.2.x or upgrading from 3.2.x to 3.3.0. Starting with version 3.2.x the GsDevKit/GLASS extents are put into [Unicode Comparison Mode][1] where Legacy Strings and Unicode Strings are compared and sorted using the default ICU collator. This change in collation sequence means that when you upgrade from a pre-3.2.x stone, Character collection indexes and SortedCollections with CharacerCollection contents need to be rebuilt/resorted.
 
-These operations are controlled by a collection of tODE scripts that can be found in `'home/uitils/upgrade`. 
+These operations are controlled by a collection of tODE scripts that can be found in `'home/uitils/upgrade`.
 
 The `/home/utils/upgrade/postUpgrade` script is the primary driver and calls different scripts depending upon which version of GemStone you are upgrading to:
 

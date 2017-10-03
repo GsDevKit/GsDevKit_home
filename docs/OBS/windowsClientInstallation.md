@@ -1,4 +1,4 @@
-##tODE Windows Client Installation
+## tODE Windows Client Installation
 
 1. Download and install *GitHub for Windows* by following the instructions on the [GitHub for Windows][1] page.
 
@@ -14,7 +14,7 @@
    export PATH=$GS_HOME/bin/windows:$PATH
    ```
 
-5. Using the bash shell, clone the [tode][3] and [ston][8] projects to the root of your C: drive. 
+5. Using the bash shell, clone the [tode][3] and [ston][8] projects to the root of your C: drive.
    We're manually cloning `tODE` to avoid hitting the 256 character path limit for Windows and rooting the repository at the C: keeps the longest paths in tODE out of trouble. The `ston` project needs to be cloned, because the version of Metacello ppresent in the standard Pharo3.0 image, cannot download projects directly from **GitHub**:
 
    ```Shell
