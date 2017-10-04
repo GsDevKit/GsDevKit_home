@@ -22,6 +22,8 @@ createStone devKit_33 3.3.0 |& tee -a $GS_HOME/install.log
 createClient tode1 |& tee -a $GS_HOME/install.log
 ```
 
+*Note: `|&` requires a bash version >= 4.1. On older bash versions you can replace it by `2>&1 |`. This problem will mostly impact OSX users since OSX uses bash 3.2 by default.*
+
 ### Install Server
 
 1. **Determine your installation directory and clone GsDevKit_home to that location**
