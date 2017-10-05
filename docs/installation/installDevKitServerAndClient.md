@@ -7,7 +7,7 @@ The GsDevKit single-code installation  may be on **Linux** (64 bit) or **Mac**. 
 #### GemStone Version and License
 Before installing, please check for later versions of [the GemStone/S 64 Bit product][2] and visit [the Licenses page][3] for information on the license included with the download. It is a good idea to use the latest version of GemStone, and to acquire a free, Limited Community License (by sending email to sales@gemtalksystems.com).
 
-## Example Scriptt
+## Example Script
 
 This script installs both client and server components, and installs and starts a 3.3.0 server named **devKit_330**, and installs but does not start a todeClient named **tode1**.  Output is sent to a log file, in case of problems during installation.
 You must already have [git installed][1].
@@ -21,6 +21,8 @@ installServerClient |& tee $GS_HOME/install.log
 createStone devKit_33 3.3.0 |& tee -a $GS_HOME/install.log
 createClient tode1 |& tee -a $GS_HOME/install.log
 ```
+
+*Note: `|&` requires a bash version >= 4.1. On older bash versions you can replace it by `2>&1 |`. This problem will mostly impact OSX users since OSX uses bash 3.2 by default.*
 
 ### Install Server
 
