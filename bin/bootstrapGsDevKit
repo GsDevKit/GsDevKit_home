@@ -1,0 +1,242 @@
+#! /usr/bin/env bash
+#=========================================================================
+# Copyright (c) 2016 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#
+#   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
+#=========================================================================
+
+theArgs="$*"
+source ${GS_HOME}/bin/private/shFeedback
+start_banner
+
+usage() {
+  cat <<HELP
+USAGE: $(basename $0) [-h] <stone-name>
+Bootstrap GsDevKit (https://github.com/GsDevKit/GsDevKit) into an extent0.dbf.
+
+OPTIONS
+  -h
+     display help
+
+EXAMPLES
+   $(basename $0) -h
+   $(basename $0) gs_329
+
+HELP
+}
+
+if [ "${GS_HOME}x" = "x" ] ; then
+  exit_1_banner "the GS_HOME environment variable needs to be defined"
+fi
+source ${GS_HOME}/bin/defGsDevKit.env
+
+source ${GS_HOME}/bin/private/shFunctions
+getOpts_help $@
+
+if [ $# -ne 1 ]; then
+  usage; exit_1_banner "wrong number of arguments (1 expected)"
+fi
+stoneName=$1
+shift 1
+
+stonePath=$GS_SERVER_STONES/$stoneName
+if [ ! -d "$stonePath" ] ; then
+  exit_1_banner "The stone $stoneName does not exist"
+fi
+
+if [ "${GS_SYS_LOCAL}x" = "x" ] ; then
+  $GS_HOME/bin/private/clone_sys_local
+  source ${GS_HOME}/bin/defGsDevKit.env
+fi
+
+$GS_HOME/bin/startStone -b $stoneName
+
+# set up stone environment
+pushd $stonePath $stonePath >& /dev/null
+  source $stonePath/stone.env
+popd >& /dev/null
+
+export upgradeDir=$GEMSTONE/upgrade
+
+$GS_HOME/bin/startTopaz $stoneName -l << EOF
+  iferr 1 stk
+  iferr 2 stack
+  iferr 3 exit 1
+  set u SystemUser p swordfish
+  login
+
+# Cypress changes ... not yet included in base
+  input $GS_HOME/shared/topaz/cypress-3.4/changes.gs
+  commit
+
+# GsDevKit is not yet ready for Portable streams, nor Legacy streams with ANSI polarity.
+#   Also enable unicode mode
+#   and create UndefinedSymbols global
+  run
+  | undef |
+  Stream installLegacyStreamImplementation.
+  (Globals at: #'PositionableStream_position') == #'ANSI'
+     ifTrue: [
+       Globals at: #'PositionableStream_position' put: #'Legacy'.
+       PositionableStream compilePositionMethods ].
+  CharacterCollection enableUnicodeComparisonMode.
+  undef := SymbolDictionary new.
+  undef name: #UndefinedSymbols.
+  Globals at: #UndefinedSymbols put: undef.
+  Globals at: #UndefinedSymbolList put: (SymbolList with: undef).
+%
+  commit
+#       BootStrap UUID into Base --- eventually part of 3.4.0 base
+  input $GS_HOME/shared/topaz/uuid/bootstrapUUIDSupport.topaz
+  commit
+  input $upgradeDir/bootstrapMetacelloSupport.topaz
+  commit
+  run
+  UserGlobals at: #Metacello_SUPPORT_REPO put: '$GS_SHARED_REPO_METACELLO'.
+  UserGlobals at: #Metacello_SUPPORT_REPO put: 'filetree:///export/foos1/users/dhenrich/dev/_home/server/stones/metacello/git/metacello-work/repository/'
+%
+  run
+  | smalltalkDict |
+  smalltalkDict := SymbolDictionary new.
+  smalltalkDict name: #SmalltalkDict.
+  System myUserProfile symbolList insertObject: smalltalkDict at: 1. 
+  GsCurrentSession currentSession symbolList insertObject: smalltalkDict at: 1.
+%
+  doit
+  (Object
+	subclass: 'Smalltalk'
+	instVarNames: #(  )
+	classVars: #(  )
+	classInstVars: #(  )
+	poolDictionaries: #()
+	inDictionary: SmalltalkDict
+	options: #())
+		category: 'Kernel Smalltalk Compat';
+		comment: '';
+		immediateInvariant.
+%
+  commit
+category: 'bootstrapGsDevKit'
+classmethod: Smalltalk
+  at: aGlobalName ifPresent: aBlock
+  | glob |
+  aGlobalName isNil
+    ifTrue: [ ^ nil ].
+  glob := GsSession currentSession symbolList objectNamed: aGlobalName.
+  ^ glob ~~ nil
+    ifTrue: [ aBlock value: glob ]
+    ifFalse: [ glob ]
+%
+commit
+  run
+  Smalltalk at: #Object ifPresent: [:cl | cl ]
+%
+  run
+  Metacello new
+    baseline: 'Metacello';
+    repository: 'cypressft://$GS_HOME/shared/repos/gs_port/metacello/repository/';
+    load;
+    lock
+%
+  run
+  Smalltalk at: #Object ifPresent: [:cl | cl ]
+%
+  commit
+  run
+  UserGlobals removeKey: #Metacello_SUPPORT_REPO
+%
+  commit
+# these two methods used by STON 
+classmethod: SequenceableCollection
+streamContents: blockWithArg
+  ^ self new: 100 streamContents: blockWithArg
+%
+classMethod: SequenceableCollection
+new: newSize streamContents: blockWithArg
+  | stream |
+  stream := WriteStreamPortable on: (self new: newSize).
+  blockWithArg value: stream.
+  ^ stream contents
+%
+method: SequenceableCollection
+beginsWith: aSequenceableCollection
+  (aSequenceableCollection isEmpty
+    or: [ self size < aSequenceableCollection size ])
+    ifTrue: [ ^ false ].
+  aSequenceableCollection
+    withIndexDo: [ :each :index | 
+      (self at: index) ~= each
+        ifTrue: [ ^ false ] ].
+  ^ true
+%
+method: SequenceableCollection
+withIndexDo: elementAndIndexBlock
+  "Just like with:do: except that the iteration index supplies the second argument to the block."
+
+  1 to: self size do: [ :index | elementAndIndexBlock value: (self at: index) value: index ]
+%
+method: Symbol
+value: anObject
+  ^ anObject perform: self
+%
+method: Character
+isCompilerSpecial
+  "Answer whether the receiver is one of the special characters"
+
+  ^ '+-/\*~<>=@,%|&?!' includes: self
+%
+method: Object
+value
+  ^self
+%
+method: Object
+instVarNamed: aString
+  "Return the value of the instance variable in me with that name.  Slow and unclean, but very useful. "
+
+  ^ self instVarAt: (self class allInstVarNames indexOf: aString asSymbol)
+%
+  commit
+  run
+  Metacello new
+    baseline: 'Ston';
+    repository: 'cypressft://$GS_HOME/shared/repos/gs_port/ston/repository/';
+    load;
+    lock
+%
+  commit
+  run
+  Smalltalk at: #Object ifPresent: [:cl | cl ]
+%
+  run
+  Metacello new
+    baseline: 'Gt4Gemstone';
+    repository: 'cypressft://$GS_HOME/shared/repos/gt4gemstone/src/';
+    load
+%
+  commit
+  run
+  Smalltalk at: #Object ifPresent: [:cl | cl ]
+%
+  run
+  Metacello new
+    baseline: 'Sport';
+    repository: 'cypressft:$GS_HOME/shared/repos/Sport/src/';
+    lock.
+Smalltalk at: #Object ifPresent: [:cl | cl ].
+  Metacello new
+    baseline: 'Grease';
+    repository: 'cypressft:$GS_HOME/shared/repos/gs_port/Grease/repository/';
+    lock.
+Smalltalk at: #Object ifPresent: [:cl | cl ].
+  Metacello new
+    baseline: 'GsDevKit';
+    repository: 'cypressft:$GS_HOME/shared/repos/GsDevKit/repository/';
+    get;
+    lock;
+    load: 'Base'
+%
+  commit
+  exit
+EOF
+
+exit_0_banner "...finished $(basename $0)"

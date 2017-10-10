@@ -148,6 +148,9 @@ handleCopyDbfError() {
       $GS_HOME/bin/devKitCommandLine restoreFromBackupAltUser $stoneName $snapshotFile DataCurator swordfish
       ;;
     extent) 
+      if [ -e "$stonePath/extents/extent0.dbf" ] ; then
+        rm -rf "$stonePath/extents/extent0.dbf"
+      fi
       if [ "${snapshotFile}x" != "x" ] ; then
         mimeType=`file -b --mime-type $snapshotFile | cut -d / -f 2`
         $GS_HOME/bin/devKitCommandLine newExtent $stoneName $snapshotFile $mimeType

@@ -219,47 +219,12 @@ if [ "$installTode" = "true" ] ; then
   $GS_SYS/bin/todeLoad $stoneName
 else
   if [ "${bootstrapCypress}" = "true" ] ; then
-    if [ "$vers" != "3.4.0_e" ] ; then
-      exit_1_banner "Bootstrapping Cypress is only support for GemStone 3.4.0_e"
-    fi 
-    stonePath=$GS_SERVER_STONES/$stoneName
-    # set up stone environment
-    pushd $stonePath $stonePath >& /dev/null
-    source $stonePath/stone.env
-    popd >& /dev/null
-    export upgradeDir="$GEMSTONE/upgrade/"
-    ${GS_HOME}/bin/startTopaz $stoneName -l << EOF
-    iferr 1 stk
-    iferr 2 stack
-    iferr 3 exit 1
-    set u SystemUser p swordfish
-    login
-#   BootStrap UUID into Base --- eventually part of 3.4.0 base
-    input $GS_HOME/shared/topaz/uuid/bootstrapUUIDSupport.topaz
-    commit
-    input $upgradeDir/bootstrapMetacelloSupport.topaz
-    commit
-    run
-    UserGlobals at: #Cypress_SUPPORT_REPO put: '$GS_HOME/shared/repos/CypressReferenceImplementation/cypress/'
-%
-    input $GS_HOME/shared/topaz/cypress/loadCypressSupport.topaz
-    commit
-    run
-    UserGlobals removeKey: #Cypress_SUPPORT_REPO
-%
-    run
-    UserGlobals at: #Metacello_SUPPORT_REPO put: '$GS_SHARED_REPO_METACELLO'.
-    UserGlobals at: #Metacello_SUPPORT_REPO put: 'filetree:///export/foos1/users/dhenrich/dev/_home/server/stones/metacello/git/metacello-work/repository/'
-%
-    input $GS_HOME/shared/topaz/metacello/loadMetacelloSupport.topaz
-    commit
-    run
-    UserGlobals removeKey: #Metacello_SUPPORT_REPO
-%
-    commit
-    logout
-    exit 0
-EOF
+    case "$vers" in
+      3.4.*)
+        $GS_HOME/bin/bootstrapGsDevKit $stoneName
+        ;;
+      *) exit_1_banner "Bootstrapping Cypress is only support for GemStone 3.4.x and later" ;;
+    esac
   fi
 fi
 
