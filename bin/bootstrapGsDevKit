@@ -65,10 +65,6 @@ $GS_HOME/bin/startTopaz $stoneName -l << EOF
   set u SystemUser p swordfish
   login
 
-# Cypress changes ... not yet included in base
-  input $GS_HOME/shared/topaz/cypress-3.4/changes.gs
-  commit
-
 # GsDevKit is not yet ready for Portable streams, nor Legacy streams with ANSI polarity.
 #   Also enable unicode mode
 #   and create UndefinedSymbols global
@@ -129,17 +125,11 @@ classmethod: Smalltalk
 %
 commit
   run
-  Smalltalk at: #Object ifPresent: [:cl | cl ]
-%
-  run
   Metacello new
     baseline: 'Metacello';
     repository: 'cypressft://$GS_HOME/shared/repos/gs_port/metacello/repository/';
     load;
     lock
-%
-  run
-  Smalltalk at: #Object ifPresent: [:cl | cl ]
 %
   commit
   run
@@ -205,9 +195,6 @@ instVarNamed: aString
 %
   commit
   run
-  Smalltalk at: #Object ifPresent: [:cl | cl ]
-%
-  run
   Metacello new
     baseline: 'Gt4Gemstone';
     repository: 'cypressft://$GS_HOME/shared/repos/gt4gemstone/src/';
@@ -215,19 +202,14 @@ instVarNamed: aString
 %
   commit
   run
-  Smalltalk at: #Object ifPresent: [:cl | cl ]
-%
-  run
   Metacello new
     baseline: 'Sport';
     repository: 'cypressft:$GS_HOME/shared/repos/Sport/src/';
     lock.
-Smalltalk at: #Object ifPresent: [:cl | cl ].
   Metacello new
     baseline: 'Grease';
     repository: 'cypressft:$GS_HOME/shared/repos/gs_port/Grease/repository/';
     lock.
-Smalltalk at: #Object ifPresent: [:cl | cl ].
   Metacello new
     baseline: 'GsDevKit';
     repository: 'cypressft:$GS_HOME/shared/repos/GsDevKit/repository/';
