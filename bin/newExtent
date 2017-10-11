@@ -112,7 +112,7 @@ echo "Shutdown stone"
 
 if [ "${noRestart}" = "false" ] ; then
   echo "Copy snapshot and remove tranlogs"
-  "$GS_HOME/bin/devKitCommandLine" newExtent $stoneName "$snapshotFile"
+  "$GS_HOME/bin/devKitCommandLine" newExtent $stoneName "${snapshotFile}"
 
   # -N option used to ignore tranlog files during restart
   echo "Restarting stone and netldi"
