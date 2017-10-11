@@ -8,9 +8,9 @@ copySnapshotExtent: snapshotExtentFile to: stoneDirectory for: aGsVersionString
 		tab;
 		show: 'Copying extent file: ' , snapshotExtentFile pathString printString.
 	extentFile := stoneDirectory / 'extents' / 'extent0.dbf'.
-	cmdPath := ((aGsVersionString beginsWith: '2.4') or: [true])
+	cmdPath := (aGsVersionString beginsWith: '2.4')
 		ifTrue: [ 
-			"cannot use copydbf to copy extent from product tree, so unconditionally use `cp` ---when there are spaces in file paths (https://github.com/GsDevKit/GsDevKit_home/issues/182)"
+			"cannot use copydbf to copy extent from product tree, so unconditionally use `cp`"
 			'/bin/cp' ]
 		ifFalse: [ (self gemstoneBin / 'copydbf') pathString ].
 	argsArray := {(snapshotExtentFile pathString).
