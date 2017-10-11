@@ -1,9 +1,9 @@
-#tODE Client Installation
+# tODE Client Installation
 
-**Before installing a remote client, you should seriously consider using [ssh X11 forwarding][8]. 
+**Before installing a remote client, you should seriously consider using [ssh X11 forwarding][8].
 With [ssh X11 forwarding][8], you install an X11 client on the server, and install an X11 server on your client, instead of installing a tODE client.**
 
-tODE clients may be installed on **Linux**, **Mac** or **Windows**. 
+tODE clients may be installed on **Linux**, **Mac** or **Windows**.
 
 Before installing tODE on a client, you should complete the [install of the Development Kit on a GemStone server][2].
 

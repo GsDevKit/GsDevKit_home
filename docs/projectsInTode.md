@@ -1,4 +1,4 @@
-##Projects in tODE
+## Projects in tODE
 
 Using tODE, you will be working with code in projects.  To get started, open a *Project List Browser* using the `project list` tODE command:
 
@@ -6,12 +6,12 @@ Using tODE, you will be working with code in projects.  To get started, open a *
 
 The typeface in the project list has the following meanings:
 
-*  italic/underlined means the project is installed; the project is present on the local disk and registered in the image, but the code is not loaded. 
+*  italic/underlined means the project is installed; the project is present on the local disk and registered in the image, but the code is not loaded.
 *  bold means loaded and the project has been marked active. Active projects are sorted to the beginning of the list.
 *  normal font means the project is loaded, but not marked active.  Loaded means the Smalltalk code was filed into the Stone.
 *  Asterisk * means the package is dirty in the image; the project has one or more modified packages.
 *  Plus + means dirty disk for git
-*  Bar | means the project is locked 
+*  Bar | means the project is locked
 
 You may load an existing project, such as seaside, or create a new project based on an existing Metacello project.  
 
@@ -60,7 +60,7 @@ The *BaselineOfFoo* is created with the following specification:
 baseline: spec
   <baseline>
   spec for: #'common' do: [ spec package: 'Foo-Core' ]
-``` 
+```
 
 For a bit more information on working with the *BaselineOf*, read the [Create Baseline][40] in the [Getting Started with GitHub document][41].
 The *BaselineOfFoo* package is created for storing the *BaselineOf* on disk.
@@ -79,7 +79,7 @@ Finally a *project entry* is created:
     yourself
 ```
 
-and saved in the directory `$GS_HOME/sys/local/server/projects` as Foo.ston. 
+and saved in the directory `$GS_HOME/sys/local/server/projects` as Foo.ston.
 
 Now is a good time make some modifications to your application class, update the `project list` command and play with some of the `project list` menu items:
 
@@ -102,4 +102,3 @@ Now is a good time make some modifications to your application class, update the
 [40]: https://github.com/dalehenrich/metacello-work/blob/master/docs/GettingStartedWithGitHub.md#create-baseline
 [41]: https://github.com/dalehenrich/metacello-work/blob/master/docs/GettingStartedWithGitHub.md#getting-started-with-github
 [42]: images/todeFooProjectList.png
-

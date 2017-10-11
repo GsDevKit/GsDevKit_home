@@ -1,15 +1,15 @@
-#GsDevKit Server and Client Installation
+# GsDevKit Server and Client Installation
 
 While you can install GsDevKit server and client on two different nodes, the simpliest installation is to have both on a single node.  
 
 The GsDevKit single-code installation  may be on **Linux** (64 bit) or **Mac**. If you are running Windows, you can install the server on a Linux VM, and the client on Windows; instructions are [here][4].
 
-####GemStone Version and License
-Before installing, please check for later versions of [the GemStone/S 64 Bit product][2] and visit [the Licenses page][3] for information on the license included with the download. It is a good idea to use the latest version of GemStone, and to acquire a free, Limited Community License (by sending email to sales@gemtalksystems.com). 
+#### GemStone Version and License
+Before installing, please check for later versions of [the GemStone/S 64 Bit product][2] and visit [the Licenses page][3] for information on the license included with the download. It is a good idea to use the latest version of GemStone, and to acquire a free, Limited Community License (by sending email to sales@gemtalksystems.com).
 
-## Example Scriptt
+## Example Script
 
-This script installs both client and server components, and installs and starts a 3.3.0 server named **devKit_330**, and installs but does not start a todeClient named **tode1**.  Output is sent to a log file, in case of problems during installation. 
+This script installs both client and server components, and installs and starts a 3.3.0 server named **devKit_330**, and installs but does not start a todeClient named **tode1**.  Output is sent to a log file, in case of problems during installation.
 You must already have [git installed][1].
 
 ```
@@ -22,7 +22,9 @@ createStone devKit_33 3.3.0 |& tee -a $GS_HOME/install.log
 createClient tode1 |& tee -a $GS_HOME/install.log
 ```
 
-###Install Server
+*Note: `|&` requires a bash version >= 4.1. On older bash versions you can replace it by `2>&1 |`. This problem will mostly impact OSX users since OSX uses bash 3.2 by default.*
+
+### Install Server
 
 1. **Determine your installation directory and clone GsDevKit_home to that location**
 
@@ -44,31 +46,31 @@ createClient tode1 |& tee -a $GS_HOME/install.log
    ```
 
 4. **Perform the Server installation**
-   
+
     The installation is performed by the `installServerClient` script.  This takes care of installing any required OS packages and cloning the required projects to your server node
 
    ```
    installServerClient
    ```
    The `installServerClient` script invokes the following sub-scripts:
-   
+
    ```
    downloadGemStone
    installOsPrereqs
-   cloneGsDevKitProjects 
+   cloneGsDevKitProjects
    cloneSharedTodeProjects
-   setupGsDevKit 
+   setupGsDevKit
    ```
 5.  Create the stone and client
-    The `createStone` and `createClient` scripts install the stone and client. 
-   
+    The `createStone` and `createClient` scripts install the stone and client.
+
    ```
    createStone <myStoneName> <GemStoneVersion>
    createClient <myClientName>
    ```
    You may use any name for the `<myStoneName>` and `<myClientName>`; you may later have multiple stones and multiple clients.
-   
-      After these scripts successfully complete, you will have a stone named `<myStoneName>`, of GemStone/S 64 Bit version `<GemStoneVersion>`, installed on your server node and running.  You will have a NetLDI named `<myStoneName>_ldi` running on the server, so the server is ready for the tODE client to connect.  You will also have a client named `<myClientName>` installed and ready to start. 
+
+      After these scripts successfully complete, you will have a stone named `<myStoneName>`, of GemStone/S 64 Bit version `<GemStoneVersion>`, installed on your server node and running.  You will have a NetLDI named `<myStoneName>_ldi` running on the server, so the server is ready for the tODE client to connect.  You will also have a client named `<myClientName>` installed and ready to start.
 
 
 
