@@ -8,13 +8,9 @@ activate
 			self printHelp.
 			^ self exitFailure: 'Missing arguments' ].
 	self shouldNotBeForeignStone.
-	argsArray := {
-		'-c'.
-		(self gemstoneBin / 'startnetldi') pathString.
-	},
-		self produceNetldiArgs.
+	argsArray := self produceNetldiArgs.
 	Transcript
 		cr;
-		show: (self runShellCommand: ExternalUnixOSProcess bashShellPath  args: argsArray);
+		show: (self runShellCommand: (self gemstoneBin / 'startnetldi') pathString args: argsArray);
 		cr.
 	self exitSuccess
