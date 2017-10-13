@@ -156,7 +156,7 @@ echo "Creating stone $stoneName"
 
 "${GS_HOME}/bin/devKitCommandLine" createSmalltalkCIStone $stoneName $vers "${smalltalkCIConfigPath}"
 
-"$GS_HOME/bin/newExtent" $todeSnapshotArg $noRestartArg $snapshotFileFlag "${snapshotFileArg}" $stoneName
+"$GS_HOME/bin/newExtent" $todeSnapshotArg $noRestartArg $snapshotFileFlag ${snapshotFileArg} $stoneName
 
 if [ "${noRestartArg}x" = "x" ] ; then
   "$GS_HOME/bin/startNetldi" $stoneName
