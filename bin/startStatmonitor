@@ -6,7 +6,7 @@
 #=========================================================================
 
 theArgs="$*"
-source ${GS_HOME}/bin/private/shFeedback
+source "${GS_HOME}/bin/private/shFeedback"
 start_banner
 
 usage() {
@@ -36,9 +36,9 @@ fi
 if [ "${GS_HOME}x" = "x" ] ; then
   exit_1_banner "the GS_HOME environment variable needs to be defined"
 fi
-source ${GS_HOME}/bin/defGsDevKit.env
+source "${GS_HOME}/bin/defGsDevKit.env"
 
-source ${GS_HOME}/bin/private/shFunctions
+source "${GS_HOME}/bin/private/shFunctions"
 getOpts_help $@
 
 if [ $# -ne 1 ]; then
@@ -47,20 +47,20 @@ fi
 stoneName=$1
 
 # set up stone environment
-stonePath=$GS_SERVER_STONES/$stoneName
+stonePath="$GS_SERVER_STONES/$stoneName"
 
 if [ ! -d "$stonePath" ] ; then
   exit_1_banner "The stone $stoneName does not exist"
 fi
 
-pushd $stonePath >& /dev/null
-  source $stonePath/stone.env
+pushd "$stonePath" >& /dev/null
+  source "$stonePath/stone.env"
 popd >& /dev/null
 
 # start the statmonitors
-cd $stonePath/stats/1-second
-$stonePath/product/bin/statmonitor $stoneName -Arzq -h 1 -i 1 -u 0 &
+cd "$stonePath/stats/1-second"
+"$stonePath/product/bin/statmonitor" $stoneName -Arzq -h 1 -i 1 -u 0 &
 cd ../60-second
-$stonePath/product/bin/statmonitor $stoneName -Arzq -h 24 -i 60 -u 0 &
+"$stonePath/product/bin/statmonitor" $stoneName -Arzq -h 24 -i 60 -u 0 &
 
 exit_0_banner "...finished"

@@ -6,7 +6,7 @@
 #=========================================================================
 
 theArgs="$*"
-source ${GS_HOME}/bin/private/shFeedback
+source "${GS_HOME}/bin/private/shFeedback"
 start_banner
 
 usage() {
@@ -35,7 +35,7 @@ HELP
 if [ "${GS_HOME}x" = "x" ] ; then
   exit_1_banner "the GS_HOME environment variable needs to be defined"
 fi
-source ${GS_HOME}/bin/defGsDevKit.env
+source "${GS_HOME}/bin/defGsDevKit.env"
 
 modeArg=""
 organizationArg=""
@@ -55,11 +55,11 @@ fi
 
 setupType=$1
 
-$GS_HOME/bin/utils/installOsPrereqs $setupType
-$GS_HOME/bin/utils/cloneGsDevKitProjects $modeArg $organizationArg $setupType
-$GS_HOME/bin/utils/cloneSharedTodeProjects $modeArg $setupType
+"$GS_HOME/bin/utils/installOsPrereqs" $setupType
+"$GS_HOME/bin/utils/cloneGsDevKitProjects" $modeArg $organizationArg $setupType
+"$GS_HOME/bin/utils/cloneSharedTodeProjects" $modeArg $setupType
 
-cat - > $GS_HOME/bin/.gsdevkitSetup << EOF
+cat - > "$GS_HOME/bin/.gsdevkitSetup" << EOF
 the presence of this file means that \$GS_HOME/bin/setupGsDevKit has
 been successfully run.
 EOF

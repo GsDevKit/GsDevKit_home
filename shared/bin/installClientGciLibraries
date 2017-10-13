@@ -6,7 +6,7 @@
 #=========================================================================
 
 theArgs="$*"
-source ${GS_HOME}/bin/private/shFeedback
+source "${GS_HOME}/bin/private/shFeedback"
 start_banner
 
 usage() {
@@ -35,8 +35,8 @@ if [ $# -ne 1 ]; then
 fi
 vers="$1"
 
-if [ -e ${GS_SHARED_PHARO}/pharo ] ; then
-  $GS_HOME/bin/private/installGci -d ${GS_SHARED_PHARO} -t pharo $vers
+if [ -e "${GS_SHARED_PHARO}/pharo" ] ; then
+  "$GS_HOME/bin/private/installGci" -d "${GS_SHARED_PHARO}" -t pharo $vers
 fi
 
 exit_0_banner "...finished"

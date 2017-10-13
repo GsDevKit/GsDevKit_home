@@ -6,7 +6,7 @@
 #=========================================================================
 
 theArgs="$*"
-source ${GS_HOME}/bin/private/shFeedback
+source "${GS_HOME}/bin/private/shFeedback"
 start_banner
 
 usage() {
@@ -92,11 +92,12 @@ fi
 if [ "${GS_HOME}x" = "x" ] ; then
   exit_1_banner "The \$GS_HOME environment variable needs to be defined"
 fi
-source ${GS_HOME}/bin/defGsDevKit.env
+source "${GS_HOME}/bin/defGsDevKit.env"
 
-source ${GS_HOME}/bin/private/shFunctions
+source "${GS_HOME}/bin/private/shFunctions"
 verify_gsdevkit_installation
 
+snapshotFileFlag=""
 snapshotFileArg=""
 noRestartArg=""
 force=""
@@ -113,8 +114,8 @@ while getopts "fghns:t:u:i:l:z:c" OPT ; do
     f) force="true";; 
     g) installTode="false";;
     n) noRestartArg=" -n ";;
-    s) snapshotFileArg=" -s ${OPTARG} ";;
-    t) snapshotFileArg=" -s ${OPTARG} "; installTode="false"; todeSnapshotArg=" -t ";;
+    s) snapshotFileFlag=" -s "; snapshotFileArg="${OPTARG}";;
+    t) snapshotFileFlag=" -s "; snapshotFileArg="${OPTARG}"; installTode="false"; todeSnapshotArg=" -t ";;
     u) entryUrl="${OPTARG}";;
     i) installProjectName="${OPTARG}";;
     l) loadProjectName="${OPTARG}";;
@@ -132,62 +133,62 @@ stoneName="$1"
 vers="$2"
 
 if [ "${GS_SERVER}x" = "x" ] ; then
-  $GS_HOME/bin/private/clone_gs_server
-  source ${GS_HOME}/bin/defGsDevKit.env
+  "$GS_HOME/bin/private/clone_gs_server"
+  source "${GS_HOME}/bin/defGsDevKit.env"
 fi
 
 if [ "${GS_SYS_LOCAL}x" = "x" ] ; then
-  $GS_HOME/bin/private/clone_sys_local
-  source ${GS_HOME}/bin/defGsDevKit.env
+  "$GS_HOME/bin/private/clone_sys_local"
+  source "${GS_HOME}/bin/defGsDevKit.env"
 fi
 
-if [ -d $GS_SERVER_STONES/$stoneName ] ; then
+if [ -d "$GS_SERVER_STONES/$stoneName" ] ; then
   if [ "${force}x" = "x" ] ; then
     exit_1_banner "The stone $stoneName already exists. Use the -f option to force re-creation"
   else
-    $GS_HOME/bin/deleteStone $stoneName
+    "$GS_HOME/bin/deleteStone" $stoneName
   fi
 fi
 
 echo "Creating stone $stoneName"
 
-$GS_HOME/bin/downloadGemStone $vers
+"$GS_HOME/bin/downloadGemStone" $vers
 
-${GS_HOME}/bin/devKitCommandLine createSmalltalkCIStone $stoneName $vers $smalltalkCIConfigPath
+"${GS_HOME}/bin/devKitCommandLine" createSmalltalkCIStone $stoneName $vers "${smalltalkCIConfigPath}"
 
-$GS_HOME/bin/newExtent $todeSnapshotArg $noRestartArg $snapshotFileArg $stoneName
+"$GS_HOME/bin/newExtent" $todeSnapshotArg $noRestartArg $snapshotFileFlag ${snapshotFileArg} $stoneName
 
 if [ "${noRestartArg}x" = "x" ] ; then
-  $GS_HOME/bin/startNetldi $stoneName
+  "$GS_HOME/bin/startNetldi" $stoneName
   if [ "${smalltalkCIConfigPath}x" != "x" ] ; then
-    ${GS_HOME}/bin/devKitCommandLine setupRuntimeSmalltalkCIStone $stoneName $smalltalkCIConfigPath
+    "${GS_HOME}/bin/devKitCommandLine" setupRuntimeSmalltalkCIStone $stoneName "${smalltalkCIConfigPath}"
   fi
 fi
 
 if [ "$installTode" = "true" ] ; then
-  $GS_SYS/bin/todeLoad $stoneName
+  "$GS_SYS/bin/todeLoad" $stoneName
 fi
 
 if [ "$entryUrl" != "" ] ; then
-  $GS_HOME/bin/private/gsDevKitTodeCommandLine todeIt $stoneName << EOF
+  "$GS_HOME/bin/private/gsDevKitTodeCommandLine" todeIt $stoneName << EOF
 project entry --url=${entryUrl} /sys/stone/projects
 EOF
 fi
 
 if [ "$installProjectName" != "" ] ; then
-  $GS_HOME/bin/private/gsDevKitTodeCommandLine todeIt $stoneName << EOF
+  "$GS_HOME/bin/private/gsDevKitTodeCommandLine" todeIt $stoneName << EOF
 project install ${installProjectName}
 EOF
 fi
 
 if [ "$loadProjectName" != "" ] ; then
-  $GS_HOME/bin/private/gsDevKitTodeCommandLine todeIt $stoneName << EOF
+  "$GS_HOME/bin/private/gsDevKitTodeCommandLine" todeIt $stoneName << EOF
 project load ${loadProjectName}
 EOF
 fi
 
 if [ "${loadSmalltalkCIConfig}" = "true" ] ; then
-  ${GS_HOME}/bin/devKitCommandLine serverDoIt  $stoneName << EOF
+  "${GS_HOME}/bin/devKitCommandLine" serverDoIt  $stoneName << EOF
   GsDeployer bulkMigrate: [
     [
       Metacello new

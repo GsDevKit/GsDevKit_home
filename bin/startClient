@@ -6,7 +6,7 @@
 #=========================================================================
 
 theArgs="$*"
-source ${GS_HOME}/bin/private/shFeedback
+source "${GS_HOME}/bin/private/shFeedback"
 start_banner
 
 usage() {
@@ -33,7 +33,7 @@ HELP
 if [ "${GS_HOME}x" = "x" ] ; then
   exit_1_banner "the GS_HOME environment variable needs to be defined"
 fi
-source ${GS_HOME}/bin/defGsDevKit.env
+source "${GS_HOME}/bin/defGsDevKit.env"
 
 if [ "$1" = "-h" ] ; then
   usage; exit 0
@@ -58,8 +58,8 @@ if [ "${GS_CLIENT_DEV}x" = "x" ] || [ ! -d "${GS_CLIENT_DEV_CLIENTS}/$clientName
     read -p "Do you wish to create ${clientName}? [y/n]" yn
     case $yn in
       [Yy]* ) 
-        ${GS_HOME}/bin/createClient -t tode $clientName $*
-        source ${GS_HOME}/bin/defGsDevKit.env
+        "${GS_HOME}/bin/createClient" -t tode $clientName $*
+        source "${GS_HOME}/bin/defGsDevKit.env"
         created="true" ;;
       [Nn]* ) exit_1_banner "Skipping create client";;
       * ) echo "Please answer yes or no.";;
@@ -67,6 +67,6 @@ if [ "${GS_CLIENT_DEV}x" = "x" ] || [ ! -d "${GS_CLIENT_DEV_CLIENTS}/$clientName
   done
 fi
 
-${GS_CLIENT_DEV_CLIENTS}/$clientName/startClient $* $clientName
+"${GS_CLIENT_DEV_CLIENTS}/$clientName/startClient" $* $clientName
 
 exit_0_banner "...finished"

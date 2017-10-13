@@ -6,15 +6,15 @@
 #=========================================================================
 
 theArgs="$*"
-source ${GS_HOME}/bin/private/shFeedback
+source "${GS_HOME}/bin/private/shFeedback"
 
 if [ "${GS_HOME}x" = "x" ] ; then
   exit_1_banner "the GS_HOME environment variable needs to be defined"
 fi
-source ${GS_HOME}/bin/defGsDevKit.env
+source "${GS_HOME}/bin/defGsDevKit.env"
 
 cloneScriptPath="${GS_SYS_DEFAULT}/gsdevkit_bin/cloneSharedTodeProjects"
 if [ -e "${GS_SYS_LOCAL}/gsdevkit_bin/cloneSharedTodeProjects" ] ; then
   cloneScriptPath="${GS_SYS_LOCAL}/gsdevkit_bin/cloneSharedTodeProjects"
 fi
-$cloneScriptPath $*
+"$cloneScriptPath" $*

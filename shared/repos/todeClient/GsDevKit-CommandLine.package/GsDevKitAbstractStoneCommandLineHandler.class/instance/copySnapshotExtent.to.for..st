@@ -19,4 +19,4 @@ copySnapshotExtent: snapshotExtentFile to: stoneDirectory for: aGsVersionString
 		cr;
 		show: (self runShellCommand: cmdPath args: argsArray);
 		cr.
-	OSProcess command: 'chmod +w ' , extentFile pathString
+	OSProcess command: 'chmod +w "' , extentFile pathString, '"'

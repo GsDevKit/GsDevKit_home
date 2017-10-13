@@ -9,4 +9,4 @@
 # identity of gsDevKitTodeCommandLine to make it clear when reading scripts
 # that the callers of this script expect tODE to be installed in the server
 
-$GS_HOME/bin/devKitCommandLine $*
+"$GS_HOME/bin/devKitCommandLine" $*
