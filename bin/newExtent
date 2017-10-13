@@ -61,6 +61,8 @@ EXAMPLES
 HELP
 }
 
+set -x
+
 PLATFORM="`uname -sm | tr ' ' '-'`"
 if [[ "$PLATFORM" == MINGW32_NT* || "$PLATFORM" == MSYS_NT* ]] ; then
   exit_1_banner "This script is a server-only script and cannot be used on Windows"
@@ -132,7 +134,7 @@ else
     usage
     exit_1_banner "Must specify <snapshot-file-path>, when using the -n (no restart option). Tranlogs left in $\GS_HOME/gemstone/stones/${stoneName}/tranlogs are not likely to be appropriate for \$GEMSTONE/bin/extent0.seaside.dbf"
   fi
-  "$GS_HOME/bin/devKitCommandLine" newExtentForRecovery $stoneName" $snapshotFile"
+  "$GS_HOME/bin/devKitCommandLine" newExtentForRecovery $stoneName "${snapshotFile}"
 
   echo "Stone is now ready for recovery. Please read the How to Restore from Backup"
   echo "section of the manual (http://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/GS64-SysAdmin-3.2.htm?http://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/9-BackupAndRestore.htm#pgfId-999128)"
