@@ -63,13 +63,14 @@ source "${GS_HOME}/bin/defGsDevKit.env"
 source "${GS_HOME}/bin/private/shFunctions"
 verify_gsdevkit_installation
 
+snapshotFileFlag=""
 snapshotFileArg=""
 smalltalkCIConfigPath=""
 runSmalltalkCITests="false"
 while getopts "ht:z:r" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
-    t) snapshotFileArg=" -s \"${OPTARG}\" ";;
+    t) snapshotFileFlag=" -s "; snapshotFileArg="${OPTARG}";;
     z) smalltalkCIConfigPath="${OPTARG}";;
     r) runSmalltalkCITests="true";;
     *) usage; exit_1_banner "Unknown option";;
@@ -83,9 +84,9 @@ fi
 stoneName="$1"
 
 if [ "${snapshotFileArg}x" = "x" ] ; then
-  "$GS_HOME/bin/newExtent" -a -s "$GS_HOME/server/stones/${stoneName}/snapshots/extent0.tode.dbf" $stoneName
+  "$GS_HOME/bin/newExtent" -a -s "${GS_HOME}/server/stones/${stoneName}/snapshots/extent0.tode.dbf" $stoneName
 else
-  "$GS_HOME/bin/newExtent" -a $snapshotFileArg $stoneName
+  "$GS_HOME/bin/newExtent" -a $snapshotFileFlag $snapshotFileArg $stoneName
 fi
 
 "${GS_HOME}/bin/devKitCommandLine" serverDoIt  $stoneName << EOF
@@ -106,7 +107,7 @@ if [ "${runSmalltalkCITests}" = "true" ]; then
   if [ ! -d "$GS_HOME/server/stones/${stoneName}/ci" ] ; then
     mkdir "$GS_HOME/server/stones/${stoneName}/ci"
   fi
-  "${GS_HOME}/bin/startTopaz" "${stoneName}" -l -T 100000 << EOF
+  "${GS_HOME}/bin/startTopaz" ${stoneName} -l -T 100000 << EOF
   login
   run
     SmalltalkCIGemstone 
