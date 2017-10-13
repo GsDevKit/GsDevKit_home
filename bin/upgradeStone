@@ -86,7 +86,7 @@ if [ ! -d "$sourceStonePath" ] ; then
   exit_1_banner "The stone $sourceStoneName does not exist"
 fi
 
-sourceStoneVersion="$(sed -n '2{p;q;}' \"$sourceStonePath/product/version.txt\" | awk '{print $1;}')"
+sourceStoneVersion="$(sed -n '2{p;q;}' $sourceStonePath/product/version.txt | awk '{print $1;}')"
 majorMinorVersion="${sourceStoneVersion:0:3}"
 
 if [ "${hasSnapshotFile}" = "false" ] ; then
@@ -128,18 +128,18 @@ fi
 
 if [ "$majorMinorVersion" = "2.4" ]  ; then
   #Cannot use copydbf to copy a 2.4 extent to 3.x
-  cp "$snapshotFile" "$targetStonePath/extents/extent0.dbf"
-  chmod +w "$targetStonePath/extents/extent0.dbf"
+  cp "$snapshotFile" "${targetStonePath}/extents/extent0.dbf"
+  chmod +w "${targetStonePath}/extents/extent0.dbf"
 else
-  rm -rf "$GS_SERVER_STONES/${targetStoneName}/extents/extent0.dbf"
+  rm -rf "${GS_SERVER_STONES}/${targetStoneName}/extents/extent0.dbf"
   "$GS_HOME/bin/newExtent" -n -s "$snapshotFile" $targetStoneName
 fi
-rm -rf "$targetStonePath/tranlogs/tranlog*.dbf"
+rm -rf "${targetStonePath}/tranlogs/tranlog*.dbf"
 
 "$GS_HOME/bin/private/preUpgradeStone" $sourceStoneName $targetStoneName $gsvers
 
 pushd "$targetStonePath" >& /dev/null
-  source "$targetStonePath/stone.env"
+  source "${targetStonePath}/stone.env"
 
   if [ ! -d "upgradeLog" ] ; then
     mkdir upgradeLog
