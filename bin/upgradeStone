@@ -124,6 +124,7 @@ if [ "${createStone}" = "true" ] ; then
   "$GS_HOME/bin/downloadGemStone" $gsvers
   "$GS_HOME/bin/createStone" $forceArg -g $targetStoneName $gsvers
   "$GS_HOME/bin/stopStone" $targetStoneName
+  
 fi
 
 if [ "$majorMinorVersion" = "2.4" ]  ; then
@@ -134,7 +135,7 @@ else
   rm -rf "${GS_SERVER_STONES}/${targetStoneName}/extents/extent0.dbf"
   "$GS_HOME/bin/newExtent" -n -s "$snapshotFile" $targetStoneName
 fi
-rm -rf "${targetStonePath}/tranlogs/tranlog*.dbf"
+rm -rf ${targetStonePath}/tranlogs/tranlog*.dbf
 
 "$GS_HOME/bin/private/preUpgradeStone" $sourceStoneName $targetStoneName $gsvers
 
