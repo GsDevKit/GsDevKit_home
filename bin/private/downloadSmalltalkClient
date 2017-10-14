@@ -179,7 +179,7 @@ else
 fi
 }
           trap 'missing_32-bit_libs' ERR
-          ./pharo --help --vm-display-null &> /dev/null 2>&1
+          ./pharo Pharo.image --help &> /dev/null 2>&1
           trap - ERR
           trap 'error ${LINENO}' ERR
         else
