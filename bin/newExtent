@@ -114,22 +114,22 @@ popd >& /dev/null
 echo "Shutdown stone"
 "$GS_HOME/bin/stopStone" $stoneName
 
-
-if [ "${noRestart}" = "false" ] ; then
-  echo "Copy snapshot and remove tranlogs"
-
-  filetype="extent"
-  if [ "${snapshotFile}x" != "x" ] ; then
-    tempFile=`mktemp /tmp/gsd.XXXXXXXXXXX`
 handleCopyDbfError() {
   echo "===================== ERROR output from $GEMSTONE/bin/copydbf:"
   cat $tempFile
   echo "====================="
   exit_1_banner "error while running copydbf"
 }
+
+extractFiletypeFromSnapshot () {
+  local ssFile="$1"
+
+  filetype="extent"
+  if [ "${ssFile}x" != "x" ] ; then
+    tempFile=`mktemp /tmp/gsd.XXXXXXXXXXX`
     trap - ERR
     trap 'handleCopyDbfError' ERR
-    "$GEMSTONE/bin/copydbf" -i "${snapshotFile}" >> $tempFile 2>&1
+    "$GEMSTONE/bin/copydbf" -i "${ssFile}" >> $tempFile 2>&1
     trap - ERR
     trap 'error ${LINENO}' ERR
     filetype=`cat $tempFile | sed -n '/File type:/p' | cut -d : -f 2 | xargs | cut -d \  -f 1`
@@ -138,6 +138,13 @@ handleCopyDbfError() {
       filetype=`cat $tempFile | sed -n '/file type:/p' | cut -d : -f 2 | xargs | cut -d \  -f 1`
     fi
   fi
+}
+
+if [ "${noRestart}" = "false" ] ; then
+  echo "Copy snapshot and remove tranlogs"
+
+  extractFiletypeFromSnapshot "${snapshotFile}"
+
   case "$filetype" in
     backup) 
       "$GS_HOME/bin/devKitCommandLine" newExtent $stoneName "$stonePath/product/bin/extent0.dbf"
@@ -179,7 +186,7 @@ else
     usage
     exit_1_banner "Must specify <snapshot-file-path>, when using the -n (no restart option). Tranlogs left in $\GS_HOME/gemstone/stones/${stoneName}/tranlogs are not likely to be appropriate for \$GEMSTONE/bin/extent0.seaside.dbf"
   fi
-  filetype=`"$GEMSTONE/bin/copydbf" -i "${snapshotFile}" 2>&1 | sed -n '/File type:/p' | cut -d : -f 2 | xargs | cut -d \  -f 1`
+  extractFiletypeFromSnapshot "${snapshotFile}"
   if [ "${filetype}" != "extent" ] ; then
     usage; exit_1_banner "snapshot file type ('${filetype}') must be 'extent' if -n option specified"
   fi
