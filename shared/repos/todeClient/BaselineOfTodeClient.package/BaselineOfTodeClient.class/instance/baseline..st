@@ -2,7 +2,7 @@ baseline
 baseline: spec
 	<baseline>
 	spec
-		for: #(#'pharo3.x' #'pharo4.x' #'pharo5.x' #'pharo6.x')
+		for: #(#'pharo3.x' #'pharo4.x' #'pharo5.x' #'pharo6.x' #'pharo7.x')
 		do: [ 
 			spec
 				baseline: 'SmalltalkCI'
