@@ -6,7 +6,7 @@
 #=========================================================================
 
 theArgs="$*"
-source ${GS_HOME}/bin/private/shFeedback
+source "${GS_HOME}/bin/private/shFeedback"
 start_banner
 
 usage() {
@@ -31,9 +31,9 @@ if [ "${GS_HOME}x" = "x" ] ; then
 fi
 
 if [ "${GS_CLIENT_DEV}x" != "x" ] ; then
-   ${GS_CLIENT_DEV}/bin/installClientGciLibraries $*
+   "${GS_CLIENT_DEV}/bin/installClientGciLibraries" $*
 fi
 
-${GS_SHARED}/bin/installClientGciLibraries $*
+"${GS_SHARED}/bin/installClientGciLibraries" $*
 
 exit_0_banner "...finished"

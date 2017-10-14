@@ -6,7 +6,7 @@
 #=========================================================================
 
 theArgs="$*"
-source ${GS_HOME}/bin/private/shFeedback
+source "${GS_HOME}/bin/private/shFeedback"
 start_banner 
 
 usage() {
@@ -79,7 +79,7 @@ if [ "$GS_SERVER{}x" = "x" ] ; then
   exit_1_banner "the GS_SERVER environment variable needs to be defined. Perhaps a stone has not been create yet?"
 fi
 
-source ${GS_HOME}/bin/private/shFunctions
+source "${GS_HOME}/bin/private/shFunctions"
 snapshotFile=""
 noRestart="false"
 attachTode="false"
@@ -88,7 +88,7 @@ while getopts "hns:ta" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     n) noRestart="true";;
-    s) snapshotFile=`realpath ${OPTARG}` ;; 
+    s) snapshotFile=`realpath "${OPTARG}"` ;; 
     t) attachTode="true";;
     a) attachTodeServer="true";;
     *) usage; exit_1_banner "Unknown option";;
@@ -103,16 +103,16 @@ stoneName=$1
 
 
 # set up stone environment
-stonePath=$GS_SERVER_STONES/$stoneName
+stonePath="$GS_SERVER_STONES/${stoneName}"
 if [ ! -d "$stonePath" ] ; then
   exit_1_banner "The stone $stoneName does not appear to exist."
 fi
-pushd $stonePath >& /dev/null
-  source $stonePath/stone.env
+pushd "$stonePath" >& /dev/null
+  source "$stonePath/stone.env"
 popd >& /dev/null
 
 echo "Shutdown stone"
-$GS_HOME/bin/stopStone $stoneName
+"$GS_HOME/bin/stopStone" $stoneName
 
 
 if [ "${noRestart}" = "false" ] ; then
@@ -129,7 +129,7 @@ handleCopyDbfError() {
 }
     trap - ERR
     trap 'handleCopyDbfError' ERR
-    $GEMSTONE/bin/copydbf -i $snapshotFile >> $tempFile 2>&1
+    "$GEMSTONE/bin/copydbf" -i "${snapshotFile}" >> $tempFile 2>&1
     trap - ERR
     trap 'error ${LINENO}' ERR
     filetype=`cat $tempFile | sed -n '/File type:/p' | cut -d : -f 2 | xargs | cut -d \  -f 1`
@@ -140,12 +140,12 @@ handleCopyDbfError() {
   fi
   case "$filetype" in
     backup) 
-      $GS_HOME/bin/devKitCommandLine newExtent $stoneName $stonePath/product/bin/extent0.dbf
+      "$GS_HOME/bin/devKitCommandLine" newExtent $stoneName "$stonePath/product/bin/extent0.dbf"
       # -N option used to ignore tranlog files during restart
       echo "Restarting stone and netldi"
-      $GS_HOME/bin/startStone -b -N $stoneName
+      "$GS_HOME/bin/startStone" -b -N $stoneName
       echo "Restoring from backup"
-      $GS_HOME/bin/devKitCommandLine restoreFromBackupAltUser $stoneName $snapshotFile DataCurator swordfish
+      "$GS_HOME/bin/devKitCommandLine" restoreFromBackupAltUser $stoneName "${snapshotFile}" DataCurator swordfish
       ;;
     extent) 
       if [ -e "$stonePath/extents/extent0.dbf" ] ; then
@@ -153,23 +153,23 @@ handleCopyDbfError() {
       fi
       if [ "${snapshotFile}x" != "x" ] ; then
         mimeType=`file -b --mime-type $snapshotFile | cut -d / -f 2`
-        $GS_HOME/bin/devKitCommandLine newExtent $stoneName $snapshotFile $mimeType
+        "$GS_HOME/bin/devKitCommandLine" newExtent $stoneName "${snapshotFile}" $mimeType
       else
-        $GS_HOME/bin/devKitCommandLine newExtent $stoneName
+        "$GS_HOME/bin/devKitCommandLine" newExtent $stoneName
       fi
       # -N option used to ignore tranlog files during restart
       echo "Restarting stone and netldi"
-      $GS_HOME/bin/startStone -b -N $stoneName
+      "$GS_HOME/bin/startStone" -b -N $stoneName
       ;;
     *) usage; exit_1_banner "Unknown filetype: '${filetype}'. Expecting backup or extent" ;;
   esac
 
 
   if [ "${attachTode}" = "true" ] ; then
-    $GS_HOME/bin/todeIt $stoneName "script --script=rebuildServerTode"
+    "$GS_HOME/bin/todeIt" $stoneName "script --script=rebuildServerTode"
   else
     if [ "${attachTodeServer}" = "true" ] ; then
-      $GS_HOME/bin/todeIt $stoneName "script --script=rebuildSys"
+      "$GS_HOME/bin/todeIt" $stoneName "script --script=rebuildSys"
     fi
   fi
 else
@@ -179,12 +179,12 @@ else
     usage
     exit_1_banner "Must specify <snapshot-file-path>, when using the -n (no restart option). Tranlogs left in $\GS_HOME/gemstone/stones/${stoneName}/tranlogs are not likely to be appropriate for \$GEMSTONE/bin/extent0.seaside.dbf"
   fi
-  filetype=`$GEMSTONE/bin/copydbf -i $snapshotFile 2>&1 | sed -n '/File type:/p' | cut -d : -f 2 | xargs | cut -d \  -f 1`
+  filetype=`"$GEMSTONE/bin/copydbf" -i "${snapshotFile}" 2>&1 | sed -n '/File type:/p' | cut -d : -f 2 | xargs | cut -d \  -f 1`
   if [ "${filetype}" != "extent" ] ; then
     usage; exit_1_banner "snapshot file type ('${filetype}') must be 'extent' if -n option specified"
   fi
   mimeType=`file -b --mime-type $snapshotFile | cut -d / -f 2`
-  $GS_HOME/bin/devKitCommandLine newExtentForRecovery $stoneName $snapshotFile $mimeType
+  "$GS_HOME/bin/devKitCommandLine" newExtentForRecovery $stoneName "${snapshotFile}" $mimeType
 
   echo "Stone is now ready for recovery. Please read the How to Restore from Backup"
   echo "section of the manual (http://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/GS64-SysAdmin-3.2.htm?http://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/9-BackupAndRestore.htm#pgfId-999128)"

@@ -6,18 +6,18 @@
 #=========================================================================
 
 theArgs="$*"
-source ${GS_HOME}/bin/private/shFeedback
+source "${GS_HOME}/bin/private/shFeedback"
 start_banner
 
 if [ "${GS_HOME}x" = "x" ] ; then
   exit_1_banner "the GS_HOME environment variable needs to be defined"
 fi
-source ${GS_HOME}/bin/defGsDevKit.env
+source "${GS_HOME}/bin/defGsDevKit.env"
 
 cloneUpdatePath="${GS_SYS_DEFAULT}/gsdevkit_bin/cloneUpdate"
 if [ -e "${GS_SYS_LOCAL}/gsdevkit_bin/cloneUpdate" ] ; then
   cloneUpdatePath="${GS_SYS_LOCAL}/gsdevkit_bin/cloneUpdate"
 fi
-$cloneUpdatePath $*
+"$cloneUpdatePath" $*
 
 exit_0_banner "...finished"

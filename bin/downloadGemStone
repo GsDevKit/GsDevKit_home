@@ -7,7 +7,7 @@
 #=========================================================================
 
 theArgs="$*"
-source ${GS_HOME}/bin/private/shFeedback
+source "${GS_HOME}/bin/private/shFeedback"
 start_banner
 
 # help function
@@ -48,7 +48,7 @@ vers="$1"
 if [ "${GS_HOME}x" = "x" ] ; then
   exit_1_banner "the GS_HOME environment variable needs to be defined"
 fi
-source ${GS_HOME}/bin/defGsDevKit.env
+source "${GS_HOME}/bin/defGsDevKit.env"
 
 echo "Downloading GemStone/S $vers"
 bucket=$vers
@@ -112,7 +112,7 @@ else
 fi
 
 # Download GemStone
-pushd $GS_SHARED_DOWNLOADS/zip >& /dev/null
+pushd "$GS_SHARED_DOWNLOADS/zip" >& /dev/null
   if [ ! -e $gss_file ]; then
     echo "[Info] Downloading ${ftp_address}/pub/GemStone64/$bucket/$gss_file using ${cmd}"
     $cmd ${ftp_address}/pub/GemStone64/$bucket/$gss_file
@@ -123,10 +123,10 @@ pushd $GS_SHARED_DOWNLOADS/zip >& /dev/null
 
   # Unzip the downloaded archive into $GS_HOME/shared/downloads/products/
   echo "[Info] Uncompressing GemStone archive into $GS_HOME/shared/downloads/products/"
-  gs_product=$GS_SHARED_DOWNLOADS/products/$gsvers
-  if [ ! -e $gs_product ]
+  gs_product="$GS_SHARED_DOWNLOADS/products/$gsvers"
+  if [ ! -e "$gs_product" ]
     then
-    unzip -q -d $GS_SHARED_DOWNLOADS/products $gss_file
+    unzip -q -d "$GS_SHARED_DOWNLOADS/products" $gss_file
   else
     echo "[Warning] $GS_SHARED_DOWNLOADS/products/$gsvers already exists"
     echo "to replace it, remove or rename it and rerun this script"
@@ -140,11 +140,11 @@ case "$PLATFORM" in
   *)
     # Copy initial system.conf into the Seaside data directory
     echo "[Info] Copying initial system.conf to data directory"
-    if [ ! -e $gs_product/seaside/data/system.conf ]
+    if [ ! -e "$gs_product/seaside/data/system.conf" ]
       then
-      cp $gs_product/seaside/system.conf \
-         $gs_product/seaside/data
-      chmod 644 $gs_product/seaside/data/system.conf
+      cp "$gs_product/seaside/system.conf" \
+         "$gs_product/seaside/data"
+      chmod 644 "$gs_product/seaside/data/system.conf"
     else
       echo "[Warning] $gs_product/seaside/data/system.conf already exists"
       echo "to replace it, remove or rename it and rerun this script"
@@ -152,11 +152,11 @@ case "$PLATFORM" in
 
     # Copy an initial extent to the Seaside data directory
     echo "[Info] Copying initial Seaside repository to data directory"
-    if [ ! -e $gs_product/seaside/data/extent0.dbf ]
+    if [ ! -e "$gs_product/seaside/data/extent0.dbf" ]
       then
-      cp $gs_product/bin/extent0.seaside.dbf \
-         $gs_product/seaside/data/extent0.dbf
-      chmod 644 $gs_product/seaside/data/extent0.dbf
+      cp "$gs_product/bin/extent0.seaside.dbf" \
+         "$gs_product/seaside/data/extent0.dbf"
+      chmod 644 "$gs_product/seaside/data/extent0.dbf"
     else
       echo "[Warning] $gs_product/seaside/data/extent0.dbf already exists"
       echo "to replace it, remove or rename it and rerun this script"
@@ -165,12 +165,12 @@ case "$PLATFORM" in
 esac
 
 #    Copy the gci libraries to client installations
-$GS_HOME/bin/private/installClientGciLibraries $vers
+"$GS_HOME/bin/private/installClientGciLibraries" $vers
 
 echo "[Info] Finished $gsvers download on $machine_name"
 echo ""
 echo "[Info] GemStone version information:"
-cat $gs_product/version.txt
+cat "$gs_product/version.txt"
 
 if [ "${GS_TRAVIS}x" != "x" ] ; then
   case "$PLATFORM" in
@@ -186,9 +186,9 @@ if [ "${GS_TRAVIS}x" != "x" ] ; then
         *) exit_1_banner "No travis license for GemStone $vers";;
       esac
       if [ "${keyName}x" != "x" ] ; then
-        chmod +w  $gs_product/seaside/etc/gemstone.key
+        chmod +w  "$gs_product/seaside/etc/gemstone.key"
         echo "Copying $GS_HOME/travis/$keyName to $gs_product/seaside/etc/gemstone.key"
-        cp $GS_HOME/travis/$keyName $gs_product/seaside/etc/gemstone.key
+        cp "$GS_HOME/travis/$keyName" "$gs_product/seaside/etc/gemstone.key"
       fi
       ;;
    *)

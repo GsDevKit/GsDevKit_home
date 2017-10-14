@@ -6,7 +6,7 @@
 #=========================================================================
 
 theArgs="$*"
-source ${GS_HOME}/bin/private/shFeedback
+source "${GS_HOME}/bin/private/shFeedback"
 
 usage() {
   cat <<HELP
@@ -39,11 +39,11 @@ HELP
 if [ "${GS_HOME}x" = "x" ] ; then
   exit_1_banner "the GS_HOME environment variable needs to be defined"
 fi
-source ${GS_HOME}/bin/defGsDevKit.env
+source "${GS_HOME}/bin/defGsDevKit.env"
 if [ "$GS_SERVER{}x" = "x" ] ; then
   exit_1_banner "the \$GS_SERVER environment variable needs to be defined. Perhaps a stone has not been create yet?"
 fi
-source ${GS_HOME}/bin/private/winRunPharoFunctions
+source "${GS_HOME}/bin/private/winRunPharoFunctions"
 
 force="false"
 exitAfterForce="false"
@@ -71,7 +71,7 @@ if [ "$force" = "true" ] ; then
   forceArg=" -f "
 fi
 if [ ! -e "${GS_SHARED_PHARO}/gsDevKitCommandLine.image" ] || [ "$force" = "true" ] ; then
-  $GS_SHARED/bin/create_gs_server_image $forceArg -d $GS_SHARED_PHARO gsDevKitCommandLine
+  "$GS_SHARED/bin/create_gs_server_image" $forceArg -d "$GS_SHARED_PHARO" gsDevKitCommandLine
   if [ "$exitAfterForce" = "true" ] ; then
     exit 0
   fi
@@ -87,7 +87,7 @@ case "$PLATFORM" in
     if [ "$interactive" = "true" ] ; then
       vmArgs=""
     fi
-    pharoCmd="win_run_pharo ${GS_SHARED_PHARO} $vmArgs" 
+    pharoCmd="win_run_pharo \"${GS_SHARED_PHARO}\" $vmArgs" 
     ;;
   *)
     pharoCmd="${GS_SHARED_PHARO}/pharo"
@@ -96,4 +96,4 @@ case "$PLATFORM" in
     fi
     ;;
 esac
-$pharoCmd ${GS_SHARED_PHARO}/gsDevKitCommandLine.image $*
+"$pharoCmd" "${GS_SHARED_PHARO}/gsDevKitCommandLine.image" $*

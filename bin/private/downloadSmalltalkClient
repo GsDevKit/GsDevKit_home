@@ -6,7 +6,7 @@
 #=========================================================================
 
 theArgs="$*"
-source ${GS_HOME}/bin/private/shFeedback
+source "${GS_HOME}/bin/private/shFeedback"
 start_banner
 
 usage() {
@@ -36,7 +36,7 @@ HELP
 if [ "${GS_HOME}x" = "x" ] ; then
   exit_1_banner "the GS_HOME environment variable needs to be defined"
 fi
-source ${GS_HOME}/bin/private/shFunctions
+source "${GS_HOME}/bin/private/shFunctions"
 verify_gsdevkit_installation
 
 directoryPath=""
@@ -77,7 +77,7 @@ case $version in
         exit_1_banner "Error: Neither curl not wget is not available. Install wget or curl and rerun this script."
       fi
     fi
-    pushd $directoryPath >& /dev/null
+    pushd "$directoryPath" >& /dev/null
       case $version in
         Pharo3.0)
           case "$PLATFORM" in

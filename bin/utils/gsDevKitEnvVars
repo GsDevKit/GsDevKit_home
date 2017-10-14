@@ -5,5 +5,5 @@
 #   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
 #=========================================================================
 
-source $GS_HOME/bin/defGsDevKit.env
+source "$GS_HOME/bin/defGsDevKit.env"
 env | grep GS | sort

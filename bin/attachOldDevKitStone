@@ -6,7 +6,7 @@
 #=========================================================================
 
 theArgs="$*"
-source ${GS_HOME}/bin/private/shFeedback
+source "${GS_HOME}/bin/private/shFeedback"
 start_banner
 
 usage() {
@@ -56,7 +56,7 @@ fi
 if [ "${GS_HOME}x" = "x" ] ; then
   exit_1_banner "the GS_HOME environment variable needs to be defined"
 fi
-source ${GS_HOME}/bin/defGsDevKit.env
+source "${GS_HOME}/bin/defGsDevKit.env"
 
 oldStoneName=""
 todeInstalledArg=""
@@ -88,13 +88,13 @@ if [ $# -ne 3 ]; then
 fi
 stoneName=$1
 vers=$2
-oldGS_HOME=$3
+oldGS_HOME="$3"
 
 oldStoneArg=""
 if [ "${oldStoneName}x" != "x" ] ; then
   oldStoneArg=" -o $oldStoneName "
 fi
 
-$GS_HOME/bin/private/attachStone $todeInstalledArg $oldStoneArg $devKitHomeArg $oldGS_HOME $stoneName $vers
+"$GS_HOME/bin/private/attachStone" $todeInstalledArg $oldStoneArg $devKitHomeArg "$oldGS_HOME" $stoneName $vers
 
 exit_0_banner "...finished"

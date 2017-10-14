@@ -6,7 +6,7 @@
 #=========================================================================
 
 theArgs="$*"
-source ${GS_HOME}/bin/private/shFeedback
+source "${GS_HOME}/bin/private/shFeedback"
 start_banner
 
 usage() {
@@ -51,7 +51,7 @@ HELP
 if [ "${GS_HOME}x" = "x" ] ; then
   exit_1_banner "the GS_HOME environment variable needs to be defined"
 fi
-source ${GS_HOME}/bin/defGsDevKit.env
+source "${GS_HOME}/bin/defGsDevKit.env"
 
 modeArg=""
 while getopts "hnb:c:" OPT ; do
@@ -80,42 +80,42 @@ source ${GS_HOME}/bin/private/gitFunctions
 
 pushd ${GS_SHARED_REPO} >& /dev/null
   if [ -d "metacello-work" ] ; then
-    updateClone $GS_SHARED_GIT_CHECKOUT_METACELLO $GS_SHARED_GIT_REMOTE_METACELLO ${GS_SHARED_REPO}/metacello-work
+    updateClone "$GS_SHARED_GIT_CHECKOUT_METACELLO" "$GS_SHARED_GIT_REMOTE_METACELLO" "${GS_SHARED_REPO}/metacello-work"
   fi
   if [ -d "tode" ] ; then
-    updateClone $GS_SHARED_GIT_CHECKOUT_TODE $GS_SHARED_GIT_REMOTE_TODE ${GS_SHARED_REPO}/tode
+    updateClone "$GS_SHARED_GIT_CHECKOUT_TODE" "$GS_SHARED_GIT_REMOTE_TODE" "${GS_SHARED_REPO}/tode"
   fi
   if [ -d "ston" ] ; then
-    updateClone $GS_SHARED_GIT_CHECKOUT_STON $GS_SHARED_GIT_REMOTE_STON ${GS_SHARED_REPO}/ston
+    updateClone "$GS_SHARED_GIT_CHECKOUT_STON" "$GS_SHARED_GIT_REMOTE_STON" "${GS_SHARED_REPO}/ston"
   fi
   if [ -d "smalltalkCI" ] ; then
-    updateClone $GS_SHARED_GIT_CHECKOUT_SMALLTALKCI $GS_SHARED_GIT_REMOTE_SMALLTALKCI ${GS_SHARED_REPO}/smalltalkCI
+    updateClone "$GS_SHARED_GIT_CHECKOUT_SMALLTALKCI" "$GS_SHARED_GIT_REMOTE_SMALLTALKCI" "${GS_SHARED_REPO}/smalltalkCI"
   fi
   if [ "$updateClientRepos" = "true" ] ; then
     cd pharo3.0
     if [ -d "filetree" ] ; then
-      updateClone $GS_SHARED_GIT_CHECKOUT_PHARO3_FILETREE $GS_SHARED_GIT_REMOTE_PHARO3_FILETREE ${GS_SHARED_REPO}/pharo3.0/filetree
+      updateClone "$GS_SHARED_GIT_CHECKOUT_PHARO3_FILETREE" "$GS_SHARED_GIT_REMOTE_PHARO3_FILETREE" "${GS_SHARED_REPO}/pharo3.0/filetree"
     fi
     cd ..
   fi
   if [ "$updateServerRepos" = "true" ] ; then
     if [ -d "filetree" ] ; then
-      updateClone $GS_SHARED_GIT_CHECKOUT_GEMSTONE_FILETREE $GS_SHARED_GIT_REMOTE_GEMSTONE_FILETREE ${GS_SHARED_REPO}/filetree
+      updateClone "$GS_SHARED_GIT_CHECKOUT_GEMSTONE_FILETREE" "$GS_SHARED_GIT_REMOTE_GEMSTONE_FILETREE" "${GS_SHARED_REPO}/filetree"
     fi
     if [ -d "Grease" ] ; then
-      updateClone $GS_SHARED_GIT_CHECKOUT_GREASE $GS_SHARED_GIT_REMOTE_GREASE ${GS_SHARED_REPO}/Grease
+      updateClone "$GS_SHARED_GIT_CHECKOUT_GREASE" "$GS_SHARED_GIT_REMOTE_GREASE" "${GS_SHARED_REPO}/Grease"
     fi
     if [ -d "PharoCompatibility" ] ; then
-      updateClone $GS_SHARED_GIT_CHECKOUT_PHARO_COMPAT $GS_SHARED_GIT_REMOTE_PHARO_COMPAT ${GS_SHARED_REPO}/PharoCompatibility
+      updateClone "$GS_SHARED_GIT_CHECKOUT_PHARO_COMPAT" "$GS_SHARED_GIT_REMOTE_PHARO_COMPAT" "${GS_SHARED_REPO}/PharoCompatibility"
     fi
     if [ -d "glass" ] ; then
-      updateClone $GS_SHARED_GIT_CHECKOUT_GLASS1 $GS_SHARED_GIT_REMOTE_GLASS1 ${GS_SHARED_REPO}/glass
+      updateClone "$GS_SHARED_GIT_CHECKOUT_GLASS1" "$GS_SHARED_GIT_REMOTE_GLASS1" "${GS_SHARED_REPO}/glass"
     fi
     if [ -d "rb" ] ; then
-      updateClone $GS_SHARED_GIT_CHECKOUT_RB $GS_SHARED_GIT_REMOTE_RB ${GS_SHARED_REPO}/rb
+      updateClone "$GS_SHARED_GIT_CHECKOUT_RB" "$GS_SHARED_GIT_REMOTE_RB" "${GS_SHARED_REPO}/rb"
     fi
     if [ -d "zinc" ] ; then
-      updateClone $GS_SHARED_GIT_CHECKOUT_ZINC $GS_SHARED_GIT_REMOTE_ZINC ${GS_SHARED_REPO}/zinc
+      updateClone "$GS_SHARED_GIT_CHECKOUT_ZINC" "$GS_SHARED_GIT_REMOTE_ZINC" "${GS_SHARED_REPO}/zinc"
     fi
   fi
 popd >& /dev/null

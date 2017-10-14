@@ -7,4 +7,4 @@ createDefStoneLn: stoneDirectory
 		cr;
 		tab;
 		show: 'Creating defStone.env symbolic link to ' , defStoneBinFile pathString .
-	OSProcess command: 'ln -sf ' , defStoneBinFile pathString , ' ' , (stoneDirectory / defStone) pathString
+	OSProcess command: 'ln -sf "' , defStoneBinFile pathString , '" "' , (stoneDirectory / defStone) pathString, '"'

@@ -6,7 +6,7 @@
 #=========================================================================
 
 theArgs="$*"
-source ${GS_HOME}/bin/private/shFeedback
+source "${GS_HOME}/bin/private/shFeedback"
 start_banner
 
 usage() {
@@ -85,9 +85,9 @@ HELP
 if [ "${GS_HOME}x" = "x" ] ; then
   exit_1_banner "The GS_HOME environment variable needs to be defined"
 fi
-source ${GS_HOME}/bin/defGsDevKit.env
+source "${GS_HOME}/bin/defGsDevKit.env"
 
-source ${GS_HOME}/bin/private/shFunctions
+source "${GS_HOME}/bin/private/shFunctions"
 verify_gsdevkit_installation
 
 clientType="tode"
@@ -110,7 +110,7 @@ shift $(($OPTIND - 1))
 
 if [ "${showHelp}" = "true" ]; then
   if [ "$typeArg" = "set"  ] && [ "${GS_TODE_CLIENT}x" != "x" ]; then
-    ${GS_TODE_CLIENT}/bin/createClient -h
+    "${GS_TODE_CLIENT}/bin/createClient" -h
     exit 0
   fi
   usage
@@ -124,34 +124,34 @@ clientName=$1
 shift 1
 
 if [ "${GS_CLIENT_DEV}x" = "x" ] ; then
-  $GS_HOME/bin/private/clone_gs_client_dev
-  source ${GS_HOME}/bin/defGsDevKit.env
+  "$GS_HOME/bin/private/clone_gs_client_dev"
+  source "${GS_HOME}/bin/defGsDevKit.env"
 fi
 
 if [ "${GS_SYS_LOCAL}x" = "x" ] ; then
-  $GS_HOME/bin/private/clone_sys_local
-  source ${GS_HOME}/bin/defGsDevKit.env
+  "$GS_HOME/bin/private/clone_sys_local"
+  source "${GS_HOME}/bin/defGsDevKit.env"
 fi
 
 if [ "${deleteClientDir}" = "true" ] ; then
-  $GS_HOME/bin/deleteClient $clientName
+  "$GS_HOME/bin/deleteClient" $clientName
 fi
 
 todeArg=""
 case $clientType in
   tode)
     if [ "${GS_TODE_CLIENT}x" = "x" ] ; then
-      ${GS_HOME}/bin/private/clone_todeClient
-      source ${GS_HOME}/bin/defGsDevKit.env
+      "${GS_HOME}/bin/private/clone_todeClient"
+      source "${GS_HOME}/bin/defGsDevKit.env"
     fi
-    ${GS_TODE_CLIENT}/bin/createClient $debugArg $forceArg $* $clientName
+    "${GS_TODE_CLIENT}/bin/createClient" $debugArg $forceArg $* $clientName
     ;;
   pharo)
     if [ "${GS_TODE_CLIENT}x" = "x" ] ; then
-      ${GS_HOME}/bin/private/clone_todeClient
-      source ${GS_HOME}/bin/defGsDevKit.env
+      "${GS_HOME}/bin/private/clone_todeClient"
+      source "${GS_HOME}/bin/defGsDevKit.env"
     fi
-    ${GS_TODE_CLIENT}/bin/createClient -c $debugArg $forceArg $* $clientName
+    "${GS_TODE_CLIENT}/bin/createClient" -c $debugArg $forceArg $* $clientName
     ;;
   gemtools)
     ;;

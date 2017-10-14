@@ -6,7 +6,7 @@ GsDevKit is a client-server system, which may both be installed on a single mach
 
 The Development Kit for GemStone/S for client and server is known to work on Ubuntu, Centos, Debian, and MacOS. The Development Kit for GemStone/S for client is known to work on Windows.
 
-##Installation
+## Installation
 
 Before installing, you should read through the **[Installation Instructions][2]**.  There are several installation options: all on a single workstation, or with a local client and a remote server.  The script below installs GsDevKit and GemStone on a single workstation, creates and starts a Stone (server), and creates a tODE client.  You must [install git][14] before you can execute this script.
 
@@ -22,7 +22,7 @@ createStone devKit_33 3.3.0
 createClient tode1
 ```
 
-##Using GsDevKit and tODE
+## Using GsDevKit and tODE
 
 GsDevKit and tODE provide a development environment that is similar to Smalltalk IDEs, but with additonal functionality.  The most important capabilities are for project management, and the tODE command shell.  To get started learning about tODE features, see:
 * [Getting started with tODE][11]
@@ -30,7 +30,7 @@ GsDevKit and tODE provide a development environment that is similar to Smalltalk
 * [Projects in tODE][13]
 
 
-##FAQs
+## FAQs
 1. [If I am already using gsDevKitHome, why should I consider moving to GsDevKit_home?][3]
 2. [Do I have to rebuild all of my stones to use GsDevKit_home?][4]
 3. [Can I use a GsDevKit_home tODE client to connect to older stones?][5]
@@ -42,7 +42,7 @@ GsDevKit and tODE provide a development environment that is similar to Smalltalk
 9. [How do I upgrade a stone to a new version of GemStone?][16]
 10. [How do I load Seaside?][21]
 
-##Talks
+## Talks
 Smalltalks 2015: Announcing GsDevKit_home And tODE ([video][30], [slides][31])
 
 [**FEEDBACK**][8]

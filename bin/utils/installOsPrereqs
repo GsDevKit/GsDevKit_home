@@ -6,7 +6,7 @@
 #=========================================================================
 
 theArgs="$*"
-source ${GS_HOME}/bin/private/shFeedback
+source "${GS_HOME}/bin/private/shFeedback"
 start_banner
 
 usage() {
@@ -75,8 +75,7 @@ installUbuntuPackages(){
 
 installPrereqsForDebian(){
   case "$osVersion" in
-    testing)
-      installDebianPackages
+    testing | 8.3)
       sudo dpkg --add-architecture i386
       installUbuntuPackages
       sudo apt-get -y install fonts-dejavu # ensure that DejaVu Sans Mono font present (default font for tODE)
@@ -84,9 +83,6 @@ installPrereqsForDebian(){
       ;;
     *) usage; exit_1_banner "unrecognized Debian version $os";;
   esac
-}
-installDebianPackages(){
-  installUbuntuPackages
 }
 
 
@@ -146,9 +142,9 @@ case "$1" in
 esac
 
 # touch the following file, if you prefer to skip the installation of prerequisites
-osPrereqsSysSetup=$GS_HOME/bin/.osPrereqsSysSetup # if file exists, skip linux prereq installation
-sharedMemorySysSetup=$GS_HOME/bin/.sharedMemorySysSetup # if file exists, skip shared memory setup
-gsdevkitSysSetup=$GS_HOME/bin/.gsdevkitSysSetup # if file exists, shared memory setup already completed
+osPrereqsSysSetup="$GS_HOME/bin/.osPrereqsSysSetup" # if file exists, skip linux prereq installation
+sharedMemorySysSetup="$GS_HOME/bin/.sharedMemorySysSetup" # if file exists, skip shared memory setup
+gsdevkitSysSetup="$GS_HOME/bin/.gsdevkitSysSetup" # if file exists, shared memory setup already completed
 
 if [ -e "$gsdevkitSysSetup" ]; then
   echo "Skip operating system configuration steps, system already setup ($gsdevkitSysSetup exists)"
@@ -306,7 +302,7 @@ else
     echo "[Warning] /opt/gemstone directory already exists"
     echo "to replace it, remove or rename it and rerun this script"
   fi
-  cat - > $sharedMemorySysSetup << EOF
+  cat - > "$sharedMemorySysSetup" << EOF
 the presence of this file means that \$GS_HOME/bin/installOsPrereqs has 
 set up shared memory for GemStone/S 64
 EOF
@@ -321,7 +317,7 @@ case "$PLATFORM" in
       # Do a trivial sudo to test we can and get the password prompt out of the way
       sudo date
 
-      if [ -f /etc/lsb-release ] || [ -f `which lsb_release` ]; then
+	  if [ -f /etc/lsb-release ] || [ `which lsb_release 2> /dev/null > /dev/null; echo $?` = "0" ]; then
         osName=`lsb_release -ds | cut -d ' ' -f 1 | cut -d '"' -f 2`
         osVersion=`lsb_release -rs`
       elif [ -f /etc/centos-release ]; then
@@ -344,7 +340,7 @@ case "$PLATFORM" in
 		  ;;
 	    *) usage; exit_1_banner "Unrecognized Linux named $osName version $osVersion";;
 	  esac
-	    cat - > $osPrereqsSysSetup << EOF
+	    cat - > "$osPrereqsSysSetup" << EOF
 the presence of this file means that \$GS_HOME/bin/installOsPrereqs has 
 installed the prerequisites for GemStone/S 64
 EOF
@@ -353,7 +349,7 @@ EOF
   *) # nothing special needed
     ;;
 esac
-cat - > $gsdevkitSysSetup << EOF
+cat - > "$gsdevkitSysSetup" << EOF
 the presence of this file means that \$GS_HOME/bin/installOsPrereqs has 
 configured the OS for running GemStone/S 64, including the setup of shared memory
 EOF

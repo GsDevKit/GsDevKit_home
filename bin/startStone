@@ -6,7 +6,7 @@
 #=========================================================================
 
 theArgs="$*"
-source ${GS_HOME}/bin/private/shFeedback
+source "${GS_HOME}/bin/private/shFeedback"
 start_banner
 
 usage() {
@@ -82,7 +82,7 @@ shift $(($OPTIND - 1))
 if [ "${GS_HOME}x" = "x" ] ; then
   exit_1_banner "the GS_HOME environment variable needs to be defined"
 fi
-source ${GS_HOME}/bin/defGsDevKit.env
+source "${GS_HOME}/bin/defGsDevKit.env"
 if [ "$GS_SERVER{}x" = "x" ] ; then
   exit_1_banner "The GS_SERVER environment variable needs to be defined. Perhaps a stone has not been create yet?"
 fi
@@ -91,21 +91,20 @@ if [ $# -ne 1 ]; then
   usage; exit_1_banner "Required argument missing"
 fi
 stoneName=$1
-stonePath=$GS_SERVER_STONES/$stoneName
+stonePath="$GS_SERVER_STONES/$stoneName"
 
 if [ ! -d "$stonePath" ] ; then
   exit_1_banner "The stone $stoneName does not exist"
 fi
 
 # set up stone environment
-
-pushd $stonePath >& /dev/null
-  source $stonePath/stone.env
+pushd "$stonePath" >& /dev/null
+  source "$stonePath/stone.env"
 popd >& /dev/null
 
 if [ "${restart}x" = "x" ] ; then
   trap - ERR
-  $stonePath/product/bin/waitstone $stoneName  -1
+  "$stonePath/product/bin/waitstone" $stoneName  -1
   status=$?
   if [ $status -eq 0 ] ; then
     exit_0_banner "stone $stoneName already running, to restart use -r option"
@@ -114,12 +113,12 @@ if [ "${restart}x" = "x" ] ; then
 fi
 
 # start the stone
-$GS_HOME/bin/devKitCommandLine startstone $stoneName $ARG
+"$GS_HOME/bin/devKitCommandLine" startstone $stoneName $ARG
 
 if [ "${waitTime}x" = "x" ] ; then
   if [ "${GS_TRAVIS}x" != "x" ] ; then
     trap - ERR
-    $stonePath/product/bin/waitstone $stoneName 5
+    "$stonePath/product/bin/waitstone" $stoneName 5
     status=$?
     if [ $status -ne 0 ] ; then
       exit_1_banner "stone $stoneName did not start"
@@ -128,7 +127,7 @@ if [ "${waitTime}x" = "x" ] ; then
   fi
 else
   trap - ERR
-  $stonePath/product/bin/waitstone $stoneName $waitTime
+  "$stonePath/product/bin/waitstone" $stoneName $waitTime
   status=$?
   if [ $status -ne 0 ] ; then
     exit_1_banner "stone $stoneName did not start"
@@ -137,7 +136,7 @@ else
 fi
 
 if [ "${startnetldi}" = "true" ] ; then
-  $GS_HOME/bin/startNetldi $stoneName
+  "$GS_HOME/bin/startNetldi" $stoneName
 fi
 
 exit_0_banner "...finished"
