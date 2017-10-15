@@ -39,8 +39,7 @@ case $TEST in
     installClient
     createClient tode2
 
-    downloadGemStone 3.3.5
-    downloadGemStone -f 3.3.5
+    downloadGemStone -f $GS_VERSION
     downloadGemStone -f -d 3.4.0-Alpha5 3.4.0
     ;;
   Error)
