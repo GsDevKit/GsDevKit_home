@@ -38,6 +38,10 @@ case $TEST in
     createStone -g ${STONENAME2} $GS_VERSION
     installClient
     createClient tode2
+
+    downloadGemStone 3.3.5
+    downloadGemStone -f 3.3.5
+    downloadGemStone -f -d 3.4.0-Alpha5 3.4.0
     ;;
   Error)
    $GS_HOME/tests/errorTests.sh
