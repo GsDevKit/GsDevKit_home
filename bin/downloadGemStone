@@ -13,7 +13,7 @@ start_banner
 # help function
 usage() {
  cat <<HELP
-USAGE: $(basename $0) [-h] <gemstone-version>
+USAGE: $(basename $0) [-h] [-f] [-d <directory-name>] <gemstone-version>
 
 Safe to run multiple times, as it will not overwrite existing data
 
@@ -25,21 +25,36 @@ Actions:
    Print build version information and available IPv4 addresses
 
 OPTIONS
-  -h display help
+  -h
+     display help
+  -d <directory-name>
+     Download the GemStone product zipfile from the given <directory-name> on 
+     the ftp site, instead of the default location.
+  -f
+     If a product download already exists in the \$GS_HOME/shared/downloads/products
+     directory, delete the exising download and replace with the freshly downloaded
+     product tree
 
 EXAMPLES
   $(basename $0) -h
+  $(basename $0) -d 3.4.0-Alpha5 3.4.0
+  $(basename $0) -df 3.4.0-Alpha5 3.4.0
   $(basename $0) 3.2.9
 
 HELP
 }
 
-while getopts "h" OPT ; do
+force=""
+alternateDir=""
+while getopts "hfd:" OPT ; do
   case "$OPT" in
     h) usage ; exit 0 ;;
+    d) alternateDir="${OPTARG}" ;;
+    f) force="true" ;;
     *) usage ; exit_1_banner "Unknown option" ;;
   esac
 done
+shift $(($OPTIND - 1))
 
 if [ "$1x" = "x" ] ; then
   usage; exit_1_banner "Required positional argument missing"
@@ -50,8 +65,13 @@ if [ "${GS_HOME}x" = "x" ] ; then
 fi
 source "${GS_HOME}/bin/defGsDevKit.env"
 
-echo "Downloading GemStone/S $vers"
-bucket=$vers
+if [ "${alternateDir}x" = "x" ] ; then 
+  bucket=$vers
+  echo "Downloading GemStone/S $vers"
+else
+  bucket=$alternateDir
+  echo "Downloading GemStone/S ($bucket) $vers"
+fi
 
 # Detect operating system
 PLATFORM="`uname -sm | tr ' ' '-'`"
@@ -97,7 +117,13 @@ machine_name="`uname -n`"
 echo "[Info] Starting download of $gsvers on $machine_name"
 
 if [ -d "$GS_SHARED_DOWNLOADS/products/$gsvers" ] ; then
+  if [ "${force}" = "true" ] ; then
+    chmod -R +w "$GS_SHARED_DOWNLOADS//products/$gsvers"
+    rm -rf "$GS_SHARED_DOWNLOADS/products/$gsvers"
+    rm -rf "$GS_SHARED_DOWNLOADS/zip/${gsvers}.zip"
+  else
     exit_0_banner "$GS_SHARED_DOWNLOADS//products/$gsvers already exists to replace it, remove or rename it and rerun this script"
+  fi
 fi
 
 # Look for either wget to download GemStone

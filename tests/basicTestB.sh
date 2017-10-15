@@ -26,6 +26,8 @@ createStone -f -u http://gsdevkit.github.io/GsDevKit_home/TestSample2.ston \
             -i Sample -l Sample \
             -t $todeSnapshot ${STONENAME3} $GS_VERSION
 
+downloadGemStone -f -d 3.4.0-Alpha5 3.4.0
+
 $GS_HOME/bin/private/gsDevKitTodeCommandLine todeIt ${STONENAME3} << EOF
 project entry --url=http://gsdevkit.github.io/GsDevKit_home/Flow.ston /sys/stone/projects
 project install Flow
