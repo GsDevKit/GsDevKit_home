@@ -5,6 +5,8 @@ os:
 
 env:
   - GS_VERSION=3.2.17 TEST=Error
+  - GS_VERSION=3.4.0 DOWNLOAD=3.4.0-Alpha5 TEST=BasicA
+  - GS_VERSION=3.4.0 DOWNLOAD=3.4.0-Alpha5 TEST=BasicB
   - GS_VERSION=2.4.8 TEST=BasicA
   - GS_VERSION=2.4.8 TEST=BasicB
   - GS_VERSION=3.1.0.6 TEST=BasicA
@@ -13,8 +15,6 @@ env:
   - GS_VERSION=3.2.17 TEST=BasicB
   - GS_VERSION=3.3.6 TEST=BasicA
   - GS_VERSION=3.3.6 TEST=BasicB
-  - GS_VERSION=3.4.0 DOWNLOAD=3.4.0-Alpha5 TEST=BasicA
-  - GS_VERSION=3.4.0 DOWNLOAD=3.4.0-Alpha5 TEST=BasicB
   - GS_VERSION=3.3.6 TEST=Install
   - GS_VERSION=3.3.6 TEST=Clients
   - GS_VERSION=3.3.6 TEST=Client Client=Pharo3.0

@@ -52,6 +52,7 @@ shift $(($OPTIND - 1))
 
 pushd "${GS_HOME}" >& /dev/null
   "${GS_HOME}/bin/private/cloneGitHubProject" $modeArg $organization GsDevKit_gs_client_dev dev
+  checkoutClone "$GSDEVKIT_DEV_GIT_CHECKOUT" "$GS_CLIENT_DEV"
 popd >& /dev/null
 
 exit_0_banner "...finished"
