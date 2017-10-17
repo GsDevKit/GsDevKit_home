@@ -191,7 +191,11 @@ case "$PLATFORM" in
 esac
 
 #    Copy the gci libraries to client installations
-"$GS_HOME/bin/private/installClientGciLibraries" $vers
+if [ "${force}x" = "x" ] ; then
+  "$GS_HOME/bin/private/installClientGciLibraries" $vers
+else
+  "$GS_HOME/bin/private/installClientGciLibraries" -f $vers
+fi
 
 echo "[Info] Finished $gsvers download on $machine_name"
 echo ""
