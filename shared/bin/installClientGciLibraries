@@ -40,6 +40,7 @@ while getopts "fh" OPT ; do
     *) usage; exit_1_banner "Uknown option";;
   esac
 done
+shift $(($OPTIND - 1))
 
 if [ $# -ne 1 ]; then
   usage; exit_1_banner "Missing required positional parameter"
