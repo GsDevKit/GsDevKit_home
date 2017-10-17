@@ -28,6 +28,10 @@ $GS_HOME/bin/private/clone_sys_local -c https
 # Customize the scripts used by tODE (https://github.com/dalehenrich/tode/issues/226)
 $GS_HOME/tests/travisCustomize.sh
 
+if [ "${DOWNLOAD}x" != "x" ] ; then
+  downloadGemStone -f -d "${DOWNLOAD}" $GS_VERSION
+fi
+
 case $TEST in
   Install)
     installClient
@@ -38,6 +42,8 @@ case $TEST in
     createStone -g ${STONENAME2} $GS_VERSION
     installClient
     createClient tode2
+
+    downloadGemStone -f $GS_VERSION
     ;;
   Error)
    $GS_HOME/tests/errorTests.sh
