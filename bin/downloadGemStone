@@ -209,6 +209,7 @@ if [ "${GS_TRAVIS}x" != "x" ] ; then
         3.2.*) keyName="GemStone64Bit3.2.0-x86_64.Linux.key" ;;
         3.2.*) keyName="GemStone64Bit3.2.0-x86_64.Linux.key" ;;
         3.3.*) keyName="GemStone64Bit3.3.0-x86_64.Linux.key" ;;
+        3.4.*) ;;
         *) exit_1_banner "No travis license for GemStone $vers";;
       esac
       if [ "${keyName}x" != "x" ] ; then
