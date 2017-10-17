@@ -50,6 +50,8 @@ while getopts "hc:o:" OPT ; do
 done
 shift $(($OPTIND - 1))
 
+source "${GS_HOME}/bin/private/gitFunctions"
+
 pushd "${GS_HOME}" >& /dev/null
   "${GS_HOME}/bin/private/cloneGitHubProject" $modeArg $organization GsDevKit_gs_client_dev dev
   checkoutClone "$GSDEVKIT_DEV_GIT_CHECKOUT" "$GS_CLIENT_DEV"
