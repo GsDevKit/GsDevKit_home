@@ -1,0 +1,10 @@
+TDObjectGatewayLeafNode{#name:'PharoGs',#contents:'^ TDProjectSpecEntryDefinition new
+    baseline: \'PharoGs\'
+      repository: \'github://dalehenrich/PharoGs:gs/src\'
+      loads: #(\'Tests\');
+    preLoadScript: \'
+      mount @/sys/stone/dirs/PharoGs/tode /home pharoGs
+      /home/pharoGs/prep \';
+    status: #(#\'active\');
+    locked: false;
+    yourself'}
