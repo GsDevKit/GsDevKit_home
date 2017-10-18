@@ -2,8 +2,9 @@ TDObjectGatewayLeafNode{#name:'PharoGs',#contents:'^ TDProjectSpecEntryDefinitio
     baseline: \'PharoGs\'
       repository: \'github://dalehenrich/PharoGs:gs/src\'
       loads: #(\'Tests\');
-    preLoadScript: \'
-      mount @/sys/stone/dirs/PharoGs/tode /home pharoGs
+    installScript: \'
+      project clone --https --local PharoGs
+      mount @/sys/stone/dirs/PharoGs/tode /home pharoGs     
       /home/pharoGs/prep \';
     status: #(#\'active\');
     locked: false;
