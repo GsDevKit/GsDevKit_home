@@ -38,7 +38,7 @@ OPTIONS
 EXAMPLES
   $(basename $0) -h
   $(basename $0) -d 3.4.0-Alpha5 3.4.0
-  $(basename $0) -df 3.4.0-Alpha5 3.4.0
+  $(basename $0) -f -d 3.4.0-Alpha5 3.4.0
   $(basename $0) 3.2.9
 
 HELP
