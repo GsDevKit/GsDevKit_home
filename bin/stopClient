@@ -1,0 +1,57 @@
+#! /usr/bin/env bash
+#=========================================================================
+# Copyright (c) 2014, 2015 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#
+#   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
+#=========================================================================
+
+theArgs="$*"
+source ${GS_HOME}/bin/private/shFeedback
+start_banner
+
+usage() {
+  cat <<HELP
+USAGE: $(basename $0) [-h] <client-name> [ <client-specific-args> ]
+
+Stop the client named <client-name>.
+
+OPTIONS
+  -h 
+     display help
+
+EXAMPLES
+  $(basename $0) -h
+  $(basename $0) tode -h
+
+  $(basename $0) tode
+  $(basename $0) gemtools_329
+  $(basename $0) jade_329
+
+HELP
+}
+
+if [ "${GS_HOME}x" = "x" ] ; then
+  exit_1_banner "the GS_HOME environment variable needs to be defined"
+fi
+source ${GS_HOME}/bin/defGsDevKit.env
+
+if [ "$1" = "-h" ] ; then
+  usage; exit 0
+fi
+
+if [ $# -lt 1 ]; then
+   usage; exit_1_banner "Missing required client name argument"
+fi
+clientName=$1
+shift 1
+
+
+
+if [ "${GS_CLIENT_DEV}x" = "x" ] || [ ! -d "${GS_CLIENT_DEV_CLIENTS}/$clientName" ] ; then
+  # client does not exist and we are in a non-interactive shell
+  exit_1_banner "The requested client: $clientName does not exist"
+fi
+
+${GS_CLIENT_DEV_CLIENTS}/$clientName/stopClient $* $clientName
+
+exit_0_banner "...finished"

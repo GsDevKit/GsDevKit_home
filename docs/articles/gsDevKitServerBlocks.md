@@ -4,7 +4,7 @@
 2. [THIN CLIENT example](#thin-client-example)
 3. [Caveats](#caveats)
 
-##Intro
+## Intro
 A *GsDevKit Server Block* is a `block` that is written in-line in client Smalltalk in Pharo, while the code in the `block` is executed on the server in GemStone.
 For example, the following code can be evaluated in a standard Pharo workspace while the `[ x + y ]` block is executed in a gem connected to the `devKit` stone:
 
@@ -27,7 +27,7 @@ The result of the `block` evaluation is serialized using [STON][1] and returned 
 On the client, the result is reified and returned as the result of the `onServerDo:` message.
 
 
-##`onServerDo:` Examples
+## `onServerDo:` Examples
 
 ```Smalltalk
 "Establish server connection"
@@ -53,7 +53,7 @@ z + 3.
 DevKitShell quit.
 ```
 
-##THIN CLIENT example
+## THIN CLIENT example
 The classic problem when working with a client/server application is to pick the right cut point for the client/server boundary.
 Too fat and you end up needing more and more of the business objects on the client which leads to network-based performance issues as well as complicated replication/management frameworks.
 Too thin and ... I'm not sure that the client can be too thin.
@@ -84,7 +84,7 @@ The following doits illustrate a few of the common use cases encountered in a th
 
 2. Export domain class (NeoCSVTestObject) to GemStone:
   ```Smalltalk
-  DevKitShell 
+  DevKitShell
     exportClassToServer: NeoCSVTestObject;
     onServerDo: [ System commitTransaction ].
   ```
@@ -100,7 +100,7 @@ The following doits illustrate a few of the common use cases encountered in a th
 4. Initialize data store in GemStone:
   ```Smalltalk
   DevKitShell
-    onServerDo: [ 
+    onServerDo: [
       UserGlobals
         at: #'NeoCSVDictionary'
         put: Dictionary new.
@@ -110,7 +110,7 @@ The following doits illustrate a few of the common use cases encountered in a th
 5. Load domain data into GemStone from CSV file. Commit every 1000 records:
   ```Smalltalk
 'NeoCSVBenchmark.csv' asFileReference
-    readStreamDo: [ :stream | 
+    readStreamDo: [ :stream |
       | reader converter buffer bufCnt numRecords records |
       converter := [ :string | NeoNumberParser parse: string ].
       reader := NeoCSVReader on: (ZnBufferedReadStream on: stream).
@@ -122,16 +122,16 @@ The following doits illustrate a few of the common use cases encountered in a th
       buffer := Array new: 1000.
       bufCnt := 0.
       [ reader atEnd ]
-        whileFalse: [ 
+        whileFalse: [
           bufCnt := bufCnt + 1.
           buffer at: bufCnt put: reader next.
           bufCnt = buffer size
-            ifTrue: [ 
+            ifTrue: [
               numRecords := bufCnt.
               records := buffer.
               DevKitShell
-                onServerDo: [ 
-                  1 to: numRecords do: [ :index | 
+                onServerDo: [
+                  1 to: numRecords do: [ :index |
                     | record |
                     record := records at: index.
                     NeoCSVDictionary at: record x put: record ].
@@ -147,11 +147,11 @@ The following doits illustrate a few of the common use cases encountered in a th
   min := 500.
   max := 550.
   resultSize := DevKitShell
-    onServerDo: [ 
+    onServerDo: [
       | queryResults |
       queryResults := OrderedCollection new.
       NeoCSVDictionary
-        keysAndValuesDo: [ :id :record | 
+        keysAndValuesDo: [ :id :record |
           (id >= min and: [ id <= max ])
             ifTrue: [ queryResults add: record ] ].
       UserGlobals at: #'NeoCSVQueryResults' put: queryResults.
@@ -162,7 +162,7 @@ The following doits illustrate a few of the common use cases encountered in a th
 
 7. View a specific record:
   ```Smalltalk
-	
+
   | resultIndex |
   resultIndex := 25.
   DevKitShell
@@ -174,7 +174,7 @@ The following doits illustrate a few of the common use cases encountered in a th
   DevKitShell quit.
   ```
 
-##Caveats
+## Caveats
 When using `doIt`, `printIt`, etc. the workspace code is initially compiled in Pharo.
 Consequently if you have an expression like:
 

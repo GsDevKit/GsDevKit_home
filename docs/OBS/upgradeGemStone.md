@@ -1,4 +1,4 @@
-#Upgrade GemStone
+# Upgrade GemStone
 
 ---
 
@@ -8,7 +8,7 @@
 
 ---
 
-##Table of Contents
+## Table of Contents
 
 ---
 
@@ -22,14 +22,14 @@
  - [Common *upgradeImage* Errors](#common-upgradeimage-errors)
  - [Common *upgradeSeasideImage* Errors](#common-upgradeseasideimage-errors)
  - [Interpretting *topazerrors.log* files](#interpretting-topazerrorslog-files)
-   
----
-
-##Introduction
 
 ---
 
-**READ THE INSTALL GUIDES for [Linux][1] or [Mac][2] FIRST**. 
+## Introduction
+
+---
+
+**READ THE INSTALL GUIDES for [Linux][1] or [Mac][2] FIRST**.
 
 ---
 
@@ -39,10 +39,10 @@ process.
 
 To perform an upgrade, you need to accomplish three things:
 
-1. Install the GemStone/S Core code base for the target GemStone version, which may include new **Global** methods and classes. 
+1. Install the GemStone/S Core code base for the target GemStone version, which may include new **Global** methods and classes.
 
-  
-2. Install the GLASS/GsDevKit code base for the target GemStone version, which may include different sets of GsDevKit packages. 
+
+2. Install the GLASS/GsDevKit code base for the target GemStone version, which may include different sets of GsDevKit packages.
 
 3. Install your application code, which may need to be different for the target GemStone version.
 
@@ -54,11 +54,11 @@ The [upgradeGemStone script][3] automates nearly all of the upgrade steps called
 
 [Step 3][11], and [step 4][12] of the [Perform the Upgrade][9] section need to be performed manually after the upgrade is comnplete).
 
-##Porting your application to the target version of GemStone
+## Porting your application to the target version of GemStone
 
 ---
 
-**READ THE INSTALL GUIDES for [Linux][1] or [Mac][2] FIRST**. 
+**READ THE INSTALL GUIDES for [Linux][1] or [Mac][2] FIRST**.
 
 ---
 
@@ -71,16 +71,16 @@ complicated than installing your application in a virgin seaside extent
 and running your tests.
 
 If you are upgrading from GemStone 2.x, the port may be more complicated
-and you should pay special attention to the section entitled 
+and you should pay special attention to the section entitled
 [Prior to Upgrade in existing application][18] in [Chapter 3][17] of the
 Install Guides.
 
 You should also [Check for use of deprecated methods][19].
 
-###Package Naming Guidelines
+### Package Naming Guidelines
 
 If you find that you do indeed have code changes that are specific to
-the target version of GemStone, then you will need to decide on a re-packaging strategy. You can 
+the target version of GemStone, then you will need to decide on a re-packaging strategy. You can
 take one of two routes:
 
 1. Create a package branch using the GemStone version number (`3.2` for example), where you simply make the necessary
@@ -90,9 +90,9 @@ take one of two routes:
    would look like the following:
 
    ```Smalltalk
-   spec for: #'gemstone' do: [ 
+   spec for: #'gemstone' do: [
      spec package: 'MyApplication-Core' ].
-   spec for: #'gs3.2.x' do: [ 
+   spec for: #'gs3.2.x' do: [
      spec package: 'MyApplication-Core' with: [ spec file: 'MyApplication-Core.v32']
    ```
 
@@ -105,11 +105,11 @@ take one of two routes:
    modified to look like the following:
 
    ```Smalltalk
-   spec for: #'gemstone' do: [ 
+   spec for: #'gemstone' do: [
      spec package: 'MyApplication-Core' ].
    spec
      for: #'gs2.4.x'
-     do: [ 
+     do: [
        spec
          package: 'MyApplication-Core'
            with: [ spec includes: 'MyApplication-2x-Core' ];
@@ -117,19 +117,19 @@ take one of two routes:
            with: [ spec requires: 'MyApplication-Core' ] ].
    spec
      for: #'gs3.2.x'
-     do: [ 
+     do: [
        spec
          package: 'MyApplication-Core'
            with: [ spec includes: 'MyApplication-32-Core' ];
          package: 'MyApplication-32-Core'
            with: [ spec requires: 'MyApplication-Core' ] ]
-   ``` 
+   ```
 
 The first approach is appropriate if you will be moving your entire
 development effort to GemStone 3.2 and most if not all code
 modifications will take place in the 3.2 branch. It is relatively easy
 to merge changes from *MyApplication-Core* to *MyApplication-Core.v32*,
-but it is not quite as easy to merge changes from *MyApplication-Core.v32* 
+but it is not quite as easy to merge changes from *MyApplication-Core.v32*
 back to *MyApplication-Core*.
 
 The second approach is appropriate if you intend to continue development
@@ -137,22 +137,22 @@ for both GemStone `2.x` (or `3.1.x`) and GemStone `3.2` as it is much easier
 to share the common code across multiple platforms, when merging
 isn't required.
 
-##Pre Upgrade
+## Pre Upgrade
 
 ---
 
-**READ THE INSTALL GUIDES for [Linux][1] or [Mac][2] FIRST**. 
+**READ THE INSTALL GUIDES for [Linux][1] or [Mac][2] FIRST**.
 
 ---
 
-Before running the [upgradeGemStone script][3] for the first time, you need to 
+Before running the [upgradeGemStone script][3] for the first time, you need to
 [reset SystemUser password][14] and [stop user activity][16].
 
-##Running the upgradeGemStone script
+## Running the upgradeGemStone script
 
 ---
 
-**READ THE INSTALL GUIDES for [Linux][1] or [Mac][2] FIRST**. 
+**READ THE INSTALL GUIDES for [Linux][1] or [Mac][2] FIRST**.
 
 ---
 
@@ -171,7 +171,7 @@ The [upgradeGemStone script][3] performs the following upgrade steps:
 ---
 
 ### 1. Install and configure the target version of GemStone
-[Step 1][13] of the [Prepare for Upgrade][7] section is performed using the [installGemStone][24] and [createStone][25] scripts. 
+[Step 1][13] of the [Prepare for Upgrade][7] section is performed using the [installGemStone][24] and [createStone][25] scripts.
 
 ### 2. Stop source stone
 [Step 4][21] of the [Prepare for Upgrade][7] section is performed using the [stopStone][26] script.
@@ -192,8 +192,8 @@ using the following command:
 ```Shell
 $GEMSTONE/bin/upgradeImage -s $GEMSTONE_NAME
 ```
-If there are errors during the exectuion of the script, 
-the *topazerrors.log* file contains pointers to the error conditions. See 
+If there are errors during the exectuion of the script,
+the *topazerrors.log* file contains pointers to the error conditions. See
 [Interpretting topazerrors.log files](#interpretting-topazerrorslog-files)
 for information about interpretting the contents of the *topazerrors.log*.
 
@@ -205,8 +205,8 @@ Once the *bootstrap-globals* script has been run, the *upgradeSeaside* script is
 ```Shell
 $GEMSTONE/seaside/bin/upgradeSeasideImage -s $GEMSTONE_NAME
 ```
-If there are errors during the exectuion of the script, 
-the *topazerrors.log* file contains pointers to the error conditions. See 
+If there are errors during the exectuion of the script,
+the *topazerrors.log* file contains pointers to the error conditions. See
 [Interpretting topazerrors.log files](#interpretting-topazerrorslog-files)
 for information about interpretting the contents of the *topazerrors.log*.
 
@@ -229,7 +229,7 @@ is specified, but this file along with the other *load* files in the directory:
 
 are simply example scripts. To create your own *application-load* file, you should take the topaz script
 that you use to load your code into GemStone/S and modify it so that it will perform as an *application-load*
-script. To do so, you need to add a **MCPerformPostloadNotification** handler to your load script and 
+script. To do so, you need to add a **MCPerformPostloadNotification** handler to your load script and
 only allow the initialization of classes that are needed for the upgrade. The following code can be
 used as a template:
 
@@ -245,18 +245,18 @@ performInitialization := #("names of class needing class initialization during u
                ex resume: true ]
              ifFalse: [
                GsFile gciLogServer: ' Skip ', ex postloadClass name asString, ' initialization.'.
-                ex resume: false ] ] 
+                ex resume: false ] ]
 ```
 
-During the upgrade process, all of the methods are removed from your application classes, so during the load, 
+During the upgrade process, all of the methods are removed from your application classes, so during the load,
 *Monticello* will rerun **all** class initializations. Obviously, this can lead to all sorts of nasty problems.
 
-99% of the classes do not need to have the class initaliazations run, however, every once in a while, you may 
-find it necessary to run an #initialize method. If you look at the *upgradeSeasideImage* script there are a handful 
+99% of the classes do not need to have the class initaliazations run, however, every once in a while, you may
+find it necessary to run an #initialize method. If you look at the *upgradeSeasideImage* script there are a handful
 of classes that are explicitly initialized during upgrade.
 
-If there are errors during the exectuion of the script, 
-the *topazerrors.log* file contains pointers to the error conditions. See 
+If there are errors during the exectuion of the script,
+the *topazerrors.log* file contains pointers to the error conditions. See
 [Interpretting topazerrors.log files](#interpretting-topazerrorslog-files)
 for information about interpretting the contents of the *topazerrors.log*.
 
@@ -264,13 +264,13 @@ for information about interpretting the contents of the *topazerrors.log*.
 
 ---
 
-**READ THE INSTALL GUIDES for [Linux][1] or [Mac][2] FIRST**. 
+**READ THE INSTALL GUIDES for [Linux][1] or [Mac][2] FIRST**.
 
 ---
 
 After the script has completed with no errors, you should continue following
-the upgrade procedure outlined in the *Post-upgrade Application Code Modifications* 
-sections in **Chapter 2. Upgrading from previous 
+the upgrade procedure outlined in the *Post-upgrade Application Code Modifications*
+sections in **Chapter 2. Upgrading from previous
 GemStone/S 64 Bit 3.x versions** or **Chapter 3. Converting from GemStone/S 64 Bit 2.4.xversions** of the
 [Linux][1] or [Mac][2] **Install Guides**.
 
@@ -279,7 +279,7 @@ GemStone/S 64 Bit 3.x versions** or **Chapter 3. Converting from GemStone/S 64 B
 ### Common *upgradeImage* Errors
 If an error occurs while running *upgradeImage*
 it will more than likely require help from GemStone engineers to
-diagnose the problem. 
+diagnose the problem.
 
 Gather up the log files and package them in an email to the [GLASS mailing
 list][5].
@@ -316,7 +316,7 @@ ERROR: UNEXPECTED ERROR
 ```
 
 The best way to resolve the error is to find a copy of the missing mcz
-file (*Squeak.v32-dkh.300.mcz* or *OB-GemStone-Platform-dkh.69*) and copy it into 
+file (*Squeak.v32-dkh.300.mcz* or *OB-GemStone-Platform-dkh.69*) and copy it into
 the **BootstrapRepositoryDirectory**. If you are
 using the default location, you will need to make the directory
 writable.
@@ -361,28 +361,28 @@ and temp values:
 ```
 ==> 1 MessageNotUnderstood >> defaultAction         @2 line 3   [methId 212055297]
     receiver [246793217 sz:13 cls: 131073 MessageNotUnderstood] a MessageNotUnderstood occurred (error 2010), a UndefinedObject does not understand  #'project'
-    result [20 sz:0 cls: 76289 UndefinedObject] nil 
+    result [20 sz:0 cls: 76289 UndefinedObject] nil
 (skipped 1 evaluationTemps)
 2 MessageNotUnderstood (AbstractException) >> _signalWith: @5 line 25   [methId 212120321]
     receiver [246793217 sz:13 cls: 131073 MessageNotUnderstood] a MessageNotUnderstood occurred (error 2010), a UndefinedObject does not understand  #'project'
-    inCextensionArg [20 sz:0 cls: 76289 UndefinedObject] nil 
-    res [20 sz:0 cls: 76289 UndefinedObject] nil 
+    inCextensionArg [20 sz:0 cls: 76289 UndefinedObject] nil
+    res [20 sz:0 cls: 76289 UndefinedObject] nil
 (skipped 1 evaluationTemps)
 3 MessageNotUnderstood (AbstractException) >> signal @2 line 47   [methId 212123905]
     receiver [246793217 sz:13 cls: 131073 MessageNotUnderstood] a MessageNotUnderstood occurred (error 2010), a UndefinedObject does not understand  #'project'
 4 UndefinedObject (Object) >> doesNotUnderstand: @9 line 10   [methId 168907521]
-    receiver [20 sz:0 cls: 76289 UndefinedObject] nil 
+    receiver [20 sz:0 cls: 76289 UndefinedObject] nil
     aMessageDescriptor [245338369 sz:2 cls: 66817 Array] anArray
     args [246792961 sz:0 cls: 66817 Array] anArray
     sel [19544065 sz:7 cls: 110849 Symbol] project
     ex [246793217 sz:13 cls: 131073 MessageNotUnderstood] a MessageNotUnderstood occurred (error 2010), a UndefinedObject does not understand  #'project'
 (skipped 3 evaluationTemps)
 5 UndefinedObject (Object) >> _doesNotUnderstand:args:envId:reason: @7 line 12   [methId 168899073]
-    receiver [20 sz:0 cls: 76289 UndefinedObject] nil 
+    receiver [20 sz:0 cls: 76289 UndefinedObject] nil
     aSymbol [19544065 sz:7 cls: 110849 Symbol] project
     anArray [246792961 sz:0 cls: 66817 Array] anArray
-    aSmallInt [2 sz:0 cls: 74241 SmallInteger] 0 == 0x0 
-    dnuKind [2 sz:0 cls: 74241 SmallInteger] 0 == 0x0 
+    aSmallInt [2 sz:0 cls: 74241 SmallInteger] 0 == 0x0
+    dnuKind [2 sz:0 cls: 74241 SmallInteger] 0 == 0x0
 6 [] in  ExecBlock0 (MetacelloScriptEngine) >> get @13 line 12   [methId 241598209]
     self [246720769 sz:3 cls: 28447233 MetacelloScriptEngine] aMetacelloScriptEngine
     receiver [246724097 sz:5 cls: 127745 ExecBlock0] anExecBlock0
@@ -422,4 +422,3 @@ and temp values:
 [26]: ../../bin/stopStone
 [27]: ../../bin/stoneNewExtent
 [28]: ../../bin/startStone
-

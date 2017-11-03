@@ -7,7 +7,7 @@
 
 If you are undecided about whether or not you should install the optional packages, read the section on [Client/Server Configurations][4].
 
-##Install Basic Prerequisites (required)
+## Install Basic Prerequisites (required)
 
 The following programs must be installed on OS X 10.9 for GsDefKit and tODE to function:
 
@@ -22,17 +22,17 @@ To install `wget`, first [install brew][1] then:
 brew install wget
 ```
 
-##Optional Installs
+## Optional Installs
 
-###Install X11 Client (optional)
+### Install X11 Client (optional)
 To connect to a remote stone, you may want to install X11 [follow these instructions][3]. Other options are to install X11 on the remote, or to connect to the remote netldi port via SSH.
 
-##Preinstalled
+## Preinstalled
 The following prerequisites are installed on Mac OS X by default, so no additional steps are needed.
 - ssh
 - curl
 
-###Unsupported
+### Unsupported
 - Currently the [osPrereqs script][5] does not support OS X.
 
 [1]: http://coolestguidesontheplanet.com/setting-up-os-x-mavericks-and-homebrew/
@@ -41,5 +41,5 @@ The following prerequisites are installed on Mac OS X by default, so no addition
 [4]: osPrereqs.md#clientserver-configurations
 [5]: ../../bin/osPrereqs
 
-##Unknown
+## Unknown
 - PAM - is this needed for OS X?

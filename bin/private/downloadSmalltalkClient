@@ -94,12 +94,46 @@ case $version in
           esac
           ;;
         Pharo4.0)
-          $cmd get.pharo.org/vm40 | bash
-          $cmd get.pharo.org/40 | bash
+          case "$PLATFORM" in
+            MSYS_NT*|MINGW32_NT*|MINGW64_NT*)
+              cmd=`which curl`
+              $cmd -O http://files.pharo.org/platform/Pharo4.0-win.zip
+              unzip -j -q Pharo4.0-win.zip
+              mv Pharo4.0.image Pharo.image
+              mv Pharo4.0.changes Pharo.changes
+            ;;
+            *) 
+              $cmd get.pharo.org/vm40 | bash
+              $cmd get.pharo.org/40 | bash
+          esac
           ;;
         Pharo5.0)
-          $cmd get.pharo.org/vm50 | bash
-          $cmd get.pharo.org/50 | bash
+          case "$PLATFORM" in
+            MSYS_NT*|MINGW32_NT*|MINGW64_NT**)
+              cmd=`which curl`
+              $cmd -O http://files.pharo.org/platform/Pharo5.0-win.zip
+              unzip -j -q Pharo5.0-win.zip
+              mv Pharo5.0.image Pharo.image
+              mv Pharo5.0.changes Pharo.changes
+            ;;
+            *) 
+              $cmd get.pharo.org/vm50 | bash
+              $cmd get.pharo.org/50 | bash
+          esac
+          ;;
+        Pharo6.0)
+          case "$PLATFORM" in
+            MSYS_NT*|MINGW32_NT*|MINGW64_NT**)
+              cmd=`which curl`
+              $cmd -O http://files.pharo.org/platform/Pharo6.0-win.zip
+              unzip -j -q Pharo6.0-win.zip
+              mv Pharo6.0.image Pharo.image
+              mv Pharo6.0.changes Pharo.changes
+            ;;
+            *) 
+              $cmd get.pharo.org/vm60 | bash
+              $cmd get.pharo.org/60 | bash
+          esac
           ;;
         *) usage; exit_1_banner "Unknown Pharo version $version" ;;
       esac

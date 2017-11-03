@@ -1,11 +1,11 @@
-# GsDevKit prerequisites for Ubuntu 12.04 
+# GsDevKit prerequisites for Ubuntu 12.04
 
 1. [Install Basic Prerequisites (required)](#install-basic-prerequisites-required)
 3. [Install ssh (recommended)](#install-ssh-recommended)
 4. [X11 Client (recommended)](#install-x11-client-recommended)
 5. [GemTools (optional](#gemtools-optional)
 
-##Install Basic Prerequisites (required)
+## Install Basic Prerequisites (required)
 
 The following packages must be installed for GsDevKit and tODE to function:
 
@@ -26,7 +26,7 @@ sudo apt-get -y install pstack
 sudo /bin/su -c "echo 'kernel.yama.ptrace_scope = 0' >>/etc/sysctl.d/10-ptrace.conf"
 ```
 
-##Install ssh (recommended)
+## Install ssh (recommended)
 Before installing [ssh][2] on your server, read up on the web about [best practices using ssh][4].
 
 ```
@@ -35,14 +35,14 @@ sudo apt-get -y install openssh-client
 sudo apt-get -y install openssh-server
 ```
 
-##Install X11 Client (recommended)
+## Install X11 Client (recommended)
 
 ```
 sudo apt-get -y install libgl1-mesa-dev:i386
 sudo apt-get -y install libxcb-dri2-0:i386
 ```
 
-##GemTools (optional)
+## GemTools (optional)
 Required libraries if using GemTools from http://seaside.gemtalksystems.com/squeak/GemTools-1.0-beta.8.7-310x.zip.
 
 ```

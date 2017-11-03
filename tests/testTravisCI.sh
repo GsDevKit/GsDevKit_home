@@ -28,6 +28,10 @@ $GS_HOME/bin/private/clone_sys_local -c https
 # Customize the scripts used by tODE (https://github.com/dalehenrich/tode/issues/226)
 $GS_HOME/tests/travisCustomize.sh
 
+if [ "${DOWNLOAD}x" != "x" ] ; then
+  downloadGemStone -f -d "${DOWNLOAD}" $GS_VERSION
+fi
+
 case $TEST in
   Install)
     installClient
@@ -38,6 +42,8 @@ case $TEST in
     createStone -g ${STONENAME2} $GS_VERSION
     installClient
     createClient tode2
+
+    downloadGemStone -f $GS_VERSION
     ;;
   Error)
    $GS_HOME/tests/errorTests.sh
@@ -73,6 +79,8 @@ case $TEST in
 
 EOF
     status=$?
+    stopStone -b ${STONENAME1}_${UPGRADE_FROM}
+    stopStone -b ${STONENAME1}_${GS_VERSION}
     if [ "$status" != "0" ] ; then
       tail -1000 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topazerrors.log
       if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out" ] ; then 
@@ -99,6 +107,8 @@ EOF
 
 EOF
     status=$?
+    stopStone -b ${STONENAME1}_3211
+    stopStone -b ${STONENAME1}_${GS_VERSION}
     if [ "$status" != "0" ] ; then
       tail -1000 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topazerrors.log
       if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out" ] ; then 
