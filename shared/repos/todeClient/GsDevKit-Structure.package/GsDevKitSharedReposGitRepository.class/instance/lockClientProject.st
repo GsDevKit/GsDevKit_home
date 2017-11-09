@@ -12,5 +12,5 @@ lockClientProject
 				ifAbsent: [ 
 					Metacello new
 						baseline: ciLoadSpec baseline;
-						repository: (ciLoadSpec loadRepositoryFor: ci);
+						repository: ciLoadSpec loadRepository;
 						lock ] ]
