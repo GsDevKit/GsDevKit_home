@@ -37,9 +37,9 @@ OPTIONS
 
 EXAMPLES
   $(basename $0) -h
-  $(basename $0) -d 3.4.0-Alpha5 3.4.0
-  $(basename $0) -f -d 3.4.0-Alpha5 3.4.0
-  $(basename $0) 3.2.9
+  $(basename $0) -d 3.5.0-Alpha1 3.5.0
+  $(basename $0) -f -d 3.5.0-Alpha1 3.5.0
+  $(basename $0) 3.4.0
 
 HELP
 }
@@ -197,6 +197,7 @@ else
   "$GS_HOME/bin/private/installClientGciLibraries" -f $vers
 fi
 
+
 echo "[Info] Finished $gsvers download on $machine_name"
 echo ""
 echo "[Info] GemStone version information:"
@@ -213,7 +214,7 @@ if [ "${GS_TRAVIS}x" != "x" ] ; then
         3.2.*) keyName="GemStone64Bit3.2.0-x86_64.Linux.key" ;;
         3.2.*) keyName="GemStone64Bit3.2.0-x86_64.Linux.key" ;;
         3.3.*) keyName="GemStone64Bit3.3.0-x86_64.Linux.key" ;;
-        3.4.*) ;;
+        3.4.*) keyName="GemStone64Bit3.4.0-x86_64.Linux.key" ;;
         *) exit_1_banner "No travis license for GemStone $vers";;
       esac
       if [ "${keyName}x" != "x" ] ; then
