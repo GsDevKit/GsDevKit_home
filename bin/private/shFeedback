@@ -28,6 +28,11 @@ start_banner() {
   printf "${ANSI_BLUE}=================${ANSI_RESET}\n" 1>&2
 }
 
+warning_banner() {
+  local message="$1"
+  printf "${ANSI_YELLOW}${message}${ANSI_RESET}\n" 1>&2
+}
+
 interrupted() {
   local lineno="$1"
   printf "${ANSI_YELLOW}^C detected (line ${lineno}) :: $(basename "$0") ${theArgs}${ANSI_RESET}\n" 1>&2

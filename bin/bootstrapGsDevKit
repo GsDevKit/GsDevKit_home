@@ -39,6 +39,12 @@ fi
 stoneName=$1
 shift 1
 
+warning_banner "========================================="
+warning_banner "========================================="
+warning_banner "This is an experimental feature - not recommended for production use"
+warning_banner "========================================="
+warning_banner "========================================="
+
 stonePath=$GS_SERVER_STONES/$stoneName
 if [ ! -d "$stonePath" ] ; then
   exit_1_banner "The stone $stoneName does not exist"
@@ -220,5 +226,11 @@ instVarNamed: aString
   commit
   exit
 EOF
+
+warning_banner "========================================="
+warning_banner "========================================="
+warning_banner "This is an experimental feature - not recommended for production use"
+warning_banner "========================================="
+warning_banner "========================================="
 
 exit_0_banner "...finished $(basename $0)"

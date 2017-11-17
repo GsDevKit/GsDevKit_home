@@ -44,7 +44,7 @@ OPTIONS
   -b
      Bootstrap GLASS into the given extent as the given user. Default extent is exten0.dbf.
   -B
-     Ensure that Cypress is installed as SystemUser. Used with the -G option only.
+     [EXPERIMENTAL] Ensure that Cypress is installed as SystemUser. Used with the -G option only.
   -n
      No startStone, no startNetldi.
   -s <snapshot-file-path> 
@@ -89,7 +89,7 @@ EXAMPLES
   $(basename $0) -h
   $(basename $0) -g gs_329 3.2.9
   $(basename $0) -G gs_329 3.2.9
-  $(basename $0) -BG gs_329 3.2.9
+  $(basename $0) -BG gs_340 3.4.0
   $(basename $0) gs_329 3.2.9
   $(basename $0) -f gs_329 3.2.9
   $(basename $0) -g -s \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
@@ -106,8 +106,8 @@ EXAMPLES
 		 -t \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
   $(basename $0) -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329 3.2.9
   $(basename $0) -c -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329 3.2.9
-  $(basename $0) -BG -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329 3.2.9
-  $(basename $0) -BGC -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329 3.2.9
+  $(basename $0) -BG -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_340 3.4.0
+  $(basename $0) -BGC -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_340 3.4.0
   $(basename $0) -b -U bozo gs_329 3.2.9
   $(basename $0) -b -U bozo -P theClown gs_329 3.2.9
 
@@ -222,8 +222,18 @@ else
   if [ "${bootstrapCypress}" = "true" ] ; then
     case "$vers" in
       3.4.*)
+        warning_banner "========================================="
+        warning_banner "========================================="
+        warning_banner "This is an experimental feature - not recommended for production use"
+        warning_banner "========================================="
+        warning_banner "========================================="
         "$GS_HOME/bin/bootstrapGsDevKit" $stoneName
-        ;;
+        warning_banner "========================================="
+        warning_banner "========================================="
+        warning_banner "This is an experimental feature - not recommended for production use"
+        warning_banner "========================================="
+        warning_banner "========================================="
+         ;;
       *) exit_1_banner "Bootstrapping Cypress is only support for GemStone 3.4.x and later" ;;
     esac
   fi
