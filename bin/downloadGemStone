@@ -33,7 +33,9 @@ OPTIONS
   -f
      If a product download already exists in the \$GS_HOME/shared/downloads/products
      directory, delete the exising download and replace with the freshly downloaded
-     product tree
+     product tree. NOTE that any stones created with a non-standard release must be 
+     recreated as upgrades from the non-standard version to a release version is not 
+     supported.
 
 EXAMPLES
   $(basename $0) -h
