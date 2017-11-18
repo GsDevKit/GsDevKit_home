@@ -15,8 +15,7 @@ If you are planning to use Seaside, instead of this you can install and create a
 ```
 git clone https://github.com/GsDevKit/GsDevKit_home.git
 cd GsDevKit_home
-export GS_HOME=`pwd`
-export PATH=$GS_HOME/bin:$PATH
+. bin/defHOME_PATH.env    # define GS_HOME env var and put $GS_HOME into PATH
 installServerClient
 createStone devKit_33 3.3.0
 createClient tode1
