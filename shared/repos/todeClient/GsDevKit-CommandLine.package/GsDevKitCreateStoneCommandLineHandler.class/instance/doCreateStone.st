@@ -1,6 +1,6 @@
 activations
 doCreateStone
-	| stoneDirectory newStoneInfo |
+	| stoneDirectory newStoneInfo newSessionDescription |
 	Transcript
 		cr;
 		show: 'Creating stone ' , self stoneName.
@@ -26,14 +26,15 @@ doCreateStone
 		createEmptyStatsSubDirectories: stoneDirectory;
 		copyTemplateSystemConf: stoneDirectory;
 		copyTemplateFiles: stoneDirectory;
-		createTopaziniFile: stoneDirectory;
 		createDefStoneLn: stoneDirectory;
+		createSysLocalStonesLn: stoneDirectory;
 		yourself.
 	(newStoneInfo := self stoneInfoClass new
 		stoneName: self stoneName;
 		gsVers: self gsVers;
 		yourself) exportTo: stoneDirectory / self stoneInfoFilename.
-	self createTodeDescription: newStoneInfo.
+	newSessionDescription := self createTodeDescription: newStoneInfo.
+	self createTopaziniFile: stoneDirectory sessionDescription: newSessionDescription.
 	Transcript
 		cr;
 		tab;

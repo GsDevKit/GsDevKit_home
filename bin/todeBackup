@@ -6,7 +6,7 @@
 #=========================================================================
 
 theArgs="$*"
-source ${GS_HOME}/bin/private/shFeedback
+source "${GS_HOME}/bin/private/shFeedback"
 start_banner
 
 usage() {
@@ -36,7 +36,7 @@ fi
 if [ "${GS_HOME}x" = "x" ] ; then
   exit_1_banner "the GS_HOME environment variable needs to be defined"
 fi
-source ${GS_HOME}/bin/defGsDevKit.env
+source "${GS_HOME}/bin/defGsDevKit.env"
 if [ "${GS_SERVER}x" = "x" ] ; then
   exit_1_banner "the GS_SERVER environment variable needs to be defined. Perhaps a stone has not been created yet?"
 fi
@@ -45,7 +45,7 @@ interactiveArg=""
 while getopts "hi" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
-    i) interactiveArg=" -i ";;
+    i) interactiveArg=" -D ";;
     *) usage; exit_1_banner "Unknown option";;
   esac
 done
@@ -57,7 +57,7 @@ fi
 stoneName=$1
 backupFile=$2
 
-stonePath=$GS_SERVER_STONES/$stoneName
+stonePath="$GS_SERVER_STONES/$stoneName"
 if [ ! -d "$stonePath" ] ; then
   exit_1_banner "The stone $stoneName does not exist"
 fi
@@ -65,12 +65,12 @@ fi
 echo "Backing up stone: $stoneName using: $backupFile"
 
 # set up stone environment
-pushd $stonePath >& /dev/null
-  source $stonePath/stone.env
+pushd "$stonePath" >& /dev/null
+  source "$stonePath/stone.env"
 popd >& /dev/null
 
 # do tODE backup
-$GS_HOME/bin/private/gsDevKitTodeCommandLine $interactiveArg backup $stoneName $backupFile
+"$GS_HOME/bin/private/gsDevKitTodeCommandLine" $interactiveArg backup $stoneName "$backupFile"
 
 exit_0_banner "...finished"
 

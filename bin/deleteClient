@@ -6,7 +6,7 @@
 #=========================================================================
 
 theArgs="$*"
-source ${GS_HOME}/bin/private/shFeedback
+source "${GS_HOME}/bin/private/shFeedback"
 start_banner
 
 usage() {
@@ -31,12 +31,12 @@ HELP
 if [ "${GS_HOME}x" = "x" ] ; then
   exit_1_banner "The GS_HOME environment variable needs to be defined"
 fi
-source ${GS_HOME}/bin/defGsDevKit.env
+source "${GS_HOME}/bin/defGsDevKit.env"
 if [ "${GS_CLIENT_DEV}x" = "x" ] ; then
   exit_0_banner "No clients installed"
 fi
 
-source ${GS_HOME}/bin/private/shFunctions
+source "${GS_HOME}/bin/private/shFunctions"
 getOpts_help $@
 
 if [ $# -lt 1 ]; then
@@ -46,8 +46,8 @@ fi
 for clientName in "$@"
 do
   if [ -d "${GS_CLIENT_DEV_CLIENTS}/$clientName/" ] ; then
-    deleteCmd="`${GS_CLIENT_DEV_CLIENTS}/$clientName/deleteClient $clientName`"
-    $deleteCmd
+    deleteCmd="`\"${GS_CLIENT_DEV_CLIENTS}/$clientName/deleteClient\" $clientName`"
+    "$deleteCmd"
   else
     echo "client $clientName does not exist"
   fi

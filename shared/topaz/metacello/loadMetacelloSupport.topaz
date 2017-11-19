@@ -1,0 +1,7 @@
+run
+Metacello new
+  baseline: 'Metacello';
+  repository: Metacello_SUPPORT_REPO;
+  load: #('batch' 'Tests');
+  lock.
+%

@@ -33,13 +33,15 @@ OPTIONS
   -f
      If a product download already exists in the \$GS_HOME/shared/downloads/products
      directory, delete the exising download and replace with the freshly downloaded
-     product tree
+     product tree. NOTE that any stones created with a non-standard release must be 
+     recreated as upgrades from the non-standard version to a release version is not 
+     supported.
 
 EXAMPLES
   $(basename $0) -h
-  $(basename $0) -d 3.4.0-Alpha5 3.4.0
-  $(basename $0) -df 3.4.0-Alpha5 3.4.0
-  $(basename $0) 3.2.9
+  $(basename $0) -d 3.5.0-Alpha1 3.5.0
+  $(basename $0) -f -d 3.5.0-Alpha1 3.5.0
+  $(basename $0) 3.4.0
 
 HELP
 }
@@ -191,7 +193,12 @@ case "$PLATFORM" in
 esac
 
 #    Copy the gci libraries to client installations
-"$GS_HOME/bin/private/installClientGciLibraries" $vers
+if [ "${force}x" = "x" ] ; then
+  "$GS_HOME/bin/private/installClientGciLibraries" $vers
+else
+  "$GS_HOME/bin/private/installClientGciLibraries" -f $vers
+fi
+
 
 echo "[Info] Finished $gsvers download on $machine_name"
 echo ""

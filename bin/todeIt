@@ -6,7 +6,7 @@
 #=========================================================================
 
 theArgs="$*"
-source ${GS_HOME}/bin/private/shFeedback
+source "${GS_HOME}/bin/private/shFeedback"
 start_banner
 
 usage() {
@@ -44,7 +44,7 @@ interactiveArg=""
 while getopts "hD" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
-    D) interactiveArg=" -i ";;
+    D) interactiveArg=" -D ";;
     *) usage; exit_1_banner "Unknown option";;
   esac
 done
@@ -55,7 +55,7 @@ shift
 
 # do tODE shell command
 echo "performing tode command: __$*__"
-$GS_HOME/bin/private/gsDevKitTodeCommandLine $interactiveArg todeIt $stoneName << EOF
+"$GS_HOME/bin/private/gsDevKitTodeCommandLine" $interactiveArg todeIt $stoneName << EOF
 $*
 EOF
 echo "" # todeIt output tends to be missing trailing LF

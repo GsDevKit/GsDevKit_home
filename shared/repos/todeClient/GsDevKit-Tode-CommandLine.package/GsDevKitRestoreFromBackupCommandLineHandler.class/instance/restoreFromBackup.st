@@ -1,3 +1,7 @@
 actions
 restoreFromBackup
-	TDShell sessionDescription: self sessionDescription evaluate: 'restoreBackup ', (self backupsHome / self backupfile) pathString
+	| backupReference |
+	backupReference := self backupfile asFileReference.
+	backupReference isAbsolute
+		ifFalse: [ backupReference := self backupsHome / self backupfile ].
+	self restoreFromBackup: backupReference pathString

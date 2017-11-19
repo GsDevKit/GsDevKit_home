@@ -16,6 +16,7 @@ stones
     # help
 attachForeignStone -h
 attachOldDevKitStone -h
+bootstrapGLASS -h
 clients -h
 createClient -h
 createStone -h
@@ -31,6 +32,7 @@ newExtent -h
 products -h
 sessions -h
 setupGsDevKit -h
+startAllStones -h
 startClient -h
 stopClient -h
 editClient -h
@@ -42,6 +44,7 @@ status -h
 stones -h
 stopNetldi -h
 stopStone -h
+stopAllStones -h
 smalltalkCI -h
 todeBackup -h
 todeLoad -h
@@ -102,6 +105,17 @@ todeLoad ${STONENAME4}
 #create a tODE stone
 createStone -t $todeSnapshot ${STONENAME3} $GS_VERSION
 
+# RPC login (Issue #161)
+startTopaz ${STONENAME3} << EOF
+login
+run
+3+4
+%
+logout
+exit 0
+EOF
+
+# Linked login
 startTopaz ${STONENAME3} -l << EOF
 login
 run
@@ -110,6 +124,7 @@ run
 logout
 exit 0
 EOF
+
 
 cd $GS_HOME/sys/stones/${STONENAME3}
 ls dirs.ston  home  homeComposition.ston  packages.ston  projectComposition.ston  projects  repos.ston
@@ -123,6 +138,33 @@ stopStone -b ${STONENAME2} ${STONENAME3}  ${STONENAME4}
 newExtent -n -s $baseSnapshot ${STONENAME3}
 
 deleteStone ${STONENAME2} ${STONENAME3}
+
+createStone -g ${STONENAME3} $GS_VERSION
+case "$GS_VERSION" in
+  2.4.*) echo "skipping bootstrapGLASS for version $GS_VERSION";;
+  *) bootstrapGLASS ${STONENAME3};;
+esac
+deleteStone ${STONENAME3}
+
+case "$GS_VERSION" in
+  2.4.*) echo "skipping username and password createStone test for version $GS_VERSION";;
+  *)
+     createStone -b -U bozo -P theClown ${STONENAME2} $GS_VERSION
+     stopNetldi ${STONENAME2}
+     startNetldi ${STONENAME2} -g -A ::1 ${STONENAME2}_ldi
+     stopStone -b ${STONENAME2}
+     ;;
+esac
+deleteStone ${STONENAME2}
+
+createStone ${STONENAME2} $GS_VERSION
+createStone -g ${STONENAME3} $GS_VERSION
+stopAllStones
+startAllStones
+stopAllStones -b
+startAllStones -b
+deleteStone ${STONENAME2}
+deleteStone ${STONENAME3}
 
 startStone -b ${STONENAME1}
 git config --global user.email "travis@example.com"
@@ -160,4 +202,3 @@ EOF
 . $GS_HOME/bin/defStone.env ${STONENAME1}
 cd $GS_HOME/server/stones/${STONENAME1}
 . defStone.env
-

@@ -6,7 +6,7 @@
 #=========================================================================
 
 theArgs="$*"
-source ${GS_HOME}/bin/private/shFeedback
+source "${GS_HOME}/bin/private/shFeedback"
 start_banner
 
 usage() {
@@ -39,7 +39,7 @@ fi
 if [ "${GS_HOME}x" = "x" ] ; then
   exit_1_banner "the GS_HOME environment variable needs to be defined"
 fi
-source ${GS_HOME}/bin/defGsDevKit.env
+source "${GS_HOME}/bin/defGsDevKit.env"
 
 modeArg=""
 organizationArg=""
@@ -57,6 +57,6 @@ if [ $# -ne 0 ]; then
   usage; exit_1_banner "unexpected argument ($1)"
 fi
 
-$GS_HOME/bin/setupGsDevKit $modeArg $organizationArg both
+"$GS_HOME/bin/setupGsDevKit" $modeArg $organizationArg both
 
 exit_0_banner "...finished"

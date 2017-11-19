@@ -1,0 +1,45 @@
+#=========================================================================
+# Copyright (c) 2016 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#
+#   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
+#=========================================================================
+
+! run with topaz -l -T50000 or larger
+
+level 1
+iferr 1 stk
+iferr 2 stack
+iferr 3 exit 1
+
+login
+
+!
+! Define which SymbolDictionary into which all classes are to be installed.
+!
+run
+UserGlobals at: #BootstrapSymbolDictionaryName put: #UserGlobals.
+true
+%
+commit
+errorCount
+
+input $GEMSTONE/upgrade/installMaster30.topaz
+
+commit
+errorCount
+
+# set autoCommit to true, so that Seaside initialization functions correctly
+
+run
+MCPlatformSupport autoCommit: true.
+true
+%
+
+commit
+errorCount
+
+logout
+
+time
+
+exit 0

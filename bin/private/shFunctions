@@ -38,7 +38,7 @@ if [ ! -e "$GS_HOME/bin/.gsdevkitSetup" ] ; then
     exit_1_banner "The appropriate install script has not been run (installClient, installServerClient or installServer).
     Please read the Installation Overview documentation (https://github.com/GsDevKit/GsDevKit_home/blob/master/docs/installation/README.md#installation-overview) for further details."
   fi
-  cat - > $GS_HOME/bin/.gsdevkitSetup << EOF
+  cat - > "$GS_HOME/bin/.gsdevkitSetup" << EOF
 the presence of this file means that \$GS_HOME/bin/setupGsDevKit is assumed to have
 been successfully run.
 EOF

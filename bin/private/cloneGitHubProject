@@ -6,7 +6,7 @@
 #=========================================================================
 
 theArgs="$*"
-source ${GS_HOME}/bin/private/shFeedback
+source "${GS_HOME}/bin/private/shFeedback"
 start_banner
 
 usage() {
@@ -38,7 +38,7 @@ EXAMPLES
 
 HELP
 }
-useSshForGit=${GS_HOME}/bin/private/.useSshForGit
+useSshForGit="${GS_HOME}/bin/private/.useSshForGit"
 
 if [ "${GS_HOME}x" = "x" ] ; then
   exit_1_banner "the GS_HOME environment variable needs to be defined"
@@ -64,7 +64,7 @@ shift $(($OPTIND - 1))
 if [ $# -eq 3 ]; then
   userName=$1
   projectName=$2
-  directoryName=$3
+  directoryName="$3"
 elif [ $# -eq 2 ]; then
   userName=$1
   projectName=$2
@@ -74,19 +74,19 @@ else
 fi
 
 if [ "${mode}" = "ssh" ] ; then
-  cat - > $useSshForGit << EOF
+  cat - > "$useSshForGit" << EOF
 the presence of this file means that GsDevKit_* will clone git projects using ssh protocol
 EOF
   url="git@github.com:${userName}/${projectName}.git"
 elif [  "${mode}" = "https" ] ; then
-  rm -rf ${useSshForGit}
+  rm -rf "${useSshForGit}"
   url="https://github.com/${userName}/${projectName}.git"
 else 
   usage; exit_1_banner "Unknown -c argument: $mode"
 fi
 
 if [ ! -d "${directoryName}" ] ; then
-  git clone $gitArg $url $directoryName
+  git clone $gitArg $url "$directoryName"
 fi
 
 exit_0_banner "...finished"

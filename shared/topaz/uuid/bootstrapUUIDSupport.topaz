@@ -1,0 +1,10 @@
+input $GS_HOME/shared/topaz/uuid/FastUUIDGenerator.gs
+errorCount
+input $GS_HOME/shared/topaz/uuid/UUID.gs
+errorCount
+
+input $GS_HOME/shared/topaz/uuid/AbstractUUIDTest.gs
+errorCount
+input $GS_HOME/shared/topaz/uuid/FastUUIDTest.gs
+errorCount
+

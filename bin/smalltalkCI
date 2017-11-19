@@ -6,27 +6,19 @@
 #=========================================================================
 
 theArgs="$*"
-source ${GS_HOME}/bin/private/shFeedback
+source "${GS_HOME}/bin/private/shFeedback"
 start_banner
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-r] [-t <tode-snapshot-file-path>] -z <smalltalkCI-smalltalk.ston-path>
-                      <stone-name>
+USAGE: $(basename $0) [-h] [-r] [-G] [-t <tode-snapshot-file-path>] [-s <snapshot-file-path>]
+                      -z <smalltalkCI-smalltalk.ston-path> <stone-name>
 
-Copy a new extent into the named stone's extent directory using the snapshot 
-file specified by the -t option (\$GS_HOME/server/stones/<stone-name>/snapshots/extent0.tode.dbf
-by default), load the project specified by the -z option
-into the stone. 
+Copy a new extent into the named stone's extent directory, install SmalltalkCI and then install the project
+specified by <smalltalkCI-smalltalk.ston-path>. If the -r option is present, run the tests specified in
+the <smalltalkCI-smalltalk.ston-path>.
 
-Optionally run the tests specified by the -z option if the -r option is present.
-
-Similar to \$GS_HOME/bin/newExtent, the stone will be stopped before doing the 
-copy and after the copy is complete, the stone will be restarted with the -N option.
-
-The -z option is required.
-
-The stone is left running after the tests have completed.
+The stone is left running.
 
 OPTIONS
   -h
@@ -35,17 +27,32 @@ OPTIONS
      Run the tests specified in the -z options.
   -t <tode-snapshot-file-path>
      Path to snapshot file used to create stone. It is assumed that the snapshot
-     already has tODE installed and the snapshot will be attached to the
-     existing \$GS_TODE/sys/stones/<stone-name> structure.
+     already has tODE installed and the snapshot attached to the existing 
+     \$GS_TODE/sys/stones/<stone-name> structure before installing SmalltalkCI
+  -s <snapshot-file-path>
+     Path to snapshot file used to create stone. Extent is used without doing 
+     anything other than install SmalltalkCI. Path may be a relative file
+     path. The snapshot file may be an extent file (raw, zipped (.zip) or 
+     gzipped (.gz)) or a backup file. If the file is compressed, it will be
+     uncompressed into the target extents directory. If the file is a backup
+     file, a \$GEMSTONE/bin/extent0.dbf will be copied into the target
+     extents directory and then the backup will be restored without replaying 
+     tranlogs.
   -z <smalltalkCI-smalltalk.ston-path>
      Customize the stone installation according to the attrbutes specified in the 
      <smalltalkCI-smalltalk.ston-path> file.
+  -G 
+     Default extent is extent0.dbf for the given GemStone version.
 
 EXAMPLES
   $(basename $0) -h
+  $(basename $0) -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329
+  $(basename $0) -G -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329
   $(basename $0) -r -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329
+  $(basename $0) -G -s \$GS_HOME/server/stones/gs_329/product/bin/extent0.dbf -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329
   $(basename $0) -t \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329
   $(basename $0) -r -t \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329 
+  $(basename $0) -Gr -s \$GS_HOME/server/stones/gs_329/product/bin/extent0.dbf -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329
 
 HELP
 }
@@ -58,20 +65,25 @@ fi
 if [ "${GS_HOME}x" = "x" ] ; then
   exit_1_banner "the GS_HOME environment variable needs to be defined"
 fi
-source ${GS_HOME}/bin/defGsDevKit.env
+source "${GS_HOME}/bin/defGsDevKit.env"
 
-source ${GS_HOME}/bin/private/shFunctions
+source "${GS_HOME}/bin/private/shFunctions"
 verify_gsdevkit_installation
 
+snapshotFileFlag=""
 snapshotFileArg=""
 smalltalkCIConfigPath=""
 runSmalltalkCITests="false"
-while getopts "ht:z:r" OPT ; do
+attachTodeArgs="-a"
+snapshotFileArg=""
+while getopts "ht:z:rGs:" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
-    t) snapshotFileArg=" -s ${OPTARG} ";;
+    s) snapshotFileFlag=" -s "; snapshotFileArg="${OPTARG}";;
+    t) snapshotFileFlag=" -s "; snapshotFileArg="${OPTARG}";;
     z) smalltalkCIConfigPath="${OPTARG}";;
     r) runSmalltalkCITests="true";;
+    G) attachTodeArgs="";;
     *) usage; exit_1_banner "Unknown option";;
   esac
 done
@@ -83,12 +95,16 @@ fi
 stoneName="$1"
 
 if [ "${snapshotFileArg}x" = "x" ] ; then
-  $GS_HOME/bin/newExtent -a -s "$GS_HOME/server/stones/${stoneName}/snapshots/extent0.tode.dbf" $stoneName
-else
-  $GS_HOME/bin/newExtent -a $snapshotFileArg $stoneName
+  snapshotFileFlag=" -s "
+  snapshotFileArg="$GS_HOME/server/stones/${stoneName}/snapshots/extent0.tode.dbf"
+  if [ "${attachTodeArgs}x" = "x" ] ; then
+    snapshotFileArg="$GS_HOME/server/stones/${stoneName}/product/bin/extent0.dbf"
+  fi
 fi
+"$GS_HOME/bin/newExtent" ${attachTodeArgs} $snapshotFileFlag $snapshotFileArg $stoneName
 
-${GS_HOME}/bin/devKitCommandLine serverDoIt  $stoneName << EOF
+if [ "${attachTodeArgs}x" != "x" ] ; then
+  "${GS_HOME}/bin/devKitCommandLine" serverDoIt  $stoneName << EOF
   GsDeployer bulkMigrate: [
     [
     Metacello new
@@ -99,17 +115,75 @@ ${GS_HOME}/bin/devKitCommandLine serverDoIt  $stoneName << EOF
       load ] on: Warning do: [:w | w resume ].
     (Smalltalk at: #SmalltalkCI) load: '${smalltalkCIConfigPath}'.
   ].
-
 EOF
+fi
 
 if [ "${runSmalltalkCITests}" = "true" ]; then
   if [ ! -d "$GS_HOME/server/stones/${stoneName}/ci" ] ; then
     mkdir "$GS_HOME/server/stones/${stoneName}/ci"
   fi
-  ${GS_HOME}/bin/startTopaz "${stoneName}" -l -T 100000 << EOF
+  if [ "${attachTodeArgs}x" = "x" ] ; then
+    stonePath="$GS_SERVER_STONES/${stoneName}"
+    # set up stone environment
+    pushd "${stonePath}" "${stonePath}" >& /dev/null
+    source "${stonePath}/stone.env"
+    popd >& /dev/null
+    export upgradeDir="$GEMSTONE/upgrade/"
+    "$GS_HOME/bin/startTopaz" $stoneName -l -T 100000 << EOF
+    iferr 1 stk
+    iferr 2 stack
+    iferr 3 exit 1
+    login
+#   BootStrap UUID into Base --- eventually part of 3.4.0 base
+    output push bootstrapUUID.log only
+    input $GS_HOME/shared/topaz/uuid/bootstrapUUIDSupport.topaz
+    commit
+    output pop
+    output push bootstrapCypess.log only
+    input $upgradeDir/bootstrapCypressSupport.topaz
+    output pop
+    commit
+    output push bootstrapMetacello.log only
+    input $upgradeDir/bootstrapMetacelloSupport.topaz
+    commit
+    output pop
+   run
+    Metacello new
+      baseline: 'Cypress';
+      repository: 'gitcypress://github.com/dalehenrich/CypressReferenceImplementation:portability/cypress/';
+      load: #( 'Core' );
+      lock.
+%
+    commit
+    run
+    Metacello new
+      baseline: 'Metacello';
+      repository: 'gitfiletree://github.com/dalehenrich/metacello-work:gs_port/repository/';
+      load: #( 'batch' );
+      lock.
+%
+    commit
+    run
+    Metacello new
+      baseline: 'SmalltalkCI';
+      repository: 'gitfiletree://github.com/dalehenrich/smalltalkCI:gs_port/repository/';
+      load;
+      lock.
+%
+    commit
+    logout
+    exit 0
+EOF
+  fi
+  "$GS_HOME/bin/startTopaz" $stoneName -l -T 100000 << EOF
+  iferr 1 stk
+  iferr 2 stack
+  iferr 3 exit 1
   login
   run
-    SmalltalkCIGemstone 
+    SmalltalkCI platformClass
+      load: '${smalltalkCIConfigPath}'.
+    SmalltalkCI platformClass
       test: '${smalltalkCIConfigPath}'
       xmlLogDirPath: '$GS_HOME/server/stones/${stoneName}/ci'
 %
@@ -117,5 +191,4 @@ if [ "${runSmalltalkCITests}" = "true" ]; then
   exit 0
 EOF
 fi
-
 exit_0_banner "...finished"

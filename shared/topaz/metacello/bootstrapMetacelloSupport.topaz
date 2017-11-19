@@ -1,0 +1,16 @@
+run
+| packageManager repo summary |
+  packageManager := CypressPackageManager2 new.
+  repo := CypressAbstractRepository
+    onUrl: ('cypressfiletree:', Metacello_BOOTSTRAP_REPO) asUrl
+    alias: ''.
+  #('Metacello-Base' 'Metacello-GsCypress-Base' 'Metacello-Core' 'Metacello-Platform.gscypress' 'Metacello-GsCypress-Platform' 'Metacello-MC' 'Metacello-Cypress' 'Metacello-GsCypress-MC')
+    do: [ :each | Transcript cr show: 'Loading ' , each , '...'.
+      summary := packageManager
+        loadPackageFrom: (CypressKnownPackageInformation named: each)
+        defaultSymbolDictionaryName: #'Globals'
+        inRepository: repo.
+      summary isEmpty
+        ifFalse: [ self error: 'Could not reload package named: ' , each printString ].
+      Transcript show: 'done' ].
+%

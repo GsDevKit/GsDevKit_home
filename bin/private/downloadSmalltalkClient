@@ -6,7 +6,7 @@
 #=========================================================================
 
 theArgs="$*"
-source ${GS_HOME}/bin/private/shFeedback
+source "${GS_HOME}/bin/private/shFeedback"
 start_banner
 
 usage() {
@@ -36,7 +36,7 @@ HELP
 if [ "${GS_HOME}x" = "x" ] ; then
   exit_1_banner "the GS_HOME environment variable needs to be defined"
 fi
-source ${GS_HOME}/bin/private/shFunctions
+source "${GS_HOME}/bin/private/shFunctions"
 verify_gsdevkit_installation
 
 directoryPath=""
@@ -77,7 +77,7 @@ case $version in
         exit_1_banner "Error: Neither curl not wget is not available. Install wget or curl and rerun this script."
       fi
     fi
-    pushd $directoryPath >& /dev/null
+    pushd "$directoryPath" >& /dev/null
       case $version in
         Pharo3.0)
           case "$PLATFORM" in
@@ -135,6 +135,34 @@ case $version in
               $cmd get.pharo.org/60 | bash
           esac
           ;;
+        Pharo6.1)
+          case "$PLATFORM" in
+            MSYS_NT*|MINGW32_NT*|MINGW64_NT**)
+              cmd=`which curl`
+              $cmd -O http://files.pharo.org/platform/Pharo6.1-win.zip
+              unzip -j -q Pharo6.1-win.zip
+              mv Pharo6.1.image Pharo.image
+              mv Pharo6.1.changes Pharo.changes
+            ;;
+            *) 
+              $cmd get.pharo.org/vm61 | bash
+              $cmd get.pharo.org/61 | bash
+          esac
+          ;;
+        Pharo7.0)
+          case "$PLATFORM" in
+            MSYS_NT*|MINGW32_NT*|MINGW64_NT**)
+              cmd=`which curl`
+              $cmd -O http://files.pharo.org/platform/Pharo7.0-win.zip
+              unzip -j -q Pharo7.0-win.zip
+              mv Pharo7.0.image Pharo.image
+              mv Pharo7.0.changes Pharo.changes
+            ;;
+            *) 
+              $cmd get.pharo.org/vm70 | bash
+              $cmd get.pharo.org/70 | bash
+          esac
+          ;;
         *) usage; exit_1_banner "Unknown Pharo version $version" ;;
       esac
       if [ -e "./Pharo.exe" ] ; then
@@ -151,7 +179,7 @@ else
 fi
 }
           trap 'missing_32-bit_libs' ERR
-          ./pharo --help --vm-display-null &> /dev/null 2>&1
+          ./pharo Pharo.image --help &> /dev/null 2>&1
           trap - ERR
           trap 'error ${LINENO}' ERR
         else
