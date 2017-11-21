@@ -17,16 +17,18 @@ System myUserProfile symbolList do: [:symDict |
 							"*anythingbutpackagename[-anything]"
 						toRemove := aClass categoryNames select: 
 										[:each |
-										(each first = $* and: [(each size = (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2])
+										each isEmpty not and: [
+											(each first = $* and: [(each size = (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2])
 														or: [each size > (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2 and: [(each at: packageName size + 2) = $-]]]])
-										or: [each first ~= $*]]
+											or: [each first ~= $*]]]
 					]
 					ifFalse: [
 							"*packagename[-anything]"
 						toRemove := aClass categoryNames select: 
 										[:each |
-										each first = $* and: [(each size = (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2])
-														or: [each size > (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2 and: [(each at: packageName size + 2) = $-]]]]]
+										each isEmpty not and: [
+											each first = $* and: [(each size = (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2])
+														or: [each size > (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2 and: [(each at: packageName size + 2) = $-]]]]]]
 					].
 				toRemove do: [:each | aClass removeCategory: each].
 			]
@@ -41,62 +43,62 @@ true.
 
 doit
 (WriteStream
-	subclass: 'MessageDigestStream'
+	subclass: 'CypressMessageDigestStream'
 	instVarNames: #(  )
 	classVars: #(  )
 	classInstVars: #(  )
 	poolDictionaries: #()
-	inDictionary: Globals
+	inDictionary: UserGlobals
 	options: #())
 		category: 'Cypress-MesssageDigest';
-		comment: '';
+		comment: 'All Cypress classes are private to GemStone and are likely to be removed in a future release.';
 		immediateInvariant.
 true.
 %
 
-! Class Implementation for MessageDigestStream
+! Class Implementation for CypressMessageDigestStream
 
-! ------------------- Class methods for MessageDigestStream
+! ------------------- Class methods for CypressMessageDigestStream
 
 category: 'instance creation'
-classmethod: MessageDigestStream
+classmethod: CypressMessageDigestStream
 bytes
 
 	^self on: ByteArray new
 %
 
 category: 'instance creation'
-classmethod: MessageDigestStream
+classmethod: CypressMessageDigestStream
 characters
 
 	^self on: String new
 %
 
-! ------------------- Instance methods for MessageDigestStream
+! ------------------- Instance methods for CypressMessageDigestStream
 
 category: 'digests'
-method: MessageDigestStream
+method: CypressMessageDigestStream
 md5sum
 
 	^self contents md5sum
 %
 
 category: 'digests'
-method: MessageDigestStream
+method: CypressMessageDigestStream
 sha1Sum
 
 	^self contents sha1Sum
 %
 
 category: 'digests'
-method: MessageDigestStream
+method: CypressMessageDigestStream
 sha256Sum
 
 	^self contents sha256Sum
 %
 
 category: 'digests'
-method: MessageDigestStream
+method: CypressMessageDigestStream
 sha512Sum
 
 	^self contents sha512Sum
@@ -113,21 +115,55 @@ method: CypressClassStructure
 addToDigest: aMessageDigestStream
 
 	aMessageDigestStream
-		tab; tab; nextPutAll: self class name; cr;
-		tab; tab; tab; nextPutAll: 'extension:'; nextPutAll: self isClassExtension printString; cr;
-		tab; tab; tab; nextPutAll: 'comment:'; nextPutAll: self comment; cr;
-		tab; tab; tab; nextPutAll: 'properties:'; cr;
-		tab; tab; tab; tab.
-	self properties writeCypressJsonOn: aMessageDigestStream indent: 4.
+		tab;
+		tab;
+		nextPutAll: self class name;
+		cr;
+		tab;
+		tab;
+		tab;
+		nextPutAll: 'extension:';
+		nextPutAll: self isClassExtension printString;
+		cr;
+		tab;
+		tab;
+		tab;
+		nextPutAll: 'comment:';
+		nextPutAll: self comment;
+		cr;
+		tab;
+		tab;
+		tab;
+		nextPutAll: 'properties:';
+		cr;
+		tab;
+		tab;
+		tab;
+		tab.
+	self properties _writeCypressJsonOn: aMessageDigestStream indent: 4.
 	aMessageDigestStream
 		cr;
-		tab; tab; tab; nextPutAll: 'class methods:'; cr.
-	(self classMethods asSortedCollection: [:a :b | (a isMetaclass printString, a selector) < (b isMetaclass printString, b selector)])
+		tab;
+		tab;
+		tab;
+		nextPutAll: 'class methods:';
+		cr.
+	(self classMethods asSortedCollection: 
+			[:a :b |
+			(a isMetaclass printString , a selector)
+				< (b isMetaclass printString , b selector)])
 		do: [:each | each addToDigest: aMessageDigestStream].
 	aMessageDigestStream
-		tab; tab; tab; nextPutAll: 'instance methods:'; cr.
-	(self instanceMethods asSortedCollection: [:a :b | (a isMetaclass printString, a selector) < (b isMetaclass printString, b selector)])
-		do: [:each | each addToDigest: aMessageDigestStream].
+		tab;
+		tab;
+		tab;
+		nextPutAll: 'instance methods:';
+		cr.
+	(self instanceMethods asSortedCollection: 
+			[:a :b |
+			(a isMetaclass printString , a selector)
+				< (b isMetaclass printString , b selector)])
+		do: [:each | each addToDigest: aMessageDigestStream]
 %
 
 category: '*Cypress-MesssageDigest'
@@ -149,14 +185,42 @@ method: CypressMethodStructure
 addToDigest: aMessageDigestStream
 
 	aMessageDigestStream
-		tab; tab; tab; tab; nextPutAll: self class name; cr;
-		tab; tab; tab; tab; tab; nextPutAll: self selector; cr;
-		tab; tab; tab; tab; tab; nextPutAll: 'properties:'; cr;
-		tab; tab; tab; tab; tab; tab.
-	self properties writeCypressJsonOn: aMessageDigestStream indent: 6.
+		tab;
+		tab;
+		tab;
+		tab;
+		nextPutAll: self class name;
+		cr;
+		tab;
+		tab;
+		tab;
+		tab;
+		tab;
+		nextPutAll: self selector;
+		cr;
+		tab;
+		tab;
+		tab;
+		tab;
+		tab;
+		nextPutAll: 'properties:';
+		cr;
+		tab;
+		tab;
+		tab;
+		tab;
+		tab;
+		tab.
+	self properties _writeCypressJsonOn: aMessageDigestStream indent: 6.
 	aMessageDigestStream
 		cr;
-		tab; tab; tab; tab; nextPutAll: 'source:'; nextPutAll: self source; cr.
+		tab;
+		tab;
+		tab;
+		tab;
+		nextPutAll: 'source:';
+		nextPutAll: self source;
+		cr
 %
 
 category: '*Cypress-MesssageDigest'
@@ -177,20 +241,31 @@ method: CypressPackageStructure
 addToDigest: aMessageDigestStream
 
 	aMessageDigestStream
-		nextPutAll: self class name; cr;
-		tab; nextPutAll: 'name:'; nextPutAll: self name; cr;
-		tab; nextPutAll: 'properties:'; cr;
-		tab; tab.
-	self properties writeCypressJsonOn: aMessageDigestStream indent: 2.
+		nextPutAll: self class name;
+		cr;
+		tab;
+		nextPutAll: 'name:';
+		nextPutAll: self name;
+		cr;
+		tab;
+		nextPutAll: 'properties:';
+		cr;
+		tab;
+		tab.
+	self properties _writeCypressJsonOn: aMessageDigestStream indent: 2.
 	aMessageDigestStream
 		cr;
-		tab; nextPutAll: 'classes:'; cr.
+		tab;
+		nextPutAll: 'classes:';
+		cr.
 	(self classes asSortedCollection: [:a :b | a name < b name])
 		do: [:each | each addToDigest: aMessageDigestStream].
 	aMessageDigestStream
-		tab; nextPutAll: 'extensions:'; cr.
+		tab;
+		nextPutAll: 'extensions:';
+		cr.
 	(self extensions asSortedCollection: [:a :b | a name < b name])
-		do: [:each | each addToDigest: aMessageDigestStream].
+		do: [:each | each addToDigest: aMessageDigestStream]
 %
 
 category: '*Cypress-MesssageDigest'
@@ -223,7 +298,7 @@ digest
 
 	| stream |
 	self isSkeleton ifTrue: [^nil].
-	stream := MessageDigestStream characters.
+	stream := CypressMessageDigestStream characters.
 	self addToDigest: stream.
 	^stream md5sum
 %

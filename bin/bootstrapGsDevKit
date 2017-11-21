@@ -91,12 +91,8 @@ $GS_HOME/bin/startTopaz $stoneName -l << EOF
 #       BootStrap UUID into Base --- eventually part of 3.4.0 base
   input $GS_HOME/shared/topaz/uuid/bootstrapUUIDSupport.topaz
   commit
-  input $upgradeDir/bootstrapMetacelloSupport.topaz
+  input $GS_HOME/shared/topaz/metacello/bootstrapMetacelloSupport.topaz
   commit
-  run
-  UserGlobals at: #Metacello_SUPPORT_REPO put: '$GS_SHARED_REPO_METACELLO'.
-  UserGlobals at: #Metacello_SUPPORT_REPO put: 'filetree:///export/foos1/users/dhenrich/dev/_home/server/stones/metacello/git/metacello-work/repository/'
-%
   run
   | smalltalkDict |
   smalltalkDict := SymbolDictionary new.
@@ -120,7 +116,7 @@ $GS_HOME/bin/startTopaz $stoneName -l << EOF
   commit
 category: 'bootstrapGsDevKit'
 classmethod: Smalltalk
-  at: aGlobalName ifPresent: aBlock
+at: aGlobalName ifPresent: aBlock
   | glob |
   aGlobalName isNil
     ifTrue: [ ^ nil ].
@@ -129,17 +125,43 @@ classmethod: Smalltalk
     ifTrue: [ aBlock value: glob ]
     ifFalse: [ glob ]
 %
-commit
+category: 'bootstrapGsDevKit'
+classmethod: Smalltalk
+at: aGlobalName ifAbsent: aBlock
+  | glob |
+  aGlobalName isNil
+    ifTrue: [ ^ aBlock value ].
+  glob := GsSession currentSession symbolList objectNamed: aGlobalName.
+  ^ glob == nil
+    ifTrue: [ aBlock value ]
+    ifFalse: [ glob ]
+%
+category: 'bootstrapGsDevKit'
+classmethod: Smalltalk
+classNamed: className
+  "className is either a class name or a class name followed by '
+	class'. Answer the class or metaclass it names"
+
+  | meta baseName baseClass |
+  (className size > 6 and: [ (className copyFrom: className size - 6 to: className size) = ' class' ])
+    ifTrue: [ 
+      meta := true.
+      baseName := className copyFrom: 1 to: className size - 6 ]
+    ifFalse: [ 
+      meta := false.
+      baseName := className ].
+  baseClass := self at: baseName asSymbol ifAbsent: [ ^ nil ].
+  meta
+    ifTrue: [ ^ baseClass class ]
+    ifFalse: [ ^ baseClass ]
+%
+  commit
   run
   Metacello new
     baseline: 'Metacello';
     repository: 'cypressft://$GS_HOME/shared/repos/gs_port/metacello/repository/';
     load;
     lock
-%
-  commit
-  run
-  UserGlobals removeKey: #Metacello_SUPPORT_REPO
 %
   commit
 # these two methods used by STON 

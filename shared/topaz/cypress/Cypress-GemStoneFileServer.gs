@@ -17,16 +17,18 @@ System myUserProfile symbolList do: [:symDict |
 							"*anythingbutpackagename[-anything]"
 						toRemove := aClass categoryNames select: 
 										[:each |
-										(each first = $* and: [(each size = (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2])
+										each isEmpty not and: [
+											(each first = $* and: [(each size = (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2])
 														or: [each size > (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2 and: [(each at: packageName size + 2) = $-]]]])
-										or: [each first ~= $*]]
+											or: [each first ~= $*]]]
 					]
 					ifFalse: [
 							"*packagename[-anything]"
 						toRemove := aClass categoryNames select: 
 										[:each |
-										each first = $* and: [(each size = (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2])
-														or: [each size > (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2 and: [(each at: packageName size + 2) = $-]]]]]
+										each isEmpty not and: [
+											each first = $* and: [(each size = (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2])
+														or: [each size > (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2 and: [(each at: packageName size + 2) = $-]]]]]]
 					].
 				toRemove do: [:each | aClass removeCategory: each].
 			]
@@ -46,10 +48,10 @@ doit
 	classVars: #(  )
 	classInstVars: #(  )
 	poolDictionaries: #()
-	inDictionary: Globals
+	inDictionary: UserGlobals
 	options: #())
 		category: 'Cypress-GemStoneFileServer';
-		comment: '';
+		comment: 'All Cypress classes are private to GemStone and are likely to be removed in a future release.';
 		immediateInvariant.
 true.
 %
@@ -61,10 +63,10 @@ doit
 	classVars: #(  )
 	classInstVars: #(  )
 	poolDictionaries: #()
-	inDictionary: Globals
+	inDictionary: UserGlobals
 	options: #())
 		category: 'Cypress-GemStoneFileServer';
-		comment: '';
+		comment: 'All Cypress classes are private to GemStone and are likely to be removed in a future release.';
 		immediateInvariant.
 true.
 %
@@ -76,10 +78,10 @@ doit
 	classVars: #(  )
 	classInstVars: #(  )
 	poolDictionaries: #()
-	inDictionary: Globals
+	inDictionary: UserGlobals
 	options: #())
 		category: 'Cypress-GemStoneFileServer';
-		comment: '';
+		comment: 'All Cypress classes are private to GemStone and are likely to be removed in a future release.';
 		immediateInvariant.
 true.
 %
@@ -91,10 +93,10 @@ doit
 	classVars: #(  )
 	classInstVars: #(  )
 	poolDictionaries: #()
-	inDictionary: Globals
+	inDictionary: UserGlobals
 	options: #())
 		category: 'Cypress-GemStoneFileServer';
-		comment: '';
+		comment: 'All Cypress classes are private to GemStone and are likely to be removed in a future release.';
 		immediateInvariant.
 true.
 %
@@ -106,10 +108,10 @@ doit
 	classVars: #(  )
 	classInstVars: #(  )
 	poolDictionaries: #()
-	inDictionary: Globals
+	inDictionary: UserGlobals
 	options: #())
 		category: 'Cypress-GemStoneFileServer';
-		comment: '';
+		comment: 'All Cypress classes are private to GemStone and are likely to be removed in a future release.';
 		immediateInvariant.
 true.
 %
@@ -121,10 +123,10 @@ doit
 	classVars: #(  )
 	classInstVars: #(  )
 	poolDictionaries: #()
-	inDictionary: Globals
+	inDictionary: UserGlobals
 	options: #())
 		category: 'Cypress-GemStoneFileServer';
-		comment: '';
+		comment: 'All Cypress classes are private to GemStone and are likely to be removed in a future release.';
 		immediateInvariant.
 true.
 %
@@ -136,10 +138,10 @@ doit
 	classVars: #(  )
 	classInstVars: #(  )
 	poolDictionaries: #()
-	inDictionary: Globals
+	inDictionary: UserGlobals
 	options: #())
 		category: 'Cypress-GemStoneFileServer';
-		comment: '';
+		comment: 'All Cypress classes are private to GemStone and are likely to be removed in a future release.';
 		immediateInvariant.
 true.
 %
@@ -151,10 +153,10 @@ doit
 	classVars: #(  )
 	classInstVars: #(  )
 	poolDictionaries: #()
-	inDictionary: Globals
+	inDictionary: UserGlobals
 	options: #())
 		category: 'Cypress-GemStoneFileServer';
-		comment: '';
+		comment: 'All Cypress classes are private to GemStone and are likely to be removed in a future release.';
 		immediateInvariant.
 true.
 %
@@ -166,10 +168,10 @@ doit
 	classVars: #(  )
 	classInstVars: #(  )
 	poolDictionaries: #()
-	inDictionary: Globals
+	inDictionary: UserGlobals
 	options: #())
 		category: 'Cypress-GemStoneFileServer';
-		comment: '';
+		comment: 'All Cypress classes are private to GemStone and are likely to be removed in a future release.';
 		immediateInvariant.
 true.
 %
@@ -181,10 +183,10 @@ doit
 	classVars: #(  )
 	classInstVars: #( specials )
 	poolDictionaries: #()
-	inDictionary: Globals
+	inDictionary: UserGlobals
 	options: #())
 		category: 'Cypress-GemStoneFileServer';
-		comment: '';
+		comment: 'All Cypress classes are private to GemStone and are likely to be removed in a future release.';
 		immediateInvariant.
 true.
 %
@@ -196,10 +198,10 @@ doit
 	classVars: #(  )
 	classInstVars: #(  )
 	poolDictionaries: #()
-	inDictionary: Globals
+	inDictionary: UserGlobals
 	options: #())
 		category: 'Cypress-GemStoneFileServer';
-		comment: '';
+		comment: 'All Cypress classes are private to GemStone and are likely to be removed in a future release.';
 		immediateInvariant.
 true.
 %
@@ -211,10 +213,10 @@ doit
 	classVars: #(  )
 	classInstVars: #(  )
 	poolDictionaries: #()
-	inDictionary: Globals
+	inDictionary: UserGlobals
 	options: #())
 		category: 'Cypress-GemStoneFileServer';
-		comment: '';
+		comment: 'All Cypress classes are private to GemStone and are likely to be removed in a future release.';
 		immediateInvariant.
 true.
 %
@@ -226,10 +228,10 @@ doit
 	classVars: #(  )
 	classInstVars: #(  )
 	poolDictionaries: #()
-	inDictionary: Globals
+	inDictionary: UserGlobals
 	options: #())
 		category: 'Cypress-GemStoneFileServer';
-		comment: '';
+		comment: 'All Cypress classes are private to GemStone and are likely to be removed in a future release.';
 		immediateInvariant.
 true.
 %
@@ -241,10 +243,10 @@ doit
 	classVars: #( Current )
 	classInstVars: #(  )
 	poolDictionaries: #()
-	inDictionary: Globals
+	inDictionary: UserGlobals
 	options: #())
 		category: 'Cypress-GemStoneFileServer';
-		comment: '';
+		comment: 'All Cypress classes are private to GemStone and are likely to be removed in a future release.';
 		immediateInvariant.
 true.
 %
@@ -256,10 +258,10 @@ doit
 	classVars: #(  )
 	classInstVars: #(  )
 	poolDictionaries: #()
-	inDictionary: Globals
+	inDictionary: UserGlobals
 	options: #())
 		category: 'Cypress-GemStoneFileServer';
-		comment: '';
+		comment: 'All Cypress classes are private to GemStone and are likely to be removed in a future release.';
 		immediateInvariant.
 true.
 %
@@ -342,6 +344,17 @@ repository
 	^repository
 %
 
+category: 'private'
+method: CypressAbstractPackageFiler
+string: aString endsWith: subString
+	"Answer whether the last characters of aString are the same as subString."
+
+	| expectedStart |
+	expectedStart := aString size - subString size + 1 max: 1.
+	^expectedStart
+		= (aString indexOfSubCollection: subString startingAt: expectedStart)
+%
+
 ! Class Implementation for CypressAbstractFileoutWriter
 
 ! ------------------- Instance methods for CypressAbstractFileoutWriter
@@ -350,11 +363,10 @@ category: 'accessing'
 method: CypressAbstractFileoutWriter
 classesInDependencyOrder
 
-	^(GsGeneralDependencySorter
+	^(CypressGsGeneralDependencySorter
 		on: self packageStructure classes
 		dependsOn: [:candidate | candidate superclassName]
-		dependent: [:candidate | candidate className])
-			inOrder
+		dependent: [:candidate | candidate className]) inOrder
 %
 
 category: 'accessing'
@@ -511,9 +523,10 @@ method: CypressAbstractFileoutWriter
 writePackageStructure
 
 	CypressFileUtilities current
-		writeStreamFor: self packageStructure packageName, self packageNameExtension
+		writeStreamFor: self packageStructure packageName
+				, self packageNameExtension
 		in: self packageDirectory
-		do: [:fileStream | fileStream nextPutAll: (String streamContents: [:stream | self fileOutPackageOn: stream])]
+		do: [:fileStream | self fileOutPackageOn: fileStream]
 %
 
 category: 'writing'
@@ -534,33 +547,68 @@ category: 'writing - private'
 method: CypressSmalltalkFileoutWriter
 fileOut: aString methodsPreambleFor: classStructure on: aStream
 
+	self
+		writeChunk: '" ------------------- ' , aString , ' methods for '
+				, classStructure name , '"'
+		on: aStream.
 	aStream
-		nextChunkPut: '" ------------------- ', aString, ' methods for ', classStructure name, '"'; lf;
+		lf;
 		lf
 %
 
 category: 'writing - private'
 method: CypressSmalltalkFileoutWriter
 fileOutClassDeclaration: classStructure on: aStream
+	"This is the structure for VW/Pharo  class definitions. It may or may not be portable
+	to all dialects that use chunk-format fileins. It does not attempt to handle VW
+	namespaces at this time. Probably should use an XML fileout for that."
 
 	aStream
-		nextPutAll: '(', classStructure superclassName; lf;
-		nextPutAll: '	subclass: ', classStructure className asString printString; lf;
-		nextPutAll: '	instVarNames: #( ', classStructure instanceVariablesString, ' )'; lf;
-		nextPutAll: '	classVars: #( ', classStructure classVariablesString, ' )'; lf;
-		nextPutAll: '	classInstVars: #( ', classStructure classInstanceVariablesString, ' )'; lf;
-		nextPutAll: '	poolDictionaries: #())'; lf;
-		nextPutAll: '		category: ', classStructure category printString, ';'; lf;
-		nextChunkPut: '		comment: ', classStructure comment printString; lf;
+		nextPutAll: classStructure superclassName;
+		nextPutAll: ' subclass: #';
+		nextPutAll: classStructure className;
+		lf;
+		nextPutAll: '	instanceVariableNames:  ''';
+		nextPutAll: classStructure instanceVariablesString;
+		nextPut: $';
+		lf;
+		nextPutAll: '	classVariableNames: ''';
+		nextPutAll: classStructure classVariablesString;
+		nextPut: $';
+		lf;
+		nextPutAll: '	poolDictionaries: ''';
+		nextPutAll: classStructure poolDictionariesString;
+		nextPut: $';
+		lf;
+		nextPutAll: '	category: ''';
+		nextPutAll: classStructure category.
+	self writeChunk: '''' on: aStream.
+	aStream
+		lf;
+		lf;
+		nextPutAll: classStructure className;
+		nextPutAll: ' comment:';
 		lf.
+	self writeChunk: classStructure comment printString on: aStream.
+	aStream
+		lf;
+		lf;
+		nextPutAll: classStructure className;
+		nextPutAll: ' class instanceVariableNames: ''';
+		nextPutAll: classStructure classInstanceVariablesString.
+	self writeChunk: '''' on: aStream.
+	aStream
+		lf;
+		lf
 %
 
 category: 'writing - private'
 method: CypressSmalltalkFileoutWriter
 fileOutClassesPreambleOn: aStream
 
+	self writeChunk: '" Class Declarations "' on: aStream.
 	aStream
-		nextChunkPut: '" Class Declarations "'; lf;
+		lf;
 		lf
 %
 
@@ -568,8 +616,8 @@ category: 'writing - private'
 method: CypressSmalltalkFileoutWriter
 fileOutClassInitializerFor: classStructure on: aStream
 
-	aStream
-		nextChunkPut: classStructure className, ' initialize.'; lf
+	self writeChunk: classStructure className , ' initialize.' on: aStream.
+	aStream lf
 %
 
 category: 'writing - private'
@@ -584,8 +632,9 @@ category: 'writing - private'
 method: CypressSmalltalkFileoutWriter
 fileOutClassInitializersPreambleOn: aStream
 
+	self writeChunk: '" Class initializers "' on: aStream.
 	aStream
-		nextChunkPut: '" Class initializers "'; lf;
+		lf;
 		lf
 %
 
@@ -593,8 +642,9 @@ category: 'writing - private'
 method: CypressSmalltalkFileoutWriter
 fileOutExtensionsPreambleOn: aStream
 
+	self writeChunk: '" Class Extensions "' on: aStream.
 	aStream
-		nextChunkPut: '" Class Extensions "'; lf;
+		lf;
 		lf
 %
 
@@ -602,12 +652,19 @@ category: 'writing - private'
 method: CypressSmalltalkFileoutWriter
 fileOutMethod: methodStructure on: aStream
 
-	aStream
-		nextPutAll: '!';
-		nextChunkPut: methodStructure classStructure className, (methodStructure isMetaclass ifTrue: [' class methodsFor: '] ifFalse: [' methodsFor: ']), methodStructure category printString; lf;
-		nextChunkPut: methodStructure source;
-		nextChunkPut: ' ';
-		lf
+	aStream nextPutAll: '!'.
+	self
+		writeChunk: methodStructure classStructure className
+				, (methodStructure isMetaclass
+						ifTrue: [' class methodsFor: ']
+						ifFalse: [' methodsFor: '])
+					, methodStructure category printString
+		on: aStream.
+	aStream lf.
+	self
+		writeChunk: methodStructure source on: aStream;
+		writeChunk: ' ' on: aStream.
+	aStream lf
 %
 
 category: 'writing - private'
@@ -616,8 +673,10 @@ fileOutPackagePostambleOn: aStream
 
 	aStream
 		lf;
+		lf.
+	self writeChunk: '" End of Package: ' , self packageName , '"' on: aStream.
+	aStream
 		lf;
-		nextChunkPut: '" End of Package: ', self packageName, '"'; lf;
 		lf;
 		lf
 %
@@ -626,8 +685,9 @@ category: 'writing - private'
 method: CypressSmalltalkFileoutWriter
 fileOutPackagePreambleOn: aStream
 
+	self writeChunk: '" Package: ' , self packageName , '"' on: aStream.
 	aStream
-		nextChunkPut: '" Package: ', self packageName, '"'; lf;
+		lf;
 		lf;
 		lf
 %
@@ -636,8 +696,10 @@ category: 'writing - private'
 method: CypressSmalltalkFileoutWriter
 fileOutPreambleType: aString for: classStructure on: aStream
 
+	self writeChunk: '" ' , aString , ' for ' , classStructure name , '"'
+		on: aStream.
 	aStream
-		nextChunkPut: '" ', aString, ' for ', classStructure name, '"'; lf;
+		lf;
 		lf
 %
 
@@ -646,6 +708,17 @@ method: CypressSmalltalkFileoutWriter
 packageNameExtension
 
 	^'.st'
+%
+
+category: 'writing - private'
+method: CypressSmalltalkFileoutWriter
+writeChunk: aString on: aStream
+
+	aString do: 
+			[:each |
+			aStream nextPut: each.
+			each = $! ifTrue: [aStream nextPut: each]].
+	aStream nextPut: $!
 %
 
 ! Class Implementation for CypressTopazFileoutWriter
@@ -664,23 +737,41 @@ fileOut: aString methodsPreambleFor: classStructure on: aStream
 category: 'writing - private'
 method: CypressTopazFileoutWriter
 fileOutClassDeclaration: classStructure on: aStream
-
-	aStream
-		nextPutAll: 'doit'; lf;
-		nextPutAll: '(', classStructure superclassName; lf;
-		nextPutAll: '	subclass: ', classStructure className asString printString; lf;
-		nextPutAll: '	instVarNames: #( ', classStructure instanceVariablesString, ' )'; lf;
-		nextPutAll: '	classVars: #( ', classStructure classVariablesString, ' )'; lf;
-		nextPutAll: '	classInstVars: #( ', classStructure classInstanceVariablesString, ' )'; lf;
-		nextPutAll: '	poolDictionaries: #()'; lf;
-		nextPutAll: '	inDictionary: Globals'; lf;
-		nextPutAll: '	options: #())'; lf;
-		nextPutAll: '		category: ', classStructure category printString, ';'; lf;
-		nextPutAll: '		comment: ', classStructure comment printString, ';'; lf;
-		nextPutAll: '		immediateInvariant.'; lf;
-                nextPutAll: 'true.'; lf;
-		nextPutAll: '%'; lf;
-		lf.
+  aStream
+    nextPutAll: 'doit';
+    lf;
+    nextPutAll: '(' , classStructure superclassName;
+    lf.
+  self
+    writeClassTypeMessage: classStructure
+    on: aStream
+    hasInstanceVariables: [ aStream
+        nextPutAll:
+            '	instVarNames: #( ' , classStructure instanceVariablesString , ' )';
+        lf ].
+  aStream
+    nextPutAll: '	classVars: #( ' , classStructure classVariablesString , ' )';
+    lf;
+    nextPutAll:
+        '	classInstVars: #( ' , classStructure classInstanceVariablesString , ' )';
+    lf;
+    nextPutAll: '	poolDictionaries: #()';
+    lf;
+    nextPutAll: '	inDictionary: UserGlobals';
+    lf;
+    nextPutAll: '	options: #())';
+    lf;
+    nextPutAll: '		category: ' , classStructure category printString , ';';
+    lf;
+    nextPutAll: '		comment: ' , classStructure comment printString , ';';
+    lf;
+    nextPutAll: '		immediateInvariant.';
+    lf;
+    nextPutAll: 'true.';
+    lf;
+    nextPutAll: '%';
+    lf;
+    lf
 %
 
 category: 'writing - private'
@@ -779,16 +870,18 @@ fileOutPackagePreambleOn: aStream
 		nextPutAll: '							"*anythingbutpackagename[-anything]"'; lf;
 		nextPutAll: '						toRemove := aClass categoryNames select: '; lf;
 		nextPutAll: '										[:each |'; lf;
-		nextPutAll: '										(each first = $* and: [(each size = (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2])'; lf;
+		nextPutAll: '										each isEmpty not and: ['; lf;
+		nextPutAll: '											(each first = $* and: [(each size = (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2])'; lf;
 		nextPutAll: '														or: [each size > (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2 and: [(each at: packageName size + 2) = $-]]]])'; lf;
-		nextPutAll: '										or: [each first ~= $*]]'; lf;
+		nextPutAll: '											or: [each first ~= $*]]]'; lf;
 		nextPutAll: '					]'; lf;
 		nextPutAll: '					ifFalse: ['; lf;
 		nextPutAll: '							"*packagename[-anything]"'; lf;
 		nextPutAll: '						toRemove := aClass categoryNames select: '; lf;
 		nextPutAll: '										[:each |'; lf;
-		nextPutAll: '										each first = $* and: [(each size = (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2])'; lf;
-		nextPutAll: '														or: [each size > (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2 and: [(each at: packageName size + 2) = $-]]]]]'; lf;
+		nextPutAll: '										each isEmpty not and: ['; lf;
+		nextPutAll: '											each first = $* and: [(each size = (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2])'; lf;
+		nextPutAll: '														or: [each size > (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2 and: [(each at: packageName size + 2) = $-]]]]]]'; lf;
 		nextPutAll: '					].'; lf;
 		nextPutAll: '				toRemove do: [:each | aClass removeCategory: each].'; lf;
 		nextPutAll: '			]'; lf;
@@ -817,9 +910,80 @@ packageNameExtension
 	^'.gs'
 %
 
+category: 'writing - private'
+method: CypressTopazFileoutWriter
+writeClassTypeMessage: classStructure on: aStream hasInstanceVariables: instanceVariableBlock
+  | classType classTypeMessage hasInstanceVariables |
+  hasInstanceVariables := true.
+  classType := classStructure subclassType.
+  classType = 'indexableSubclass'
+    ifTrue: [ classTypeMessage := 'indexableSubclass: ' ]
+    ifFalse: [ classType = 'byteSubclass'
+        ifTrue: [ classTypeMessage := 'byteSubclass: '.
+          hasInstanceVariables := false ]
+        ifFalse: [ classType = ''
+            ifTrue: [ classTypeMessage := 'subclass: ' ]
+            ifFalse: [ self error: 'unknown subclass type: ' , classType ] ] ].
+  aStream
+    tab;
+    nextPutAll: classTypeMessage , classStructure className asString printString;
+    lf.
+  hasInstanceVariables
+    ifTrue: [ instanceVariableBlock value ]
+%
+
 ! Class Implementation for CypressAbstractPackageReader
 
 ! ------------------- Instance methods for CypressAbstractPackageReader
+
+category: 'parsing'
+method: CypressAbstractPackageReader
+_parseMethod: source category: cat using: aSymbolList environmentId: anEnvironmentId
+	"Compiles the method into disposable dictionaries, if possible.
+	 Attempts auto-recompile for undefinedSymbols.
+	 Returns the compiled method or signals a CompileError."
+
+	| undefinedSymbolList undefinedSymbols |
+	undefinedSymbols := SymbolDictionary new name: #UndefinedSymbols.
+	undefinedSymbolList := SymbolList with: undefinedSymbols.
+	^
+	[UndefinedObject
+		compileMethod: source
+		dictionaries: aSymbolList
+		category: cat
+		intoMethodDict: GsMethodDictionary new
+		intoCategories: GsMethodDictionary new
+		intoPragmas: nil
+		environmentId: anEnvironmentId]
+			onSynchronous: (Array with: CompileError with: CompileWarning)
+			do: (Array with: 
+						[:ex |
+						| undefSymbol symbols |
+						undefSymbol := true.
+						symbols := Array new.
+						ex errorDetails do: 
+								[:errArray |
+								(errArray atOrNil: 1) == 1031
+									ifTrue: [symbols add: (errArray atOrNil: 5) asSymbol]
+									ifFalse: [undefSymbol := false]].
+						undefSymbol
+							ifTrue: 
+								["attempt auto-define of undefined symbols"
+								symbols do: [:sym | undefinedSymbols at: sym put: nil].
+								
+								[^UndefinedObject
+									compileMethod: source
+									dictionaries: aSymbolList , undefinedSymbolList
+									category: cat
+									intoMethodDict: GsMethodDictionary new
+									intoCategories: GsMethodDictionary new
+									intoPragmas: nil
+									environmentId: anEnvironmentId]
+										onException: CompileError
+										do: [:exb | undefSymbol := false]].
+						undefSymbol ifFalse: [ex outer]]
+					with: [:ex | ex resume])
+%
 
 category: 'private'
 method: CypressAbstractPackageReader
@@ -847,7 +1011,7 @@ method: CypressAbstractPackageReader
 isPropertiesFileDirectoryEntry: entry
 
 	^self propertiesFileNameExtensions
-		anySatisfy: [:each | entry endsWith: '/properties' , each]
+		anySatisfy: [:each | self string: entry endsWith: '/properties' , each]
 %
 
 category: 'accessing'
@@ -858,12 +1022,33 @@ packageExtension
 		packageExtensionOr: [self repository packageExtension]
 %
 
+category: 'parsing'
+method: CypressAbstractPackageReader
+parseSelectorFrom: methodString
+
+	| meth |
+	^
+	[meth := self
+				_parseMethod: methodString
+				category: #xyzzy
+				using: GsSession currentSession symbolList
+				environmentId: 0.
+	meth class ~~ GsNMethod
+		ifTrue: 
+			["if error slot is nil, then the method wasn't compiled because of errors"
+			(meth at: 2) == nil ifFalse: [^nil].
+			meth := meth at: 1].
+	meth selector asString]
+			on: CompileError
+			do: [:ex | ex return: '_____could_not_parse_selector_from_method_source_____']
+%
+
 category: 'reading'
 method: CypressAbstractPackageReader
 readClassCommentFromDirectoryEntries: entries
 
 	self fileUtils readStreamFor: (entries
-				detect: [:entry | entry endsWith: '/README.md']
+				detect: [:entry | self string: entry endsWith: '/README.md']
 				ifNone: [^''])
 		do: [:fileStream | ^fileStream contents]
 %
@@ -912,7 +1097,7 @@ readCypressFormatMethodStructureFrom: fileStream intoClassStructure: classStruct
 		ifTrue: [fileStream nextLine]
 		ifFalse: [self error: 'Method does not have valid Cypress format'].
 	source := fileStream upToEnd.
-	selector := UndefinedObject parseSelectorFrom: source.
+	selector := self parseSelectorFrom: source.
 	methods at: selector
 		put: ((CypressMethodStructure new)
 				packageStructure: self packageStructure;
@@ -945,7 +1130,7 @@ readFileTreeFormatMethodStructureFrom: fileStream intoClassStructure: classStruc
 	| category source selector |
 	category := fileStream nextLine trimSeparators.
 	source := fileStream upToEnd.
-	selector := UndefinedObject parseSelectorFrom: source.
+	selector := self parseSelectorFrom: source.
 	methods at: selector
 		put: ((CypressMethodStructure new)
 				packageStructure: self packageStructure;
@@ -965,22 +1150,23 @@ readMethodStructureFor: classStructure in: entries
 	entries do: 
 			[:entry |
 			| methods isMeta |
-			methods := (isMeta := entry endsWith: '/class')
+			methods := (isMeta := self string: entry endsWith: '/class')
 						ifTrue: [classStructure classMethods]
 						ifFalse: [classStructure instanceMethods].
-			((entry endsWith: '/instance') or: [entry endsWith: '/class'])
-				ifTrue: 
-					[((self fileUtils directoryEntriesFrom: entry)
-						select: [:each | each endsWith: '.st']) do: 
-								[:methodEntry |
-								self fileUtils readStreamFor: methodEntry
-									do: 
-										[:fileStream |
-										self
-											readMethodStructureFrom: fileStream
-											intoClassStructure: classStructure
-											meta: isMeta
-											methods: methods]]]]
+			((self string: entry endsWith: '/instance')
+				or: [self string: entry endsWith: '/class'])
+					ifTrue: 
+						[((self fileUtils directoryEntriesFrom: entry)
+							select: [:each | self string: each endsWith: '.st']) do: 
+									[:methodEntry |
+									self fileUtils readStreamFor: methodEntry
+										do: 
+											[:fileStream |
+											self
+												readMethodStructureFrom: fileStream
+												intoClassStructure: classStructure
+												meta: isMeta
+												methods: methods]]]]
 %
 
 category: 'reading'
@@ -994,14 +1180,18 @@ category: 'reading'
 method: CypressAbstractPackageReader
 readPackageStructure
 
-   (self fileUtils directoryEntriesFrom: self packageDirectory)
-        do: [ :entry | 
-		(self isPropertiesFileDirectoryEntry: entry)
-			ifTrue: [ self packageStructure properties: (self readPropertiesFile: entry) ].
-            (entry endsWith: '.class')
-                ifTrue: [ self packageStructure classes add: (self readClassStructureFromEntry: entry) ].
-            (entry endsWith: '.extension')
-                ifTrue: [ self packageStructure extensions add: (self readExtensionClassStructureFromEntry: entry) ] ]
+	(self fileUtils directoryEntriesFrom: self packageDirectory) do: 
+			[:entry |
+			(self isPropertiesFileDirectoryEntry: entry)
+				ifTrue: [self packageStructure properties: (self readPropertiesFile: entry)].
+			(self string: entry endsWith: '.class')
+				ifTrue: 
+					[self packageStructure classes
+						add: (self readClassStructureFromEntry: entry)].
+			(self string: entry endsWith: '.extension')
+				ifTrue: 
+					[self packageStructure extensions
+						add: (self readExtensionClassStructureFromEntry: entry)]]
 %
 
 category: 'reading'
@@ -1096,7 +1286,7 @@ isPropertiesFileDirectoryEntry: entry
 	"Expect .ston properties file, but tolerate .json if present."
 
 	^(super isPropertiesFileDirectoryEntry: entry)
-		or: [entry endsWith: '/properties.json']
+		or: [self string: entry endsWith: '/properties.json']
 %
 
 category: 'reading'
@@ -1205,13 +1395,13 @@ fileNameForSelector: selector
 			[(selector first isLetter or: [selector first = $_])
 				ifTrue: [selector]
 				ifFalse: 
-					[| specials |
+					[| specials output |
 					specials := self class specials.
-					String streamContents: 
-							[:output |
-							output nextPut: $^.
-							selector do: [:each | output nextPutAll: (specials at: each)]
-								separatedBy: [output nextPut: $.]]]]
+					output := WriteStreamPortable on: (String new: 100).
+					output nextPut: $^.
+					selector do: [:each | output nextPutAll: (specials at: each)]
+						separatedBy: [output nextPut: $.].
+					output contents]]
 %
 
 category: 'writing'
@@ -1237,7 +1427,8 @@ category: 'writing'
 method: CypressAbstractPackageWriter
 writeClassComment: classStructure on: fileStream
 
-	fileStream nextPutAll: classStructure comment withUnixLineEndings
+	fileStream
+		nextPutAll: (CypressObject normalizeLineEndingsOf: classStructure comment)
 %
 
 category: 'writing'
@@ -1252,7 +1443,7 @@ writeClassStructure: classStructure to: classPath
 		writeInDirectoryName: classPath
 			fileName: 'properties'
 			extension: self propertiesFileNameExtension
-			visit: [:fileStream | classStructure  properties writeCypressJsonOn: fileStream]
+			visit: [:fileStream | classStructure properties _writeCypressJsonOn: fileStream]
 %
 
 category: 'writing'
@@ -1266,7 +1457,7 @@ writeExtensionClassStructure: classStructure to: classPath
 		visit: 
 			[:fileStream |
 			(Dictionary with: 'name' -> classStructure className)
-				writeCypressJsonOn: fileStream]
+				_writeCypressJsonOn: fileStream]
 %
 
 category: 'private'
@@ -1354,7 +1545,7 @@ writePropertiesFile
 		writeInDirectoryName: '.'
 		fileName: 'properties'
 		extension: self propertiesFileNameExtension
-		visit: [:fileStream | Dictionary new writeCypressJsonOn: fileStream]
+		visit: [:fileStream | Dictionary new _writeCypressJsonOn: fileStream]
 %
 
 ! Class Implementation for CypressFileTreeFormatPackageWriter
@@ -1389,43 +1580,49 @@ propertiesFileNameExtension
 category: 'writing'
 method: CypressFileTreeFormatPackageWriter
 removeOldReplacingWithNew
-  self fileUtils
-    deleteAll: self packageDirectory
-    rejecting: [ :filename | 
-      "do not delete the monticello.meta directory to preserve existing Monticello meta data.
+
+	self fileUtils deleteAll: self packageDirectory
+		rejecting: 
+			[:filename |
+			"do not delete the monticello.meta directory to preserve existing Monticello meta data.
        Equivalent behavior to MCFileTreeRepository with Metadata property set to false."
-      (filename endsWith: 'monticello.meta')
-        or: [ filename endsWith: '.filetree' ] ].
-  self writePropertiesFile.
-  self writePackageStructure
+			(self string: filename endsWith: 'monticello.meta')
+				or: [ (self string: filename endsWith: '.filetree')
+					or: [self string: filename endsWith: 'methodProperties.json']]].
+	self writePropertiesFile.
+	self writePackageStructure
 %
 
 category: 'writing'
 method: CypressFileTreeFormatPackageWriter
 writeClassStructure: classStructure to: classPath
-  self
-    writeInDirectoryName: classPath
-      fileName: 'README'
-      extension: '.md'
-      visit: [ :fileStream | self writeClassComment: classStructure on: fileStream ];
-    writeInDirectoryName: classPath
-      fileName: 'properties'
-      extension: self propertiesFileNameExtension
-      visit: [ :fileStream | 
-        (self adjustClassPropertiesForFileTree: classStructure properties)
-          writeFiletreeJsonOn: fileStream ]
+
+	self
+		writeInDirectoryName: classPath
+			fileName: 'README'
+			extension: '.md'
+			visit: [:fileStream | self writeClassComment: classStructure on: fileStream];
+		writeInDirectoryName: classPath
+			fileName: 'properties'
+			extension: self propertiesFileNameExtension
+			visit: 
+				[:fileStream |
+				(self adjustClassPropertiesForFileTree: classStructure properties)
+					_writeCypressJsonOn: fileStream]
 %
 
 category: 'writing'
 method: CypressFileTreeFormatPackageWriter
 writeExtensionClassStructure: classStructure to: classPath
-  self
-    writeInDirectoryName: classPath
-    fileName: 'properties'
-    extension: self propertiesFileNameExtension
-    visit: [ :fileStream | 
-      (Dictionary with: 'name' -> classStructure className)
-        writeFiletreeJsonOn: fileStream ]
+
+	self
+		writeInDirectoryName: classPath
+		fileName: 'properties'
+		extension: self propertiesFileNameExtension
+		visit: 
+			[:fileStream |
+			(Dictionary with: 'name' -> classStructure className)
+				_writeCypressJsonOn: fileStream]
 %
 
 category: 'writing'
@@ -1433,18 +1630,20 @@ method: CypressFileTreeFormatPackageWriter
 writeMethodStructure: methodStructure onStream: fileStream
 
 	fileStream
-		nextPutAll: methodStructure category; lf;
-		nextPutAll: methodStructure source withUnixLineEndings
+		nextPutAll: methodStructure category;
+		lf;
+		nextPutAll: (CypressObject normalizeLineEndingsOf: methodStructure source)
 %
 
 category: 'writing'
 method: CypressFileTreeFormatPackageWriter
 writePropertiesFile
-  self
-    writeInDirectoryName: '.'
-    fileName: 'properties'
-    extension: self propertiesFileNameExtension
-    visit: [ :fileStream | Dictionary new writeFiletreeJsonOn: fileStream ]
+
+	self
+		writeInDirectoryName: '.'
+		fileName: 'properties'
+		extension: self propertiesFileNameExtension
+		visit: [:fileStream | Dictionary new _writeCypressJsonOn: fileStream]
 %
 
 ! Class Implementation for CypressPackageWriter
@@ -1465,11 +1664,26 @@ method: CypressPackageWriter
 writeMethodStructure: methodStructure onStream: fileStream
 
 	fileStream
-		nextPutAll: '"'; lf;
-		nextPutAll: 'notice: ', self methodNoticeLine; lf;
-		nextPutAll: 'category: ', methodStructure category; lf;
-		nextPutAll: '"'; lf;
-		nextPutAll: methodStructure source withUnixLineEndings
+		nextPutAll: '"';
+		lf;
+		nextPutAll: 'notice: ' , self methodNoticeLine;
+		lf;
+		nextPutAll: 'category: ' , methodStructure category;
+		lf;
+		nextPutAll: '"';
+		lf;
+		nextPutAll: (CypressObject normalizeLineEndingsOf: methodStructure source)
+%
+
+category: 'writing'
+method: CypressPackageWriter
+writePropertiesFile
+
+	self
+		writeInDirectoryName: '.'
+		fileName: 'properties'
+		extension: self propertiesFileNameExtension
+		visit: [:fileStream | self repository properties _writeCypressJsonOn: fileStream]
 %
 
 ! Class Implementation for CypressStrictFileTreeFormatDoNothingPackageWriter
@@ -1614,31 +1828,31 @@ deleteAll: aDirectory
 category: 'utilities'
 classmethod: CypressGemStoneDirectoryUtilities
 deleteAll: aDirectory rejecting: rejectBlock
-  "Delete all the files and directories under the named directory.
+	"Delete all the files and directories under the named directory.
        Reject file and directores in aDirectory that are rejected by rejectBlock.
        The rejectBlock is not used recursively.
        Ensure we don't try to recursively delete . or .."
 
-  | filename isFile |
-  (GsFile contentsAndTypesOfDirectory: aDirectory onClient: false)
-    doWithIndex: [ :each :index | 
-      index odd
-        ifTrue: [ filename := each ]
-        ifFalse: [ 
-          isFile := each.
-          isFile
-            ifTrue: [ 
-              (rejectBlock value: filename)
-                ifFalse: [ 
-                  (rejectBlock value: filename)
-                    ifFalse: [ GsFile removeServerFile: filename ] ] ]
-            ifFalse: [ 
-              (#('/..' '/.' '\..' '\.') anySatisfy: [ :special | filename endsWith: special ])
-                ifFalse: [ 
-                  (rejectBlock value: filename)
-                    ifFalse: [ 
-                      self deleteAll: filename.
-                      GsFile removeServerDirectory: filename ] ] ] ] ]
+	| filename isFile |
+	(GsFile contentsAndTypesOfDirectory: aDirectory onClient: false)
+		doWithIndex: 
+			[:each :index |
+			index odd
+				ifTrue: [filename := each]
+				ifFalse: 
+					[isFile := each.
+					isFile
+						ifTrue: 
+							[(rejectBlock value: filename)
+								ifFalse: 
+									[(rejectBlock value: filename) ifFalse: [GsFile removeServerFile: filename]]]
+						ifFalse: 
+							[(self endsWithSpecial: filename)
+								ifFalse: 
+									[(rejectBlock value: filename)
+										ifFalse: 
+											[self deleteAll: filename rejecting: rejectBlock.
+											GsFile removeServerDirectory: filename]]]]]
 %
 
 category: 'utilities'
@@ -1656,7 +1870,7 @@ directoryExists: aDirectory
 	^GsFile existsOnServer: aDirectory
 %
 
-category: 'unknown'
+category: 'utilities'
 classmethod: CypressGemStoneDirectoryUtilities
 directoryFileNamesAndContents: aDirectory
 	"Walk the directory tree starting at aDirectory and
@@ -1669,7 +1883,7 @@ directoryFileNamesAndContents: aDirectory
 	^map.
 %
 
-category: 'unknown'
+category: 'utilities'
 classmethod: CypressGemStoneDirectoryUtilities
 directoryFileNamesAndContents: aDirectory into: aDictionary
 	"Walk the directory tree starting at aDirectory and
@@ -1693,18 +1907,37 @@ directoryFileNamesAndContents: aDirectory into: aDictionary
 									[aDictionary at: filename put: file contents.
 									file close]]
 						ifFalse: 
-							[(#('/..' '/.' '\..' '\.')
-								anySatisfy: [:special | filename endsWith: special])
-									ifFalse: [self directoryFileNamesAndContents: filename into: aDictionary]]]]
+							[(self endsWithSpecial: filename)
+								ifFalse: [self directoryFileNamesAndContents: filename into: aDictionary]]]]
 %
 
 category: 'utilities'
 classmethod: CypressGemStoneDirectoryUtilities
 directoryFromPath: directoryPath relativeTo: aDirectory
 
-	^((aDirectory endsWith: self pathNameDelimiter) or: [directoryPath beginsWith: self pathNameDelimiter])
-		ifTrue: [aDirectory, directoryPath]
-		ifFalse: [aDirectory, self pathNameDelimiter, directoryPath]
+	| delimiter |
+	delimiter := self pathNameDelimiter.
+	^(aDirectory last = delimiter last
+		or: [(directoryPath indexOfSubCollection: delimiter) = 1])
+			ifTrue: [aDirectory , directoryPath]
+			ifFalse: [aDirectory , delimiter , directoryPath]
+%
+
+category: 'private'
+classmethod: CypressGemStoneDirectoryUtilities
+endsWithSpecial: filename
+	"Answer true if the given filename ends with any of the special sequences
+	'/..' '/.' '\..' '\.', false otherwise."
+
+	| filenameSize finalChars |
+	filenameSize := filename size.
+	finalChars := filename copyFrom: filenameSize - 1 to: filenameSize.
+	finalChars = '/.' ifTrue: [^true].
+	finalChars = '\.' ifTrue: [^true].
+	finalChars := filename copyFrom: filenameSize - 2 to: filenameSize.
+	finalChars = '/..' ifTrue: [^true].
+	finalChars = '\..' ifTrue: [^true].
+	^false
 %
 
 category: 'utilities'
@@ -1748,19 +1981,20 @@ category: 'utilities'
 classmethod: CypressGemStoneDirectoryUtilities
 readStreamFor: filePath do: aOneArgBlock
 
-	| file stream |
+	| file stream blockResult |
 	GsFile serverErrorString.
 	file := GsFile openReadOnServer: filePath.
 	GsFile serverErrorString ifNotNil: [:errorMessage | self error: errorMessage].
 	[stream := ReadStreamPortable on: (String withAll: file contents asByteArray decodeFromUTF8).
-	aOneArgBlock value: stream] ensure: [file close]
+	blockResult := aOneArgBlock value: stream] ensure: [file close].
+	^ blockResult
 %
 
 category: 'utilities'
 classmethod: CypressGemStoneDirectoryUtilities
 readStreamFor: filePath in: aDirectory do: aOneArgBlock
 
-	self
+	^ self
 		readStreamFor: (self directoryFromPath: filePath relativeTo: aDirectory)
 		do: aOneArgBlock
 %
@@ -1785,36 +2019,6 @@ writeStreamFor: filePath in: aDirectory do: aOneArgBlock
 %
 
 ! Class Extensions
-
-! Class Extension for WriteStream
-
-! ------------------- Instance methods for WriteStream
-
-category: '*Cypress-GemStoneFileServer-Adding'
-method: WriteStream
-nextChunkPut: aString
-
-	aString do: 
-		[:each |
-		self nextPut: each.
-		each = $! ifTrue: [self nextPut: each]].
-	self nextPut: $!.
-%
-
-! Class Extension for WriteStreamPortable
-
-! ------------------- Instance methods for WriteStreamPortable
-
-category: '*Cypress-GemStoneFileServer-Adding'
-method: WriteStreamPortable
-nextChunkPut: aString
-
-	aString do: 
-		[:each |
-		self nextPut: each.
-		each = $! ifTrue: [self nextPut: each]].
-	self nextPut: $!.
-%
 
 ! Class initializers 
 

@@ -17,16 +17,18 @@ System myUserProfile symbolList do: [:symDict |
 							"*anythingbutpackagename[-anything]"
 						toRemove := aClass categoryNames select: 
 										[:each |
-										(each first = $* and: [(each size = (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2])
+										each isEmpty not and: [
+											(each first = $* and: [(each size = (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2])
 														or: [each size > (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2 and: [(each at: packageName size + 2) = $-]]]])
-										or: [each first ~= $*]]
+											or: [each first ~= $*]]]
 					]
 					ifFalse: [
 							"*packagename[-anything]"
 						toRemove := aClass categoryNames select: 
 										[:each |
-										each first = $* and: [(each size = (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2])
-														or: [each size > (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2 and: [(each at: packageName size + 2) = $-]]]]]
+										each isEmpty not and: [
+											each first = $* and: [(each size = (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2])
+														or: [each size > (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2 and: [(each at: packageName size + 2) = $-]]]]]]
 					].
 				toRemove do: [:each | aClass removeCategory: each].
 			]
@@ -40,61 +42,16 @@ true.
 ! Class Declarations
 
 doit
-(Error
-	subclass: 'CypressJsonError'
-	instVarNames: #(  )
-	classVars: #(  )
-	classInstVars: #(  )
-	poolDictionaries: #()
-	inDictionary: Globals
-	options: #())
-		category: 'Cypress-Structure';
-		comment: '';
-		immediateInvariant.
-true.
-%
-
-doit
-(Object
-	subclass: 'CypressJsonParser'
-	instVarNames: #( stream )
-	classVars: #(  )
-	classInstVars: #(  )
-	poolDictionaries: #()
-	inDictionary: Globals
-	options: #())
-		category: 'Cypress-Structure';
-		comment: '';
-		immediateInvariant.
-true.
-%
-
-doit
-(Object
-	subclass: 'GsGeneralDependencySorter'
-	instVarNames: #( candidates dependsOnConverter dependentConverter individualDependencyMap dependencyGraphs candidateAliasMap )
-	classVars: #(  )
-	classInstVars: #(  )
-	poolDictionaries: #()
-	inDictionary: Globals
-	options: #())
-		category: 'Cypress-Structure';
-		comment: '';
-		immediateInvariant.
-true.
-%
-
-doit
 (CypressObject
 	subclass: 'CypressStructure'
 	instVarNames: #( name properties packageStructure )
 	classVars: #(  )
 	classInstVars: #(  )
 	poolDictionaries: #()
-	inDictionary: Globals
+	inDictionary: UserGlobals
 	options: #())
 		category: 'Cypress-Structure';
-		comment: '';
+		comment: 'All Cypress classes are private to GemStone and are likely to be removed in a future release.';
 		immediateInvariant.
 true.
 %
@@ -106,10 +63,10 @@ doit
 	classVars: #(  )
 	classInstVars: #(  )
 	poolDictionaries: #()
-	inDictionary: Globals
+	inDictionary: UserGlobals
 	options: #())
 		category: 'Cypress-Structure';
-		comment: '';
+		comment: 'All Cypress classes are private to GemStone and are likely to be removed in a future release.';
 		immediateInvariant.
 true.
 %
@@ -121,10 +78,10 @@ doit
 	classVars: #(  )
 	classInstVars: #(  )
 	poolDictionaries: #()
-	inDictionary: Globals
+	inDictionary: UserGlobals
 	options: #())
 		category: 'Cypress-Structure';
-		comment: '';
+		comment: 'All Cypress classes are private to GemStone and are likely to be removed in a future release.';
 		immediateInvariant.
 true.
 %
@@ -136,432 +93,57 @@ doit
 	classVars: #(  )
 	classInstVars: #(  )
 	poolDictionaries: #()
-	inDictionary: Globals
+	inDictionary: UserGlobals
 	options: #())
 		category: 'Cypress-Structure';
-		comment: '';
+		comment: 'All Cypress classes are private to GemStone and are likely to be removed in a future release.';
 		immediateInvariant.
 true.
 %
 
-! Class Implementation for CypressJsonError
-
-! Class Implementation for CypressJsonParser
-
-! ------------------- Class methods for CypressJsonParser
-
-category: 'instance creation'
-classmethod: CypressJsonParser
-new
-
-	CypressJsonError signal: 'Instantiate the parser with a stream.'
+doit
+(Error
+	subclass: 'CypressJsonError'
+	instVarNames: #(  )
+	classVars: #(  )
+	classInstVars: #(  )
+	poolDictionaries: #()
+	inDictionary: UserGlobals
+	options: #())
+		category: 'Cypress-Structure';
+		comment: 'All Cypress classes are private to GemStone and are likely to be removed in a future release.';
+		immediateInvariant.
+true.
 %
 
-category: 'instance creation'
-classmethod: CypressJsonParser
-on: aStream
-	^ self basicNew initializeOn: aStream
+doit
+(Object
+	subclass: 'CypressGsGeneralDependencySorter'
+	instVarNames: #( candidates dependsOnConverter dependentConverter individualDependencyMap dependencyGraphs candidateAliasMap )
+	classVars: #(  )
+	classInstVars: #(  )
+	poolDictionaries: #()
+	inDictionary: UserGlobals
+	options: #())
+		category: 'Cypress-Structure';
+		comment: 'All Cypress classes are private to GemStone and are likely to be removed in a future release.';
+		immediateInvariant.
+true.
 %
 
-category: 'accessing'
-classmethod: CypressJsonParser
-parse: aString
-	^ self parseStream: aString readStream
-%
-
-category: 'accessing'
-classmethod: CypressJsonParser
-parseStream: aStream
-	^ (self on: aStream) parse
-%
-
-! ------------------- Instance methods for CypressJsonParser
-
-category: 'adding'
-method: CypressJsonParser
-addProperty: anAssociation to: anObject
-	"Add the property anAssociation described with key and value to anObject. Subclasses might want to refine this implementation."
-	
-	^ anObject 
-		add: anAssociation;
-		yourself
-%
-
-category: 'adding'
-method: CypressJsonParser
-addValue: anObject to: aCollection
-	"Add anObject to aCollection. Subclasses might want to refine this implementation."
-
-	^ aCollection copyWith: anObject
-%
-
-category: 'creating'
-method: CypressJsonParser
-createArray
-	"Create an empty collection. Subclasses might want to refine this implementation."
-
-	^ Array new
-%
-
-category: 'creating'
-method: CypressJsonParser
-createFalse
-	"Create the false literal. Subclasses might want to refine this implementation."
-	
-	^ false
-%
-
-category: 'creating'
-method: CypressJsonParser
-createNull
-	"Create the null literal. Subclasses might want to refine this implementation."
-
-	^ nil
-%
-
-category: 'creating'
-method: CypressJsonParser
-createObject
-	"Create an empty object. Subclasses might want to refine this implementation."
-	
-	^ Dictionary new
-%
-
-category: 'creating'
-method: CypressJsonParser
-createProperty: aKey with: aValue
-	"Create an empty attribute value pair. Subclasses might want to refine this implementation."
-	
-	^ aKey -> aValue
-%
-
-category: 'creating'
-method: CypressJsonParser
-createString: aString
-	"Create a string literal. Subclasses might want to refine this implementation."
-
-	^ aString
-%
-
-category: 'creating'
-method: CypressJsonParser
-createTrue
-	"Create the true literal. Subclasses might want to refine this implementation."
-
-	^ true
-%
-
-category: 'private'
-method: CypressJsonParser
-expect: aString
-	"Expects aString and consume input, throw an error otherwise."
-
-	^(self match: aString)
-		ifFalse: [CypressJsonError signal: aString , ' expected']
-%
-
-category: 'initialization'
-method: CypressJsonParser
-initializeOn: aStream
-	stream := aStream
-%
-
-category: 'private'
-method: CypressJsonParser
-match: aString
-	"Tries to match aString, consume input and answer true if successful."
-	
-	| position |
-	position := stream position.
-	aString do: [ :each |
-		(stream atEnd or: [ stream next ~= each ]) ifTrue: [ 
-			stream position: position.
-			^ false ] ].
-	self whitespace.
-	^ true
-%
-
-category: 'parsing'
-method: CypressJsonParser
-parse
-
-	| result |
-	result := self
-				whitespace;
-				parseValue.
-	stream atEnd ifFalse: [CypressJsonError signal: 'end of input expected'].
-	^result
-%
-
-category: 'parsing'
-method: CypressJsonParser
-parseArray
-
-	| result |
-	self expect: '['.
-	result := self createArray.
-	(self match: ']') ifTrue: [^result].
-	[stream atEnd] whileFalse: 
-			[result := self addValue: self parseValue to: result.
-			(self match: ']') ifTrue: [^result].
-			self expect: ','].
-	CypressJsonError signal: 'end of array expected'
-%
-
-category: 'parsing-internal'
-method: CypressJsonParser
-parseCharacter
-	| char |
-	(char := stream next) = $\ 
-		ifFalse: [ ^ char ].
-	(char := stream next) = $" 
-		ifTrue: [ ^ char ].
-	char = $\
-		ifTrue: [ ^ char ].
-	char = $/
-		ifTrue: [ ^ char ].
-	char = $b
-		ifTrue: [ ^ Character backspace ].
-	char = $f
-		ifTrue: [ ^ Character newPage ].
-	char = $n
-		ifTrue: [ ^ Character lf ].
-	char = $r
-		ifTrue: [ ^ Character cr ].
-	char = $t
-		ifTrue: [ ^ Character tab ].
-	char = $u
-		ifTrue: [ ^ self parseCharacterHex ].
-	CypressJsonError signal: 'invalid escape character \' , (String with: char)
-%
-
-category: 'parsing-internal'
-method: CypressJsonParser
-parseCharacterHex
-  | value |
-  value := self parseCharacterHexDigit.
-  3 timesRepeat: [ value := (value bitShift: 4) + self parseCharacterHexDigit ].
-  ^ Character codePoint: value
-%
-
-category: 'parsing-internal'
-method: CypressJsonParser
-parseCharacterHexDigit
-    | digit |
-    stream atEnd
-        ifFalse: [ 
-            digit := stream next codePoint.
-            (digit between: 48 and: 57)
-                ifTrue: [ ^ digit - 48 ].	"$0"	"$9"
-            (digit between: 65 and: 70)
-                ifTrue: [ ^ digit - 55 ].	"$A"	"$F"
-            (digit between: 97 and: 102)
-                ifTrue: [ ^ digit - 87 ]	"$a"	"$f" ].
-    CypressJsonError signal: 'hex-digit expected'
-%
-
-category: 'parsing-internal'
-method: CypressJsonParser
-parseNumber
-	| negated number |
-	negated := stream peek = $-.
-	negated ifTrue: [ stream next ].
-	number := self parseNumberInteger.
-	(stream peek = $.) ifTrue: [
-		stream next. 
-		number := number + self parseNumberFraction ].
-	(stream peek = $e or: [ stream peek = $E ]) ifTrue: [
-		stream next.
-		number := number * self parseNumberExponent ].
-	negated ifTrue: [ number := number negated ].
-	self whitespace.
-	^ number
-%
-
-category: 'parsing-internal'
-method: CypressJsonParser
-parseNumberExponent
-    | number negated |
-    number := 0.
-    negated := stream peek = $-.
-    (negated or: [ stream peek = $+ ])
-        ifTrue: [ stream next ].
-    [ stream atEnd not and: [ stream peek isDigit ] ] whileTrue: [ number := 10 * number + (stream next codePoint - 48) ].
-    negated
-        ifTrue: [ number := number negated ].
-    ^ 10 raisedTo: number
-%
-
-category: 'parsing-internal'
-method: CypressJsonParser
-parseNumberFraction
-    | number power |
-    number := 0.
-    power := 1.0.
-    [ stream atEnd not and: [ stream peek isDigit ] ]
-        whileTrue: [ 
-            number := 10 * number + (stream next codePoint - 48).
-            power := power * 10.0 ].
-    ^ number / power
-%
-
-category: 'parsing-internal'
-method: CypressJsonParser
-parseNumberInteger
-    | number |
-    number := 0.
-    [ stream atEnd not and: [ stream peek isDigit ] ] whileTrue: [ number := 10 * number + (stream next codePoint - 48) ].
-    ^ number
-%
-
-category: 'parsing'
-method: CypressJsonParser
-parseObject
-
-	| result |
-	self expect: '{'.
-	result := self createObject.
-	(self match: '}') ifTrue: [^result].
-	[stream atEnd] whileFalse: 
-			[result := self addProperty: self parseProperty to: result.
-			(self match: '}') ifTrue: [^result].
-			self expect: ','].
-	CypressJsonError signal: 'end of object expected'
-%
-
-category: 'parsing-internal'
-method: CypressJsonParser
-parseProperty
-	| name value |
-	name := self parseString.
-	self expect: ':'.
-	value := self parseValue.
-	^ self createProperty: name with: value.
-%
-
-category: 'parsing-internal'
-method: CypressJsonParser
-parseString
-	| result |
-	self expect: '"'.
-	result := WriteStreamPortable on: String new.
-	[ stream atEnd or: [ stream peek = $" ] ] 
-		whileFalse: [ result nextPut: self parseCharacter ].
-	^ self expect: '"'; createString: result contents
-%
-
-category: 'parsing'
-method: CypressJsonParser
-parseValue
-	| char |
-	stream atEnd ifFalse: [ 
-		char := stream peek.
-		char = ${
-			ifTrue: [ ^ self parseObject ].
-		char = $[
-			ifTrue: [ ^ self parseArray ].
-		char = $"
-			ifTrue: [ ^ self parseString ].
-		(char = $- or: [ char between: $0 and: $9 ])
-			ifTrue: [ ^ self parseNumber ].
-		(self match: 'true')
-			ifTrue: [ ^ self createTrue ].
-		(self match: 'false')
-			ifTrue: [ ^ self createFalse ].
-		(self match: 'null')
-			ifTrue: [ ^ self createNull ] ].
-	CypressJsonError signal: 'invalid input'
-%
-
-category: 'private'
-method: CypressJsonParser
-whitespace
-	"Strip whitespaces from the input stream."
-
-	[ stream atEnd not and: [ stream peek isSeparator ] ]
-		whileTrue: [ stream next ]
-%
-
-! Class Implementation for GsGeneralDependencySorter
-
-! ------------------- Class methods for GsGeneralDependencySorter
-
-category: 'instance creation'
-classmethod: GsGeneralDependencySorter
-on: someCandidates dependsOn: aOneArgBlock dependent: anotherOneArgBlock
-	"Create an instance of the receiver capable for sorting the dependencies of someCandidates.
-	 aOneArgBlock is used to evaluate the key of the object depended on for a candidate.
-	 anotherOneArgBlock is used to evaluate the key of the candidate itself."
-
-	^self new
-		initializeOn: someCandidates dependsOn: aOneArgBlock dependent: anotherOneArgBlock;
-		yourself.
-%
-
-! ------------------- Instance methods for GsGeneralDependencySorter
-
-category: 'sorting - private'
-method: GsGeneralDependencySorter
-determineGraphRoots
-
-	^dependencyGraphs
-		selectAssociations: [:each | (candidateAliasMap includesKey: each key) not]
-%
-
-category: 'initializing - private'
-method: GsGeneralDependencySorter
-initializeOn: someCandidates dependsOn: aOneArgBlock dependent: anotherOneArgBlock
-
-	candidates := someCandidates.
-	dependsOnConverter := aOneArgBlock.
-	dependentConverter := anotherOneArgBlock.
-	individualDependencyMap := Dictionary new.
-	dependencyGraphs := Dictionary new.
-	candidateAliasMap := Dictionary new
-%
-
-category: 'sorting'
-method: GsGeneralDependencySorter
-inOrder
-
-	| sorted |
-	sorted := OrderedCollection new.
-	self mapCandidatesIntoGraphs.
-	self determineGraphRoots
-		do: [:each | self transcribeGraph: each into: sorted].
-	^sorted.
-%
-
-category: 'sorting - private'
-method: GsGeneralDependencySorter
-mapCandidatesIntoGraphs
-
-	| dependsOnKey dependentKey |
-	candidates do: 
-			[:each |
-			| individualDependency |
-			dependsOnKey := dependsOnConverter value: each.
-			dependentKey := dependentConverter value: each.
-			candidateAliasMap at: dependentKey put: each.
-			individualDependencyMap at: dependsOnKey ifAbsentPut: [Dictionary new].
-			individualDependencyMap at: dependentKey ifAbsentPut: [Dictionary new].
-			individualDependency := individualDependencyMap
-						associationAt: dependsOnKey.
-			(dependencyGraphs includesKey: dependsOnKey)
-				ifFalse: [dependencyGraphs add: individualDependency].
-			individualDependency value
-				add: (individualDependencyMap associationAt: dependentKey)]
-%
-
-category: 'sorting - private'
-method: GsGeneralDependencySorter
-transcribeGraph: subtree into: sorted
-  (subtree keys asSortedCollection: [ :a :b | a <= b ])
-    do: [ :name | 
-      | subsubtree |
-      subsubtree := subtree at: name.
-      sorted add: (candidateAliasMap at: name).
-      self transcribeGraph: subsubtree into: sorted ]
+doit
+(Object
+	subclass: 'CypressJsonParser'
+	instVarNames: #( stream )
+	classVars: #(  )
+	classInstVars: #(  )
+	poolDictionaries: #()
+	inDictionary: UserGlobals
+	options: #())
+		category: 'Cypress-Structure';
+		comment: 'All Cypress classes are private to GemStone and are likely to be removed in a future release.';
+		immediateInvariant.
+true.
 %
 
 ! Class Implementation for CypressStructure
@@ -969,29 +551,23 @@ isMetaclass: aBoolean
 category: 'accessing'
 method: CypressMethodStructure
 selector
-    ^ String
-        streamContents: [ :stream | 
-            self name
-                do: [ :chara | 
-                    stream
-                        nextPut:
-                            (chara = $.
-                                ifTrue: [ $: ]
-                                ifFalse: [ chara ]) ] ]
+
+	| stream |
+	stream := WriteStreamPortable on: (String new: 100).
+	self name
+		do: [:chara | stream nextPut: (chara = $. ifTrue: [$:] ifFalse: [chara])].
+	^stream contents
 %
 
 category: 'accessing'
 method: CypressMethodStructure
 selector: aString
-    name := String
-        streamContents: [ :stream | 
-            aString
-                do: [ :chara | 
-                    stream
-                        nextPut:
-                            (chara = $:
-                                ifTrue: [ $. ]
-                                ifFalse: [ chara ]) ] ]
+
+	| stream |
+	stream := WriteStreamPortable on: (String new: 100).
+	aString
+		do: [:chara | stream nextPut: (chara = $: ifTrue: [$.] ifFalse: [chara])].
+	name := stream contents
 %
 
 category: 'accessing'
@@ -1121,7 +697,14 @@ category: 'accessing'
 method: CypressPackageStructure
 packageName
 
-	^self name copyWithoutSuffix: self packageExtension
+	| extension extensionSize stopIndex |
+	extension := self packageExtension.
+	extensionSize := extension size.
+	stopIndex := self name
+				indexOfSubCollection: extension
+				startingAt: self name size - extensionSize + 1
+				ifAbsent: [self name size + 1].
+	^self name copyFrom: 1 to: stopIndex - 1
 %
 
 category: 'accessing'
@@ -1149,190 +732,425 @@ snapshot
 	^ CypressSnapshot definitions: definitions
 %
 
-! Class Extensions
+! Class Implementation for CypressJsonError
 
-! Class Extension for Array
+! Class Implementation for CypressGsGeneralDependencySorter
 
-! ------------------- Instance methods for Array
+! ------------------- Class methods for CypressGsGeneralDependencySorter
 
-category: '*Cypress-Structure'
-method: Array
-asCypressPropertyObject
+category: 'instance creation'
+classmethod: CypressGsGeneralDependencySorter
+on: someCandidates dependsOn: aOneArgBlock dependent: anotherOneArgBlock
+	"Create an instance of the receiver capable for sorting the dependencies of someCandidates.
+	 aOneArgBlock is used to evaluate the key of the object depended on for a candidate.
+	 anotherOneArgBlock is used to evaluate the key of the candidate itself."
 
-	^self collect: [:each | each asCypressPropertyObject]
+	^self new
+		initializeOn: someCandidates dependsOn: aOneArgBlock dependent: anotherOneArgBlock;
+		yourself.
 %
 
-category: '*Cypress-Structure'
-method: Array
-writeCypressJsonOn: aStream indent: startIndent
+! ------------------- Instance methods for CypressGsGeneralDependencySorter
 
-	| indent |
-	aStream
-		nextPutAll: '[';
-		lf.
-	indent := startIndent + 1.
-	1 to: self size
-		do: 
-			[:index |
-			| item |
-			item := self at: index.
-			aStream tab: indent.
-			item writeCypressJsonOn: aStream indent: indent.
-			index < self size
-				ifTrue: 
-					[aStream
-						nextPutAll: ',';
-						lf]].
-	self size = 0 ifTrue: [aStream tab: indent].
-	aStream nextPutAll: ' ]'
+category: 'sorting - private'
+method: CypressGsGeneralDependencySorter
+determineGraphRoots
+  ^ dependencyGraphs
+    selectAssociations: [ :each | (candidateAliasMap includesKey: each key) not ]
 %
 
-! Class Extension for Boolean
+category: 'initializing - private'
+method: CypressGsGeneralDependencySorter
+initializeOn: someCandidates dependsOn: aOneArgBlock dependent: anotherOneArgBlock
 
-! ------------------- Instance methods for Boolean
-
-category: '*Cypress-Structure'
-method: Boolean
-writeCypressJsonOn: aStream indent: startIndent
-
-	aStream nextPutAll: self printString
+	candidates := someCandidates.
+	dependsOnConverter := aOneArgBlock.
+	dependentConverter := anotherOneArgBlock.
+	individualDependencyMap := Dictionary new.
+	dependencyGraphs := Dictionary new.
+	candidateAliasMap := Dictionary new
 %
 
-! Class Extension for Dictionary
+category: 'sorting'
+method: CypressGsGeneralDependencySorter
+inOrder
+  | sorted sortedRoots |
+  sorted := OrderedCollection new.
+  self mapCandidatesIntoGraphs.
+  sortedRoots := SortedCollection sortBlock: [ :a :b | a key <= b key ].
+  self determineGraphRoots associationsDo: [ :assoc | sortedRoots add: assoc ].
+  sortedRoots do: [ :assoc | self transcribeGraph: assoc value into: sorted ].
+  ^ sorted
+%
 
-! ------------------- Instance methods for Dictionary
+category: 'sorting - private'
+method: CypressGsGeneralDependencySorter
+mapCandidatesIntoGraphs
 
-category: '*Cypress-Structure'
-method: Dictionary
-asCypressPropertyObject
+	| dependsOnKey dependentKey |
+	candidates do: 
+			[:each |
+			| individualDependency |
+			dependsOnKey := dependsOnConverter value: each.
+			dependentKey := dependentConverter value: each.
+			candidateAliasMap at: dependentKey put: each.
+			individualDependencyMap at: dependsOnKey ifAbsentPut: [Dictionary new].
+			individualDependencyMap at: dependentKey ifAbsentPut: [Dictionary new].
+			individualDependency := individualDependencyMap
+						associationAt: dependsOnKey.
+			(dependencyGraphs includesKey: dependsOnKey)
+				ifFalse: [dependencyGraphs add: individualDependency].
+			individualDependency value
+				add: (individualDependencyMap associationAt: dependentKey)]
+%
+
+category: 'sorting - private'
+method: CypressGsGeneralDependencySorter
+transcribeGraph: subtree into: sorted
+  (subtree keys asSortedCollection: [ :a :b | a <= b ])
+    do: [ :name | | subsubtree |
+      subsubtree := subtree at: name.
+      sorted add: (candidateAliasMap at: name).
+      self transcribeGraph: subsubtree into: sorted ]
+%
+
+! Class Implementation for CypressJsonParser
+
+! ------------------- Class methods for CypressJsonParser
+
+category: 'instance creation'
+classmethod: CypressJsonParser
+new
+
+	CypressJsonError signal: 'Instantiate the parser with a stream.'
+%
+
+category: 'instance creation'
+classmethod: CypressJsonParser
+on: aStream
+	^ self basicNew initializeOn: aStream
+%
+
+category: 'accessing'
+classmethod: CypressJsonParser
+parse: aString
+	^ self parseStream: aString readStream
+%
+
+category: 'accessing'
+classmethod: CypressJsonParser
+parseStream: aStream
+	^ (self on: aStream) parse
+%
+
+! ------------------- Instance methods for CypressJsonParser
+
+category: 'adding'
+method: CypressJsonParser
+addProperty: anAssociation to: anObject
+	"Add the property anAssociation described with key and value to anObject. Subclasses might want to refine this implementation."
+	
+	^ anObject 
+		add: anAssociation;
+		yourself
+%
+
+category: 'adding'
+method: CypressJsonParser
+addValue: anObject to: aCollection
+	"Add anObject to aCollection. Subclasses might want to refine this implementation."
+
+	^ aCollection copyWith: anObject
+%
+
+category: 'creating'
+method: CypressJsonParser
+createArray
+	"Create an empty collection. Subclasses might want to refine this implementation."
+
+	^ Array new
+%
+
+category: 'creating'
+method: CypressJsonParser
+createFalse
+	"Create the false literal. Subclasses might want to refine this implementation."
+	
+	^ false
+%
+
+category: 'creating'
+method: CypressJsonParser
+createNull
+	"Create the null literal. Subclasses might want to refine this implementation."
+
+	^ nil
+%
+
+category: 'creating'
+method: CypressJsonParser
+createObject
+	"Create an empty object. Subclasses might want to refine this implementation."
+	
+	^ Dictionary new
+%
+
+category: 'creating'
+method: CypressJsonParser
+createProperty: aKey with: aValue
+	"Create an empty attribute value pair. Subclasses might want to refine this implementation."
+	
+	^ aKey -> aValue
+%
+
+category: 'creating'
+method: CypressJsonParser
+createString: aString
+	"Create a string literal. Subclasses might want to refine this implementation."
+
+	^ aString
+%
+
+category: 'creating'
+method: CypressJsonParser
+createTrue
+	"Create the true literal. Subclasses might want to refine this implementation."
+
+	^ true
+%
+
+category: 'private'
+method: CypressJsonParser
+expect: aString
+	"Expects aString and consume input, throw an error otherwise."
+
+	^(self match: aString)
+		ifFalse: [CypressJsonError signal: aString , ' expected']
+%
+
+category: 'initialization'
+method: CypressJsonParser
+initializeOn: aStream
+	stream := aStream
+%
+
+category: 'private'
+method: CypressJsonParser
+match: aString
+	"Tries to match aString, consume input and answer true if successful."
+	
+	| position |
+	position := stream position.
+	aString do: [ :each |
+		(stream atEnd or: [ stream next ~= each ]) ifTrue: [ 
+			stream position: position.
+			^ false ] ].
+	self whitespace.
+	^ true
+%
+
+category: 'parsing'
+method: CypressJsonParser
+parse
 
 	| result |
-	result := self class new: self size.
-	self associationsDo: [:assoc | result at: assoc key put: assoc value asCypressPropertyObject].
-	^result.
+	result := self
+				whitespace;
+				parseValue.
+	stream atEnd ifFalse: [CypressJsonError signal: 'end of input expected'].
+	^result
 %
 
-category: '*Cypress-Structure'
-method: Dictionary
-writeCypressJsonOn: aStream indent: startIndent
-  | indent cnt |
-  indent := startIndent.
-  aStream
-    nextPutAll: '{';
-    lf.
-  cnt := 0.
-  indent := indent + 1.
-  self keys asSortedCollection
-    do: [ :key | 
-      | value |
-      value := self at: key.
-      cnt := cnt + 1.
-      aStream tab: indent.
-      key writeCypressJsonOn: aStream indent: indent.
-      aStream nextPutAll: ' : '.
-      value writeCypressJsonOn: aStream indent: indent.
-      cnt < self size
-        ifTrue: [ 
-          aStream
-            nextPutAll: ',';
-            lf ] ].
-  self size = 0
-    ifTrue: [ aStream tab: indent ].
-  aStream nextPutAll: ' }'
+category: 'parsing'
+method: CypressJsonParser
+parseArray
+
+	| result |
+	self expect: '['.
+	result := self createArray.
+	(self match: ']') ifTrue: [^result].
+	[stream atEnd] whileFalse: 
+			[result := self addValue: self parseValue to: result.
+			(self match: ']') ifTrue: [^result].
+			self expect: ','].
+	CypressJsonError signal: 'end of array expected'
 %
 
-category: '*Cypress-Structure'
-method: Dictionary
-writeFiletreeJsonOn: aStream indent: startIndent
-  | indent cnt |
-  indent := startIndent.
-  aStream
-    nextPutAll: '{';
-    lf.
-  cnt := 0.
-  indent := indent + 1.
-  self keys asSortedCollection
-    do: [ :key | 
-      | value |
-      value := self at: key.
-      cnt := cnt + 1.
-      aStream tab: indent.
-      key writeCypressJsonOn: aStream indent: indent.
-      aStream nextPutAll: ' : '.
-      value writeFiletreeJsonOn: aStream indent: indent.
-      cnt < self size
-        ifTrue: [ 
-          aStream
-            nextPutAll: ',';
-            lf ] ].
-  self size = 0
-    ifTrue: [ aStream tab: indent ].
-  aStream
-    nextPutAll: ' }';
-    lf
+category: 'parsing-internal'
+method: CypressJsonParser
+parseCharacter
+	| char |
+	(char := stream next) = $\ 
+		ifFalse: [ ^ char ].
+	(char := stream next) = $" 
+		ifTrue: [ ^ char ].
+	char = $\
+		ifTrue: [ ^ char ].
+	char = $/
+		ifTrue: [ ^ char ].
+	char = $b
+		ifTrue: [ ^ Character backspace ].
+	char = $f
+		ifTrue: [ ^ Character newPage ].
+	char = $n
+		ifTrue: [ ^ Character lf ].
+	char = $r
+		ifTrue: [ ^ Character cr ].
+	char = $t
+		ifTrue: [ ^ Character tab ].
+	char = $u
+		ifTrue: [ ^ self parseCharacterHex ].
+	CypressJsonError signal: 'invalid escape character \' , (String with: char)
 %
 
-! Class Extension for Number
-
-! ------------------- Instance methods for Number
-
-category: '*Cypress-Structure'
-method: Number
-writeCypressJsonOn: aStream indent: startIndent
-
-	aStream nextPutAll: self printString
+category: 'parsing-internal'
+method: CypressJsonParser
+parseCharacterHex
+  | value |
+  value := self parseCharacterHexDigit.
+  3 timesRepeat: [ value := (value bitShift: 4) + self parseCharacterHexDigit ].
+  ^ Character codePoint: value
 %
 
-! Class Extension for Object
-
-! ------------------- Instance methods for Object
-
-category: '*Cypress-Structure'
-method: Object
-asCypressPropertyObject
-
-	^self
+category: 'parsing-internal'
+method: CypressJsonParser
+parseCharacterHexDigit
+    | digit |
+    stream atEnd
+        ifFalse: [ 
+            digit := stream next codePoint.
+            (digit between: 48 and: 57)
+                ifTrue: [ ^ digit - 48 ].	"$0"	"$9"
+            (digit between: 65 and: 70)
+                ifTrue: [ ^ digit - 55 ].	"$A"	"$F"
+            (digit between: 97 and: 102)
+                ifTrue: [ ^ digit - 87 ]	"$a"	"$f" ].
+    CypressJsonError signal: 'hex-digit expected'
 %
 
-category: '*Cypress-Structure'
-method: Object
-writeCypressJsonOn: fileStream
-
-	self writeCypressJsonOn: fileStream indent: 0
+category: 'parsing-internal'
+method: CypressJsonParser
+parseNumber
+	| negated number |
+	negated := stream peek = $-.
+	negated ifTrue: [ stream next ].
+	number := self parseNumberInteger.
+	(stream peek = $.) ifTrue: [
+		stream next. 
+		number := number + self parseNumberFraction ].
+	(stream peek = $e or: [ stream peek = $E ]) ifTrue: [
+		stream next.
+		number := number * self parseNumberExponent ].
+	negated ifTrue: [ number := number negated ].
+	self whitespace.
+	^ number
 %
 
-category: '*Cypress-Structure'
-method: Object
-writeFiletreeJsonOn: fileStream
-  self writeFiletreeJsonOn: fileStream indent: 0
+category: 'parsing-internal'
+method: CypressJsonParser
+parseNumberExponent
+    | number negated |
+    number := 0.
+    negated := stream peek = $-.
+    (negated or: [ stream peek = $+ ])
+        ifTrue: [ stream next ].
+    [ stream atEnd not and: [ stream peek isDigit ] ] whileTrue: [ number := 10 * number + (stream next codePoint - 48) ].
+    negated
+        ifTrue: [ number := number negated ].
+    ^ 10 raisedTo: number
 %
 
-category: '*Cypress-Structure'
-method: Object
-writeFiletreeJsonOn: aStream indent: startIndent
-  ^self writeCypressJsonOn: aStream indent: startIndent
+category: 'parsing-internal'
+method: CypressJsonParser
+parseNumberFraction
+    | number power |
+    number := 0.
+    power := 1.0.
+    [ stream atEnd not and: [ stream peek isDigit ] ]
+        whileTrue: [ 
+            number := 10 * number + (stream next codePoint - 48).
+            power := power * 10.0 ].
+    ^ number / power
 %
 
-! Class Extension for String
-
-! ------------------- Instance methods for String
-
-category: '*Cypress-Structure'
-method: String
-asCypressPropertyObject
-
-	^self unescapePercents withUnixLineEndings
+category: 'parsing-internal'
+method: CypressJsonParser
+parseNumberInteger
+    | number |
+    number := 0.
+    [ stream atEnd not and: [ stream peek isDigit ] ] whileTrue: [ number := 10 * number + (stream next codePoint - 48) ].
+    ^ number
 %
 
-category: '*Cypress-Structure'
-method: String
-writeCypressJsonOn: aStream indent: startIndent
+category: 'parsing'
+method: CypressJsonParser
+parseObject
 
-	aStream
-		nextPutAll: '"';
-		nextPutAll: self withUnixLineEndings encodeAsUTF8 escapePercents;
-		nextPutAll: '"'
+	| result |
+	self expect: '{'.
+	result := self createObject.
+	(self match: '}') ifTrue: [^result].
+	[stream atEnd] whileFalse: 
+			[result := self addProperty: self parseProperty to: result.
+			(self match: '}') ifTrue: [^result].
+			self expect: ','].
+	CypressJsonError signal: 'end of object expected'
 %
+
+category: 'parsing-internal'
+method: CypressJsonParser
+parseProperty
+	| name value |
+	name := self parseString.
+	self expect: ':'.
+	value := self parseValue.
+	^ self createProperty: name with: value.
+%
+
+category: 'parsing-internal'
+method: CypressJsonParser
+parseString
+	| result |
+	self expect: '"'.
+	result := WriteStreamPortable on: String new.
+	[ stream atEnd or: [ stream peek = $" ] ] 
+		whileFalse: [ result nextPut: self parseCharacter ].
+	^ self expect: '"'; createString: result contents
+%
+
+category: 'parsing'
+method: CypressJsonParser
+parseValue
+	| char |
+	stream atEnd ifFalse: [ 
+		char := stream peek.
+		char = ${
+			ifTrue: [ ^ self parseObject ].
+		char = $[
+			ifTrue: [ ^ self parseArray ].
+		char = $"
+			ifTrue: [ ^ self parseString ].
+		(char = $- or: [ char between: $0 and: $9 ])
+			ifTrue: [ ^ self parseNumber ].
+		(self match: 'true')
+			ifTrue: [ ^ self createTrue ].
+		(self match: 'false')
+			ifTrue: [ ^ self createFalse ].
+		(self match: 'null')
+			ifTrue: [ ^ self createNull ] ].
+	CypressJsonError signal: 'invalid input'
+%
+
+category: 'private'
+method: CypressJsonParser
+whitespace
+	"Strip whitespaces from the input stream."
+
+	[ stream atEnd not and: [ stream peek isSeparator ] ]
+		whileTrue: [ stream next ]
+%
+
+! Class Extensions
 
 ! Class initializers 
 

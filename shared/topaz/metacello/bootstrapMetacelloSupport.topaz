@@ -1,16 +1,34 @@
-run
-| packageManager repo summary |
-  packageManager := CypressPackageManager2 new.
-  repo := CypressAbstractRepository
-    onUrl: ('cypressfiletree:', Metacello_BOOTSTRAP_REPO) asUrl
-    alias: ''.
-  #('Metacello-Base' 'Metacello-GsCypress-Base' 'Metacello-Core' 'Metacello-Platform.gscypress' 'Metacello-GsCypress-Platform' 'Metacello-MC' 'Metacello-Cypress' 'Metacello-GsCypress-MC')
-    do: [ :each | Transcript cr show: 'Loading ' , each , '...'.
-      summary := packageManager
-        loadPackageFrom: (CypressKnownPackageInformation named: each)
-        defaultSymbolDictionaryName: #'Globals'
-        inRepository: repo.
-      summary isEmpty
-        ifFalse: [ self error: 'Could not reload package named: ' , each printString ].
-      Transcript show: 'done' ].
-%
+!=========================================================================
+! Copyright (C) GemTalk Systems 1986-2017.  All Rights Reserved.
+!
+! Bootstrap Metacello Support. Once installed, code can be loaded from
+!    https://github.com/dalehenrich/metacello-work
+!    using Metacello itself and Cypress.
+!
+!! Once Metacello is bootstrapped, the following Smalltalk can be run
+!    to update Metacello (recommended):
+!
+!  Metacello new
+!    baseline: 'Metacello';
+!    repository: 'gitfiletree://github.com/Metacello/metacello:3.5.0/repository/';
+!    load.
+!
+!=========================================================================
+
+input $GS_HOME/shared/topaz/metacello/Metacello-Base.gs
+errorCount
+input $GS_HOME/shared/topaz/metacello/Metacello-GsCypress-Base.gs
+errorCount
+input $GS_HOME/shared/topaz/metacello/Metacello-Core.gs
+errorCount
+input $GS_HOME/shared/topaz/metacello/Metacello-Platform.gscypress.gs
+errorCount
+input $GS_HOME/shared/topaz/metacello/Metacello-GsCypress-Platform.gs
+errorCount
+input $GS_HOME/shared/topaz/metacello/Metacello-MC.gs
+errorCount
+input $GS_HOME/shared/topaz/metacello/Metacello-Cypress.gs
+errorCount
+input $GS_HOME/shared/topaz/metacello/Metacello-GsCypress-MC.gs
+errorCount
+

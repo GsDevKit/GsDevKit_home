@@ -1,17 +1,34 @@
-input $upgradeDir/cypress/Cypress-GemStoneCompatibilityLayer.gs
+!=========================================================================
+! Copyright (C) GemTalk Systems 1986-2017.  All Rights Reserved.
+!
+! Bootstrap Cypress Support. Once installed, code can be loaded from
+!    https://github.com/rjsargent/CypressReferenceImplementation
+!    using Cypress itself.
+!
+! Once Metacello is bootstrapped, the following Smalltalk can be run
+!    to update Cypress (recommended):
+!
+!  Metacello new
+!    baseline: 'Cypress';
+!    repository: 'gitcypress://github.com/rjsargent/CypressReferenceImplementation/cypress/';
+!    load.
+!
+!=========================================================================
+
+input $Gs_HOME/shared/topaz/cypress/Cypress-Definitions.gs
 errorCount
-input $upgradeDir/cypress/Cypress-Definitions.gs
+input $Gs_HOME/shared/topaz/cypress/Cypress-Structure.gs
 errorCount
-input $upgradeDir/cypress/Cypress-Structure.gs
+input $Gs_HOME/shared/topaz/cypress/Cypress-GemStoneFileServer.gs
 errorCount
-input $upgradeDir/cypress/Cypress-GemStoneFileServer.gs
+input $Gs_HOME/shared/topaz/cypress/Cypress-Network-Url.gs
 errorCount
-input $upgradeDir/cypress/Network-Url.gs
+input $Gs_HOME/shared/topaz/cypress/Cypress-MesssageDigest.gs
 errorCount
-input $upgradeDir/cypress/Cypress-MesssageDigest.gs
+input $Gs_HOME/shared/topaz/cypress/Cypress-PackageManagement.gs
 errorCount
-input $upgradeDir/cypress/Cypress-PackageManagement.gs
+input $Gs_HOME/shared/topaz/cypress/Cypress-Environmental-Tools.gs
 errorCount
-input $upgradeDir/cypress/Cypress-Comparison.gs
+input $Gs_HOME/shared/topaz/cypress/Cypress-Comparison.gs
 errorCount
 

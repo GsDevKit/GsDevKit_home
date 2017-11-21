@@ -17,16 +17,18 @@ System myUserProfile symbolList do: [:symDict |
 							"*anythingbutpackagename[-anything]"
 						toRemove := aClass categoryNames select: 
 										[:each |
-										(each first = $* and: [(each size = (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2])
+										each isEmpty not and: [
+											(each first = $* and: [(each size = (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2])
 														or: [each size > (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2 and: [(each at: packageName size + 2) = $-]]]])
-										or: [each first ~= $*]]
+											or: [each first ~= $*]]]
 					]
 					ifFalse: [
 							"*packagename[-anything]"
 						toRemove := aClass categoryNames select: 
 										[:each |
-										each first = $* and: [(each size = (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2])
-														or: [each size > (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2 and: [(each at: packageName size + 2) = $-]]]]]
+										each isEmpty not and: [
+											each first = $* and: [(each size = (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2])
+														or: [each size > (packageName size + 1) and: [(each findStringNoCase: packageName startingAt: 2) = 2 and: [(each at: packageName size + 2) = $-]]]]]]
 					].
 				toRemove do: [:each | aClass removeCategory: each].
 			]
@@ -46,10 +48,10 @@ doit
 	classVars: #(  )
 	classInstVars: #(  )
 	poolDictionaries: #()
-	inDictionary: Globals
+	inDictionary: UserGlobals
 	options: #())
 		category: 'Cypress-Comparison';
-		comment: '';
+		comment: 'All Cypress classes are private to GemStone and are likely to be removed in a future release.';
 		immediateInvariant.
 true.
 %
@@ -61,10 +63,10 @@ doit
 	classVars: #(  )
 	classInstVars: #(  )
 	poolDictionaries: #()
-	inDictionary: Globals
+	inDictionary: UserGlobals
 	options: #())
 		category: 'Cypress-Comparison';
-		comment: '';
+		comment: 'All Cypress classes are private to GemStone and are likely to be removed in a future release.';
 		immediateInvariant.
 true.
 %
@@ -79,16 +81,6 @@ comparingPackageNamed: packageName fromDirectory: aDirectory
 
 	^(self new)
 		comparingPackageNamed: packageName fromDirectory: aDirectory;
-		yourself
-%
-
-category: 'instance creation'
-classmethod: CypressPackageComparator
-forCypress
-
-	^(self new)
-		comparingPackages: #('Cypress-Definitions' 'Cypress-Mocks' 'Cypress-Structure' 'Cypress-Tests' 'Cypress-GemStoneFileServer' 'Cypress-Comparison')
-			fromDirectory: '/opt/git/CypressReferenceImplementation/';
 		yourself
 %
 
@@ -182,9 +174,9 @@ comparingPackages: someNames fromDirectory: aDirectory
 			diskSnapshots at: packageName put: reader packageStructure snapshot.
 			modTime := System
 						performOnServer: 'stat --printf=%y ' , reader packageDirectory.
-			modTimestamp := (modTime beginsWith: 'stat:')
+			modTimestamp := (modTime indexOfSubCollection: 'stat:') = 1
 						ifTrue: [nil]
-						ifFalse: [DateAndTime fromUnixFormatString: modTime].
+						ifFalse: [self dateAndTimeFromUnixFormatString: modTime].
 			diskTimestamps at: packageName put: modTimestamp.
 			imageSnapshots at: packageName
 				put: (CypressPackageDefinition named: packageName) snapshot]
@@ -225,6 +217,50 @@ currentRemovals
 
 	currentRemovals ifNil: [self updateCurrentAdditionsAndRemovals].
 	^currentRemovals
+%
+
+category: 'initializing - private'
+method: CypressPackageComparator
+dateAndTimeFromUnixFormatString: aString
+	"YYYY-MM-DDTHH:MM:SS +HHMM
+	 Examples:
+		| string |
+		string := '2013-06-20 14:47:55.40271592140198 -0700'.
+		(DateAndTimeANSI fromUnixFormatString: string) printString = '2013-06-20T14:47:55.40271592140198-07:00'.
+	"
+
+	| stream sign positionBias |
+	stream := ReadStreamPortable on: aString.
+	sign := aString at: aString size - 4.
+	positionBias := stream class isLegacyStreamImplementation
+				ifTrue: [1]
+				ifFalse: [0].
+	^DateAndTime
+		year: (stream next: 4) asNumber
+		month: (stream
+				next;
+				next: 2) asNumber
+		day: (stream
+				next;
+				next: 2) asNumber
+		hour: (stream
+				next;
+				next: 2) asNumber
+		minute: (stream
+				next;
+				next: 2) asNumber
+		second: (stream
+				next;
+				next: aString size - 6 - stream position + positionBias) asNumber
+		offset: (Duration
+				days: 0
+				hours: (stream
+						next;
+						next;
+						next: 2) asNumber
+						* (sign == $- ifTrue: [-1] ifFalse: [1])
+				minutes: (stream next: 2) asNumber
+				seconds: 0)
 %
 
 category: 'comparing'
@@ -535,14 +571,14 @@ updateCurrentOperations
 
 ! ------------------- Instance methods for CypressClassDefinition
 
-category: '*Cypress-Comparison-accessing'
+category: '*Cypress-Comparison'
 method: CypressClassDefinition
 category: aString
 
 	category := aString
 %
 
-category: '*Cypress-Comparison-accessing'
+category: '*Cypress-Comparison'
 method: CypressClassDefinition
 classCreationSelector
   | type |
@@ -558,48 +594,48 @@ classCreationSelector
             ifFalse: [ self error: 'unknown subclass type: ' , type ] ] ]
 %
 
-category: '*Cypress-Comparison-accessing'
+category: '*Cypress-Comparison'
 method: CypressClassDefinition
 classDefinitionString
-  ^ String
-    streamContents: [ :stream | 
-      stream
-        nextPut: $(;
-        nextPutAll: superclassName;
-        space;
-        nextPutAll: self classCreationSelector;
-        space;
-        nextPutAll: self name printString.
-      self subclassType = 'byteSubclass'
-        ifFalse: [ 
-          stream
-            lf;
-            tab;
-            nextPutAll: 'instVarNames: #(' , self instanceVariablesString , ')' ].
-      stream
-        lf;
-        tab;
-        nextPutAll: 'classVars: #(' , self classVariablesString , ')';
-        lf;
-        tab;
-        nextPutAll:
-            'classInstVars: #(' , self classInstanceVariablesString , ')';
-        lf;
-        tab;
-        nextPutAll: 'poolDictionaries: #(' , self poolDictionariesString , ')';
-        lf;
-        tab;
-        nextPutAll: 'inDictionary: ''<not-defined>''';
-        nextPut: $);
-        lf;
-        tab;
-        tab;
-        nextPutAll: 'category: ' , self category printString , ';';
-        lf;
-        tab;
-        tab;
-        nextPutAll: 'comment: ' , self comment printString;
-        yourself ]
+
+	| stream |
+	stream := WriteStreamPortable on: (String new: 100).
+	stream
+		nextPut: $(;
+		nextPutAll: superclassName;
+		space;
+		nextPutAll: self classCreationSelector;
+		space;
+		nextPutAll: self name printString.
+	self subclassType = 'byteSubclass'
+		ifFalse: 
+			[stream
+				lf;
+				tab;
+				nextPutAll: 'instVarNames: #(' , self instanceVariablesString , ')'].
+	stream
+		lf;
+		tab;
+		nextPutAll: 'classVars: #(' , self classVariablesString , ')';
+		lf;
+		tab;
+		nextPutAll: 'classInstVars: #(' , self classInstanceVariablesString , ')';
+		lf;
+		tab;
+		nextPutAll: 'poolDictionaries: #(' , self poolDictionariesString , ')';
+		lf;
+		tab;
+		nextPutAll: 'inDictionary: ''<not-defined>''';
+		nextPut: $);
+		lf;
+		tab;
+		tab;
+		nextPutAll: 'category: ' , self category printString , ';';
+		lf;
+		tab;
+		tab;
+		nextPutAll: 'comment: ' , self comment printString.
+	^stream contents
 %
 
 ! Class Extension for CypressPackageManager
@@ -609,10 +645,15 @@ classDefinitionString
 category: '*Cypress-Comparison'
 method: CypressPackageManager
 comparePackagesFrom: someCypressPackageInformations
-  ^ (someCypressPackageInformations
-    inject: CypressPackageComparator new
-    into: [ :comparer :each | comparer comparingPackageNamed: each name fromDirectory: each savedLocation ])
-    getDifferences
+
+	| packageNames savedLocation comparator |
+	packageNames := someCypressPackageInformations collect: 
+					[:each |
+					savedLocation := each savedLocation.
+					each name].
+	comparator := CypressPackageComparator new.
+	comparator comparingPackages: packageNames fromDirectory: savedLocation.
+	^comparator getDifferences
 %
 
 ! Class initializers 
