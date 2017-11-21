@@ -28,3 +28,6 @@ createClient -f -t pharo gciClient40 -l -v Pharo4.0 -z $GS_HOME/shared/repos/Gem
 startClient gciClient50 -n
 stopClient gciClient50
 editClient gciClient50 "Smalltalk at: #GCIGemStoneClientTestTimeStamp put: DateAndTime current."
+
+stopClient gciClient50
+deleteClient gciClient50
