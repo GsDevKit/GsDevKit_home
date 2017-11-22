@@ -32,5 +32,5 @@ errorCount
 input $GS_HOME/shared/topaz/metacello/Metacello-GsCypress-MC.gs
 errorCount
 # environment 2 candidate methods
-input $GS_HOME/shared/topaz/metacello/Metacello-BaseExtensions.gs
-errorCount
+# input $GS_HOME/shared/topaz/metacello/Metacello-BaseExtensions.gs
+# errorCount

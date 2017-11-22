@@ -32,5 +32,5 @@ errorCount
 input $GS_HOME/shared/topaz/cypress/Cypress-Comparison.gs
 errorCount
 # environment 2 candidate methods
-input $GS_HOME/shared/topaz/cypress/Cypress-Base-ExtensionMethods.gs
-errorCount
+# input $GS_HOME/shared/topaz/cypress/Cypress-Base-ExtensionMethods.gs
+# errorCount

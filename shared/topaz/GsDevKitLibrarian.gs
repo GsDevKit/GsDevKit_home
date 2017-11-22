@@ -94,37 +94,31 @@ logout
 set u GsDevKitLibrarianUser p swordfish
 login
 
-
-! enable session methods
-run
-  | sessionMethodsPackage homeSymbolDict policy |
-  sessionMethodsPackage := GsPackageLibrary
-    createPackageNamed: #'SessionMethods'.
-  GsPackageLibrary installPackage: sessionMethodsPackage.
-
-  GsPackagePolicy current enable.
-
-  homeSymbolDict := (GsCurrentSession currentSession objectNamed: #'UserGlobals').
-  policy := GsPackagePolicy current.
-  policy homeSymbolDict: homeSymbolDict.
-  policy externalSymbolList: Array new.
-  ^ true
-%
-commit
-
 run
 UserGlobals at: #GS_AllUsers put: AllUsers.
 ^ true
 %
 commit
 
-#  input $GS_HOME/shared/topaz/uuid/bootstrapUUIDSupport.topaz
-#  commit
+set compile_env: 2
 input $GS_HOME/shared/topaz/cypress/bootstrapCypressSupport.topaz
 commit
 input $GS_HOME/shared/topaz/metacello/bootstrapMetacelloSupport.topaz
 commit
 
+logout
+set u SystemUser p swordfish
+login
+
+set compile_env: 2
+input $GS_HOME/shared/topaz/cypress/Cypress-Base-ExtensionMethods.gs
+commit
+input $GS_HOME/shared/topaz/metacello/Metacello-BaseExtensions.gs
+commit
+
+logout
+set u GsDevKitLibrarianUser p swordfish
+login
 
 doit
   (Object
