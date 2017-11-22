@@ -1,77 +1,29 @@
-! Package: CodeLibrarian-Core
+! Package: GsDevKitLibrarian-Core
 
 ! Class Declarations
 
 doit
 (Object
-	subclass: 'CodeLibrarian'
+	subclass: 'GsDevKitLibrarian'
 	instVarNames: #( projectName repositoryUrl userProfile )
 	classVars: #(  )
 	classInstVars: #(  )
 	poolDictionaries: #()
 	inDictionary: UserGlobals
 	options: #())
-		category: 'CodeLibrarian-Core';
-		comment: '"run as SystemUser"
-CodeLibrarian new
-  user: ''HostAgentUser'';
-  repository: ''tonel:$GITBASE/GemStone64/tonel/'';
-  load: #(''X509'').
-
-CodeLibrarian new
-  user: ''CodeLibrarianUser'';
-  baseline: ''Cypress'';
-  repository: ''cypress:$GITBASE/CypressReferenceImplementation/cypress/'';
-  load.
-
-CodeLibrarian new
-  user: ''HostAgentUser'';
-  repository: ''tonel:$GITBASE/GemStone64/tonel/'';
-  save: #(''X509'').
-
-CodeLibrarian new
-  user: ''CodeLibrarianUser'';
-  baseline: ''Cypress'';
-  repository: ''cypress:$GITBASE/CypressReferenceImplementation/cypress/'';
-  save.
-
-CodeLibrarian new
-    user: ''CodeLibrarianUser'';
-    baseline: ''Sample'';
-    repository:
-        ''cypressft:/export/foos1/users/dhenrich/dev/_home/shared/repos/gs_port/sample/repository/'';
-    load
-
-CodeLibrarian new
-    repository:
-        ''cypressft:$GITBASE/GemStone64/packages/'';
-    load: #( ''CodeLibrarian-Core'' )
-
-"run as user"
-CodeLibrarian new
-  repository: ''cypressft:$GITBASE/GemStone64/packages/'';
-  save: #(''CodeLibrarian-Core'').
-
-CodeLibrarian new
-  repository: ''topaz:$ARCHBASE/image/'';
-  save: #(''CodeLibrarian-Core'').
-
-CodeLibrarian new
-    repository:
-        ''cypressft:/export/foos1/users/dhenrich/3.0/g_gss64bit/git/metacello/repository/'';
-    save:
-        #(''Metacello-GsCypress-MC'' ''Metacello-GsCypress-Platform'' ''Metacello-Platform.gscypress'')';
+		category: 'GsDevKitLibrarian-Core';
+		comment: '';
 		immediateInvariant.
 true.
 %
 
-! Class Implementation for CodeLibrarian
+! Class Implementation for GsDevKitLibrarian
 
-! ------------------- Instance methods for CodeLibrarian
+! ------------------- Instance methods for GsDevKitLibrarian
 
 category: 'private'
-method: CodeLibrarian
-_executeCodeLibraryBlock: aBlock
+method: GsDevKitLibrarian
+_executeGsDevKitLibraryBlock: aBlock
   "Do not commit during aBlock ... we don't want session methods enabled for SystemUser"
 
   "for now you need to run as SystemUser"
@@ -83,11 +35,11 @@ _executeCodeLibraryBlock: aBlock
   librarianUserGlobals := librarian symbolList objectNamed: #'UserGlobals'.
   [ 
   transientSymbolList := GsCurrentSession currentSession symbolList.
-  (transientSymbolList objectNamed: #'CodeLibrarianSessionMethods')
+  (transientSymbolList objectNamed: #'GsDevKitLibrarianSessionMethods')
     ifNil: [ 
-      transientSymbolList createDictionaryNamed: #'CodeLibrarianSessionMethods' at: 0.
+      transientSymbolList createDictionaryNamed: #'GsDevKitLibrarianSessionMethods' at: 0.
       librarianSessionMethods := transientSymbolList
-        objectNamed: #'CodeLibrarianSessionMethods'.
+        objectNamed: #'GsDevKitLibrarianSessionMethods'.
       librarianSessionMethods
         at: GsPackagePolicy globalName
           put: (librarianUserGlobals at: GsPackagePolicy globalName);
@@ -100,19 +52,19 @@ _executeCodeLibraryBlock: aBlock
 %
 
 category: 'private'
-method: CodeLibrarian
+method: GsDevKitLibrarian
 _librarian
-  ^ AllUsers userWithId: 'CodeLibrarianUser' ifAbsent: [ ^ self _myUserProfile ]
+  ^ AllUsers userWithId: 'GsDevKitLibrarianUser' ifAbsent: [ ^ self _myUserProfile ]
 %
 
 category: 'private'
-method: CodeLibrarian
+method: GsDevKitLibrarian
 _librarianUserGlobals
   ^ self librarian symbolList objectNamed: #'UserGlobals'
 %
 
 category: 'private'
-method: CodeLibrarian
+method: GsDevKitLibrarian
 _loadMetacello: groupNamesOrNil
   | librarian metacello |
   librarian := self _librarian.
@@ -126,7 +78,7 @@ _loadMetacello: groupNamesOrNil
 %
 
 category: 'private'
-method: CodeLibrarian
+method: GsDevKitLibrarian
 _loadPackages: packageNames
   "load the list of packages in the given repository into symbolList of userId"
 
@@ -153,37 +105,37 @@ _loadPackages: packageNames
 %
 
 category: 'private'
-method: CodeLibrarian
+method: GsDevKitLibrarian
 _myUserProfile
   ^ System myUserProfile
 %
 
 category: 'private'
-method: CodeLibrarian
+method: GsDevKitLibrarian
 _projectName
   ^ projectName
 %
 
 category: 'project specs'
-method: CodeLibrarian
+method: GsDevKitLibrarian
 _repositoryUrl
   ^ repositoryUrl
 %
 
 category: 'private'
-method: CodeLibrarian
+method: GsDevKitLibrarian
 _userProfile
   ^ userProfile ifNil: [ userProfile := self _myUserProfile ]
 %
 
 category: 'project specs'
-method: CodeLibrarian
+method: GsDevKitLibrarian
 baseline: aString
   projectName := aString
 %
 
 category: 'actions'
-method: CodeLibrarian
+method: GsDevKitLibrarian
 load
   "load the default packages of the given project from the given repository into symbolList of userId"
 
@@ -196,7 +148,7 @@ load
 %
 
 category: 'actions'
-method: CodeLibrarian
+method: GsDevKitLibrarian
 load: packageOrGroupNames
   "load the list of packages in the given repository into symbolList of userId"
 
@@ -207,7 +159,7 @@ load: packageOrGroupNames
 %
 
 category: 'project specs'
-method: CodeLibrarian
+method: GsDevKitLibrarian
 repository: aRepositoryUrl
   "specify the repository url which encodes the repository type and the path to the repository"
 
@@ -215,7 +167,7 @@ repository: aRepositoryUrl
 %
 
 category: 'actions'
-method: CodeLibrarian
+method: GsDevKitLibrarian
 save
   "save the project named by eth baseline in the given repository on behalf of the given userId"
 
@@ -243,12 +195,12 @@ save
 %
 
 category: 'actions'
-method: CodeLibrarian
+method: GsDevKitLibrarian
 save: packageNames
   "save the list of packages in the given repository on behalf of the given userId"
 
   self
-    _executeCodeLibraryBlock: [ 
+    _executeGsDevKitLibraryBlock: [ 
       | librarian repo |
       librarian := self _librarian.
       repo := (librarian objectNamed: 'CypressAbstractRepository')
@@ -270,7 +222,7 @@ save: packageNames
 %
 
 category: 'project specs'
-method: CodeLibrarian
+method: GsDevKitLibrarian
 user: aUserId
   "specify the userId of the user where the package is installed"
 
@@ -287,6 +239,6 @@ true.
 
 
 
-! End of Package: CodeLibrarian-Core
+! End of Package: GsDevKitLibrarian-Core
 
 
