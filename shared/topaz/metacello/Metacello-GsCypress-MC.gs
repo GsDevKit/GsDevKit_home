@@ -455,19 +455,6 @@ preLoad: packageOrVersionSpec
 
 ! Class Extensions
 
-! Class Extension for AbstractDictionary
-
-! ------------------- Instance methods for AbstractDictionary
-
-category: '*Metacello-GsCypress-MC'
-method: AbstractDictionary
-at: key ifPresent: aBlock
-	"Lookup the given key in the receiver. If it is present, answer the value of evaluating the given block with the value associated with the key. Otherwise, answer nil."
-
-	| v |
-	v := self at: key ifAbsent: [^ nil].
-	^ aBlock value: v
-%
 
 ! Class Extension for AbstractMetacelloConfiguration
 
@@ -1074,26 +1061,6 @@ loadWithPolicy: aLoadPolicy
   | packageManager |
   packageManager := MetacelloGemStoneBasePlatform cypressPackageManagerClass new.
   self loadUsing: self packageManager: packageManager
-%
-
-! Class Extension for String
-
-! ------------------- Class methods for String
-
-category: '*Metacello-GsCypress-MC'
-classmethod: String
-stringHash: aString initialHash: speciesHash
-  | stringSize hash low |
-  stringSize := aString size.
-  hash := speciesHash bitAnd: 16rFFFFFFF.
-  1 to: stringSize do: [ :pos | 
-    hash := hash + (aString at: pos) asInteger.	"Begin hashMultiply"
-    low := hash bitAnd: 16383.
-    hash := 16r260D * low
-      +
-        ((16r260D * (hash bitShift: -14) + (16r0065 * low) bitAnd: 16383) * 16384)
-      bitAnd: 16r0FFFFFFF ].
-  ^ hash
 %
 
 ! Class initializers 
