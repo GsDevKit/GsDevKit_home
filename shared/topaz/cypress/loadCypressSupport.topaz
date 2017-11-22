@@ -1,7 +1,0 @@
-run
-Metacello new
-  baseline: 'Cypress';
-  repository: 'cypress:', Cypress_SUPPORT_REPO;
-  load: #( 'Core' 'Tests' );
-  lock.
-%
