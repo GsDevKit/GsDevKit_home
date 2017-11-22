@@ -3701,11 +3701,15 @@ name: aString repository: aRepository
 
 ! ------------------- Instance methods for CypressResolvedReference
 
+set compile_env: 0
+
 category: 'comparing'
 method: CypressResolvedReference
 <= aResolvedReference
-  ^ self name <= aResolvedReference name
+  ^ (self perform: #name env: 2 withArguments: {}) <= (aResolvedReference perform: #name env: 2 withArguments: {})
 %
+
+set compile_env: 2
 
 category: 'initialization'
 method: CypressResolvedReference
