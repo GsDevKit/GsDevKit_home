@@ -1489,6 +1489,8 @@ doit
 true.
 %
 
+set compile_env: 2
+
 ! Class Implementation for MetacelloMethodSectionPath
 
 ! ------------------- Instance methods for MetacelloMethodSectionPath
@@ -14431,4 +14433,5 @@ true.
 
 ! End of Package: Metacello-Core
 
+set compile_env: 0
 

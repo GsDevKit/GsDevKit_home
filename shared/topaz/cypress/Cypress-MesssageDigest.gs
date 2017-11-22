@@ -17,6 +17,8 @@ doit
 true.
 %
 
+set compile_env: 2
+
 ! Class Implementation for CypressMessageDigestStream
 
 ! ------------------- Class methods for CypressMessageDigestStream
@@ -281,4 +283,4 @@ true.
 
 ! End of Package: Cypress-MesssageDigest
 
-
+set compile_env: 0

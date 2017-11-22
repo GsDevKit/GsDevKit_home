@@ -499,6 +499,8 @@ doit
 true.
 %
 
+set compile_env: 2
+
 ! Class Implementation for MetacelloPackageSpec
 
 ! ------------------- Instance methods for MetacelloPackageSpec
@@ -6586,4 +6588,4 @@ true.
 
 ! End of Package: Metacello-MC
 
-
+set compile_env: 0

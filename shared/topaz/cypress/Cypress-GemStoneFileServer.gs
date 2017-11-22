@@ -227,6 +227,8 @@ doit
 true.
 %
 
+set compile_env: 2
+
 ! Class Implementation for CypressAbstractPackageFiler
 
 ! ------------------- Class methods for CypressAbstractPackageFiler
@@ -1992,4 +1994,4 @@ true.
 
 ! End of Package: Cypress-GemStoneFileServer
 
-
+set compile_env: 0

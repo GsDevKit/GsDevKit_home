@@ -107,6 +107,8 @@ doit
 true.
 %
 
+set compile_env: 2
+
 ! Class Implementation for CypressStructure
 
 ! ------------------- Class methods for CypressStructure
@@ -1123,4 +1125,4 @@ true.
 
 ! End of Package: Cypress-Structure
 
-
+set compile_env: 0

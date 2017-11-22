@@ -67,6 +67,8 @@ doit
 true.
 %
 
+set compile_env: 2
+
 ! Class Implementation for CypressEnvironmentDependencySorter
 
 ! ------------------- Instance methods for CypressEnvironmentDependencySorter
@@ -584,4 +586,4 @@ true.
 
 ! End of Package: Cypress-Environmental-Tools
 
-
+set compile_env: 0

@@ -206,6 +206,8 @@ doit
 true.
 %
 
+set compile_env: 2
+
 ! Class Implementation for CypressUrl
 
 ! ------------------- Class methods for CypressUrl
@@ -1335,4 +1337,4 @@ true.
 
 ! End of Package: Cypress-Network-Url
 
-
+set compile_env: 0

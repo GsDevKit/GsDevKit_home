@@ -476,6 +476,8 @@ A CypressVersionReference refers to a specific version of a Monticello package.'
 true.
 %
 
+set compile_env: 2
+
 ! Class Implementation for CypressAbstractFileUrl
 
 ! ------------------- Class methods for CypressAbstractFileUrl
@@ -3903,4 +3905,4 @@ true.
 
 ! End of Package: Cypress-PackageManagement
 
-
+set compile_env: 0

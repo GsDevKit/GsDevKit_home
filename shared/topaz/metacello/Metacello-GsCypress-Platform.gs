@@ -2,6 +2,8 @@
 
 ! Class Declarations
 
+set compile_env: 2
+
 ! Class Extensions
 
 ! Class Extension for MetacelloPlatform
@@ -211,4 +213,4 @@ true.
 
 ! End of Package: Metacello-GsCypress-Platform
 
-
+set compile_env: 0

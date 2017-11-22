@@ -90,6 +90,30 @@ list do:[:name |
 %
 commit
 
+category: 'GsDevKitLibrarian env 2 override'
+method: Object
+doesNotUnderstand: aSymbol args: anArray envId: envId
+  "Generates an error reporting that the receiver cannot respond to a message.
+ because no compiled method was found for aSymbol in method environment
+ envId.   envId is a SmallInteger, 0 for Smalltalk , 1 for Ruby , 
+ 2 for GsDevKitLibrarian,  3..255 for future use by Smalltalk package managers .
+"
+
+  | ex |
+  envId = 2
+    ifTrue: [ 
+      "Any MNU in env 2, forward message to env 0"
+      ^ self perform: aSymbol env: 0 withArguments: anArray ].
+  (ex := MessageNotUnderstood _basicNew)
+    receiver: self
+    selector: aSymbol
+    args: anArray
+    envId: envId.
+  ^ ex signal
+%
+commit
+
+
 logout
 set u GsDevKitLibrarianUser p swordfish
 login
@@ -100,7 +124,6 @@ UserGlobals at: #GS_AllUsers put: AllUsers.
 %
 commit
 
-set compile_env: 2
 input $GS_HOME/shared/topaz/cypress/bootstrapCypressSupport.topaz
 commit
 input $GS_HOME/shared/topaz/metacello/bootstrapMetacelloSupport.topaz
@@ -110,7 +133,6 @@ logout
 set u SystemUser p swordfish
 login
 
-set compile_env: 2
 input $GS_HOME/shared/topaz/cypress/Cypress-Base-ExtensionMethods.gs
 commit
 input $GS_HOME/shared/topaz/metacello/Metacello-BaseExtensions.gs

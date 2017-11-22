@@ -1,6 +1,8 @@
 # 
 # Cypress-PackageManagement.gs
 #
+set compile_env: 2
+
 ! Class Extensions
 
 ! Class Extension for Array
@@ -122,8 +124,8 @@ _writeCypressJsonOn: aStream indent: startIndent
 	"Private method which may be removed in a future GemStone version."
 
 	aStream nextPutAll: '"'.
-	CypressUrl
-		writeWithHttpEscapes: (CypressObject normalizeLineEndingsOf: self)
+	((AllUsers userWithId: 'GsDevKitLibrarianUser') objectNamed: 'CypressUrl')
+		writeWithHttpEscapes: (((AllUsers userWithId: 'GsDevKitLibrarianUser') objectNamed: 'CypressObject') normalizeLineEndingsOf: self)
 		on: aStream.
 	aStream nextPutAll: '"'
 %
@@ -169,4 +171,5 @@ persistentSuperclassForEnv: envId put: aValue
   mds at: ofs put: aValue
 %
 
+set compile_env: 0
 

@@ -62,6 +62,8 @@ doit
 true.
 %
 
+set compile_env: 2
+
 ! Class Implementation for MetacelloFetchingCypressSpecLoader
 
 ! ------------------- Instance methods for MetacelloFetchingCypressSpecLoader
@@ -1073,4 +1075,4 @@ true.
 
 ! End of Package: Metacello-GsCypress-MC
 
-
+set compile_env: 0

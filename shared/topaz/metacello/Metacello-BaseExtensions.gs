@@ -2,6 +2,8 @@
 # Metacello-GsCypress-MC
 #
 
+set compile_env: 2
+
 ! Class Extension for AbstractDictionary
 
 ! ------------------- Instance methods for AbstractDictionary
@@ -447,7 +449,7 @@ asMetacelloAttributeList
 category: '*Metacello-BaseExtensions'
 method: Symbol
 asMetacelloAttributePath
-    ^ MetacelloMethodSectionPath with: {self}
+    ^ ((AllUsers userWithId: 'GsDevKitLibrarianUser') objectNamed: 'MetacelloMethodSectionPath') with: {self}
 %
 
 category: '*Metacello-BaseExtensions'
@@ -493,14 +495,14 @@ setPreLoadDoItInMetacelloSpec: aMetacelloSpec
 category: '*Metacello-BaseExtensions'
 method: UndefinedObject
 asMetacelloSemanticVersionNumber
-    ^ MetacelloSemanticVersionNumber fromString: ''
+    ^ ((AllUsers userWithId: 'GsDevKitLibrarianUser') objectNamed: 'MetacelloSemanticVersionNumber') fromString: ''
 %
 
 category: '*Metacello-BaseExtensions'
 method: UndefinedObject
 asMetacelloVersionNumber
 
-	^MetacelloVersionNumber fromString: ''
+	^((AllUsers userWithId: 'GsDevKitLibrarianUser') objectNamed: 'MetacelloVersionNumber') fromString: ''
 %
 
 category: '*Metacello-BaseExtensions'
@@ -570,3 +572,4 @@ setTimestampInMetacelloVersion: aMetacelloVersionSpec
 	aMetacelloVersionSpec setTimestamp: self
 %
 
+set compile_env: 0
