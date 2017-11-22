@@ -15,20 +15,20 @@
 !
 !=========================================================================
 
-input $Gs_HOME/shared/topaz/cypress/Cypress-Definitions.gs
+input $GS_HOME/shared/topaz/cypress/Cypress-Definitions.gs
 errorCount
-input $Gs_HOME/shared/topaz/cypress/Cypress-Structure.gs
+input $GS_HOME/shared/topaz/cypress/Cypress-Structure.gs
 errorCount
-input $Gs_HOME/shared/topaz/cypress/Cypress-GemStoneFileServer.gs
+input $GS_HOME/shared/topaz/cypress/Cypress-GemStoneFileServer.gs
 errorCount
-input $Gs_HOME/shared/topaz/cypress/Cypress-Network-Url.gs
+input $GS_HOME/shared/topaz/cypress/Cypress-Network-Url.gs
 errorCount
-input $Gs_HOME/shared/topaz/cypress/Cypress-MesssageDigest.gs
+input $GS_HOME/shared/topaz/cypress/Cypress-MesssageDigest.gs
 errorCount
-input $Gs_HOME/shared/topaz/cypress/Cypress-PackageManagement.gs
+input $GS_HOME/shared/topaz/cypress/Cypress-PackageManagement.gs
 errorCount
-input $Gs_HOME/shared/topaz/cypress/Cypress-Environmental-Tools.gs
+input $GS_HOME/shared/topaz/cypress/Cypress-Environmental-Tools.gs
 errorCount
-input $Gs_HOME/shared/topaz/cypress/Cypress-Comparison.gs
+input $GS_HOME/shared/topaz/cypress/Cypress-Comparison.gs
 errorCount
 

@@ -88,14 +88,6 @@ $GS_HOME/bin/startTopaz $stoneName -l << EOF
   Globals at: #UndefinedSymbolList put: (SymbolList with: undef).
 %
   commit
-  run
-  Metacello new
-    baseline: 'Metacello';
-    repository: 'cypressft://$GS_HOME/shared/repos/gs_port/metacello/repository/';
-    load;
-    lock
-%
-  commit
 # these two methods used by STON 
 classmethod: SequenceableCollection
 streamContents: blockWithArg
@@ -146,6 +138,13 @@ instVarNamed: aString
   ^ self instVarAt: (self class allInstVarNames indexOf: aString asSymbol)
 %
   commit
+  logout
+
+  input $GS_HOME/shared/topaz/GsDevKitLibrarian.gs
+
+  set u SystemUser p swordfish
+  login
+
   run
   GsDevKitLibrarian new
     baseline: 'Ston';

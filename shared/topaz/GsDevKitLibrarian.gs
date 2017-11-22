@@ -109,9 +109,8 @@ commit
 
 ! Install GsDevKitLibrarian-Core package
 
-input $upgradeDir/GsDevKitLibrarian-Core.gs
+input $GS_HOME/shared/topaz/GsDevKitLibrarian-Core.gs
 commit
-
 logout
 
 set u SystemUser p swordfish
