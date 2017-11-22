@@ -88,74 +88,6 @@ $GS_HOME/bin/startTopaz $stoneName -l << EOF
   Globals at: #UndefinedSymbolList put: (SymbolList with: undef).
 %
   commit
-#       BootStrap UUID into Base --- eventually part of 3.4.0 base
-  input $GS_HOME/shared/topaz/uuid/bootstrapUUIDSupport.topaz
-  commit
-  input $GS_HOME/shared/topaz/metacello/bootstrapMetacelloSupport.topaz
-  commit
-  run
-  | smalltalkDict |
-  smalltalkDict := SymbolDictionary new.
-  smalltalkDict name: #SmalltalkDict.
-  System myUserProfile symbolList insertObject: smalltalkDict at: 1. 
-  GsCurrentSession currentSession symbolList insertObject: smalltalkDict at: 1.
-%
-  doit
-  (Object
-	subclass: 'Smalltalk'
-	instVarNames: #(  )
-	classVars: #(  )
-	classInstVars: #(  )
-	poolDictionaries: #()
-	inDictionary: SmalltalkDict
-	options: #())
-		category: 'Kernel Smalltalk Compat';
-		comment: '';
-		immediateInvariant.
-%
-  commit
-category: 'bootstrapGsDevKit'
-classmethod: Smalltalk
-at: aGlobalName ifPresent: aBlock
-  | glob |
-  aGlobalName isNil
-    ifTrue: [ ^ nil ].
-  glob := GsSession currentSession symbolList objectNamed: aGlobalName.
-  ^ glob ~~ nil
-    ifTrue: [ aBlock value: glob ]
-    ifFalse: [ glob ]
-%
-category: 'bootstrapGsDevKit'
-classmethod: Smalltalk
-at: aGlobalName ifAbsent: aBlock
-  | glob |
-  aGlobalName isNil
-    ifTrue: [ ^ aBlock value ].
-  glob := GsSession currentSession symbolList objectNamed: aGlobalName.
-  ^ glob == nil
-    ifTrue: [ aBlock value ]
-    ifFalse: [ glob ]
-%
-category: 'bootstrapGsDevKit'
-classmethod: Smalltalk
-classNamed: className
-  "className is either a class name or a class name followed by '
-	class'. Answer the class or metaclass it names"
-
-  | meta baseName baseClass |
-  (className size > 6 and: [ (className copyFrom: className size - 6 to: className size) = ' class' ])
-    ifTrue: [ 
-      meta := true.
-      baseName := className copyFrom: 1 to: className size - 6 ]
-    ifFalse: [ 
-      meta := false.
-      baseName := className ].
-  baseClass := self at: baseName asSymbol ifAbsent: [ ^ nil ].
-  meta
-    ifTrue: [ ^ baseClass class ]
-    ifFalse: [ ^ baseClass ]
-%
-  commit
   run
   Metacello new
     baseline: 'Metacello';
@@ -215,7 +147,7 @@ instVarNamed: aString
 %
   commit
   run
-  Metacello new
+  GsDevKitLibrarian new
     baseline: 'Ston';
     repository: 'cypressft://$GS_HOME/shared/repos/gs_port/ston/repository/';
     load;
@@ -223,22 +155,22 @@ instVarNamed: aString
 %
   commit
   run
-  Metacello new
+  GsDevKitLibrarian new
     baseline: 'Gt4Gemstone';
     repository: 'cypressft://$GS_HOME/shared/repos/gt4gemstone/src/';
     load
 %
   commit
   run
-  Metacello new
+  GsDevKitLibrarian new
     baseline: 'Sport';
     repository: 'cypressft:$GS_HOME/shared/repos/Sport/src/';
     lock.
-  Metacello new
+  GsDevKitLibrarian new
     baseline: 'Grease';
     repository: 'cypressft:$GS_HOME/shared/repos/gs_port/Grease/repository/';
     lock.
-  Metacello new
+  GsDevKitLibrarian new
     baseline: 'GsDevKit';
     repository: 'cypressft:$GS_HOME/shared/repos/GsDevKit/repository/';
     get;

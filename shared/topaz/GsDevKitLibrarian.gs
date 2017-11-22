@@ -71,6 +71,8 @@ UserGlobals at: #GS_AllUsers put: AllUsers.
 %
 commit
 
+#  input $GS_HOME/shared/topaz/uuid/bootstrapUUIDSupport.topaz
+#  commit
 input $GS_HOME/shared/topaz/cypress/bootstrapCypressSupport.topaz
 commit
 input $GS_HOME/shared/topaz/metacello/bootstrapMetacelloSupport.topaz
