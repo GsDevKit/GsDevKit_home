@@ -68,13 +68,12 @@ method: GsDevKitLibrarian
 _loadMetacello: groupNamesOrNil
   | librarian metacello |
   librarian := self _librarian.
-  metacello := (librarian objectNamed: 'Metacello') new
-    baseline: self _projectName;
-    repository: self _repositoryUrl;
-    yourself.
+  metacello := (librarian objectNamed: 'Metacello') new.
+  metacello @env2: baseline: self _projectName.
+  metacello @env2: repository: self _repositoryUrl.
   ^ groupNamesOrNil
-    ifNil: [ metacello load ]
-    ifNotNil: [ metacello load: groupNamesOrNil ]
+    ifNil: [ metacello @env2: load ]
+    ifNotNil: [ metacello @env2: load: groupNamesOrNil ]
 %
 
 category: 'private'
