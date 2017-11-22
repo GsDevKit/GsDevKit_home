@@ -890,20 +890,20 @@ defaultPlatformAttributes
 category: '*Metacello-GsCypress-MC'
 method: MetacelloPlatform
 globalNamed: globalName
-  ^ GsSession currentSession symbolList objectNamed: globalName
+  ^ (AllUsers userWithId: self class userId) symbolList objectNamed: globalName
 %
 
 category: '*Metacello-GsCypress-MC'
 method: MetacelloPlatform
 globalNamed: globalName ifAbsent: absentBlock
-  ^ (GsSession currentSession symbolList objectNamed: globalName)
+  ^ ((AllUsers userWithId: self class userId) symbolList objectNamed: globalName)
     ifNil: absentBlock
 %
 
 category: '*Metacello-GsCypress-MC'
 method: MetacelloPlatform
 globalNamed: globalName ifPresent: presentBlock
-  ^ (GsSession currentSession symbolList objectNamed: globalName)
+  ^ ((AllUsers userWithId: self class userId) symbolList objectNamed: globalName)
     ifNotNil: [:anObject | presentBlock value: anObject]
 %
 
