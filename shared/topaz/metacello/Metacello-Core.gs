@@ -4132,7 +4132,7 @@ method: MetacelloAbstractVersionConstructor
 evaluatePragma: pragma
   pragma ifNil: [ ^ self ].
   currentContext := pragma.
-  [ self configuration perform: pragma selector with: self ]
+  [ self configuration perform: pragma selector env: 2 withArguments: { self } ]
     ensure: [ currentContext := nil ]
 %
 
@@ -5585,7 +5585,7 @@ defaultSymbolicVersionResolverBlock: receiver
 	(pragma argumentAt: 1) = symbolicVrsn
 		ifTrue: [ 
 			self symbolicVersion: symbolicVrsn.
-			result := [ receiver perform: pragma selector ] on: MetacelloVersionDoesNotExistError do: [ :ex | ex return: nil ] ].
+			result := [ receiver perform: pragma selector env: 2 withArguments: {} ] on: MetacelloVersionDoesNotExistError do: [ :ex | ex return: nil ] ].
 	result ]
 %
 
@@ -6325,7 +6325,7 @@ validateDoIts: aSpec versionString: versionString errorMessage: errorMessage
   'postLoadDoIt selector for '}.
   1 to: ar size by: 2 do: [ :i | 
     | selector |
-    selector := (aSpec perform: (ar at: i)) value.
+    selector := (aSpec perform: (ar at: i) env: 2 withArguments: {}) value.
     selector ~~ nil
       ifTrue: [ 
         (MetacelloPlatform current isSymbol: selector)
@@ -7191,7 +7191,7 @@ unselect
 category: 'accessing'
 method: MetacelloPlatform
 authorName
-  self globalNamed: #'Author' ifPresent: [ :cl | ^ cl perform: #'initials' ].
+  self globalNamed: #'Author' ifPresent: [ :cl | ^ cl perform: #'initials' env: 2 withArguments: {} ].
   ^ 'no developer initials'
 %
 
@@ -7266,7 +7266,7 @@ method: MetacelloPlatform
 confirm: aString
   self
     globalNamed: #'UIManager'
-    ifPresent: [ :cl | ^ cl default perform: #'confirm:' with: aString ] Warning
+    ifPresent: [ :cl | ^ cl default perform: #'confirm:' env: 2 withArguments: { aString } ] Warning
     signal: aString.	"throw warning and answer true, if no way to announce"
   ^ true
 %
@@ -9193,7 +9193,7 @@ performCurrentVersionTestAgainst: vrsn operator: anOperator targetVersionStatus:
       (cv := prjct currentVersion) == nil
         ifTrue: [ ^ false ].
       (targetVersionStatus includes: cv versionStatus)
-        ifTrue: [ ^ cv perform: anOperator with: vrsn ].
+        ifTrue: [ ^ cv perform: anOperator env: 2 withArguments: { vrsn } ].
       ^ false ].
   true
     ifTrue: [ 
@@ -10003,8 +10003,8 @@ execute: statements
   statements
     do: [ :assoc | 
       assoc value
-        ifNil: [ self perform: assoc key ]
-        ifNotNil: [ self perform: assoc key withArguments: assoc value ] ].
+        ifNil: [ self perform: assoc key env: 2 withArguments: {} ]
+        ifNotNil: [ self perform: assoc key env: 2 withArguments: assoc value ] ].
   projectSpecGenerator := self projectSpecGenerator.
   projectSpecGenerator target
     execute: [ :projectSpec | 
@@ -10013,7 +10013,7 @@ execute: statements
         options: self options copy;
         projectSpec: projectSpec;
         yourself.
-      engine perform: actionArg key withArguments: actionArg value.
+      engine perform: actionArg key env: 2 withArguments: actionArg value.
       engine root ifNotNil: [ :root | self roots add: root ] ]
     against: self.
   ^ (self singleRoot and: [ self roots size == 1 ])
@@ -10404,11 +10404,11 @@ doItBlock: selector
 
 	selector == nil ifTrue: [ ^nil ].
 	selector numArgs = 0
-		ifTrue: [ ^[ self project configuration perform: selector ] ].
+		ifTrue: [ ^[ self project configuration perform: selector env: 2 withArguments: {} ] ].
 	selector numArgs = 1
-		ifTrue: [ ^[:aLoader | self project configuration perform: selector with: aLoader ] ].
+		ifTrue: [ ^[:aLoader | self project configuration perform: selector env: 2 withArguments: { aLoader } ] ].
 	selector numArgs = 2
-		ifTrue: [ ^[:aLoader :pkgSpec | self project configuration perform: selector with: aLoader with: pkgSpec ] ].
+		ifTrue: [ ^[:aLoader :pkgSpec | self project configuration perform: selector env: 2 withArguments: {aLoader. pkgSpec } ] ].
 	^nil
 %
 
@@ -12118,8 +12118,9 @@ compareVersions: aMetacelloProjectSpec usingOperator: anOperator
       "https://github.com/dalehenrich/metacello-work/issues/199#issuecomment-21739622"
       aMetacelloProjectSpec versionString asMetacelloVersionNumber
         perform: anOperator
-        with: self version versionNumber ]
-    ifFalse: [ ^ aMetacelloProjectSpec version perform: anOperator with: self version ]
+        env: 2
+        withArguments: { self version versionNumber } ]
+    ifFalse: [ ^ aMetacelloProjectSpec version perform: anOperator env: 2 withArguments: { self version } ]
 %
 
 category: 'scripting'

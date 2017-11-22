@@ -21,6 +21,14 @@ true.
 
 ! ------------------- Instance methods for GsDevKitLibrarian
 
+
+
+category: 'private'
+method: GsDevKitLibrarian
+_methodEnvironment
+  ^ 2
+%
+
 category: 'private'
 method: GsDevKitLibrarian
 _executeGsDevKitLibraryBlock: aBlock
@@ -69,11 +77,12 @@ _loadMetacello: groupNamesOrNil
   | librarian metacello |
   librarian := self _librarian.
   metacello := (librarian objectNamed: 'Metacello') new.
-  metacello @env2: baseline: self _projectName.
-  metacello @env2: repository: self _repositoryUrl.
+  metacello 
+    perform: #baseline:	env: self _methodEnvironment withArguments: { self _projectName};
+    perform: #repository: env: self _methodEnvironment withArguments: { self _repositoryUrl }.
   ^ groupNamesOrNil
-    ifNil: [ metacello @env2: load ]
-    ifNotNil: [ metacello @env2: load: groupNamesOrNil ]
+    ifNil: [ metacello perform: #load env: self _methodEnvironment withArguments: {} ]
+    ifNotNil: [ metacello perform: #load: env: self _methodEnvironment withArguments: { groupNamesOrNil } ]
 %
 
 category: 'private'
