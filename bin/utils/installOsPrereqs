@@ -49,10 +49,18 @@ installPrereqsForUbuntu(){
         sudo apt-get -y install fonts-dejavu # ensure that DejaVu Sans Mono font present (default font for tODE)
         sudo ln -f -s /usr/lib/i386-lin-gnu/libstdc++.so.6 /usr/lib/i386-linux-gnu/libstdc++.so
         ;;
+      18.2) #Linux Mint
+        sudo dpkg --add-architecture i386
+        installUbuntuPackages
+        sudo apt-get -y install fonts-dejavu # ensure that DejaVu Sans Mono font present (default font for tODE)
+        sudo ln -f -s /usr/lib/i386-lin-gnu/libstdc++.so.6 /usr/lib/i386-linux-gnu/libstdc++.so
+        ;;
       *) usage; exit_1_banner "unrecognized Ubuntu version $os";;
     esac
 
 }
+
+
 installUbuntuPackages(){
     sudo apt-get -y update
     sudo apt-get -y install curl
@@ -330,6 +338,9 @@ case "$PLATFORM" in
 	  echo "Installing prereqs for detect Linux named $osName and version $osVersion"
       case "$osName" in
         Ubuntu)
+		  installPrereqsForUbuntu
+		  ;;
+		Linux) #Linux Mint
 		  installPrereqsForUbuntu
 		  ;;
         Debian)
