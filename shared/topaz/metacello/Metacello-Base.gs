@@ -538,7 +538,6 @@ The newly loaded of the project will continue to be locked.
 true.
 %
 
-set compile_env: 2
 
 ! Class Implementation for AbstractMetacelloConfiguration
 
@@ -1132,8 +1131,4 @@ doit
 true.
 %
 
-
-
 ! End of Package: Metacello-Base
-
-set compile_env: 0

@@ -103,6 +103,10 @@ doesNotUnderstand: aSymbol args: anArray envId: envId
   envId = 2
     ifTrue: [ 
       "Any MNU in env 2, forward message to env 0"
+      aSymbol == #perform:env:withArguments:
+        ifTrue: [
+          "MNU from #perform:env:withArguments: ... unpack selector and args to resend"
+          ^ self perform: (anArray at: 1) env: 0 withArguments: (anArray at: 3) ].
       ^ self perform: aSymbol env: 0 withArguments: anArray ].
   (ex := MessageNotUnderstood _basicNew)
     receiver: self
@@ -111,6 +115,28 @@ doesNotUnderstand: aSymbol args: anArray envId: envId
     envId: envId.
   ^ ex signal
 %
+
+set compile_env: 2
+
+category: 'GsDevKitLibrarian env 2 override'
+method: Object
+perform: aSelectorSymbol env: environmentId withArguments: anArray
+  "Sends the receiver the message indicated by the arguments.
+ The argument, aSelectorSymbol, is the keyword selector of the message.
+ The arguments of the message are the elements of anArray.  Generates an
+ error if the number of arguments expected by aSelectorSymbol is not
+ the same as the number of elements in anArray.
+
+ anArray must be an instance of Array.
+
+ environmentId must be a SmallInteger >= 0 and <= 255,
+ specifying a method lookup environment."
+
+^ self @env0: perform: aSelectorSymbol env: environmentId withArguments: anArray
+%
+
+set compile_env: 0
+
 commit
 
 
@@ -179,20 +205,23 @@ logout
 set u SystemUser p swordfish
 login
 
-! Install GsDevKitLibrarian class association into globals
+! Install GsDevKitLibrarian class association into globals and BaselineOf class, too
 expectvalue %String
 run
-  Globals at: #GsDevKitLibrarian 
-    ifAbsent: [
-      | codeLibrarian |
-      codeLibrarian := AllUsers userWithId: 'GsDevKitLibrarianUser'.
-      #( #'GsDevKitLibrarian' )
-        do: [ :className | 
-          | assoc |
+  | codeLibrarian str |
+  codeLibrarian := AllUsers userWithId: 'GsDevKitLibrarianUser'.
+  str := String new.
+  #( #'GsDevKitLibrarian' #'BaselineOf' #'Metacello' #'ConfigurationOf' )
+    do: [ :className | 
+      | assoc |
+      Globals 
+        at: className 
+        ifAbsent: [
           assoc := codeLibrarian symbolList resolveSymbol: className.
-          Globals addAssociation: assoc ].
-      ^ 'GsDevKitLibrarian class installed in Globals'].
-  ^ 'GsDevKitLibrarian class already exists in Globals'
+          Globals addAssociation: assoc.
+          str add: className asString, ' ' ] ].
+  str isEmpty ifTrue: [ ^ 'GsDevKitLibrarian, Metacello, ConfigurationOf, and BaselineOf already in Globals' ].
+  ^str , 'installed in Globals'
 %
 
 commit

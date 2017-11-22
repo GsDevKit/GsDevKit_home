@@ -1489,6 +1489,13 @@ doit
 true.
 %
 
+! patch env 2 superclasses
+run
+MetacelloScriptApiExecutor superclassForEnv: 2 put: MetacelloScriptExecutor.
+MetacelloScriptImageExecutor superclassForEnv: 2 put: MetacelloScriptExecutor.
+MetacelloScriptRegistryExecutor superclassForEnv: 2 put: MetacelloScriptExecutor.
+%
+
 set compile_env: 2
 
 ! Class Implementation for MetacelloMethodSectionPath

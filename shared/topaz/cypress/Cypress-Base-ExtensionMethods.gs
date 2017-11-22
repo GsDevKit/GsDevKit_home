@@ -171,5 +171,22 @@ persistentSuperclassForEnv: envId put: aValue
   mds at: ofs put: aValue
 %
 
+category: '*Cypress-Base-ExtensionMethods'
+method: SequenceableCollection
+sort: aSortBlock
+  "Sort this array using aSortBlock. The block should take two arguments
+	and return true if the first element should preceed the second one."
+
+^ self sortWithBlock: aSortBlock
+%
+
+category: '*Cypress-Base-ExtensionMethods'
+method: SequenceableCollection
+sort
+  "Sort this array into ascending order using the '<=' operator."
+
+  ^ self sort: [ :a :b | a <= b ]
+%
+
 set compile_env: 0
 
