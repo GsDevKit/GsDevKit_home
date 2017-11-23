@@ -203,6 +203,11 @@ resolvePackageSpecsNamedForMetacelloMCVersion: aMetacelloMCVersion visited: visi
         visited: visited
 %
 
+category: '*Metacello-BaseExtensions'
+method: String
+setLoadsInMetacelloProject: aMetacelloPackageSpec
+  aMetacelloPackageSpec setLoads: {self}
+%
 
 #
 # Metacello-Core
@@ -252,6 +257,12 @@ method: Collection
 setIncludesInMetacelloPackage: aMetacelloPackageSpec
 
 	aMetacelloPackageSpec setIncludes: self asArray.
+%
+
+category: '*Metacello-BaseExtensions'
+method: Collection
+setLoadsInMetacelloProject: aMetacelloPackageSpec
+  aMetacelloPackageSpec setLoads: self asArray
 %
 
 category: '*Metacello-BaseExtensions'

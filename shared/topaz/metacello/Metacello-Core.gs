@@ -3318,6 +3318,8 @@ signal: aMetacelloPackageSpec
 
 ! ------------------- Instance methods for MetacelloIgnorePackageLoaded
 
+set compile_env: 0
+
 category: 'accessing'
 method: MetacelloIgnorePackageLoaded
 defaultAction
@@ -3326,6 +3328,8 @@ defaultAction
 
   ^ false
 %
+
+set compile_env: 2
 
 category: 'accessing'
 method: MetacelloIgnorePackageLoaded
@@ -3339,6 +3343,13 @@ method: MetacelloIgnorePackageLoaded
 packageSpec: anObject
 
    packageSpec := anObject
+%
+
+category: 'signalling'
+method: MetacelloIgnorePackageLoaded
+signal
+
+  ^ self @env0: signal
 %
 
 ! Class Implementation for MetacelloScriptGitBasedDownloadNotification

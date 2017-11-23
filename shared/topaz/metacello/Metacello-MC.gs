@@ -5974,8 +5974,9 @@ load
   mcLoader := self loader.
   packages values
     do: [ :pkg | 
+      | x |
       pkg ensureLoadedForDevelopmentUsing: mcLoader.
-      (MetacelloIgnorePackageLoaded signal: pkg)
+      (x := MetacelloIgnorePackageLoaded signal: pkg)
         ifFalse: [ 
           mcLoader ignoreImage
             ifFalse: [ 
