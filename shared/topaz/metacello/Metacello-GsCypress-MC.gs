@@ -462,6 +462,8 @@ preLoad: packageOrVersionSpec
 
 ! ------------------- Class methods for AbstractMetacelloConfiguration
 
+set compile_env: 0
+
 category: '*Metacello-GsCypress-MC'
 classmethod: AbstractMetacelloConfiguration
 ensureMetacello: loadList
@@ -479,6 +481,8 @@ method: BaselineOf
 projectClass
     ^ MetacelloCypressBaselineProject
 %
+
+set compile_env: 2
 
 ! Class Extension for CypressAbstractRepository
 

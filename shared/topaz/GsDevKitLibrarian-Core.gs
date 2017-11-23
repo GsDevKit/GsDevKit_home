@@ -78,11 +78,11 @@ _loadMetacello: groupNamesOrNil
   librarian := self _librarian.
   metacello := (librarian objectNamed: 'Metacello') new.
   metacello 
-    perform: #baseline:	env: self _methodEnvironment withArguments: { self _projectName};
-    perform: #repository: env: self _methodEnvironment withArguments: { self _repositoryUrl }.
+    baseline: self _projectName;
+    repository: self _repositoryUrl.
   ^ groupNamesOrNil
-    ifNil: [ metacello perform: #load env: self _methodEnvironment withArguments: {} ]
-    ifNotNil: [ metacello perform: #load: env: self _methodEnvironment withArguments: { groupNamesOrNil } ]
+    ifNil: [ metacello load ]
+    ifNotNil: [ metacello load: groupNamesOrNil ]
 %
 
 category: 'private'

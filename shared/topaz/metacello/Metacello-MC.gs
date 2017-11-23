@@ -6118,6 +6118,8 @@ versionString
 
 ! Class Extensions
 
+set compile_env: 0
+
 ! Class Extension for AbstractMetacelloConfiguration
 
 ! ------------------- Instance methods for AbstractMetacelloConfiguration
@@ -6137,6 +6139,8 @@ method: ConfigurationOf
 projectClass
   ^ MetacelloMCProject
 %
+
+set compile_env: 2
 
 ! Class Extension for MetacelloAbstractPackageSpec
 

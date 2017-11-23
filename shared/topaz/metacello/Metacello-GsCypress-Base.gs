@@ -1,7 +1,5 @@
 ! Package: Metacello-GsCypress-Base
 
-set compile_env: 2
-
 ! Class Declarations
 
 ! Class Extensions
@@ -26,6 +24,4 @@ true.
 
 
 ! End of Package: Metacello-GsCypress-Base
-
-set compile_env: 0
 
