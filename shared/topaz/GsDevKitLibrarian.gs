@@ -164,10 +164,6 @@ commit
 input $GS_HOME/shared/topaz/metacello/Metacello-BaseExtensions.gs
 commit
 
-logout
-set u GsDevKitLibrarianUser p swordfish
-login
-
 doit
   (Object
 	subclass: 'Smalltalk'
@@ -195,6 +191,10 @@ classmethod: Smalltalk
     ifFalse: [ glob ]
 %
 commit
+
+logout
+set u GsDevKitLibrarianUser p swordfish
+login
 
 ! Install GsDevKitLibrarian-Core package
 

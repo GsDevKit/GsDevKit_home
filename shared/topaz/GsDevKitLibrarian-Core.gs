@@ -67,6 +67,17 @@ _librarian
 
 category: 'private'
 method: GsDevKitLibrarian
+_getMetacello
+  | metacello |
+  metacello := (self _librarian objectNamed: 'Metacello') image.
+  ^ metacello 
+    baseline: self _projectName;
+    repository: self _repositoryUrl;
+    get
+%
+
+category: 'private'
+method: GsDevKitLibrarian
 _lockMetacello
   | metacello |
   metacello := (self _librarian objectNamed: 'Metacello') image.
@@ -150,6 +161,23 @@ category: 'project specs'
 method: GsDevKitLibrarian
 baseline: aString
   projectName := aString
+%
+
+category: 'actions'
+method: GsDevKitLibrarian
+get
+  "resolve project name in given repository and return an instance of MetacelloProject resolved from a ConfigurationOf or BaselineOf"
+  projectName
+    ifNil: [ 
+      self
+        error:
+          'Missing Metacello project name. Must use `baseline:` to define project name.' ].
+  repositoryUrl
+    ifNil: [ 
+      self
+        error:
+          'Missing Metacello repository description. Must use `repository:` to define repository url.' ].
+  ^ self _getMetacello
 %
 
 category: 'actions'
