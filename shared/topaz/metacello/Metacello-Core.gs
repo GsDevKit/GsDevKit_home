@@ -10631,6 +10631,8 @@ nonOverridable
 	^#()
 %
 
+set compile_env: 0
+
 category: 'copying'
 method: MetacelloSpec
 postCopy
@@ -10639,6 +10641,8 @@ postCopy
     loader ~~ nil
         ifTrue: [ self loader: loader ].
 %
+
+set compile_env: 2
 
 category: 'doits'
 method: MetacelloSpec
