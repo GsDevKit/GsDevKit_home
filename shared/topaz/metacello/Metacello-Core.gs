@@ -8797,12 +8797,16 @@ mutable
     mutable := true
 %
 
+set compile_env: 0
+
 category: 'copying'
 method: MetacelloProjectRegistration
 postCopy
     super postCopy.
     mutable := nil
 %
+
+set compile_env: 2
 
 category: 'printing'
 method: MetacelloProjectRegistration

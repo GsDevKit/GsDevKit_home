@@ -67,6 +67,16 @@ _librarian
 
 category: 'private'
 method: GsDevKitLibrarian
+_lockMetacello
+  | metacello |
+  metacello := (self _librarian objectNamed: 'Metacello') image.
+  ^ metacello 
+    baseline: self _projectName;
+    lock
+%
+
+category: 'private'
+method: GsDevKitLibrarian
 _librarianUserGlobals
   ^ self librarian symbolList objectNamed: #'UserGlobals'
 %
@@ -144,6 +154,18 @@ baseline: aString
 
 category: 'actions'
 method: GsDevKitLibrarian
+lock
+  "lock the project in the registry"
+
+  projectName
+    ifNil: [ 
+      self
+        error:
+          'Missing Metacello project name. Must use `baseline:` to define project name.' ].
+  ^ self _lockMetacello
+%
+category: 'actions'
+method: GsDevKitLibrarian
 load
   "load the default packages of the given project from the given repository into symbolList of userId"
 
@@ -151,8 +173,8 @@ load
     ifNil: [ 
       self
         error:
-          'Missing Metacello project name. Must `baseline:` to define project name.' ].
-  self _loadMetacello: nil
+          'Missing Metacello project name. Must use `baseline:` to define project name.' ].
+  ^ self _loadMetacello: nil
 %
 
 category: 'actions'
@@ -163,7 +185,7 @@ load: packageOrGroupNames
   System
     currentObjectSecurityPolicy: self _userProfile defaultObjectSecurityPolicy.	"assume that only SystemUser can do this"
   projectName ifNil: [ ^ self _loadPackages: packageOrGroupNames ].
-  self _loadMetacello: packageOrGroupNames
+  ^ self _loadMetacello: packageOrGroupNames
 %
 
 category: 'project specs'
