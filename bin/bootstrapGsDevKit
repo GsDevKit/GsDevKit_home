@@ -170,6 +170,7 @@ instVarNamed: aString
     repository: 'cypressft:$GS_HOME/shared/repos/gs_port/Grease/repository/';
     lock.
   GsDevKitLibrarian new
+    gitCloneDir: '$GS_HOME/shared/repos/gsdevkit';
     baseline: 'GsDevKit';
     repository: 'cypressft:$GS_HOME/shared/repos/GsDevKit/repository/';
     get;

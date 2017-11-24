@@ -53,6 +53,13 @@ set compile_env: 2
 
 ! ------------------- Instance methods for MetacelloCypressBaselineProjectSpec
 
+category: 'merging'
+method: MetacelloCypressBaselineProjectSpec
+speciesForMerge
+
+  ^ MetacelloMCBaselineOfProjectSpec
+%
+
 category: 'scripting'
 method: MetacelloCypressBaselineProjectSpec
 asBaselineProjectSpec

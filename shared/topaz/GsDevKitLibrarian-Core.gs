@@ -180,6 +180,13 @@ get
   ^ self _getMetacello
 %
 
+category: 'loader constants'
+method: GsDevKitLibrarian
+gitCloneDir: directoryPath
+
+  (self _librarian objectNamed: 'CypressFileSystemGitRepository') @env2: gitRepositoryDir: directoryPath
+%
+
 category: 'actions'
 method: GsDevKitLibrarian
 lock

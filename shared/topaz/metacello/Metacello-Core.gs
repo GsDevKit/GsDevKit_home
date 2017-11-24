@@ -3272,6 +3272,8 @@ versionString: aString exception: anException
 
 ! ------------------- Instance methods for MetacelloErrorInProjectConstructionNotification
 
+set compile_env: 0
+
 category: 'exception description'
 method: MetacelloErrorInProjectConstructionNotification
 defaultAction
@@ -3280,6 +3282,8 @@ defaultAction
 
     ^ false
 %
+
+set compile_env: 2
 
 category: 'accessing'
 method: MetacelloErrorInProjectConstructionNotification
@@ -3425,13 +3429,17 @@ checkAllowed
             signal) ]
 %
 
+set compile_env: 0
+
 category: 'exception handling'
 method: MetacelloResolveProjectUpgrade
 defaultAction
     "Result of signal should be the projectRegistration to be used to perform the load ... default is to disallow"
 
-    ^ self existingProjectRegistration
+    ^ self @env2: existingProjectRegistration
 %
+
+set compile_env: 2
 
 category: 'exception handling'
 method: MetacelloResolveProjectUpgrade
@@ -3515,18 +3523,22 @@ useNew
 
 ! ------------------- Instance methods for MetacelloAllowConflictingProjectUpgrade
 
+set compile_env: 0
+
 category: 'exception handling'
 method: MetacelloAllowConflictingProjectUpgrade
 defaultAction
-  self existingProjectRegistration locked
+  self @env2: existingProjectRegistration locked
     ifTrue: [ 
       "https://github.com/dalehenrich/metacello-work/issues/263"
-      ^ self useIncoming ].
+      ^ self @env2: useIncoming ].
   ^ MetacelloConflictingProjectError
-    signal:
-      'Load Conflict between existing ' , self existingProjectRegistration printString
-        , ' and ' , self newProjectRegistration printString
+    @env2: signal:
+      'Load Conflict between existing ' , (self @env2: existingProjectRegistration printString)
+        , ' and ' , (self @env2: newProjectRegistration printString)
 %
+
+set compile_env: 2
 
 category: 'handlers'
 method: MetacelloAllowConflictingProjectUpgrade
@@ -3556,18 +3568,22 @@ checkAllowed
   "noop ... if user decided to allow lock to be broken, then so be it"
 %
 
+set compile_env: 0
+
 category: 'exception handling'
 method: MetacelloAllowLockedProjectChange
 defaultAction
   Warning
     signal:
-      'LOCK ENFORCED: Attempt to ' , self operationString printString
-        , ' new project: ' , self newProjectRegistration printString printString
+      'LOCK ENFORCED: Attempt to ' , self @env2: operationString printString
+        , ' new project: ' , self @env2: newProjectRegistration printString printString
         , ' when existing project: '
-        , self existingProjectRegistration printString printString
+        , self @env2: existingProjectRegistration printString printString
         , ' is locked. New project not loaded. Use #onLock: to intercept.'.
-  ^ self disallow
+  ^ self @env2: disallow
 %
+
+set compile_env: 2
 
 category: 'handlers'
 method: MetacelloAllowLockedProjectChange
@@ -3606,14 +3622,18 @@ operationString: aString
 
 ! ------------------- Instance methods for MetacelloAllowProjectDowngrade
 
+set compile_env: 0
+
 category: 'exception handling'
 method: MetacelloAllowProjectDowngrade
 defaultAction
   "Default for Downgrade is to disallow, but still should check for locks"
 
-  self checkAllowed.
+  self @env2: checkAllowed.
   ^ super defaultAction
 %
+
+set compile_env: 2
 
 category: 'handlers'
 method: MetacelloAllowProjectDowngrade
@@ -3646,14 +3666,18 @@ operationString
 
 ! ------------------- Instance methods for MetacelloAllowProjectUpgrade
 
+set compile_env: 0
+
 category: 'exception handling'
 method: MetacelloAllowProjectUpgrade
 defaultAction
     "Default for Upgrade is to allow"
 
-    self checkAllowed.
-    ^ self newProjectRegistration
+    self @env2: checkAllowed.
+    ^ self @env2: newProjectRegistration
 %
+
+set compile_env: 2
 
 category: 'handlers'
 method: MetacelloAllowProjectUpgrade
@@ -3686,6 +3710,8 @@ operationString
 
 ! ------------------- Instance methods for MetacelloScriptEnsureProjectLoadedForDevelopment
 
+set compile_env: 0
+
 category: 'exception handling'
 method: MetacelloScriptEnsureProjectLoadedForDevelopment
 defaultAction
@@ -3693,6 +3719,8 @@ defaultAction
 
     ^ true
 %
+
+set compile_env: 2
 
 category: 'handlers'
 method: MetacelloScriptEnsureProjectLoadedForDevelopment
@@ -3704,13 +3732,17 @@ handleResolutionFor: aScriptEngine
 
 ! ------------------- Instance methods for MetacelloScriptProjectSpecNotification
 
+set compile_env: 0
+
 category: 'exception description'
 method: MetacelloScriptProjectSpecNotification
 defaultAction
     "Result of signal should be the projectSpec to be used to perform the load"
 
-    ^ self projectSpec
+    ^ self @env2: projectSpec
 %
+
+set compile_env: 2
 
 category: 'accessing'
 method: MetacelloScriptProjectSpecNotification
@@ -3728,6 +3760,8 @@ projectSpec: anObject
 
 ! ------------------- Instance methods for MetacelloLookupBaselineSpecForEnsureLoad
 
+set compile_env: 0
+
 category: 'exception description'
 method: MetacelloLookupBaselineSpecForEnsureLoad
 defaultAction
@@ -3735,6 +3769,8 @@ defaultAction
 
 	^ true
 %
+
+set compile_env: 2
 
 category: 'handlers'
 method: MetacelloLookupBaselineSpecForEnsureLoad
@@ -3756,6 +3792,8 @@ handleResolutionFor: aScriptEngine
 
 ! ------------------- Instance methods for MetacelloLookupProjectSpecForLoad
 
+set compile_env: 0
+
 category: 'exception description'
 method: MetacelloLookupProjectSpecForLoad
 defaultAction
@@ -3763,9 +3801,11 @@ defaultAction
 	Create a MetacelloProjectSpecForLoad and use the overrideProjectSpec: if you want to supply a different projectSpec"
 
     ^ MetacelloProjectSpecForLoad new
-        projectSpec: self projectSpec;
+        @env2: projectSpec: self @env2: projectSpec;
         yourself
 %
+
+set compile_env: 2
 
 category: 'handlers'
 method: MetacelloLookupProjectSpecForLoad
@@ -3777,11 +3817,15 @@ handleResolutionFor: aScriptEngine
 
 ! ------------------- Instance methods for MetacelloProjectSpecLoadedNotification
 
+set compile_env: 0
+
 category: 'exception description'
 method: MetacelloProjectSpecLoadedNotification
 defaultAction
     ^ nil
 %
+
+set compile_env: 2
 
 category: 'handlers'
 method: MetacelloProjectSpecLoadedNotification
@@ -3802,6 +3846,8 @@ signal: aMetacelloPackageSpec
 
 ! ------------------- Instance methods for MetacelloSkipDirtyPackageLoad
 
+set compile_env: 0
+
 category: 'accessing'
 method: MetacelloSkipDirtyPackageLoad
 defaultAction
@@ -3809,6 +3855,8 @@ defaultAction
 
 	^true
 %
+
+set compile_env: 2
 
 category: 'accessing'
 method: MetacelloSkipDirtyPackageLoad
@@ -3997,6 +4045,8 @@ attributeOrder
 	^attributeOrder
 %
 
+set compile_env: 0
+
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 author: aBlockOrString
@@ -4010,8 +4060,10 @@ author: aBlockOrString
 			spec value: 'dkh'. ].
 	 "
 
-    self root author: aBlockOrString constructor: self
+    self root @env2: author: aBlockOrString constructor: self
 %
+
+set compile_env: 2
 
 category: 'api spec callbacks'
 method: MetacelloAbstractVersionConstructor
@@ -4019,17 +4071,21 @@ authorForVersion: aBlockOrString
     aBlockOrString setAuthorInMetacelloConfig: self
 %
 
+set compile_env: 0
+
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 baseline: aString
-    self root baseline: aString constructor: self
+    self root @env2: baseline: aString constructor: self
 %
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 baseline: aString with: aBlockOrString
-    self root baseline: aString with: aBlockOrString constructor: self
+    self root @env2: baseline: aString with: aBlockOrString constructor: self
 %
+
+set compile_env: 2
 
 category: 'api spec callbacks'
 method: MetacelloAbstractVersionConstructor
@@ -4042,6 +4098,8 @@ method: MetacelloAbstractVersionConstructor
 baselineForVersion: aString with: aBlock
     aBlock setBaseline: aString withInMetacelloConfig: self
 %
+
+set compile_env: 0
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
@@ -4061,14 +4119,18 @@ blessing: aBlockOrString
 		#release - indicating that the version spec has stabilized and will NOT change over time
 	 "
 
-    self root blessing: aBlockOrString constructor: self
+    self root @env2: blessing: aBlockOrString constructor: self
 %
+
+set compile_env: 2
 
 category: 'api spec callbacks'
 method: MetacelloAbstractVersionConstructor
 blessingForVersion: aBlockOrString
     aBlockOrString setBlessingInMetacelloConfig: self
 %
+
+set compile_env: 0
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
@@ -4081,8 +4143,10 @@ className: aString
 	The className field is OPTIONAL in the project spec. If omitted, the className will be created by prepending 'ConfigurationOf' to the project name.
 	 "
 
-    self root className: aString constructor: self
+    self root @env2: className: aString constructor: self
 %
+
+set compile_env: 2
 
 category: 'api spec callbacks'
 method: MetacelloAbstractVersionConstructor
@@ -4104,11 +4168,15 @@ configuration: aConfig
 	configuration := aConfig
 %
 
+set compile_env: 0
+
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 configuration: aString with: aBlockOrString
-    self root configuration: aString with: aBlockOrString constructor: self
+    self root @env2: configuration: aString with: aBlockOrString constructor: self
 %
+
+set compile_env: 2
 
 category: 'accessing'
 method: MetacelloAbstractVersionConstructor
@@ -4123,6 +4191,8 @@ configurationForVersion: aString with: aBlock
     aBlock setConfiguration: aString withInMetacelloConfig: self
 %
 
+set compile_env: 0
+
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 description: aBlockOrString
@@ -4136,8 +4206,10 @@ description: aBlockOrString
 			spec value: 'Descriptive comment'.
 	 "
 
-    self root description: aBlockOrString constructor: self
+    self root @env2: description: aBlockOrString constructor: self
 %
+
+set compile_env: 2
 
 category: 'api spec callbacks'
 method: MetacelloAbstractVersionConstructor
@@ -4153,6 +4225,8 @@ evaluatePragma: pragma
   [ self configuration perform: pragma selector withArguments: { self } ]
     ensure: [ currentContext := nil ]
 %
+
+set compile_env: 0
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
@@ -4185,8 +4259,10 @@ file: aString
 			spec file: 'MyProject-Metacello'.
 	 "
 
-    self root file: aString constructor: self
+    self root @env2: file: aString constructor: self
 %
+
+set compile_env: 2
 
 category: 'api spec callbacks'
 method: MetacelloAbstractVersionConstructor
@@ -10705,8 +10781,15 @@ shouldBeMutable
 
 category: 'merging'
 method: MetacelloSpec
+speciesForMerge
+
+  ^ self class
+%
+
+category: 'merging'
+method: MetacelloSpec
 validateMergeForSpec: aSpec
-    aSpec class = self class
+    aSpec speciesForMerge = self speciesForMerge
         ifFalse: [ 
             self
                 error:

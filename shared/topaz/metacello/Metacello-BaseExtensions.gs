@@ -225,6 +225,12 @@ execute: projectSpecBlock against: aScriptExecutor
 
 category: '*Metacello-BaseExtensions'
 method: BlockClosure
+setBaseline: aString withInMetacelloConfig: aMetacelloConfig
+  aMetacelloConfig setBaseline: aString withBlock: self
+%
+
+category: '*Metacello-BaseExtensions'
+method: BlockClosure
 setPackage: aString withInMetacelloConfig: aMetacelloConfig
 
 	aMetacelloConfig setPackage: aString withBlock: self

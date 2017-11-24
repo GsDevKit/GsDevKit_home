@@ -642,7 +642,7 @@ schemeName
 		protocol: the user name part to add to the ssh Url, default to git, but can also be https (which implies read only access).
 		readOnly : is the repository read only? If present, reduce the history to a minimum (and change the GUI).
 	Alternative url syntax:
-		gitcypress://github.com/dalehenrich/filetree:pharo5.0_dev/repository
+		github://github.com/dalehenrich/filetree:pharo5.0_dev/repository
 	with:
 		host : github.com
 		project : dalehenrich/filetree
@@ -650,7 +650,7 @@ schemeName
 		dir : repository
 "
 
-  ^ 'gitcypress'
+  ^ 'github'
 %
 
 ! ------------------- Instance methods for CypressGitFileUrl
