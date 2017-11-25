@@ -27,6 +27,8 @@ input $GS_HOME/shared/topaz/cypress/Cypress-MesssageDigest.gs
 errorCount
 input $GS_HOME/shared/topaz/cypress/Cypress-PackageManagement.gs
 errorCount
+input $GS_HOME/shared/topaz/cypress/Cypress-GitHub-Url.gs
+errorCount
 input $GS_HOME/shared/topaz/cypress/Cypress-Environmental-Tools.gs
 errorCount
 input $GS_HOME/shared/topaz/cypress/Cypress-Comparison.gs
