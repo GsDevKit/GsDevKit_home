@@ -211,7 +211,7 @@ run
   | codeLibrarian str |
   codeLibrarian := AllUsers userWithId: 'GsDevKitLibrarianUser'.
   str := String new.
-  #( #'GsDevKitLibrarian' #'BaselineOf' #'Metacello' #'ConfigurationOf' )
+  #( #'GsDevKitLibrarian' #'BaselineOf' #'Metacello' #'ConfigurationOf' 'MetacelloCypressBaselineProject' )
     do: [ :className | 
       | assoc |
       Globals 
