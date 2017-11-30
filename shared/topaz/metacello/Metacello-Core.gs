@@ -10621,11 +10621,11 @@ doItBlock: selector
 
 	selector == nil ifTrue: [ ^nil ].
 	selector numArgs = 0
-		ifTrue: [ ^[ self project configuration perform: selector env: 2 withArguments: {} ] ].
+		ifTrue: [ ^[ self project configuration perform: selector withArguments: {} ] ].
 	selector numArgs = 1
-		ifTrue: [ ^[:aLoader | self project configuration perform: selector env: 2 withArguments: { aLoader } ] ].
+		ifTrue: [ ^[:aLoader | self project configuration perform: selector withArguments: { aLoader } ] ].
 	selector numArgs = 2
-		ifTrue: [ ^[:aLoader :pkgSpec | self project configuration perform: selector env: 2 withArguments: {aLoader. pkgSpec } ] ].
+		ifTrue: [ ^[:aLoader :pkgSpec | self project configuration perform: selector withArguments: {aLoader. pkgSpec } ] ].
 	^nil
 %
 
