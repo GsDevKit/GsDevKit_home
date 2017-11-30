@@ -2245,11 +2245,15 @@ do: elementBlock separatedBy: separatorBlock
 		elementBlock value: each]
 %
 
+set compile_env: 0
+
 category: 'comparing'
 method: MetacelloSemanticVersionNumber
 hash
-    ^ self versionComponents hash
+    ^ self @env2: versionComponents hash
 %
+
+set compile_env: 2
 
 category: 'operations'
 method: MetacelloSemanticVersionNumber
@@ -2504,12 +2508,16 @@ groups
 	^groups
 %
 
+set compile_env: 0
+
 category: 'comparing'
 method: MetacelloVersion
 hash
 
-	^self versionNumber hash
+	^self @env2: versionNumber hash
 %
+
+set compile_env: 2
 
 category: 'accessing'
 method: MetacelloVersion
@@ -3038,6 +3046,8 @@ do: elementBlock separatedBy: separatorBlock
 		elementBlock value: each]
 %
 
+set compile_env: 0
+
 category: 'comparing'
 method: MetacelloVersionNumber
 hash
@@ -3066,6 +3076,8 @@ hashValue := 4459.
 
 ^ hashValue abs
 %
+
+set compile_env: 2
 
 category: 'operations'
 method: MetacelloVersionNumber
@@ -8751,12 +8763,16 @@ currentVersionString
     ifNil: [ baselineProjectSpec repositoryVersionString ]
 %
 
+set compile_env: 0
+
 category: 'comparision'
 method: MetacelloProjectRegistration
 hash
     ^ ((String stringHash: projectName initialHash: 0) bitXor: configurationProjectSpec metacelloRegistrationHash)
         bitXor: baselineProjectSpec metacelloRegistrationHash
 %
+
+set compile_env: 2
 
 category: 'testing'
 method: MetacelloProjectRegistration
@@ -9092,13 +9108,17 @@ isEmpty
     and: [ self baselineProjectSpecs isEmpty ]
 %
 
+set compile_env: 0
+
 category: 'copying'
 method: MetacelloProjectRegistry
 postCopy
     super postCopy.
-    baselineRegistry := self baselineRegistry copy.
-    configurationRegistry := self configurationRegistry copy
+    baselineRegistry := self @env2: baselineRegistry copy.
+    configurationRegistry := self @env2: configurationRegistry copy
 %
+
+set compile_env: 2
 
 category: 'initialization'
 method: MetacelloProjectRegistry
@@ -10715,7 +10735,7 @@ postCopy
     super postCopy.
     mutable := nil.
     loader ~~ nil
-        ifTrue: [ self loader: loader ].
+        ifTrue: [ self @env2: loader: loader ].
 %
 
 set compile_env: 2

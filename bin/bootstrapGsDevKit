@@ -163,11 +163,11 @@ instVarNamed: aString
   run
   GsDevKitLibrarian new
     baseline: 'Sport';
-    repository: 'cypressft:$GS_HOME/shared/repos/Sport/src/';
+    repository: 'cypressft:$GS_HOME/shared/repos/gsdevkit/Sport/src/';
     lock.
   GsDevKitLibrarian new
     baseline: 'Grease';
-    repository: 'cypressft:$GS_HOME/shared/repos/gs_port/Grease/repository/';
+    repository: 'cypressft:$GS_HOME/shared/repos/gsdevkit/Grease/repository/';
     lock.
   GsDevKitLibrarian new
     gitCloneDir: '$GS_HOME/shared/repos/gsdevkit';

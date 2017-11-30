@@ -205,6 +205,22 @@ resolvePackageSpecsNamedForMetacelloMCVersion: aMetacelloMCVersion visited: visi
 
 category: '*Metacello-BaseExtensions'
 method: String
+setBlessingInMetacelloConfig: aMetacelloConfig
+  aMetacelloConfig setBlessingWithString: self
+%
+
+category: '*Metacello-BaseExtensions'
+method: String
+setBlessingInMetacelloVersion: aMetacelloVersionSpec
+  aMetacelloVersionSpec
+    setBlessing:
+      (aMetacelloVersionSpec project valueHolderSpec
+        value: self;
+        yourself)
+%
+
+category: '*Metacello-BaseExtensions'
+method: String
 setLoadsInMetacelloProject: aMetacelloPackageSpec
   aMetacelloPackageSpec setLoads: {self}
 %
@@ -227,6 +243,12 @@ category: '*Metacello-BaseExtensions'
 method: BlockClosure
 setBaseline: aString withInMetacelloConfig: aMetacelloConfig
   aMetacelloConfig setBaseline: aString withBlock: self
+%
+
+category: '*Metacello-BaseExtensions'
+method: BlockClosure
+setBlessingInMetacelloConfig: aMetacelloConfig
+  aMetacelloConfig setBlessingWithBlock: self
 %
 
 category: '*Metacello-BaseExtensions'

@@ -2522,10 +2522,11 @@ gitCloneRepositoryAndCheckoutIn: aDirectoryName workingDirectory: workingDirecto
             ifFalse: [ gitDir , self fileUtils pathNameDelimiter , self repositoryPath ]).
       targetDirBranch := self currentBranch.
       targetDirBranch = branch
-        ifFalse: [ self error: self class name asString
+        ifFalse: [ 
+          false ifTrue: [ self error: self class name asString
                 ,
-                  ' target directory already exists and is on another branch, cancelling clone and repository instanciation : '
-                , gitDir ] ]
+                  ' target directory already exists and is on another branch, cancelling clone and repository instantiation : '
+                , gitDir ] ] ]
     ifFalse: [ self gitCommand: #('clone') , {'-b'.
               branch} , {remoteUrl.
               gitDir} in: workingDirectory.
