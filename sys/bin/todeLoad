@@ -52,6 +52,6 @@ pushd "$stonePath" >& /dev/null
 popd >& /dev/null
 
 # install tODE using gsDevKitTodeCommandLine
-"$GS_HOME/bin/private/gsDevKitTodeCommandLine" loadTode $stoneName
+"$GS_HOME/bin/private/gsDevKitTodeCommandLine" -D loadTode $stoneName
 
 exit_0_banner "...finished"

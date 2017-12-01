@@ -2026,6 +2026,8 @@ method: MetacelloSemanticVersionNumber
     ^ self compareLessThan: aMetacelloVersionNumber
 %
 
+set compile_env: 0
+
 category: 'comparing'
 method: MetacelloSemanticVersionNumber
 = aMetacelloVersionNumber
@@ -2033,6 +2035,8 @@ method: MetacelloSemanticVersionNumber
         ifFalse: [ ^ false ].
     ^ self compareEqualTo: aMetacelloVersionNumber
 %
+
+set compile_env: 2
 
 category: 'comparing'
 method: MetacelloSemanticVersionNumber
@@ -2434,13 +2438,17 @@ method: MetacelloVersion
 	^self versionNumber < aMetacelloVersion versionNumber
 %
 
+set compile_env: 0
+
 category: 'comparing'
 method: MetacelloVersion
 = aMetacelloVersion
 
 	aMetacelloVersion species = self species ifFalse: [ ^false ].
-	^self versionNumber = aMetacelloVersion versionNumber
+	^self @env2: versionNumber = aMetacelloVersion @env2: versionNumber
 %
+
+set compile_env: 2
 
 category: 'comparing'
 method: MetacelloVersion
@@ -2819,6 +2827,8 @@ method: MetacelloVersionNumber
 	^ self compareLessThan: aMetacelloVersionNumber
 %
 
+set compile_env: 0
+
 category: 'comparing'
 method: MetacelloVersionNumber
 = aMetacelloVersionNumber
@@ -2832,6 +2842,8 @@ method: MetacelloVersionNumber
 		ifTrue: [ ^ condensed compareEqualTo: aCondensed ].
 	^ self compareEqualTo: aMetacelloVersionNumber
 %
+
+set compile_env: 2
 
 category: 'comparing'
 method: MetacelloVersionNumber
@@ -2866,6 +2878,8 @@ asString
 	^ self printString
 %
 
+set compile_env: 0
+
 category: 'private'
 method: MetacelloVersionNumber
 collapseZeros
@@ -2877,7 +2891,7 @@ collapseZeros
   collection := OrderedCollection new.
   lastElementIsStringOrZero := true.
   canCollapse := true.
-  platform := MetacelloPlatform current.
+  platform := MetacelloPlatform @env2: current.
   self size to: 1 by: -1 do: [ :i | 
     | element |
     element := self at: i.
@@ -2956,6 +2970,8 @@ compareLessThan: aMetacelloVersionNumber
         ifFalse: [ ^ false ].
       ^ platform isString: (self at: commonSize + 1) ]
 %
+
+set compile_env: 2
 
 category: 'copying'
 method: MetacelloVersionNumber
@@ -8590,6 +8606,8 @@ resetRegistry
 
 ! ------------------- Instance methods for MetacelloProjectRegistration
 
+set compile_env: 0
+
 category: 'comparision'
 method: MetacelloProjectRegistration
 = aRegistration
@@ -8598,6 +8616,8 @@ method: MetacelloProjectRegistration
     ^ (configurationProjectSpec registrationsCompareEqual: aRegistration configurationProjectSpec)
         and: [ baselineProjectSpec registrationsCompareEqual: aRegistration baselineProjectSpec ]
 %
+
+set compile_env: 2
 
 category: 'accessing'
 method: MetacelloProjectRegistration

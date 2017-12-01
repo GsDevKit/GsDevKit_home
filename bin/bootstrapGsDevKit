@@ -175,7 +175,7 @@ instVarNamed: aString
     repository: 'cypressft:$GS_HOME/shared/repos/GsDevKit/repository/';
     get;
     lock;
-    load: 'Base'
+    load: 'Base'.
 %
   commit
   exit

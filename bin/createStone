@@ -11,7 +11,7 @@ start_banner
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-f] [-g|-G] [-b] [-B] [-U <gemstone-user-id>] [-P <gemstone-password>]
+USAGE: $(basename $0) [-h] [-f] [-g] [-b] [-B] [-U <gemstone-user-id>] [-P <gemstone-password>]
                       [-n] [-s <snapshot-file-path>] [-t <tode-snapshot-file-path>]
 		      [-u <project-entry-url>] [-i <project-name>] [-l <project-name>]
                       [-c|-C] [-z <smalltalkCI-smalltalk.ston-path>]
@@ -38,13 +38,12 @@ OPTIONS
   -g 
      Do not install tODE in stone ... use initial extent unaltered. Default extent is extent0.seaside.dbf
      for the given GemStone version. Default <gemstone-user-id> is DataCurator.
-  -G 
-     Do not install tODE in stone ... use initial extent unaltered. Default extent is extent0.dbf
-     for the given GemStone version. Default <gemstone-user-id> is SystemUser.
   -b
      Bootstrap GLASS into the given extent as the given user. Default extent is exten0.dbf.
   -B
-     [EXPERIMENTAL] Ensure that Cypress is installed as SystemUser. Used with the -G option only.
+     [EXPERIMENTAL] Bootstrap GsDevKit the given extent as the given user. Default extent is
+     extent0.dbf and the default <gemstone-user-id> is SystemUser. If -g is NOT specified,
+     tODE will be installed on top of GsDevKit.
   -n
      No startStone, no startNetldi.
   -s <snapshot-file-path> 
@@ -88,12 +87,11 @@ OPTIONS
 EXAMPLES
   $(basename $0) -h
   $(basename $0) -g gs_329 3.2.9
-  $(basename $0) -G gs_329 3.2.9
-  $(basename $0) -BG gs_340 3.4.0
+  $(basename $0) -B gs_340 3.4.0
   $(basename $0) gs_329 3.2.9
   $(basename $0) -f gs_329 3.2.9
   $(basename $0) -g -s \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
-  $(basename $0) -BG -s \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
+  $(basename $0) -B -s \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
   $(basename $0) -t \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
   $(basename $0) -u http://gsdevkit.github.io/GsDevKit_seaside31/Seaside31.ston \
 	         -t \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
@@ -106,8 +104,8 @@ EXAMPLES
 		 -t \$GS_HOME/server/snapshots/extent0.tode.3.2.4.dbf gs_324 3.2.4
   $(basename $0) -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329 3.2.9
   $(basename $0) -c -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329 3.2.9
-  $(basename $0) -BG -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_340 3.4.0
-  $(basename $0) -BGC -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_340 3.4.0
+  $(basename $0) -B -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_340 3.4.0
+  $(basename $0) -BC -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_340 3.4.0
   $(basename $0) -b -U bozo gs_329 3.2.9
   $(basename $0) -b -U bozo -P theClown gs_329 3.2.9
 
@@ -139,17 +137,16 @@ loadProjectName=""
 smalltalkCIConfigPath=""
 loadSmalltalkCIConfig="false"
 loadSmalltalkCIConfigUsingCypress="false"
-bootstrapCypress="false"
+bootstrapGsDevKit="false"
 bootstrapGLASS="false"
 defaultExtentName="extent0.seaside.dbf"
 defaultGemstoneUserId="DataCurator"
 gemstonePassword="swordfish"
-while getopts "fghns:t:u:i:l:z:cBCGU:P:b" OPT ; do
+while getopts "fghns:t:u:i:l:z:cBCU:P:b" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     f) force="true";; 
     g) installTode="false";;
-    G) installTode="false"; defaultExtentName="extent0.dbf"; defaultGemstoneUserId="SystemUser";;
     n) noRestartArg=" -n ";;
     s) snapshotFileFlag=" -s "; snapshotFileArg="${OPTARG}";;
     t) snapshotFileFlag=" -s "; snapshotFileArg="${OPTARG}"; installTode="false"; todeSnapshotArg=" -t ";;
@@ -159,7 +156,7 @@ while getopts "fghns:t:u:i:l:z:cBCGU:P:b" OPT ; do
     z) smalltalkCIConfigPath="${OPTARG}";;
     c) loadSmalltalkCIConfig="true";;
     C) loadSmalltalkCIConfigUsingCypress="true";;
-    B) bootstrapCypress="true";;
+    B) bootstrapGsDevKit="true"; defaultExtentName="extent0.dbf"; defaultGemstoneUserId="SystemUser";;
     b) bootstrapGLASS="true"; defaultExtentName="extent0.dbf" ;;
     U) gemstoneUserId="${OPTARG}";;
     P) gemstonePassword="${OPTARG}";;
@@ -213,13 +210,10 @@ if [ "${noRestartArg}x" = "x" ] ; then
   "${GS_HOME}/bin/devKitCommandLine" setupRuntimeSmalltalkCIStoneNew $stoneName $gemstoneUserId $gemstonePassword "${smalltalkCIConfigPath}"
 fi
 
-if [ "$installTode" = "true" ] ; then
-  if [ "$bootstrapGLASS" = "true" ] ; then
-    "$GS_HOME/bin/bootstrapGLASS" $stoneName
-  fi
-  "$GS_SYS/bin/todeLoad" $stoneName
+if [ "$bootstrapGLASS" = "true" ] ; then
+  "$GS_HOME/bin/bootstrapGLASS" $stoneName
 else
-  if [ "${bootstrapCypress}" = "true" ] ; then
+  if [ "${bootstrapGsDevKit}" = "true" ] ; then
     case "$vers" in
       3.4.*)
         warning_banner "========================================="
@@ -237,6 +231,9 @@ else
       *) exit_1_banner "Bootstrapping Cypress is only support for GemStone 3.4.x and later" ;;
     esac
   fi
+fi
+if [ "$installTode" = "true" ] ; then
+  "$GS_SYS/bin/todeLoad" $stoneName
 fi
 
 if [ "$entryUrl" != "" ] ; then

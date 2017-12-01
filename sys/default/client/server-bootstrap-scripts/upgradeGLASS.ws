@@ -5,7 +5,8 @@
     cr;
     show: '---Step 1 of tODE bootstrap process: execute upgradeGlass.ws'.
   [ 
-  | monticelloDir gofer sysLocal |
+  | monticelloDir gofer sysLocal gsDevKitInstalled |
+  gsDevKitInstalled := (System myUserProfile symbolList objectNamed: #BaselineOfGsDevKit) ~~ nil.
   Transcript
     cr;
     show: '-----Install GsUpgrader-Core package '.
@@ -45,6 +46,12 @@
           gofer url: 'http://ss3.gemtalksystems.com/ss/gsUpgrader'.
           gofer load ]
             ensure: [ MCCacheRepository setDefault: oldCache ] ] ].
+  gsDevKitInstalled
+    ifTrue: [
+      Transcript
+        cr; 
+        show: 'GsDevKit is installed. There is no need to upgrade GLASS.'.
+      ^self ].
   Transcript
     cr;
     show: '-----Upgrade GLASS using GsUpgrader class>>upgradeGLASSForGsDevKit_home'.
