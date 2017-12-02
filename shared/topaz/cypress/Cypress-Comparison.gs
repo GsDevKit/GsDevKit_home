@@ -32,7 +32,6 @@ doit
 true.
 %
 
-set compile_env: 2
 ! Class Implementation for CypressPackageComparator
 
 ! ------------------- Class methods for CypressPackageComparator
@@ -628,5 +627,4 @@ true.
 
 ! End of Package: Cypress-Comparison
 
-set compile_env: 0
 

@@ -47,7 +47,6 @@ doit
 true.
 %
 
-set compile_env: 2
 
 ! Class Implementation for MetacelloCypressBaselineProjectSpec
 
@@ -214,4 +213,3 @@ true.
 
 ! End of Package: Metacello-Cypress
 
-set compile_env: 0

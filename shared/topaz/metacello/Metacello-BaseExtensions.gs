@@ -2,7 +2,6 @@
 # Metacello-GsCypress-MC
 #
 
-set compile_env: 2
 
 ! Class Extension for AbstractDictionary
 
@@ -611,4 +610,3 @@ setTimestampInMetacelloVersion: aMetacelloVersionSpec
 	aMetacelloVersionSpec setTimestamp: self
 %
 
-set compile_env: 0

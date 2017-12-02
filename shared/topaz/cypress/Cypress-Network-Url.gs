@@ -206,7 +206,6 @@ doit
 true.
 %
 
-set compile_env: 2
 
 ! Class Implementation for CypressUrl
 
@@ -780,7 +779,6 @@ postCopy
 	path := path copy
 %
 
-set compile_env: 0
 
 category: 'printing'
 method: CypressFileUrl
@@ -790,7 +788,7 @@ printOn: aStream
 	Note that <host> being '' is equivalent to 'localhost' and is not printed."
 
 	aStream
-		nextPutAll: self @env2: schemeName;
+		nextPutAll: self schemeName;
 		nextPut: $:.
 
 	"File URLs with hosts (which are fairly useless) cannot be relative."
@@ -804,14 +802,13 @@ printOn: aStream
 				nextPutAll: '//';
 				nextPutAll: host].
 	isAbsolute ifTrue: [aStream nextPut: $/].
-	aStream nextPutAll: self @env2: pathString.
+	aStream nextPutAll: self pathString.
 	fragment
 		ifNotNil: 
 			[aStream nextPut: $#.
-			self @env2: writeWithHttpEscapes: fragment on: aStream]
+			self writeWithHttpEscapes: fragment on: aStream]
 %
 
-set compile_env: 2
 
 category: 'private-initialization'
 method: CypressFileUrl
@@ -1341,4 +1338,3 @@ true.
 
 ! End of Package: Cypress-Network-Url
 
-set compile_env: 0

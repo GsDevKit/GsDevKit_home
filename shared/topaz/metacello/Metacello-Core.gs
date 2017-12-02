@@ -1496,7 +1496,6 @@ MetacelloScriptImageExecutor superclassForEnv: 2 put: MetacelloScriptExecutor.
 MetacelloScriptRegistryExecutor superclassForEnv: 2 put: MetacelloScriptExecutor.
 %
 
-set compile_env: 2
 
 ! Class Implementation for MetacelloMethodSectionPath
 
@@ -2026,7 +2025,6 @@ method: MetacelloSemanticVersionNumber
     ^ self compareLessThan: aMetacelloVersionNumber
 %
 
-set compile_env: 0
 
 category: 'comparing'
 method: MetacelloSemanticVersionNumber
@@ -2036,7 +2034,6 @@ method: MetacelloSemanticVersionNumber
     ^ self compareEqualTo: aMetacelloVersionNumber
 %
 
-set compile_env: 2
 
 category: 'comparing'
 method: MetacelloSemanticVersionNumber
@@ -2249,15 +2246,13 @@ do: elementBlock separatedBy: separatorBlock
 		elementBlock value: each]
 %
 
-set compile_env: 0
 
 category: 'comparing'
 method: MetacelloSemanticVersionNumber
 hash
-    ^ self @env2: versionComponents hash
+    ^ self  versionComponents hash
 %
 
-set compile_env: 2
 
 category: 'operations'
 method: MetacelloSemanticVersionNumber
@@ -2438,17 +2433,15 @@ method: MetacelloVersion
 	^self versionNumber < aMetacelloVersion versionNumber
 %
 
-set compile_env: 0
 
 category: 'comparing'
 method: MetacelloVersion
 = aMetacelloVersion
 
 	aMetacelloVersion species = self species ifFalse: [ ^false ].
-	^self @env2: versionNumber = aMetacelloVersion @env2: versionNumber
+	^self  versionNumber = aMetacelloVersion  versionNumber
 %
 
-set compile_env: 2
 
 category: 'comparing'
 method: MetacelloVersion
@@ -2516,16 +2509,14 @@ groups
 	^groups
 %
 
-set compile_env: 0
 
 category: 'comparing'
 method: MetacelloVersion
 hash
 
-	^self @env2: versionNumber hash
+	^self  versionNumber hash
 %
 
-set compile_env: 2
 
 category: 'accessing'
 method: MetacelloVersion
@@ -2827,7 +2818,6 @@ method: MetacelloVersionNumber
 	^ self compareLessThan: aMetacelloVersionNumber
 %
 
-set compile_env: 0
 
 category: 'comparing'
 method: MetacelloVersionNumber
@@ -2843,7 +2833,6 @@ method: MetacelloVersionNumber
 	^ self compareEqualTo: aMetacelloVersionNumber
 %
 
-set compile_env: 2
 
 category: 'comparing'
 method: MetacelloVersionNumber
@@ -2878,7 +2867,6 @@ asString
 	^ self printString
 %
 
-set compile_env: 0
 
 category: 'private'
 method: MetacelloVersionNumber
@@ -2891,7 +2879,7 @@ collapseZeros
   collection := OrderedCollection new.
   lastElementIsStringOrZero := true.
   canCollapse := true.
-  platform := MetacelloPlatform @env2: current.
+  platform := MetacelloPlatform  current.
   self size to: 1 by: -1 do: [ :i | 
     | element |
     element := self at: i.
@@ -2971,7 +2959,6 @@ compareLessThan: aMetacelloVersionNumber
       ^ platform isString: (self at: commonSize + 1) ]
 %
 
-set compile_env: 2
 
 category: 'copying'
 method: MetacelloVersionNumber
@@ -3062,7 +3049,6 @@ do: elementBlock separatedBy: separatorBlock
 		elementBlock value: each]
 %
 
-set compile_env: 0
 
 category: 'comparing'
 method: MetacelloVersionNumber
@@ -3093,7 +3079,6 @@ hashValue := 4459.
 ^ hashValue abs
 %
 
-set compile_env: 2
 
 category: 'operations'
 method: MetacelloVersionNumber
@@ -3300,7 +3285,6 @@ versionString: aString exception: anException
 
 ! ------------------- Instance methods for MetacelloErrorInProjectConstructionNotification
 
-set compile_env: 0
 
 category: 'exception description'
 method: MetacelloErrorInProjectConstructionNotification
@@ -3311,7 +3295,6 @@ defaultAction
     ^ false
 %
 
-set compile_env: 2
 
 category: 'accessing'
 method: MetacelloErrorInProjectConstructionNotification
@@ -3350,7 +3333,6 @@ signal: aMetacelloPackageSpec
 
 ! ------------------- Instance methods for MetacelloIgnorePackageLoaded
 
-set compile_env: 0
 
 category: 'accessing'
 method: MetacelloIgnorePackageLoaded
@@ -3361,7 +3343,6 @@ defaultAction
   ^ false
 %
 
-set compile_env: 2
 
 category: 'accessing'
 method: MetacelloIgnorePackageLoaded
@@ -3375,13 +3356,6 @@ method: MetacelloIgnorePackageLoaded
 packageSpec: anObject
 
    packageSpec := anObject
-%
-
-category: 'signalling'
-method: MetacelloIgnorePackageLoaded
-signal
-
-  ^ self @env0: signal
 %
 
 ! Class Implementation for MetacelloScriptGitBasedDownloadNotification
@@ -3457,17 +3431,15 @@ checkAllowed
             signal) ]
 %
 
-set compile_env: 0
 
 category: 'exception handling'
 method: MetacelloResolveProjectUpgrade
 defaultAction
     "Result of signal should be the projectRegistration to be used to perform the load ... default is to disallow"
 
-    ^ self @env2: existingProjectRegistration
+    ^ self  existingProjectRegistration
 %
 
-set compile_env: 2
 
 category: 'exception handling'
 method: MetacelloResolveProjectUpgrade
@@ -3551,22 +3523,20 @@ useNew
 
 ! ------------------- Instance methods for MetacelloAllowConflictingProjectUpgrade
 
-set compile_env: 0
 
 category: 'exception handling'
 method: MetacelloAllowConflictingProjectUpgrade
 defaultAction
-  self @env2: existingProjectRegistration locked
+  self  existingProjectRegistration locked
     ifTrue: [ 
       "https://github.com/dalehenrich/metacello-work/issues/263"
-      ^ self @env2: useIncoming ].
+      ^ self  useIncoming ].
   ^ MetacelloConflictingProjectError
-    @env2: signal:
-      'Load Conflict between existing ' , (self @env2: existingProjectRegistration printString)
-        , ' and ' , (self @env2: newProjectRegistration printString)
+     signal:
+      'Load Conflict between existing ' , (self  existingProjectRegistration printString)
+        , ' and ' , (self  newProjectRegistration printString)
 %
 
-set compile_env: 2
 
 category: 'handlers'
 method: MetacelloAllowConflictingProjectUpgrade
@@ -3596,22 +3566,20 @@ checkAllowed
   "noop ... if user decided to allow lock to be broken, then so be it"
 %
 
-set compile_env: 0
 
 category: 'exception handling'
 method: MetacelloAllowLockedProjectChange
 defaultAction
   Warning
     signal:
-      'LOCK ENFORCED: Attempt to ' , self @env2: operationString printString
-        , ' new project: ' , self @env2: newProjectRegistration printString printString
+      'LOCK ENFORCED: Attempt to ' , self  operationString printString
+        , ' new project: ' , self  newProjectRegistration printString printString
         , ' when existing project: '
-        , self @env2: existingProjectRegistration printString printString
+        , self  existingProjectRegistration printString printString
         , ' is locked. New project not loaded. Use #onLock: to intercept.'.
-  ^ self @env2: disallow
+  ^ self  disallow
 %
 
-set compile_env: 2
 
 category: 'handlers'
 method: MetacelloAllowLockedProjectChange
@@ -3650,18 +3618,16 @@ operationString: aString
 
 ! ------------------- Instance methods for MetacelloAllowProjectDowngrade
 
-set compile_env: 0
 
 category: 'exception handling'
 method: MetacelloAllowProjectDowngrade
 defaultAction
   "Default for Downgrade is to disallow, but still should check for locks"
 
-  self @env2: checkAllowed.
+  self  checkAllowed.
   ^ super defaultAction
 %
 
-set compile_env: 2
 
 category: 'handlers'
 method: MetacelloAllowProjectDowngrade
@@ -3694,18 +3660,16 @@ operationString
 
 ! ------------------- Instance methods for MetacelloAllowProjectUpgrade
 
-set compile_env: 0
 
 category: 'exception handling'
 method: MetacelloAllowProjectUpgrade
 defaultAction
     "Default for Upgrade is to allow"
 
-    self @env2: checkAllowed.
-    ^ self @env2: newProjectRegistration
+    self  checkAllowed.
+    ^ self  newProjectRegistration
 %
 
-set compile_env: 2
 
 category: 'handlers'
 method: MetacelloAllowProjectUpgrade
@@ -3738,7 +3702,6 @@ operationString
 
 ! ------------------- Instance methods for MetacelloScriptEnsureProjectLoadedForDevelopment
 
-set compile_env: 0
 
 category: 'exception handling'
 method: MetacelloScriptEnsureProjectLoadedForDevelopment
@@ -3748,7 +3711,6 @@ defaultAction
     ^ true
 %
 
-set compile_env: 2
 
 category: 'handlers'
 method: MetacelloScriptEnsureProjectLoadedForDevelopment
@@ -3760,17 +3722,15 @@ handleResolutionFor: aScriptEngine
 
 ! ------------------- Instance methods for MetacelloScriptProjectSpecNotification
 
-set compile_env: 0
 
 category: 'exception description'
 method: MetacelloScriptProjectSpecNotification
 defaultAction
     "Result of signal should be the projectSpec to be used to perform the load"
 
-    ^ self @env2: projectSpec
+    ^ self  projectSpec
 %
 
-set compile_env: 2
 
 category: 'accessing'
 method: MetacelloScriptProjectSpecNotification
@@ -3788,7 +3748,6 @@ projectSpec: anObject
 
 ! ------------------- Instance methods for MetacelloLookupBaselineSpecForEnsureLoad
 
-set compile_env: 0
 
 category: 'exception description'
 method: MetacelloLookupBaselineSpecForEnsureLoad
@@ -3798,7 +3757,6 @@ defaultAction
 	^ true
 %
 
-set compile_env: 2
 
 category: 'handlers'
 method: MetacelloLookupBaselineSpecForEnsureLoad
@@ -3820,7 +3778,6 @@ handleResolutionFor: aScriptEngine
 
 ! ------------------- Instance methods for MetacelloLookupProjectSpecForLoad
 
-set compile_env: 0
 
 category: 'exception description'
 method: MetacelloLookupProjectSpecForLoad
@@ -3829,11 +3786,10 @@ defaultAction
 	Create a MetacelloProjectSpecForLoad and use the overrideProjectSpec: if you want to supply a different projectSpec"
 
     ^ MetacelloProjectSpecForLoad new
-        @env2: projectSpec: self @env2: projectSpec;
+         projectSpec: self  projectSpec;
         yourself
 %
 
-set compile_env: 2
 
 category: 'handlers'
 method: MetacelloLookupProjectSpecForLoad
@@ -3845,7 +3801,6 @@ handleResolutionFor: aScriptEngine
 
 ! ------------------- Instance methods for MetacelloProjectSpecLoadedNotification
 
-set compile_env: 0
 
 category: 'exception description'
 method: MetacelloProjectSpecLoadedNotification
@@ -3853,7 +3808,6 @@ defaultAction
     ^ nil
 %
 
-set compile_env: 2
 
 category: 'handlers'
 method: MetacelloProjectSpecLoadedNotification
@@ -3874,7 +3828,6 @@ signal: aMetacelloPackageSpec
 
 ! ------------------- Instance methods for MetacelloSkipDirtyPackageLoad
 
-set compile_env: 0
 
 category: 'accessing'
 method: MetacelloSkipDirtyPackageLoad
@@ -3884,7 +3837,6 @@ defaultAction
 	^true
 %
 
-set compile_env: 2
 
 category: 'accessing'
 method: MetacelloSkipDirtyPackageLoad
@@ -4073,7 +4025,6 @@ attributeOrder
 	^attributeOrder
 %
 
-set compile_env: 0
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
@@ -4088,10 +4039,9 @@ author: aBlockOrString
 			spec value: 'dkh'. ].
 	 "
 
-    self root @env2: author: aBlockOrString constructor: self
+    self root  author: aBlockOrString constructor: self
 %
 
-set compile_env: 2
 
 category: 'api spec callbacks'
 method: MetacelloAbstractVersionConstructor
@@ -4099,21 +4049,19 @@ authorForVersion: aBlockOrString
     aBlockOrString setAuthorInMetacelloConfig: self
 %
 
-set compile_env: 0
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 baseline: aString
-    self root @env2: baseline: aString constructor: self
+    self root  baseline: aString constructor: self
 %
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 baseline: aString with: aBlockOrString
-    self root @env2: baseline: aString with: aBlockOrString constructor: self
+    self root  baseline: aString with: aBlockOrString constructor: self
 %
 
-set compile_env: 2
 
 category: 'api spec callbacks'
 method: MetacelloAbstractVersionConstructor
@@ -4127,7 +4075,6 @@ baselineForVersion: aString with: aBlock
     aBlock setBaseline: aString withInMetacelloConfig: self
 %
 
-set compile_env: 0
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
@@ -4147,10 +4094,9 @@ blessing: aBlockOrString
 		#release - indicating that the version spec has stabilized and will NOT change over time
 	 "
 
-    self root @env2: blessing: aBlockOrString constructor: self
+    self root  blessing: aBlockOrString constructor: self
 %
 
-set compile_env: 2
 
 category: 'api spec callbacks'
 method: MetacelloAbstractVersionConstructor
@@ -4158,7 +4104,6 @@ blessingForVersion: aBlockOrString
     aBlockOrString setBlessingInMetacelloConfig: self
 %
 
-set compile_env: 0
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
@@ -4171,10 +4116,9 @@ className: aString
 	The className field is OPTIONAL in the project spec. If omitted, the className will be created by prepending 'ConfigurationOf' to the project name.
 	 "
 
-    self root @env2: className: aString constructor: self
+    self root  className: aString constructor: self
 %
 
-set compile_env: 2
 
 category: 'api spec callbacks'
 method: MetacelloAbstractVersionConstructor
@@ -4196,15 +4140,13 @@ configuration: aConfig
 	configuration := aConfig
 %
 
-set compile_env: 0
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 configuration: aString with: aBlockOrString
-    self root @env2: configuration: aString with: aBlockOrString constructor: self
+    self root  configuration: aString with: aBlockOrString constructor: self
 %
 
-set compile_env: 2
 
 category: 'accessing'
 method: MetacelloAbstractVersionConstructor
@@ -4219,7 +4161,6 @@ configurationForVersion: aString with: aBlock
     aBlock setConfiguration: aString withInMetacelloConfig: self
 %
 
-set compile_env: 0
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
@@ -4234,10 +4175,9 @@ description: aBlockOrString
 			spec value: 'Descriptive comment'.
 	 "
 
-    self root @env2: description: aBlockOrString constructor: self
+    self root  description: aBlockOrString constructor: self
 %
 
-set compile_env: 2
 
 category: 'api spec callbacks'
 method: MetacelloAbstractVersionConstructor
@@ -4254,7 +4194,6 @@ evaluatePragma: pragma
     ensure: [ currentContext := nil ]
 %
 
-set compile_env: 0
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
@@ -4287,10 +4226,9 @@ file: aString
 			spec file: 'MyProject-Metacello'.
 	 "
 
-    self root @env2: file: aString constructor: self
+    self root  file: aString constructor: self
 %
 
-set compile_env: 2
 
 category: 'api spec callbacks'
 method: MetacelloAbstractVersionConstructor
@@ -4304,14 +4242,13 @@ fileForProject: aString
     self root file: aString
 %
 
-set compile_env: 0
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 for: attributeListOrSymbol do: aBlock
     "conditional version support"
 
-    attributeListOrSymbol @env2: setForDo: aBlock withInMetacelloConfig: self
+    attributeListOrSymbol  setForDo: aBlock withInMetacelloConfig: self
 %
 
 category: 'api'
@@ -4319,22 +4256,21 @@ method: MetacelloAbstractVersionConstructor
 for: attributeListOrSymbol version: aString
     "conditional symbolicVersion support"
 
-    attributeListOrSymbol @env2: setForVersion: aString withInMetacelloConfig: self
+    attributeListOrSymbol  setForVersion: aString withInMetacelloConfig: self
 %
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 group: aString overrides: aStringOrCollection
-   self root @env2: group: aString overrides: aStringOrCollection constructor: self
+   self root  group: aString overrides: aStringOrCollection constructor: self
 %
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 group: aString with: aStringOrCollection
-    self root @env2:  group: aString with: aStringOrCollection constructor: self
+    self root   group: aString with: aStringOrCollection constructor: self
 %
 
-set compile_env: 2
 
 category: 'api spec callbacks'
 method: MetacelloAbstractVersionConstructor
@@ -4358,7 +4294,6 @@ groupForVersion: aString with: aStringOrCollection
     self root packages merge: spec
 %
 
-set compile_env: 0
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
@@ -4375,7 +4310,7 @@ import: aStringOrCollection
 		spec import: #('Sample' 'Example')]	
 	 "
 
-  self root @env2: import: aStringOrCollection constructor: self
+  self root  import: aStringOrCollection constructor: self
 %
 
 category: 'api'
@@ -4390,10 +4325,9 @@ import: aString provides: aCollection
 		spec import: 'Example' provides: #('Example Core')]	
 	 "
 
-  self root @env2: import: aString provides: aCollection constructor: self
+  self root  import: aString provides: aCollection constructor: self
 %
 
-set compile_env: 2
 
 category: 'api spec callbacks'
 method: MetacelloAbstractVersionConstructor
@@ -4407,15 +4341,13 @@ importForVersion: aString provides: anArray
   self root import: aString provides: anArray
 %
 
-set compile_env: 0
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 includes: anObject
-    self root @env2: includes: anObject constructor: self
+    self root  includes: anObject constructor: self
 %
 
-set compile_env: 2
 
 category: 'api spec callbacks'
 method: MetacelloAbstractVersionConstructor
@@ -4423,15 +4355,13 @@ includesForPackage: anObject
     self root includes: anObject
 %
 
-set compile_env: 0
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 loads: aStringOrCollection
-  self root @env2: loads: aStringOrCollection constructor: self
+  self root  loads: aStringOrCollection constructor: self
 %
 
-set compile_env: 2
 
 category: 'api spec callbacks'
 method: MetacelloAbstractVersionConstructor
@@ -4439,15 +4369,13 @@ loadsForProject: anObject
     self root loads: anObject
 %
 
-set compile_env: 0
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 name: anObject
-    self root @env2: name: anObject constructor: self
+    self root  name: anObject constructor: self
 %
 
-set compile_env: 2
 
 category: 'api spec callbacks'
 method: MetacelloAbstractVersionConstructor
@@ -4455,15 +4383,13 @@ nameForProject: aString
     self root name: aString
 %
 
-set compile_env: 0
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 operator: anObject
-    self root @env2: operator: anObject constructor: self
+    self root  operator: anObject constructor: self
 %
 
-set compile_env: 2
 
 category: 'api spec callbacks'
 method: MetacelloAbstractVersionConstructor
@@ -4471,18 +4397,17 @@ operatorForProject: anObject
     self root operator: anObject
 %
 
-set compile_env: 0
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 package: aString
-    self root @env2: package: aString constructor: self
+    self root  package: aString constructor: self
 %
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 package: aString overrides: aBlock
-    self root @env2: package: aString overrides: aBlock constructor: self
+    self root  package: aString overrides: aBlock constructor: self
 %
 
 category: 'api'
@@ -4499,10 +4424,9 @@ package: packageName with: aBlockOrString
 			spec repository: '/opt/gemstone/repository'.
 	 "
 
-    self root @env2: package: packageName with: aBlockOrString constructor: self
+    self root  package: packageName with: aBlockOrString constructor: self
 %
 
-set compile_env: 2
 
 category: 'api spec callbacks'
 method: MetacelloAbstractVersionConstructor
@@ -4531,15 +4455,13 @@ packageForVersion: packageName with: aBlockOrString
     aBlockOrString setPackage: packageName withInMetacelloConfig: self
 %
 
-set compile_env: 0
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 postLoadDoIt: aSymbol
-    self root @env2: postLoadDoIt: aSymbol constructor: self
+    self root  postLoadDoIt: aSymbol constructor: self
 %
 
-set compile_env: 2
 
 category: 'api spec callbacks'
 method: MetacelloAbstractVersionConstructor
@@ -4566,15 +4488,13 @@ postLoadDoItForVersion: aSymbol
     self postLoadDoItForSpec: aSymbol
 %
 
-set compile_env: 0
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 preLoadDoIt: aSymbol
-    self root @env2: preLoadDoIt: aSymbol constructor: self
+    self root  preLoadDoIt: aSymbol constructor: self
 %
 
-set compile_env: 2
 
 category: 'api spec callbacks'
 method: MetacelloAbstractVersionConstructor
@@ -4609,19 +4529,18 @@ project
     ^ project
 %
 
-set compile_env: 0
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 project: aString
-    self root @env2: project: aString constructor: self
+    self root  project: aString constructor: self
 %
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 project: aString copyFrom: oldSpecName with: aBlock
     self root
-        @env2: project: aString
+         project: aString
         copyFrom: oldSpecName
         with: aBlock
         constructor: self
@@ -4630,16 +4549,15 @@ project: aString copyFrom: oldSpecName with: aBlock
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 project: aString overrides: aBlock
-    self root @env2: project: aString overrides: aBlock constructor: self
+    self root  project: aString overrides: aBlock constructor: self
 %
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 project: aString with: aBlockOrString
-    self root @env2: project: aString with: aBlockOrString constructor: self
+    self root  project: aString with: aBlockOrString constructor: self
 %
 
-set compile_env: 2
 
 category: 'api spec callbacks'
 method: MetacelloAbstractVersionConstructor
@@ -4683,17 +4601,15 @@ projectForVersion: aString with: aBlockOrString
     aBlockOrString setProject: aString withInMetacelloConfig: self
 %
 
-set compile_env: 0
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 projectPackage: aBlock
     "projectPackage spec data folded into project spec"
 
-    self root @env2: projectPackage: aBlock constructor: self
+    self root  projectPackage: aBlock constructor: self
 %
 
-set compile_env: 2
 
 category: 'api spec callbacks'
 method: MetacelloAbstractVersionConstructor
@@ -4701,15 +4617,13 @@ projectPackageForProject: aBlock
     self with: self root during: aBlock
 %
 
-set compile_env: 0
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 removeGroup: aString
-    self root @env2: removeGroup: aString constructor: self
+    self root  removeGroup: aString constructor: self
 %
 
-set compile_env: 2
 
 category: 'api spec callbacks'
 method: MetacelloAbstractVersionConstructor
@@ -4721,15 +4635,13 @@ removeGroupForVersion: aString
     self root packages remove: spec
 %
 
-set compile_env: 0
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 removePackage: aString
-    self root @env2: removePackage: aString constructor: self
+    self root  removePackage: aString constructor: self
 %
 
-set compile_env: 2
 
 category: 'api spec callbacks'
 method: MetacelloAbstractVersionConstructor
@@ -4741,15 +4653,13 @@ removePackageForVersion: aString
     self root packages remove: spec
 %
 
-set compile_env: 0
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 removeProject: aString
-    self root @env2: removeProject: aString constructor: self
+    self root  removeProject: aString constructor: self
 %
 
-set compile_env: 2
 
 category: 'api spec callbacks'
 method: MetacelloAbstractVersionConstructor
@@ -4761,15 +4671,13 @@ removeProjectForVersion: aString
     self root packages remove: spec
 %
 
-set compile_env: 0
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 repositories: aBlock
-    self root @env2: repositories: aBlock constructor: self
+    self root  repositories: aBlock constructor: self
 %
 
-set compile_env: 2
 
 category: 'api spec callbacks'
 method: MetacelloAbstractVersionConstructor
@@ -4795,25 +4703,23 @@ repositoriesForVersion: aBlock
     self repositoriesForSpec: aBlock
 %
 
-set compile_env: 0
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 repository: anObject
-    self root @env2: repository: anObject constructor: self
+    self root  repository: anObject constructor: self
 %
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 repository: description username: username password: password
     self root
-        @env2: repository: description
+         repository: description
         username: username
         password: password
         constructor: self
 %
 
-set compile_env: 2
 
 category: 'api spec callbacks'
 method: MetacelloAbstractVersionConstructor
@@ -4875,15 +4781,13 @@ repositoryForVersion: aString username: username password: password
     self repositoryForSpec: aString username: username password: password
 %
 
-set compile_env: 0
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 requires: anObject
-    self root @env2: requires: anObject constructor: self
+    self root  requires: anObject constructor: self
 %
 
-set compile_env: 2
 
 category: 'api spec callbacks'
 method: MetacelloAbstractVersionConstructor
@@ -4897,7 +4801,6 @@ reset
     attributeMap := attributeOrder := nil
 %
 
-set compile_env: 0
 
 category: 'accessing'
 method: MetacelloAbstractVersionConstructor
@@ -4906,7 +4809,6 @@ root
 	^root
 %
 
-set compile_env: 2
 
 category: 'accessing'
 method: MetacelloAbstractVersionConstructor
@@ -5128,15 +5030,13 @@ setTimestampWithString: aString
 	self root timestamp: aString
 %
 
-set compile_env: 0
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 supplyingAnswers: aCollection
-    self root @env2: supplyingAnswers: aCollection constructor: self
+    self root  supplyingAnswers: aCollection constructor: self
 %
 
-set compile_env: 2
 
 category: 'api spec callbacks'
 method: MetacelloAbstractVersionConstructor
@@ -5158,7 +5058,6 @@ symbolicVersion: aSymbol
 	symbolicVersion := aSymbol
 %
 
-set compile_env: 0
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
@@ -5176,10 +5075,9 @@ timestamp: aBlockOrStringOrDateAndTime
 			spec value: '10/7/2009 14:40'. ].
     "
 
-    self root @env2: timestamp: aBlockOrStringOrDateAndTime constructor: self
+    self root  timestamp: aBlockOrStringOrDateAndTime constructor: self
 %
 
-set compile_env: 2
 
 category: 'api spec callbacks'
 method: MetacelloAbstractVersionConstructor
@@ -5196,15 +5094,13 @@ validateDoItSelector: anObject
     ifFalse: [ self error: 'Invalid message selector for doit: ' , anObject printString ]
 %
 
-set compile_env: 0
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 value: anObject
-    self root @env2: value: anObject constructor: self
+    self root  value: anObject constructor: self
 %
 
-set compile_env: 2
 
 category: 'api spec callbacks'
 method: MetacelloAbstractVersionConstructor
@@ -5212,15 +5108,13 @@ valueForValueHolder: anObject
     self root value: anObject
 %
 
-set compile_env: 0
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 version: anObject
-    self root @env2: version: anObject constructor: self
+    self root  version: anObject constructor: self
 %
 
-set compile_env: 2
 
 category: 'api spec callbacks'
 method: MetacelloAbstractVersionConstructor
@@ -5234,15 +5128,13 @@ versionForVersion: anObject
     self versionStringForVersion: anObject
 %
 
-set compile_env: 0
 
 category: 'api'
 method: MetacelloAbstractVersionConstructor
 versionString: anObject
-    self root @env2: versionString: anObject constructor: self
+    self root  versionString: anObject constructor: self
 %
 
-set compile_env: 2
 
 category: 'api spec callbacks'
 method: MetacelloAbstractVersionConstructor
@@ -5806,7 +5698,7 @@ defaultSymbolicVersionResolverBlock: receiver
 	(pragma argumentAt: 1) = symbolicVrsn
 		ifTrue: [ 
 			self symbolicVersion: symbolicVrsn.
-			result := [ receiver perform: pragma selector env: 2 withArguments: {} ] on: MetacelloVersionDoesNotExistError do: [ :ex | ex return: nil ] ].
+			result := [ receiver perform: pragma selector  ] on: MetacelloVersionDoesNotExistError do: [ :ex | ex return: nil ] ].
 	result ]
 %
 
@@ -6546,7 +6438,7 @@ validateDoIts: aSpec versionString: versionString errorMessage: errorMessage
   'postLoadDoIt selector for '}.
   1 to: ar size by: 2 do: [ :i | 
     | selector |
-    selector := (aSpec perform: (ar at: i) env: 2 withArguments: {}) value.
+    selector := (aSpec perform: (ar at: i) ) value.
     selector ~~ nil
       ifTrue: [ 
         (MetacelloPlatform current isSymbol: selector)
@@ -7412,7 +7304,7 @@ unselect
 category: 'accessing'
 method: MetacelloPlatform
 authorName
-  self globalNamed: #'Author' ifPresent: [ :cl | ^ cl perform: #'initials' env: 2 withArguments: {} ].
+  self globalNamed: #'Author' ifPresent: [ :cl | ^ cl initials ].
   ^ 'no developer initials'
 %
 
@@ -7487,7 +7379,7 @@ method: MetacelloPlatform
 confirm: aString
   self
     globalNamed: #'UIManager'
-    ifPresent: [ :cl | ^ cl default perform: #'confirm:' env: 2 withArguments: { aString } ] Warning
+    ifPresent: [ :cl | ^ cl confirm: aString ] Warning
     signal: aString.	"throw warning and answer true, if no way to announce"
   ^ true
 %
@@ -8606,7 +8498,6 @@ resetRegistry
 
 ! ------------------- Instance methods for MetacelloProjectRegistration
 
-set compile_env: 0
 
 category: 'comparision'
 method: MetacelloProjectRegistration
@@ -8617,7 +8508,6 @@ method: MetacelloProjectRegistration
         and: [ baselineProjectSpec registrationsCompareEqual: aRegistration baselineProjectSpec ]
 %
 
-set compile_env: 2
 
 category: 'accessing'
 method: MetacelloProjectRegistration
@@ -8783,7 +8673,6 @@ currentVersionString
     ifNil: [ baselineProjectSpec repositoryVersionString ]
 %
 
-set compile_env: 0
 
 category: 'comparision'
 method: MetacelloProjectRegistration
@@ -8792,7 +8681,6 @@ hash
         bitXor: baselineProjectSpec metacelloRegistrationHash
 %
 
-set compile_env: 2
 
 category: 'testing'
 method: MetacelloProjectRegistration
@@ -8909,7 +8797,6 @@ mutable
     mutable := true
 %
 
-set compile_env: 0
 
 category: 'copying'
 method: MetacelloProjectRegistration
@@ -8918,7 +8805,6 @@ postCopy
     mutable := nil
 %
 
-set compile_env: 2
 
 category: 'printing'
 method: MetacelloProjectRegistration
@@ -9128,17 +9014,15 @@ isEmpty
     and: [ self baselineProjectSpecs isEmpty ]
 %
 
-set compile_env: 0
 
 category: 'copying'
 method: MetacelloProjectRegistry
 postCopy
     super postCopy.
-    baselineRegistry := self @env2: baselineRegistry copy.
-    configurationRegistry := self @env2: configurationRegistry copy
+    baselineRegistry := self  baselineRegistry copy.
+    configurationRegistry := self  configurationRegistry copy
 %
 
-set compile_env: 2
 
 category: 'initialization'
 method: MetacelloProjectRegistry
@@ -9430,7 +9314,7 @@ performCurrentVersionTestAgainst: vrsn operator: anOperator targetVersionStatus:
       (cv := prjct currentVersion) == nil
         ifTrue: [ ^ false ].
       (targetVersionStatus includes: cv versionStatus)
-        ifTrue: [ ^ cv perform: anOperator env: 2 withArguments: { vrsn } ].
+        ifTrue: [ ^ cv perform: anOperator withArguments: { vrsn } ].
       ^ false ].
   true
     ifTrue: [ 
@@ -10240,8 +10124,8 @@ execute: statements
   statements
     do: [ :assoc | 
       assoc value
-        ifNil: [ self perform: assoc key env: 2 withArguments: {} ]
-        ifNotNil: [ self perform: assoc key env: 2 withArguments: assoc value ] ].
+        ifNil: [ self perform: assoc key withArguments: {} ]
+        ifNotNil: [ self perform: assoc key withArguments: assoc value ] ].
   projectSpecGenerator := self projectSpecGenerator.
   projectSpecGenerator target
     execute: [ :projectSpec | 
@@ -10250,7 +10134,7 @@ execute: statements
         options: self options copy;
         projectSpec: projectSpec;
         yourself.
-      engine perform: actionArg key env: 2 withArguments: actionArg value.
+      engine perform: actionArg key withArguments: actionArg value.
       engine root ifNotNil: [ :root | self roots add: root ] ]
     against: self.
   ^ (self singleRoot and: [ self roots size == 1 ])
@@ -10747,7 +10631,6 @@ nonOverridable
 	^#()
 %
 
-set compile_env: 0
 
 category: 'copying'
 method: MetacelloSpec
@@ -10755,10 +10638,9 @@ postCopy
     super postCopy.
     mutable := nil.
     loader ~~ nil
-        ifTrue: [ self @env2: loader: loader ].
+        ifTrue: [ self  loader: loader ].
 %
 
-set compile_env: 2
 
 category: 'doits'
 method: MetacelloSpec
@@ -12366,9 +12248,8 @@ compareVersions: aMetacelloProjectSpec usingOperator: anOperator
       "https://github.com/dalehenrich/metacello-work/issues/199#issuecomment-21739622"
       aMetacelloProjectSpec versionString asMetacelloVersionNumber
         perform: anOperator
-        env: 2
         withArguments: { self version versionNumber } ]
-    ifFalse: [ ^ aMetacelloProjectSpec version perform: anOperator env: 2 withArguments: { self version } ]
+    ifFalse: [ ^ aMetacelloProjectSpec version perform: anOperator withArguments: { self version } ]
 %
 
 category: 'scripting'
@@ -14629,7 +14510,6 @@ versionNumberClass
     ^ MetacelloSemanticVersionNumber
 %
 
-set compile_env: 0
 
 ! Class Extension for BaselineOf
 
@@ -14667,15 +14547,14 @@ category: '*metacello-core'
 classmethod: Metacello
 scriptExecutorClass: anExecutorSpec
   | currentPlatform |
-  currentPlatform :=  MetacelloPlatform @env2: current.
+  currentPlatform :=  MetacelloPlatform  current.
   currentPlatform
-    @env2: 
+     
       globalNamed: anExecutorSpec key
       ifAbsent: [ ConfigurationOf ensureMetacello: anExecutorSpec value ].
-  ^ currentPlatform @env2: globalNamed: anExecutorSpec key
+  ^ currentPlatform  globalNamed: anExecutorSpec key
 %
 
-set compile_env: 2
 
 ! Class initializers 
 
@@ -14688,5 +14567,4 @@ true.
 
 ! End of Package: Metacello-Core
 
-set compile_env: 0
 

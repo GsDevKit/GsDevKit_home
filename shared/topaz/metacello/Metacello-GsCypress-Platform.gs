@@ -2,7 +2,6 @@
 
 ! Class Declarations
 
-set compile_env: 2
 
 ! Class Extensions
 
@@ -121,7 +120,6 @@ isNumber: anObject
   ^ anObject _isNumber
 %
 
-set compile_env: 0
 
 category: '*Metacello-GsCypress-Platform'
 method: MetacelloPlatform
@@ -129,7 +127,6 @@ isString: anObject
   ^ anObject isKindOf: CharacterCollection
 %
 
-set compile_env: 2
 
 category: '*Metacello-GsCypress-Platform'
 method: MetacelloPlatform
@@ -217,4 +214,3 @@ true.
 
 ! End of Package: Metacello-GsCypress-Platform
 
-set compile_env: 0

@@ -62,7 +62,6 @@ doit
 true.
 %
 
-set compile_env: 2
 
 ! Class Implementation for MetacelloFetchingCypressSpecLoader
 
@@ -462,7 +461,6 @@ preLoad: packageOrVersionSpec
 
 ! ------------------- Class methods for AbstractMetacelloConfiguration
 
-set compile_env: 0
 
 category: '*Metacello-GsCypress-MC'
 classmethod: AbstractMetacelloConfiguration
@@ -482,7 +480,6 @@ projectClass
     ^ MetacelloCypressBaselineProject
 %
 
-set compile_env: 2
 
 ! Class Extension for CypressAbstractRepository
 
@@ -1079,4 +1076,3 @@ true.
 
 ! End of Package: Metacello-GsCypress-MC
 
-set compile_env: 0

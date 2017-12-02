@@ -499,7 +499,6 @@ doit
 true.
 %
 
-set compile_env: 2
 
 ! Class Implementation for MetacelloPackageSpec
 
@@ -6119,7 +6118,6 @@ versionString
 
 ! Class Extensions
 
-set compile_env: 0
 
 ! Class Extension for AbstractMetacelloConfiguration
 
@@ -6141,7 +6139,6 @@ projectClass
   ^ MetacelloMCProject
 %
 
-set compile_env: 2
 
 ! Class Extension for MetacelloAbstractPackageSpec
 
@@ -6593,4 +6590,3 @@ true.
 
 ! End of Package: Metacello-MC
 
-set compile_env: 0

@@ -1,7 +1,6 @@
 # 
 # Cypress-PackageManagement.gs
 #
-set compile_env: 2
 
 ! Class Extensions
 
@@ -188,5 +187,4 @@ sort
   ^ self sort: [ :a :b | a <= b ]
 %
 
-set compile_env: 0
 

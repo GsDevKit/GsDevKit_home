@@ -90,55 +90,6 @@ list do:[:name |
 %
 commit
 
-category: 'GsDevKitLibrarian env 2 override'
-method: Object
-doesNotUnderstand: aSymbol args: anArray envId: envId
-  "Generates an error reporting that the receiver cannot respond to a message.
- because no compiled method was found for aSymbol in method environment
- envId.   envId is a SmallInteger, 0 for Smalltalk , 1 for Ruby , 
- 2 for GsDevKitLibrarian,  3..255 for future use by Smalltalk package managers .
-"
-
-  | ex |
-  envId = 2
-    ifTrue: [ 
-      "Any MNU in env 2, forward message to env 0"
-      aSymbol == #perform:env:withArguments:
-        ifTrue: [
-          "MNU from #perform:env:withArguments: ... unpack selector and args to resend"
-          ^ self perform: (anArray at: 1) env: 0 withArguments: (anArray at: 3) ].
-      ^ self perform: aSymbol env: 0 withArguments: anArray ].
-  (ex := MessageNotUnderstood _basicNew)
-    receiver: self
-    selector: aSymbol
-    args: anArray
-    envId: envId.
-  ^ ex signal
-%
-
-set compile_env: 2
-
-category: 'GsDevKitLibrarian env 2 override'
-method: Object
-perform: aSelectorSymbol env: environmentId withArguments: anArray
-  "Sends the receiver the message indicated by the arguments.
- The argument, aSelectorSymbol, is the keyword selector of the message.
- The arguments of the message are the elements of anArray.  Generates an
- error if the number of arguments expected by aSelectorSymbol is not
- the same as the number of elements in anArray.
-
- anArray must be an instance of Array.
-
- environmentId must be a SmallInteger >= 0 and <= 255,
- specifying a method lookup environment."
-
-^ self @env0: perform: aSelectorSymbol env: environmentId withArguments: anArray
-%
-
-set compile_env: 0
-
-commit
-
 
 logout
 set u GsDevKitLibrarianUser p swordfish

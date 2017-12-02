@@ -586,10 +586,10 @@ project
       "Bootstrap Metacello if it is not already loaded"
       self class ensureMetacello.
       project := self projectClass new
-        @env2: projectAttributes: self customProjectAttributes.	"Create the Metacello project"
-      project @env2: versionNumberClass: self versionNumberClass.
-      (project class @env2: versionConstructorClass) @env2: on: self project: project.	"Construct the project"
-      project @env2: loadType: self loadType.
+         projectAttributes: self customProjectAttributes.	"Create the Metacello project"
+      project  versionNumberClass: self versionNumberClass.
+      (project class  versionConstructorClass)  on: self project: project.	"Construct the project"
+      project  loadType: self loadType.
       project ]
 %
 
@@ -747,7 +747,7 @@ execute: selector args: args
   | script |
   script := self statements copy.
   script add: selector -> args.
-  ^ self scriptExecutor @env2: execute: script
+  ^ self scriptExecutor  execute: script
 %
 
 category: 'accessing'

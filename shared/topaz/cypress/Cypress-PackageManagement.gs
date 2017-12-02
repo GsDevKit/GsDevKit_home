@@ -476,7 +476,6 @@ A CypressVersionReference refers to a specific version of a Monticello package.'
 true.
 %
 
-set compile_env: 2
 
 ! Class Implementation for CypressAbstractFileUrl
 
@@ -3707,15 +3706,13 @@ name: aString repository: aRepository
 
 ! ------------------- Instance methods for CypressResolvedReference
 
-set compile_env: 0
 
 category: 'comparing'
 method: CypressResolvedReference
 <= aResolvedReference
-  ^ (self perform: #name env: 2 withArguments: {}) <= (aResolvedReference perform: #name env: 2 withArguments: {})
+  ^ self name <= aResolvedReference name
 %
 
-set compile_env: 2
 
 category: 'initialization'
 method: CypressResolvedReference
@@ -3915,4 +3912,3 @@ true.
 
 ! End of Package: Cypress-PackageManagement
 
-set compile_env: 0

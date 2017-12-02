@@ -17,7 +17,6 @@ doit
 true.
 %
 
-set compile_env: 2
 
 ! Class Implementation for MetacelloGemStoneBasePlatform
 
@@ -174,4 +173,3 @@ true.
 
 ! End of Package: Metacello-Platform.gscypress
 
-set compile_env: 0

@@ -299,7 +299,6 @@ doit
 true.
 %
 
-set compile_env: 2
 
 ! Class Implementation for CypressError
 
@@ -2923,4 +2922,3 @@ true.
 
 ! End of Package: Cypress-Definitions
 
-set compile_env: 0

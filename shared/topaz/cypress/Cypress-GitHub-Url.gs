@@ -17,7 +17,6 @@ doit
 true.
 %
 
-set compile_env: 2
 
 ! ------------------- Class methods for CypressGitHubFileUrl
 
@@ -100,4 +99,3 @@ pathString
 
 ! End of Package: Cypress-GitHub-Url
 
-set compile_env: 0
