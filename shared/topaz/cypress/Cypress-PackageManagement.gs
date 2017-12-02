@@ -672,6 +672,9 @@ category: 'private-initialization'
 method: CypressGitFileUrl
 initializeFromPathString: aPathString
   | projectDelim repoDelimIndex branchOrTagDelimIndex |
+  isAbsolute := true.
+  path := ((aPathString subStrings: '/') copyWithout: '')
+				collect: [:token | self decodeHttpEscapesOf: token].
   projectBranchOrTag := repositoryPath := nil.
   projectDelim := aPathString indexOf: $/ startingAt: 2.
   repoDelimIndex := aPathString indexOf: $/ startingAt: projectDelim + 1.

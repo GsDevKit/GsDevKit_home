@@ -80,6 +80,24 @@ privateInitializeFromText: aString
   self initializeFromPathString: pathString
 %
 
+category: 'paths'
+method: CypressGitHubFileUrl
+pathString
+	"Path as it appears in a URL with $/ as delimiter."
+
+	| s first |
+	s := WriteStreamPortable on: (String new: 100).
+
+	first := true.
+	self path do: 
+			[:p |
+			first ifFalse: [s nextPut: $/].
+			first := false.
+			s nextPutAll: p ].
+	^s contents
+%
+
+
 ! End of Package: Cypress-GitHub-Url
 
 set compile_env: 0

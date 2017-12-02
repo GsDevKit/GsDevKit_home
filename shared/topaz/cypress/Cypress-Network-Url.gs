@@ -780,6 +780,8 @@ postCopy
 	path := path copy
 %
 
+set compile_env: 0
+
 category: 'printing'
 method: CypressFileUrl
 printOn: aStream
@@ -788,7 +790,7 @@ printOn: aStream
 	Note that <host> being '' is equivalent to 'localhost' and is not printed."
 
 	aStream
-		nextPutAll: self schemeName;
+		nextPutAll: self @env2: schemeName;
 		nextPut: $:.
 
 	"File URLs with hosts (which are fairly useless) cannot be relative."
@@ -802,12 +804,14 @@ printOn: aStream
 				nextPutAll: '//';
 				nextPutAll: host].
 	isAbsolute ifTrue: [aStream nextPut: $/].
-	aStream nextPutAll: self pathString.
+	aStream nextPutAll: self @env2: pathString.
 	fragment
 		ifNotNil: 
 			[aStream nextPut: $#.
-			self writeWithHttpEscapes: fragment on: aStream]
+			self @env2: writeWithHttpEscapes: fragment on: aStream]
 %
+
+set compile_env: 2
 
 category: 'private-initialization'
 method: CypressFileUrl
