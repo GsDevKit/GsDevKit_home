@@ -2,6 +2,12 @@
 
 ! Class Declarations
 
+run
+".,$s/inDictionary: UserGlobals/inDictionary: CypressPackageSymbolList/ "
+UserGlobals at: #CypressPackageSymbolList put: Globals.
+true
+%
+
 doit
 (WriteStream
 	subclass: 'CypressMessageDigestStream'
@@ -9,7 +15,7 @@ doit
 	classVars: #(  )
 	classInstVars: #(  )
 	poolDictionaries: #()
-	inDictionary: UserGlobals
+	inDictionary: CypressPackageSymbolList
 	options: #())
 		category: 'Cypress-MesssageDigest';
 		comment: 'All Cypress classes are private to GemStone and are likely to be removed in a future release.';
@@ -281,4 +287,8 @@ true.
 
 
 ! End of Package: Cypress-MesssageDigest
+run
+UserGlobals removeKey: #CypressPackageSymbolList.
+true
+%
 

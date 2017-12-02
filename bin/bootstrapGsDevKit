@@ -153,13 +153,6 @@ instVarNamed: aString
     lock
 %
   commit
-#  run
-#  GsDevKitLibrarian new
-#    baseline: 'Gt4Gemstone';
-#    repository: 'cypressft://$GS_HOME/shared/repos/gt4gemstone/src/';
-#    load
-#%
-#  commit
   run
   GsDevKitLibrarian new
     baseline: 'Sport';

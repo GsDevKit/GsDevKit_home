@@ -2,6 +2,12 @@
 
 ! Class Declarations
 
+run
+".,$s/inDictionary: UserGlobals/inDictionary: CypressPackageSymbolList/ "
+UserGlobals at: #CypressPackageSymbolList put: Globals.
+true
+%
+
 doit
 (Object
 	subclass: 'CypressPackageComparator'
@@ -9,7 +15,7 @@ doit
 	classVars: #(  )
 	classInstVars: #(  )
 	poolDictionaries: #()
-	inDictionary: UserGlobals
+	inDictionary: CypressPackageSymbolList
 	options: #())
 		category: 'Cypress-Comparison';
 		comment: 'All Cypress classes are private to GemStone and are likely to be removed in a future release.';
@@ -24,7 +30,7 @@ doit
 	classVars: #(  )
 	classInstVars: #(  )
 	poolDictionaries: #()
-	inDictionary: UserGlobals
+	inDictionary: CypressPackageSymbolList
 	options: #())
 		category: 'Cypress-Comparison';
 		comment: 'All Cypress classes are private to GemStone and are likely to be removed in a future release.';
@@ -627,4 +633,8 @@ true.
 
 ! End of Package: Cypress-Comparison
 
+run
+UserGlobals removeKey: #CypressPackageSymbolList.
+true
+%
 

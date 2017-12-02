@@ -26,7 +26,7 @@ true.
 category: 'private'
 method: GsDevKitLibrarian
 _methodEnvironment
-  ^0 
+  ^ 2
 %
 
 category: 'private'
@@ -35,8 +35,6 @@ _executeGsDevKitLibraryBlock: aBlock
   "Do not commit during aBlock ... we don't want session methods enabled for SystemUser"
 
   "for now you need to run as SystemUser"
-
-  "this method is in flux ... depending upon how this package is loaded"
 
   | librarian transientSymbolList librarianSessionMethods librarianUserGlobals |
   System

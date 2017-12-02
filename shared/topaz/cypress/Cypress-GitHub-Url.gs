@@ -3,13 +3,19 @@
 ! Class Declarations
 
 
+run
+".,$s/inDictionary: UserGlobals/inDictionary: CypressPackageSymbolList/ "
+UserGlobals at: #CypressPackageSymbolList put: Globals.
+true
+%
+
 doit
 (CypressGitFileUrl subclass: 'CypressGitHubFileUrl'
 	instVarNames: #()
 	classVars: #()
 	classInstVars: #()
 	poolDictionaries: #()
-	inDictionary: UserGlobals
+	inDictionary: CypressPackageSymbolList
 	options: #())
 		category: 'Cypress-GitHub-Url';
 		comment: 'All Cypress classes are private to GemStone and are likely to be removed in a future release.';
@@ -98,4 +104,9 @@ pathString
 
 
 ! End of Package: Cypress-GitHub-Url
+
+run
+UserGlobals removeKey: #CypressPackageSymbolList.
+true
+%
 

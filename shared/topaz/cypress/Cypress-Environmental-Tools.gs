@@ -2,6 +2,12 @@
 
 ! Class Declarations
 
+run
+".,$s/inDictionary: UserGlobals/inDictionary: CypressPackageSymbolList/ "
+UserGlobals at: #CypressPackageSymbolList put: Globals.
+true
+%
+
 doit
 (CypressDependencySorter
 	subclass: 'CypressEnvironmentDependencySorter'
@@ -9,7 +15,7 @@ doit
 	classVars: #(  )
 	classInstVars: #(  )
 	poolDictionaries: #()
-	inDictionary: UserGlobals
+	inDictionary: CypressPackageSymbolList
 	options: #())
 		category: 'Cypress-Environmental-Tools';
 		comment: '';
@@ -24,7 +30,7 @@ doit
 	classVars: #(  )
 	classInstVars: #(  )
 	poolDictionaries: #()
-	inDictionary: UserGlobals
+	inDictionary: CypressPackageSymbolList
 	options: #())
 		category: 'Cypress-Environmental-Tools';
 		comment: '';
@@ -39,7 +45,7 @@ doit
 	classVars: #(  )
 	classInstVars: #(  )
 	poolDictionaries: #()
-	inDictionary: UserGlobals
+	inDictionary: CypressPackageSymbolList
 	options: #())
 		category: 'Cypress-Environmental-Tools';
 		comment: 'No class-specific documentation for CypressEnvironmentPackageDefinition, hierarchy is: 
@@ -59,7 +65,7 @@ doit
 	classVars: #(  )
 	classInstVars: #(  )
 	poolDictionaries: #()
-	inDictionary: UserGlobals
+	inDictionary: CypressPackageSymbolList
 	options: #())
 		category: 'Cypress-Environmental-Tools';
 		comment: '';
@@ -584,4 +590,9 @@ true.
 
 
 ! End of Package: Cypress-Environmental-Tools
+
+run
+UserGlobals removeKey: #CypressPackageSymbolList.
+true
+%
 

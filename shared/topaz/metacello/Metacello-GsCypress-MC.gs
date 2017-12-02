@@ -480,25 +480,6 @@ projectClass
     ^ MetacelloCypressBaselineProject
 %
 
-
-! Class Extension for CypressAbstractRepository
-
-! ------------------- Instance methods for CypressAbstractRepository
-
-category: '*Metacello-GsCypress-MC'
-method: CypressAbstractRepository
-flushForScriptGet
-  "noop"
-%
-
-category: '*Metacello-GsCypress-MC'
-method: CypressAbstractRepository
-repositoryVersionString
-  "extract a version string from the repository ... if possible"
-
-  ^ ''
-%
-
 ! Class Extension for MetacelloAbstractPackageSpec
 
 ! ------------------- Instance methods for MetacelloAbstractPackageSpec
