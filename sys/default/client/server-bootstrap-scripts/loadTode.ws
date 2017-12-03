@@ -2,7 +2,7 @@
 
 Transcript cr; show: '---Step 4 of tODE bootstrap process: execute loadTode.ws'.
 
-GsUpgrader batchErrorHandlingDo: [
+  [
   | todeRepo |
   todeRepo := GsFile _expandEnvVariable: 'GS_SHARED_REPO_TODE' isClient: false.
   Transcript
@@ -14,4 +14,16 @@ GsUpgrader batchErrorHandlingDo: [
       repository: todeRepo;
       get;
       lock;
-      load: 'GemStone Dev' ] ].
+      load: 'GemStone Dev' ] ]
+        on: Error , Halt
+        do: [ :ex | 
+          Transcript
+            cr;
+            show: '========>Server Stack: ' , ex description printString;
+            cr;
+            show: (GsProcess stackReportToLevel: 500).
+          Transcript
+            cr;
+            show: '========>Client Stack: ';
+            cr.
+          ex pass ]

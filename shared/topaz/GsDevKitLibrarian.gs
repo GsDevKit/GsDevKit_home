@@ -205,7 +205,28 @@ commit
     repository: 'cypressft:$GS_HOME/shared/repos/GsDevKit/repository/';
     get;
     lock;
-    load: 'Base'
+    load: 'Base'.
+%
+  commit
+
+  run
+  | gs_home |
+  gs_home := System gemEnvironmentVariable: 'GS_HOME'.
+  CypressFileSystemGitRepository gitRepositoryDir: gs_home, '/shared/repos/gsdevkit'.
+  "Now install a version of Metacello meant to be used with GsDevKit/GLASS1"
+  MetacelloGemStoneBootstrapPlatform initialize.
+  Metacello new
+    baseline: 'Metacello';
+    repository: 'cypressft://', gs_home, '/shared/repos/metacello/repository/';
+    onLockBreak;
+    get;
+    load;
+    lock.
+%
+  commit
+
+  run
+  MetacelloGemStonePlatform initialize.
 %
   commit
 

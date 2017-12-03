@@ -1,9 +1,13 @@
 "Second step in tODE load process: lock Metacello if you want to use a non-standard repository.
  load Metacello from local git clone."
 
+Smalltalk 
+  at: #GsUpgrader 
+  ifPresent: [:gsUpgrader |
+
 Transcript cr; show: '---Step 2 of tODE bootstrap process: execute loadMetacello.ws'.
 
-GsUpgrader batchErrorHandlingDo: [
+gsUpgrader batchErrorHandlingDo: [
   | metacelloRepo filetreeRepo greaseRepo pharoCompatRepo glass1Repo rbRepo stonRepo zincRepo zodiacRepo |
   metacelloRepo := GsFile _expandEnvVariable: 'GS_SHARED_REPO_METACELLO' isClient: false.
   filetreeRepo := GsFile _expandEnvVariable: 'GS_SHARED_REPO_GEMSTONE_FILETREE' isClient: false.
@@ -86,3 +90,7 @@ GsUpgrader batchErrorHandlingDo: [
     repository: greaseRepo;
     load.
     ].
+  ^ self ].
+Transcript
+  cr;
+  show: '-----GsDevKit is installed, skip step 2 -- no need to upgrade Metacello'.
