@@ -95,31 +95,12 @@ commit
 input $GS_HOME/shared/topaz/cypress/bootstrapCypressSupport.topaz
 commit
 
-logout
-set u GsDevKitLibrarianUser p swordfish
-login
-
-! Need to install Metacello as separate bootstrap user, because we need to use the latest Metacello
-!  from GitHub and we need Metacello to bootstrap Metacello ... so as this user, we load the .gs
-!  files for Metacello 
-!
-# Temporary hack to allow tODE to login as GsDevKitLibrarianUser
-run
-UserGlobals at: #GS_AllUsers put: AllUsers.
-^ true
-%
-commit
-
 output push boot_0.log only
 
 input $GS_HOME/shared/topaz/metacello/bootstrapMetacelloSupport.topaz
 commit
 
 output pop
-
-logout
-set u SystemUser p swordfish
-login
 
 # Temporary hack to allow tODE to login as SystemUser
 run
@@ -184,61 +165,17 @@ commit
 %
   commit
 
-logout
-set u GsDevKitLibrarianUser p swordfish
-login
-
-! Install GsDevKitLibrarian-Core package
-
-output push boot_2.log only
-
-input $GS_HOME/shared/topaz/GsDevKitLibrarian-Core.gs
-commit
-
-output pop
-
-logout
-
-set u SystemUser p swordfish
-login
-
-! Install GsDevKitLibrarian class association into globals and BaselineOf class, too
-expectvalue %String
-run
-  | codeLibrarian str |
-  codeLibrarian := AllUsers userWithId: 'GsDevKitLibrarianUser'.
-  str := String new.
-  #( #'GsDevKitLibrarian' )
-    do: [ :className | 
-      | assoc |
-      Globals 
-        at: className 
-        ifAbsent: [
-          assoc := codeLibrarian symbolList resolveSymbol: className.
-          Globals addAssociation: assoc.
-          str add: className asString, ' ' ] ].
-  str isEmpty ifTrue: [ ^ 'GsDevKitLibrarian, Metacello, ConfigurationOf, and BaselineOf already in Globals' ].
-  ^str , 'installed in Globals'
-%
-
-output push boot_3.log only
-
-# need all globals defined before reloading  ... preparation for loading Metacello as SystemUser
-input $GS_HOME/shared/topaz/metacello/bootstrapMetacelloSupport.topaz
-commit
-
-output pop
-
 ! install Metacello
 
   run
   | gs_home |
   gs_home := System gemEnvironmentVariable: 'GS_HOME'.
   CypressFileSystemGitRepository gitRepositoryDir: gs_home, '/shared/repos/gsdevkit'.
-  GsDevKitLibrarian new
+  Metacello new
     baseline: 'Metacello';
     repository: 'cypressft://', gs_home, '/shared/repos/gs_port/metacello/repository/';
-    load
+    load;
+    lock
 %
   commit
   run
