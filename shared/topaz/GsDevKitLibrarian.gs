@@ -243,16 +243,18 @@ output pop
   commit
   run
   | gs_home |
-true ifTrue: [ ^ self ].
   gs_home := System gemEnvironmentVariable: 'GS_HOME'.
   Metacello new
     baseline: 'Metacello';
     repository: 'cypressft://', gs_home, '/shared/repos/gs_port/metacello/repository/';
-    load
+    lock
 %
   commit
 
   run
+  | gs_home |
+  gs_home := System gemEnvironmentVariable: 'GS_HOME'.
+  CypressFileSystemGitRepository gitRepositoryDir: gs_home, '/shared/repos/gsdevkit'.
   Metacello new
     baseline: 'Sport';
     repository: 'cypressft:$GS_HOME/shared/repos/Sport/src/';
