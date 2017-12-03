@@ -209,10 +209,4 @@ commit
 %
   commit
 
-
-
-! Install GsDevKitLibrarian-Core package
-
-input $GS_HOME/shared/topaz/GsDevKitLibrarian-Core.gs
-commit
-
+logout
