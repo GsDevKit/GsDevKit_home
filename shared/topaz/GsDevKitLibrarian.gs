@@ -234,6 +234,7 @@ output pop
   run
   | gs_home |
   gs_home := System gemEnvironmentVariable: 'GS_HOME'.
+  CypressFileSystemGitRepository gitRepositoryDir: gs_home, '/shared/repos/gsdevkit'.
   GsDevKitLibrarian new
     baseline: 'Metacello';
     repository: 'cypressft://', gs_home, '/shared/repos/gs_port/metacello/repository/';
@@ -242,6 +243,7 @@ output pop
   commit
   run
   | gs_home |
+true ifTrue: [ ^ self ].
   gs_home := System gemEnvironmentVariable: 'GS_HOME'.
   Metacello new
     baseline: 'Metacello';
@@ -257,7 +259,7 @@ output pop
     lock.
   Metacello new
     baseline: 'Grease';
-    repository: 'cypressft:$GS_HOME/shared/repos/gs_port/Grease/repository/';
+    repository: 'cypressft:$GS_HOME/shared/repos/gsdevkit/Grease/repository/';
     lock.
   Metacello new
     baseline: 'GsDevKit';

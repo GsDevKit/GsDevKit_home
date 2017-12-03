@@ -64,6 +64,7 @@ popd >& /dev/null
 
 export upgradeDir=$GEMSTONE/upgrade
 
+
 $GS_HOME/bin/startTopaz $stoneName -l << EOF
   iferr 1 stk
   iferr 2 stack
@@ -146,6 +147,7 @@ instVarNamed: aString
   login
 
   run
+self halt.
   GsDevKitLibrarian new
     baseline: 'Ston';
     repository: 'cypressft://$GS_HOME/shared/repos/gs_port/ston/repository/';
