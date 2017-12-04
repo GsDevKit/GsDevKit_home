@@ -4,7 +4,7 @@
 
 doit
 (Object
-	subclass: 'AbstractMetacelloConfiguration'
+	subclass: 'ConfigurationOf'
 	instVarNames: #( project )
 	classVars: #(  )
 	classInstVars: #(  )
@@ -74,7 +74,7 @@ true.
 %
 
 doit
-(AbstractMetacelloConfiguration
+(ConfigurationOf
 	subclass: 'BaselineOf'
 	instVarNames: #(  )
 	classVars: #(  )
@@ -147,77 +147,6 @@ reference](MetacelloScriptingAPI.md). There more information on [working with Gi
 [1]: http://git-scm.com/
 [2]: https://github.com/dalehenrich/metacello-work/blob/master/repository/Metacello-Base.package/ConfigurationOf.class/README.md
 [3]: https://github.com/dalehenrich/sample/tree/configuration/ConfigurationOfSample.package/ConfigurationOfSample.class
-';
-		immediateInvariant.
-true.
-%
-
-doit
-(AbstractMetacelloConfiguration
-	subclass: 'ConfigurationOf'
-	instVarNames: #(  )
-	classVars: #(  )
-	classInstVars: #(  )
-	poolDictionaries: #()
-	inDictionary: UserGlobals
-	options: #())
-		category: 'Metacello-Base';
-		comment: 'You must use a *configuration* when your project is stored in a
-repository using `.mcz` files.
-
-If you are using a source code manager (SCM) like [git][1] and have
-created a *baseline* (see the [**BaselineOf** class comment][3] for more info)
-you may use a *configuration* to associate a specific
-git commit (SHA, branch name, tag name) with a [Metacello version][2].
-
-To create a new Metacello configuration:
-
-1. Create a subclass of the **ConfigurationOf** class. The configuration
-   class for your project should be names by appending the name of
-   your project to the string `ConfigurationOf`. The name of the
-   category and package should be the same as the name of the class:
-
-    ```Smalltalk
-    ConfigurationOf subclass: #ConfigurationOfExample
-      instanceVariableNames: ''''
-      classVariableNames: ''''
-      poolDictionaries: ''''
-      category: ''ConfigurationOfExample''
-    ```
-
-2. Create a **baselineXXXX:** method where you specify the structure of your project:
-
-    ```Smalltalk
-    baseline0100: spec
-      <baseline: ''1.0-baseline''>
-
-      spec for: #common do: [
-        spec repository: ''http://ss3.gemstone.com/ss/Example''.
-        spec
-          package: ''Example-Core'';
-          package: ''Example-Tests'' with: [
-            spec requires: ''Example-Core'' ]].
-    ```
-
-3. Create a **versionXXXX:** method where you specify the specific
-   versions of the packages to be loaded for this version:
-
-    ```Smalltalk
-    version01000: spec
-      <version: ''1.0'' imports: #(''1.0-baseline'')>
-
-      spec for: #common do: [
-        spec blessing: #release.
-        spec
-          package: ''Example-Core'' with: ''Example-Core'';
-          package: ''Example-Tests'' with: ''Example-Tests'' ].
-    ```
-
-4. Create a Monticello package for your **ConfigurationOf** class and save it in the repository where your packages are stored. 
-
-[1]: http://git-scm.com/
-[2]: https://github.com/dalehenrich/metacello-work/blob/master/docs/MetacelloScriptingAPI.md#metacello-version-numbers
-[3]: https://github.com/dalehenrich/metacello-work/blob/master/repository/Metacello-Base.package/BaselineOf.class/README.md
 ';
 		immediateInvariant.
 true.
@@ -539,12 +468,12 @@ true.
 %
 
 
-! Class Implementation for AbstractMetacelloConfiguration
+! Class Implementation for ConfigurationOf
 
-! ------------------- Class methods for AbstractMetacelloConfiguration
+! ------------------- Class methods for ConfigurationOf
 
 category: 'private'
-classmethod: AbstractMetacelloConfiguration
+classmethod: ConfigurationOf
 ensureMetacello
     "Bootstrap Metacello and load the 'botstrap' group"
 
@@ -552,16 +481,16 @@ ensureMetacello
 %
 
 category: 'accessing'
-classmethod: AbstractMetacelloConfiguration
+classmethod: ConfigurationOf
 project
 
 	^self new project
 %
 
-! ------------------- Instance methods for AbstractMetacelloConfiguration
+! ------------------- Instance methods for ConfigurationOf
 
 category: 'accessing'
-method: AbstractMetacelloConfiguration
+method: ConfigurationOf
 customProjectAttributes
     "Edit to return a collection of any custom attributes e.g. for conditional loading: Array with: #'Condition1' with: #'Condition2.
 	For more information see: http://code.google.com/p/metacello/wiki/CustomProjectAttrributes "
@@ -570,7 +499,7 @@ customProjectAttributes
 %
 
 category: 'accessing'
-method: AbstractMetacelloConfiguration
+method: ConfigurationOf
 loadType
   "override in subclass to change to #atomic if desired.
    #atomic loads all packages in a single step instead of one package at a time in #linear"
@@ -579,7 +508,7 @@ loadType
 %
 
 category: 'accessing'
-method: AbstractMetacelloConfiguration
+method: ConfigurationOf
 project
   ^ project
     ifNil: [ 
@@ -594,7 +523,7 @@ project
 %
 
 category: 'accessing'
-method: AbstractMetacelloConfiguration
+method: ConfigurationOf
 project: aProject
 
 	project ifNil: [ self class ensureMetacello ].

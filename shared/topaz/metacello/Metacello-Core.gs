@@ -14500,12 +14500,12 @@ visit: aSpec doing: aBlock
 
 ! Class Extensions
 
-! Class Extension for AbstractMetacelloConfiguration
+! Class Extension for ConfigurationOf
 
-! ------------------- Instance methods for AbstractMetacelloConfiguration
+! ------------------- Instance methods for ConfigurationOf
 
 category: '*metacello-core'
-method: AbstractMetacelloConfiguration
+method: ConfigurationOf
 versionNumberClass
     ^ MetacelloSemanticVersionNumber
 %

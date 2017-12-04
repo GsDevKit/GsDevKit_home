@@ -457,13 +457,13 @@ preLoad: packageOrVersionSpec
 ! Class Extensions
 
 
-! Class Extension for AbstractMetacelloConfiguration
+! Class Extension for ConfigurationOf
 
-! ------------------- Class methods for AbstractMetacelloConfiguration
+! ------------------- Class methods for ConfigurationOf
 
 
 category: '*Metacello-GsCypress-MC'
-classmethod: AbstractMetacelloConfiguration
+classmethod: ConfigurationOf
 ensureMetacello: loadList
   "Bootstrap Metacello, retry using alternate repository, if primary repository is not accessible"
 

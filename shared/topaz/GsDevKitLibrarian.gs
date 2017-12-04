@@ -190,6 +190,18 @@ commit
 
   run
   | gs_home |
+true ifTrue: [ "needs STON installed ... " ^ true ].
+  gs_home := System gemEnvironmentVariable: 'GS_HOME'.
+  CypressFileSystemGitRepository gitRepositoryDir: gs_home, '/shared/repos/gsdevkit'.
+  Metacello new
+    baseline: 'Gt4Gemstone';
+    repository: 'cypressft://', gs_home, '/shared/repos/gt4gemstone/src/';
+    load
+%
+  commit
+
+  run
+  | gs_home |
   gs_home := System gemEnvironmentVariable: 'GS_HOME'.
   CypressFileSystemGitRepository gitRepositoryDir: gs_home, '/shared/repos/gsdevkit'.
   Metacello new

@@ -6119,16 +6119,6 @@ versionString
 ! Class Extensions
 
 
-! Class Extension for AbstractMetacelloConfiguration
-
-! ------------------- Instance methods for AbstractMetacelloConfiguration
-
-category: '*metacello-mc'
-method: AbstractMetacelloConfiguration
-projectClass
-  ^ self subclassResponsibility
-%
-
 ! Class Extension for ConfigurationOf
 
 ! ------------------- Instance methods for ConfigurationOf
