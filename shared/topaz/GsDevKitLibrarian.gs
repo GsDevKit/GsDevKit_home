@@ -217,7 +217,7 @@ true ifTrue: [ "needs STON installed ... " ^ true ].
     repository: 'cypressft:$GS_HOME/shared/repos/GsDevKit/repository/';
     get;
     lock;
-    load: 'Base'.
+    load: #( 'Base' 'GsMisc' ).
 %
   commit
 
@@ -258,6 +258,38 @@ true ifTrue: [ "needs STON installed ... " ^ true ].
 
   run
   MetacelloGemStonePlatform initialize.
+%
+  commit
+
+  run
+  "reload for Metacello registration purposes"
+  MetacelloProjectRegistration resetRegistry.
+  Metacello new
+    baseline: 'Metacello';
+    repository: 'filetree://$GS_HOME/shared/repos/metacello/repository/';
+    lock;
+    load: 'Core'.
+  Metacello new
+    baseline: 'Sport';
+    repository: 'filetree://$GS_HOME/shared/repos/Sport/src/';
+    get;
+    lock;
+    load.
+  Metacello new
+    baseline: 'Grease';
+    repository: 'filetree://$GS_HOME/shared/repos/gsdevkit/Grease/repository/';
+    get;
+    lock;
+    load.
+  Metacello new
+    baseline: 'GsDevKit';
+    repository: 'filetree://$GS_HOME/shared/repos/GsDevKit/repository/';
+    get;
+    lock.
+  Metacello new
+    baseline: 'GsDevKit';
+    repository: 'filetree://$GS_HOME/shared/repos/GsDevKit/repository/';
+    load: #( 'Base' 'GsMisc' ).
 %
   commit
 

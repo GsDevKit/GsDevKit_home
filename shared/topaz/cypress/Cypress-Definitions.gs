@@ -1144,7 +1144,7 @@ classInstanceVariablesString
 category: 'accessing'
 method: CypressClassDefinition
 classInstVarNames
-  ^ classInstVarNames sort
+  ^ classInstVarNames
 %
 
 category: 'accessing'
@@ -1311,7 +1311,7 @@ instanceVariablesString
 category: 'accessing'
 method: CypressClassDefinition
 instVarNames
-  ^ instVarNames sort
+  ^ instVarNames
 %
 
 category: 'loading'
