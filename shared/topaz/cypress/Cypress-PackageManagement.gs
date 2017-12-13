@@ -3,8 +3,9 @@
 ! Class Declarations
 
 run
-".,$s/inDictionary: UserGlobals/inDictionary: CypressPackageSymbolList/ "
-UserGlobals at: #CypressPackageSymbolList put: Globals.
+System myUserProfile userId = 'SystemUser'
+  ifTrue: [ UserGlobals at: #CypressPackageSymbolList put: Globals ]
+  ifFalse: [ UserGlobals at: #CypressPackageSymbolList put: UserGlobals ].
 true
 %
 
@@ -2374,7 +2375,19 @@ readPropertiesFile: fileName
 	self fileUtils
 		readStreamFor: fileName
 		in: self directoryPath
-		do: [:fileStream | properties := CypressJsonParser parseStream: fileStream]
+		do: [:fileStream | properties := CypressJsonParser parseStream: fileStream].
+	properties 
+	  at: 'type' 
+	  ifPresent: [:typeProperty |
+            | subtype |
+	    "translate from FileTree type to Cypress type"
+	    typeProperty _isArray
+	      ifTrue: [
+	         subtype := typeProperty at: 1.
+                 properties at: '_gs_options' put: (typeProperty at: 2) ]
+	      ifFalse: [ subtype := typeProperty ].
+	    subtype = 'normal' ifTrue: [ subtype := '' ].
+	    properties at: '_gs_subclassType' put: subtype. ].
 %
 
 category: 'updating properties'

@@ -3,8 +3,9 @@
 ! Class Declarations
 
 run
-".,$s/inDictionary: UserGlobals/inDictionary: CypressPackageSymbolList/ "
-UserGlobals at: #CypressPackageSymbolList put: Globals.
+System myUserProfile userId = 'SystemUser'
+  ifTrue: [ UserGlobals at: #CypressPackageSymbolList put: Globals ]
+  ifFalse: [ UserGlobals at: #CypressPackageSymbolList put: UserGlobals ].
 true
 %
 
@@ -207,6 +208,7 @@ asCypressClassDefinition
 		poolDictionaryNames: self poolDictionaryNames
 		comment: self comment
 		subclassType: self subclassType
+		options: self optionsArray
 %
 
 category: 'accessing'
@@ -417,12 +419,27 @@ subclassType
 
 category: 'accessing'
 method: CypressClassStructure
+optionsArray
+
+	^self properties at: '_gs_options' ifAbsent: [ #() ]
+%
+
+category: 'accessing'
+method: CypressClassStructure
 subclassType: aString
 
 	aString isEmpty
 		ifTrue: [self properties removeKey: '_gs_subclassType' ifAbsent: []]
 		ifFalse: [self properties at: '_gs_subclassType' put: aString]
 %
+
+category: 'accessing'
+method: CypressClassStructure
+optionsArray: anArray
+
+	self properties at: '_gs_options' put: anArray
+%
+
 
 category: 'accessing'
 method: CypressClassStructure

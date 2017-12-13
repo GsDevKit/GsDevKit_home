@@ -4,8 +4,9 @@
 
 
 run
-".,$s/inDictionary: UserGlobals/inDictionary: CypressPackageSymbolList/ "
-UserGlobals at: #CypressPackageSymbolList put: Globals.
+System myUserProfile userId = 'SystemUser'
+  ifTrue: [ UserGlobals at: #CypressPackageSymbolList put: Globals ]
+  ifFalse: [ UserGlobals at: #CypressPackageSymbolList put: UserGlobals ].
 true
 %
 

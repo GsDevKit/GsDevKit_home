@@ -8,8 +8,9 @@
 ! Class Declarations
 
 run
-".,$s/inDictionary: UserGlobals/inDictionary: CypressPackageSymbolList/ "
-UserGlobals at: #CypressPackageSymbolList put: Globals.
+System myUserProfile userId = 'SystemUser'
+  ifTrue: [ UserGlobals at: #CypressPackageSymbolList put: Globals ]
+  ifFalse: [ UserGlobals at: #CypressPackageSymbolList put: UserGlobals ].
 true
 %
 
@@ -128,7 +129,7 @@ true.
 doit
 (CypressDefinition
 	subclass: 'CypressClassDefinition'
-	instVarNames: #( category classInstVarNames classVarNames comment defaultSymbolDictionaryName instVarNames name poolDictionaryNames subclassType superclassName )
+	instVarNames: #( category classInstVarNames classVarNames comment defaultSymbolDictionaryName instVarNames name poolDictionaryNames subclassType classOptions superclassName )
 	classVars: #(  )
 	classInstVars: #(  )
 	poolDictionaries: #()
@@ -989,11 +990,12 @@ forClass: aClass
 		poolDictionaryNames: aClass sharedPools
 		comment: aClass comment
 		subclassType: (self subclassTypeOf: aClass)
+                options: aClass _optionsArray
 %
 
 category: 'instance creation'
 classmethod: CypressClassDefinition
-name: aClassName superclassName: aSuperclassName category: aCategory instVarNames: someInstanceVariableNames classInstVarNames: someClassInstanceVariableNames classVarNames: someClassVariableNames poolDictionaryNames: somePoolDictionaryNames comment: aComment subclassType: subclassType
+name: aClassName superclassName: aSuperclassName category: aCategory instVarNames: someInstanceVariableNames classInstVarNames: someClassInstanceVariableNames classVarNames: someClassVariableNames poolDictionaryNames: somePoolDictionaryNames comment: aComment subclassType: subclassType options: optionsArray
 
 	^self new
 		name: aClassName asString
@@ -1009,6 +1011,7 @@ name: aClassName superclassName: aSuperclassName category: aCategory instVarName
 				collect: [:each | each asString])
 		comment: (self normalizeLineEndingsOf: aComment)
 		subclassType: subclassType
+		options: optionsArray
 %
 
 category: 'private'
@@ -1197,7 +1200,7 @@ createOrReviseByteClass
 		classInstVars: (self classInstVarNames collect: [:each | each asSymbol])
 		poolDictionaries: self poolDictionaryList
 		inDictionary: (self symbolDictionaryForClassNamed: self name)
-		options: #())
+		options: self classOptions)
 			category: category;
 			comment: self comment
 %
@@ -1209,10 +1212,10 @@ createOrReviseClass
 	^self subclassType = ''
 		ifTrue: [self createOrReviseRegularClass]
 		ifFalse: 
-			[self subclassType = 'byteSubclass'
+			[(self subclassType = 'byteSubclass' or: [self subclassType = 'bytes'])
 				ifTrue: [self createOrReviseByteClass]
 				ifFalse: 
-					[self subclassType = 'indexableSubclass'
+					[(self subclassType = 'indexableSubclass' or: [ self subclassType = 'variable' ])
 						ifTrue: [self createOrReviseIndexableClass]
 						ifFalse: 
 							[self error: 'unknown subclass type: ' , self subclassType printString]]]
@@ -1235,7 +1238,7 @@ createOrReviseIndexableClass
 		classInstVars: (self classInstVarNames collect: [:each | each asSymbol])
 		poolDictionaries: self poolDictionaryList
 		inDictionary: (self symbolDictionaryForClassNamed: self name)
-		options: #())
+		options: self classOptions )
 			category: category;
 			comment: self comment
 %
@@ -1257,7 +1260,7 @@ createOrReviseRegularClass
 		classInstVars: (self classInstVarNames collect: [:each | each asSymbol])
 		poolDictionaries: self poolDictionaryList
 		inDictionary: (self symbolDictionaryForClassNamed: self name)
-		options: #())
+		options: self classOptions)
 			category: category;
 			comment: self comment
 %
@@ -1350,7 +1353,7 @@ name
 
 category: 'initialization'
 method: CypressClassDefinition
-name: aClassName superclassName: aSuperclassName category: aCategory instVarNames: someInstanceVariableNames classInstVarNames: someClassInstanceVariableNames classVarNames: someClassVariableNames poolDictionaryNames: somePoolDictionaryNames comment: aComment subclassType: aSubclassType
+name: aClassName superclassName: aSuperclassName category: aCategory instVarNames: someInstanceVariableNames classInstVarNames: someClassInstanceVariableNames classVarNames: someClassVariableNames poolDictionaryNames: somePoolDictionaryNames comment: aComment subclassType: aSubclassType options: optionsArray
 
 	name := aClassName.
 	superclassName := aSuperclassName.
@@ -1360,7 +1363,8 @@ name: aClassName superclassName: aSuperclassName category: aCategory instVarName
 	classVarNames := someClassVariableNames.
 	poolDictionaryNames := somePoolDictionaryNames.
 	comment := aComment.
-	subclassType := aSubclassType
+	subclassType := aSubclassType.
+	classOptions := (optionsArray collect: [:each | each asSymbol ])
 %
 
 category: 'loading'
@@ -1486,6 +1490,12 @@ method: CypressClassDefinition
 subclassType
 
 	^subclassType
+%
+
+category: 'accessing'
+method: CypressClassDefinition
+classOptions 
+  ^ classOptions
 %
 
 category: 'accessing'

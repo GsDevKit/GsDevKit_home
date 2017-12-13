@@ -42,7 +42,7 @@ OPTIONS
      Bootstrap GLASS into the given extent as the given user. Default extent is exten0.dbf.
   -B
      [EXPERIMENTAL] Bootstrap GsDevKit the given extent as the given user. Default extent is
-     extent0.dbf and the default <gemstone-user-id> is SystemUser. If -g is NOT specified,
+     extent0.dbf and the default <gemstone-user-id> is DataCurator. If -g is NOT specified,
      tODE will be installed on top of GsDevKit.
   -n
      No startStone, no startNetldi.
@@ -156,7 +156,7 @@ while getopts "fghns:t:u:i:l:z:cBCU:P:b" OPT ; do
     z) smalltalkCIConfigPath="${OPTARG}";;
     c) loadSmalltalkCIConfig="true";;
     C) loadSmalltalkCIConfigUsingCypress="true";;
-    B) bootstrapGsDevKit="true"; defaultExtentName="extent0.dbf"; defaultGemstoneUserId="SystemUser";;
+    B) bootstrapGsDevKit="true"; defaultExtentName="extent0.dbf"; defaultGemstoneUserId="DataCurator";;
     b) bootstrapGLASS="true"; defaultExtentName="extent0.dbf" ;;
     U) gemstoneUserId="${OPTARG}";;
     P) gemstonePassword="${OPTARG}";;
