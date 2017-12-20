@@ -338,8 +338,4 @@ true ifTrue: [ "needs STON installed ... " ^ true ].
 %
   commit
 
-  print
-  GsDeployer new classesWithClassHistory collect: [:each | each className ].
-%
-
 logout

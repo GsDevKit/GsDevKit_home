@@ -103,6 +103,7 @@ Transcript cr; show: '---Step 2 of tODE bootstrap process: execute lock projects
       Metacello new
         baseline: 'Grease';
         repository: greaseRepo;
+        onWarningLog;
         load ] ]
         on: Error , Halt
         do: [ :ex | 

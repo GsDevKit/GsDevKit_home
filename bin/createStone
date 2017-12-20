@@ -43,7 +43,8 @@ OPTIONS
   -B
      [EXPERIMENTAL] Bootstrap GsDevKit the given extent as the given user. Default extent is
      extent0.dbf and the default <gemstone-user-id> is DataCurator. If -g is NOT specified,
-     tODE will be installed on top of GsDevKit.
+     tODE will be installed on top of GsDevKit. Can only be used with GemStone version 3.4.0 or 
+     later.
   -n
      No startStone, no startNetldi.
   -s <snapshot-file-path> 
@@ -228,7 +229,7 @@ else
         warning_banner "========================================="
         warning_banner "========================================="
          ;;
-      *) exit_1_banner "Bootstrapping Cypress is only support for GemStone 3.4.x and later" ;;
+      *) exit_1_banner "Bootstrapping GsDevKit is only supported for GemStone 3.4.x and later" ;;
     esac
   fi
 fi
