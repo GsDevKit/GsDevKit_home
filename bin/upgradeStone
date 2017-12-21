@@ -11,7 +11,7 @@ start_banner
 
 usage() {
   cat <<HELP
-usage: $0 [-B] [-c] [-f] [-u] [-s <source-stone-extent-file-path>] [-l <post-load-tode-script>]
+usage: $0 [-B|-N] [-c] [-f] [-u] [-s <source-stone-extent-file-path>] [-l <post-load-tode-script>]
           [-m <tempObjCacheSize>] [-U <gemstone-user-id>] [-P <gemstone-password>]
 	  <source-stone-name> <target-stone-name> <gemstone-version>
 
@@ -39,6 +39,9 @@ OPTIONS
   -B
      [EXPERIMENTAL] Bootstrap GsDevKit after upgradeImage, instead of bootstrapping GLASS. Can
      only be used when upgrading to GemStone 3.4.0 or later.
+  -N 
+     [EXPERIMENTAL] Load GLASS baseline after upggradeImage, instead of bootstrapping GLASS. Can
+     only be used when upgrading to GemStone 3.4.0 or later.
   -U <gemstone-user-name>
      Use <gemstone-user-id> in session description. If the user does not exist in GemStone,
      then create the user after the stone has been started.
@@ -52,6 +55,7 @@ EXAMPLES
   $(basename $0) -U bozo -P theClown gs_3106 gs_329 3.2.9
   $(basename $0) gs_3106 gs_329 3.2.9
   $(basename $0) -B gs_3106 gs_340 3.4.0
+  $(basename $0) -N gs_3106 gs_340 3.4.0
 
 HELP
 }
@@ -77,7 +81,8 @@ tempObjCacheSize="100000"
 gemstoneUserId="DataCurator"
 gemstonePassword="swordfish"
 bootstrapGsDevKit="false"
-while getopts "Bcfhl:s:um:U:P:" OPT ; do
+bootstrapGLASS="false"
+while getopts "BNcfhl:s:um:U:P:" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     c) runUpgrade="false";;
@@ -90,6 +95,7 @@ while getopts "Bcfhl:s:um:U:P:" OPT ; do
        ;;
     u) createStone="false";;
     B) bootstrapGsDevKit="true";;
+    N) bootstrapGLASS="true";;
     U) gemstoneUserId="${OPTARG}";;
     P) gemstonePassword="${OPTARG}";;
     *) usage; exit_1_banner "Uknown option";;
@@ -224,6 +230,7 @@ if [ "${bootstrapGsDevKit}" = "true" ] ; then
   policy := GsPackagePolicy current.
   policy homeSymbolDict: UserGlobals.
   policy externalSymbolList: Array new.
+  policy enable.
   true
 %
   commit
@@ -248,6 +255,8 @@ if [ "${bootstrapGsDevKit}" = "true" ] ; then
   "Wipe out the Metacello registry ... if it exists"
   (GsCurrentSession currentSession symbolList objectNamed: #MetacelloProjectRegistration)
     ifNotNil: [:cl | cl _classVars at: #Registry put: nil ].
+  MCCacheRepository setDefault: MCDictionaryRepository new.
+  MCPlatformSupport autoMigrate: true.
   true
 %
   commit
@@ -260,6 +269,7 @@ if [ "${bootstrapGsDevKit}" = "true" ] ; then
     get;
     lock;
     load: 'Core'.
+  MetacelloGemStonePlatform select.
   Metacello new
     baseline: 'Sport';
     repository: 'filetree://$GS_HOME/shared/repos/Sport/src/';
@@ -269,6 +279,26 @@ if [ "${bootstrapGsDevKit}" = "true" ] ; then
     baseline: 'Grease';
     repository: 'filetree://$GS_HOME/shared/repos/gsdevkit/Grease/repository/';
     get;
+    lock.
+  Metacello new
+    baseline: 'ZincHTTPComponents';
+    repository: 'filetree://$GS_HOME/shared/repos/zinc/repository/';
+    lock.
+  Metacello new
+    baseline: 'Zodiac';
+    repository: 'filetree://$GS_HOME/shared/repos/zodiac/repository/';
+    lock.
+  Metacello new
+    baseline: 'Ston';
+    repository: 'filetree://$GS_HOME/shared/repos/ston/repository/';
+    lock.
+  Metacello new
+    baseline: 'RB';
+    repository: 'filetree://$GS_HOME/shared/repos/rb/repository/';
+    lock.
+  Metacello new
+    baseline: 'FileTree';
+    repository: 'filetree://$GS_HOME/shared/repos/filetree/repository/';
     lock.
   Metacello new
     baseline: 'GsDevKit';
@@ -289,6 +319,155 @@ EOF
       ;;
     *) exit_1_banner "Bootstrapping GsDevKit is only supported for GemStone 3.4.x and later" ;;
   esac
+ elif [ "${bootstrapGLASS}" = "true" ] ; then
+  case "$gsvers" in
+    3.4.*)
+        warning_banner "========================================="
+        warning_banner "========================================="
+        warning_banner "This is an experimental feature - not recommended for production use"
+        warning_banner "========================================="
+        warning_banner "========================================="
+        "$GS_HOME/bin/startTopaz" $targetStoneName -l -T50000 > $upgradeLogDir/topaz.out << EOF
+  display resultcheck
+  level 0
+
+  login
+  
+  display oops
+  iferr 1 stk
+  iferr 2 stack
+  iferr 3 input pop
+  iferr 4 exit 1
+  
+! enable session methods
+  run
+  | policy sessionMethodsPackage enabled |
+  sessionMethodsPackage := GsPackageLibrary
+    createPackageNamed: #'SessionMethods'.
+  GsPackageLibrary installPackage: sessionMethodsPackage.
+  policy := GsPackagePolicy current.
+  policy homeSymbolDict: UserGlobals.
+  policy externalSymbolList: Array new.
+  policy enable.
+  true
+%
+  commit
+
+! clear caches - those that are unneeded or create problem during initial load
+  run
+  "MCDefinition clearInstances"
+  MCDefinition _classVars at: #Instances put: nil.
+  "MCMethodDefinition shutdown"
+  MCMethodDefinition _classVars at: #Definitions put: nil.
+  "MethodVersionHistory reset"
+  UserGlobals removeKey: #MethodVersionHistory_UniqueInstance ifAbsent: [].
+  "clear out PackageOrganizer default class instance variable"
+  PackageOrganizer atClassInstVar: #default put: nil.
+  "clear out McCacheRepository default class instance variable"
+  MCCacheRepository atClassInstVar: #default put: nil.
+  "wipe out the working copy registry ... will be redefined later"
+  MCPackageManager atClassInstVar: #registry put: nil.
+  MCWorkingCopy atClassInstVar: #registry put: nil.
+  "wipe out the default MCRepositoryGroup"
+  MCRepositoryGroup atClassInstVar: #default put: nil.
+  "Wipe out the Metacello registry ... if it exists"
+  (GsCurrentSession currentSession symbolList objectNamed: #MetacelloProjectRegistration)
+    ifNotNil: [:cl | cl _classVars at: #Registry put: nil ].
+  MCCacheRepository setDefault: MCDictionaryRepository new.
+  MCPlatformSupport autoMigrate: true.
+  true
+%
+  commit
+
+  run
+  | repository |
+  "refresh all configurations"
+  repository := MCHttpRepository
+                location:
+                  'http://seaside.gemtalksystems.com/ss/MetacelloRepository'
+                user: ''
+                password: ''.
+  [ 
+  Gofer new
+    repository: repository;
+    package: 'ConfigurationOfGofer';
+    package: 'ConfigurationOfMetacello';
+    package: 'ConfigurationOfGsCore';
+    package: 'ConfigurationOfGoferProjectLoader';
+    package: 'ConfigurationOfGsMonticello';
+    package: 'ConfigurationOfGsOB';
+    package: 'ConfigurationOfGsMisc';
+    package: 'ConfigurationOfGsSqueakCommon';
+    load ]
+    on: Warning
+    do: [ :ex | 
+      self log: ex description.
+      ex resume ].
+  true
+%
+  commit
+
+  run
+  MetacelloGemStonePlatform select.
+  Metacello new
+    baseline: 'Metacello';
+    repository: 'filetree://$GS_HOME/shared/repos/metacello-work/repository/';
+    get;
+    lock;
+    load: 'Core'.
+  MetacelloGemStonePlatform select.
+  Metacello new
+    baseline: 'Sport';
+    repository: 'filetree://$GS_HOME/shared/repos/Sport/src/';
+    get;
+    lock.
+  Metacello new
+    baseline: 'Grease';
+    repository: 'filetree://$GS_HOME/shared/repos/gsdevkit/Grease/repository/';
+    get;
+    lock.
+  Metacello new
+    baseline: 'ZincHTTPComponents';
+    repository: 'filetree://$GS_HOME/shared/repos/zinc/repository/';
+    lock.
+  Metacello new
+    baseline: 'Zodiac';
+    repository: 'filetree://$GS_HOME/shared/repos/zodiac/repository/';
+    lock.
+  Metacello new
+    baseline: 'Ston';
+    repository: 'filetree://$GS_HOME/shared/repos/ston/repository/';
+    lock.
+  Metacello new
+    baseline: 'RB';
+    repository: 'filetree://$GS_HOME/shared/repos/rb/repository/';
+    lock.
+  Metacello new
+    baseline: 'FileTree';
+    repository: 'filetree://$GS_HOME/shared/repos/filetree/repository/';
+    lock.
+  Metacello new
+    baseline: 'GLASS1';
+    repository: 'filetree://$GS_HOME/shared/repos/glass/repository/';
+    get;
+    lock.
+  Metacello new
+    baseline: 'GLASS1';
+    repository: 'filetree://$GS_HOME/shared/repos/glass/repository/';
+    onWarningLog;
+    load: #( 'default' ).
+  true
+%
+  commit
+  logout
+
+  exit
+EOF
+      ;;
+    *) exit_1_banner "Bootstrapping GLASS is only supported for GemStone 3.4.x and later" ;;
+  esac
+
+
  else  
   # Patch BUG 46217 -- needed for 3.3.0 and pre-3.2.16 GemStone versions.
   echo "Install patch for Bug 46217"
