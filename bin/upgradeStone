@@ -262,6 +262,16 @@ if [ "${bootstrapGsDevKit}" = "true" ] ; then
   commit
 
   run
+  "collect methods that reference the soon to be obsolete class Pragma --- it is now in base.
+   these methods will need to be recompiled at some point."
+  UserGlobals 
+    at: #MethodsReferencingObsoletePragmaClass
+    put: (ClassOrganizer new referencesToObject: (UserGlobals at: #Pragma)).
+  true
+%
+  commit
+
+  run
   MetacelloGemStonePlatform select.
   Metacello new
     baseline: 'Metacello';
@@ -312,6 +322,40 @@ if [ "${bootstrapGsDevKit}" = "true" ] ; then
   true
 %
   commit
+
+  run
+  | methodList |
+  "All methods that reference a Pragma need to recompiled, to rebuild the Pragma using the new class"
+  methodList := (UserGlobals 
+    at: #MethodsReferencingObsoletePragmaClass).
+  ClassOrganizer new classes do: [:aClass |
+    (aClass methodDictForEnv: 0)
+      keysAndValuesDo: [ :selector :method | method pragmas isEmpty ifFalse: [ methodList add: method ] ].
+    (aClass class methodDictForEnv: 0)
+      keysAndValuesDo: [ :selector :method | method pragmas isEmpty ifFalse: [ methodList add: method ] ].
+    ].
+  true
+%
+  commit
+
+  run
+  "now recompile the methods that reference the ObsoletePragma class ... which has been removed from 
+   system by this point"
+  (UserGlobals 
+    at: #MethodsReferencingObsoletePragmaClass) do: [:gsNMethod | 
+      (System myUserProfile symbolList objectNamed: gsNMethod inClass theNonMetaClass name)
+        ifNil: [ 
+          GsFile gciLogServer: 'SKIPPED recompile of method: ', gsNMethod inClass name, '>>', gsNMethod selector]
+        ifNotNil: [:theNonMetaClass |
+          | cat |
+          cat := gsNMethod inClass categoryOfSelector: gsNMethod selector.
+          gsNMethod inClass compileMethod: gsNMethod sourceString category: cat.
+          GsFile gciLogServer: 'recompiled method: ', gsNMethod inClass name, '>>', gsNMethod selector ] ].
+  UserGlobals removeKey: #MethodsReferencingObsoletePragmaClass.
+  true
+%
+  commit
+
   logout
 
   exit
@@ -498,6 +542,13 @@ EOF
           cat := gsNMethod inClass categoryOfSelector: gsNMethod selector.
           gsNMethod inClass compileMethod: gsNMethod sourceString category: cat.
           GsFile gciLogServer: 'recompiled method: ', gsNMethod inClass name, '>>', gsNMethod selector ] ].
+  UserGlobals removeKey: #MethodsReferencingObsoletePragmaClass.
+  true
+%
+  commit
+
+  run
+  MCMockPackageInfo initialize.
   true
 %
   commit
