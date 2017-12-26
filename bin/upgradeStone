@@ -356,6 +356,12 @@ if [ "${bootstrapGsDevKit}" = "true" ] ; then
 %
   commit
 
+  run
+  MCMockPackageInfo initialize.
+  true
+%
+  commit
+
   logout
 
   exit
@@ -471,13 +477,8 @@ EOF
     load: 'Core'.
   MetacelloGemStonePlatform select.
   Metacello new
-    baseline: 'Sport';
-    repository: 'filetree://$GS_HOME/shared/repos/Sport/src/';
-    get;
-    lock.
-  Metacello new
     baseline: 'Grease';
-    repository: 'filetree://$GS_HOME/shared/repos/gsdevkit/Grease/repository/';
+    repository: 'filetree://$GS_HOME/shared/repos/Grease/repository/';
     get;
     lock.
   Metacello new
@@ -487,14 +488,6 @@ EOF
   Metacello new
     baseline: 'Zodiac';
     repository: 'filetree://$GS_HOME/shared/repos/zodiac/repository/';
-    lock.
-  Metacello new
-    baseline: 'Ston';
-    repository: 'filetree://$GS_HOME/shared/repos/ston/repository/';
-    lock.
-  Metacello new
-    baseline: 'RB';
-    repository: 'filetree://$GS_HOME/shared/repos/rb/repository/';
     lock.
   Metacello new
     baseline: 'FileTree';
