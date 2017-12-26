@@ -324,8 +324,7 @@ true ifTrue: [ "needs STON installed ... " ^ true ].
     baseline: 'Grease';
     repository: 'filetree://$GS_HOME/shared/repos/gsdevkit/Grease/repository/';
     get;
-    lock;
-    load.
+    lock.
   Metacello new
     baseline: 'GsDevKit';
     repository: 'filetree://$GS_HOME/shared/repos/GsDevKit/repository/';
