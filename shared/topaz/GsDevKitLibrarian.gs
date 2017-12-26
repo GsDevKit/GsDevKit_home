@@ -211,7 +211,7 @@ run
   CypressFileSystemGitRepository gitRepositoryDir: gs_home, '/shared/repos/gsdevkit'.
   Metacello new
     baseline: 'Metacello';
-    repository: 'cypressft://', gs_home, '/shared/repos/gs_port/metacello/repository/';
+    repository: 'cypressft://', gs_home, '/shared/repos/gsdevkit/metacello/repository/';
     load;
     lock
 %
@@ -221,7 +221,7 @@ run
   gs_home := System gemEnvironmentVariable: 'GS_HOME'.
   Metacello new
     baseline: 'Metacello';
-    repository: 'cypressft://', gs_home, '/shared/repos/gs_port/metacello/repository/';
+    repository: 'cypressft://', gs_home, '/shared/repos/gsdevkit/metacello/repository/';
     lock
 %
   commit
@@ -267,7 +267,7 @@ true ifTrue: [ "needs STON installed ... " ^ true ].
   "Prepare to bootstrap the Monticello-based Metacello -- usable with GLASS1/GsDevKit"
   Metacello new
     baseline: 'Metacello';
-    repository: 'cypressft://', gs_home, '/shared/repos/gs_port/metacello/repository/';
+    repository: 'cypressft://', gs_home, '/shared/repos/gsdevkit/metacello/repository/';
     load: 'BootstrapMetacello'.
 %
   commit
