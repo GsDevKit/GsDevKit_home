@@ -83,17 +83,21 @@ PLATFORM="`uname -sm | tr ' ' '-'`"
 # Check we're on a suitable 64-bit machine and set gsvers
 case "$PLATFORM" in
     Darwin-i386)
+      dlvers="GemStone64Bit${bucket}-i386.Darwin"
       gsvers="GemStone64Bit${vers}-i386.Darwin"
       ;;
     Linux-x86_64)
       # Linux looks OK
+      dlvers="GemStone64Bit${bucket}-x86_64.Linux"
       gsvers="GemStone64Bit${vers}-x86_64.Linux"
       ;;
     MSYS_NT*|MINGW32_NT*|MINGW64_NT*)
       if  [ "$vers" \< "3.3.0"  ] ;  then 
           gsvers="GemBuilderC${vers}-x86.Windows_NT"
+          dlvers="$gsvers"
       else
           gsvers="GemStone64BitClient${vers}-x86.Windows_NT"
+          dlvers="$gsvers"
       fi
       ;;
     *)
@@ -102,6 +106,7 @@ case "$PLATFORM" in
 esac
 
 # set zipfile name from gsvers
+dl_gss_file=${dlvers}.zip
 gss_file=${gsvers}.zip
 
 # set ftp_address
@@ -116,13 +121,11 @@ fi
 
 # We're good to go. Let user know.
 machine_name="`uname -n`"
-echo "[Info] Starting download of $gsvers on $machine_name"
 
 if [ -d "$GS_SHARED_DOWNLOADS/products/$gsvers" ] ; then
   if [ "${force}" = "true" ] ; then
     chmod -R +w "$GS_SHARED_DOWNLOADS//products/$gsvers"
     rm -rf "$GS_SHARED_DOWNLOADS/products/$gsvers"
-    rm -rf "$GS_SHARED_DOWNLOADS/zip/${gsvers}.zip"
   else
     exit_0_banner "$GS_SHARED_DOWNLOADS//products/$gsvers already exists to replace it, remove or rename it and rerun this script"
   fi
@@ -141,11 +144,12 @@ fi
 
 # Download GemStone
 pushd "$GS_SHARED_DOWNLOADS/zip" >& /dev/null
-  if [ ! -e $gss_file ]; then
-    echo "[Info] Downloading ${ftp_address}/pub/GemStone64/$bucket/$gss_file using ${cmd}"
-    $cmd ${ftp_address}/pub/GemStone64/$bucket/$gss_file
+  echo "[Info] Starting download of $dl_gss_file for GemStone $gsverson $machine_name"
+  if [ ! -e $dl_gss_file ]; then
+    echo "[Info] Downloading ${ftp_address}/pub/GemStone64/$bucket/$dl_gss_file using ${cmd}"
+    $cmd ${ftp_address}/pub/GemStone64/$bucket/$dl_gss_file
   else
-    echo "[Info] $gss_file already exists"
+    echo "[Info] $dl_gss_file already exists"
     echo "to replace it, remove or rename it and rerun this script"
   fi
 
@@ -154,7 +158,10 @@ pushd "$GS_SHARED_DOWNLOADS/zip" >& /dev/null
   gs_product="$GS_SHARED_DOWNLOADS/products/$gsvers"
   if [ ! -e "$gs_product" ]
     then
-    unzip -q -d "$GS_SHARED_DOWNLOADS/products" $gss_file
+    unzip -q -d "$GS_SHARED_DOWNLOADS/products" $dl_gss_file
+    if [ ! -e "$gs_product" ] ; then
+      ln -s "$GS_SHARED_DOWNLOADS/products/${dlvers}" "${gs_product}"
+    fi
   else
     echo "[Warning] $GS_SHARED_DOWNLOADS/products/$gsvers already exists"
     echo "to replace it, remove or rename it and rerun this script"
@@ -217,6 +224,7 @@ if [ "${GS_TRAVIS}x" != "x" ] ; then
         3.2.*) keyName="GemStone64Bit3.2.0-x86_64.Linux.key" ;;
         3.3.*) keyName="GemStone64Bit3.3.0-x86_64.Linux.key" ;;
         3.4.*) keyName="GemStone64Bit3.4.0-x86_64.Linux.key" ;;
+        3.5.*) keyName="GemStone64Bit3.5.0-x86_64.Linux.key" ;;
         *) exit_1_banner "No travis license for GemStone $vers";;
       esac
       if [ "${keyName}x" != "x" ] ; then
