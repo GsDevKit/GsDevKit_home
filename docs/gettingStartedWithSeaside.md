@@ -2,10 +2,10 @@
 
 ## Install Seaside
 
-First you install the [Seaside project](https://github.com/GsDevKit/Seaside31). At the tODE shell prompt, execute:
+First you install the [Seaside project](https://github.com/SeasideSt/Seaside). At the tODE shell prompt, execute:
 
 ```
-project install --url=http://gsdevkit.github.io/GsDevKit_home/Seaside3.ston
+project install --url=http://gsdevkit.github.io/GsDevKit_home/Seaside32.ston
 ```
 
 This command downloads the project entry for Seaside3 and clones the [Seaside project](https://github.com/GsDevKit/Seaside31). The github repositories for the [Zinc project](https://github.com/GsDevKit/zinc), the web server of choice for GsDevKit and the [gsApplicationTools project](https://github.com/GsDevKit/gsApplicationTools) that provides support for starting and stopping Seaside server gems.
