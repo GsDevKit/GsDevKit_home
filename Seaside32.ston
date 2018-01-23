@@ -3,7 +3,7 @@ TDObjectGatewayLeafNode{#name:'Seaside32',#contents:'^ TDProjectSpecEntryDefinit
     projectUrl: \'https://github.com/SeasideSt/Seaside\';
     baseline: \'Seaside3\'
       repository: \'github://SeasideSt/Seaside:master/repository\'
-      loads: #(\'Development\' \'Zinc Project\' \'Examples\');
+      loads: #(\'Welcome' 'Development\' \'Zinc Project\' \'Examples\');
     installScript: \'project clone --https --local Seaside3
       project install --local --url=http://gsdevkit.github.io/GsDevKit_home/GsApplicationTools.ston\';
     gitCheckout: \'master\';
