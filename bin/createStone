@@ -216,7 +216,7 @@ if [ "$bootstrapGLASS" = "true" ] ; then
 else
   if [ "${bootstrapGsDevKit}" = "true" ] ; then
     case "$vers" in
-      3.4.*)
+      3.4.*|3.5.*)
         warning_banner "========================================="
         warning_banner "========================================="
         warning_banner "This is an experimental feature - not recommended for production use"

@@ -333,7 +333,7 @@ true ifTrue: [ "needs STON installed ... " ^ true ].
   Metacello new
     baseline: 'GsDevKit';
     repository: 'filetree://$GS_HOME/shared/repos/GsDevKit/repository/';
-    load: #( 'Base' 'GsMisc' ).
+    load: #( 'Base' 'GsMisc' 'GsOB' ).
 %
   commit
 
