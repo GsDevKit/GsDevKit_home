@@ -83,7 +83,7 @@ installUbuntuPackages(){
 
 installPrereqsForDebian(){
   case "$osVersion" in
-    testing | 8.3)
+    testing | 8.3 | 9.*)
       sudo dpkg --add-architecture i386
       installUbuntuPackages
       sudo apt-get -y install fonts-dejavu # ensure that DejaVu Sans Mono font present (default font for tODE)
