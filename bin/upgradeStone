@@ -12,7 +12,7 @@ start_banner
 usage() {
   cat <<HELP
 usage: $0 [-c] [-f] [-u] [-s <source-stone-extent-file-path>] [-l <post-load-tode-script>]
-          [-m <tempObjCacheSize>] [-U <gemstone-user-id>] [-P <gemstone-password>]
+          [-m <tempObjCacheSize>] [-U <gemstone-user-id>] [-P <gemstone-password>] [-R]
 	  <source-stone-name> <target-stone-name> <gemstone-version>
 
 OPTIONS
@@ -42,9 +42,13 @@ OPTIONS
   -P <gemstone-password>
      Use <gemstone-password> as the password for the user specified in -U option. Default 
      password is swordfish. If -U not specified the -P option has no effect.
+  -R
+     do a Rowan-based upgrade
+
 
 EXAMPLES
   $(basename $0) -h
+  $(basename $0) -R gs_3215 gs_3217 3.2.17
   $(basename $0) -l /home/loadMyApplication gs_3106 gs_329 3.2.9
   $(basename $0) -U bozo -P theClown gs_3106 gs_329 3.2.9
   $(basename $0) gs_3106 gs_329 3.2.9
@@ -72,7 +76,8 @@ hasSnapshotFile="false"
 tempObjCacheSize="100000"
 gemstoneUserId="DataCurator"
 gemstonePassword="swordfish"
-while getopts "cfhl:s:um:U:P:" OPT ; do
+rowanUgrade="false"
+while getopts "cfhl:s:um:U:P:R" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     c) runUpgrade="false";;
@@ -86,6 +91,7 @@ while getopts "cfhl:s:um:U:P:" OPT ; do
     u) createStone="false";;
     U) gemstoneUserId="${OPTARG}";;
     P) gemstonePassword="${OPTARG}";;
+		R) rowanUpgrade="true";;
     *) usage; exit_1_banner "Uknown option";;
   esac
 done
@@ -113,6 +119,7 @@ if [ "${hasSnapshotFile}" = "false" ] ; then
   snapshotFile="$GS_SERVER_STONES/$sourceStoneName/extents/extent0.dbf"
 fi
 
+if [ "$rowanUpgrade" = "false" ] ; then
 cat <<EOF
 
 Performing the GsDevKitHome upgrade from the stone "$sourceStoneName" to the
@@ -138,6 +145,30 @@ directory or on stdout.
 Press the return key to continue...
 EOF
 read prompt
+
+else
+cat <<EOF
+
+Performing a Rowan-based GsDevKitHome upgrade from the stone "$sourceStoneName" to the
+stone "$targetStoneName":
+
+  1. executes the \$GS_HOME/bin/downloadGemStone to install GemStone $gsvers
+  2. executes the \$GS_HOME/bin/createStone to create the $targetStoneName stone
+  3. copy the extent0.dbf file from "$sourceStoneName to $targetStoneName
+  4. create $targetStonePath/upgradeLog
+  5. execute the \$ROWAN_PROJECTS_HOME/Rowan/platforms/gemstone/topaz/$gsvers/upgradeImage script
+  7. execute the \$GS_SERVER/bin/private/upgradeRowanImage script
+
+If an error occurs during execution of this script, the details of the error are
+available in the topazerrors.log file in the 
+"$targetStonePath/upgradeLog"
+directory or on stdout.
+
+Press the return key to continue...
+EOF
+read prompt
+
+fi
 
 "$GS_HOME/bin/stopStone" $sourceStoneName
 if [ "${createStone}" = "true" ] ; then
@@ -183,11 +214,22 @@ fi
 "$GS_HOME/bin/startStone" $startStoneArg -b -w 5 $targetStoneName
 
 pushd "${upgradeLogDir}" >& /dev/null
+if [ "$rowanUpgrade" = "true" ] ; then
+  # start Rowan upgrade
+  echo "STARTING Rowan upgradeImage "
+	export gsvers
+  "$ROWAN_PROJECTS_HOME/Rowan/platforms/gemstone/topaz/$gsvers/upgradeImage" -s $GEMSTONE_NAME << EOF
+  
+EOF
+	exit_1_banner "...finished - without completing Rowan upgrade steps"
+else
   # start standard upgrade
   echo "STARTING standard upgradeImage "
   "$GEMSTONE/bin/upgradeImage" -s $GEMSTONE_NAME << EOF
-  
+
 EOF
+
+fi
   
   # Patch BUG 46217 -- needed for 3.3.0 and pre-3.2.16 GemStone versions.
   echo "Install patch for Bug 46217"
