@@ -32,10 +32,10 @@ Before doing the upgrade, you should first *port* your code to the target GemSto
 
 Stone upgrade is done using the script `upgradeStone`.  This stone takes three required arguments, the existing stone name, the new stone name, and the GemStone/S 64 Bit version you want to upgrade to.  These arguments must be the last three arguments.
 
-For example, to ugprade your stone named devKit_329 to version 3.3, creating a new stone named devKit_33, execute the following:
+For example, to ugprade your stone named devKit_329 to version 3.4.3, creating a new stone named devKit_343, execute the following:
 
 ```
-upgradeStone devKit_329 devKit_33 3.3.0 |& tee -a $GS_HOME/upgrade.log
+upgradeStone devKit_329 devKit_343 3.4.3 |& tee -a $GS_HOME/upgrade.log
 ```
 
 See [Upgrading stones with $GS_HOME/bin/upgradeStone][1] for additional information about the operations performed during `upgradeStone`

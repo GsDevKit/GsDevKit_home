@@ -17,7 +17,7 @@ git clone https://github.com/GsDevKit/GsDevKit_home.git
 cd GsDevKit_home
 . bin/defHOME_PATH.env    # define GS_HOME env var and put $GS_HOME into PATH
 installServerClient
-createStone devKit_33 3.3.0
+createStone devKit_343 3.4.3
 createClient tode1
 ```
 
