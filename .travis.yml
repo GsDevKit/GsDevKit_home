@@ -23,7 +23,7 @@ env:
   - GS_VERSION=3.3.9 TEST=Client Client=Pharo3.0
   - GS_VERSION=3.3.9 TEST=Client Client=Pharo6.1
   - GS_VERSION=3.4.3 TEST=Client Client=Pharo3.0
-  - GS_VERSION=3.4.3 TEST=Client Client=Pharo5.0
+#  - GS_VERSION=3.4.3 TEST=Client Client=Pharo5.0 # https://github.com/GsDevKit/GemStone-GCI/issues/5
   - GS_VERSION=3.4.3 TEST=Client Client=Pharo6.0
   - GS_VERSION=3.4.3 TEST=Client Client=Pharo6.1
   - GS_VERSION=3.4.3 TEST=Client Client=Pharo7.0

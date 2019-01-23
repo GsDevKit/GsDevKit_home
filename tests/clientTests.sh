@@ -12,22 +12,23 @@ git clone https://github.com/GsDevKit/GemStone-GCI.git
 
 createClient -t pharo gciClient30 -v Pharo3.0 -z $GS_HOME/shared/repos/GemStone-GCI/.smalltalk.ston
 createClient -t pharo gciClient40 -v Pharo4.0 -z $GS_HOME/shared/repos/GemStone-GCI/.smalltalk.ston
-createClient -t pharo gciClient50 -v Pharo5.0 -z $GS_HOME/shared/repos/GemStone-GCI/.smalltalk.ston
+# https://github.com/GsDevKit/GemStone-GCI/issues/5
+# createClient -t pharo gciClient50 -v Pharo5.0 -z $GS_HOME/shared/repos/GemStone-GCI/.smalltalk.ston
 
-createClient -t pharo gciClient50 -l -v Pharo5.0 -z $GS_HOME/shared/repos/GemStone-GCI/.smalltalk.ston
+# createClient -t pharo gciClient50 -l -v Pharo5.0 -z $GS_HOME/shared/repos/GemStone-GCI/.smalltalk.ston
 
-createClient -t pharo gciClient50 -v Pharo5.0 -y $GS_HOME/shared/repos/GemStone-GCI -z $GS_HOME/shared/repos/GemStone-GCI/.smalltalk.ston
-createClient -t pharo gciClient50 -l -v Pharo5.0 -y $GS_HOME/shared/repos/GemStone-GCI -z $GS_HOME/shared/repos/GemStone-GCI/.smalltalk.ston
+#createClient -t pharo gciClient50 -v Pharo5.0 -y $GS_HOME/shared/repos/GemStone-GCI -z $GS_HOME/shared/repos/GemStone-GCI/.smalltalk.ston
+#createClient -t pharo gciClient50 -l -v Pharo5.0 -y $GS_HOME/shared/repos/GemStone-GCI -z $GS_HOME/shared/repos/GemStone-GCI/.smalltalk.ston
 
-createClient -t pharo gciClient50 -s ${STONENAME1} -v Pharo5.0 -y $GS_HOME/shared/repos/GemStone-GCI -z $GS_HOME/shared/repos/GemStone-GCI/.smalltalk.ston
-createClient -t pharo gciClient50 -l -s ${STONENAME1} -v Pharo5.0 -y $GS_HOME/shared/repos/GemStone-GCI -z $GS_HOME/shared/repos/GemStone-GCI/.smalltalk.ston
+#createClient -t pharo gciClient50 -s ${STONENAME1} -v Pharo5.0 -y $GS_HOME/shared/repos/GemStone-GCI -z $GS_HOME/shared/repos/GemStone-GCI/.smalltalk.ston
+#createClient -t pharo gciClient50 -l -s ${STONENAME1} -v Pharo5.0 -y $GS_HOME/shared/repos/GemStone-GCI -z $GS_HOME/shared/repos/GemStone-GCI/.smalltalk.ston
 
 createClient -f -t pharo gciClient40 -v Pharo4.0 -z $GS_HOME/shared/repos/GemStone-GCI/.smalltalk.ston
 createClient -f -t pharo gciClient40 -l -v Pharo4.0 -z $GS_HOME/shared/repos/GemStone-GCI/.smalltalk.ston
 
-startClient gciClient50 -n
-stopClient gciClient50
-editClient gciClient50 "Smalltalk at: #GCIGemStoneClientTestTimeStamp put: DateAndTime current."
+startClient gciClient40 -n
+stopClient gciClient40
+editClient gciClient40 "Smalltalk at: #GCIGemStoneClientTestTimeStamp put: DateAndTime current."
 
-stopClient gciClient50
-deleteClient gciClient50
+stopClient gciClient40
+deleteClient gciClient40
