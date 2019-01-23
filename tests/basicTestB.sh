@@ -33,7 +33,6 @@ project install --local --url=http://gsdevkit.github.io/GsDevKit_home/GLASS1.sto
 project install --local --url=http://gsdevkit.github.io/GsDevKit_home/Grease.ston
 project install --local --url=http://gsdevkit.github.io/GsDevKit_home/GsApplicationTools.ston
 project install --local --url=http://gsdevkit.github.io/GsDevKit_home/GsDevKit_home.ston
-project install --local --url=http://gsdevkit.github.io/GsDevKit_home/GsDevKit_seaside32.ston
 project install --local --url=http://gsdevkit.github.io/GsDevKit_home/Magritte3.ston
 project install --local --url=http://gsdevkit.github.io/GsDevKit_home/Mapless.ston
 project install --local --url=http://gsdevkit.github.io/GsDevKit_home/Metacello.ston
