@@ -10,16 +10,15 @@ The Development Kit for GemStone/S for client and server is known to work on Ubu
 
 Before installing, you should read through the **[Installation Instructions][2]**.  There are several installation options: all on a single workstation, or with a local client and a remote server.  The script below installs GsDevKit and GemStone on a single workstation, creates and starts a Stone (server), and creates a tODE client.  You must [install git][14] before you can execute this script.
 
-If you are planning to use Seaside, instead of this you can install and create a Seaside Stone using the [Seaside installation instructions][20]. You can also [install Seaside into an existing GsDevKit installation][21].
-
 ```
 git clone https://github.com/GsDevKit/GsDevKit_home.git
 cd GsDevKit_home
 . bin/defHOME_PATH.env    # define GS_HOME env var and put $GS_HOME into PATH
 installServerClient
-createStone devKit_33 3.3.0
+createStone devKit_343 3.4.3
 createClient tode1
 ```
+If you are planning to use Seaside, follow the instructions to [install Seaside into an existing GsDevKit installation][21].
 
 ## Using GsDevKit and tODE
 
