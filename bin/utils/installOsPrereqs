@@ -232,7 +232,7 @@ else
   # Figure out the max shared memory segment size (shmmax) we want
   # Use 75% of available memory but not more than 2GB
   shmmaxNew=$(($totalMem * 3/4))
-  [ $shmmaxNew -gt 2147483648 ] && shmmaxNew=2147483648
+  [[ $shmmaxNew -gt 2147483648 ]] && shmmaxNew=2147483648
   shmmaxNewMB=$(($shmmaxNew / 1048576))
 
   # Figure out the max shared memory allowed (shmall) we want
@@ -241,11 +241,11 @@ else
   # but things will certainly break if it's been reset too small
   # so ensure it's at least big enough to hold a fullsize shared memory segment
   shmallNew=$(($shmmaxNew / 4096))
-  [ $shmallNew -lt $shmall ] && shmallNew=$shmall
+  [[ $shmallNew -lt $shmall ]] && shmallNew=$shmall
   shmallNewMB=$(($shmallNew / 256))
 
   # Increase shmmax if appropriate
-  if [ $shmmaxNew -gt $shmmax ]; then
+  if [[ $shmmaxNew -gt $shmmax ]]; then
     echo "[Info] Increasing max shared memory segment size to $shmmaxNewMB MB"
     [ $PLATFORM = "Darwin-i386" ] \
       && sudo sysctl -w kern.sysv.shmmax=$shmmaxNew
