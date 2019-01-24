@@ -38,7 +38,7 @@ env:
 
 matrix:
    allow_failures:
-     - env: GS_VERSION=3.4.03TEST=Upgrade_71 # until https://github.com/GsDevKit/GsDevKit_home/issues/108 fixed
+     - env: GS_VERSION=3.4.3 TEST=Upgrade_71 # until https://github.com/GsDevKit/GsDevKit_home/issues/108 fixed
      - env: GS_VERSION=3.2.17 UPGRADE_FROM=3.2.9 TEST=Upgrade
      - env: GS_VERSION=3.4.3 UPGRADE_FROM=3.2.17 TEST=Upgrade
 
