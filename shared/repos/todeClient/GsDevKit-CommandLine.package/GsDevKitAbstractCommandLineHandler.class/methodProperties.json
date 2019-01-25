@@ -2,6 +2,7 @@
 	"class" : {
 		"isAbstract" : "dkh 7/19/2014 07:48",
 		"runShellCommand:args:" : "dkh 3/20/2015 12:07",
+		"runShellCommand:args:exitStatus:" : "dkh 1/24/2019 18:12",
 		"runShellCommand:args:noError:" : "dkh 3/20/2015 13:09" },
 	"instance" : {
 		"authorId" : "dkh 10/19/2015 21:13",
@@ -19,6 +20,7 @@
 		"localHostName" : "dkh 2/18/2016 09:56",
 		"productsHome" : "dkh 9/23/2015 20:44",
 		"runShellCommand:args:" : "dkh 3/20/2015 12:08",
+		"runShellCommand:args:exitStatus:" : "dkh 1/24/2019 18:13",
 		"runShellCommand:args:noError:" : "dkh 3/20/2015 12:08",
 		"serverTodeHome" : "dkh 10/10/2015 17:22",
 		"serverTodeSys" : "dkh 9/24/2015 07:08",
