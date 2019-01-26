@@ -41,7 +41,7 @@ if [ $# -ne 1 ]; then
 fi
 stoneName=$1
 
-"$GS_HOME/bin/startSton"e -b $stoneName
+"$GS_HOME/bin/startStone" -b $stoneName
 
 echo "Install tODE on stone: $stoneName"
 
