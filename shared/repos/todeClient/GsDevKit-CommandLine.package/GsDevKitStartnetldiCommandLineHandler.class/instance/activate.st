@@ -11,6 +11,9 @@ activate
 	argsArray := self produceNetldiArgs.
 	Transcript
 		cr;
-		show: (self runShellCommand: (self gemstoneBin / 'startnetldi') pathString args: argsArray);
+		show: (self runShellCommand: (self gemstoneBin / 'startnetldi') pathString args: argsArray exitStatus: [:proc |
+			| es |
+			es := (proc exitStatus bitAnd: 16rFF00) >> 8.
+			proc isComplete and: [ es == 0 or: [ es == 2 ] ] ]);
 		cr.
 	self exitSuccess

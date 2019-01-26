@@ -1,5 +1,5 @@
 accessing
 gemstoneBin
 	gemstoneBin
-		ifNil: [ self productsHome directories do: [ :gemstoneInstallDir | gemstoneBin := gemstoneInstallDir asFileReference / 'bin' ] ].
+		ifNil: [ self productsHome directories "reverse" do: [ :gemstoneInstallDir | gemstoneBin := gemstoneInstallDir asFileReference / 'bin' ] ].
 	^ gemstoneBin

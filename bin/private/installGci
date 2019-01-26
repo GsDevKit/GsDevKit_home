@@ -10,7 +10,7 @@ source "${GS_HOME}/bin/private/shFeedback"
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] -f -d <directory-path> -t gemtools|pharo|jade <gemstone-version>
+USAGE: $(basename $0) [-h] -f -d <directory-path> -t gemtools|pharo|pharo64|jade <gemstone-version>
 
 Copy the gci libraries for the given GemStone version into the given directory for the 
 given type of client.
@@ -25,6 +25,7 @@ EXAMPLES
    $(basename $0) -h
    $(basename $0) -d \$GS_CLIENT_DEV -t pharo 3.2.9
    $(basename $0) -f -d \$GS_CLIENT_DEV -t pharo 3.2.9
+   $(basename $0) -f -d \$GS_CLIENT_DEV -t pharo64 3.2.9
 
 HELP
 }
@@ -82,10 +83,20 @@ gs_product="$GS_SHARED_DOWNLOADS/products/$gsvers"
 case "$clientType" in
   gemtools) ;;
   jade) ;;
-  pharo) 
-    sourceLocation="$gs_product/lib32"
+  pharo*)
+	 	if [ "$clientType" = "pharo64" ] ; then
+			sourceLocation="$gs_product/lib"
+		else
+    	sourceLocation="$gs_product/lib32"
+		fi
     case "$PLATFORM" in
-      Linux-x86_64) targetLocation="${directoryPath}/pharo-vm" ;;
+      Linux-x86_64)
+				targetLocation="${directoryPath}/pharo-vm"
+				if [ -d "${targetLocation}/lib/pharo" ] ; then
+					targetLocation="${targetLocation}/lib/pharo/5.0*"
+					targetLocation=`echo $targetLocation`
+				fi
+			 	;;
       Darwin-i386) targetLocation="${directoryPath}/pharo-vm/Pharo.app/Contents/MacOS/Plugins" ;;
       MSYS_NT*|MINGW32_NT*|MINGW64_NT*)
         case "$vers" in
