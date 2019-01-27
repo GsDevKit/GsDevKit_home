@@ -10,7 +10,7 @@ source "${GS_HOME}/bin/private/shFeedback"
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] <directory-path>
+USAGE: $(basename $0) [-h] [-t 32 | 64 ] <directory-path>
 
 Install GCI libraries for all products in  <directory-path>
 
@@ -21,6 +21,7 @@ OPTIONS
 
 EXAMPLES
   $(basename $0) -h
+  $(basename $0) -t 64 \$GS_HOME/shared/pharo/pharo-vm
   $(basename $0) \$GS_HOME/shared/pharo/pharo-vm
 
 HELP
@@ -31,9 +32,11 @@ if [ "${GS_HOME}x" = "x" ] ; then
 fi
 source "${GS_HOME}/bin/defGsDevKit.env"
 
-while getopts "h" OPT ; do
+gciType=""
+while getopts ":ht:" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
+		t) gciType="${OPTARG}";;
     *) usage; exit_1_banner "Unknown option";;
   esac
 done
@@ -43,6 +46,11 @@ if [ $# -lt 1 ]; then
   usage; exit_1_banner "missing required argument"
 fi
 directoryPath="$1"
+
+clientType="pharo"
+if [ "${gciType}" = "64" ] ; then
+	clientType="pharo64"
+fi
 
 pushd "$GS_SHARED_DOWNLOADS/products" >& /dev/null
 
@@ -54,18 +62,18 @@ pushd "$GS_SHARED_DOWNLOADS/products" >& /dev/null
     if [[ "$productName" == ./GemStone64BitClient* ]] ; then
       vers=`echo "$productName" | cut -d'-' -f1 | cut -c22-`
       echo "$productName --> $vers"
-      "${GS_HOME}/bin/private/installGci" -d "$directoryPath" -t pharo $vers
+      "${GS_HOME}/bin/private/installGci" -d "$directoryPath" -t $clientType $vers
     else 
       if [[ "$productName" == ./GemStone64Bit* ]] ; then 
         vers=`echo "$productName" | cut -d'-' -f1 | cut -c16-`
         echo "$productName --> $vers"
-        "${GS_HOME}/bin/private/installGci" -d "$directoryPath" -t pharo $vers
+        "${GS_HOME}/bin/private/installGci" -d "$directoryPath" -t $clientType  $vers
       fi
     fi
     if [[ "$productName" == ./GemBuilderC* ]] ; then 
       vers=`echo "$productName" | cut -d'-' -f1 | cut -c14-`
       echo "$productName --> $vers"
-      "${GS_HOME}/bin/private/installGci" -d "$directoryPath" -t pharo $vers
+      "${GS_HOME}/bin/private/installGci" -d "$directoryPath" -t $clientType  $vers
     fi
   done
 

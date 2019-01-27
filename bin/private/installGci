@@ -115,13 +115,17 @@ case "$clientType" in
   *) usage; exit_1_banner "uknown client type: $clientType";;
 esac
 
+arch="32"
+if [ "$clientType" = "pharo64" ] ; then
+	arch="64"
+fi
 copyFiles="true"
-if [ -e "$targetLocation/libgcirpc-${vers}-32.${libext}" ] ; then
-  if [ "$force" = "true" ]; then
-    copyFiles="true"
-  else
-    copyFiles="false"
-  fi
+if [ -e "$targetLocation/libgcirpc-${vers}-arch.${libext}" ] ; then
+ 	if [ "$force" = "true" ]; then
+   	copyFiles="true"
+ 	else
+   	copyFiles="false"
+ 	fi
 fi
 
 if [ "$copyFiles" = "true" ] ; then
