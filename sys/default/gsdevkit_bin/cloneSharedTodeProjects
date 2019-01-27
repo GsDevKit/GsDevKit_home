@@ -34,6 +34,7 @@ Clone the Github repositories used by the tODE client and server into
   - github://glassdb/glass:\${GS_SHARED_COMMIT_GLASS1}/repository
   - github://dalehenrich/rb:\${GS_SHARED_COMMIT_RB}/repository
   - github://GsDevKit/zinc:\${GS_SHARED_COMMIT_ZINC}/repository
+  - github://GsDevKit/zodiac:\${GS_SHARED_COMMIT_ZODIAC}/repository
 
 
 If you clone these repositoris into  \$GS_HOME/shared/repos, then they will be 
@@ -176,6 +177,10 @@ pushd "${GS_SHARED_REPO}" >& /dev/null
     if [ ! -d "zinc" ] ; then
       "${GS_HOME}/bin/private/cloneGitHubProject" -n $modeArg GsDevKit zinc
       checkoutClone "$GS_SHARED_GIT_CHECKOUT_ZINC" "${GS_SHARED_REPO}/zinc" $branchName
+    fi
+    if [ ! -d "zodiac" ] ; then
+      "${GS_HOME}/bin/private/cloneGitHubProject" -n $modeArg GsDevKit zodiac
+      checkoutClone "$GS_SHARED_GIT_CHECKOUT_ZODIAC" "${GS_SHARED_REPO}/zodiac" $branchName
     fi
     if [ ! -d "smalltalkCI" ] ; then
       "${GS_HOME}/bin/private/cloneGitHubProject" -n $modeArg hpi-swa smalltalkCI

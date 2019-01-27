@@ -1,6 +1,8 @@
 "Second step in tODE load process: lock Metacello if you want to use a non-standard repository.
  load Metacello from local git clone."
 
+"Important Note --- the values of these env vars are as of the last time that the netldi was started"
+
 Transcript cr; show: '---Step 2 of tODE bootstrap process: execute loadMetacello.ws'.
 
 GsUpgrader batchErrorHandlingDo: [
