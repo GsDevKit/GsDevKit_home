@@ -11,7 +11,7 @@ start_banner
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) [-h] [-f] [-D] [-F] [-t tode|pharo|gemtools|jade] <client-name> 
+USAGE: $(basename $0) [-h] [-f] [-D] [-F] [-t tode|pharo|pharo64|gemtools|jade] <client-name> 
                       [ <client-specific-args> ]
 
 Create a client of the given type and <client-name>.
@@ -54,6 +54,9 @@ EXAMPLES
 
   # pharo client (default)
   $(basename $0) -t pharo -h
+
+  $(basename $0) -t pharo64 pharoClient -v Pharo7.0
+
   $(basename $0) -t pharo pharoClient -v Pharo5.0
   $(basename $0) -D -t pharo pharoClient -v Pharo5.0
   $(basename $0) -f -t pharo pharoClient -v Pharo5.0
@@ -152,6 +155,13 @@ case $clientType in
       source "${GS_HOME}/bin/defGsDevKit.env"
     fi
     "${GS_TODE_CLIENT}/bin/createClient" -c $debugArg $forceArg $* $clientName
+    ;;
+  pharo64)
+    if [ "${GS_TODE_CLIENT}x" = "x" ] ; then
+      "${GS_HOME}/bin/private/clone_todeClient"
+      source "${GS_HOME}/bin/defGsDevKit.env"
+    fi
+    "${GS_TODE_CLIENT}/bin/createClient" -t 64 -c $debugArg $forceArg $* $clientName
     ;;
   gemtools)
     ;;
