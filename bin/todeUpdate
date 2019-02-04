@@ -42,12 +42,12 @@ if [ $# -ne 1 ]; then
 fi
 stoneName=$1
 
-"$GS_HOME/bin/startStone" -b $stoneName
-
 stonePath="$GS_SERVER_STONES/$stoneName"
 if [ ! -d "$stonePath" ] ; then
   exit_1_banner "The stone $stoneName does not exist"
 fi
+
+"$GS_HOME/bin/startStone" -b $stoneName
 
 echo "Update tODE on stone: $stoneName"
 
