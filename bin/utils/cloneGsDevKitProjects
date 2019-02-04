@@ -70,7 +70,7 @@ if [ "$cloneClient" = "true" ] ; then
 fi
 
 if [ "$cloneServer" = "true" ] ; then
-  "$GS_HOME/bin/private/clone_gs_client_dev" $modeArg $organizationArg
+  "$GS_HOME/bin/private/clone_gs_server" $modeArg $organizationArg
 fi
 
 exit_0_banner "...finished"
