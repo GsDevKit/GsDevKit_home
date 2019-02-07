@@ -44,7 +44,7 @@ while getopts "ho:c:" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     c) modeArg=" -c ${OPTARG} ";;
-    o) organizationArg=" - o ${OPTARG} ";;
+    o) organizationArg=" -o ${OPTARG} ";;
     *) usage; exit_1_banner "Unknown option";;
   esac
 done
