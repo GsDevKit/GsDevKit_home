@@ -12,6 +12,6 @@ startStone -b ${STONENAME1}
 "$GS_HOME/bin/private/gsDevKitTodeCommandLine" todeIt ${STONENAME1} << EOF
 # after test run, <self> will be a TestResult
 test --batch image
-eval \`(self hasErrors or: [ self hasFailures ]) ifTrue: [ self error: 'Tests failed' ]\`
+eval \`[(self hasErrors or: [ self hasFailures ]) ifTrue: [ self error: 'Tests failed' ] ] on: Warning do: [:ex | ex resume: true ]\`
 EOF
 
