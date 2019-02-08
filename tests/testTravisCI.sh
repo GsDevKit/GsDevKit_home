@@ -83,6 +83,7 @@ case $TEST in
 		$GS_HOME/tests/basicInstallServer.sh
     source $GS_HOME/bin/defGsDevKit.env
     $GS_HOME/tests/seaside3Install.sh
+		;;
 	UnitTests)
 		$GS_HOME/tests/basicInstallServer.sh
     source $GS_HOME/bin/defGsDevKit.env
