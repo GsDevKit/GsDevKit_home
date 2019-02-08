@@ -79,6 +79,11 @@ case $TEST in
     source $GS_HOME/bin/defGsDevKit.env
     $GS_HOME/tests/smalltalkCITests.sh
     ;; 
+	UnitTests)
+		$GS_HOME/tests/basicInstallServer.sh
+    source $GS_HOME/bin/defGsDevKit.env
+    $GS_HOME/tests/todeUnitTests.sh
+		;;
   Upgrade)
     installServer
     if [ "${UPGRADE_FROM}" = "2.4.4.1" ] ; then
