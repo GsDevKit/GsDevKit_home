@@ -79,6 +79,10 @@ case $TEST in
     source $GS_HOME/bin/defGsDevKit.env
     $GS_HOME/tests/smalltalkCITests.sh
     ;; 
+	Seaside3)
+		$GS_HOME/tests/basicInstallServer.sh
+    source $GS_HOME/bin/defGsDevKit.env
+    $GS_HOME/tests/seaside3Install.sh
 	UnitTests)
 		$GS_HOME/tests/basicInstallServer.sh
     source $GS_HOME/bin/defGsDevKit.env
