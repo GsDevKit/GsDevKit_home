@@ -18,8 +18,14 @@ deleteStone ${STONENAME2}
 deleteStone ${STONENAME3}
 
 startStone -b ${STONENAME1}
-git config --global user.email "travis@example.com"
-git config --global user.name "Travis Ci"
+set +e
+gitusername=`git config user.name`
+if [ "${gitusername}x" = "x" ] ; then
+	# make sure git user.name and user.email are set
+	git config --global user.email "travis@example.com"
+	git config --global user.name "Travis Ci"
+fi
+set -e
 todeIt ${STONENAME1} project new Foo
 
 createStone -f -u http://gsdevkit.github.io/GsDevKit_home/TestSample2.ston \
