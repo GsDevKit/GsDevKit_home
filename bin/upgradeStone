@@ -182,6 +182,7 @@ fi
 
 "$GS_HOME/bin/startStone" $startStoneArg -b -w 5 $targetStoneName
 
+set -x
 pushd "${upgradeLogDir}" >& /dev/null
   # start standard upgrade
   echo "STARTING standard upgradeImage "
