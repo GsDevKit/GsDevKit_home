@@ -440,6 +440,8 @@ EOF
 EOF
 popd >& /dev/null  
 
+exit_0_banner "...finished -- EXITTING EARLY"
+
 echo "Installing tODE"
 "$GS_HOME/bin/todeLoad" $targetStoneName
 if [ "${createStone}" = "true" ] ; then
