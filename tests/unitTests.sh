@@ -7,6 +7,8 @@
 
 set -e  # exit on error
 
+errorExitOnTestFailure="$2"
+
 startTopaz "$1" -l << EOF
 
 	iferr 1 stk
@@ -16,7 +18,8 @@ startTopaz "$1" -l << EOF
 
 	expectvalue true
 	run
-	| suite res passed |
+	| suite res passed errorExitOnTestFailure |
+	errorExitOnTestFailure := $errorExitOnTestFailure
 	passed := true.
   suite := TestSuite named: 'Image Test Suite'.
   TestCase suite tests do: [ :s | suite addTests: s tests ].
@@ -29,12 +32,17 @@ startTopaz "$1" -l << EOF
 	(res errors collect: [:each | each printString ]) asArray sort do: [:each |
 		GsFile gciLogServer: '	', each ].
 	res failures size = 0
-		ifTrue: [ ^ passed ].
+		ifTrue: [ 
+			^ errorExitOnTestFailure
+					ifTrue: [ passed ]
+					ifFalse: [ true ] ].
 	GsFile gciLogServer: '  failures'.
 	passed := passed & res errors isEmpty.
 	(res failures collect: [:each | each printString]) asArray sort do: [:each |
 		GsFile gciLogServer: '	',each ].
-	^ passed
+	^ errorExitOnTestFailure
+			ifTrue: [ passed ]
+			ifFalse: [ true ]
 %
 
 	logout

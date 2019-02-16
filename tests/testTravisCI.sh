@@ -115,8 +115,10 @@ EOF
 EOF
     status=$?
 		if [ "$status" = "0" ] ; then
-			$GS_HOME/tests/unitTests.sh ${STONENAME1}_${UPGRADE_FROM} # don't fail if tests fail in from stone
-			$GS_HOME/tests/unitTests.sh $upgradeStoneName
+			set -e # if script fails for reason other than unit test failures, bail
+			$GS_HOME/tests/unitTests.sh ${STONENAME1}_${UPGRADE_FROM} false # don't fail if unit tests fail
+			set +e
+			$GS_HOME/tests/unitTests.sh $upgradeStoneName true #fail if unit tests don't pass
 			status=$?
 		fi
     stopStone -b ${STONENAME1}_${UPGRADE_FROM}
