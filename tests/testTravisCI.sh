@@ -115,6 +115,7 @@ EOF
 EOF
     status=$?
 		if [ "$status" = "0" ] ; then
+			startStone ${STONENAME1}_${UPGRADE_FROM}	#stopped during upgrade
 			set -e # if script fails for reason other than unit test failures, bail
 			$GS_HOME/tests/unitTests.sh ${STONENAME1}_${UPGRADE_FROM} false # don't fail if unit tests fail
 			set +e

@@ -23,9 +23,11 @@ startTopaz "$1" -l << EOF
 	passed := true.
   suite := TestSuite named: 'Image Test Suite'.
   TestCase suite tests do: [ :s | suite addTests: s tests ].
-	res := suite run.
 
  	GsFile gciLogServer: 'Unit tests for $1, GemStone version ', (System gemVersionAt: #gsVersion) printString.
+	res := suite run.
+
+	GsFile gciLogServer: '------------------------------------------'.
 	GsFile gciLogServer: res printString.
 	GsFile gciLogServer: '  errors'.
 	passed := res errors isEmpty.
