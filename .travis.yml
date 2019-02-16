@@ -4,6 +4,7 @@ os:
   - linux
 
 env:
+  - GS_VERSION=3.4.3 UPGRADE_FROM=3.3.9 TEST=Upgrade_unittest
 #  - GS_VERSION=2.4.8 TEST=UnitTests   # allow failures ... not expected to pass anymor
 #  - GS_VERSION=3.1.0.6 TEST=UnitTests
 #  - GS_VERSION=3.2.17 TEST=UnitTests  # allow failures ... want to fix these errors (eventually)
@@ -43,7 +44,6 @@ env:
   - GS_VERSION=3.4.3 UPGRADE_FROM=3.2.17 TEST=Upgrade
   - GS_VERSION=3.4.3 TEST=Upgrade_71 
   - GS_VERSION=3.4.3 UPGRADE_FROM=3.2.17 TEST=Upgrade_User
-  - GS_VERSION=3.4.3 UPGRADE_FROM=3.3.9 TEST=Upgrade_unittest
 
 matrix:
    allow_failures:
