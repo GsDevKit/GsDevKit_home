@@ -96,28 +96,32 @@ case $TEST in
     fi
     createStone $opt ${STONENAME1}_${UPGRADE_FROM} ${UPGRADE_FROM}
     upgradeStoneName="${STONENAME1}_${GS_VERSION}"
-#    set +e
+		set +e
     upgradeStone -f ${STONENAME1}_${UPGRADE_FROM} ${STONENAME1}_${GS_VERSION} $GS_VERSION << EOF
 
 EOF
-    status=$?
+		status=$?
     stopStone -b ${STONENAME1}_${UPGRADE_FROM}
     stopStone -b ${STONENAME1}_${GS_VERSION}
-#    if [ "$status" != "0" ] ; then
-#      tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topazerrors.log
-#      if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out" ] ; then 
-#        tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out
-#      fi
-#      if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeTo3x.out" ] ; then 
-#        tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeTo3x.out
-#      fi
-#      if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topaz.out" ] ; then 
-#        tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topaz.out
-#      fi
-#      exit 1
-#    else
-#      exit 0
-#    fi
+		exit $status
+    ;;
+  Upgrade_unittest)
+    installServer
+    createStone $opt ${STONENAME1}_${UPGRADE_FROM} ${UPGRADE_FROM}
+    upgradeStoneName="${STONENAME1}_${GS_VERSION}"
+		set +e
+    upgradeStone -f ${STONENAME1}_${UPGRADE_FROM} $upgradeStoneName $GS_VERSION << EOF
+
+EOF
+    status=$?
+		if [ "$status" = "0" ] ; then
+			$GS_HOME/tests/unitTests.sh ${STONENAME1}_${UPGRADE_FROM} # don't fail if tests fail in from stone
+			$GS_HOME/tests/unitTests.sh $upgradeStoneName
+			status=$?
+		fi
+    stopStone -b ${STONENAME1}_${UPGRADE_FROM}
+    stopStone -b $upgradeStoneName
+		exit $status
     ;;
   Upgrade_User)
     installServer
