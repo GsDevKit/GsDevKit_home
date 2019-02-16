@@ -19,7 +19,7 @@ startTopaz "$1" -l << EOF
 	expectvalue true
 	run
 	| suite res passed errorExitOnTestFailure |
-	errorExitOnTestFailure := $errorExitOnTestFailure
+	errorExitOnTestFailure := $errorExitOnTestFailure. "must be true or false --- or at least a literal"
 	passed := true.
   suite := TestSuite named: 'Image Test Suite'.
   TestCase suite tests do: [ :s | suite addTests: s tests ].
