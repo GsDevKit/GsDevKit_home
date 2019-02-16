@@ -9,8 +9,8 @@ set -e  # exit on error
 
 startTopaz "$1" -l << EOF
 
-	iferr1 stk
-	iferr2 exit 1
+	iferr 1 stk
+	iferr 2 exit 1
 
 	login
 
