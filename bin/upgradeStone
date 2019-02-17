@@ -182,7 +182,6 @@ fi
 
 "$GS_HOME/bin/startStone" $startStoneArg -b -w 5 $targetStoneName
 
-set -x
 pushd "${upgradeLogDir}" >& /dev/null
   # start standard upgrade
   echo "STARTING standard upgradeImage "
@@ -439,8 +438,6 @@ EOF
   exit 0
 EOF
 popd >& /dev/null  
-
-exit_0_banner "...finished -- EXITTING EARLY"
 
 echo "Installing tODE"
 "$GS_HOME/bin/todeLoad" $targetStoneName
