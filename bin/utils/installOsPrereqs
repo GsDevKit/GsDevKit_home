@@ -206,8 +206,10 @@ else
     totalMem=$(($totalMemKB * 1024))
     # Figure out the max shared memory segment size currently allowed
     shmmax=`cat /proc/sys/kernel/shmmax`
-    # Figure out the max shared memory currently allowed
-    shmall=`cat /proc/sys/kernel/shmall`
+    if [ -e "/proc/sys/kernel/shmall" ] ; then
+      # Figure out the max shared memory currently allowed
+      shmall=`cat /proc/sys/kernel/shmall`
+    fi
     ;;
   Darwin-i386)
     totalMem="`sysctl hw.memsize | cut -f2 -d' '`"
@@ -222,12 +224,18 @@ else
   esac
   totalMemMB=$(($totalMem / 1048576))
   shmmaxMB=$(($shmmax / 1048576))
-  shmallMB=$(($shmall / 256))
+  if [ "${shmall}x" -ne "x" ] ; then 
+    shmallMB=$(($shmall / 256))
+  fi
 
   # Print current values
   echo "  Total memory available is $totalMemMB MB"
   echo "  Max shared memory segment size is $shmmaxMB MB"
-  echo "  Max shared memory allowed is $shmallMB MB"
+  if [ "${shmallMB}x" -ne "x" ] ; then
+    echo "  Max shared memory allowed is $shmallMB MB"
+  else
+    echo "  Max shared memory not available"
+  fi
 
   # Figure out the max shared memory segment size (shmmax) we want
   # Use 75% of available memory but not more than 2GB
@@ -241,8 +249,10 @@ else
   # but things will certainly break if it's been reset too small
   # so ensure it's at least big enough to hold a fullsize shared memory segment
   shmallNew=$(($shmmaxNew / 4096))
-  [[ $shmallNew -lt $shmall ]] && shmallNew=$shmall
-  shmallNewMB=$(($shmallNew / 256))
+  if [ "${small}x" -ne "x" ] ; then
+    [[ $shmallNew -lt $shmall ]] && shmallNew=$shmall
+    shmallNewMB=$(($shmallNew / 256))
+  fi
 
   # Increase shmmax if appropriate
   if [[ $shmmaxNew -gt $shmmax ]]; then
@@ -256,15 +266,17 @@ else
     echo "[Info] No need to increase max shared memory segment size"
   fi
 
-  # Increase shmall if appropriate
-  if [ $shmallNew -gt $shmall ]; then
-    echo "[Info] Increasing max shared memory allowed to $shmallNewMB MB"
-    [ $PLATFORM = "Darwin-i386" ] && sudo sysctl -w kern.sysv.shmall=$shmallNew
-    [ $PLATFORM = "Linux-x86_64" ] \
-      && sudo bash -c "echo $shmallNew > /proc/sys/kernel/shmall" \
-      && sudo /bin/su -c "echo 'kernel.shmall=$shmallNew' >>/etc/sysctl.conf"
-  else
-    echo "[Info] No need to increase max shared memory allowed"
+  if [ "${shmall}x" -ne "x" ] ; then
+    # Increase shmall if appropriate
+    if [ $shmallNew -gt $shmall ]; then
+      echo "[Info] Increasing max shared memory allowed to $shmallNewMB MB"
+      [ $PLATFORM = "Darwin-i386" ] && sudo sysctl -w kern.sysv.shmall=$shmallNew
+      [ $PLATFORM = "Linux-x86_64" ] \
+        && sudo bash -c "echo $shmallNew > /proc/sys/kernel/shmall" \
+        && sudo /bin/su -c "echo 'kernel.shmall=$shmallNew' >>/etc/sysctl.conf"
+    else
+      echo "[Info] No need to increase max shared memory allowed"
+    fi
   fi
   # At this point, shared memory settings contain the values we want, 
   # put them in sysctl.conf so they are preserved.
