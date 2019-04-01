@@ -56,8 +56,6 @@ if [ ! -d "$stonePath" ] ; then
   exit_1_banner "The stone $stoneName does not exist"
 fi
 
-set -x
-
 # set up stone environment
 pushd "$stonePath" >& /dev/null
   source "$stonePath/stone.env"

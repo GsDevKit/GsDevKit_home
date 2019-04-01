@@ -384,6 +384,8 @@ EOF
         input $GEMSTONE/upgrade/bootstrapSeasideImage.topaz
 	exit 0
 EOF
+
+	echo "Seaside Upgrade completed. No errors detected."
       ;;
     *)
       "$GEMSTONE/seaside/bin/upgradeSeasideImage" -s $targetStoneName >> $upgradeLogDir/topaz.out 2>&1 << EOF

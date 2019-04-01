@@ -5,7 +5,7 @@
 #   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
 #=========================================================================
 
-set -xe  # print commands and exit on error
+set -e  # print commands and exit on error
 
 uname -a   #gather info for bug 44185
 
