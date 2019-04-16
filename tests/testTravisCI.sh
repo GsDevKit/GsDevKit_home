@@ -5,7 +5,7 @@
 #   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
 #=========================================================================
 
-set -xe  # print commands and exit on error
+set -e  # print commands and exit on error
 
 uname -a   #gather info for bug 44185
 
@@ -96,29 +96,35 @@ case $TEST in
     fi
     createStone $opt ${STONENAME1}_${UPGRADE_FROM} ${UPGRADE_FROM}
     upgradeStoneName="${STONENAME1}_${GS_VERSION}"
-    set +e
-    set -x
+		set +e
     upgradeStone -f ${STONENAME1}_${UPGRADE_FROM} ${STONENAME1}_${GS_VERSION} $GS_VERSION << EOF
 
 EOF
-    status=$?
+		status=$?
     stopStone -b ${STONENAME1}_${UPGRADE_FROM}
     stopStone -b ${STONENAME1}_${GS_VERSION}
-    if [ "$status" != "0" ] ; then
-      tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topazerrors.log
-      if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out" ] ; then 
-        tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out
-      fi
-      if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeTo3x.out" ] ; then 
-        tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeTo3x.out
-      fi
-      if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topaz.out" ] ; then 
-        tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topaz.out
-      fi
-      exit 1
-    else
-      exit 0
-    fi
+		exit $status
+    ;;
+  Upgrade_unittest)
+    installServer
+    createStone $opt ${STONENAME1}_${UPGRADE_FROM} ${UPGRADE_FROM}
+    upgradeStoneName="${STONENAME1}_${GS_VERSION}"
+		set +e
+    upgradeStone -f ${STONENAME1}_${UPGRADE_FROM} $upgradeStoneName $GS_VERSION << EOF
+
+EOF
+    status=$?
+		if [ "$status" = "0" ] ; then
+			startStone ${STONENAME1}_${UPGRADE_FROM}	#stopped during upgrade
+			set -e # if script fails for reason other than unit test failures, bail
+			$GS_HOME/tests/unitTests.sh ${STONENAME1}_${UPGRADE_FROM} false # don't fail if unit tests fail
+			set +e
+			$GS_HOME/tests/unitTests.sh $upgradeStoneName true #fail if unit tests don't pass
+			status=$?
+		fi
+    stopStone -b ${STONENAME1}_${UPGRADE_FROM}
+    stopStone -b $upgradeStoneName
+		exit $status
     ;;
   Upgrade_User)
     installServer

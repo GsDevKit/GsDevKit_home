@@ -69,6 +69,14 @@ pushd "$stonePath" >& /dev/null
   source "$stonePath/stone.env"
 popd >& /dev/null
 
+set +e
 "$GS_HOME/bin/devKitCommandLine" startnetldi $stoneName $*
+
+status="$?"
+
+if [ $status -ne 0 ] ; then
+	echo "status: $status"
+	exit $status
+fi
 
 exit_0_banner "...finished"

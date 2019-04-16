@@ -189,174 +189,14 @@ pushd "${upgradeLogDir}" >& /dev/null
   
 EOF
   
-  # Patch BUG 46217 -- needed for 3.3.0 and pre-3.2.16 GemStone versions.
-  echo "Install patch for Bug 46217"
-  "$GS_HOME/bin/startTopaz" $targetStoneName -l -T50000 > $upgradeLogDir/topaz.out << EOF
-  display resultcheck
-  level 0
 
-  display oops
-  iferr 1 stk
-  iferr 2 stack
-  iferr 3 input pop
-  iferr 4 exit 1
-
-! need to patch the the Monticello bootstrap class  MCGemStonePlatform for Bug 46217
-  set user SystemUser pass swordfish
-  login
-  
-  run
-| package symbolDict class theSymbolList gsVersion |
-  gsVersion := System gemVersionAt: 'gsRelease'.
-  (gsVersion matchPattern: #('3.2.' \$*))
-    ifTrue: [
-      (gsVersion matchPattern: #('3.2.1' \$*))
-        ifTrue: [
-          (gsVersion size > 5 and: [ #($7 $8 $9) includes: (gsVersion at: 6) ])
-	    ifTrue: [
-	      "GemStone version 3.2.16 or later - patch not needed"
-	      ^ true ] ] ]
-    ifFalse: [
-      (gsVersion matchPattern: #('3.3.' \$*))
-        ifTrue: [
-          (gsVersion matchPattern: #('3.3.0' \$*))
-            ifFalse: [ 
-	      "GemStone 3.3.1 or later patch not needed"
-	      ^ true ] ]
-	ifFalse: [ 
-	  "no patch available for GemStone versions preceding 3,2.x"
-	  ^true ] ].
-  "patch needed: 3.2.0 thru 3.2.15, and 3.3.0"
-  package := GsPackageLibrary packageNamed: #'Monticello_Globals'.
-  symbolDict := package symbolDict.
-  class := symbolDict at: #'MCGemStonePlatform'.
-  theSymbolList := GsCurrentSession currentSession symbolList.
-  class
-    compileMethod: 'removeClassFromSystem: aClass
-
-  ((GsSession currentSession objectNamed: #UserGlobals) 
-      at: #''GS_BOOTSTRAP_MONTICELLO_SKIP_REMOVE_CLASS'' ifAbsent: [ false ]) 
-    ifTrue: [
-      "Bug 46217 - during bootstrap don''t remove any classes.
-        during initial bootstrap no classes will be removed
-        during upgrade unexpected classes should not be removed during the
-          bootstrap operation" ]
-    ifFalse: [
-	| ar |
-	aClass subclasses isEmpty not ifTrue: [ ^self error: ''class has subclasses'' ].
-	ar := System myUserProfile dictionaryAndSymbolOf: aClass.
-	ar ifNil: [ ^self error: ''class not found in current user profile'' ].
-	(ar at: 1) removeKey: (ar at: 2) ]'
-    dictionaries: theSymbolList
-    category: #'patch bug 46217'
-    intoMethodDict: nil
-    intoCategories: nil
-    intoPragmas: {}
-    environmentId: 0.
-  true
-%
-  commit
-  logout
-
-  exit 0
-EOF
-
-"$GS_HOME/bin/startTopaz" $targetStoneName -l -T50000 >> $upgradeLogDir/topaz.out << EOF
-  display resultcheck
-  level 0
-
-  display oops
-  iferr 1 stk
-  iferr 2 stack
-  iferr 3 input pop
-  iferr 4 exit 1
-  login
-
-  run
-  "Bug 46217 - add for versions pre-dating 3.2.16 and 3.3.0"
-  UserGlobals at: #'GS_BOOTSTRAP_MONTICELLO_SKIP_REMOVE_CLASS' put: true.
-  true
-%
-  commit
-  logout
-
-  exit 0
-EOF
- 
-  # Clear SystemLoginNotification #Subscriptions class variable
-  echo "STARTING clear SystemLoginNotification #Subscriptions class variable"
-  "$GS_HOME/bin/startTopaz" $targetStoneName -l -T50000 >> $upgradeLogDir/topaz.out << EOF
-  
-  display resultcheck
-  level 0
-
-  login
-  
-  display oops
-  iferr 1 stk
-  iferr 2 stack
-  iferr 3 input pop
-  iferr 4 exit 1
-  
-  run
-  (SystemLoginNotification _classVars at: #'Subscriptions') removeAll: (SystemLoginNotification _classVars at: #'Subscriptions').
-  true
-%
-  commit
-
-! patch for Issue #71 (GemStone bug 46059)
-  run
-  GsPackageLibrary 
-    installMonticelloPackagesHome: (GsCurrentSession currentSession objectNamed: #'UserGlobals') 
-    during: [:globals | 
-      Class
-        compileMethod: 'removeFromSystem
-  | ar |
-  ar := System myUserProfile dictionaryAndSymbolOf: self.
-  ar ifNotNil: [ (ar at: 1) removeKey: (ar at: 2) ].'
-	dictionaries: GsCurrentSession currentSession symbolList
-	category: '*change-notification'
-    ].
-  true
-%
-  commit
-
-  
-  logout
-  exit 0
-EOF
-
-  # Setting BootstrapApplicationPostloadClassList (see https://github.com/GsDevKit/GsDevKit_home/issues/52)
-  echo "Starting set BootstrapApplicationPostloadClassList"
-  "$GS_HOME/bin/startTopaz" $targetStoneName -l -T50000 >> $upgradeLogDir/topaz.out << EOF
-  
-  display resultcheck
-  level 0
-  
-  login
-  
-  display oops
-  iferr 1 stk
-  iferr 2 stack
-  iferr 3 input pop
-  iferr 4 exit 1
-  
-  run
-  UserGlobals at: #BootstrapApplicationPostloadClassList put: #( #SecureHashAlgorithm #MCFileTreeFileDirectoryUtils ).
-  true
-%
-  commit
-  
-  logout
-  exit 0
-EOF
-  
   # use default Bootstrap globals for Seaside upgrade
   # start "seaside" upgrade to upgrade GLASS to 1.0-beta.9.1
   echo "STARTING upgradeSeasideImage"
   case "$gsvers" in
     3.2.16|3.2.17|3.3.[1-9]*|3.4.*)
-      export upgradeDir=$GEMSTONE/upgrade      
+			"$GS_HOME/bin/private/preUpgradeSeasideImage" $targetStoneName "$upgradeLogDir"
+      export upgradeDir=$GEMSTONE/upgrade 
       $GS_HOME/bin/startTopaz $targetStoneName -l -T ${tempObjCacheSize} >> $upgradeLogDir/topaz.out 2>&1 << EOF
         set user SystemUser p swordfish
         display resultcheck
@@ -384,59 +224,24 @@ EOF
         input $GEMSTONE/upgrade/bootstrapSeasideImage.topaz
 	exit 0
 EOF
+			"$GS_HOME/bin/private/postUpgradeSeasideImage" $targetStoneName "$upgradeLogDir"
+			echo "Seaside Upgrade completed. No errors detected."
       ;;
+		3.5.*)
+			upgradeScript=$GEMSTONE/upgrade/createGsDevKit_upgrade.topaz
+      "$GEMSTONE/seaside/bin/upgradeSeasideImage" -s $targetStoneName $username -P $upgradeScript >> $upgradeLogDir/topaz.out 2>&1 << EOF
+  
+EOF
+			;;
     *)
+			"$GS_HOME/bin/private/preUpgradeSeasideImage" $targetStoneName "$upgradeLogDir"
       "$GEMSTONE/seaside/bin/upgradeSeasideImage" -s $targetStoneName >> $upgradeLogDir/topaz.out 2>&1 << EOF
   
 EOF
+			"$GS_HOME/bin/private/postUpgradeSeasideImage" $targetStoneName "$upgradeLogDir"
       ;;
   esac
   
-  # Remove all BaselineOf* classes ... so that they will be reloaded during tODE installation
-  echo "STARTING remove BaselineOf* classes"
-  "$GS_HOME/bin/startTopaz" $targetStoneName -l -T ${tempObjCacheSize} >> $upgradeLogDir/topaz.out  2>&1 << EOF
-  
-  display resultcheck
-  level 0
-  
-  login
-  
-  display oops
-  iferr 1 stk
-  iferr 2 stack
-  iferr 3 input pop
-  iferr 4 exit 1
-  
-  run 
-  "Bug 46217 - remove for versions pre-dating 3.2.16 and 3.3.0" 
-  UserGlobals removeKey: #'GS_BOOTSTRAP_MONTICELLO_SKIP_REMOVE_CLASS' ifAbsent: []. 
-  true. 
-%
-  commit
-
-  run
-  UserGlobals associations do: [:assoc |
-    assoc value isBehavior
-      ifTrue: [
-        | globalName |
-        globalName := assoc key asString.
-        (globalName ~= 'BaselineOf' and: [
-             (globalName _findString: 'BaselineOf' startingAt: 1 ignoreCase: false) == 1 ])
-           ifTrue: [
-             GsFile gciLogServer: '  removing the baseline ', globalName printString.
-             assoc value removeFromSystem ] ] ].
-  true
-%
-  
-  run
-  MCWorkingCopy allManagers do: [ :wc | wc packageName = 'Grease' ifTrue: [ wc unregister ] ].
-  true
-%
-  
-  commit
-  logout
-  exit 0
-EOF
 popd >& /dev/null  
 
 echo "Installing tODE"
