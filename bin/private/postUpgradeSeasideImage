@@ -1,0 +1,81 @@
+#! /usr/bin/env bash
+#=========================================================================
+# Copyright (c) 2019 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#
+#   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
+#=========================================================================
+
+theArgs="$*"
+source "${GS_HOME}/bin/private/shFeedback"
+start_banner
+
+usage() {
+  cat <<HELP
+USAGE: $(basename $0) [-h] <source-stone-name> <upgrade-log-dir>
+
+  Run post-upgradeSeaseImage script for GemStone version 3.4.x and earlier.
+
+OPTIONS
+  -h
+     display help
+
+EXAMPLES
+   $(basename $0) -h
+   $(basename $0) gs_sample_331 "\$GS_HOME/server/stones/gs_sample_331/upgradeLogDir"
+HELP
+}
+
+if [ $# -ne 2 ]; then
+  usage; exit_1_banner "Two positional arguments are required"
+fi
+
+targetStoneName="$1"
+upgradeLogDir="$2"
+
+  # Remove all BaselineOf* classes ... so that they will be reloaded during tODE installation
+  echo "STARTING remove BaselineOf* classes"
+  "$GS_HOME/bin/startTopaz" $targetStoneName -l >> $upgradeLogDir/topaz.out  2>&1 << EOF
+  
+  display resultcheck
+  level 0
+  
+  login
+  
+  display oops
+  iferr 1 stk
+  iferr 2 stack
+  iferr 3 input pop
+  iferr 4 exit 1
+  
+  run 
+  "Bug 46217 - remove for versions pre-dating 3.2.16 and 3.3.0" 
+  UserGlobals removeKey: #'GS_BOOTSTRAP_MONTICELLO_SKIP_REMOVE_CLASS' ifAbsent: []. 
+  true. 
+%
+  commit
+
+  run
+  UserGlobals associations do: [:assoc |
+    assoc value isBehavior
+      ifTrue: [
+        | globalName |
+        globalName := assoc key asString.
+        (globalName ~= 'BaselineOf' and: [
+             (globalName _findString: 'BaselineOf' startingAt: 1 ignoreCase: false) == 1 ])
+           ifTrue: [
+             GsFile gciLogServer: '  removing the baseline ', globalName printString.
+             assoc value removeFromSystem ] ] ].
+  true
+%
+  
+  run
+  MCWorkingCopy allManagers do: [ :wc | wc packageName = 'Grease' ifTrue: [ wc unregister ] ].
+  true
+%
+  
+  commit
+  logout
+  exit 0
+EOF
+
+exit_0_banner "...finished"

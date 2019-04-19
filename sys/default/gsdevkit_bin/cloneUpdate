@@ -9,6 +9,8 @@ theArgs="$*"
 source "${GS_HOME}/bin/private/shFeedback"
 start_banner
 
+set -e
+
 usage() {
   cat <<HELP
 USAGE: $(basename $0) [-h] client|server|both
