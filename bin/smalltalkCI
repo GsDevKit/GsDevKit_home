@@ -125,7 +125,7 @@ if [ "${runSmalltalkCITests}" = "true" ]; then
   if [ "${attachTodeArgs}x" = "x" ] ; then
     stonePath="$GS_SERVER_STONES/${stoneName}"
     # set up stone environment
-    pushd "${stonePath}" "${stonePath}" >& /dev/null
+    pushd "${stonePath}" >& /dev/null
     source "${stonePath}/stone.env"
     popd >& /dev/null
     export upgradeDir="$GEMSTONE/upgrade/"
