@@ -4,6 +4,11 @@
 #
 #   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
 #=========================================================================
+#
+#	this script is funcationally equivalent to startTopaz, except that the start
+#	banner, exit banner and error banner (for the topaz execution) are not used.
+#	we want stdout to be as clean as possible when using this script to run topaz.
+#
 
 theArgs="$*"
 source "${GS_HOME}/bin/private/shFeedback"
@@ -49,4 +54,5 @@ pushd "$stonePath" >& /dev/null
   source "$stonePath/stone.env"
 popd >& /dev/null
 
+trap - ERR	# disable trap when running topaz
 "$GEMSTONE/bin/topaz" -I "$stonePath/.topazini" $*
