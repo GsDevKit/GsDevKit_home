@@ -141,10 +141,10 @@ EOF
     createStone -g ${STONENAME1}_3211 3.2.11
     upgradeStoneName="${STONENAME1}_${GS_VERSION}"
     set +e
-    set -x
     upgradeStone -f ${STONENAME1}_3211 ${STONENAME1}_${GS_VERSION} $GS_VERSION << EOF
 
 EOF
+		set -x
     status=$?
     stopStone -b ${STONENAME1}_3211
     stopStone -b ${STONENAME1}_${GS_VERSION}
