@@ -144,7 +144,6 @@ EOF
     upgradeStone -f ${STONENAME1}_3211 ${STONENAME1}_${GS_VERSION} $GS_VERSION << EOF
 
 EOF
-		set -x
     status=$?
     stopStone -b ${STONENAME1}_3211
     stopStone -b ${STONENAME1}_${GS_VERSION}
