@@ -229,7 +229,7 @@ EOF
       ;;
 		3.5.*)
 			upgradeScript=$GEMSTONE/upgrade/createGsDevKit_upgrade.topaz
-      "$GEMSTONE/seaside/bin/upgradeSeasideImage" -s $targetStoneName $username -P $upgradeScript >> $upgradeLogDir/topaz.out 2>&1 << EOF
+      "$GEMSTONE/seaside/bin/upgradeSeasideImage" -s $targetStoneName -u $gemstoneUserId -p $gemstonePassword -P $upgradeScript >> $upgradeLogDir/topaz.out 2>&1 << EOF
   
 EOF
 			;;

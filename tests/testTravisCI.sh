@@ -101,6 +101,7 @@ case $TEST in
 
 EOF
 		status=$?
+		echo "UPGRADE FINISHED WITH $status exit status"
     stopStone -b ${STONENAME1}_${UPGRADE_FROM}
     stopStone -b ${STONENAME1}_${GS_VERSION}
 		exit $status
@@ -114,13 +115,19 @@ EOF
 
 EOF
     status=$?
+		echo "UPGRADE FINISHED WITH $status exit status"
 		if [ "$status" = "0" ] ; then
 			startStone ${STONENAME1}_${UPGRADE_FROM}	#stopped during upgrade
 			set -e # if script fails for reason other than unit test failures, bail
+			echo "running unit test health check"
 			$GS_HOME/tests/unitTests.sh ${STONENAME1}_${UPGRADE_FROM} false # don't fail if unit tests fail
+			echo "finished unit test health check"
 			set +e
 			$GS_HOME/tests/unitTests.sh $upgradeStoneName true #fail if unit tests don't pass
 			status=$?
+			if [ "$status" != "0" ] ; then
+				echo "unit tests failed after upgrade"
+			fi
 		fi
     stopStone -b ${STONENAME1}_${UPGRADE_FROM}
     stopStone -b $upgradeStoneName
@@ -131,10 +138,27 @@ EOF
     createStone -b $opt -U bozo -P theClown ${STONENAME1}_${UPGRADE_FROM} ${UPGRADE_FROM}
     upgradeStoneName="${STONENAME1}_${GS_VERSION}"
     set +e
-    set -x
-    upgradeStone -f  -U bozo -P theClown ${STONENAME1}_${UPGRADE_FROM} ${STONENAME1}_${GS_VERSION} $GS_VERSION << EOF
+    upgradeStone -f  -u bozo -p theClown ${STONENAME1}_${UPGRADE_FROM} ${STONENAME1}_${GS_VERSION} $GS_VERSION << EOF
 
 EOF
+    status=$?
+		echo "UPGRADE FINISHED WITH $status exit status"
+		if [ "$status" = "0" ] ; then
+			startStone ${STONENAME1}_${UPGRADE_FROM}	#stopped during upgrade
+			set -e # if script fails for reason other than unit test failures, bail
+			echo "running unit test health check"
+			$GS_HOME/tests/unitTests.sh ${STONENAME1}_${UPGRADE_FROM} false # don't fail if unit tests fail
+			echo "finished unit test health check"
+			set +e
+			$GS_HOME/tests/unitTests.sh $upgradeStoneName true #fail if unit tests don't pass
+			status=$?
+			if [ "$status" != "0" ] ; then
+				echo "unit tests failed after upgrade"
+			fi
+		fi
+    stopStone -b ${STONENAME1}_${UPGRADE_FROM}
+    stopStone -b $upgradeStoneName
+		exit $status
     ;;
   Upgrade_71) # Issue #71: test case ... upgrade from 3.2.11
     installServer
@@ -145,6 +169,7 @@ EOF
 
 EOF
     status=$?
+		echo "UPGRADE FINISHED WITH $status exit status"
     stopStone -b ${STONENAME1}_3211
     stopStone -b ${STONENAME1}_${GS_VERSION}
     if [ "$status" != "0" ] ; then
