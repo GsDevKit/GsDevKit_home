@@ -104,7 +104,24 @@ EOF
 		echo "UPGRADE FINISHED WITH $status exit status"
     stopStone -b ${STONENAME1}_${UPGRADE_FROM}
     stopStone -b ${STONENAME1}_${GS_VERSION}
-		exit $status
+    if [ "$status" != "0" ] ; then
+      tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topazerrors.log
+			if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeSeasideImage.out" ] ; then 
+        tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeSeasideImage.out
+      fi
+      if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out" ] ; then 
+        tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out
+      fi
+      if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeTo3x.out" ] ; then 
+        tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeTo3x.out
+      fi
+      if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topaz.out" ] ; then 
+        tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topaz.out
+      fi
+      exit 1
+    else
+      exit 0
+    fi
     ;;
   Upgrade_unittest)
     installServer
