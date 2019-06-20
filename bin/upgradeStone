@@ -228,6 +228,7 @@ EOF
 			echo "Seaside Upgrade completed. No errors detected."
       ;;
 		3.5.*)
+			set +e
 			upgradeScript=$GEMSTONE/upgrade/createGsDevKit_upgrade.topaz
       "$GEMSTONE/seaside/bin/upgradeSeasideImage" -s $targetStoneName -u $gemstoneUserId -p $gemstonePassword -P $upgradeScript >> $upgradeLogDir/topaz.out 2>&1 << EOF
 
@@ -237,7 +238,7 @@ EOF
 				cat $upgradeLogDir/topaz.out
 				exit $status
 			fi
-
+			set -e
 			;;
     *)
 			"$GS_HOME/bin/private/preUpgradeSeasideImage" $targetStoneName "$upgradeLogDir"
