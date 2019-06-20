@@ -107,8 +107,35 @@ EOF
     stopStone -b ${STONENAME1}_${GS_VERSION}
     if [ "$status" != "0" ] ; then
       cat $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topazerrors.log
-			if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeSeasideImage.out" ] ; then 
-        cat $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeSeasideImage.out
+			if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeSeasideImage.out" ] ; then
+			  echo "================	upgradeLog/upgradeSeasideImage.out"
+        cat "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeSeasideImage.out"
+				if [ -e "$GS_HOME/server/stones/$upgradeStoneName/installGsDevKit_upgrade_topaz.log" ] ; then
+					if [ -e "$GS_HOME/server/stones/$upgradeStoneName/prepareGsDevKitImage_pragma_user.log" ] ; then
+						if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/prepareImage_pragma_systemuser_topaz.log" ] ; then
+							if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/prepareGsDevKitImage.log" ] ; then
+								if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/cleanupGsDevKitImage.log" ] ; then
+			  					echo "================	upgradeLog/cleanupGsDevKitImage.log"
+									cat "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/cleanupGsDevKitImage.log"
+									exit 1
+								fi
+			  				echo "================	upgradeLog/prepareGsDevKitImage.log"
+								cat "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/prepareGsDevKitImage.log"
+								exit 1
+							fi
+			  			echo "================	prepareImage_pragma_systemuser_topaz.log"
+							cat "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/prepareImage_pragma_systemuser_topaz.log"
+							exit 1
+						fi
+			  		echo "================	prepareGsDevKitImage_pragma_user.log"
+						cat "$GS_HOME/server/stones/$upgradeStoneName/prepareGsDevKitImage_pragma_user.log"
+						exit 1
+					fi
+			  	echo "================	installGsDevKit_upgrade_topaz.log"
+					cat "$GS_HOME/server/stones/$upgradeStoneName/installGsDevKit_upgrade_topaz.log"
+					exit 1
+				fi
+				exit 1
       fi
       if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out" ] ; then 
         tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out
