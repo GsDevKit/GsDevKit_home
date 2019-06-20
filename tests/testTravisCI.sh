@@ -138,7 +138,7 @@ EOF
     createStone -b $opt -U bozo -P theClown ${STONENAME1}_${UPGRADE_FROM} ${UPGRADE_FROM}
     upgradeStoneName="${STONENAME1}_${GS_VERSION}"
     set +e
-    upgradeStone -f  -u bozo -p theClown ${STONENAME1}_${UPGRADE_FROM} ${STONENAME1}_${GS_VERSION} $GS_VERSION << EOF
+    upgradeStone -f -U bozo -P theClown ${STONENAME1}_${UPGRADE_FROM} ${STONENAME1}_${GS_VERSION} $GS_VERSION << EOF
 
 EOF
     status=$?
@@ -174,6 +174,9 @@ EOF
     stopStone -b ${STONENAME1}_${GS_VERSION}
     if [ "$status" != "0" ] ; then
       tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topazerrors.log
+			if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeSeasideImage.out" ] ; then 
+        tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeSeasideImage.out
+      fi
       if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out" ] ; then 
         tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out
       fi
