@@ -102,6 +102,7 @@ case $TEST in
 EOF
 		status=$?
 		echo "UPGRADE FINISHED WITH $status exit status"
+		set -x
     stopStone -b ${STONENAME1}_${UPGRADE_FROM}
     stopStone -b ${STONENAME1}_${GS_VERSION}
     if [ "$status" != "0" ] ; then
