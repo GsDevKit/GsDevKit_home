@@ -14,7 +14,7 @@ This command downloads the project entry for Seaside3 and clones the [Seaside pr
 Then you load the [Seaside project](https://github.com/SeasideSt/Seaside) using the `project list` menu item **load**, or by executing the following in the tODE shell:
 
 ```
-project load --loads=`#('Seaside-Welcome' 'Zinc' 'Development' 'Examples')` Seaside3
+project load --loads=`#('Welcome' 'Development' 'Zinc Project' 'Examples')` Seaside3
 ```
 
 The `mount` command makes the Seaside tODE scripts directory available from with tODE as `/home/seaside`:
@@ -31,7 +31,13 @@ bu backup seaside.dbf
 
 ## Creating a Seaside gem server
 
-Wiuth seaside installed, you use the `/home/seaside/gemServer` script to register, start, and stop a Seaside gem server.
+Load the Seaside GemStone Adaptors package by executing the following in the tODE shell:
+
+```
+project load --loads=`#('Seaside-GemStone-Adaptors-Zinc')` Seaside3
+```
+
+With seaside installed, you use the `/home/seaside/gemServer` script to register, start, and stop a Seaside gem server.
 The following tODE command defines a gemServer named *seaside* that will listen for HTTP requests on port 1750:
 
 ```
