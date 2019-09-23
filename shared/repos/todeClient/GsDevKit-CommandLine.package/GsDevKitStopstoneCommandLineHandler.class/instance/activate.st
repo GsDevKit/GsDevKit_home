@@ -15,6 +15,10 @@ activate
 	argsArray := #().
 	Transcript
 		cr;
-		show: (self runShellCommand: (self gs_serverBinGs / 'stopGemstone') pathString args: argsArray);
+		show: (self runShellCommand: (self gs_serverBinGs / 'stopGemstone') pathString args: argsArray exitStatus: [:proc |
+			| es ans |
+			es := (proc exitStatus bitAnd: 16rFF00) >> 8.
+			ans := proc isComplete and: [ es == 0 or: [ es == 1  "information" or: [ es == 2  "warning"] ] ].
+			ans ]);
 		cr.
 	self exitSuccess
