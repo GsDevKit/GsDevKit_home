@@ -42,9 +42,6 @@ startTopaz "$1" -l << EOF
 	passed := passed & res errors isEmpty.
 	(res failures collect: [:each | each printString]) asArray sort do: [:each |
 		GsFile gciLogServer: '	',each ].
-	"tracking failure of this test ... cannot reproduce"
-	Smalltalk at: #ZnHTTPSTests 
-		ifPresent: [:cls | cls debug: #testGoogleEncrypted ].
 	^ errorExitOnTestFailure
 			ifTrue: [ passed ]
 			ifFalse: [ true ]
