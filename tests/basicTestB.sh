@@ -10,6 +10,14 @@ set -xe  # print commands and exit on error
 
 createStone ${STONENAME2} $GS_VERSION
 createStone -g ${STONENAME3} $GS_VERSION
+
+pushd $GS_HOME/server/stones/${STONENAME2}
+	cat - >> .topazini << EOF
+# set user SystemUser
+# set password banana
+EOF
+popd
+
 stopAllStones
 startAllStones
 stopAllStones -b

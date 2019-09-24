@@ -14,6 +14,6 @@ activate
 		show: (self runShellCommand: (self gemstoneBin / 'startnetldi') pathString args: argsArray exitStatus: [:proc |
 			| es |
 			es := (proc exitStatus bitAnd: 16rFF00) >> 8.
-			proc isComplete and: [ es == 0 or: [ es == 2 ] ] ]);
+			proc isComplete and: [ es == 0 or: [ es == 1 "information" or: [ es == 2 "warning"] ] ] ]);
 		cr.
 	self exitSuccess

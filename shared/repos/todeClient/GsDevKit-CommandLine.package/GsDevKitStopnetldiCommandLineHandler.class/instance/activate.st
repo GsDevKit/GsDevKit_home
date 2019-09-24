@@ -21,6 +21,9 @@ activate
 	argsArray := sess ifNil: [ {(stoneInfo netLDI)} ] ifNotNil: [ {(sess netLDI)} ].
 	Transcript
 		cr;
-		show: (self runShellCommand: (self gemstoneBin / 'stopnetldi') pathString args: argsArray);
+		show: (self runShellCommand: (self gemstoneBin / 'stopnetldi') pathString args: argsArray exitStatus: [:proc |
+			| es |
+			es := (proc exitStatus bitAnd: 16rFF00) >> 8.
+			proc isComplete and: [ es == 0 or: [ es == 1 "information" or: [ es == 2 "warning"] ] ] ]);
 		cr.
 	self exitSuccess
