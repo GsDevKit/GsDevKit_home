@@ -134,7 +134,7 @@ EOF
 			  	echo "================	installGsDevKit_upgrade_topaz.log"
 					cat "$GS_HOME/server/stones/$upgradeStoneName/installGsDevKit_upgrade_topaz.log"
 					exit 1
-				fi
+				fi123456789
 				exit 1
       fi
       if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out" ] ; then 
@@ -205,6 +205,27 @@ EOF
     stopStone -b $upgradeStoneName
 		exit $status
     ;;
+	Upgrade_TOC)
+    installServer
+    createStone $opt ${STONENAME1}_${UPGRADE_FROM} ${UPGRADE_FROM}
+    upgradeStoneName="${STONENAME1}_${GS_VERSION}"
+		set +e
+    upgradeStone -m 987654 -f ${STONENAME1}_${UPGRADE_FROM} $upgradeStoneName $GS_VERSION << EOF
+
+EOF
+    status=$?
+		echo "UPGRADE FINISHED WITH $status exit status"
+		if [ "$status" = "0" ] ; then
+			result=`grep "GEM_TEMPOBJ_CACHE_SIZE = 987654KB;" "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/conversion.conf" | wc`
+			if [ "result" = "      0       0       0" ] ; then
+				echo "ERROR TOC not set correctly for upgrade"
+				exit 1
+			fi
+		fi
+    stopStone -b ${STONENAME1}_${UPGRADE_FROM}
+    stopStone -b $upgradeStoneName
+		exit $status
+		;;
   Upgrade_71) # Issue #71: test case ... upgrade from 3.2.11
     installServer
     createStone -g ${STONENAME1}_3211 3.2.11

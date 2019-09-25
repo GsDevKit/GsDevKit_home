@@ -185,7 +185,7 @@ fi
 pushd "${upgradeLogDir}" >& /dev/null
   # start standard upgrade
   echo "STARTING standard upgradeImage "
-  "$GEMSTONE/bin/upgradeImage" -s $GEMSTONE_NAME << EOF
+  "$GEMSTONE/bin/upgradeImage" -c $tempObjCacheSize -s $GEMSTONE_NAME << EOF
   
 EOF
   
@@ -230,7 +230,7 @@ EOF
 		3.5.*)
 			set +e
 			upgradeScript=$GEMSTONE/upgrade/createGsDevKit_upgrade.topaz
-      "$GEMSTONE/seaside/bin/upgradeSeasideImage" -s $targetStoneName -u $gemstoneUserId -p $gemstonePassword -P $upgradeScript >> $upgradeLogDir/topaz.out 2>&1 << EOF
+      "$GEMSTONE/seaside/bin/upgradeSeasideImage" -c $tempObjCacheSize -s $targetStoneName -u $gemstoneUserId -p $gemstonePassword -P $upgradeScript >> $upgradeLogDir/topaz.out 2>&1 << EOF
 
 EOF
 			status=$?
@@ -242,7 +242,7 @@ EOF
 			;;
     *)
 			"$GS_HOME/bin/private/preUpgradeSeasideImage" $targetStoneName "$upgradeLogDir"
-      "$GEMSTONE/seaside/bin/upgradeSeasideImage" -s $targetStoneName >> $upgradeLogDir/topaz.out 2>&1 << EOF
+      "$GEMSTONE/seaside/bin/upgradeSeasideImage" -c $tempObjCacheSize -s $targetStoneName >> $upgradeLogDir/topaz.out 2>&1 << EOF
   
 EOF
 			"$GS_HOME/bin/private/postUpgradeSeasideImage" $targetStoneName "$upgradeLogDir"
