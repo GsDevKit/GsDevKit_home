@@ -134,7 +134,7 @@ EOF
 			  	echo "================	installGsDevKit_upgrade_topaz.log"
 					cat "$GS_HOME/server/stones/$upgradeStoneName/installGsDevKit_upgrade_topaz.log"
 					exit 1
-				fi123456789
+				fi
 				exit 1
       fi
       if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out" ] ; then 
