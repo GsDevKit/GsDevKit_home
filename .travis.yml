@@ -56,6 +56,7 @@ env:
   - GS_VERSION=3.5.0 UPGRADE_FROM=3.4.3 TEST=Upgrade_User
   - GS_VERSION=3.5.0 UPGRADE_FROM=3.4.3 TEST=Upgrade_unittest
   - GS_VERSION=3.5.0 TEST=Upgrade_71 
+  - GS_VERSION=3.5.0 UPGRADE_FROM=3.3.9 TEST=Upgrade_TOC
 
 matrix:
    allow_failures:
