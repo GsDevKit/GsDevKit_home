@@ -1,0 +1,251 @@
+#!/usr/bin/env bash
+#
+#
+
+usage() {
+  cat <<HELP
+USAGE: $(basename $0) scriptPath [ [ imageName ] [-H] [-D] [-V] [topaz vm args] -- ] [script args]
+       $(basename $0) scriptPath [ [ imageName ] [-H] [-D] [-V] [topaz vm args] --   [script args] -- [non-option script args] 
+
+If topaz arguments are specified the <imageName> is required to be the first 
+argument following the <scriptPath>.
+
+The $(basename $0) options may be interspersed with the topz vm args as of
+GemStone 3.5.0.
+
+If the scriptdefault.envto use '--' to terminate it's argument parsing, then a 
+'--' must precede the script arguments on the command line.
+
+OPTIONS
+  -D
+     Bring up topaz debugger for StashCommandError exceptions. Normally these exceptions result in
+     an error message to stderr.
+  -H
+     Display help message and exit.
+  -V
+     Verbose output
+
+EXAMPLES
+  $(basename $0) -H                           # this message
+  $(basename $0) ./hello.st solo_350 -h --    # topaz help message
+  $(basename $0) ./hello.st solo_350 -- -h    # hello.st help message using solo_350 image
+  $(basename $0) ./hello.st -- -h             # hello.st help message using default image
+  $(basename $0) ./hello.st -h                # hello.st help message using default image
+  $(basename $0) ./hello.st -x 								# run hello.st with an invalid option --> error message on stderr
+  $(basename $0) ./hello.st solo_350 -D -- -x # run hello.st with an invalid option --> bring up topaz debugger
+
+HELP
+}
+
+. $HOME/.config/st_launcher/st_launcher_default.env
+
+stashFile=`realpath $1`
+scriptName="$(basename -- $1)"
+shift
+scriptArgs=""
+launcherVmArgs=""
+imageName="$ST_LAUNCHER_DEFAULT_IMAGE_NAME"
+
+interpArgs="$*"
+
+for argument in $@ ; do
+	if [ "$argument" = "--" ] ; then
+		launcherVmArgs=$scriptArgs
+		args=($launcherVmArgs)
+		case ${args[0]} in
+			-*) # allow imageName to be optional first argument
+				;;
+			*) imageName=${args[0]} ;;
+		esac
+		
+		scriptArgs=""
+	else
+		scriptArgs+=" $argument"
+	fi
+done
+
+debugCommandError="false"
+for argument in $launcherVmArgs ; do
+	case "$argument" in
+		-D) debugCommandError="true" ;;
+		-H) usage; exit 0 ;;
+		-V) set -x ;;
+		*);;
+	esac
+done
+
+if [ "${ST_LAUNCHER_HOME}x" = "x" ] ; then
+	export ST_LAUNCHER_HOME="$ST_LAUNCHER_DEFAULT_IMAGE_PATH/../.."
+fi
+
+#
+#	this is the smalltalk code executed by the vm aasociated with the \$imageName image
+# 	it is fed to the vm launched by the \$scriptCmdLine
+#
+vmScriptFile=`mktemp -p /tmp tmp.XXXXXXXXXX.stash`
+pwd=`pwd`
+cat - > $vmScriptFile << EOF
+
+	[
+		StLauncherScript
+			loadAndExecuteScriptClassFile: '$stashFile'
+			stashArgs: '$scriptArgs'
+			imageName: '$imageName'
+			scriptName: '$scriptName'
+			workingDir: '$pwd'.
+		true	]
+		on: StashCommandError, Error, Warning
+		do: [:ex |
+			(ex isKindOf: Warning)
+				ifTrue: [
+					$debugCommandError
+						ifTrue: [ ex pass ]
+						ifFalse: [ ex resume ] ].
+			$debugCommandError
+				ifTrue: [ ex pass ]
+				ifFalse: [ 
+					StashScript
+						ansiRedOn: StLauncherCommon stderr 
+						during: [ StLauncherCommon stderr nextPutAll: ex description ].
+					StLauncherCommon stderr lf.
+					false ] ].
+EOF
+
+#
+# code used to launch the vm associated with the default image, that generates the \$scriptCmdLine
+#
+
+if [ "$ST_LAUNCHER_DEFAULT_PLATFORM" = "gemstone" ] ; then
+	inputFile=`mktemp`
+	cat - > $inputFile << EOF
+# st_launcher debugging only
+iferr 1 stack
+iferr 2 exit 1
+display oops
+
+	set solologin on
+	login
+
+	expectvalue true
+	run
+	| launcherArgMap |
+	launcherArgMap := Dictionary new
+		at: '-H' put: #none;	"help"
+		at: '-D' put: #none;	"debug StashCommandErrors"
+		at: '-V' put: #none;	"list script execution"
+		yourself.
+	^ StLauncherPlatform 
+			generateSmalltalkScriptLaunchCommandLineFor: '$imageName'
+			launchScriptPath: '$vmScriptFile'
+			launcherArgs: '$interpArgs' 
+			launcherArgMap: launcherArgMap 
+			debugCommandError: $debugCommandError.
+%
+EXITIFNOERROR
+EOF
+	export GEMSTONE="$ST_LAUNCHER_DEFAULT_PRODUCT_PATH"
+	if [ "$debugCommandError" = "false" ] ; then
+		scriptFile=`mktemp`
+		$GEMSTONE/bin/topaz -lq -I "$ST_LAUNCHER_DEFAULT_IMAGE_PATH/.topazini" -C "GEM_SOLO_EXTENT=$ST_LAUNCHER_DEFAULT_SNAPSHOT_PATH" -S $inputFile > $scriptFile
+		status=$?
+		if [ "$status" != "0" ]; then
+			exit $status
+		fi
+		chmod +x $scriptFile
+		$scriptFile
+		status=$?
+		if [ "$status" != "0" ]; then
+			exit $status
+		fi
+	else
+		# expecting to interactively debug topaz
+		stdoutF=`mktemp`
+		$GEMSTONE/bin/topaz -lq -I "$ST_LAUNCHER_DEFAULT_IMAGE_PATH/.topazini" -C "GEM_SOLO_EXTENT=$ST_LAUNCHER_DEFAULT_SNAPSHOT_PATH" -S $inputFile | tee $stdoutF >&2
+		status="${PIPESTATUS[0]}"
+		if [ "$status" != "0" ]; then
+			echo "-- debug session in topaz exited with a non-zero exit status"
+			exit $status
+		fi
+#		>&2 echo "-- debug session ended, continuing execution"
+		scriptCmdLine=`cat $stdoutF`
+	fi
+elif [ "$ST_LAUNCHER_DEFAULT_PLATFORM" = "pharo" ] ; then
+	echo "PHARO not supported ... yet"
+	exit 1
+else
+	echo "Unsupported platform: \$ST_LAUNCHER_DEFAULT_PLATFORM"
+	exit 1
+fi
+
+# >&2 echo "$scriptCmdLine"
+$scriptCmdLine
+
+# https://github.com/mkropat/sh-realpath/blob/master/realpath.sh
+realpath() {
+    canonicalize_path "$(resolve_symlinks "$1")"
+}
+
+resolve_symlinks() {
+    _resolve_symlinks "$1"
+}
+
+_resolve_symlinks() {
+    _assert_no_path_cycles "$@" || return
+
+    local dir_context path
+    path=$(readlink -- "$1")
+    if [ $? -eq 0 ]; then
+        dir_context=$(dirname -- "$1")
+        _resolve_symlinks "$(_prepend_dir_context_if_necessary "$dir_context" "$path")" "$@"
+    else
+        printf '%s\n' "$1"
+    fi
+}
+
+_prepend_dir_context_if_necessary() {
+    if [ "$1" = . ]; then
+        printf '%s\n' "$2"
+    else
+        _prepend_path_if_relative "$1" "$2"
+    fi
+}
+
+_prepend_path_if_relative() {
+    case "$2" in
+        /* ) printf '%s\n' "$2" ;;
+         * ) printf '%s\n' "$1/$2" ;;
+    esac
+}
+
+_assert_no_path_cycles() {
+    local target path
+
+    target=$1
+    shift
+
+    for path in "$@"; do
+        if [ "$path" = "$target" ]; then
+            return 1
+        fi
+    done
+}
+
+canonicalize_path() {
+    if [ -d "$1" ]; then
+        _canonicalize_dir_path "$1"
+    else
+        _canonicalize_file_path "$1"
+    fi
+}
+
+_canonicalize_dir_path() {
+    (cd "$1" 2>/dev/null && pwd -P)
+}
+
+_canonicalize_file_path() {
+    local dir file
+    dir=$(dirname -- "$1")
+    file=$(basename -- "$1")
+    (cd "$dir" 2>/dev/null && printf '%s/%s\n' "$(pwd -P)" "$file")
+}
+
