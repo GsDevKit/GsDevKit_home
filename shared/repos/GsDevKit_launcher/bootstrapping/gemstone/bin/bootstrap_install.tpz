@@ -1,0 +1,39 @@
+#!/usr/local/bin/smalltalk/gemstone/topaz
+
+	input $ROWAN_PROJECTS_HOME/Rowan/platforms/gemstone/topaz/3.5.0/install_1.tpz
+	input $ROWAN_PROJECTS_HOME/Rowan/platforms/gemstone/topaz/3.5.0/install_2.tpz
+	input $ROWAN_PROJECTS_HOME/Rowan/platforms/gemstone/topaz/3.5.0/install_3.tpz
+	input $ROWAN_PROJECTS_HOME/Rowan/platforms/gemstone/topaz/3.5.0/install_4.tpz
+
+	iferr_clear
+
+	set u SystemUser p swordfish
+	login
+
+	run
+	"Need to patch AbstractDictionary>>at:ifPresent: to use cull:"
+	AbstractDictionary
+		compileMethod: 'at: key ifPresent: aBlock
+	"Lookup the given key in the receiver. If it is present, answer the value of evaluating the given
+		block with the value associated with the key. Otherwise, answer nil."
+
+	| v |
+	v := self at: key ifAbsent: [ ^ nil ].
+	^ aBlock cull: v'
+%
+	commit
+
+	run
+"install gsdevkit_launcher project"
+	| url projectSetDefinition |
+	url := 'file:$ROWAN_PROJECTS_HOME/gsdevkit_launcher/rowan/specs/gsdevkit_launcher.ston'.
+	projectSetDefinition := (RwComponentProjectDefinition newForUrl: url)
+		projectHome: '$ROWAN_PROJECTS_HOME';
+		read.
+	projectSetDefinition load
+%
+	commit
+
+	errorCount
+	exit
+

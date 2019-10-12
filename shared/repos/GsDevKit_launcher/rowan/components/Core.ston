@@ -1,0 +1,45 @@
+RwComponentLoadConfiguration{
+	#name : 'Core',
+	#comment : '',
+	#version : '0.1.0',
+	#definedGroupNames : {
+		'core' : [ ],
+		'tests' : [ 'core' ]
+	},
+	#configurationNames : [
+		'Properties'
+	],
+	#conditionalPackages : {
+		[
+			'common'
+		] : {
+			'core' : {
+				#packageNames : [
+					'st_launcher-Core'
+				]
+			},
+			'tests' : {
+				#packageNames : [
+				]
+			}
+		},
+		[
+			'gs3.[2-]'
+		] : {
+			'core' : {
+				#packageNames : [
+					'st_launcher-GemStone-Core',
+					'st_launcher-GemStone-Services',
+					'st_launcher-GemStone-Kernel'
+				]
+			}
+		}
+	},
+	#conditionalPackageMapSpecs : {
+		'gemstone' : {
+			'SystemUser' : {
+				#defaultSymbolDictName : 'Globals'
+			}
+		}
+	}
+}

@@ -1,0 +1,14 @@
+RwComponentSpecification{
+	#specName : 'gsdevkit_launcher',
+	#version : '0.3.0',
+	#projectUrl : 'https://github.com/GsDevKit_home',
+	#configsPath : 'rowan/components',
+	#projectsPath : 'rowan/projects',
+	#repoPath : 'rowan/src',
+	#specsPath : 'rowan/specs',
+	#defaultComponentName : 'Core',
+	#defaultGroupNames : [
+		'tests'
+	],
+	#comment : 'GsDevKit_home script support'
+}

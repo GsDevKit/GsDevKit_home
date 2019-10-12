@@ -1,0 +1,14 @@
+RwComponentSpecification{
+	#specName : 'st_launcher',
+	#version : '0.3.0',
+	#projectUrl : 'https://github.com/dalehenrich/st_launcher',
+	#configsPath : 'rowan/components',
+	#projectsPath : 'rowan/projects',
+	#repoPath : 'rowan/src',
+	#specsPath : 'rowan/specs',
+	#defaultComponentName : 'Core',
+	#defaultGroupNames : [
+		'core'
+	],
+	#comment : 'Tonel class file shell scripts'
+}
