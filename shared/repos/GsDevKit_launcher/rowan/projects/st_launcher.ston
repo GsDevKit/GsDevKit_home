@@ -6,7 +6,7 @@ RwComponentSpecification{
 	#projectsPath : 'rowan/projects',
 	#repoPath : 'rowan/src',
 	#specsPath : 'rowan/specs',
-	#defaultComponentName : 'Core',
+	#defaultComponentName : 'AbstractProgram',
 	#defaultGroupNames : [
 		'core'
 	],
