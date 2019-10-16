@@ -24,16 +24,34 @@
 	commit
 
 #
-#	installation using Rowan gsdevkit_launcher completely installed as SystemUser (deploy)
+#	installation using Rowan gsdevkit_launcher rereqs 
 #
 	run
+"install st_launcher prereguisite"
 	| url projectSetDefinition |
-	url := 'file:$ROWAN_PROJECTS_HOME/GsDevKit_launcher/rowan/specs/gsdevkit_launcher.ston'.
+	url := 'file:$ROWAN_PROJECTS_HOME/GsDevKit_launcher/rowan/projects/st_launcher.ston'.
 	projectSetDefinition := (RwComponentProjectDefinition newForUrl: url)
 		projectHome: '$ROWAN_PROJECTS_HOME';
-		packageFormat: 'filetree';
 		read.
 	projectSetDefinition load
+%
+	commit
+
+	logout
+
+#
+#	installation using tODE (shared development)
+#
+
+	set u DataCurator p swordfish
+	login
+
+	run
+	Rowan projectTools browser addRowanSymbolDictionariesToPersistentSymbolList.
+	Metacello new
+		baseline: 'GsDevKit_launcher';
+		repository: 'filetree://$GS_HOME/shared/repos/GsDevKit_launcher/rowan/src';
+		load
 %
 	commit
 

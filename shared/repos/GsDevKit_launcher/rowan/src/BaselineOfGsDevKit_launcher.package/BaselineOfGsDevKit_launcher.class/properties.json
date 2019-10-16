@@ -1,0 +1,14 @@
+{
+	"category" : "BaselineOfGsDevKit_launcher",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "BaselineOfGsDevKit_launcher",
+	"pools" : [
+		 ],
+	"super" : "BaselineOf",
+	"type" : "normal" }

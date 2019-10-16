@@ -1,0 +1,14 @@
+{
+	"category" : "gsdevkit_launcher-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "dkh 10/16/2019 15:23",
+	"instvars" : [
+		 ],
+	"name" : "AbstractGsDevKitProgram",
+	"pools" : [
+		 ],
+	"super" : "AbstractProgram",
+	"type" : "normal" }

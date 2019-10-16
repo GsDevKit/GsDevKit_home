@@ -1,0 +1,9 @@
+set -e
+. defStone.env
+
+rm -rf *.log *.out
+
+newExtent -t -s snapshots/extent0.tode.dbf $GEMSTONE_NAME
+
+$ROWAN_PROJECTS_HOME/GsDevKit_launcher/bootstrapping/gemstone/bin/bootstrap_install_tode.tpz $GEMSTONE_NAME -lq
+
