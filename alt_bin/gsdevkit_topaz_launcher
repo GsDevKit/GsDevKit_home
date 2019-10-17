@@ -188,7 +188,6 @@ EOF
 	$GEMSTONE/bin/topaz -lq -I "$topaziniPath" $soloExtentArg -S $generateCommandLineFile > $scriptFile
 	chmod +x $scriptFile
 	$scriptFile
-#	$scriptCommandLine -- $scriptArgs
 fi
 
 

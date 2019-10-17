@@ -1,0 +1,17 @@
+set -e
+. defStone.env
+
+rm -rf *.log *.out
+
+newExtent -t -s snapshots/extent0.tode.dbf $GEMSTONE_NAME
+
+$ROWAN_PROJECTS_HOME/GsDevKit_launcher/bootstrapping/gemstone/bin/bootstrap_install_tode.tpz $GEMSTONE_NAME -lq
+
+#	this script needs to be rewritten for gsdevkit_launcher
+rm -f ./snapshots/extent0.gsdevkit_launcher.dbf
+todeIt $GEMSTONE_NAME bu snapshot gsdevkit_launcher.dbf
+
+# cp the solo extent to snapshots directory
+chmod oug-w snapshots/extent0.gsdevkit_launcher.dbf
+cp -f ./snapshots/extent0.gsdevkit_launcher.dbf $GS_HOME/shared/gemstone/snapshots/
+

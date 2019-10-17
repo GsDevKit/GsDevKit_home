@@ -4,7 +4,7 @@ Hello world GsDevKit script
 "
 Class {
 	#name : 'GsDevKitLauncher_Hello',
-	#superclass : 'AbstractGsDevKitProgram',
+	#superclass : 'AbstractProgram',
 	#category : 'gsdevKit_launcher-Scripts'
 }
 

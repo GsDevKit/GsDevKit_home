@@ -4,7 +4,7 @@ Example script that signals an error.
 "
 Class {
 	#name : 'GsDevKitLauncher_Error',
-	#superclass : 'AbstractGsDevKitProgram',
+	#superclass : 'AbstractProgram',
 	#category : 'gsdevKit_launcher-Scripts'
 }
 

@@ -80,7 +80,6 @@ fi
 
 #
 #	this is the smalltalk code executed by the vm aasociated with the \$imageName image
-# 	it is fed to the vm launched by the \$scriptCmdLine
 #
 vmScriptFile=`mktemp -p /tmp tmp.XXXXXXXXXX.stash`
 pwd=`pwd`
@@ -105,15 +104,11 @@ cat - > $vmScriptFile << EOF
 				ifTrue: [ ex pass ]
 				ifFalse: [ 
 					StashScript
-						ansiRedOn: StLauncherCommon stderr 
-						during: [ StLauncherCommon stderr nextPutAll: ex description ].
-					StLauncherCommon stderr lf.
+						ansiRedOn: AbstractProgram stderr 
+						during: [ AbstractProgram stderr nextPutAll: ex description ].
+					AbstractProgram stderr lf.
 					false ] ].
 EOF
-
-#
-# code used to launch the vm associated with the default image, that generates the \$scriptCmdLine
-#
 
 if [ "$ST_LAUNCHER_DEFAULT_PLATFORM" = "gemstone" ] ; then
 	inputFile=`mktemp`
@@ -167,7 +162,8 @@ EOF
 			exit $status
 		fi
 #		>&2 echo "-- debug session ended, continuing execution"
-		scriptCmdLine=`cat $stdoutF`
+		chmod +x $stdoutF
+		$stdoutF
 	fi
 elif [ "$ST_LAUNCHER_DEFAULT_PLATFORM" = "pharo" ] ; then
 	echo "PHARO not supported ... yet"
@@ -176,9 +172,6 @@ else
 	echo "Unsupported platform: \$ST_LAUNCHER_DEFAULT_PLATFORM"
 	exit 1
 fi
-
-# >&2 echo "$scriptCmdLine"
-$scriptCmdLine
 
 # https://github.com/mkropat/sh-realpath/blob/master/realpath.sh
 realpath() {
