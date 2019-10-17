@@ -4,21 +4,18 @@
 
 usage() {
   cat <<HELP
-USAGE: $(basename $0) scriptPath [ [ imageName ] [-H] [-D] [-V] [topaz vm args] -- ] [script args]
-       $(basename $0) scriptPath [ [ imageName ] [-H] [-D] [-V] [topaz vm args] --   [script args] -- [non-option script args] 
+USAGE: $(basename $0) scriptPath [ [-H] [-D] [-V] [topaz-vm-args] -- ] [script-args]
+       $(basename $0) scriptPath [ [-H] [-D] [-V] [topaz-vm-args] ] -- [script-args] -- [non-option-script-args]
 
-If topaz arguments are specified the <imageName> is required to be the first 
-argument following the <scriptPath>.
-
-The $(basename $0) options may be interspersed with the topz vm args as of
+The $(basename $0) -HDV options may be interspersed with the topz-vm-args as of
 GemStone 3.5.0.
 
-If the scriptdefault.envto use '--' to terminate it's argument parsing, then a 
+If non-option-script-args are present, use '--' to terminate the script-args and a 
 '--' must precede the script arguments on the command line.
 
 OPTIONS
   -D
-     Bring up topaz debugger for StashCommandError exceptions. Normally these exceptions result in
+     Bring up topaz debugger for Error exceptions. Normally these exceptions result in
      an error message to stderr.
   -H
      Display help message and exit.
@@ -26,25 +23,21 @@ OPTIONS
      Verbose output
 
 EXAMPLES
-  $(basename $0) -H                           # this message
-  $(basename $0) ./hello.st solo_350 -h --    # topaz help message
-  $(basename $0) ./hello.st solo_350 -- -h    # hello.st help message using solo_350 image
-  $(basename $0) ./hello.st -- -h             # hello.st help message using default image
-  $(basename $0) ./hello.st -h                # hello.st help message using default image
-  $(basename $0) ./hello.st -x 								# run hello.st with an invalid option --> error message on stderr
-  $(basename $0) ./hello.st solo_350 -D -- -x # run hello.st with an invalid option --> bring up topaz debugger
+  $(basename $0) -H                   # this message
+  $(basename $0) $GS_HOME/alt_bin/examples/hello.st -H --     # this message
+  $(basename $0) $GS_HOME/alt_bin/examples/hello.st -- -h     # hello.st help message
+	$(basename $0) $GS_HOME/alt_bin/examples/hello.st -- -h     # hello.st help message using default image
+  $(basename $0) $GS_HOME/alt_bin/examples/hello.st -- -x 		# run hello.st with an invalid option --> error message on stderr
+  $(basename $0) $GS_HOME/alt_bin/examples/hello.st -D -- -x  # run hello.st with an invalid option --> bring up topaz debugger
 
 HELP
 }
-
-. $HOME/.config/st_launcher/st_launcher_default.env
 
 stashFile=`realpath $1`
 scriptName="$(basename -- $1)"
 shift
 scriptArgs=""
 launcherVmArgs=""
-imageName="$ST_LAUNCHER_DEFAULT_IMAGE_NAME"
 
 interpArgs="$*"
 
@@ -52,11 +45,11 @@ for argument in $@ ; do
 	if [ "$argument" = "--" ] ; then
 		launcherVmArgs=$scriptArgs
 		args=($launcherVmArgs)
-		case ${args[0]} in
-			-*) # allow imageName to be optional first argument
-				;;
-			*) imageName=${args[0]} ;;
-		esac
+#		case ${args[0]} in
+#			-*) # allow imageName to be optional first argument
+#				;;
+#			*) imageName=${args[0]} ;;
+#		esac
 		
 		scriptArgs=""
 	else
@@ -74,22 +67,33 @@ for argument in $launcherVmArgs ; do
 	esac
 done
 
-if [ "${ST_LAUNCHER_HOME}x" = "x" ] ; then
-	export ST_LAUNCHER_HOME="$ST_LAUNCHER_DEFAULT_IMAGE_PATH/../.."
+#
+#	this generates the topaz code to execute the script in then gsdevkit_launcher solo extent
+#
+if [ "$debugCommandError" = "true" ] ; then
+	ifErr1="iferr 1 stk"
+	ifErr2="display oops"
+	topazExit="EXITIFNOERROR"
+else
+	ifErr1="iferr 1 exit 1"
+	ifErr2=""
+	topazExit="EXIT"
 fi
-
-#
-#	this is the smalltalk code executed by the vm aasociated with the \$imageName image
-#
-vmScriptFile=`mktemp -p /tmp tmp.XXXXXXXXXX.stash`
+vmScriptFile=`mktemp -p /tmp tmp.XXXXXXXXXX.gsdevkit`
 pwd=`pwd`
 cat - > $vmScriptFile << EOF
 
+$ifErr1
+$ifErr2
+
+set solologin on
+login
+
+run
 	[
-		StLauncherScript
+		AbstractGsDevKitProgram
 			loadAndExecuteScriptClassFile: '$stashFile'
 			stashArgs: '$scriptArgs'
-			imageName: '$imageName'
 			scriptName: '$scriptName'
 			workingDir: '$pwd'.
 		true	]
@@ -103,77 +107,27 @@ cat - > $vmScriptFile << EOF
 			$debugCommandError
 				ifTrue: [ ex pass ]
 				ifFalse: [ 
-					StashScript
-						ansiRedOn: AbstractProgram stderr 
-						during: [ AbstractProgram stderr nextPutAll: ex description ].
-					AbstractProgram stderr lf.
+					AbstractGsDevKitProgram
+						ansiRedOn: AbstractGsDevKitProgram stderr 
+						during: [ AbstractGsDevKitProgram stderr nextPutAll: ex description ].
+					AbstractGsDevKitProgram stderr lf.
 					false ] ].
-EOF
-
-if [ "$ST_LAUNCHER_DEFAULT_PLATFORM" = "gemstone" ] ; then
-	inputFile=`mktemp`
-	cat - > $inputFile << EOF
-# st_launcher debugging only
-iferr 1 stack
-iferr 2 exit 1
-display oops
-
-	set solologin on
-	login
-
-	expectvalue true
-	run
-	| launcherArgMap |
-	launcherArgMap := Dictionary new
-		at: '-H' put: #none;	"help"
-		at: '-D' put: #none;	"debug StashCommandErrors"
-		at: '-V' put: #none;	"list script execution"
-		yourself.
-	^ StLauncherPlatform 
-			generateSmalltalkScriptLaunchCommandLineFor: '$imageName'
-			launchScriptPath: '$vmScriptFile'
-			launcherArgs: '$interpArgs' 
-			launcherArgMap: launcherArgMap 
-			debugCommandError: $debugCommandError.
 %
-EXITIFNOERROR
-EOF
-	export GEMSTONE="$ST_LAUNCHER_DEFAULT_PRODUCT_PATH"
-	if [ "$debugCommandError" = "false" ] ; then
-		scriptFile=`mktemp`
-		$GEMSTONE/bin/topaz -lq -I "$ST_LAUNCHER_DEFAULT_IMAGE_PATH/.topazini" -C "GEM_SOLO_EXTENT=$ST_LAUNCHER_DEFAULT_SNAPSHOT_PATH" -S $inputFile > $scriptFile
-		status=$?
-		if [ "$status" != "0" ]; then
-			exit $status
-		fi
-		chmod +x $scriptFile
-		$scriptFile
-		status=$?
-		if [ "$status" != "0" ]; then
-			exit $status
-		fi
-	else
-		# expecting to interactively debug topaz
-		stdoutF=`mktemp`
-		$GEMSTONE/bin/topaz -lq -I "$ST_LAUNCHER_DEFAULT_IMAGE_PATH/.topazini" -C "GEM_SOLO_EXTENT=$ST_LAUNCHER_DEFAULT_SNAPSHOT_PATH" -S $inputFile | tee $stdoutF >&2
-		status="${PIPESTATUS[0]}"
-		if [ "$status" != "0" ]; then
-			echo "-- debug session in topaz exited with a non-zero exit status"
-			exit $status
-		fi
-#		>&2 echo "-- debug session ended, continuing execution"
-		chmod +x $stdoutF
-		$stdoutF
-	fi
-elif [ "$ST_LAUNCHER_DEFAULT_PLATFORM" = "pharo" ] ; then
-	echo "PHARO not supported ... yet"
-	exit 1
-else
-	echo "Unsupported platform: \$ST_LAUNCHER_DEFAULT_PLATFORM"
-	exit 1
-fi
 
+$topazExit
+EOF
+
+export GEMSTONE="$GS_HOME/shared/gemstone/product"
+$GEMSTONE/bin/topaz -lq \
+										-I "$GS_HOME/shared/gemstone/.topazini" \
+										-C "GEM_SOLO_EXTENT=$GS_HOME/shared/gemstone/snapshots/extent0.gsdevkit_launcher.dbf" \
+										-S $vmScriptFile \
+										-lq
+
+#################################################################################################
 # https://github.com/mkropat/sh-realpath/blob/master/realpath.sh
+#################################################################################################
+
 realpath() {
     canonicalize_path "$(resolve_symlinks "$1")"
 }

@@ -1,5 +1,5 @@
 SET GEMSTONE admin_gs_350
-set user SystemUser
+set user DataCurator
 set password swordfish
 set solologin on
 
