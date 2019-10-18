@@ -10,18 +10,21 @@
 	set u SystemUser p swordfish
 	login
 
-	run
-	"Need to patch AbstractDictionary>>at:ifPresent: to use cull:"
-	AbstractDictionary
-		compileMethod: 'at: key ifPresent: aBlock
-	"Lookup the given key in the receiver. If it is present, answer the value of evaluating the given
-		block with the value associated with the key. Otherwise, answer nil."
-
-	| v |
-	v := self at: key ifAbsent: [ ^ nil ].
-	^ aBlock cull: v'
-%
-	commit
+#
+#	Already implemented in GLASS (tODE)
+#
+#	run
+#	"Need to patch AbstractDictionary>>at:ifPresent: to use cull:"
+#	AbstractDictionary
+#		compileMethod: 'at: key ifPresent: aBlock
+#	"Lookup the given key in the receiver. If it is present, answer the value of evaluating the given
+#		block with the value associated with the key. Otherwise, answer nil."
+#
+#	| v |
+#	v := self at: key ifAbsent: [ ^ nil ].
+#	^ aBlock cull: v'
+#%
+#	commit
 
 #
 #	installation using Rowan gsdevkit_launcher rereqs 

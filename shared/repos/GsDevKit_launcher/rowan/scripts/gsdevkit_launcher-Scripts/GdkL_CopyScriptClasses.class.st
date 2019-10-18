@@ -43,3 +43,27 @@ self halt.
 	projectDefinition_filetree export.
 	projectDefinition_tonel export.
 ]
+
+{ #category : 'options' }
+GdkL_CopyScriptClasses >> scriptMethodOptions [
+	^ super scriptMethodOptions, 
+	{
+			#('write' nil #required #write:).
+	}
+]
+
+{ #category : 'usage' }
+GdkL_CopyScriptClasses >> usageExamples: scriptName [
+
+	^	scriptName, '
+	', scriptName, ' --write=filetree GdkL_Error GdkL_Hello
+
+	', scriptName, ' -D -- --write=tonel GdkL_Error
+'
+]
+
+{ #category : 'usage' }
+GdkL_CopyScriptClasses >> usageSynopsis: scriptName [
+
+	^	(super usageSynopsis: scriptName), ' --write=[filetree|tonel] <script-class-names>'
+]
