@@ -2,18 +2,19 @@
 "
 Copy script classes back and forth between Tonel and FileTree formats.
 
-For the work on https://github.com/GsDevKit/GsDevKit_home/issues/260 it is
-convenient/necessary to develop scripts using tODE which currently does not
-support reading/writing Tonel format. Of course in order to EXECUTE a tonel
-class file-based script, it must be in Tonel format. So this script will do
-the work of copying classes back and forth between Monticello FileTree packages
-and Rown Tonel packages.
-
-
+	For the work on https://github.com/GsDevKit/GsDevKit_home/issues/260 it is
+	convenient/necessary to develop scripts using tODE which currently does not
+	support reading/writing Tonel format. Of course in order to EXECUTE a tonel
+	class file-based script, it must be in Tonel format. So this script will do
+	the work of copying classes back and forth between Monticello FileTree
+	packages and Rown Tonel packages.
 "
 Class {
 	#name : 'GdkL_CopyScriptClasses',
 	#superclass : 'AbstractGsDevKitProgram',
+	#instVars : [
+		'write'
+	],
 	#category : 'gsdevkit_launcher-Scripts'
 }
 
@@ -22,8 +23,8 @@ GdkL_CopyScriptClasses >> _projectDefinitionForUrl: rowanSpecUrl [
 	| projectDef |
 	projectDef := (self _projectDefinitionClass newForUrl: rowanSpecUrl)
 		projectHome: '$GS_HOME/shared/repos/';
+		read;
 		yourself.
-	projectDef read.
 	^ projectDef
 ]
 
@@ -34,14 +35,34 @@ GdkL_CopyScriptClasses >> _projectDefinitionClass [
 
 { #category : 'main' }
 GdkL_CopyScriptClasses >> main [
-	|  projectDefinition_filetree projectDefinition_tonel |
+	|  projectDefinition_filetree projectDefinition_tonel packageName sourcePackageDef targetPackageDef |
+
+	args isEmpty ifTrue: [ self error: 'Expected to find at least one class name on command line ' ].
+
 	projectDefinition_filetree := self _projectDefinitionForUrl: 'file:$GS_HOME/shared/repos/GsDevKit_launcher/rowan/specs/gsdevkit_launcher_filetree.ston'.
 	projectDefinition_tonel := self _projectDefinitionForUrl: 'file:$GS_HOME/shared/repos/GsDevKit_launcher/rowan/specs/gsdevkit_launcher_tonel.ston'.
 
-self halt.
+self halt. 
 
-	projectDefinition_filetree export.
-	projectDefinition_tonel export.
+	packageName := 'gsdevkit_launcher-Scripts'.
+	write = 'filetree'
+		ifTrue: [ 
+			sourcePackageDef := projectDefinition_tonel packageNamed: packageName.
+			targetPackageDef := projectDefinition_filetree packageNamed: packageName ]
+		ifFalse: [ 
+			targetPackageDef := projectDefinition_tonel packageNamed: packageName.
+			sourcePackageDef := projectDefinition_filetree packageNamed: packageName ].
+
+	args do: [:className |
+		targetPackageDef 
+			removeClassNamed: className 
+			ifAbsent: [ "No need to remove the class definition if is not present" ].
+		targetPackageDef addClassDefinition: (sourcePackageDef classDefinitionNamed: className) ].
+
+	write = 'filetree'
+		ifTrue: [ projectDefinition_filetree exportPackages ].
+	write = 'tonel'
+		ifTrue: [ projectDefinition_tonel exportPackages ].
 ]
 
 { #category : 'options' }
@@ -56,9 +77,9 @@ GdkL_CopyScriptClasses >> scriptMethodOptions [
 GdkL_CopyScriptClasses >> usageExamples: scriptName [
 
 	^	scriptName, '
-	', scriptName, ' --write=filetree GdkL_Error GdkL_Hello
+	', scriptName, ' --write=tonel GdkL_Error GdkL_Hello GdkL_CopyScriptClasses
 
-	', scriptName, ' -D -- --write=tonel GdkL_Error
+	', scriptName, ' -D -- --write=filetree GdkL_Error
 '
 ]
 
@@ -66,4 +87,12 @@ GdkL_CopyScriptClasses >> usageExamples: scriptName [
 GdkL_CopyScriptClasses >> usageSynopsis: scriptName [
 
 	^	(super usageSynopsis: scriptName), ' --write=[filetree|tonel] <script-class-names>'
+]
+
+{ #category : 'accessing' }
+GdkL_CopyScriptClasses >> write: repoTarget [
+
+	write := repoTarget asLowercase.
+	(#( 'filetree' 'tonel') includes: write)
+		ifFalse: [ self error: 'The arg to the --write option must be ''filetree'' or ''tonel'', not ', repoTarget printString ]
 ]

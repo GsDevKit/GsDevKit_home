@@ -1,0 +1,4 @@
+main
+main
+
+	^'hello world'

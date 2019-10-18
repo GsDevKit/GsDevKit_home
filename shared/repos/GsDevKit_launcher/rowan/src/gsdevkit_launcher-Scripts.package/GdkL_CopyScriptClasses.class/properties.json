@@ -1,0 +1,9 @@
+{
+	"category" : "gsdevkit_launcher-Scripts",
+	"instvars" : [
+		"write"
+	],
+	"name" : "GdkL_CopyScriptClasses",
+	"super" : "AbstractGsDevKitProgram",
+	"type" : "normal"
+}

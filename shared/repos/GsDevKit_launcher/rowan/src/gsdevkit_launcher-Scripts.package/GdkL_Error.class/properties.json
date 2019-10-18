@@ -1,0 +1,6 @@
+{
+	"category" : "gsdevkit_launcher-Scripts",
+	"name" : "GdkL_Error",
+	"super" : "AbstractGsDevKitProgram",
+	"type" : "normal"
+}
