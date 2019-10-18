@@ -3,13 +3,13 @@
 Hello world GsDevKit script
 "
 Class {
-	#name : 'GsDevKitLauncher_Hello',
+	#name : 'GdkL_Hello',
 	#superclass : 'AbstractGsDevKitProgram',
 	#category : 'gsdevKit_launcher-Scripts'
 }
 
 { #category : 'main' }
-GsDevKitLauncher_Hello >> main [
+GdkL_Hello >> main [
 
 	^'hello world'
 ]

@@ -1,0 +1,4 @@
+{ 
+	#format : 'filetree',
+	#convention : 'RowanHybrid'
+}

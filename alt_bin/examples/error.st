@@ -3,20 +3,20 @@
 Example script that signals an error.
 "
 Class {
-	#name : 'GsDevKitLauncher_Error',
+	#name : 'GdkL_Error',
 	#superclass : 'AbstractGsDevKitProgram',
 	#category : 'gsdevKit_launcher-Scripts'
 }
 
 { #category : 'main' }
-StLauncher_Error >> main [
+GdkL_Error >> main [
 
 	Error signal: 'You wanted an error?'.
 	^ nil
 ]
 
 { #category : 'usage' }
-StLauncher_Error >> usageExamples: scriptName [
+GdkL_Error >> usageExamples: scriptName [
 
 	^	scriptName, '
 	', scriptName, ' -D --

@@ -1,0 +1,20 @@
+RwComponentLoadConfiguration {
+	#name : 'Scripts',
+	#comment : 'copyScriptClasses.st support - tonel/filetree packages',
+	#version : '0.1.0',
+	#conditionalPackages : {
+		[
+			'common'
+		] : {
+			'core' : {
+				#packageNames : [
+					'gsdevkit_launcher-Scripts'
+				]
+			}
+		}
+	},
+	#conditionalPackageMapSpecs : { },
+	#definedGroupNames : {
+		'core' : [ ]
+	}
+}
