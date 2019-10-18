@@ -89,11 +89,13 @@ $ifErr2
 set solologin on
 login
 
+status
+
 run
 	[
 		AbstractGsDevKitProgram
 			loadAndExecuteScriptClassFile: '$stashFile'
-			stashArgs: '$scriptArgs'
+			args: '$scriptArgs'
 			scriptName: '$scriptName'
 			workingDir: '$pwd'.
 		true	]
@@ -121,8 +123,7 @@ export GEMSTONE="$GS_HOME/shared/gemstone/product"
 $GEMSTONE/bin/topaz -lq \
 										-I "$GS_HOME/shared/gemstone/.topazini" \
 										-C "GEM_SOLO_EXTENT=$GS_HOME/shared/gemstone/snapshots/extent0.gsdevkit_launcher.dbf" \
-										-S $vmScriptFile \
-										-lq
+										-S $vmScriptFile 
 
 #################################################################################################
 # https://github.com/mkropat/sh-realpath/blob/master/realpath.sh
