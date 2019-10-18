@@ -19,6 +19,11 @@ Class {
 }
 
 { #category : 'private' }
+GdkL_CopyScriptClasses >> _projectDefinitionClass [
+	^ ((AllUsers userWithId: 'SystemUser') objectNamed: 'RwComponentProjectDefinition')
+]
+
+{ #category : 'private' }
 GdkL_CopyScriptClasses >> _projectDefinitionForUrl: rowanSpecUrl [
 	| projectDef |
 	projectDef := (self _projectDefinitionClass newForUrl: rowanSpecUrl)
@@ -26,11 +31,6 @@ GdkL_CopyScriptClasses >> _projectDefinitionForUrl: rowanSpecUrl [
 		read;
 		yourself.
 	^ projectDef
-]
-
-{ #category : 'private' }
-GdkL_CopyScriptClasses >> _projectDefinitionClass [
-	^ ((AllUsers userWithId: 'SystemUser') objectNamed: 'RwComponentProjectDefinition')
 ]
 
 { #category : 'main' }
