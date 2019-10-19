@@ -1,0 +1,21 @@
+#!/usr/local/bin/smalltalk/gemstone/topaz
+
+#
+#	install scripts in tODE for development
+#
+
+	set u DataCurator p swordfish
+	login
+
+	run
+	Rowan projectTools browser addRowanSymbolDictionariesToPersistentSymbolList.
+	Metacello new
+		baseline: 'GsDevKit_launcher';
+		repository: 'filetree://$GS_HOME/shared/repos/GsDevKit_launcher/rowan/src';
+		load: 'Scripts'
+%
+	commit
+
+	errorCount
+	exitifnoerror
+

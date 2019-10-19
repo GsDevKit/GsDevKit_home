@@ -31,7 +31,6 @@
 	url := 'file:$ROWAN_PROJECTS_HOME/GsDevKit_launcher/rowan/specs/gsdevkit_launcher.ston'.
 	projectSetDefinition := (RwComponentProjectDefinition newForUrl: url)
 		projectHome: '$ROWAN_PROJECTS_HOME';
-		packageFormat: 'filetree';
 		read.
 	projectSetDefinition load
 %

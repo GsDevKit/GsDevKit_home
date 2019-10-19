@@ -18,4 +18,5 @@ cp -f snapshots/extent0.gsdevkit_launcher.dbf $GS_HOME/shared/gemstone/snapshots
 
 startStone $GEMSTONE_NAME	# in 3.5.1 snapshot up above
 
+$ROWAN_PROJECTS_HOME/GsDevKit_launcher/bootstrapping/gemstone/bin/bootstrap_install_scripts.tpz $GEMSTONE_NAME -lq
 
