@@ -10,6 +10,5 @@ Class {
 
 { #category : 'main' }
 GdkL_Hello >> main [
-
-	^'hello world'
+  ^ 'hello world'
 ]
