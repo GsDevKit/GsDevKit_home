@@ -1,4 +1,3 @@
 main
 main
-
-	^'hello world'
+  ^ 'howdy do world'
