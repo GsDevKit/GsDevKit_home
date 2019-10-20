@@ -1,6 +1,14 @@
 {
 	"category" : "gsdevkit_launcher-Scripts",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
 	"name" : "GdkL_Error",
+	"pools" : [
+		 ],
 	"super" : "AbstractGsDevKitProgram",
-	"type" : "normal"
-}
+	"type" : "normal" }
