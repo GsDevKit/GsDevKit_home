@@ -18,6 +18,45 @@ Class {
 	#category : 'gsdevkit_launcher-Scripts'
 }
 
+{ #category : 'actions' }
+GdkL_CopyScriptClasses class >> copyFileTreeToTonel [
+  "self copyFileTreeToTonel"
+
+  ^ self copyFileTreeToTonel: self defaultClassNames
+]
+
+{ #category : 'actions' }
+GdkL_CopyScriptClasses class >> copyFileTreeToTonel: classNames [
+  "self copyFileTreeToTonel: #('GdkL_CopyScriptClasses' 'GdkL_Error' 'GdkL-Hello')"
+
+  ^ self new
+    classNames: classNames;
+    write: 'tonel';
+    main
+]
+
+{ #category : 'actions' }
+GdkL_CopyScriptClasses class >> copyTonelToFiletree [
+  "self copyTonelToFiletree"
+
+  ^ self copyTonelToFiletree: self defaultClassNames
+]
+
+{ #category : 'actions' }
+GdkL_CopyScriptClasses class >> copyTonelToFiletree: classNames [
+  "self copyTonelToFiletree: #('GdkL_CopyScriptClasses' 'GdkL_Error' 'GdkL-Hello')"
+
+  ^ self new
+    classNames: classNames;
+    write: 'filetree';
+    main
+]
+
+{ #category : 'private' }
+GdkL_CopyScriptClasses class >> defaultClassNames [
+  ^ #('GdkL_CopyScriptClasses' 'GdkL_Error' 'GdkL_Hello')
+]
+
 { #category : 'private' }
 GdkL_CopyScriptClasses >> _projectDefinitionClass [
 	^ ((AllUsers userWithId: 'SystemUser') objectNamed: 'RwComponentProjectDefinition')
@@ -31,6 +70,11 @@ GdkL_CopyScriptClasses >> _projectDefinitionForUrl: rowanSpecUrl [
 		read;
 		yourself.
 	^ projectDef
+]
+
+{ #category : 'accessing' }
+GdkL_CopyScriptClasses >> classNames: classNames [
+  args := classNames
 ]
 
 { #category : 'main' }
