@@ -30,6 +30,9 @@ cd $GS_HOME
 git fetch --all
 git checkout issue_260
 
+# bootstrap gsdevkit_launcher script support
+$GS_HOME/alt_bin/bootstrap.sh
+
 # add alt_bin and alt_bin/examples to your path
 . alt_bin/defHome_PATH.env
 
