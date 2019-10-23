@@ -15,9 +15,10 @@ cp extents/extent0.dbf snapshots/extent0.gsdevkit_launcher.dbf
 # cp the solo extent to snapshots directory
 chmod oug-w snapshots/extent0.gsdevkit_launcher.dbf
 cp -f snapshots/extent0.gsdevkit_launcher.dbf $GS_HOME/shared/gemstone/snapshots/
-rm -rf $GS_HOME/shared/gemstone/snapshots/extent0.gsdevkit_launcher.dbf.zip
-zip $GS_HOME/shared/gemstone/snapshots/extent0.gsdevkit_launcher.dbf.zip snapshots/extent0.gsdevkit_launcher.dbf
-
+pushd $GS_HOME/shared/gemstone/snapshots/
+	rm -rf extent0.gsdevkit_launcher.dbf.zip
+	zip extent0.gsdevkit_launcher.dbf.zip extent0.gsdevkit_launcher.dbf
+popd
 startStone $GEMSTONE_NAME	# in 3.5.1 snapshot up above
 
 $ROWAN_PROJECTS_HOME/GsDevKit_launcher/bootstrapping/gemstone/bin/bootstrap_install_scripts.tpz $GEMSTONE_NAME -lq

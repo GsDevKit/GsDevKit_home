@@ -19,18 +19,20 @@ gsdevkit_launcher_version="v0.10.0"
 
 cd $GS_HOME/shared/gemstone
 
-# make sure 3.5.0 is installed and create symbolic link to the 3.5.0 product tree
-$GS_HOME/bin/downloadGemStone 3.5.0
-if [ ! -d "$GS_HOME/shared/downloads/products/GemStone64Bit3.5.0-x86_64.Linux" ] ; then
-	# not Linux
-	if [ ! -d "$GS_HOME/shared/downloads/products/GemStone64Bit3.5.0-i386.Darwin" ] ; then
-		# not Mac
-		exit_1_banner "gsdevkit_launcher currently supported only on Mac or Linux platforms"
+if [ ! -d product ] ; then 
+	# make sure 3.5.0 is installed and create symbolic link to the 3.5.0 product tree
+	$GS_HOME/bin/downloadGemStone 3.5.0
+	if [ ! -d "$GS_HOME/shared/downloads/products/GemStone64Bit3.5.0-x86_64.Linux" ] ; then
+		# not Linux
+		if [ ! -d "$GS_HOME/shared/downloads/products/GemStone64Bit3.5.0-i386.Darwin" ] ; then
+			# not Mac
+			exit_1_banner "gsdevkit_launcher currently supported only on Mac or Linux platforms"
+		else
+			ln -s $GS_HOME/shared/downloads/products/GemStone64Bit3.5.0-i386.Darwin product
+		fi
 	else
-		ln -s $GS_HOME/shared/downloads/products/GemStone64Bit3.5.0-i386.Darwin product
+		ln -s $GS_HOME/shared/downloads/products/GemStone64Bit3.5.0-x86_64.Linux product
 	fi
-else
-	ln -s $GS_HOME/shared/downloads/products/GemStone64Bit3.5.0-x86_64.Linux product
 fi
 
 # download and install the gsdevkit_launcher solo extent 
