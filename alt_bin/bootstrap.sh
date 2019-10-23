@@ -35,7 +35,7 @@ fi
 
 # download and install the gsdevkit_launcher solo extent 
 pushd snapshots
-	curl  -L -O -s -S "https://github.com/dalehenrich/st_launcher/releases/download/$gsdevkit_launcher_version/extent0.gsdevkit_launcher.dbf.zip"
+	curl  -L -O -s -S "https://github.com/GsDevKit/GsDevKit_home/releases/download/v0.10.0/extent0.gsdevkit_launcher.dbf.zip"
 	rm -rf extent0.gsdevkit_launcher.dbf
 	unzip -q  extent0.gsdevkit_launcher.dbf.zip
 popd
