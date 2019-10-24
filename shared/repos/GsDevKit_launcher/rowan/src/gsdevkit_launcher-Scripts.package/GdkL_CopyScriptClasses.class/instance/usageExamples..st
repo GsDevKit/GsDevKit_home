@@ -1,8 +1,14 @@
 usage
 usageExamples: scriptName
+  ^ scriptName
+    ,
+      '
+	' , scriptName
+    ,
+      ' --write=tonel GdkL_Error GdkL_Hello GdkL_CopyScriptClasses GdkL_Install_Launcher
 
-	^	scriptName, '
-	', scriptName, ' --write=tonel GdkL_Error GdkL_Hello GdkL_CopyScriptClasses
-
-	', scriptName, ' -D -- --write=filetree GdkL_Error
+	'
+    , scriptName
+    ,
+      ' -D -- --write=filetree GdkL_Error
 '
