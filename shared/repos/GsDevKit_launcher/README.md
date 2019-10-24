@@ -39,7 +39,7 @@ git checkout issue_260
 $GS_HOME/alt_bin/bootstrap_launcher
 
 # add alt_bin and alt_bin/examples to your path
-. alt_bin/defHome_PATH.env
+. alt_bin/defHOME_PATH.env
 
 # finish installation of gsdevkit_launcher support using a gsdevkit_launcher script
 $GS_HOME/alt_bin/install_launcher.st
