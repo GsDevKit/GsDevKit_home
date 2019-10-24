@@ -39,10 +39,30 @@ Class {
 	#instVars : [
 		'clone',
 		'create',
-		'stoneName'
+		'stoneName',
+		'summary'
 	],
 	#category : 'gsdevkit_launcher-Scripts'
 }
+
+{ #category : 'accessing' }
+GdkL_Install_Launcher class >> repositoryCloneSpecs [
+  ^ {(Dictionary new
+    at: 'remoteUrl' put: 'https://github.com/GemTalk/Rowan.git';
+    at: 'repositoryDirName' put: 'Rowan';
+    at: 'committish' put: 'gsdevkit_launcher';
+    yourself).
+  (Dictionary new
+    at: 'remoteUrl' put: 'https://github.com/dalehenrich/st_launcher.git';
+    at: 'repositoryDirName' put: 'st_launcher';
+    at: 'committish' put: 'candidateV0.2';
+    yourself).
+  (Dictionary new
+    at: 'remoteUrl' put: 'https://github.com/dalehenrich/stash.git';
+    at: 'repositoryDirName' put: 'stash';
+    at: 'committish' put: 'candidateV0.1';
+    yourself)}
+]
 
 { #category : 'private' }
 GdkL_Install_Launcher >> _defaultStoneName [
@@ -68,15 +88,66 @@ GdkL_Install_Launcher >> createStone [
   ^ create ifNil: [ clone isNil ]
 ]
 
+{ #category : 'actions' }
+GdkL_Install_Launcher >> doClone [
+  | gitTool repositoryRoot |
+  self clone
+    ifFalse: [ ^ self summary ].
+  gitTool := Rowan gitTools.
+  repositoryRoot := '$GS_HOME/shared/repos' asFileReference.
+  self summary at: #'clone' put: Dictionary new.
+  self class repositoryCloneSpecs
+    do: [ :specDict | 
+      | repositoryName repositoryDirectory committish |
+      repositoryName := specDict at: 'repositoryDirName'.
+      repositoryDirectory := repositoryRoot / repositoryName.
+      repositoryDirectory exists
+        ifTrue: [ 
+          (self summary at: #'clone')
+            at: repositoryName
+            put:
+              #'skipped'
+                ->
+                  ('git repository already exists at '
+                    , repositoryDirectory pathString printString) ]
+        ifFalse: [ 
+          gitTool
+            gitcloneIn: repositoryRoot pathString
+            with:
+              ' --no-checkout ' , (specDict at: 'remoteUrl') , ' '
+                , repositoryDirectory pathString.
+          committish := specDict at: 'committish'.
+          gitTool gitcheckoutIn: repositoryDirectory pathString with: committish.
+          (self summary at: #'clone')
+            at: repositoryName
+            put:
+              #'cloned' -> (repositoryDirectory pathString , ':' , committish) ] ]
+]
+
+{ #category : 'actions' }
+GdkL_Install_Launcher >> doCreateStone [
+  self createStone
+    ifFalse: [ ^ self summary ]
+]
+
 { #category : 'main' }
 GdkL_Install_Launcher >> main [
-  self stderr
-    nextPutAll: 'clone :: ' , self clone printString;
-    lf;
-    nextPutAll: 'createStone :: ' , self createStone printString.
-  self createStone
-    ifTrue: [ self stderr nextPutAll: ' -- '; nextPutAll: self stoneName ].
-  self stderr lf
+  false
+    ifTrue: [ 
+      self stderr
+        nextPutAll: 'clone :: ' , self clone printString;
+        lf;
+        nextPutAll: 'createStone :: ' , self createStone printString.
+      self createStone
+        ifTrue: [ 
+          self stderr
+            nextPutAll: ' -- ';
+            nextPutAll: self stoneName ].
+      self stderr lf ].
+  self
+    doClone;
+    doCreateStone.
+  ^ self summary
 ]
 
 { #category : 'options' }
@@ -100,6 +171,16 @@ GdkL_Install_Launcher >> stoneName: aStoneName [
     ifNotNil: [ stoneName := aStoneName ]
 ]
 
+{ #category : 'actions' }
+GdkL_Install_Launcher >> summary [
+  ^ summary
+    ifNil: [ 
+      summary := Dictionary new
+        at: #'clone' put: #'skipped' -> 'no --clone option specified';
+        at: #'createStone' put: #'skipped' -> 'no --create option specified';
+        yourself ]
+]
+
 { #category : 'usage' }
 GdkL_Install_Launcher >> usageExamples: scriptName [
   ^ scriptName
@@ -110,7 +191,13 @@ GdkL_Install_Launcher >> usageExamples: scriptName [
       ' --clone --create=gs_launcher_350
 	' , scriptName
     ,
-      ' --create=gs_launcher_350
+      ' --create=gs_launcher_350	
+	' , scriptName
+    ,
+      ' --create
+	' , scriptName
+    ,
+      ' --create --clone
 	' , scriptName
     ,
       ' --clone

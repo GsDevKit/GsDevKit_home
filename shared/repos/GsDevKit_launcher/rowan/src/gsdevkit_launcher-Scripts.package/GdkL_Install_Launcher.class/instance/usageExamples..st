@@ -8,7 +8,13 @@ usageExamples: scriptName
       ' --clone --create=gs_launcher_350
 	' , scriptName
     ,
-      ' --create=gs_launcher_350
+      ' --create=gs_launcher_350	
+	' , scriptName
+    ,
+      ' --create
+	' , scriptName
+    ,
+      ' --create --clone
 	' , scriptName
     ,
       ' --clone

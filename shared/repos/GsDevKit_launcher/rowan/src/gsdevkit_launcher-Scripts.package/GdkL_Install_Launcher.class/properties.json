@@ -4,11 +4,12 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "",
+	"commentStamp" : "dkh 10/23/2019 16:32",
 	"instvars" : [
 		"clone",
 		"create",
-		"stoneName" ],
+		"stoneName",
+		"summary" ],
 	"name" : "GdkL_Install_Launcher",
 	"pools" : [
 		 ],
