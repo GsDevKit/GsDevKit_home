@@ -23,3 +23,5 @@ startStone $GEMSTONE_NAME	# in 3.5.1 snapshot up above
 
 $ROWAN_PROJECTS_HOME/GsDevKit_launcher/bootstrapping/gemstone/bin/bootstrap_install_scripts.tpz $GEMSTONE_NAME -lq
 
+todeIt $GEMSTONE_NAME mount @/sys/stone/dirs/GsDevKit_launcher/shared/repos/GsDevKit_launcher/tode /home gsdevkit_launcher
+

@@ -1,0 +1,27 @@
+TDScriptLeafNode{#name:'copyTonelScriptsToFiletree',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./copyTonelScriptsToFiletree -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ GdkL_CopyScriptClasses copyTonelToFiletree ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  copyTonelScriptsToFiletree - copyTonelScriptsToFiletree script utility template
+SYNOPSIS
+  copyTonelScriptsToFiletree [-h|--help]
+DESCRIPTION
+  Copy the tonel script classes to the filetree package.
+
+  To be used when manual edits have been made to the tonel scripts.
+EXAMPLES
+  ./copyTonelScriptsToFiletree --help
+  ./copyTonelScriptsToFiletree -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2019-10-24T10:18:08.695271015167236-07:00'],#modificationTime:DateAndTime['2019-10-24T10:25:39.14751696586609-07:00']}

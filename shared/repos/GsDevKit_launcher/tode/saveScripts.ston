@@ -1,0 +1,37 @@
+TDScriptLeafNode{#name:'saveScripts',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./saveScripts -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      \"
+\t\tSave the filetree scripts package, then copy the script classes to the tonel package.
+\t\tSince we are writing to a metadataless repository, the version name commit message are
+\t\tnot written to disk.
+      \"
+      topez
+        evaluateCommandString:
+          \'mc save gsdevkit_launcher-Scripts gsdevkit_launcher-Scripts-xxx.0 filetree://$GS_HOME/shared/repos/GsDevKit_launcher/rowan/src `dummy message`\'.
+      GdkL_CopyScriptClasses copyFileTreeToTonel ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  saveScripts - saveScripts script utility template
+SYNOPSIS
+  saveScripts [-h|--help]
+DESCRIPTION
+  Save the gsdevkit_launcher-Scripts package to the filetree script package and
+  copy the filetree classes to the tonel script package.
+
+  To be used after making in image changes to the script classes.
+EXAMPLES
+  ./saveScripts --help
+  ./saveScripts -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2019-10-24T10:08:21.52523899078369-07:00'],#modificationTime:DateAndTime['2019-10-24T10:28:21.8267650604248-07:00']}
