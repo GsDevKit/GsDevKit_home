@@ -9,6 +9,9 @@ Copy script classes back and forth between Tonel and FileTree formats.
 	the work of copying classes back and forth between Monticello FileTree
 	packages and Rown Tonel packages.
 
+	--list
+		write the array of default script classes to objOut.
+
 	--write=[filetree|tonel]
 		When the script runs the both the filetree and tonel versions of the
 		script classes are read from disk. If `filetree` is specified, the 
@@ -17,16 +20,20 @@ Copy script classes back and forth between Tonel and FileTree formats.
 		specified, the filetree version of the script class will be written
 		to the filetree package (rowan/src/gsdevkit_launcher-Scripts).
 
+		The list of processed class names is written to objOut.
+
 	<script-class-names>
-		list of script class names to be transferred from filetree to tonel
-		or vice versa.
+		List of script class names to be transferred from filetree to tonel
+		or vice versa. If <script-class-names> is empty, the default list of
+		script classes will be used.
 
 "
 Class {
 	#name : 'GdkL_CopyScriptClasses',
 	#superclass : 'AbstractGsDevKitProgram',
 	#instVars : [
-		'write'
+		'write',
+		'list'
 	],
 	#category : 'gsdevkit_launcher-Scripts'
 }
@@ -67,7 +74,9 @@ GdkL_CopyScriptClasses class >> copyTonelToFiletree: classNames [
 
 { #category : 'private' }
 GdkL_CopyScriptClasses class >> defaultClassNames [
-  ^ #('GdkL_CopyScriptClasses' 'GdkL_Error' 'GdkL_Hello' 'GdkL_Install_Launcher')
+  "(AbstractGsDevKitProgram subclasses collect: [ :each | each name asString ]) asArray"
+
+  ^ #('GdkL_CopyScriptClasses' 'GdkL_Install_Launcher' 'GdkL_Error' 'GdkL_Hello')
 ]
 
 { #category : 'private' }
@@ -90,50 +99,66 @@ GdkL_CopyScriptClasses >> classNames: classNames [
   args := classNames
 ]
 
+{ #category : 'accessing' }
+GdkL_CopyScriptClasses >> doList [
+  list := true
+]
+
+{ #category : 'accessing' }
+GdkL_CopyScriptClasses >> list [
+  ^ list ifNil: [ false ]
+]
+
 { #category : 'main' }
 GdkL_CopyScriptClasses >> main [
-	| shebang needsShebangProperty projectDefinition_filetree projectDefinition_tonel packageName sourcePackageDef targetPackageDef |
-
-	args isEmpty ifTrue: [ self error: 'Expected to find at least one class name on command line ' ].
-
-	projectDefinition_filetree := self _projectDefinitionForUrl: 'file:$GS_HOME/shared/repos/GsDevKit_launcher/rowan/specs/gsdevkit_launcher_filetree.ston'.
-	projectDefinition_tonel := self _projectDefinitionForUrl: 'file:$GS_HOME/shared/repos/GsDevKit_launcher/rowan/specs/gsdevkit_launcher_tonel.ston'.
-
-	packageName := 'gsdevkit_launcher-Scripts'.
-	needsShebangProperty := false.
-	shebang := '/usr/bin/env gsdevkit_launcher'.
-
-	write = 'filetree'
-		ifTrue: [ 
-			sourcePackageDef := projectDefinition_tonel packageNamed: packageName.
-			targetPackageDef := projectDefinition_filetree packageNamed: packageName ]
-		ifFalse: [ 
-			targetPackageDef := projectDefinition_tonel packageNamed: packageName.
-			sourcePackageDef := projectDefinition_filetree packageNamed: packageName.
-			needsShebangProperty := true ].
-
-	args do: [:className |
-		| classDef |
-		targetPackageDef 
-			removeClassNamed: className 
-			ifAbsent: [ "No need to remove the class definition if is not present" ].
-		classDef := sourcePackageDef classDefinitionNamed: className.
-		needsShebangProperty
-			ifTrue: [ classDef shebang: shebang ].
-		targetPackageDef addClassDefinition: classDef ].
-
-	write = 'filetree'
-		ifTrue: [ projectDefinition_filetree exportPackages ].
-	write = 'tonel'
-		ifTrue: [ projectDefinition_tonel exportPackages ].
+  | shebang needsShebangProperty projectDefinition_filetree projectDefinition_tonel packageName sourcePackageDef targetPackageDef classNameList |
+  self list
+    ifTrue: [ ^ self class defaultClassNames ].
+  classNameList := args isEmpty
+    ifTrue: [ self class defaultClassNames ]
+    ifFalse: [ args ].
+  projectDefinition_filetree := self
+    _projectDefinitionForUrl:
+      'file:$GS_HOME/shared/repos/GsDevKit_launcher/rowan/specs/gsdevkit_launcher_filetree.ston'.
+  projectDefinition_tonel := self
+    _projectDefinitionForUrl:
+      'file:$GS_HOME/shared/repos/GsDevKit_launcher/rowan/specs/gsdevkit_launcher_tonel.ston'.
+  packageName := 'gsdevkit_launcher-Scripts'.
+  needsShebangProperty := false.
+  shebang := '/usr/bin/env gsdevkit_launcher'.
+  write = 'filetree'
+    ifTrue: [ 
+      sourcePackageDef := projectDefinition_tonel packageNamed: packageName.
+      targetPackageDef := projectDefinition_filetree packageNamed: packageName ]
+    ifFalse: [ 
+      targetPackageDef := projectDefinition_tonel packageNamed: packageName.
+      sourcePackageDef := projectDefinition_filetree packageNamed: packageName.
+      needsShebangProperty := true ].
+  classNameList
+    do: [ :className | 
+      | classDef |
+      targetPackageDef
+        removeClassNamed: className
+        ifAbsent: [ 
+          "No need to remove the class definition if is not present"
+           ].
+      classDef := sourcePackageDef classDefinitionNamed: className.
+      needsShebangProperty
+        ifTrue: [ classDef shebang: shebang ].
+      targetPackageDef addClassDefinition: classDef ].
+  write = 'filetree'
+    ifTrue: [ projectDefinition_filetree exportPackages ].
+  write = 'tonel'
+    ifTrue: [ projectDefinition_tonel exportPackages ].
+  ^ classNameList
 ]
 
 { #category : 'options' }
 GdkL_CopyScriptClasses >> scriptMethodOptions [
-	^ super scriptMethodOptions, 
-	{
-			#('write' nil #required #write:).
-	}
+  ^ super scriptMethodOptions
+    ,
+      {#('write' nil #'required' #'write:').
+      #('list' nil #'none' #'doList')}
 ]
 
 { #category : 'usage' }
@@ -141,6 +166,12 @@ GdkL_CopyScriptClasses >> usageExamples: scriptName [
   ^ scriptName
     ,
       '
+	' , scriptName
+    ,
+      ' --list
+	' , scriptName
+    ,
+      ' --write=tonel
 	' , scriptName
     ,
       ' --write=tonel GdkL_Error GdkL_Hello GdkL_CopyScriptClasses GdkL_Install_Launcher
@@ -154,8 +185,8 @@ GdkL_CopyScriptClasses >> usageExamples: scriptName [
 
 { #category : 'usage' }
 GdkL_CopyScriptClasses >> usageSynopsis: scriptName [
-
-	^	(super usageSynopsis: scriptName), ' --write=[filetree|tonel] <script-class-names>'
+  ^ (super usageSynopsis: scriptName)
+    , ' ( --list | --write=[filetree|tonel] <script-class-names> )'
 ]
 
 { #category : 'accessing' }

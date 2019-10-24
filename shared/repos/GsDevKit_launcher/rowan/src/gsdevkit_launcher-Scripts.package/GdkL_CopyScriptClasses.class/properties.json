@@ -6,7 +6,8 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"write" ],
+		"write",
+		"list" ],
 	"name" : "GdkL_CopyScriptClasses",
 	"pools" : [
 		 ],

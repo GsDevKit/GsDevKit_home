@@ -7,6 +7,9 @@ Copy script classes back and forth between Tonel and FileTree formats.
 	the work of copying classes back and forth between Monticello FileTree
 	packages and Rown Tonel packages.
 
+	--list
+		write the array of default script classes to objOut.
+
 	--write=[filetree|tonel]
 		When the script runs the both the filetree and tonel versions of the
 		script classes are read from disk. If `filetree` is specified, the 
@@ -15,6 +18,9 @@ Copy script classes back and forth between Tonel and FileTree formats.
 		specified, the filetree version of the script class will be written
 		to the filetree package (rowan/src/gsdevkit_launcher-Scripts).
 
+		The list of processed class names is written to objOut.
+
 	<script-class-names>
-		list of script class names to be transferred from filetree to tonel
-		or vice versa.
+		List of script class names to be transferred from filetree to tonel
+		or vice versa. If <script-class-names> is empty, the default list of
+		script classes will be used.

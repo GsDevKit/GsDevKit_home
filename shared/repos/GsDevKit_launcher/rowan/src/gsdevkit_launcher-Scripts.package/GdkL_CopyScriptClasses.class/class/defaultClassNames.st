@@ -1,3 +1,5 @@
 private
 defaultClassNames
-  ^ #('GdkL_CopyScriptClasses' 'GdkL_Error' 'GdkL_Hello' 'GdkL_Install_Launcher')
+  "(AbstractGsDevKitProgram subclasses collect: [ :each | each name asString ]) asArray"
+
+  ^ #('GdkL_CopyScriptClasses' 'GdkL_Install_Launcher' 'GdkL_Error' 'GdkL_Hello')

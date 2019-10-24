@@ -1,4 +1,4 @@
 usage
 usageSynopsis: scriptName
-
-	^	(super usageSynopsis: scriptName), ' --write=[filetree|tonel] <script-class-names>'
+  ^ (super usageSynopsis: scriptName)
+    , ' ( --list | --write=[filetree|tonel] <script-class-names> )'
