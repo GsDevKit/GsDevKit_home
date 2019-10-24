@@ -14,9 +14,9 @@ Copy script classes back and forth between Tonel and FileTree formats.
 		When the script runs the both the filetree and tonel versions of the
 		script classes are read from disk. If `filetree` is specified, the 
 		filetree version of the script class will be written to the tonel 
-		package (rowan/scripts/gsdevkit_launcher-Scripts). If `tonel` is 
+		package (rowan/tonel/gsdevkit_launcher-Scripts). If `tonel` is 
 		specified, the filetree version of the script class will be written
-		to the filetree package (rowan/src/gsdevkit_launcher-Scripts).
+		to the filetree package (rowan/filetree/gsdevkit_launcher-Scripts).
 
 		The list of processed class names is written to objOut.
 

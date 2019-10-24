@@ -16,7 +16,7 @@ TDScriptLeafNode{#name:'saveScripts',#contents:'[ :topez :objIn :tokens :command
       \"
       topez
         evaluateCommandString:
-          \'mc save gsdevkit_launcher-Scripts gsdevkit_launcher-Scripts-xxx.0 filetree://$GS_HOME/shared/repos/GsDevKit_launcher/rowan/src `dummy message`\'.
+          \'mc save gsdevkit_launcher-Scripts gsdevkit_launcher-Scripts-xxx.0 filetree://$GS_HOME/shared/repos/GsDevKit_launcher/rowan/filetree `dummy message`\'.
       GdkL_CopyScriptClasses copyFileTreeToTonel ]
     ifPresent: [ :ignored | 
       TDManPage

@@ -1,1 +1,1 @@
-../shared/repos/GsDevKit_launcher/rowan/scripts/gsdevkit_launcher-Scripts/GdkL_Install_Launcher.class.st
+../shared/repos/GsDevKit_launcher/rowan/tonel/gsdevkit_launcher-Scripts/GdkL_Install_Launcher.class.st

@@ -4,7 +4,7 @@ RwComponentSpecification{
 	#projectUrl : 'https://github.com/GsDevKit_home',
 	#configsPath : 'rowan/components',
 	#projectsPath : 'rowan/projects',
-	#repoPath : 'rowan/src',
+	#repoPath : 'rowan/filetree',
 	#specsPath : 'rowan/specs',
 	#defaultComponentName : 'Core',
 	#defaultGroupNames : [

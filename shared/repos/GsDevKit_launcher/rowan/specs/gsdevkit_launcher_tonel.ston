@@ -6,7 +6,7 @@ RwComponentSpecification{
 	#projectUrl : 'https://github.com/GsDevKit_home',
 	#configsPath : 'rowan/components',
 	#projectsPath : 'rowan/projects',
-	#repoPath : 'rowan/scripts',
+	#repoPath : 'rowan/tonel',
 	#specsPath : 'rowan/specs',
 	#defaultComponentName : 'Scripts',
 	#defaultGroupNames : [

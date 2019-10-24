@@ -1,1 +1,1 @@
-../../shared/repos/GsDevKit_launcher/rowan/scripts/gsdevkit_launcher-Scripts/GdkL_Error.class.st
+../../shared/repos/GsDevKit_launcher/rowan/tonel/gsdevkit_launcher-Scripts/GdkL_Error.class.st

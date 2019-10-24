@@ -11,7 +11,7 @@
 	Rowan projectTools browser addRowanSymbolDictionariesToPersistentSymbolList.
 	Metacello new
 		baseline: 'GsDevKit_launcher';
-		repository: 'filetree://$GS_HOME/shared/repos/GsDevKit_launcher/rowan/src';
+		repository: 'filetree://$GS_HOME/shared/repos/GsDevKit_launcher/rowan/filetree';
 		load: 'Scripts'
 %
 	commit
