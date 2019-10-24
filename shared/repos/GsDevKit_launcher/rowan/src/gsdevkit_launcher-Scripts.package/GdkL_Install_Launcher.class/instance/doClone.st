@@ -27,7 +27,7 @@ doClone
               ' --no-checkout ' , (specDict at: 'remoteUrl') , ' '
                 , repositoryDirectory pathString.
           committish := specDict at: 'committish'.
-          gitTool gitcheckoutIn: repositoryDirectory pathString with: committish.
+          gitTool gitcheckoutIn: repositoryDirectory with: committish.
           (self summary at: #'clone')
             at: repositoryName
             put:

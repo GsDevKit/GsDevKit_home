@@ -34,6 +34,7 @@ git pull origin master
 updateGsDevKit
 
 git checkout issue_260
+git pull origin issue_260	# make sure you have latest commit in your checkout
 
 # bootstrap gsdevkit_launcher script support
 $GS_HOME/alt_bin/bootstrap_launcher
@@ -42,15 +43,15 @@ $GS_HOME/alt_bin/bootstrap_launcher
 . alt_bin/defHOME_PATH.env
 
 # finish installation of gsdevkit_launcher support using a gsdevkit_launcher script
-$GS_HOME/alt_bin/install_launcher.st
+#		clone Rowan, stash and st_launcher repositories
+#		create tode-based development stone with gsdevkit_launcher code loaded
+install_launcher.st
 
 # test out the example scripts
 hello.st
 error.st
 error.st -D --
 ```
-
-
 
 [1]: https://github.com/dalehenrich/st_launcher
 [2]: https://github.com/pharo-vcs/tonel#tonel-spec
