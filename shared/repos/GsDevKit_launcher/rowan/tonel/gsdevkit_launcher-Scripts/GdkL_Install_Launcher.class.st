@@ -146,9 +146,6 @@ GdkL_Install_Launcher >> doCreateStone [
         put: #'skipped' -> ('stone already exists at ' , stoneDir pathString) ]
     ifFalse: [ 
       self class createStone: self stoneName version: '3.5.0' args: '-g'.
-      self createSummary
-        at: self stoneName
-        put: #'created' -> stoneDir pathString.
       customEnv := stoneDir / 'custome_stone.env'.
       contents := customEnv contents.
       customEnv
@@ -181,7 +178,8 @@ GdkL_Install_Launcher >> doCreateStone [
             (System
                 performOnServer:
                   'cd ' , stoneDir pathString , '; ./newBuild_SystemUser_gsdevkit_launcher_tode');
-        lf ].
+        lf.
+      createSummary at: self stoneName put: #'created' -> stoneDir pathString ].
   ^ self summary
 ]
 
