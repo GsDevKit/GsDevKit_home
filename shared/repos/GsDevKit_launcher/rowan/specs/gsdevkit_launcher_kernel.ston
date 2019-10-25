@@ -1,0 +1,16 @@
+RwComponentSpecification{
+	#specName : 'GsDevKit_launcher_kernel',
+	#projectAlias : 'GsDevKit_launcher_tonel',
+	#projectName : 'GsDevKit_launcher',
+	#version : '0.3.0',
+	#projectUrl : 'https://github.com/GsDevKit_home',
+	#configsPath : 'rowan/components',
+	#projectsPath : 'rowan/projects',
+	#repoPath : 'rowan/tonel',
+	#specsPath : 'rowan/specs',
+	#defaultComponentName : 'Kernel',
+	#defaultGroupNames : [
+		'core'
+	],
+	#comment : 'modifications to classes in Globals needed by gsdevkit_launcher'
+}

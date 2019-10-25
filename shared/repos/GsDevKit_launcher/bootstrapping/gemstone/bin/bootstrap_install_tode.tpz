@@ -40,6 +40,19 @@
 %
 	commit
 
+#
+#	install GemStone Globals extensions 
+#
+	run
+	| url projectSetDefinition |
+	url := 'file:$ROWAN_PROJECTS_HOME/GsDevKit_launcher/rowan/specs/gsdevkit_launcher_kernel.ston'.
+	projectSetDefinition := (RwComponentProjectDefinition newForUrl: url)
+		projectHome: '$ROWAN_PROJECTS_HOME';
+		read.
+	projectSetDefinition load
+%
+	commit
+
 	logout
 
 #

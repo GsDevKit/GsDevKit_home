@@ -1,0 +1,26 @@
+RwComponentLoadConfiguration {
+	#name : 'Kernel',
+	#comment : '',
+	#version : '0.1.0',
+	#conditionalPackages : {
+		[
+			'gemstone'
+		] : {
+			'core' : {
+				#packageNames : [
+					'gsdevkit_launcher-GemStone-Kernel'
+				]
+			}
+		}
+	},
+	#conditionalPackageMapSpecs : {
+		'gemstone' : {
+			'SystemUser' : {
+				#defaultSymbolDictName : 'Globals'
+			}
+		}
+	},
+	#definedGroupNames : {
+		'core' : [ ]
+	}
+}
