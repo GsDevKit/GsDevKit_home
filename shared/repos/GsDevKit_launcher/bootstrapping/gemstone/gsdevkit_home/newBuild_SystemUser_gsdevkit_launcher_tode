@@ -3,10 +3,10 @@ set -e
 
 rm -rf *.log *.out
 
-newExtent -t -s snapshots/extent0.tode.dbf $GEMSTONE_NAME
+newExtent $GEMSTONE_NAME
+todeLoad $GEMSTONE_NAME
 
 $ROWAN_PROJECTS_HOME/GsDevKit_launcher/bootstrapping/gemstone/bin/bootstrap_install_tode.tpz $GEMSTONE_NAME -lq
 $ROWAN_PROJECTS_HOME/GsDevKit_launcher/bootstrapping/gemstone/bin/bootstrap_install_scripts.tpz $GEMSTONE_NAME -lq
 
 todeIt $GEMSTONE_NAME mount @/sys/stone/dirs/GsDevKit_launcher/shared/repos/GsDevKit_launcher/tode /home gsdevkit_launcher
-

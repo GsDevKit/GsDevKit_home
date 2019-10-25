@@ -3,7 +3,14 @@ set -e
 
 rm -rf *.log *.out
 
-newExtent -t -s snapshots/extent0.tode.dbf $GEMSTONE_NAME
+if [ -e "snapshots/extent0.tode.dbf" ] ; then
+	# tODE has already been installed, reuse the extent
+	newExtent -t -s snapshots/extent0.tode.dbf $GEMSTONE_NAME
+else
+	# have to do first-time tODE install first
+	newExtent $GEMSTONE_NAME
+	todeLoad $GEMSTONE_NAME
+fi
 
 $ROWAN_PROJECTS_HOME/GsDevKit_launcher/bootstrapping/gemstone/bin/bootstrap_install_tode.tpz $GEMSTONE_NAME -lq
 

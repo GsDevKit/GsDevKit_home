@@ -31,16 +31,16 @@ doCreateStone
             lf ].
       self class stopNetldi: self stoneName.
       self class startNetldi: self stoneName.	"pick up ROWAN_PROJECTS_HOME in netldi process"
-      gsdevkitStoneScriptDir := '$GS_HOME/shared/repos/GsDefKit_launcher/bootstrapping/gemstone/gsdefkit_home'
+      gsdevkitStoneScriptDir := '$GS_HOME/shared/repos/GsDevKit_launcher/bootstrapping/gemstone/gsdevkit_home'
         asFileReference.
-      self
+      self class
         ln:
           ' -s '
             ,
               (gsdevkitStoneScriptDir / 'newBuild_SystemUser_gsdevkit_launcher_tode')
                 pathString
             , ' ' , stoneDir pathString.
-      self
+      self class
         ln:
           ' -s '
             ,
