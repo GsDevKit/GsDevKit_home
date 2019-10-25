@@ -146,7 +146,7 @@ GdkL_Install_Launcher >> doCreateStone [
         put: #'skipped' -> ('stone already exists at ' , stoneDir pathString) ]
     ifFalse: [ 
       self class createStone: self stoneName version: '3.5.0' args: '-g'.
-      customEnv := stoneDir / 'custome_stone.env'.
+      customEnv := stoneDir / 'custom_stone.env'.
       contents := customEnv contents.
       customEnv
         writeStreamDo: [ :stream | 
