@@ -49,7 +49,7 @@ doCreateStone
             , ' ' , stoneDir pathString.
       self stdout
         nextPutAll:
-            (self
+            (self class
                 performOnServer:
                   'cd ' , stoneDir pathString , '; ./newBuild_SystemUser_gsdevkit_launcher_tode'
                 logging: true);
