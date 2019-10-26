@@ -13,13 +13,15 @@ performOnServer: commandLine logging: logging
       (performOnServerStatusArray at: 1) ~~ 0
         ifTrue: [ 
           | message |
-          message := 'performOnServer: ' , commandLine printString , ' stdout: '
-            , (performOnServerStatusArray at: 3) printString
+          message := 'performOnServer: ' , commandLine printString
             , ' failed with status: '
             , (performOnServerStatusArray at: 1) printString , ' errno: '
             , (performOnServerStatusArray at: 5) printString , ' errStr: '
             , (performOnServerStatusArray at: 4) asString.
-          GsFile stderr nextPutAll: message.
+          GsFile stderr
+            nextPutAll:
+              (performOnServerStatusArray at: 3) asStringString , ' failed with status: '
+                , (performOnServerStatusArray at: 1) printString.
           self error: message ].
       performOnServerStatusArray at: 3 ].
   logging
