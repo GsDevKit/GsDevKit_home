@@ -49,9 +49,10 @@ doCreateStone
             , ' ' , stoneDir pathString.
       self stdout
         nextPutAll:
-            (System
+            (self
                 performOnServer:
-                  'cd ' , stoneDir pathString , '; ./newBuild_SystemUser_gsdevkit_launcher_tode');
+                  'cd ' , stoneDir pathString , '; ./newBuild_SystemUser_gsdevkit_launcher_tode'
+                logging: true);
         lf.
       createSummary at: self stoneName put: #'created' -> stoneDir pathString ].
   ^ self summary
