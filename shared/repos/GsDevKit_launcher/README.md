@@ -31,7 +31,7 @@ git fetch --all
 
 git checkout master
 git pull origin master
-updateGsDevKit
+updateGsDevKit -gdtcs
 
 git checkout issue_260
 git pull origin issue_260	# make sure you have latest commit in your checkout
@@ -47,7 +47,14 @@ hello.st
 error.st
 error.st -D --
 ```
+#### tODE development image
+The `bootstrap_launcher` script creates a [tODE image, that is ready for developing gsdevkit scripts][4].
+The `GsdevKit_launcher` project has a BaselineOf and 3 packages.
+The `gsdevkit_launcher-Scripts` package is where the filtree script packages can be found.
+`/home/gsdevkit_launcher` in the tODE console is where a couple of utility tODE scripts are located. 
+The `/home/gsdevkit_launcher/saveScripts`, script saves the `gsdevkit_launcher-Scripts` package copies the script classes to the tonel package, where the scripts are in a form that can be executed from a bash command line.
 
 [1]: https://github.com/dalehenrich/st_launcher
 [2]: https://github.com/pharo-vcs/tonel#tonel-spec
 [3]: https://downloads.gemtalksystems.com/docs/GemStone64/3.5.x/GS64-ReleaseNotes-3.5/2-AdministrationChanges.htm#pgfId-1963111
+[4]: ../../../docs/images/tode_gsdevkit_launcher_350.png
