@@ -44,7 +44,7 @@ pushd $GS_HOME/shared/gemstone
 	
 	stoneName="gsdevkit_launcher_350"
 	createStone -g $stoneName 3.5.0
-	$GS_HOME/alt-bin/install_launcher.st --clone --populate=$stoneName
+	$GS_HOME/alt_bin/install_launcher.st --clone --populate=$stoneName
 	pushd $GS_HOME/server/stones/$stoneName
 		./newBuild_SystemUser_gsdevkit_launcher_tode
 	popd
