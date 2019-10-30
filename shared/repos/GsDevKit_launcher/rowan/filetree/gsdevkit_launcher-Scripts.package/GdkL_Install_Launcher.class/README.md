@@ -1,16 +1,16 @@
 Finish the installation of gsdevkit_launcher that was started by 
 	$GS_HOME/alt_bin/bootstrap_launcher:
 
-	If no options are specified, then both the --clone and --create
+	If no options are specified, then both the --clone and --populate
 	(using the default <stone-name>) options are performed.
 
 	[ --clone ]
 		Clone the Rowan, stash and st_launcher projects into
 		$GS_HOME/shared/repos.
 
-	[ --create[=<stone-name>] ]
-		Create a stone that can used for doing gsdevkit_launcher
-		script development. Two scripts will be symbolically
+	[ --populate[=<stone-name>] ]
+		Populate an existing stone's directory with the scripts
+		needed for development. Two scripts will be symbolically
 		linked into the $GS_HOME/server/stones/<stone-name> 
 		directory: newBuild_SystemUser_gsdevkit_launcher_tode
 		and newBuild_SystemUser_gsdevkit_launcher_deplyer. 

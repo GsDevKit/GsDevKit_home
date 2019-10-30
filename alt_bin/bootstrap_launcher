@@ -17,29 +17,37 @@ set -x # so we can see what is going on
 
 gsdevkit_launcher_version="v0.10.0"
 
-cd $GS_HOME/shared/gemstone
+pushd $GS_HOME/shared/gemstone
 
-if [ ! -d product ] ; then 
-	# make sure 3.5.0 is installed and create symbolic link to the 3.5.0 product tree
-	$GS_HOME/bin/downloadGemStone 3.5.0
-	if [ ! -d "$GS_HOME/shared/downloads/products/GemStone64Bit3.5.0-x86_64.Linux" ] ; then
-		# not Linux
-		if [ ! -d "$GS_HOME/shared/downloads/products/GemStone64Bit3.5.0-i386.Darwin" ] ; then
-			# not Mac
-			exit_1_banner "gsdevkit_launcher currently supported only on Mac or Linux platforms"
+	if [ ! -d product ] ; then 
+		# make sure 3.5.0 is installed and create symbolic link to the 3.5.0 product tree
+		$GS_HOME/bin/downloadGemStone 3.5.0
+		if [ ! -d "$GS_HOME/shared/downloads/products/GemStone64Bit3.5.0-x86_64.Linux" ] ; then
+			# not Linux
+			if [ ! -d "$GS_HOME/shared/downloads/products/GemStone64Bit3.5.0-i386.Darwin" ] ; then
+				# not Mac
+				exit_1_banner "gsdevkit_launcher currently supported only on Mac or Linux platforms"
+			else
+				ln -s $GS_HOME/shared/downloads/products/GemStone64Bit3.5.0-i386.Darwin product
+			fi
 		else
-			ln -s $GS_HOME/shared/downloads/products/GemStone64Bit3.5.0-i386.Darwin product
+			ln -s $GS_HOME/shared/downloads/products/GemStone64Bit3.5.0-x86_64.Linux product
 		fi
-	else
-		ln -s $GS_HOME/shared/downloads/products/GemStone64Bit3.5.0-x86_64.Linux product
 	fi
-fi
-
-# download and install the gsdevkit_launcher solo extent 
-pushd snapshots
-	curl  -L -O -s -S "https://github.com/GsDevKit/GsDevKit_home/releases/download/v0.10.0/extent0.gsdevkit_launcher.dbf.zip"
-	rm -rf extent0.gsdevkit_launcher.dbf
-	unzip -q  extent0.gsdevkit_launcher.dbf.zip
+	
+	# download and install the gsdevkit_launcher solo extent 
+	pushd snapshots
+		curl  -L -O -s -S "https://github.com/GsDevKit/GsDevKit_home/releases/download/v0.10.0/extent0.gsdevkit_launcher.dbf.zip"
+		rm -rf extent0.gsdevkit_launcher.dbf
+		unzip -q  extent0.gsdevkit_launcher.dbf.zip
+	popd
+	
+	stoneName="gsdevkit_launcher_350"
+	createStone -g $stoneName 3.5.0
+	$GS_HOME/alt-bin/install_launcher.st --clone --populate=$stoneName
+	pushd $GS_HOME/server/stones/$stoneName
+		./newBuild_SystemUser_gsdevkit_launcher_tode
+	popd
 popd
 
 # End of script

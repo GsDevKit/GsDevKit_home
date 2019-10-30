@@ -7,7 +7,7 @@
 	"commentStamp" : "",
 	"instvars" : [
 		"clone",
-		"create",
+		"populate",
 		"stoneName",
 		"summary" ],
 	"name" : "GdkL_Install_Launcher",

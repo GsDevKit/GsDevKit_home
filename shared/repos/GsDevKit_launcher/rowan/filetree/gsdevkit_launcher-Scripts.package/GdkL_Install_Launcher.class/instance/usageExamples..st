@@ -5,16 +5,16 @@ usageExamples: scriptName
       '
 	' , scriptName
     ,
-      ' --clone --create=gs_launcher_350
+      ' --clone --populate=gs_launcher_350
 	' , scriptName
     ,
-      ' --create=gs_launcher_350	
+      ' --populate=gs_launcher_350	
 	' , scriptName
     ,
-      ' --create
+      ' --populate
 	' , scriptName
     ,
-      ' --create --clone
+      ' --populate --clone
 	' , scriptName
     ,
       ' --clone

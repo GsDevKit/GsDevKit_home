@@ -3,4 +3,4 @@ scriptMethodOptions
   ^ super scriptMethodOptions
     ,
       {#('clone' nil #'none' #'clone:').
-      #('create' nil #'optional' #'stoneName:')}
+      #('populate' nil #'optional' #'stoneName:')}

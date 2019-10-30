@@ -1,6 +1,6 @@
 accessing
 stoneName: aStoneName
-  create := true.
+  populate := true.
   aStoneName
     ifNil: [ stoneName := self _defaultStoneName ]
     ifNotNil: [ stoneName := aStoneName ]

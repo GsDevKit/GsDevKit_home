@@ -1,5 +1,5 @@
 accessing
 clone
-  "answer true if both clone and create have not been specified, otherwise the default is false"
+  "answer true if both clone and populatehave not been specified, otherwise the default is false"
 
-  ^ clone ifNil: [ create isNil ]
+  ^ clone ifNil: [ populate isNil ]
