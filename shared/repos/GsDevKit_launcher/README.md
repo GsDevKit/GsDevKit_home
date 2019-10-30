@@ -48,7 +48,8 @@ error.st
 error.st -D --
 ```
 #### tODE development image
-The `bootstrap_launcher` script creates a [tODE image, that is ready for developing gsdevkit scripts][4].
+The `bootstrap_launcher` script creates a tODE image, that is ready for developing gsdevkit scripts:
+![gsdevkit_launcher tode image][4].
 The `GsdevKit_launcher` project has a BaselineOf and 3 packages.
 The `gsdevkit_launcher-Scripts` package is where the filtree script packages can be found.
 `/home/gsdevkit_launcher` in the tODE console is where a couple of utility tODE scripts are located. 
