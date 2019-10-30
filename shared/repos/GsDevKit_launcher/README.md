@@ -42,11 +42,6 @@ $GS_HOME/alt_bin/bootstrap_launcher
 # add alt_bin and alt_bin/examples to your path
 . alt_bin/defHOME_PATH.env
 
-# finish installation of gsdevkit_launcher support using a gsdevkit_launcher script
-#		clone Rowan, stash and st_launcher repositories
-#		create tode-based development stone with gsdevkit_launcher code loaded
-install_launcher.st
-
 # test out the example scripts
 hello.st
 error.st
