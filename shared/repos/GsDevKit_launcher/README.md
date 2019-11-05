@@ -25,13 +25,22 @@ Note that the shebang line: `#!/usr/bin/env gsdevkit_launcher` does a lookup of 
 The `gsdevkit_launcher` shell interpreter is in `$GS_HOME/alt_bin`, so `$GS_HOME/alt_bin` needs to be located in your path.
 
 ### Setup for development
+#### If you have a fresh GsDevKit_home installation then first evaluate:
+Exsisting GsDevKit_home installation should ignored these steps.
+```
+git clone https://github.com/GsDevKit/GsDevKit_home.git
+cd GsDevKit_home
+. bin/defHOME_PATH.env    # define GS_HOME env var and put $GS_HOME into PATH
+installServerClient
+```
+#### Resume Setup for development:
 ```
 cd $GS_HOME
 git fetch --all
 
 git checkout master
 git pull origin master
-updateGsDevKit -gdtcs
+updateGsDevKit -gdtcs       # SKIP this if you have a fresh GsDevKit_home installation
 
 git checkout issue_260
 git pull origin issue_260	# make sure you have latest commit in your checkout
