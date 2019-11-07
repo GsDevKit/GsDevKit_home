@@ -32,7 +32,7 @@ EXAMPLES
 
 HELP
 }
-
+source "${GS_HOME}/bin/private/shFunctions"
 stashFile=`realpath $1`
 scriptName="$(basename -- $1)"
 shift
