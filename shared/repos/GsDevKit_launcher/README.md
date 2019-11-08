@@ -53,8 +53,10 @@ $GS_HOME/alt_bin/bootstrap_launcher
 
 # test out the example scripts
 hello.st
+hello.st --help
 error.st
 error.st -D --
+error.st -h
 ```
 #### tODE development image
 The `bootstrap_launcher` script creates a tODE image, that is ready for developing gsdevkit scripts:
