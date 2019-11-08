@@ -45,11 +45,11 @@ updateGsDevKit -gdtcs       # SKIP this if you have a fresh GsDevKit_home instal
 git checkout issue_260
 git pull origin issue_260	# make sure you have latest commit in your checkout
 
-# bootstrap gsdevkit_launcher script support
-$GS_HOME/alt_bin/bootstrap_launcher
-
 # add alt_bin and alt_bin/examples to your path
 . alt_bin/defHOME_PATH.env
+
+# bootstrap gsdevkit_launcher script support
+$GS_HOME/alt_bin/bootstrap_launcher
 
 # test out the example scripts
 hello.st
