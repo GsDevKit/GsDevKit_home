@@ -15,18 +15,6 @@ start_banner
 
 set -x # so we can see what is going on 
 
-pushd $GS_HOME/alt_bin
-
-	ln -s $GS_HOME/shared/repos/GsDevKit_launcher/rowan/tonel/gsdevkit_launcher-Scripts/GdkL_CopyScriptClasses.class.st copyScriptClasses.st
-	ln -s $GS_HOME/shared/repos/GsDevKit_launcher/rowan/tonel/gsdevkit_launcher-Scripts/GdkL_Install_Launcher.class.st install_launcher.st
-	pushd examples
-
-		ln -s $GS_HOME/shared/repos/GsDevKit_launcher/rowan/tonel/gsdevkit_launcher-Scripts/GdkL_Hello.class.st hello.st
-		ln -s $GS_HOME/shared/repos/GsDevKit_launcher/rowan/tonel/gsdevkit_launcher-Scripts/GdkL_Error.class.st error.st
-
-	popd
-
-popd
 gsdevkit_launcher_version="v0.10.0"
 
 pushd $GS_HOME/shared/gemstone
