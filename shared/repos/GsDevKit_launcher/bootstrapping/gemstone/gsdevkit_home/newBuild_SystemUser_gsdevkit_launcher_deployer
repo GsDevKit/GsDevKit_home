@@ -12,7 +12,11 @@ else
 	todeLoad $GEMSTONE_NAME
 fi
 
-$ROWAN_PROJECTS_HOME/GsDevKit_launcher/bootstrapping/gemstone/bin/bootstrap_install_tode.tpz $GEMSTONE_NAME -lq
+startTopaz $GEMSTONE_NAME -l << EOF
+
+	input $ROWAN_PROJECTS_HOME/GsDevKit_launcher/bootstrapping/gemstone/bin/bootstrap_install_tode.tpz
+
+EOF
 
 #	this script needs to be rewritten for gsdevkit_launcher
 rm -f snapshots/extent0.gsdevkit_launcher.dbf
@@ -28,7 +32,11 @@ pushd $GS_HOME/shared/gemstone/snapshots/
 popd
 startStone $GEMSTONE_NAME	# in 3.5.1 snapshot up above
 
-$ROWAN_PROJECTS_HOME/GsDevKit_launcher/bootstrapping/gemstone/bin/bootstrap_install_scripts.tpz $GEMSTONE_NAME -lq
+startTopaz $GEMSTONE_NAME -l << EOF
+
+	input $ROWAN_PROJECTS_HOME/GsDevKit_launcher/bootstrapping/gemstone/bin/bootstrap_install_scripts.tpz $GEMSTONE_NAME -lq
+
+EOF
 
 todeIt $GEMSTONE_NAME mount @/sys/stone/dirs/GsDevKit_launcher/shared/repos/GsDevKit_launcher/tode /home gsdevkit_launcher
 
