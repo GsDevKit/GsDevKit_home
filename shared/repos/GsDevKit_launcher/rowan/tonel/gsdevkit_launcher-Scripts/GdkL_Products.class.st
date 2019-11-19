@@ -1,4 +1,16 @@
 #!/usr/bin/env gsdevkit_launcher
+"
+USAGE: products [-h]
+
+List downloaded GemStone/S products.
+
+OPTIONS
+  -h display help
+
+EXAMPLES
+  products -h
+  products
+"
 Class {
 	#name : 'GdkL_Products',
 	#superclass : 'AbstractGsDevKitProgram',
@@ -52,21 +64,7 @@ GdkL_Products >> installedProductsReportOn: stream [
 
 { #category : 'other' }
 GdkL_Products >> main [
-	| resultStream |
 
-	resultStream := String new writeStream.
-	self installedProductsReportOn: resultStream.
-
-	^resultStream contents
-
-]
-
-{ #category : 'other' }
-GdkL_Products >> produceProductsReport [
-
-	self
-		installedProductsReportOn: Transcript;
-		yourself.
-	"self exitSuccess"
+	self installedProductsReportOn: self stdout
 
 ]
