@@ -1,0 +1,14 @@
+{
+	"category" : "gsdevkit_launcher-Scripts",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"installedProducts" ],
+	"name" : "GdkL_Products",
+	"pools" : [
+		 ],
+	"super" : "AbstractGsDevKitProgram",
+	"type" : "normal" }
