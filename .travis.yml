@@ -27,29 +27,29 @@ env:
   - GS_VERSION=3.2.17 TEST=BasicB
   - GS_VERSION=3.3.9 TEST=BasicA
   - GS_VERSION=3.3.9 TEST=BasicB
-  - GS_VERSION=3.4.4 TEST=BasicA
-  - GS_VERSION=3.4.4 TEST=BasicB
+  - GS_VERSION=3.4.5 TEST=BasicA
+  - GS_VERSION=3.4.5 TEST=BasicB
   - GS_VERSION=3.5.1 TEST=BasicA
   - GS_VERSION=3.5.1 TEST=BasicB
-  - GS_VERSION=3.4.4 TEST=Install
+  - GS_VERSION=3.4.5 TEST=Install
   - GS_VERSION=3.3.9 TEST=Clients
-  - GS_VERSION=3.4.4 TEST=Clients
+  - GS_VERSION=3.4.5 TEST=Clients
   - GS_VERSION=3.3.9 TEST=Client Client=Pharo3.0
   - GS_VERSION=3.3.9 TEST=Client Client=Pharo6.1
-  - GS_VERSION=3.4.4 TEST=Client Client=Pharo3.0
-  - GS_VERSION=3.4.4 TEST=Client Client=Pharo6.1
+  - GS_VERSION=3.4.5 TEST=Client Client=Pharo3.0
+  - GS_VERSION=3.4.5 TEST=Client Client=Pharo6.1
   - GS_VERSION=3.5.1 TEST=Client Client=Pharo3.0
   - GS_VERSION=3.5.1 TEST=Client Client=Pharo5.0
   - GS_VERSION=3.5.1 TEST=Client Client=Pharo6.0
   - GS_VERSION=3.5.1 TEST=Client Client=Pharo6.1
   - GS_VERSION=3.5.1 TEST=Client Client=Pharo7.0
 
-  - GS_VERSION=3.4.4 TEST=SmalltalkCI
+  - GS_VERSION=3.4.5 TEST=SmalltalkCI
   - GS_VERSION=3.5.0 TEST=SmalltalkCI
 
   - GS_VERSION=3.1.0.6 UPGRADE_FROM=2.4.4.1 TEST=Upgrade
   - GS_VERSION=3.2.17 UPGRADE_FROM=3.2.9 TEST=Upgrade
-  - GS_VERSION=3.4.4 UPGRADE_FROM=3.1.0.6 TEST=Upgrade
+  - GS_VERSION=3.4.5 UPGRADE_FROM=3.1.0.6 TEST=Upgrade
   - GS_VERSION=3.5.0 UPGRADE_FROM=3.2.17 TEST=Upgrade
   - GS_VERSION=3.5.0 UPGRADE_FROM=3.3.6 TEST=Upgrade
   - GS_VERSION=3.5.0 UPGRADE_FROM=3.4.3 TEST=Upgrade
@@ -73,6 +73,9 @@ before_script:
   - export GS_HOME="$(pwd)"
   - export PATH=$GS_HOME/bin:$PATH
   - export GS_TRAVIS=true
+  
+notifications:
+  slack: gemtalksystems:4YWbzy6sJN9cE0FhxvUPP8nS
 
 script:
   - hostname
