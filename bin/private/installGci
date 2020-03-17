@@ -105,7 +105,7 @@ case "$clientType" in
         esac
         targetLocation="${directoryPath}"
         if [ ! -e "$targetLocation/msvcr*.dll" ] ; then
-          cp "${sourceLocation}/msvcr*" $targetLocation
+          cp "${sourceLocation}/msvcr"* $targetLocation
         else
           echo "[Warning]  ${sourceLocation}/msvcrXXX.dll already present to replace, delete and try again"
         fi
