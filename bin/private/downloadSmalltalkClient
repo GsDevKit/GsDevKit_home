@@ -103,13 +103,11 @@ case $version in
         				exit_1_banner "Error: Neither curl not wget is not available. Install wget or curl and rerun this script."
       				fi
     				fi
-						echo "cmd::: $cmd"
 						tmpDir=`mktemp -d`
 						pushd $tmpDir
 							$cmd https://github.com/squeak-smalltalk/squeakssl/releases/download/v0.2.0b/squeakssl_v0.2.0b.zip
 							unzip squeakssl_v0.2.0b.zip
 							mv squeakssl_v0.2.0b/linux32/so.SqueakSSL $GS_HOME/shared/pharo/pharo-vm/libSqueakSSL.so
-							ls -altr $tmpDir
 						popd
 						rm -rf $tmpDir
 					fi
