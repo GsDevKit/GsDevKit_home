@@ -4,16 +4,16 @@ os:
   - linux
 
 env:
-  - GS_VERSION=3.4.4 UPGRADE_FROM=3.3.9 TEST=Upgrade_unittest
+  - GS_VERSION=3.4.5 UPGRADE_FROM=3.3.9 TEST=Upgrade_unittest
   - GS_VERSION=3.5.1 UPGRADE_FROM=3.3.9 TEST=Upgrade_unittest
   - GS_VERSION=2.4.8 TEST=UnitTests   # allow failures ... not expected to pass anymor
   - GS_VERSION=3.1.0.6 TEST=UnitTests
   - GS_VERSION=3.2.17 TEST=UnitTests  # allow failures ... want to fix these errors (eventually)
   - GS_VERSION=3.3.9 TEST=UnitTests
-  - GS_VERSION=3.4.4 TEST=UnitTests
-  - GS_VERSION=3.5.1 TEST=UnitTests
-  - GS_VERSION=3.5.1 TEST=Seaside3
-  - GS_VERSION=3.4.4 TEST=Seaside3
+  - GS_VERSION=3.4.5 TEST=UnitTests
+  - GS_VERSION=3.5.2 TEST=UnitTests
+  - GS_VERSION=3.5.2 TEST=Seaside3
+  - GS_VERSION=3.4.5 TEST=Seaside3
   - GS_VERSION=3.3.9 TEST=Seaside3
   - GS_VERSION=3.2.17 TEST=Seaside3
   - GS_VERSION=3.3.4.3 TEST=Error
@@ -29,8 +29,8 @@ env:
   - GS_VERSION=3.3.9 TEST=BasicB
   - GS_VERSION=3.4.5 TEST=BasicA
   - GS_VERSION=3.4.5 TEST=BasicB
-  - GS_VERSION=3.5.1 TEST=BasicA
-  - GS_VERSION=3.5.1 TEST=BasicB
+  - GS_VERSION=3.5.2 TEST=BasicA
+  - GS_VERSION=3.5.2 TEST=BasicB
   - GS_VERSION=3.4.5 TEST=Install
   - GS_VERSION=3.3.9 TEST=Clients
   - GS_VERSION=3.4.5 TEST=Clients
@@ -38,11 +38,11 @@ env:
   - GS_VERSION=3.3.9 TEST=Client Client=Pharo6.1
   - GS_VERSION=3.4.5 TEST=Client Client=Pharo3.0
   - GS_VERSION=3.4.5 TEST=Client Client=Pharo6.1
-  - GS_VERSION=3.5.1 TEST=Client Client=Pharo3.0
-  - GS_VERSION=3.5.1 TEST=Client Client=Pharo5.0
-  - GS_VERSION=3.5.1 TEST=Client Client=Pharo6.0
-  - GS_VERSION=3.5.1 TEST=Client Client=Pharo6.1
-  - GS_VERSION=3.5.1 TEST=Client Client=Pharo7.0
+  - GS_VERSION=3.5.2 TEST=Client Client=Pharo3.0
+  - GS_VERSION=3.5.2 TEST=Client Client=Pharo5.0
+  - GS_VERSION=3.5.2 TEST=Client Client=Pharo6.0
+  - GS_VERSION=3.5.2 TEST=Client Client=Pharo6.1
+  - GS_VERSION=3.5.2 TEST=Client Client=Pharo7.0
 
   - GS_VERSION=3.4.5 TEST=SmalltalkCI
   - GS_VERSION=3.5.0 TEST=SmalltalkCI
