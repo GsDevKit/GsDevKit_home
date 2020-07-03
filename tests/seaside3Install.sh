@@ -13,7 +13,7 @@ startStone -b ${STONENAME1}
 "$GS_HOME/bin/private/gsDevKitTodeCommandLine" todeIt ${STONENAME1} << EOF
 # after test run, <self> will be a TestResult
 project install --url=http://gsdevkit.github.io/GsDevKit_home/Seaside32.ston
-project load --loads=\`#('Seaside-Welcome' 'Zinc' 'Development' 'Examples' 'CI')\` Seaside3
+project load --loads=\`#('Welcome' 'Zinc Project' 'Development' 'Examples' 'CI')\` Seaside3
 test --batch project Seaside3
 eval \`[(self hasErrors or: [ self hasFailures ]) ifTrue: [ self error: 'Tests failed' ] ] on: Warning do: [:ex | ex resume: true ]\`
 EOF
