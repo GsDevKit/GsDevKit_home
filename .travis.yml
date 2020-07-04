@@ -67,6 +67,7 @@ matrix:
 addons:
   hosts:
     - travis.dev
+  chrome: stable
 
 before_script:
   - sudo hostname travis.dev
