@@ -52,6 +52,10 @@ shift $(($OPTIND - 1))
 
 source "${GS_HOME}/bin/private/gitFunctions"
 
+if [ "{$GS_CLIENT_DEV}x" = "x" ] ; then
+	export GS_CLIENT_DEV="$GS_HOME/dev"
+fi
+
 pushd "${GS_HOME}" >& /dev/null
   "${GS_HOME}/bin/private/cloneGitHubProject" $modeArg $organization GsDevKit_gs_client_dev dev
   checkoutClone "$GSDEVKIT_DEV_GIT_CHECKOUT" "$GS_CLIENT_DEV"
