@@ -52,7 +52,7 @@ shift $(($OPTIND - 1))
 
 source "${GS_HOME}/bin/private/gitFunctions"
 
-if [ "{$GS_CLIENT_DEV}x" = "x" ] ; then
+if [ "${GS_CLIENT_DEV}x" = "x" ] ; then
 	export GS_CLIENT_DEV="$GS_HOME/dev"
 fi
 
