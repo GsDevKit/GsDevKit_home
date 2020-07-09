@@ -22,4 +22,5 @@ fi
 cp $GS_HOME/tests/sys/local/client/tode-scripts/* $GS_HOME/sys/local/client/tode-scripts
 # use dev branch of tode
 #	cp $GS_HOME/tests/sys/local/gsdevkit_bin/* $GS_HOME/sys/local/gsdevkit_bin
-
+# don't set GEMSTONE_NRS_ALL
+cp $GS_HOME/tests/sys/local/server/gemstone/templates/* $GS_HOME/sys/local/server/gemstone/templates
