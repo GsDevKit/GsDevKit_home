@@ -19,7 +19,10 @@ fi
 # "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16"
 java -Dwebdriver.chrome.driver=chromedriver -Dwebdriver.chrome.logfile=${TRAVIS_BUILD_DIR}/chromedriver.log -Dwebdriver.chrome.args=--verbose -jar ${TRAVIS_BUILD_DIR}/selenium-server-standalone-3.141.59.jar -port 4444 -log ${TRAVIS_BUILD_DIR}/seleniumlog.txt &
 
-startStone -b ${STONENAME1}
+startStone ${STONENAME1}
+
+stopNetldi ${STONENAME1}
+startNetldi ${STONENAME1} -d -g -a $USER "${STONENAME1}_ldi"
 
 # test the Getting started with Seaside instructions
 "$GS_HOME/bin/private/gsDevKitTodeCommandLine" todeIt ${STONENAME1} << EOF
