@@ -69,8 +69,10 @@ pushd "$stonePath" >& /dev/null
   source "$stonePath/stone.env"
 popd >& /dev/null
 
+export GS_KEEP_ALL_LOGS=1
+
 set +e
-"$GS_HOME/bin/devKitCommandLine" startnetldi $stoneName $*
+"$GS_HOME/bin/devKitCommandLine" startnetldi $stoneName -d $*
 
 status="$?"
 
