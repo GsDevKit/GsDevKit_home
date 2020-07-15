@@ -7,6 +7,8 @@
 
 set -e  # exit on error
 
+cd $TRAVIS_BUILD_DIR
+
 # selenium needed for complete testing of Seaside application (https://github.com/GsDevKit/GsDevKit_home/issues/284#
 if [ ! -d "selenium-server-standalone-3.141.59.jar" ] ; then
 	# download launch theselenium web driver
