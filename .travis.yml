@@ -74,6 +74,7 @@ before_script:
   - export GS_HOME="$(pwd)"
   - export PATH=$GS_HOME/bin:$PATH
   - export GS_TRAVIS=true
+  - export JAVA="/bin/java"
   
 notifications:
   slack: gemtalksystems:4YWbzy6sJN9cE0FhxvUPP8nS
