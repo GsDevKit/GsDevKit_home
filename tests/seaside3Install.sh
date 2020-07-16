@@ -21,6 +21,7 @@ fi
 # "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16"
 java -Dwebdriver.chrome.driver=chromedriver -Dwebdriver.chrome.logfile=${TRAVIS_BUILD_DIR}/chromedriver.log -Dwebdriver.chrome.args=--verbose -jar ${TRAVIS_BUILD_DIR}/selenium-server-standalone-3.141.59.jar -port 4444 -log ${TRAVIS_BUILD_DIR}/seleniumlog.txt &
 
+cp $GS_HOME/tests/sys/local/server/gemstone/templates/gem.conf $GS_HOME/server/stones/$STONENAME1
 startStone ${STONENAME1}
 
 stopNetldi ${STONENAME1}
