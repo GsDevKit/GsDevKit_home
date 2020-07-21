@@ -31,6 +31,7 @@ startNetldi ${STONENAME1} -d -g -a $USER "${STONENAME1}_ldi"
 "$GS_HOME/bin/private/gsDevKitTodeCommandLine" todeIt ${STONENAME1} << EOF
 # after test run, <self> will be a TestResult
 project install --url=http://gsdevkit.github.io/GsDevKit_home/Seaside32.ston
+git checkout 9f9a232e2 $GS_HOME/shared/repos/Seaside
 project load --loads=\`#('CI')\` Seaside3
 eval \`TestCase compileMethod: 'run: aResult Transcript cr; show: self printString. aResult runCase: self '\`
 eval \`WAGemStoneProcessEnvironmentWrapper compileMethod: 'isProcessEnvironmentWrapper ^false'\`
