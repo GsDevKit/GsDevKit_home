@@ -32,9 +32,9 @@ startNetldi ${STONENAME1} -d -g -a $USER "${STONENAME1}_ldi"
 # after test run, <self> will be a TestResult
 project install --url=http://gsdevkit.github.io/GsDevKit_home/Seaside32.ston
 project load --loads=\`#('CI')\` Seaside3
-eval \`TestCase compileMethod: \'run: aResult Transcript cr; show: self printString. aResult runCase: self \'\`
-eval \`WAGemStoneProcessEnvironmentWrapper compileMethod: \'isProcessEnvironmentWrapper ^false\'\`
-eval \`WAPartialContinuationAlternatMarkerTest compileMethod: \'isProcessEnvironmentWrapper ^false\'\`
+eval \`TestCase compileMethod: 'run: aResult Transcript cr; show: self printString. aResult runCase: self '\`
+eval \`WAGemStoneProcessEnvironmentWrapper compileMethod: 'isProcessEnvironmentWrapper ^false'\`
+eval \`WAPartialContinuationAlternatMarkerTest compileMethod: 'isProcessEnvironmentWrapper ^false'\`
 eval \`System commit\`
 test --batch project Seaside3
 eval \`[(self hasErrors or: [ self hasFailures ]) ifTrue: [ self error: 'Tests failed' ] ] on: Warning do: [:ex | ex resume: true ]\`
