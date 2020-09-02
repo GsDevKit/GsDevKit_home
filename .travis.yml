@@ -75,6 +75,7 @@ before_script:
   - export PATH=$GS_HOME/bin:$PATH
   - export GS_TRAVIS=true
   - export JAVA="/usr/bin/java"
+  - export CHROME_DRIVER_VERSION="85.0.4183.87"
   
 notifications:
   slack: gemtalksystems:4YWbzy6sJN9cE0FhxvUPP8nS

@@ -11,7 +11,7 @@ set -e  # exit on error
 if [ ! -d "selenium-server-standalone-3.141.59.jar" ] ; then
 	# download launch theselenium web driver
 	wget http://selenium-release.storage.googleapis.com/3.141/selenium-server-standalone-3.141.59.jar
-	wget https://chromedriver.storage.googleapis.com/85.0.4183.87/chromedriver_linux64.zip
+	wget https://chromedriver.storage.googleapis.com/${CHROME_DRIVER_VERSION}/chromedriver_linux64.zip
 	unzip chromedriver_linux64.zip
 fi
 # LAUNCH the web driver
