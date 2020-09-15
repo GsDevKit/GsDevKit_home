@@ -1,0 +1,12 @@
+TDObjectGatewayLeafNode{#name:'Seaside3_dkh',#contents:'^ TDProjectSpecEntryDefinition new
+    comment: \'\';
+    projectUrl: \'https://github.com/dalehenrich/Seaside\';
+    baseline: \'Seaside3\'
+      repository: \'github://dalehenrich/Seaside:master/repository\'
+      loads: #(\'Welcome\' \'Development\' \'Zinc Project\' \'Examples\');
+    installScript: \'project clone --https --local Seaside3
+      project install --local --url=http://gsdevkit.github.io/GsDevKit_home/GsApplicationTools.ston\';
+    gitCheckout: \'issue_1223\';
+    status: #(#\'inactive\');
+    locked: false;
+    yourself'}
