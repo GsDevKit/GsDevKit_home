@@ -1,0 +1,11 @@
+TDObjectGatewayLeafNode{#name:'Parasol',#contents:'^ TDProjectSpecEntryDefinition new
+    comment: \'\';
+    projectUrl: \'https://github.com/SeasideSt/Parasol\';
+    baseline: \'Parasol\'
+      repository: \'github://SeasideSt/Parasol:master/repository\'
+      loads: #(\'default\');
+    installScript: \'project clone --https --local Parasol\';
+    gitCheckout: \'master\';
+    status: #(#\'inactive\');
+    locked: false;
+    yourself'}
