@@ -97,7 +97,7 @@ case $TEST in
     createStone $opt ${STONENAME1}_${UPGRADE_FROM} ${UPGRADE_FROM}
     upgradeStoneName="${STONENAME1}_${GS_VERSION}"
 		set +e
-    upgradeStone -f ${STONENAME1}_${UPGRADE_FROM} ${STONENAME1}_${GS_VERSION} $GS_VERSION << EOF
+    upgradeStone -f ${TOPAZWAITFORDEBUG} ${STONENAME1}_${UPGRADE_FROM} ${STONENAME1}_${GS_VERSION} $GS_VERSION << EOF
 
 EOF
 		status=$?

@@ -12,7 +12,7 @@ start_banner
 usage() {
   cat <<HELP
 usage: $0 [-c] [-f] [-u] [-s <source-stone-extent-file-path>] [-l <post-load-tode-script>]
-          [-m <tempObjCacheSize>] [-U <gemstone-user-id>] [-P <gemstone-password>]
+          [-m <tempObjCacheSize>] [-U <gemstone-user-id>] [-P <gemstone-password>] [-W]
 	  <source-stone-name> <target-stone-name> <gemstone-version>
 
 OPTIONS
@@ -42,6 +42,8 @@ OPTIONS
   -P <gemstone-password>
      Use <gemstone-password> as the password for the user specified in -U option. Default 
      password is swordfish. If -U not specified the -P option has no effect.
+  -W
+		 enable TOPAZWAITFORDEBUG, to allow remote debugging via DEBUGGEM (3.6.x upgrades only)
 
 EXAMPLES
   $(basename $0) -h
@@ -72,7 +74,8 @@ hasSnapshotFile="false"
 tempObjCacheSize="100000"
 gemstoneUserId="DataCurator"
 gemstonePassword="swordfish"
-while getopts "cfhl:s:um:U:P:" OPT ; do
+topazWaitForDebug=""
+while getopts "cfhl:s:um:U:P:W" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     c) runUpgrade="false";;
@@ -86,6 +89,7 @@ while getopts "cfhl:s:um:U:P:" OPT ; do
     u) createStone="false";;
     U) gemstoneUserId="${OPTARG}";;
     P) gemstonePassword="${OPTARG}";;
+		W) topazWaitForDebug=" -W ";;
     *) usage; exit_1_banner "Uknown option";;
   esac
 done
@@ -228,9 +232,13 @@ EOF
 			echo "Seaside Upgrade completed. No errors detected."
       ;;
 		3.5.*|3.6.*)
+			case "$gsvers" in
+				3.5.*) remoteDebugFlag="";; # remote debugging flag is not available in 3.5.x
+				*) remoteDebugFlag="$topazWaitForDebug" ;;
+			esac
 			set +e
 			upgradeScript=$GEMSTONE/upgrade/createGsDevKit_upgrade.topaz
-      "$GEMSTONE/seaside/bin/upgradeSeasideImage" -c $tempObjCacheSize -s $targetStoneName -u $gemstoneUserId -p $gemstonePassword -P $upgradeScript >> $upgradeLogDir/topaz.out 2>&1 << EOF
+      "$GEMSTONE/seaside/bin/upgradeSeasideImage" -c $tempObjCacheSize -s $targetStoneName -u $gemstoneUserId -p $gemstonePassword -P $upgradeScript $remoteDebugFlag >> $upgradeLogDir/topaz.out 2>&1 << EOF
 
 EOF
 			status=$?
