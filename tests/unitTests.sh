@@ -39,7 +39,7 @@ startTopaz "$1" -l << EOF
 					ifTrue: [ passed ]
 					ifFalse: [ true ] ].
 	GsFile gciLogServer: '  failures'.
-	passed := passed & res errors isEmpty.
+	passed := passed & res failures isEmpty.
 	(res failures collect: [:each | each printString]) asArray sort do: [:each |
 		GsFile gciLogServer: '	',each ].
 	^ errorExitOnTestFailure
