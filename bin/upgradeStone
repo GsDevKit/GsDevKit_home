@@ -247,6 +247,15 @@ EOF
 				exit $status
 			fi
 			set -e
+			case  "$gsvers" in
+				3.5.*)
+					# patch https://github.com/GsDevKit/GsDevKit/issues/129
+					"$GS_HOME/bin/private/gsDevKitTodeCommandLine" todeIt $targetStoneName << TODE
+eval \`SessionMethodTransactionBoundaryPolicy install\`
+commit
+TODE
+					;;
+			esac
 			;;
     *)
 			"$GS_HOME/bin/private/preUpgradeSeasideImage" $targetStoneName "$upgradeLogDir"
