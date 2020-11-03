@@ -5,6 +5,8 @@
 #   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
 #=========================================================================
 
+set -x
+
 theArgs="$*"
 source "${GS_HOME}/bin/private/shFeedback"
 start_banner
@@ -252,7 +254,7 @@ EOF
 eval \`SessionMethodTransactionBoundaryPolicy install\`
 commit
 TODE
-						echo "PATCHED https://github.com/GsDevKit/GsDevKit/issues/129
+						echo "PATCHED https://github.com/GsDevKit/GsDevKit/issues/129"
 
 						;;
 				esac
