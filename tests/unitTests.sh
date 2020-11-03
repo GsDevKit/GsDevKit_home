@@ -12,7 +12,6 @@ errorExitOnTestFailure="$2"
 startTopaz "$1" -l << EOF
 
 	iferr 1 stk
-	iferr 2 exit 1
 
 	login
 
@@ -24,9 +23,9 @@ startTopaz "$1" -l << EOF
   suite := TestSuite named: 'Image Test Suite'.
   TestCase suite tests do: [ :s | suite addTests: s tests ].
 
- 	GsFile gciLogServer: 'Unit tests for $1, GemStone version ', (System gemVersionAt: #gsVersion) printString.
+ 	GsFile gciLogServer: 'Starting unit tests for $1, GemStone version ', (System gemVersionAt: #gsVersion) printString.
 	res := suite run.
-
+ 	GsFile gciLogServer: 'Finished unit tests for $1, GemStone version ', (System gemVersionAt: #gsVersion) printString.
 	GsFile gciLogServer: '------------------------------------------'.
 	GsFile gciLogServer: res printString.
 	GsFile gciLogServer: '  errors'.
