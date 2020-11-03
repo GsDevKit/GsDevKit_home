@@ -242,20 +242,33 @@ EOF
 
 EOF
 			status=$?
-			if [ "$status" != "1" ] ; then
+			if [ "$status" = "0" ] ; then
 				cat $upgradeLogDir/topaz.out
-				exit $status
-			fi
-			set -e
-			case  "$gsvers" in
-				3.5.*)
-					# patch https://github.com/GsDevKit/GsDevKit/issues/129
-					"$GS_HOME/bin/private/gsDevKitTodeCommandLine" todeIt $targetStoneName << TODE
+				set -e
+				case  "$gsvers" in
+					3.5.*)
+						# patch https://github.com/GsDevKit/GsDevKit/issues/129
+						"$GS_HOME/bin/private/gsDevKitTodeCommandLine" todeIt $targetStoneName << TODE
 eval \`SessionMethodTransactionBoundaryPolicy install\`
 commit
 TODE
-					;;
-			esac
+						echo "PATCHED https://github.com/GsDevKit/GsDevKit/issues/129
+
+						;;
+				esac
+				echo "UPGRADE FINISHED SUCCESSFULLY WITH $status exit status"
+				if [ "${postUpgradeLoadScriptPath}x" != "x" ] ;  then
+				  #install application code
+				  echo "Running ${postUpgradeLoadScriptPath} tODE script"
+
+				  "$GS_HOME/bin/private/gsDevKitTodeCommandLine" todeIt $targetStoneName << TODE
+project upgrade --install=${postUpgradeLoadScriptPath}
+TODE
+				fi
+			else 
+				echo "UPGRADE FINISHED UNSUCCESSFULLY WITH $status exit status"
+			fi
+			exit $status
 			;;
     *)
 			"$GS_HOME/bin/private/preUpgradeSeasideImage" $targetStoneName "$upgradeLogDir"
