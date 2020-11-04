@@ -246,7 +246,7 @@ EOF
 EOF
     status=$?
 		echo "UPGRADE FINISHED WITH $status exit status"
-    if [ "$status" != "0" ] ; then
+    if [ "$status" = "0" ] ; then
 			startStone ${upgradeFromStoneName}	#stopped during upgrade
 			set -e # if script fails for reason other than unit test failures, bail
 			echo "running unit test health check (${upgradeFromVersion})"

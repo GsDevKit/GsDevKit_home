@@ -195,7 +195,9 @@ pushd "${upgradeLogDir}" >& /dev/null
 EOF
 	status=$?
 	set -e
+	echo "================== START of tail -100 of $upgradeLogDir/upgradeImage.out"
 	tail -100 $upgradeLogDir/upgradeImage.out
+	echo "================== END of tail -100 of $upgradeLogDir/upgradeImage.out"
 	if [ "$status" != "0" ] ; then
 		echo "STANDARD UPGRADE FINISHED UNSUCCESSFULLY WITH $status exit status"
 		exit $status
@@ -251,7 +253,9 @@ EOF
 EOF
 			status=$?
 			set -e
+			echo "================== START of tail -100 of $upgradeLogDir/upgradeSeasideImage.out"
 			tail -100 $upgradeLogDir/upgradeSeasideImage.out
+			echo "================== END of tail -100 of $upgradeLogDir/upgradeSeasideImage.out"
 			if [ "$status" != "0" ] ; then
 				echo "UPGRADE FINISHED UNSUCCESSFULLY WITH $status exit status"
 			else
