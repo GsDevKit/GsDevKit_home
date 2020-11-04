@@ -231,30 +231,24 @@ EOF
 		;;
   Upgrade_71) # Issue #71: test case ... upgrade from 3.2.11; tode not installed
     installServer
-    createStone -g ${STONENAME1}_3211 3.2.11
-    upgradeStoneName="${STONENAME1}_${GS_VERSION}"
+		if [ "$UPGRADE_FROM"x = "x" ] ; then
+			upgradeFromStoneName="${STONENAME1}_3211"
+			upgradeFromVersion="3.2.11"
+		else
+			upgradeFromStoneName="${STONENAME1}_${GS_VERSION}"
+			upgradeFromVersion="${GS_VERSION}"
+		fi
+	  createStone -g ${upgradeFromStoneName} ${upgradeFromVersion}
+  	upgradeStoneName="${STONENAME1}_${GS_VERSION}"
     set +e
-    upgradeStone -f ${STONENAME1}_3211 ${STONENAME1}_${GS_VERSION} $GS_VERSION << EOF
+    upgradeStone -f ${upgradeFromStoneName} ${STONENAME1}_${GS_VERSION} $GS_VERSION << EOF
 
 EOF
     status=$?
 		echo "UPGRADE FINISHED WITH $status exit status"
-    stopStone -b ${STONENAME1}_3211
+    stopStone -b ${upgradeFromStoneName}
     stopStone -b ${STONENAME1}_${GS_VERSION}
     if [ "$status" != "0" ] ; then
-      tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topazerrors.log
-			if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeSeasideImage.out" ] ; then 
-        tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeSeasideImage.out
-      fi
-      if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out" ] ; then 
-        tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeImage.out
-      fi
-      if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeTo3x.out" ] ; then 
-        tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/upgradeTo3x.out
-      fi
-      if [ -e "$GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topaz.out" ] ; then 
-        tail -500 $GS_HOME/server/stones/$upgradeStoneName/upgradeLog/topaz.out
-      fi
       exit 1
     else
       exit 0
