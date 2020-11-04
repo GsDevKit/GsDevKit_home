@@ -229,7 +229,7 @@ EOF
     stopStone -b $upgradeStoneName
 		exit $status
 		;;
-  Upgrade_71) # Issue #71: test case ... upgrade from 3.2.11
+  Upgrade_71) # Issue #71: test case ... upgrade from 3.2.11; tode not installed
     installServer
     createStone -g ${STONENAME1}_3211 3.2.11
     upgradeStoneName="${STONENAME1}_${GS_VERSION}"

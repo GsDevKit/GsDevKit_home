@@ -260,10 +260,19 @@ EOF
 					3.5.*)
 						# patch https://github.com/GsDevKit/GsDevKit/issues/129
 						echo "PATCHING https://github.com/GsDevKit/GsDevKit/issues/129"
-						"$GS_HOME/bin/private/gsDevKitTodeCommandLine" todeIt $targetStoneName << TODE
-eval \`SessionMethodTransactionBoundaryPolicy install\`
-commit
-TODE
+						$GS_HOME/bin/startTopaz $targetStoneName -l 2>&1 << EOF
+        			login
+        			display oops
+        			iferr 1 stk
+        			iferr 2 stack
+							iferr 3 exit
+							run
+								SessionMethodTransactionBoundaryPolicy install.
+                System commitTransaction
+							%
+							logout
+              exit 0
+EOF
 						echo "PATCHED https://github.com/GsDevKit/GsDevKit/issues/129"
 
 						;;
