@@ -273,7 +273,7 @@ EOF
 							run
 								SessionMethodTransactionBoundaryPolicy install.
                 System commitTransaction
-							%
+%
 							logout
               exit 0
 EOF
