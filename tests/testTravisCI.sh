@@ -235,8 +235,8 @@ EOF
 			upgradeFromStoneName="${STONENAME1}_3211"
 			upgradeFromVersion="3.2.11"
 		else
-			upgradeFromStoneName="${STONENAME1}_${GS_VERSION}"
-			upgradeFromVersion="${GS_VERSION}"
+			upgradeFromStoneName="${STONENAME1}_${UPGRADE_FROM}"
+			upgradeFromVersion="${UPGRADE_FROM}"
 		fi
 	  createStone -g ${upgradeFromStoneName} ${upgradeFromVersion}
   	upgradeStoneName="${STONENAME1}_${GS_VERSION}"
@@ -246,13 +246,24 @@ EOF
 EOF
     status=$?
 		echo "UPGRADE FINISHED WITH $status exit status"
-    stopStone -b ${upgradeFromStoneName}
-    stopStone -b ${STONENAME1}_${GS_VERSION}
     if [ "$status" != "0" ] ; then
-      exit 1
-    else
-      exit 0
+			startStone ${upgradeFromStoneName}	#stopped during upgrade
+			set -e # if script fails for reason other than unit test failures, bail
+			echo "running unit test health check (${upgradeFromVersion})"
+			$GS_HOME/tests/unitTests.sh ${upgradeFromStoneName} false # don't fail if unit tests fail
+			echo "finished unit test health check(${upgradeFromVersion})"
+			set +e
+			echo "running unit test on upgraded stone (${GS_VERSION})"
+			$GS_HOME/tests/unitTests.sh $upgradeStoneName true #fail if unit tests don't pass
+			status=$?
+			echo "finished unit test  on upgraded stone(${GS_VERSION})"
+			if [ "$status" != "0" ] ; then
+				echo "unit tests failed after upgrade"
+			fi
     fi
+    stopStone -b ${STONENAME1}_${UPGRADE_FROM}
+    stopStone -b $upgradeStoneName
+		exit $status
     ;;
   BasicTodeClient)
     $GS_HOME/tests/basicTodeClientTests.sh
