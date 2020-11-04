@@ -191,10 +191,18 @@ fi
 pushd "${upgradeLogDir}" >& /dev/null
   # start standard upgrade
   echo "STARTING standard upgradeImage "
+	set +e
   "$GEMSTONE/bin/upgradeImage" -c $tempObjCacheSize -s $GEMSTONE_NAME << EOF
   
 EOF
-  
+	status=$?
+	set -e
+	cat $upgradeLogDir/upgradeImage.out
+	if [ "$status" != "0" ] ; then
+		echo "STANDARD UPGRADE FINISHED UNSUCCESSFULLY WITH $status exit status"
+		exit $status
+	fi
+	echo "STANDARD UPGRADE FINISHED SUCCESSFULLY WITH $status exit status"
 
   # use default Bootstrap globals for Seaside upgrade
   # start "seaside" upgrade to upgrade GLASS to 1.0-beta.9.1
@@ -240,16 +248,20 @@ EOF
 			esac
 			set +e
 			upgradeScript=$GEMSTONE/upgrade/createGsDevKit_upgrade.topaz
-      "$GEMSTONE/seaside/bin/upgradeSeasideImage" -c $tempObjCacheSize -s $targetStoneName -u $gemstoneUserId -p $gemstonePassword -P $upgradeScript $remoteDebugFlag >> $upgradeLogDir/topaz.out 2>&1 << EOF
+      "$GEMSTONE/seaside/bin/upgradeSeasideImage" -c $tempObjCacheSize -s $targetStoneName -u $gemstoneUserId -p $gemstonePassword -P $upgradeScript $remoteDebugFlag 2>&1 << EOF
 
 EOF
 			status=$?
-			if [ "$status" = "0" ] ; then
-				cat $upgradeLogDir/topaz.out
-				set -e
+			set -e
+			cat $upgradeLogDir/upgradeSeasideImage.out
+			if [ "$status" != "0" ] ; then
+				echo "UPGRADE FINISHED UNSUCCESSFULLY WITH $status exit status"
+			else
+				echo "UPGRADE FINISHED SUCCESSFULLY WITH $status exit status"
 				case  "$gsvers" in
 					3.5.*)
 						# patch https://github.com/GsDevKit/GsDevKit/issues/129
+						echo "PATCHING https://github.com/GsDevKit/GsDevKit/issues/129"
 						"$GS_HOME/bin/private/gsDevKitTodeCommandLine" todeIt $targetStoneName << TODE
 eval \`SessionMethodTransactionBoundaryPolicy install\`
 commit
@@ -258,7 +270,6 @@ TODE
 
 						;;
 				esac
-				echo "UPGRADE FINISHED SUCCESSFULLY WITH $status exit status"
 				if [ "${postUpgradeLoadScriptPath}x" != "x" ] ;  then
 				  #install application code
 				  echo "Running ${postUpgradeLoadScriptPath} tODE script"
@@ -266,11 +277,10 @@ TODE
 				  "$GS_HOME/bin/private/gsDevKitTodeCommandLine" todeIt $targetStoneName << TODE
 project upgrade --install=${postUpgradeLoadScriptPath}
 TODE
+					echo "Finished ${postUpgradeLoadScriptPath} tODE script"
 				fi
-			else 
-				echo "UPGRADE FINISHED UNSUCCESSFULLY WITH $status exit status"
 			fi
-			exit $status
+			exit $status	# all necessary processing has been completed
 			;;
     *)
 			"$GS_HOME/bin/private/preUpgradeSeasideImage" $targetStoneName "$upgradeLogDir"
