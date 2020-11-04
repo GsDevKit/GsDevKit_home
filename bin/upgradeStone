@@ -5,8 +5,6 @@
 #   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
 #=========================================================================
 
-set -x
-
 theArgs="$*"
 source "${GS_HOME}/bin/private/shFeedback"
 start_banner
@@ -197,7 +195,6 @@ pushd "${upgradeLogDir}" >& /dev/null
 EOF
 	status=$?
 	set -e
-	cat $upgradeLogDir/upgradeImage.out
 	if [ "$status" != "0" ] ; then
 		echo "STANDARD UPGRADE FINISHED UNSUCCESSFULLY WITH $status exit status"
 		exit $status
@@ -253,7 +250,6 @@ EOF
 EOF
 			status=$?
 			set -e
-			cat $upgradeLogDir/upgradeSeasideImage.out
 			if [ "$status" != "0" ] ; then
 				echo "UPGRADE FINISHED UNSUCCESSFULLY WITH $status exit status"
 			else
