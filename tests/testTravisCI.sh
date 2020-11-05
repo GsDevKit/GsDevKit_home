@@ -247,7 +247,7 @@ EOF
 		echo "UPGRADE FINISHED WITH $status exit status"
     if [ "$status" = "0" ] ; then
 			startStone ${upgradeFromStoneName}	#stopped during upgrade
-			if [ "upgradeFromVersion" != "3.2.11" ] ; then
+			if [ "$upgradeFromVersion" != "3.2.11" ] ; then
 				# 3.2.11 unit tests fail with "too many sessions error", so skip the tests
 				set -e # if script fails for reason other than unit test failures, bail
 				echo "running unit test health check (${upgradeFromVersion})"
