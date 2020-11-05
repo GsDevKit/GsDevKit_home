@@ -248,10 +248,12 @@ EOF
 		echo "UPGRADE FINISHED WITH $status exit status"
     if [ "$status" = "0" ] ; then
 			startStone ${upgradeFromStoneName}	#stopped during upgrade
-			set -e # if script fails for reason other than unit test failures, bail
-			echo "running unit test health check (${upgradeFromVersion})"
-			$GS_HOME/tests/unitTests.sh ${upgradeFromStoneName} false # don't fail if unit tests fail
-			echo "finished unit test health check(${upgradeFromVersion})"
+			if [ "upgradeFromVersion] != "3.2.11" ] ; then
+				# 3.2.11 unit tests fail with "too many sessions error", so skip the tests
+				set -e # if script fails for reason other than unit test failures, bail
+				echo "running unit test health check (${upgradeFromVersion})"
+				$GS_HOME/tests/unitTests.sh ${upgradeFromStoneName} false # don't fail if unit tests fail
+				echo "finished unit test health check(${upgradeFromVersion})"
 			set +e
 			echo "running unit test on upgraded stone (${GS_VERSION})"
 			$GS_HOME/tests/unitTests.sh $upgradeStoneName true #fail if unit tests don't pass
