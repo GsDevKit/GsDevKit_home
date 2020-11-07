@@ -6,6 +6,7 @@ TDObjectGatewayLeafNode{#name:'OrderPreservingDictionary',#contents:'^ TDProject
         \'github://GsDevKit/OrderPreservingDictionary:gemstone/filetree\'
       loads: #(\'default\');
     installScript: \'project clone --https --local OrderPreservingDictionary\';
+    gitCheckout: \'gemstone\';
     status: #(#\'inactive\');
     locked: false;
     yourself'}

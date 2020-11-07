@@ -9,6 +9,7 @@ TDObjectGatewayLeafNode{#name:'XPath',#contents:'^ TDProjectSpecEntryDefinition 
         project clone --https --local XPath
         project install --local --url=http://gsdevkit.github.io/GsDevKit_home/XMLWriter.ston
         project install --local --url=http://gsdevkit.github.io/GsDevKit_home/XMLParser.ston\';
+    gitCheckout: \'gemstone\';
     status: #(#\'inactive\');
     locked: false;
     yourself'}

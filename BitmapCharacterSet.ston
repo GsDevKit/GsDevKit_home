@@ -5,6 +5,7 @@ TDObjectGatewayLeafNode{#name:'BitmapCharacterSet',#contents:'^ TDProjectSpecEnt
       repository: \'github://GsDevKit/BitmapCharacterSet:gemstone/filetree\'
       loads: #(\'default\');
     installScript: \'project clone --https --local BitmapCharacterSet\';
+    gitCheckout: \'gemstone\';
     status: #(#\'inactive\');
     locked: false;
     yourself'}

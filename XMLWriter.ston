@@ -8,6 +8,7 @@ TDObjectGatewayLeafNode{#name:'XMLWriter',#contents:'^ TDProjectSpecEntryDefinit
         \'
         project clone --https --local XMLWriter
         project install --local --url=http://gsdevkit.github.io/GsDevKit_home/OrderPreservingDictionary.ston\';
+    gitCheckout: \'gemstone\';
     status: #(#\'inactive\');
     locked: false;
     yourself'}
