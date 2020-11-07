@@ -7,9 +7,9 @@ TDObjectGatewayLeafNode{#name:'XMLParser',#contents:'^ TDProjectSpecEntryDefinit
     installScript:
         \'
         project clone --https --local XMLParser
-        project install --local -url=http://gsdevkit.github.io/GsDevKit_home/XMLWriter.ston
-        project install --local -url=http://gsdevkit.github.io/GsDevKit_home/OrderPreservingDictionary.ston
-        project install --local -url=http://gsdevkit.github.io/GsDevKit_home/BitmapCharacterSet.ston\';
+        project install --local --url=http://gsdevkit.github.io/GsDevKit_home/XMLWriter.ston
+        project install --local --url=http://gsdevkit.github.io/GsDevKit_home/OrderPreservingDictionary.ston
+        project install --local --url=http://gsdevkit.github.io/GsDevKit_home/BitmapCharacterSet.ston\';
     status: #(#\'inactive\');
     locked: false;
     yourself'}
