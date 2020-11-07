@@ -1,11 +1,14 @@
-TDObjectGatewayLeafNode{#name:'SIXX',#contents:'^TDProjectSpecEntryDefinition new
+TDObjectGatewayLeafNode{#name:'SIXX',#contents:'^ TDProjectSpecEntryDefinition new
     comment: \'\';
     projectUrl: \'https://github.com/glassdb/SIXX\';
-  baseline: \'SIXX\'
-    repository: \'github://glassdb/SIXX:master/repository\'
-    loads: \'Core\';
-  installScript: \'project clone --https --local SIXX\';
-  gitCheckout: \'master\';
-  status: #(#\'inactive\');
-  locked: false;
-  yourself'}
+    baseline: \'SIXX\'
+      repository: \'github://glassdb/SIXX:master/repository\'
+      loads: \'Core\';
+    installScript:
+        \'
+        project clone --https --local SIXX
+        project install --https --local --url=http://gsdevkit.github.io/GsDevKit_home/XMLParser\';
+    gitCheckout: \'master\';
+    status: #(#\'inactive\');
+    locked: false;
+    yourself'}

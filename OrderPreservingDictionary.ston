@@ -1,0 +1,11 @@
+TDObjectGatewayLeafNode{#name:'OrderPreservingDictionary',#contents:'^ TDProjectSpecEntryDefinition new
+    comment: \'\';
+    projectUrl: \'https://github.com/GsDevKit/OrderPreservingDictionary\';
+    baseline: \'OrderPreservingDictionary\'
+      repository:
+        \'github://GsDevKit/OrderPreservingDictionary:gemstone/filetree\'
+      loads: #(\'default\');
+    installScript: \'project clone --https --local OrderPreservingDictionary\';
+    status: #(#\'inactive\');
+    locked: false;
+    yourself'}

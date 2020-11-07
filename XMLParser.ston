@@ -1,0 +1,15 @@
+TDObjectGatewayLeafNode{#name:'XMLParser',#contents:'^ TDProjectSpecEntryDefinition new
+    comment: \'\';
+    projectUrl: \'https://github.com/GsDevKit/XML-XMLParser\';
+    baseline: \'XMLParser\'
+      repository: \'github://GsDevKit/XML-XMLParser:gemstone/filetree\'
+      loads: #(\'default\');
+    installScript:
+        \'
+        project clone --https --local XMLParser
+        project install --https --local -url=http://gsdevkit.github.io/GsDevKit_home/XMLWriter
+        project install --https --local -url=http://gsdevkit.github.io/GsDevKit_home/OrderPreservingDictionary
+        project install --https --local -url=http://gsdevkit.github.io/GsDevKit_home/BitmapCharacterSet\';
+    status: #(#\'inactive\');
+    locked: false;
+    yourself'}

@@ -1,0 +1,14 @@
+TDObjectGatewayLeafNode{#name:'XPath',#contents:'^ TDProjectSpecEntryDefinition new
+    comment: \'\';
+    projectUrl: \'https://github.com/GsDevKit/XML-XPath\';
+    baseline: \'XPath\'
+      repository: \'github://GsDevKit/XML-XPath:gemstone/filetree\'
+      loads: #(\'default\');
+    installScript:
+        \'
+        project clone --https --local XPath
+        project install --https --local -url=http://gsdevkit.github.io/GsDevKit_home/XMLWriter
+        project install --https --local -url=http://gsdevkit.github.io/GsDevKit_home/XMLParser\';
+    status: #(#\'inactive\');
+    locked: false;
+    yourself'}

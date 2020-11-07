@@ -1,0 +1,13 @@
+TDObjectGatewayLeafNode{#name:'XMLWriter',#contents:'^ TDProjectSpecEntryDefinition new
+    comment: \'\';
+    projectUrl: \'https://github.com/GsDevKit/XML-XMLWriter\';
+    baseline: \'XMLWriter\'
+      repository: \'github://GsDevKit/XML-XMLWriter:gemstone/filetree\'
+      loads: #(\'default\');
+    installScript:
+        \'
+        project clone --https --local XMLWriter
+        project install --https --local -url=http://gsdevkit.github.io/GsDevKit_home/OrderPreservingDictionary\';
+    status: #(#\'inactive\');
+    locked: false;
+    yourself'}

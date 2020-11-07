@@ -1,0 +1,10 @@
+TDObjectGatewayLeafNode{#name:'BitmapCharacterSet',#contents:'^ TDProjectSpecEntryDefinition new
+    comment: \'\';
+    projectUrl: \'https://github.com/GsDevKit/BitmapCharacterSet\';
+    baseline: \'BitmapCharacterSet\'
+      repository: \'github://GsDevKit/BitmapCharacterSet:gemstone/filetree\'
+      loads: #(\'default\');
+    installScript: \'project clone --https --local BitmapCharacterSet\';
+    status: #(#\'inactive\');
+    locked: false;
+    yourself'}
