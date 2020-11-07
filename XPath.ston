@@ -7,8 +7,8 @@ TDObjectGatewayLeafNode{#name:'XPath',#contents:'^ TDProjectSpecEntryDefinition 
     installScript:
         \'
         project clone --https --local XPath
-        project install --local -url=http://gsdevkit.github.io/GsDevKit_home/XMLWriter
-        project install --local -url=http://gsdevkit.github.io/GsDevKit_home/XMLParser\';
+        project install --local -url=http://gsdevkit.github.io/GsDevKit_home/XMLWriter.ston
+        project install --local -url=http://gsdevkit.github.io/GsDevKit_home/XMLParser.ston\';
     status: #(#\'inactive\');
     locked: false;
     yourself'}

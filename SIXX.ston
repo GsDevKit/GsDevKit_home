@@ -7,7 +7,7 @@ TDObjectGatewayLeafNode{#name:'SIXX',#contents:'^ TDProjectSpecEntryDefinition n
     installScript:
         \'
         project clone --https --local SIXX
-        project install --local --url=http://gsdevkit.github.io/GsDevKit_home/XMLParser\';
+        project install --local --url=http://gsdevkit.github.io/GsDevKit_home/XMLParser.ston\';
     gitCheckout: \'master\';
     status: #(#\'inactive\');
     locked: false;
