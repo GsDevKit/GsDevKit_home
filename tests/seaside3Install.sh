@@ -31,3 +31,10 @@ eval \`[(self hasErrors or: [ self hasFailures ]) ifTrue: [ self error: 'Tests f
 EOF
 
 kill %1
+
+echo "======CHROME======="
+cat ${TRAVIS_BUILD_DIR}/chromedriver.log
+echo "======SELENIUM======="
+cat ${TRAVIS_BUILD_DIR}/seleniumlog.txt &
+
+
