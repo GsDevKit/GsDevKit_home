@@ -14,10 +14,10 @@ env:
 #  - GS_VERSION=3.5.4 TEST=UnitTests
 #  - GS_VERSION=3.6.0 TEST=UnitTests
   - GS_VERSION=3.6.0 TEST=Seaside3
-  - GS_VERSION=3.5.4 TEST=Seaside3
-  - GS_VERSION=3.4.5 TEST=Seaside3
-  - GS_VERSION=3.3.9 TEST=Seaside3
-  - GS_VERSION=3.2.17 TEST=Seaside3
+#  - GS_VERSION=3.5.4 TEST=Seaside3
+#  - GS_VERSION=3.4.5 TEST=Seaside3
+#  - GS_VERSION=3.3.9 TEST=Seaside3
+#  - GS_VERSION=3.2.17 TEST=Seaside3
 #  - GS_VERSION=3.3.4.3 TEST=Error
 ##  - GS_VERSION=3.5.0 DOWNLOAD=3.5.0-EA-44511 TEST=BasicA # https://github.com/GsDevKit/GsDevKit_home/issues/226
 ##  - GS_VERSION=3.5.0 DOWNLOAD=3.5.0-EA-43453 TEST=BasicB # keyfile needed for BasicB tests
@@ -88,7 +88,7 @@ before_script:
   - export PATH=$GS_HOME/bin:$PATH
   - export GS_TRAVIS=true
   - export JAVA="/usr/bin/java"
-  - export CHROME_DRIVER_VERSION="85.0.4183.87"
+  - export CHROME_DRIVER_VERSION="87.0.4280.88"
   
 notifications:
   slack: gemtalksystems:4YWbzy6sJN9cE0FhxvUPP8nS
