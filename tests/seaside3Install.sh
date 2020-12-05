@@ -32,9 +32,9 @@ EOF
 
 kill %1
 
-echo "======CHROME======="
-cat ${TRAVIS_BUILD_DIR}/chromedriver.log
-echo "======SELENIUM======="
-cat ${TRAVIS_BUILD_DIR}/seleniumlog.txt &
+#	echo "======CHROME======="
+#	cat ${TRAVIS_BUILD_DIR}/chromedriver.log
+#	echo "======SELENIUM======="
+#	cat ${TRAVIS_BUILD_DIR}/seleniumlog.txt &
 
 
