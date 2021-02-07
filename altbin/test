@@ -1,0 +1,6 @@
+#!/usr/bin/env gemstone
+
+login
+run
+GsFile stdout nextPutAll: (3+4) printString
+%
