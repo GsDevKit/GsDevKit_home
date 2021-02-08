@@ -1,4 +1,4 @@
-#!/usr/bin/env gemstone
+#!/usr/bin/env topaz
 
 login
 run
