@@ -81,10 +81,14 @@ PLATFORM="`uname -sm | tr ' ' '-'`"
 [ $PLATFORM = "Darwin-x86_64" ] && PLATFORM="Darwin-i386"
 
 # Check we're on a suitable 64-bit machine and set gsvers
+dl_format=zip
 case "$PLATFORM" in
     Darwin-i386)
       dlvers="GemStone64Bit${bucket}-i386.Darwin"
       gsvers="GemStone64Bit${vers}-i386.Darwin"
+      if  [ "$vers" \> "3.5.2"  ] ;  then 
+      	dl_format=dmg
+      fi
       ;;
     Linux-x86_64)
       # Linux looks OK
@@ -106,8 +110,8 @@ case "$PLATFORM" in
 esac
 
 # set zipfile name from gsvers
-dl_gss_file=${dlvers}.zip
-gss_file=${gsvers}.zip
+dl_gss_file=${dlvers}.${dl_format}
+gss_file=${gsvers}.${dl_format}
 
 # set ftp_address
 ftp_address=https://downloads.gemtalksystems.com
@@ -153,15 +157,25 @@ pushd "$GS_SHARED_DOWNLOADS/zip" >& /dev/null
     echo "to replace it, remove or rename it and rerun this script"
   fi
 
-  # Unzip the downloaded archive into $GS_HOME/shared/downloads/products/
+  # Unpack the downloaded archive into $GS_HOME/shared/downloads/products/
   echo "[Info] Uncompressing GemStone archive into $GS_HOME/shared/downloads/products/"
   gs_product="$GS_SHARED_DOWNLOADS/products/$gsvers"
   if [ ! -e "$gs_product" ]
     then
-    unzip -q -d "$GS_SHARED_DOWNLOADS/products" $dl_gss_file
-    if [ ! -e "$gs_product" ] ; then
-      ln -s "$GS_SHARED_DOWNLOADS/products/${dlvers}" "${gs_product}"
-    fi
+    case "$dl_format" in
+      zip)
+		  unzip -q -d "$GS_SHARED_DOWNLOADS/products" $dl_gss_file
+		  if [ ! -e "$gs_product" ] ; then
+			ln -s "$GS_SHARED_DOWNLOADS/products/${dlvers}" "${gs_product}"
+		  fi
+		  ;;
+      dmg)
+      	# This will fail is there is a space in name of the mounted image. TODO: Find better solution.
+      	attach_path=`hdiutil attach $dl_gss_file | tail -n1 | awk -F\  '{print $NF}'`
+      	cp -R "${attach_path}/${gsvers}" "$GS_SHARED_DOWNLOADS/products"
+      	umount ${attach_path}
+      	;;
+    esac
   else
     echo "[Warning] $GS_SHARED_DOWNLOADS/products/$gsvers already exists"
     echo "to replace it, remove or rename it and rerun this script"
