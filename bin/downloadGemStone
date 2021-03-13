@@ -170,10 +170,12 @@ pushd "$GS_SHARED_DOWNLOADS/zip" >& /dev/null
 		  fi
 		  ;;
       dmg)
-      	# This will fail is there is a space in name of the mounted image. TODO: Find better solution.
-      	attach_path=`hdiutil attach $dl_gss_file | tail -n1 | awk -F\  '{print $NF}'`
+      	# This will fail is there is more than one mountable volume in the dmg
+      	attach_result=`hdiutil attach -plist $dl_gss_file`
+      	attach_device=`echo $attach_result | xpath "//dict/array/dict[true]/key[.='dev-entry']/following-sibling::string[1]/text()" 2>/dev/null`
+      	attach_path=`echo $attach_result | xpath "//dict/array/dict[true]/key[.='mount-point']/following-sibling::string[1]/text()" 2>/dev/null`
       	cp -R "${attach_path}/${gsvers}" "$GS_SHARED_DOWNLOADS/products"
-      	umount ${attach_path}
+      	hdiutil detach ${attach_device}
       	;;
     esac
   else
