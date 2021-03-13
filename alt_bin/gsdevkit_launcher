@@ -219,7 +219,7 @@ else
 	ifErr2=""
 	topazExit="EXIT"
 fi
-vmScriptFile=`mktemp -p /tmp tmp.XXXXXXXXXX.gsdevkit`
+vmScriptFile=`mktemp /tmp/gsdevkit.XXXXXXXXXX`
 pwd=`pwd`
 cat - > $vmScriptFile << EOF
 
