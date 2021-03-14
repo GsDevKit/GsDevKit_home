@@ -13,6 +13,10 @@ if [ "$GEMSTONE"x = "x" ] ; then
 	export GEMSTONE="$gemstoneDir/gs/product"
 fi
 
+if [ "$ROWAN_PROJECTS_HOME"x = "x" ] ; then
+	export ROWAN_PROJECTS_HOME="$GS_HOME/shared/repos"
+fi
+
 $GEMSTONE/bin/topaz -l \
 	-I "$gemstoneDir/topazini" \
 	-C "GEM_SOLO_EXTENT=$gemstoneDir/gs/extent0.solo.dbf" \

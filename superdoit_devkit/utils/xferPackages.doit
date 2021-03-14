@@ -1,0 +1,65 @@
+#!/usr/bin/env superdoit_solo_devkit
+options
+{
+  SuperDoitCommandLineOption long: 'help' short: 'h'.
+  SuperDoitCommandLineOption long: 'debug' short: 'D'.
+  SuperDoitRequiredCommandLineOption long: 'import'.
+  SuperDoitRequiredCommandLineOption long: 'export'.
+}
+%
+usage
+-----
+USAGE $basename [--help | -h] [--debug | -D] \
+      --import=<import-load-spec-url> --export=<export-load-spec-url>
+
+DESCRIPTION
+  Copy packages back and forth between superdoit project and superdoit_devkit 
+    projects. Read/write packages in tonel format for superDoit project and 
+    read/write packages to superdoit_devkit project in filetree format.
+
+OPTIONS
+  -h, --help                 display usage message
+  -D, --debug                bring up topaz debugger in the event of a script error
+
+EXAMPLES
+  $basename --help
+  $basename -h
+  $basename --debug
+  $basename -D
+  $basename --import=file:$GS_HOME/superdoit_devkit/rowan/specs/SuperDoit_devkit.ston \
+            --export=file:$GS_HOME/shared/repos/superDoit/rowan/specs/SuperDoit.ston
+-----
+%
+method
+getAndVerifyOptions
+		self getOpts: self optionSpecs.
+		self help ifTrue: [ ^ self usage ].
+%
+method
+readSpecFrom: specUrl
+	^ RwSpecification fromUrl: specUrl
+%
+method
+doImportExport
+	| attributes importSpec importProject exportSpec exportProject |
+	attributes :=  Rowan platformConditionalAttributes, {'3.6.0' asRwGemStoneVersionNumber}.
+	importSpec := self readSpecFrom: self import.
+	importProject := importSpec resolve read: attributes.
+
+	exportSpec := self readSpecFrom: self export.
+	exportProject := exportSpec resolve.
+
+	importProject packages do: [:package |
+		exportProject packages at: package name put: package ].
+	exportProject export
+%
+doit
+	[
+		self getAndVerifyOptions == self noResult
+			ifTrue: [ ^ self noResult ].
+		self doImportExport.
+	] on: Error do: [:ex | 
+		self debug ifTrue: [ ex pass ].
+		self exit: ex description withStatus: 1 "does not return" ].
+	true
+%
