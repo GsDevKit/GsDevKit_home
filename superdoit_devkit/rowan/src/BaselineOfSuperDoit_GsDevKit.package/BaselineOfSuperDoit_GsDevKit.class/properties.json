@@ -1,0 +1,14 @@
+{
+	"category" : "BaselineOfSuperDoit_GsDevKit",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "dkh 03/14/2021 14:24",
+	"instvars" : [
+		 ],
+	"name" : "BaselineOfSuperDoit_GsDevKit",
+	"pools" : [
+		 ],
+	"super" : "BaselineOf",
+	"type" : "normal" }

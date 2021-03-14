@@ -26,7 +26,7 @@ EXAMPLES
   $basename -h
   $basename --debug
   $basename -D
-  $basename --import=file:$GS_HOME/superdoit_devkit/rowan/specs/SuperDoit_devkit.ston \
+  $basename --import=file:$GS_HOME/superdoit_devkit/rowan/specs/SuperDoit.ston \
             --export=file:$GS_HOME/shared/repos/superDoit/rowan/specs/SuperDoit.ston
 -----
 %

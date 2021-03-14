@@ -1,0 +1,10 @@
+RwLoadSpecificationV2 {
+	#specName : 'SuperDoit',
+	#projectName : 'superDoit_only',
+	#diskUrl : 'file:$GS_HOME/superdoit_devkit',
+	#projectSpecFile : 'rowan/project.ston',
+	#componentNames : [
+		'SuperDoit'
+	],
+	#comment : 'USE ONLY with utils/xferPackages.doit, since this spec loads only the packages that are common between git@github.com:dalehenrich/superDoit.git superdoit_devkit'
+}
