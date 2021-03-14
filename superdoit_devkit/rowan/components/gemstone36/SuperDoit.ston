@@ -4,13 +4,13 @@ RwPlatformNestedProjectLoadComponentV2 {
 		'gs3.6.x'
 	],
 	#packageNames : [
-		'SuperDoit-GemStone-Kernel-36x'
+		'SuperDoit-GemStone-Kernel36x'
 	],
 	#conditionalPackageMapSpecs : {
 		'gemstone' : {
 			'allusers' : {
 				#packageNameToPlatformPropertiesMap : {
-					'SuperDoit-GemStone-Kernel-36x' : {
+					'SuperDoit-GemStone-Kernel36x' : {
 						'symbolDictName' : 'Globals'
 					}
 				}
