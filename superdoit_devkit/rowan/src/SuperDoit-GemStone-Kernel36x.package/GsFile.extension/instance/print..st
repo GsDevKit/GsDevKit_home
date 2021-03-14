@@ -1,3 +1,3 @@
-*superdoit-gemstone-kernel-36x
+*superdoit-gemstone-kernel36x
 print: anObject
  anObject printOn: self
