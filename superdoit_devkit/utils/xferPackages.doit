@@ -15,7 +15,7 @@ USAGE $basename [--help | -h] [--debug | -D] \
 DESCRIPTION
   Copy packages back and forth between superdoit project and superdoit_devkit 
     projects. Read/write packages in tonel format for superDoit project and 
-    read/write packages to superdoit_devkit project in filetree format.
+    read/write packages in filetree format to superdoit_devkit project.
 
 OPTIONS
   -h, --help                 display usage message
@@ -34,6 +34,8 @@ method
 getAndVerifyOptions
 		self getOpts: self optionSpecs.
 		self help ifTrue: [ ^ self usage ].
+		self import ifNil: [ self error: 'Missing required option --import' ]. 
+		self export ifNil: [ self error: 'Missing required option --export' ]. 
 %
 method
 readSpecFrom: specUrl
@@ -60,6 +62,6 @@ doit
 		self doImportExport.
 	] on: Error do: [:ex | 
 		self debug ifTrue: [ ex pass ].
-		self exit: ex description withStatus: 1 "does not return" ].
+		self exit: ex messageText withStatus: 1 "does not return" ].
 	true
 %
