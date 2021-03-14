@@ -1,0 +1,41 @@
+#!/usr/bin/env superdoit_solo
+options
+{
+  SuperDoitCommandLineOption long: 'help' short: 'h'.
+  SuperDoitCommandLineOption long: 'running' short: 'r'.
+  SuperDoitCommandLineOption long: 'installed' short: 'i'.
+  SuperDoitCommandLineOption long: 'all' short: 'a'.
+}
+%
+usage
+-----
+USAGE: $basename [-h] [-r] [-i] [-a]
+
+List information about the installed stones, running stones and running netldis.
+
+OPTIONS
+  -h display help
+  -a list running and installed stones [DEFAULT]
+  -r list running stones
+  -i list installed stones
+
+EXAMPLES
+  $basename -h
+  $basename
+
+-----
+%
+method
+getAndVerifyOptions
+		self getOpts: self optionSpecs.
+		self help ifTrue: [ ^ self usage ].
+%
+doit
+	[
+		self getAndVerifyOptions == self noResult
+			ifTrue: [ ^ self noResult ].
+		^ 'not yet implemented'
+	] on: Error do: [:ex | 
+		self debug ifTrue: [ ex pass ].
+		self exit: ex description withStatus: 1 "does not return" ].
+%
