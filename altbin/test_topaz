@@ -1,6 +1,0 @@
-#!/usr/bin/env topaz
-
-login
-run
-GsFile stdout nextPutAll: (3+4) printString
-%

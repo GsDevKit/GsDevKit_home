@@ -1,7 +1,0 @@
-
-*
-!/logs/
-!/snapshots/
-!.gitignore
-!.topazini
-!README.md

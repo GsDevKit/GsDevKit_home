@@ -1,0 +1,21 @@
+RwPlatformNestedProjectLoadComponentV2 {
+	#name : 'gemstone36/SuperDoit',
+	#condition : [
+		'gs3.6.x'
+	],
+	#packageNames : [
+		'SuperDoit-GemStone-Kernel-36x'
+	],
+	#conditionalPackageMapSpecs : {
+		'gemstone' : {
+			'allusers' : {
+				#packageNameToPlatformPropertiesMap : {
+					'SuperDoit-GemStone-Kernel-36x' : {
+						'symbolDictName' : 'Globals'
+					}
+				}
+			}
+		}
+	},
+	#comment : 'GsFile>>print: is missing from 3.6; added to 3.7'
+}

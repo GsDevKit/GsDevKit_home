@@ -1,0 +1,20 @@
+
+# set -x 
+
+export superdoitDir="`dirname $0`/superdoit"
+
+gemstoneDir="$superdoitDir/gemstone"
+
+
+scriptFile=$1
+shift
+
+if [ "$GEMSTONE"x = "x" ] ; then
+	export GEMSTONE="$gemstoneDir/gs/product"
+fi
+
+$GEMSTONE/bin/topaz -l \
+	-I "$gemstoneDir/topazini" \
+	-C "GEM_SOLO_EXTENT=$gemstoneDir/gs/extent0.solo.dbf" \
+	-q \
+	-S $gemstoneDir/superdoit.tpz -- $scriptFile -- $*

@@ -1,0 +1,13 @@
+RwSimpleProjectLoadComponentV2 {
+	#name : 'SuperDoit',
+	#condition : 'common',
+	#projectNames : [ ],
+	#componentNames : [
+		'gemstone/SuperDoit',
+		'gemstone36/SuperDoit'
+	],
+	#packageNames : [
+		'SuperDoit-Core'
+	],
+	#comment : ''
+}
