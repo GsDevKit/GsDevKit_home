@@ -2,8 +2,7 @@ RwSimpleProjectLoadComponentV2 {
 	#name : 'GsDevKit',
 	#condition : 'common',
 	#projectNames : [ ],
-	#componentNames : [
-	],
+	#componentNames : [ ],
 	#packageNames : [
 		'GsDevKit-Core'
 	],
