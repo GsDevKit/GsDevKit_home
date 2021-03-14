@@ -1,0 +1,16 @@
+{
+	"category" : "SuperDoit-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"NoValue" ],
+	"commentStamp" : "",
+	"instvars" : [
+		"longName",
+		"shortName",
+		"value" ],
+	"name" : "SuperDoitCommandLineOption",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

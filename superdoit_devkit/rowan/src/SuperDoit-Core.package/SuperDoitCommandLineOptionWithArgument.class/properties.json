@@ -1,0 +1,14 @@
+{
+	"category" : "SuperDoit-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "SuperDoitCommandLineOptionWithArgument",
+	"pools" : [
+		 ],
+	"super" : "SuperDoitCommandLineOption",
+	"type" : "normal" }

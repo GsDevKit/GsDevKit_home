@@ -1,0 +1,3 @@
+accessing
+optionSpecs
+	^ _optionSpecs

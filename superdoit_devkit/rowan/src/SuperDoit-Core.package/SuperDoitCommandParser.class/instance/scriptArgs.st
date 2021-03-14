@@ -1,0 +1,3 @@
+accessing
+scriptArgs
+^ scriptArgs ifNil: [ #() ]
