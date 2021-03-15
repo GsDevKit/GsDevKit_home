@@ -1,11 +1,11 @@
 accessing
 gsDownloadNameFor: aGsVersionString
-  Smalltalk platform isMacOS
+  self isMacOS
     ifTrue: [ ^ 'GemStone64Bit' , aGsVersionString , '-i386.Darwin' ]
     ifFalse: [ 
-      Smalltalk platform isUnix
+      self isUnix
         ifTrue: [ ^ 'GemStone64Bit' , aGsVersionString , '-x86_64.Linux' ]
         ifFalse: [ 
-          Smalltalk platform isWindows
+          self isWindows
             ifTrue: [ ^ 'GemBuilderC' , aGsVersionString , '-x86.Windows_NT' ] ] ].
   ^ ''
