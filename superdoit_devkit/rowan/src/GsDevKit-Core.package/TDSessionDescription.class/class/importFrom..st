@@ -4,7 +4,7 @@ importFrom: filepath
   FileStream
     readOnlyFileNamed: filepath
     do: [ :fileStream | ^ STON fromString: fileStream contents ] ]
-    on: (Smalltalk at: #'FileDoesNotExistException' ifAbsent: [ Error ])
+    on: Error
     do: [ :ex | 
       self
         error:
