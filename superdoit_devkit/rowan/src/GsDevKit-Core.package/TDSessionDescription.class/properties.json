@@ -1,0 +1,37 @@
+{
+	"category" : "GsDevKit-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"name",
+		"stoneHost",
+		"stoneName",
+		"gemHost",
+		"netLDI",
+		"netLDIPort",
+		"netLDIPortRange",
+		"gemTask",
+		"userId",
+		"password",
+		"osUserId",
+		"osPassword",
+		"dataDirectory",
+		"backupDirectory",
+		"snapshotDirectory",
+		"gemstoneVersion",
+		"gciLibraryName",
+		"adornmentColor",
+		"serverGitRoot",
+		"serverTodeRoot",
+		"excludeNetLDIPort",
+		"authorId",
+		"environmentId",
+		"todeUserId" ],
+	"name" : "TDSessionDescription",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

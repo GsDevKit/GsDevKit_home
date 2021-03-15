@@ -1,0 +1,3 @@
+testing
+isForeignStone
+  ^ true

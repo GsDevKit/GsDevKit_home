@@ -1,0 +1,24 @@
+{
+	"class" : {
+		"gsDownloadNameFor:" : "jupiter 03/15/2021 11:15",
+		"importFrom:" : "jupiter 03/15/2021 11:16" },
+	"instance" : {
+		"addFieldsToSessionDescription:" : "jupiter 03/15/2021 11:20",
+		"createSessionDescriptionFor:for:" : "jupiter 03/15/2021 11:20",
+		"excludedInstVarNames" : "jupiter 03/15/2021 11:21",
+		"exportTo:" : "jupiter 03/15/2021 11:21",
+		"fromSton:" : "jupiter 03/15/2021 11:21",
+		"gsVers" : "jupiter 03/15/2021 11:16",
+		"gsVers:" : "jupiter 03/15/2021 11:17",
+		"isAttached" : "jupiter 03/15/2021 11:17",
+		"isAttached:" : "jupiter 03/15/2021 11:17",
+		"isForeignStone" : "jupiter 03/15/2021 11:23",
+		"netLDI" : "jupiter 03/15/2021 11:17",
+		"printOn:" : "jupiter 03/15/2021 11:19",
+		"stonInstVarNames" : "jupiter 03/15/2021 11:21",
+		"stonOn:" : "jupiter 03/15/2021 11:21",
+		"stonProcessSubObjects:" : "jupiter 03/15/2021 11:22",
+		"stoneName" : "jupiter 03/15/2021 11:17",
+		"stoneName:" : "jupiter 03/15/2021 11:17",
+		"username" : "jupiter 03/15/2021 11:18",
+		"username:" : "jupiter 03/15/2021 11:18" } }

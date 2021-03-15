@@ -1,0 +1,17 @@
+{
+	"category" : "GsDevKit-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"stoneName",
+		"gsVers",
+		"username",
+		"isAttached" ],
+	"name" : "GsDevKitStoneInfo",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }
