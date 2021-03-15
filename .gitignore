@@ -8,3 +8,4 @@ Session.vim
 .netrwhist
 *~
 *.zip
+.DS_Store

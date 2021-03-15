@@ -1,40 +1,102 @@
 #!/usr/bin/env superdoit_solo_devkit
+instvars
+	gsListResult
+%
 options
 {
   SuperDoitCommandLineOption long: 'help' short: 'h'.
-  SuperDoitCommandLineOption long: 'running' short: 'r'.
-  SuperDoitCommandLineOption long: 'installed' short: 'i'.
   SuperDoitCommandLineOption long: 'all' short: 'a'.
+  SuperDoitCommandLineOption long: 'installed' short: 'i'.
+  SuperDoitCommandLineOption long: 'running' short: 'r'.
 }
 %
 usage
 -----
-USAGE: $basename [-h] [-r] [-i] [-a]
+USAGE $basename [--help | -h] [--all | -a] [--installed | -i] [--running | -r]
 
-List information about the installed stones, running stones and running netldis.
+DESCRIPTION
+  Provide information on the running and installed stones.
 
 OPTIONS
-  -h display help
-  -a list running and installed stones [DEFAULT]
-  -r list running stones
-  -i list installed stones
+  -h, --help 			display usage message
+  -a, --all 			display information on running and installed stones (default)
+  -i, --installed 		display information on installed stones
+  -r, --running 		display information on running stones
 
 EXAMPLES
-  $basename -h
+  $basename --help
+  $basename -a
+  $basename --installed
+  $basename -i -r 
   $basename
-
 -----
 %
 method
 getAndVerifyOptions
-		self getOpts: self optionSpecs.
-		self help ifTrue: [ ^ self usage ].
+	self getOpts: self optionSpecs.
+	self help ifTrue: [ ^ self usage ].
+%
+method
+produceStonesReport
+	| stream |
+	stream := GsFile stderr.
+	self scriptArgs size == 0 ifTrue: [ self all: true ].
+	(self all or: [self installed]) ifTrue: [
+		self installedStoneReportOn: stream
+	].
+	(self all or: [self running]) ifTrue: [
+		self
+			gsListReportNamed: 'Stones' matching: ' Stone' on: stream;
+			gsListReportNamed: 'NetLdis' matching: ' Netldi' on: stream.
+	].
+	^ self noResult
+%
+method
+installedStoneReportOn: stream
+	stream
+		nextPutAll: 'Installed Stones:';
+		cr.
+%
+method
+gsListReportNamed: reportName matching: matchString on: stream
+	stream
+		nextPutAll: 'Running ', reportName, ':';
+		cr.
+	(self gsListResult beginsWith: 'gslist[Info]: No GemStone servers')
+		ifTrue: [ ^ self ].
+	stream
+		tab;
+		nextPutAll: 'Status        Version    Owner       Pid   Port   Started     Type       Name';
+		cr;
+		tab;
+		nextPutAll: '-------      --------- --------- -------- ----- ------------ ------      ----';
+		cr.
+	(gsListResult substrings: '', Character lf)
+		do: [ :line | 
+			(line matchPattern: { $*. matchString. $*})
+				ifTrue: [ 
+					stream
+						tab;
+						nextPutAll: line;
+						cr ] ]
+%
+method
+gs_stonesDirectory
+	^ (System gemEnvironmentVariable: 'GS_SERVER_STONES') asFileReference
+%
+method
+gs_binDirectory
+	^ (System gemEnvironmentVariable: 'GEMSTONE'), '/bin/'
+%
+method
+gsListResult
+	^ gsListResult ifNil: [ gsListResult := System performOnServer: self gs_binDirectory, 'gslist -lc' ]
 %
 doit
 	[
 		self getAndVerifyOptions == self noResult
 			ifTrue: [ ^ self noResult ].
-		^ 'not yet implemented'
+		^ self produceStonesReport
 	] on: Error do: [:ex | 
 		self debug ifTrue: [ ex pass ].
 		self exit: ex messageText withStatus: 1 "does not return" ].
