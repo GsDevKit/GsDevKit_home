@@ -44,7 +44,7 @@ readSpecFrom: specUrl
 method
 doImportExport
 	| attributes importSpec importProject exportSpec exportProject |
-	attributes :=  Rowan platformConditionalAttributes, {'3.6.0' asRwGemStoneVersionNumber}.
+	attributes :=  Rowan platformConditionalAttributes, {'3.6.0' asRwGemStoneVersionNumber . 'tode' . 'rowan'}.
 	importSpec := self readSpecFrom: self import.
 	importProject := importSpec resolve read: attributes.
 
