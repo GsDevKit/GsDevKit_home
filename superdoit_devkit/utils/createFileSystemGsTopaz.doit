@@ -52,7 +52,8 @@ doImportExport
 	gsDir :=  self dirname / self gsdir.
 
   topazFileNameMap := Dictionary new
-		at: 'FileSystemGs' put: importProject packageNames;
+		at: 'FileSystemGs_', (self version copyWithout: $.) 
+			put: importProject packageNames;
 		yourself.
 	projectSetDefinition := RwProjectSetDefinition new 
 		addProject: importProject;
