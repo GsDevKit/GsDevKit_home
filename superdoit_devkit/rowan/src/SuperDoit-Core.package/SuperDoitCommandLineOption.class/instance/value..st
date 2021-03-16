@@ -1,7 +1,7 @@
 accessing
 value: object
-	value
-		ifNotNil: [ 
+	value ~~ self notSet
+		ifTrue: [ 
 			self
 				error:
 					'The option ' , self longName printString , ' has already been processed.' ].

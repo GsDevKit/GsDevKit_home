@@ -1,9 +1,9 @@
 accessing
 markNoValue
-	"Since nil is a valid value, mark with a noValue object that is unique when the optional options have been referenced on command line, should trigger use of defaultValue"
+	"mark with a noValue object that is unique when the optional options have been referenced on command line, should trigger use of defaultValue"
 
-	value
-		ifNotNil: [ 
+	(value ~~ self notSet and: [ value ~~ self noValue])
+		ifTrue: [ 
 			self
 				error:
 					'The option ' , self longName printString , ' has already been processed.' ].

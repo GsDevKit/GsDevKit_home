@@ -5,6 +5,7 @@ options
   SuperDoitCommandLineOption long: 'debug' short: 'D'.
   SuperDoitRequiredCommandLineOption long: 'import'.
   SuperDoitRequiredCommandLineOption long: 'version'.
+  SuperDoitOptionalCommandLineOption long: 'gsdir' default: '.'.
 }
 %
 usage
@@ -42,11 +43,35 @@ readSpecFrom: specUrl
 %
 method
 doImportExport
-	| attributes importSpec importProject |
+	| attributes importSpec importProject gsDir topazFileNameMap 
+		projectSetDefinition projectSetModification visitor header |
 	attributes :=  Rowan platformConditionalAttributes, {self version asRwGemStoneVersionNumber . 'tests'}.
 	importSpec := self readSpecFrom: self import.
 	importProject := importSpec resolve read: attributes.
-self halt.
+
+	gsDir :=  self dirname / self gsdir.
+
+  topazFileNameMap := Dictionary new
+		at: 'FileSystemGs' put: importProject packageNames;
+		yourself.
+	projectSetDefinition := RwProjectSetDefinition new 
+		addProject: importProject;
+		yourself.
+	projectSetModification := projectSetDefinition
+		compareAgainstBase: RwProjectSetDefinition new.
+	header := (WriteStream on: String new)
+		nextPutAll: '! FileSysteGs fileout for ', 
+			importProject name , 
+			' [', importProject commitId, '] ', 
+			DateAndTime now printString;
+		lf; 
+		contents.
+	visitor := GsModificationTopazWriterVisitor new
+		repositoryRootPath: gsDir;
+		topazFileHeader: header;
+		topazFilenamePackageNamesMap: topazFileNameMap;
+		yourself.
+	visitor visit: projectSetModification.
 %
 doit
 	[

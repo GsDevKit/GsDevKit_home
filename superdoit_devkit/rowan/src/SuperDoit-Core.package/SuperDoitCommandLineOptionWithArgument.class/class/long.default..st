@@ -1,7 +1,7 @@
 instance creation
-long: longName short: shortName default: default
+long: longName default: default
 	^ self new
+		initialize;
 		longName: longName;
-		shortName: shortName;
 		defaultValue: default;
 		yourself

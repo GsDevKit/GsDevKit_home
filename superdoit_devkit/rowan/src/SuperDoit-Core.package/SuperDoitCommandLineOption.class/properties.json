@@ -3,6 +3,7 @@
 	"classinstvars" : [
 		 ],
 	"classvars" : [
+		"NotSet",
 		"NoValue" ],
 	"commentStamp" : "",
 	"instvars" : [

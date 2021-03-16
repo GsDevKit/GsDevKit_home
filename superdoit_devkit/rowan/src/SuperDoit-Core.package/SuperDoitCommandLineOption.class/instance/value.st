@@ -1,3 +1,5 @@
 accessing
 value
-	^ value ifNil: [ value := self defaultValue ]
+	^ value == self notSet
+		ifTrue: [ self defaultValue ]
+		ifFalse: [ value ]
