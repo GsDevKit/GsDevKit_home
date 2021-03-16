@@ -1,6 +1,6 @@
 {
 	"class" : {
-		"importFrom:" : "dkh 07/23/2016 07:24",
+		"importFrom:" : "jupiter 03/15/2021 15:29",
 		"seaside" : "jupiter 03/15/2021 14:24" },
 	"instance" : {
 		"adornmentColor" : "jupiter 03/15/2021 14:24",
@@ -26,7 +26,7 @@
 		"excludeNetLDIPort:" : "dlh 10/6/2015 11:40",
 		"excludedInstVarNames" : "dkh 12/27/2016 09:50",
 		"exportTo:" : "dkh 5/28/2014 06:35",
-		"exportTo:extension:" : "dlh 10/6/2015 11:44",
+		"exportTo:extension:" : "jupiter 03/15/2021 15:25",
 		"fromSton:" : "dkh 10/22/2015 17:12",
 		"gciLibraryName" : "dkh 5/28/2014 06:35",
 		"gciLibraryName:" : "dkh 5/28/2014 06:35",
