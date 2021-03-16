@@ -3,10 +3,8 @@ importFrom: filepath
   [ 
   FileStream
     readOnlyFileNamed: filepath
-    do: [ :fileStream | 
-      ^ (TodeObjectSerializer preferredSerializer fromString: fileStream contents)
-        asTDSessionDescription ] ]
-    on: (Smalltalk at: #'FileDoesNotExistException' ifAbsent: [ Error ])
+    do: [ :fileStream | ^ STON fromString: fileStream contents ] ]
+    on: Error
     do: [ :ex | 
       self
         error:
