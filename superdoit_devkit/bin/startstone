@@ -1,0 +1,52 @@
+#!/usr/bin/env superdoit_solo_devkit
+instvars
+%
+options
+{
+	SuperDoitCommandLineOption long: 'help' short: 'h'.
+	SuperDoitCommandLineOption long: 'both' short: 'b'.
+  SuperDoitCommandLineOption long: 'restart' short: 'r'.
+  SuperDoitCommandLineOption long: 'notransactionlogs' short: 'N'.
+  SuperDoitCommandLineOption long: 'restore' short: 'R'.
+}
+%
+usage
+-----
+USAGE: startStone [-h] [-b] [-C] [-N] [-R] [-r] [-w <waitstone-timeout>] <stone-name>
+
+DESCRIPTION
+ Start the stone process for the given stone.
+
+OPTIONS
+  -h, --help 	display usage message
+  -b, --both 	start netldi
+  -r 		Restart stone if running
+  -C 		Startup for conversion.
+  -h 		display help
+  -N 		Startup without transaction logs.
+  -R 		Startup for restore
+  -w 		<waitstone-timeout>
+    		if present wait up to <waitstone-timeout> minutes for the stone to
+  		properly start
+
+EXAMPLES
+  startStone -h
+  startStone myStoneName
+  startStone -b myStoneName
+  startStone -w myStoneName
+-----
+%
+method
+getAndVerifyOptions
+	self getOpts: self optionSpecs.
+	self help ifTrue: [ ^ self usage ].
+%
+doit
+	[
+		self getAndVerifyOptions == self noResult
+			ifTrue: [ ^ self noResult ].
+		^ self startStone
+	] on: Error do: [:ex |
+		self debug ifTrue: [ ex pass ].
+		self exit: ex messageText withStatus: 1 "does not return" ].
+%

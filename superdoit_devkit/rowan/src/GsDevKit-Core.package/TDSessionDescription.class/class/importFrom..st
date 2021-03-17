@@ -1,11 +1,10 @@
 instance creation
-importFrom: filepath
+importFrom: filePath
   [ 
-  FileStream
-    readOnlyFileNamed: filepath
-    do: [ :fileStream | ^ STON fromString: fileStream contents ] ]
+  filePath asFileReference readStream
+    do: [ :fileStream | ^ STON fromStream: fileStream ] ]
     on: Error
     do: [ :ex | 
       self
         error:
-          'The session description file ' , filepath printString , ' cannot be found.' ]
+          'The session description file ' , filePath printString , ' cannot be found.' ]

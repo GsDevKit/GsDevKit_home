@@ -18,16 +18,16 @@ DESCRIPTION
   Provide information on the running and installed stones.
 
 OPTIONS
-  -h, --help 			display usage message
-  -a, --all 			display information on running and installed stones (default)
-  -i, --installed 		display information on installed stones
-  -r, --running 		display information on running stones
+  -h, --help 		display usage message
+  -a, --all 		display information on running and installed stones (default)
+  -i, --installed	display information on installed stones
+  -r, --running		display information on running stones
 
 EXAMPLES
   $basename --help
   $basename -a
   $basename --installed
-  $basename -i -r 
+  $basename -i -r
   $basename
 -----
 %
@@ -39,7 +39,7 @@ getAndVerifyOptions
 method
 produceStonesReport
 	| stream |
-	stream := GsFile stderr.
+	stream := self stderr.
 	self scriptArgs size == 0 ifTrue: [ self all: true ].
 	(self all or: [self installed]) ifTrue: [
 		self installedStoneReportOn: stream
@@ -56,13 +56,45 @@ installedStoneReportOn: stream
 	stream
 		nextPutAll: 'Installed Stones:';
 		cr.
+		(self installedStones asSortedCollection: [ :a :b | a printString < b printString ])
+			do: [ :info |
+				stream
+					tab;
+					nextPutAll: info gsVers;
+					tab;
+					nextPutAll: info stoneName.
+				info isForeignStone
+					ifTrue: [
+						stream
+							tab;
+							nextPutAll: '(foreign)' ].
+				info isAttached
+					ifTrue: [
+						stream
+							tab;
+							nextPutAll: '(attached)' ].
+				stream cr ]
+%
+method
+installedStones
+	| installedStones |
+			installedStones := Set new.
+			self gs_stonesDirectory directories do: [ :stoneDir |
+					(stoneDir filesMatching: self stoneInfoFilename)
+						do: [ :infoFile |
+							| info |
+							info := GsDevKitStoneInfo importFrom: infoFile.
+							stoneDir isSymlink
+								ifTrue: [ info isAttached: true ].
+							installedStones add: info ] ].
+	^ installedStones
 %
 method
 gsListReportNamed: reportName matching: matchString on: stream
 	stream
 		nextPutAll: 'Running ', reportName, ':';
 		cr.
-	(self gsListResult beginsWith: 'gslist[Info]: No GemStone servers')
+	(self gsListResult indexOfSubCollection: 'gslist[Info]: No GemStone servers') ~= 0
 		ifTrue: [ ^ self ].
 	stream
 		tab;
@@ -72,9 +104,9 @@ gsListReportNamed: reportName matching: matchString on: stream
 		nextPutAll: '-------      --------- --------- -------- ----- ------------ ------      ----';
 		cr.
 	(gsListResult substrings: '', Character lf)
-		do: [ :line | 
+		do: [ :line |
 			(line matchPattern: { $*. matchString. $*})
-				ifTrue: [ 
+				ifTrue: [
 					stream
 						tab;
 						nextPutAll: line;
@@ -82,7 +114,11 @@ gsListReportNamed: reportName matching: matchString on: stream
 %
 method
 gs_stonesDirectory
-	^ (System gemEnvironmentVariable: 'GS_SERVER_STONES') asFileReference
+	^  ((System gemEnvironmentVariable: 'GS_HOME'), '/server/stones') asFileReference
+%
+method
+stoneInfoFilename
+	^  'info.ston'
 %
 method
 gs_binDirectory
@@ -90,14 +126,14 @@ gs_binDirectory
 %
 method
 gsListResult
-	^ gsListResult ifNil: [ gsListResult := System performOnServer: self gs_binDirectory, 'gslist -lc' ]
+	^ gsListResult ifNil: [ gsListResult := GsHostProcess execute: self gs_binDirectory, 'gslist -lc' ]
 %
 doit
 	[
 		self getAndVerifyOptions == self noResult
 			ifTrue: [ ^ self noResult ].
 		^ self produceStonesReport
-	] on: Error do: [:ex | 
+	] on: Error do: [:ex |
 		self debug ifTrue: [ ex pass ].
 		self exit: ex messageText withStatus: 1 "does not return" ].
 %
