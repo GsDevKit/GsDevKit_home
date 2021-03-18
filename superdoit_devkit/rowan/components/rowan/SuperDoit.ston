@@ -1,0 +1,10 @@
+RwPlatformNestedProjectLoadComponentV2 {
+	#name : 'rowan/SuperDoit',
+	#condition : [
+		'rowan'
+	],
+	#packageNames : [
+		'SuperDoit-Rowan-Core'
+	],
+	#comment : 'code that is used when Rowan is present'
+}

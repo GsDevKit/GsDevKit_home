@@ -44,7 +44,14 @@ EXAMPLES
   $basename -h
   $basename --debug
   $basename -D
-  $basename --import=file:$GS_HOME/superdoit_devkit/rowan/specs/SuperDoit.ston \
+  $basename  --import=file:$GS_HOME/superdoit_devkit/rowan/specs/SuperDoit.ston \
+             --importHome=file:$GS_HOME \
+             --export=file:$GS_HOME/shared/repos/superDoit/rowan/specs/SuperDoit.ston \
+             --exportHome=file:$GS_HOME/shared/repos/
+
+
+
+--import=file:$GS_HOME/superdoit_devkit/rowan/specs/SuperDoit.ston \
             --importHome=file:$GS_HOME/shared/repos/ \
             --export=file:$GS_HOME/shared/repos/superDoit/rowan/specs/SuperDoit.ston \
             --exportHome=file:$GS_HOME/shared/repos/
@@ -67,17 +74,30 @@ doImportExport
 	attributes :=  Rowan platformConditionalAttributes, {'3.6.0' asRwGemStoneVersionNumber . 'tode' . 'rowan'}.
 	importSpec := self readSpecFrom: self import.
 	importProject := importSpec resolve
-		projectsHome: self importHome;
+		projectsHome: self importHome asFileReference;
 		read: attributes.
 
 	exportSpec := self readSpecFrom: self export.
 	exportProject := exportSpec resolve
-		projectsHome: self importHome.
+		projectsHome: self importHome asFileReference;
 		yourself.
 
+	"transfer packages from importProject to exportProject"
 	importProject packages do: [:package |
 		exportProject packages at: package name put: package ].
-	exportProject export
+	"update customConditionalAttributes"
+	exportProject 
+		customConditionalAttributes: importSpec customConditionalAttributes.
+	"transfer component structure from importProject to exportProject (3.6.0, Rowan:masterV2.1 specific)"
+	exportProject
+		_projectDefinition components: importProject _projectDefinition components.
+
+	"write exportProject to disk"
+	exportProject
+		exportLoadSpecification;
+		exportComponents;
+		exportPackages;
+		yourself
 %
 doit
 	[
