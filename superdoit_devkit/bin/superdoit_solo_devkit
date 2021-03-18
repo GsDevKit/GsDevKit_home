@@ -5,7 +5,6 @@ export superdoit_devkitDir="`dirname $0`/.."
 
 gemstoneDir="$superdoit_devkitDir/gemstone"
 
-
 scriptFile=$1
 shift
 

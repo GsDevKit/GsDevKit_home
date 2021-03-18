@@ -1,0 +1,57 @@
+#!/usr/bin/env superdoit_solo_devkit
+options
+{
+  SuperDoitCommandLineOption long: 'help' short: 'h'.
+  SuperDoitCommandLineOption long: 'debug' short: 'D'.
+}
+%
+usage
+-----
+USAGE $basename [--help | -h] [--debug | -D] <env-var-name/value-pairs> ...
+
+DESCRIPTION
+  Set env var System class >> #gemEnvironmentVariable:put:. Positional arguments
+  on command line are interpretted as a list of env var name, value pairs
+	
+
+OPTIONS
+  -h, --help                 display usage message
+  -D, --debug                bring up topaz debugger in the event of a script error
+
+EXAMPLES
+  $basename --help
+  $basename -h
+  $basename --debug
+  $basename -D
+  $basename x 1 y 2 z 3
+-----
+%
+method
+getAndVerifyOptions
+		self getOpts: self optionSpecs.
+		self help ifTrue: [ ^ self usage ].
+%
+doit
+	[
+		| pairs command args stdout |
+		self getAndVerifyOptions == self noResult
+			ifTrue: [ ^ self noResult ].
+		pairs := self positionalArgs.
+		command := '$superdoit_devkitDir'  asFileReference / 'bin' / 'printEnvVars.doit'.
+		args :=  String new.
+		1 to: pairs size by: 2 do: [:index |
+			| envName |
+			envName := (pairs at: index).
+			args add: envName, ' '.
+			System 
+				gemEnvironmentVariable: envName
+				put: (pairs at: index + 1 ifAbsent: ['']) ].
+		stdout := GsHostProcess execute: command pathString, ' ', args.
+		self stdout 
+			nextPutAll: 'And the results are:'; lf;
+			nextPutAll: stdout.
+		self noResult
+	] on: Error do: [:ex | 
+		self debug ifTrue: [ ex pass ].
+		self exit: ex messageText withStatus: 1 "does not return" ].
+%
