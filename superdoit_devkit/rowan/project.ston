@@ -1,10 +1,10 @@
 RwProjectSpecificationV2 {
 	#specName : 'project',
-	#projectSpecPath : 'rowan',
-	#componentsPath : 'rowan/components',
-	#packagesPath : 'rowan/src',
-	#projectsPath : 'rowan/projects',
-	#specsPath : 'rowan/specs',
+	#projectSpecPath : 'superdoit_devkit/rowan',
+	#componentsPath : 'superdoit_devkit/rowan/components',
+	#packagesPath : 'superdoit_devkit/rowan/src',
+	#projectsPath : 'superdoit_devkit/rowan/projects',
+	#specsPath : 'superdoit_devkit/rowan/specs',
 	#packageFormat : 'filetree',
 	#comment : ''
 }

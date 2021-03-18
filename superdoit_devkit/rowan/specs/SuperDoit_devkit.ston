@@ -2,7 +2,7 @@ RwLoadSpecificationV2 {
 	#specName : 'SuperDoit_devkit',
 	#projectName : 'superDoit_devkit',
 	#diskUrl : 'file:$GS_HOME/superdoit_devkit',
-	#projectSpecFile : 'rowan/project.ston',
+	#projectSpecFile : 'superdoit_devkit/rowan/project.ston',
 	#componentNames : [
 		'SuperDoit',
 		'GsDevKit'
