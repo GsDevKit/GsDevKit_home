@@ -9,7 +9,7 @@
 	"instvars" : [
 		"longName",
 		"shortName",
-		"value" ],
+		"value"  ],
 	"name" : "SuperDoitCommandLineOption",
 	"pools" : [
 		 ],
