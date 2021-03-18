@@ -4,13 +4,15 @@ options
   SuperDoitCommandLineOption long: 'help' short: 'h'.
   SuperDoitCommandLineOption long: 'debug' short: 'D'.
   SuperDoitRequiredCommandLineOption long: 'import'.
+  SuperDoitRequiredCommandLineOption long: 'importHome' default: '$ROWAN_PROJECTS_HOME'.
   SuperDoitRequiredCommandLineOption long: 'export'.
-}
+  SuperDoitRequiredCommandLineOption long: 'exportHome' default: '$ROWAN_PROJECTS_HOME'.}
 %
 usage
 -----
 USAGE $basename [--help | -h] [--debug | -D] \
-      --import=<import-load-spec-url> --export=<export-load-spec-url>
+      --import=<import-load-spec-url> [--importHome=<export-projects-home>]
+      --export=<export-load-spec-url> [--exportHome=<export-projects-home>]
 
 DESCRIPTION
   Copy packages back and forth between superdoit project and superdoit_devkit 
@@ -20,14 +22,39 @@ DESCRIPTION
 OPTIONS
   -h, --help                 display usage message
   -D, --debug                bring up topaz debugger in the event of a script error
+  --import=<import-load-spec-url>
+                             file url specifying the path of load spec to be
+                             imported from. This option must be specified.
+  --importHome=<import-projects-home>
+                             file url specifying the project home directory where
+                             the export project can be found. If not specified
+                             on the command line, this option defaults to 
+                             $ROWAN_PROJECTS_HOME
+  --export=<export-load-spec-url>
+                             file url specifying the path of load spec to be
+                             exported to. This option must be specified.
+  --exportHome=<export-projects-home>
+                             file url specifying the project home directory where
+                             the export project can be found. If not specified
+                             on the command line, this option defaults to 
+                             $ROWAN_PROJECTS_HOME
 
 EXAMPLES
   $basename --help
   $basename -h
   $basename --debug
   $basename -D
-  $basename --import=file:$GS_HOME/superdoit_devkit/rowan/specs/SuperDoit.ston \
-            --export=file:$GS_HOME/shared/repos/superDoit/rowan/specs/SuperDoit.ston
+  $basename  --import=file:$GS_HOME/superdoit_devkit/rowan/specs/SuperDoit.ston \
+             --importHome=file:$GS_HOME \
+             --export=file:$GS_HOME/shared/repos/superDoit/rowan/specs/SuperDoit.ston \
+             --exportHome=file:$GS_HOME/shared/repos/
+
+
+
+--import=file:$GS_HOME/superdoit_devkit/rowan/specs/SuperDoit.ston \
+            --importHome=file:$GS_HOME/shared/repos/ \
+            --export=file:$GS_HOME/shared/repos/superDoit/rowan/specs/SuperDoit.ston \
+            --exportHome=file:$GS_HOME/shared/repos/
 -----
 %
 method
@@ -46,14 +73,31 @@ doImportExport
 	| attributes importSpec importProject exportSpec exportProject |
 	attributes :=  Rowan platformConditionalAttributes, {'3.6.0' asRwGemStoneVersionNumber . 'tode' . 'rowan'}.
 	importSpec := self readSpecFrom: self import.
-	importProject := importSpec resolve read: attributes.
+	importProject := importSpec resolve
+		projectsHome: self importHome asFileReference;
+		read: attributes.
 
 	exportSpec := self readSpecFrom: self export.
-	exportProject := exportSpec resolve.
+	exportProject := exportSpec resolve
+		projectsHome: self importHome asFileReference;
+		yourself.
 
+	"transfer packages from importProject to exportProject"
 	importProject packages do: [:package |
 		exportProject packages at: package name put: package ].
-	exportProject export
+	"update customConditionalAttributes"
+	exportProject 
+		customConditionalAttributes: importSpec customConditionalAttributes.
+	"transfer component structure from importProject to exportProject (3.6.0, Rowan:masterV2.1 specific)"
+	exportProject
+		_projectDefinition components: importProject _projectDefinition components.
+
+	"write exportProject to disk"
+	exportProject
+		exportLoadSpecification;
+		exportComponents;
+		exportPackages;
+		yourself
 %
 doit
 	[

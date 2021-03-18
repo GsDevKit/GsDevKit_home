@@ -1,0 +1,10 @@
+RwPlatformNestedProjectLoadComponentV2 {
+	#name : 'tode/SuperDoit',
+	#condition : [
+		'tode'
+	],
+	#packageNames : [
+		'SuperDoit-Tode-Core'
+	],
+	#comment : 'code that is used when Tode is present'
+}
