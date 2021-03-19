@@ -7,7 +7,8 @@ options
   SuperDoitCommandLineOption long: 'help' short: 'h'.
   SuperDoitCommandLineOption long: 'all' short: 'a'.
   SuperDoitCommandLineOption long: 'installed' short: 'i'.
-  SuperDoitCommandLineOption long: 'running' short: 'r'.
+	SuperDoitCommandLineOption long: 'running' short: 'r'.
+	SuperDoitCommandLineOption long: 'debug'.
 }
 %
 usage
@@ -135,5 +136,9 @@ doit
 		^ self produceStonesReport
 	] on: Error do: [:ex |
 		self debug ifTrue: [ ex pass ].
-		self exit: ex messageText withStatus: 1 "does not return" ].
+		self
+			exit: ((ex respondsTo: #stderr)
+				ifTrue: [ ex stderr asString trimBoth ]
+				ifFalse: [ ex messageText ])
+			withStatus: 1 "does not return" ].
 %

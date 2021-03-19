@@ -1,40 +1,95 @@
 #!/usr/bin/env superdoit_solo_devkit
 instvars
+	stoneName
 %
 options
 {
 	SuperDoitCommandLineOption long: 'help' short: 'h'.
+	SuperDoitCommandLineOption long: 'debug'.
 	SuperDoitCommandLineOption long: 'both' short: 'b'.
-  SuperDoitCommandLineOption long: 'restart' short: 'r'.
-  SuperDoitCommandLineOption long: 'notransactionlogs' short: 'N'.
-  SuperDoitCommandLineOption long: 'restore' short: 'R'.
+	SuperDoitCommandLineOption long: 'restart' short: 'r'.
+	SuperDoitCommandLineOption long: 'conversion' short: 'C'.
+	SuperDoitCommandLineOption long: 'notranslogs' short: 'N'.
+	SuperDoitCommandLineOption long: 'restore' short: 'R'.
+	SuperDoitOptionalCommandLineOption long: 'wait' short: 'w' default: -1.
 }
 %
 usage
 -----
-USAGE: startStone [-h] [-b] [-C] [-N] [-R] [-r] [-w <waitstone-timeout>] <stone-name>
+USAGE: $basename [-h] [-b] [-C] [-N] [-R] [-r] [-w <waitstone-timeout>] <stone-name>
 
 DESCRIPTION
  Start the stone process for the given stone.
 
 OPTIONS
   -h, --help 	display usage message
-  -b, --both 	start netldi
-  -r 		Restart stone if running
-  -C 		Startup for conversion.
-  -h 		display help
-  -N 		Startup without transaction logs.
-  -R 		Startup for restore
-  -w 		<waitstone-timeout>
-    		if present wait up to <waitstone-timeout> minutes for the stone to
-  		properly start
+	-N, --notranslogs 	Startup without transaction logs.
+  -R, --restore 	Startup for restore
+
+The following options not implemented here
+  -b, --both 		start both stone and netldi
+  -r, --restart 	Restart stone if running
+  -C, --conversion 	Startup for conversion.
+  -N, --notranslogs 	Startup without transaction logs.
+  -R, --restore 	Startup for restore
+  -w, --wait 		<waitstone-timeout>
+			if present wait up to <waitstone-timeout> minutes for the stone to
+			properly start
 
 EXAMPLES
-  startStone -h
-  startStone myStoneName
-  startStone -b myStoneName
-  startStone -w myStoneName
+  $basename -h
+  $basename myStoneName
+  $basename -b myStoneName
+  $basename -w myStoneName
 -----
+%
+method
+startStone
+	(self positionalArgs size < 1 or: [ self positionalArgs size > 2 ])
+		ifTrue: [
+			^ Error signal: 'Wrong number of arguments (' , self positionalArgs size printString , ')' ].
+	self shouldNotBeForeignStone.
+	GsHostProcess execute: (self gs_binDirectory / 'startstone ') fullPath asString, self passThroughArguments, self positionalArgs first.
+%
+method
+shouldNotBeForeignStone
+	self stoneInfo isForeignStone
+		ifTrue: [
+			^ Error signal:
+					'The stone ' , self stoneName printString , ' is a foreign stone and should not be controlled from GsDevKit_home.' ].
+%
+method
+passThroughArguments
+	^ String streamContents: [ :stream |
+			self notranslogs ifTrue: [ stream nextPutAll: '-N ' ] ifFalse: [
+				self restore ifTrue: [ stream nextPutAll: '-R ']
+			]
+		]
+%
+method
+stoneInfo
+	^ self stoneInfoClass importFrom: self gs_stonesDirectory / self stoneName / self stoneInfoFilename
+%
+method
+stoneInfoClass
+	^ GsDevKitStoneInfo
+%
+method
+gs_binDirectory
+	^ ((System gemEnvironmentVariable: 'GEMSTONE'), '/bin') asFileReference
+%
+method
+gs_stonesDirectory
+	^  ((System gemEnvironmentVariable: 'GS_HOME'), '/server/stones') asFileReference
+%
+method
+stoneInfoFilename
+	^  'info.ston'
+%
+method
+stoneName
+	stoneName ifNil: [ stoneName := self positionalArgs at: 1 ].
+	^ stoneName
 %
 method
 getAndVerifyOptions
@@ -45,8 +100,14 @@ doit
 	[
 		self getAndVerifyOptions == self noResult
 			ifTrue: [ ^ self noResult ].
-		^ self startStone
+		self stderr nextPutAll: 'SCRIPTARGS: '; nextPutAll: (self scriptArgs printString); cr.
+		self startStone.
+		^ self noResult
 	] on: Error do: [:ex |
 		self debug ifTrue: [ ex pass ].
-		self exit: ex messageText withStatus: 1 "does not return" ].
+		self
+			exit: ((ex respondsTo: #stderr)
+				ifTrue: [ ex stderr asString trimBoth ]
+				ifFalse: [ ex messageText ])
+			withStatus: 1 "does not return" ].
 %

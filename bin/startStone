@@ -18,18 +18,18 @@ USAGE: $(basename $0) [-h] [-b] [-C] [-N] [-R] [-r] [-w <waitstone-timeout>] <st
 OPTIONS
   -b
      Start netldi
-  -r 
+  -r
      Restart stone if running
-  -C 
+  -C
      Startup for conversion.
-  -h 
+  -h
      display help
   -N
      Startup without transaction logs.
   -R
-     Startup for restore 
+     Startup for restore
   -w <waitstone-timeout>
-     if present wait up to <waitstone-timeout> minutes for the stone to 
+     if present wait up to <waitstone-timeout> minutes for the stone to
      properly start
 
 EXAMPLES
@@ -53,21 +53,21 @@ restart=""
 while getopts "bhrw:CNR" OPT ; do
   case "$OPT" in
     b) startnetldi="true" ;;
-    C) 
-      if [ "${ARG}x" != "x" ] ; then 
+    C)
+      if [ "${ARG}x" != "x" ] ; then
         exit_1_banner "Only one of -C -N or -R options may be specified"
       fi
       ARG="-C"
     ;;
     h) usage; exit 0 ;;
     N)
-      if [ "${ARG}x" != "x" ] ; then 
+      if [ "${ARG}x" != "x" ] ; then
         exit_1_banner "Only one of -C -N or -R options may be specified"
       fi
       ARG="-N"
     ;;
     R)
-      if [ "${ARG}x" != "x" ] ; then 
+      if [ "${ARG}x" != "x" ] ; then
         exit_1_banner "Only one of -C -N or -R options may be specified"
       fi
       ARG="-R"
@@ -113,7 +113,8 @@ if [ "${restart}x" = "x" ] ; then
 fi
 
 # start the stone
-"$GS_HOME/bin/devKitCommandLine" startstone $stoneName $ARG
+#"$GS_HOME/bin/devKitCommandLine" startstone $stoneName $ARG
+"$GS_HOME/superdoit_devkit/bin/startstone" $stoneName $ARG
 
 if [ "${waitTime}x" = "x" ] ; then
   if [ "${GS_TRAVIS}x" != "x" ] ; then
