@@ -28,13 +28,12 @@ You could use source code repository roots to group versions of source code for 
 To register a source code repository root use the command...
 ```
 registerSourceCodeRepositoryRoot <name> <path>
-
 ```
 For example...
 ```
 registerSourceCodeRepositoryRoot MyProject_v1 /opt/src/project_v1
 ```
-...will create a Source code repository root named *MyProject_v1* mapping to the directory at */opt/src/project_v1*
+...will register a Source code repository root named *MyProject_v1* mapping to the directory at */opt/src/project_v1*
 
 ## Stones and Stone groups
 
