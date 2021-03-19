@@ -43,6 +43,7 @@ method
 getAndVerifyOptions
 		self getOpts: self optionSpecs.
 		self help ifTrue: [ ^ self usage ].
+true ifTrue: [ ^ self ].
 		self addPackage ifNil: [ self error: 'Missing required option --addPackage' ]. 
 		self componentName ifNil: [ self error: 'Missing required option --componentName' ]. 
 		self conditionalPath ifNil: [ self error: 'Missing required option --conditionalPath' ]. 
@@ -52,7 +53,7 @@ doit
 	[
 		self getAndVerifyOptions == self noResult
 			ifTrue: [ ^ self noResult ].
-		"write your code here"
+		self error: 'not yet implemented'.
 	] on: Error do: [:ex | 
 		self debug ifTrue: [ ex pass ].
 		self exit: ex messageText withStatus: 1 "does not return" ].
