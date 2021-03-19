@@ -5,6 +5,7 @@ instvars
 options
 {
   SuperDoitCommandLineOption long: 'help' short: 'h'.
+	SuperDoitCommandLineOption long: 'debug'.
 }
 %
 usage
@@ -54,14 +55,14 @@ installedProducts
 				do: [ :productDir |
 					| dirName |
 					dirName := productDir basename.
-					(dirName  indexOfSubCollection: 'GemStone64Bit' == 1 )
+					(dirName indexOfSubCollection: 'GemStone64Bit' == 1)
 						ifTrue: [
 							| productVersion dashIndex |
 							dashIndex := dirName indexOf: $-.
 							productVersion := dirName copyFrom: 'GemStone64Bit' size + 1 to: dashIndex - 1.
 							installedProducts at: productVersion put: productDir ]
 						ifFalse: [
-							(dirName indexOfSubCollection: 'GemBuilderC' == 1 )
+							(dirName indexOfSubCollection: 'GemBuilderC' == 1)
 								ifTrue: [
 									| productVersion dashIndex |
 									dashIndex := dirName indexOf: $-.
