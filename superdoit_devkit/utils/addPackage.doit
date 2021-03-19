@@ -1,0 +1,60 @@
+#!/usr/bin/env superdoit_solo_devkit
+options
+{
+  SuperDoitCommandLineOption long: 'help' short: 'h'.
+  SuperDoitCommandLineOption long: 'debug' short: 'D'.
+  SuperDoitRequiredCommandLineOption long: 'addPackage'.
+  SuperDoitRequiredCommandLineOption long: 'componentName'.
+	SuperDoitRequiredCommandLineOption long: 'conditionalPath'.
+	SuperDoitRequiredCommandLineOption long: 'componentPath'.
+}
+%
+usage
+-----
+USAGE $basename [--help | -h] [--debug | -D] \
+      --addPackage=<package-name> --componentName=<component-name> \
+      --conditionPath=<conditional-path> componentPath=<component-path>
+
+DESCRIPTION
+  <put your description here>
+
+OPTIONS
+  -h, --help                 display usage message
+  -D, --debug                bring up topaz debugger in the event of a script error
+
+EXAMPLES
+  $basename --help
+  $basename -h
+  $basename --debug
+  $basename -D
+  $basename --addPackage=SuperDoit-Util --componentName=SuperDoit
+
+  $basename --addPackage=SuperDoit-GemStone-Kernel37x --componentName=SuperDoit \
+            --conditionPath=gs3.7.x componentPath=gemstone37
+
+  $basename --addPackage=SuperDoit-Tests --componentName=SuperDoit \
+            --conditionPath=tests componentPath=tests
+
+  $basename --addPackage=SuperDoit-GemStone36--Tests --componentName=SuperDoit \
+            --conditionPath=tests/gs3.[6-] componentPath=tests/gemstone36-
+-----
+%
+method
+getAndVerifyOptions
+		self getOpts: self optionSpecs.
+		self help ifTrue: [ ^ self usage ].
+		self addPackage ifNil: [ self error: 'Missing required option --addPackage' ]. 
+		self componentName ifNil: [ self error: 'Missing required option --componentName' ]. 
+		self conditionalPath ifNil: [ self error: 'Missing required option --conditionalPath' ]. 
+		self componentPath ifNil: [ self error: 'Missing required option --componentPath' ]. 
+%
+doit
+	[
+		self getAndVerifyOptions == self noResult
+			ifTrue: [ ^ self noResult ].
+		"write your code here"
+	] on: Error do: [:ex | 
+		self debug ifTrue: [ ex pass ].
+		self exit: ex messageText withStatus: 1 "does not return" ].
+	true
+%
