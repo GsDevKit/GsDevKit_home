@@ -1,9 +1,9 @@
 
 # set -x 
 
-export superdoit_devkitDir="`dirname $0`/.."
+export superdoitDir="`dirname $0`/.."
 
-gemstoneDir="$superdoit_devkitDir/gemstone"
+gemstoneDir="$superdoitDir/gemstone"
 
 scriptFile=$1
 shift
