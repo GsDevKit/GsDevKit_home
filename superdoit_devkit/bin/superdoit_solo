@@ -1,0 +1,43 @@
+
+# set -x 
+
+export superdoit_devkitDir="`dirname $0`/.."
+
+gemstoneDir="$superdoit_devkitDir/gemstone"
+
+scriptFile=$1
+shift
+
+if [ "$ARCHBASE"x != "x" ] ; then
+	# Internal GemStone private or sanctioned build (3.6.0 and newer)"
+  if [ -d "$ARCHBASE/fast42" ] ; then
+		# private build i386.Darwin"
+		export GEMSTONE="$ARCHBASE/fast42/gs/product"
+		export GEM_SOLO_EXTENT="$ARCHBASE/fast42/gs/hidden/bin/extent0.rowan.dbf"
+  elif [ -d "$ARCHBASE/fast50" ] ; then
+		# private build x86_64.Linux"
+		export GEMSTONE="$ARCHBASE/fast50/gs/product"
+		export GEM_SOLO_EXTENT="$ARCHBASE/fast50/gs/hidden/bin/extent0.rowan.dbf"
+	else
+		# sanctioned build"
+		export GEMSTONE="$ARCHBASE/fast/gs/product"
+		export GEM_SOLO_EXTENT="$ARCHBASE/fast/gs/hidden/bin/extent0.rowan.dbf"
+	fi
+elif [ "$GEMSTONE"x != "x" ] ; then
+	echo "A GemStone product tree including extent0.rowan.dbf has not been shipped yet."
+	echo "	until then use https://github.com/GsDevKit/GsDevKit_home."
+	exit 1
+else
+	# Installation using extent0.solo.dbf from GsDevKit_home
+	export GEMSTONE="$gemstoneDir/gs/product"
+	export GEM_SOLO_EXTENT="$gemstoneDir/gs/extent0.solo.dbf"
+	if [ "$ROWAN_PROJECTS_HOME"x = "x" ] ; then
+		export ROWAN_PROJECTS_HOME="$GS_HOME/shared/repos"
+	fi
+fi
+
+$GEMSTONE/bin/topaz -l \
+	-I "$gemstoneDir/topazini" \
+	-C "GEM_SOLO_EXTENT=$GEM_SOLO_EXTENT" \
+	-q \
+	-S $gemstoneDir/superdoit.tpz -- $scriptFile -- $*
