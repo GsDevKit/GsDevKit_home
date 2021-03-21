@@ -8,7 +8,7 @@ gemstoneDir="$superdoitDir/gemstone"
 scriptFile=$1
 shift
 
-stoneDir="`dirname $scriptFile`/.."
+export stoneDir="`dirname $scriptFile`/.."
 
 if [ "$GS_HOME"x = "x" ] ; then
 	echo "The env var \$GS_HOME is expected to be defined when running GsDevKit_home scripts"
