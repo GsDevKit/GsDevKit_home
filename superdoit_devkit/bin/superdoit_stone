@@ -1,0 +1,34 @@
+#! /usr/bin/env bash
+# set -x 
+
+export superdoitDir="`dirname $0`/.."
+
+gemstoneDir="$superdoitDir/gemstone"
+
+scriptFile=$1
+shift
+
+stoneDir="`dirname $scriptFile`/.."
+
+if [ "$GS_HOME"x = "x" ] ; then
+	echo "The env var \$GS_HOME is expected to be defined when running GsDevKit_home scripts"
+	exit 1
+fi
+
+# set up GsDevKit_home stone environment
+pushd "$stoneDir" >& /dev/null
+  source "$stoneDir/stone.env"
+popd >& /dev/null
+
+if [ "$GEMSTONE"x = "x" ] ; then
+	export GEMSTONE="$stoneDir/product"
+fi
+
+if [ "$ROWAN_PROJECTS_HOME"x = "x" ] ; then
+	export ROWAN_PROJECTS_HOME="$GS_HOME/shared/repos"
+fi
+
+$GEMSTONE/bin/topaz -l \
+	-I "$stoneDir/.topazini" \
+	-q \
+	-S $gemstoneDir/superdoit.tpz -- $scriptFile -- $*

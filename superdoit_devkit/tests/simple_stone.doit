@@ -1,0 +1,44 @@
+#!/usr/bin/env superdoit_stone
+#
+#	copy (or symbolically link) me to $GS_HOME/stones/<stone-name>/bin
+#		and I will be executed in that stone when run
+#
+options
+{
+  SuperDoitCommandLineOption long: 'help' short: 'h'.
+  SuperDoitCommandLineOption long: 'debug' short: 'D'.
+}
+%
+usage
+-----
+USAGE $basename [--help | -h] [--debug | -D]
+
+DESCRIPTION
+  Evaluate the Smalltalk expression: 3+4 and return the result on stdout.
+
+OPTIONS
+  -h, --help                 display usage message
+  -D, --debug                bring up topaz debugger in the event of a script error
+
+EXAMPLES
+  $basename --help
+  $basename -h
+  $basename --debug
+  $basename -D
+  $basename
+-----
+%
+method
+getAndVerifyOptions
+		self getOpts: self optionSpecs.
+		self help ifTrue: [ ^ self usage ].
+%
+doit
+	[
+		self getAndVerifyOptions == self noResult
+			ifTrue: [ ^ self noResult ].
+		^ 3 + 4
+	] on: Error do: [:ex | 
+		self debug ifTrue: [ ex pass ].
+		self exit: ex description withStatus: 1 "does not return" ].
+%
