@@ -1,6 +1,7 @@
 #! /usr/bin/env bash
 # set -x 
 
+set -e
 export superdoitDir="`dirname $0`/.."
 
 gemstoneDir="$superdoitDir/gemstone"
@@ -9,9 +10,9 @@ scriptFile=$1
 shift
 
 stoneDir="`dirname $scriptFile`/.."
-pushd "stoneDir" >& /dev/null
+pushd "$stoneDir" >& /dev/null
 	stoneDir=`pwd`
-popd  >& /dev/null
+popd >& /dev/null
 
 if [ "$GS_HOME"x = "x" ] ; then
 	echo "The env var \$GS_HOME is expected to be defined when running GsDevKit_home scripts"
