@@ -8,7 +8,10 @@ gemstoneDir="$superdoitDir/gemstone"
 scriptFile=$1
 shift
 
-export stoneDir="`dirname $scriptFile`/.."
+stoneDir="`dirname $scriptFile`/.."
+pushd "stoneDir" >& /dev/null
+	stoneDir=`pwd`
+popd  >& /dev/null
 
 if [ "$GS_HOME"x = "x" ] ; then
 	echo "The env var \$GS_HOME is expected to be defined when running GsDevKit_home scripts"
@@ -19,6 +22,7 @@ fi
 pushd "$stoneDir" >& /dev/null
   source "$stoneDir/stone.env"
 popd >& /dev/null
+export stoneDir
 
 if [ "$GEMSTONE"x = "x" ] ; then
 	export GEMSTONE="$stoneDir/product"
