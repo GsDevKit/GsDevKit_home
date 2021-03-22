@@ -44,11 +44,13 @@ EXAMPLES
 %
 method
 startStone
+	| result |
 	(self positionalArgs size < 1 or: [ self positionalArgs size > 2 ])
 		ifTrue: [
 			^ Error signal: 'Wrong number of arguments (' , self positionalArgs size printString , ')' ].
 	self shouldNotBeForeignStone.
-	GsHostProcess execute: (self gs_binDirectory / 'startstone ') fullPath asString, ' ', self passThroughArguments, self positionalArgs first.
+	result := GsHostProcess execute: (self gs_binDirectory / 'startstone ') fullPath asString, ' ', self passThroughArguments, self positionalArgs first.
+	self stderr nextPutAll: result; cr.
 %
 method
 shouldNotBeForeignStone

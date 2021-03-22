@@ -1,6 +1,6 @@
 {
 	"class" : {
-		"importFrom:" : "jupiter 03/16/2021 20:18",
+		"importFrom:" : "jupiter 03/21/2021 15:44",
 		"seaside" : "jupiter 03/15/2021 14:24" },
 	"instance" : {
 		"adornmentColor" : "jupiter 03/15/2021 14:24",
@@ -47,8 +47,10 @@
 		"netLDIPort:" : "dkh 9/28/2015 20:21",
 		"netLDIPortRange" : "dkh 9/28/2015 20:24",
 		"netLDIPortRange:" : "dkh 9/28/2015 20:24",
+		"netldiArgsOn:" : "jupiter 03/21/2021 19:04",
 		"osPassword" : "dkh 5/28/2014 06:35",
 		"osPassword:" : "dkh 5/28/2014 06:35",
+		"osUserId" : "jupiter 03/21/2021 16:45",
 		"osUserId:" : "dkh 5/28/2014 06:35",
 		"password" : "dkh 5/28/2014 06:35",
 		"password:" : "dkh 5/28/2014 06:35",

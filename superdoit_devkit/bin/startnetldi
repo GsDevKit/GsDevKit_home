@@ -1,0 +1,165 @@
+#!/usr/bin/env superdoit_solo_devkit
+instvars
+%
+options
+{
+	SuperDoitCommandLineOption long: 'help' short: 'h'.
+	SuperDoitCommandLineOption long: 'debug'.
+	SuperDoitCommandLineOption long: 'passThroughArguments' short: 'l'.
+}
+%
+usage
+-----
+USAGE: startNetldi [-h] <stone-name> [<startnetldi-commandLine-args>]
+
+DESCRIPTION
+Start the netldi process for the given stone.
+
+By default the netldi is started using the following commandline:
+
+  startnetldi -l -g -a currentUserName <netldi-name>
+
+If a port number is specified in the session description then the following command line is used:
+
+  startnetldi -l -g -a currentUserName -P <port-number> <netldi-name>
+
+If you specify any <startnetldi-commandLine-args>, then the <startnetldi-commandLine-args> are passed
+to the startnetldi command and none of the above defaults apply (except for the -l option):
+
+  startnetldi -l <startnetldi-commandLine-args>
+
+OPTIONS
+  -h, --help 	display usage message
+	-l, --passThroughArguments 	Startup without transaction logs.
+
+EXAMPLES
+  $basename -h
+  $basename myStoneName
+  $basename -g myStoneName -A
+-----
+%
+method
+startNetldi
+	| netldiArgs result |
+	(self positionalArgs size < 1 or: [ self positionalArgs size > 2 ])
+		ifTrue: [
+			^ Error signal: 'Wrong number of arguments (' , self positionalArgs size printString , ')' ].
+	self shouldNotBeForeignStone.
+	netldiArgs := self netldiArgsStringFromArray: self netldiArgs.
+	result := GsHostProcess execute: (self gs_binDirectory / 'startnetldi ') fullPath asString, ' ', netldiArgs.
+	self stderr nextPutAll: result
+%
+method
+shouldNotBeForeignStone
+	self stoneInfo isForeignStone
+		ifTrue: [
+			^ Error signal:
+					'The stone ' , self stoneName printString , ' is a foreign stone and should not be controlled from GsDevKit_home.' ].
+%
+method
+netldiArgs
+	| sess netldiArgs |
+	sess := self sessionDescription.
+	netldiArgs := OrderedCollection new.
+	self netldiArgsOn: netldiArgs.
+	(self positionalArgs size = 1
+		ifTrue: [
+			sess netldiArgsOn: netldiArgs.
+			netldiArgs ]
+		ifFalse: [
+			netldiArgs , (self positionalArgs copyFrom: 2 to: self positionalArgs size)
+		]
+	) asArray.
+	^ netldiArgs
+%
+method
+netldiArgsOn: netldiArgs
+	| logDir |
+	logDir := self gs_logDirectory.
+	netldiArgs
+		add: '-l';
+		add: (logDir / 'netldi.log') fullPath asString
+%
+method
+netldiArgsStringFromArray: netldiArgsArray
+	^ String streamContents: [ :stream |
+			netldiArgsArray
+				do: [ :item | stream nextPutAll: item asString ]
+					separatedBy: [ stream space ]
+		]
+%
+method
+sessionDescription
+	^ self
+		sessionDescriptionIfAbsent: [ :sessionDescriptionReference |
+			Error signal:
+					'Session description file ' , sessionDescriptionReference pathString printString , ' for ' , self stoneName printString
+						, ' not found.' ]
+%
+method
+sessionDescriptionIfAbsent: absentBlock
+	^self sessionDescriptionFor: self stoneName ifAbsent: absentBlock
+%
+method
+sessionDescriptionFor: aStoneName ifAbsent: absentBlock
+	| sessionDescriptionReference |
+	sessionDescriptionReference := self sessionDescriptionHome / aStoneName.
+	sessionDescriptionReference exists
+		ifFalse: [ ^ absentBlock value: sessionDescriptionReference ].
+	^ TDSessionDescription importFrom: sessionDescriptionReference pathString
+%
+method
+sessionDescriptionHome
+	^ (System gemEnvironmentVariable: 'GS_SYS_SESSIONS') asFileReference
+%
+method
+gs_binDirectory
+	^ ((System gemEnvironmentVariable: 'GEMSTONE'), '/bin') asFileReference
+%
+method
+gs_logDirectory
+	^ (System gemEnvironmentVariable: 'GEMSTONE_LOGDIR') asFileReference
+%
+method
+gs_stonesDirectory
+	^  ((System gemEnvironmentVariable: 'GS_HOME'), '/server/stones') asFileReference
+%
+method
+gs_stoneDirectory
+	^  self gs_stonesDirectory / self stoneName
+%
+method
+stoneInfoClass
+	^ GsDevKitStoneInfo
+%
+method
+stoneInfoFilename
+	^  'info.ston'
+%
+method
+stoneInfo
+	^ self stoneInfoClass importFrom: self gs_stoneDirectory / self stoneInfoFilename
+%
+method
+stoneName
+	^ self positionalArgs at: 1
+%
+method
+getAndVerifyOptions
+	self getOpts: self optionSpecs.
+	self help ifTrue: [ ^ self usage ].
+%
+doit
+	[
+		self getAndVerifyOptions == self noResult
+			ifTrue: [ ^ self noResult ].
+		self startNetldi.
+		^ self noResult
+	] on: Error do: [:ex |
+		self debug ifTrue: [ ex pass ].
+		self
+			exit: ((ex respondsTo: #stderr)
+				ifTrue: [ ex stderr asString trimBoth ]
+				ifFalse: [ ex messageText ])
+			withStatus: 1 "does not return" ].
+%
