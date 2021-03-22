@@ -5,7 +5,11 @@ options
 {
 	SuperDoitCommandLineOption long: 'help' short: 'h'.
 	SuperDoitCommandLineOption long: 'debug'.
-	SuperDoitCommandLineOption long: 'passThroughArguments' short: 'l'.
+	SuperDoitCommandLineOption long: 'passArgumentsToNetldi' short: 'l'.
+	SuperDoitCommandLineOption long: 'privateGuestMode' short: 'g'.
+	SuperDoitCommandLineOption long: 'privateUserName' short: 'a'.
+	SuperDoitCommandLineOption long: 'privatePortNumber' short: 'P'.
+	SuperDoitCommandLineOption long: 'privateRestart' short: 'r'.
 }
 %
 usage
@@ -62,12 +66,14 @@ netldiArgs
 	sess := self sessionDescription.
 	netldiArgs := OrderedCollection new.
 	self netldiArgsOn: netldiArgs.
-	(self positionalArgs size = 1
+	(self scriptArgs size = 1
 		ifTrue: [
 			sess netldiArgsOn: netldiArgs.
 			netldiArgs ]
 		ifFalse: [
-			netldiArgs , (self positionalArgs copyFrom: 2 to: self positionalArgs size)
+			netldiArgs
+				addAll: (self scriptArgs copyFrom: 3 to: self scriptArgs size);
+				add: sess netLDI
 		]
 	) asArray.
 	^ netldiArgs
