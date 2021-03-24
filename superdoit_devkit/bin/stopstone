@@ -30,13 +30,19 @@ EXAMPLES
 %
 method
 stopStone
-	| topaziniDict |
+	| result |
 	(self positionalArgs size < 1 or: [ self positionalArgs size > 2 ])
 		ifTrue: [
 			^ Error signal: 'Wrong number of arguments (' , self positionalArgs size printString , ')' ].
 	self shouldNotBeForeignStone.
+	result := GsHostProcess execute: self stopStoneCommand.
+	self stderr nextPutAll: result.
+%
+method
+stopStoneCommand
+	| topaziniDict |
 	topaziniDict := self topaziniDict.
-	self stderr nextPutAll: (GsHostProcess execute: (String streamContents: [ :stream |
+	^ String streamContents: [ :stream |
 		stream
 			nextPutAll: (self gs_binDirectory / 'stopstone ') fullPath asString;
 			nextPut: Character space;
@@ -45,7 +51,7 @@ stopStone
 			nextPutAll: (topaziniDict at: 'user');
 			nextPut: Character space;
 			nextPutAll: (topaziniDict at: 'password')
-	])).
+	]
 %
 method
 shouldNotBeForeignStone
