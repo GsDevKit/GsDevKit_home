@@ -1,4 +1,4 @@
-#!/usr/bin/env superdoit
+#!/usr/bin/env superdoit_solo
 instvars
 	gsListResult
 %
