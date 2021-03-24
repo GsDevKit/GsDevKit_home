@@ -1,0 +1,83 @@
+#! /usr/bin/env bash
+#=========================================================================
+# Copyright (c) 2014, 2015, 2016 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#
+#   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
+#=========================================================================
+
+theArgs="$*"
+source "${GS_HOME}/bin/private/shFeedback"
+start_banner
+
+usage() {
+  cat <<HELP
+USAGE: $(basename $0) [-h] <stone-name> [<startnetldi-commandLine-args>]
+
+Start the netldi process for the given stone.
+
+By default the netldi is started using the following commandline:
+
+  startnetldi -l $GEMSTONE_LOGDIR -g -a $USER <netldi-name>
+
+If a port number is specified in the session description then the following command line is used:
+
+  startnetldi -l $GEMSTONE_LOGDIR -g -a $USER -P <port-number> <netldi-name>
+
+If you specify any <startnetldi-commandLine-args>, then the <startnetldi-commandLine-args> are passed
+to the startnetldi command and none of the above defaults apply (except for the -l option):
+
+  startnetldi -l $GEMSTONE_LOGDIR <startnetldi-commandLine-args>
+
+OPTIONS
+  -h display help
+
+EXAMPLES
+  $(basename $0) -h
+  $(basename $0) gs_326
+  $(basename $0) gs_326 -g <netldi-name> -A ::1a
+
+HELP
+}
+PLATFORM="`uname -sm | tr ' ' '-'`"
+if [[ "$PLATFORM" == MINGW32_NT* ]] ; then
+  exit_1_banner "This script is a server-only script and cannot be used on Windows"
+fi
+
+if [ "${GS_HOME}x" = "x" ] ; then
+  exit_1_banner "the GS_HOME environment variable needs to be defined"
+fi
+source "${GS_HOME}/bin/defGsDevKit.env"
+
+source "${GS_HOME}/bin/private/shFunctions"
+getOpts_help $@
+
+if [ $# -lt 1 ]; then
+  usage; exit_1_banner "Missing required argument"
+fi
+stoneName=$1
+shift 1
+
+stonePath="$GS_SERVER_STONES/${stoneName}"
+if [ ! -d "$stonePath" ] ; then
+  exit_1_banner "The stone $stoneName does not exist"
+fi
+
+echo "starting netldi $stoneName $*"
+
+# set up stone environment
+pushd "$stonePath" >& /dev/null
+  source "$stonePath/stone.env"
+popd >& /dev/null
+
+set +e
+#"$GS_HOME/bin/devKitCommandLine" startnetldi $stoneName $*"
+"$GS_HOME/superdoit_devkit/bin/restartnetldi" $stoneName $*
+
+status="$?"
+
+if [ $status -ne 0 ] ; then
+	echo "status: $status"
+	exit $status
+fi
+
+exit_0_banner "...finished"

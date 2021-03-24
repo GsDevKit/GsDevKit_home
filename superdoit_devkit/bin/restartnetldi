@@ -5,57 +5,40 @@ options
 {
 	SuperDoitCommandLineOption long: 'help' short: 'h'.
 	SuperDoitCommandLineOption long: 'debug'.
-	SuperDoitCommandLineOption long: 'passArgumentsToNetldi' short: 'l'.
-	SuperDoitCommandLineOption long: 'privateGuestMode' short: 'g'.
-	SuperDoitCommandLineOption long: 'privateUserName' short: 'a'.
-	SuperDoitCommandLineOption long: 'privatePortNumber' short: 'P'.
-	SuperDoitCommandLineOption long: 'privateRestart' short: 'r'.
 }
 %
 usage
 -----
-USAGE: startNetldi [-h] <stone-name> [<startnetldi-commandLine-args>]
+USAGE: restartnetldi [-h] <stone-name>
 
 DESCRIPTION
-Start the netldi process for the given stone.
-
-By default the netldi is started using the following commandline:
-
-  startnetldi -l -g -a currentUserName <netldi-name>
-
-If a port number is specified in the session description then the following command line is used:
-
-  startnetldi -l -g -a currentUserName -P <port-number> <netldi-name>
-
-If you specify any <startnetldi-commandLine-args>, then the <startnetldi-commandLine-args> are passed
-to the startnetldi command and none of the above defaults apply (except for the -l option):
-
-  startnetldi -l <startnetldi-commandLine-args>
+Restart a running netldi process.
 
 OPTIONS
   -h, --help 	display usage message
-	-l, --passThroughArguments 	Startup without transaction logs.
 
 EXAMPLES
   $basename -h
   $basename myStoneName
-  $basename -g myStoneName -A
 -----
 %
 method
-startNetldi
-	| netldiArgs result |
-	self shouldNotBeForeignStone.
-	netldiArgs := self netldiArgsStringFromArray: self netldiArgs.
-	result := GsHostProcess execute: (self gs_binDirectory / 'startnetldi ') fullPath asString, ' ', netldiArgs.
-	self stderr nextPutAll: result
-%
-method
-shouldNotBeForeignStone
-	self stoneInfo isForeignStone
-		ifTrue: [
-			^ Error signal:
-					'The stone ' , self stoneName printString , ' is a foreign stone and should not be controlled from GsDevKit_home.' ].
+restartNetldi
+	"If GemStone version if >= 3.3 netldi supports restarting with -r.
+	 Older version need to be stopped and then started using the same arguments used to start it the first time"
+
+	| result netldiArgs |
+	self stderr nextPutAll: 'SESS_HOME: ', (System gemEnvironmentVariable: 'GS_SYS_SESSIONS').
+	self stoneInfo gsVers >= '3.3.0' ifTrue: [
+		result :=  GsHostProcess execute: (self gs_binDirectory / 'startnetldi ') fullPath asString, ' -r ', self sessionDescription netLDI.
+		self stderr nextPutAll: result.
+	] ifFalse: [
+		result := GsHostProcess execute: (self gs_devKitBinDirectory / 'stopNetldi ') fullPath asString, ' ', self stoneName.
+		self stderr nextPutAll: result.
+		netldiArgs := self netldiArgsStringFromArray: self netldiArgs.
+		result := GsHostProcess execute: (self gs_devKitBinDirectory / 'startNetldi ') fullPath asString, ' ', netldiArgs.
+		self stderr nextPutAll: result.
+	].
 %
 method
 netldiArgs
@@ -128,6 +111,10 @@ gs_stonesDirectory
 	^  ((System gemEnvironmentVariable: 'GS_HOME'), '/server/stones') asFileReference
 %
 method
+gs_devKitBinDirectory
+	^  ((System gemEnvironmentVariable: 'GS_HOME'), '/bin') asFileReference
+%
+method
 gs_stoneDirectory
 	^  self gs_stonesDirectory / self stoneName
 %
@@ -156,7 +143,7 @@ doit
 	[
 		self getAndVerifyOptions == self noResult
 			ifTrue: [ ^ self noResult ].
-		self startNetldi.
+		self restartNetldi.
 		^ self noResult
 	] on: Error do: [:ex |
 		self debug ifTrue: [ ex pass ].
