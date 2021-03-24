@@ -9,7 +9,7 @@ options
 %
 usage
 -----
-USAGE $basename [--help | -h]
+USAGE $basename [--help | -h] [stoneName]
 
 DESCRIPTION
   Script to test working with environments and stone contexts (groups of environment variables)
@@ -20,12 +20,20 @@ OPTIONS
 
 EXAMPLES
   $basename --help
-  $basename --debug
+  $basename --debug myStone
 -----
 %
 method
 testContext
 	self stderr nextPutAll: 'PWD: ', (System gemEnvironmentVariable: 'PWD') asString; cr.
+%
+method
+stoneContext
+
+%
+method
+findLocalStone
+	"Search from PWD up through the directory tree to find info.stone"
 %
 method
 getAndVerifyOptions
