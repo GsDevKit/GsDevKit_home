@@ -1,4 +1,4 @@
-#!/usr/bin/env superdoit_solo_devkit
+#!/usr/bin/env superdoit_solo
 options
 {
   SuperDoitCommandLineOption long: 'help' short: 'h'.
@@ -11,7 +11,8 @@ options
 usage
 -----
 USAGE $basename [--help | -h] [--debug | -D] \
-      --import=<import-load-spec-url> --export=<export-load-spec-url>
+      --import=<import-load-spec-url> --version=<gemstone-version> \
+      gsdir=<.gs-file-directory>
 
 DESCRIPTION
   Read the FileSystemGs packages from a Rowan:masterV2.1 checkout and create a
@@ -20,6 +21,13 @@ DESCRIPTION
 OPTIONS
   -h, --help                 display usage message
   -D, --debug                bring up topaz debugger in the event of a script error
+  --import=<import-load-spec-url>
+                             file url referencing the load spec for the project
+                             used as the source for the FileSystem code
+  --version=<gemstone-version>
+                             pick from 3.2.15, 3.5.0, 3.6.0, 3.6.1 and 3.7.0
+  --gsdir=<.gs-file-directory>
+                             directory where the single .gs file will be written
 
 EXAMPLES
   $basename --help

@@ -1,4 +1,4 @@
-#!/usr/bin/env superdoit_solo_devkit
+#!/usr/bin/env superdoit_solo
 options
 {
   SuperDoitCommandLineOption long: 'help' short: 'h'.
@@ -48,13 +48,6 @@ EXAMPLES
              --importHome=file:$GS_HOME \
              --export=file:$GS_HOME/shared/repos/superDoit/rowan/specs/SuperDoit.ston \
              --exportHome=file:$GS_HOME/shared/repos/
-
-
-
---import=file:$GS_HOME/superdoit_devkit/rowan/specs/SuperDoit.ston \
-            --importHome=file:$GS_HOME/shared/repos/ \
-            --export=file:$GS_HOME/shared/repos/superDoit/rowan/specs/SuperDoit.ston \
-            --exportHome=file:$GS_HOME/shared/repos/
 -----
 %
 method

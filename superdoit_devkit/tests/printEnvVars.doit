@@ -1,4 +1,4 @@
-#!/usr/bin/env superdoit_solo_devkit
+#!/usr/bin/env superdoit_solo
 options
 {
   SuperDoitCommandLineOption long: 'help' short: 'h'.
@@ -7,10 +7,12 @@ options
 %
 usage
 -----
-USAGE $basename [--help | -h] [--debug | -D]
+USAGE $basename [--help | -h] [--debug | -D] <env-var-names> ...
 
 DESCRIPTION
-  Generate an error.
+  Print the values of env vars using System class >> #gemEnvironmentVariable. 
+  Positional arguments on command line are interpretted as a list of env var 
+	names to be displayed on stdout.
 
 OPTIONS
   -h, --help                 display usage message
@@ -21,7 +23,7 @@ EXAMPLES
   $basename -h
   $basename --debug
   $basename -D
-  $basename
+  $basename x y z
 -----
 %
 method
@@ -31,9 +33,14 @@ getAndVerifyOptions
 %
 doit
 	[
+		| pairs |
 		self getAndVerifyOptions == self noResult
 			ifTrue: [ ^ self noResult ].
-		^ 3 foo
+		self positionalArgs do: [:envVar |
+			| value |
+			value := System gemEnvironmentVariable: envVar.
+			self logMessage: envVar, '=', value printString  ].
+		self noResult
 	] on: Error do: [:ex | 
 		self debug ifTrue: [ ex pass ].
 		self exit: ex messageText withStatus: 1 "does not return" ].

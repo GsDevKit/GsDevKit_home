@@ -1,4 +1,4 @@
-#!/usr/bin/env superdoit_solo_devkit
+#!/usr/bin/env superdoit_solo
 instvars
 %
 options

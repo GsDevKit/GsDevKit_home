@@ -1,4 +1,4 @@
-#!/usr/bin/env superdoit_solo_devkit
+#!/usr/bin/env superdoit_solo
 options
 {
   SuperDoitCommandLineOption long: 'help' short: 'h'.
@@ -37,7 +37,7 @@ doit
 		self getAndVerifyOptions == self noResult
 			ifTrue: [ ^ self noResult ].
 		pairs := self positionalArgs.
-		command := '$superdoit_devkitDir'  asFileReference / 'bin' / 'printEnvVars.doit'.
+		command := '$superdoit_devkitDir'  asFileReference / 'tests' / 'printEnvVars.doit'.
 		args :=  String new.
 		1 to: pairs size by: 2 do: [:index |
 			| envName |
@@ -49,7 +49,13 @@ doit
 		stdout := GsHostProcess execute: command pathString, ' ', args.
 		self stdout 
 			nextPutAll: 'And the results are:'; lf;
-			nextPutAll: stdout.
+			nextPutAll: '  GsHostProcess values: '; lf;
+			nextPutAll: stdout; lf;
+			nextPutAll: '  current process values: '; lf.
+		1 to: pairs size by: 2 do: [:index |
+			| envName |
+			envName := (pairs at: index).
+			self logMessage: envName, '=', (System gemEnvironmentVariable: envName) printString ]. 		
 		self noResult
 	] on: Error do: [:ex | 
 		self debug ifTrue: [ ex pass ].
