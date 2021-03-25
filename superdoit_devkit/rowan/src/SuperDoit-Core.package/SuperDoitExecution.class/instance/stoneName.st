@@ -1,3 +1,3 @@
 accessing
-SuperDoitExecution >> stoneName
+stoneName
        ^GsNetworkResourceString currentStoneName

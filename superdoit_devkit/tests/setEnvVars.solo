@@ -37,7 +37,7 @@ doit
 		self getAndVerifyOptions == self noResult
 			ifTrue: [ ^ self noResult ].
 		pairs := self positionalArgs.
-		command := '$superdoit_devkitDir'  asFileReference / 'tests' / 'printEnvVars.doit'.
+		command := '$superdoitDir'  asFileReference / 'tests' / 'printEnvVars.solo'.
 		args :=  String new.
 		1 to: pairs size by: 2 do: [:index |
 			| envName |
