@@ -39,7 +39,7 @@ installedProductsReportOn: stream
 	stream
 		nextPutAll: 'Installed Products:';
 		cr.
-	self installedProducts keys sorted
+	self installedProducts keys asSortedCollection
 		do: [ :gsVers |
 			stream
 				tab;
@@ -55,14 +55,14 @@ installedProducts
 				do: [ :productDir |
 					| dirName |
 					dirName := productDir basename.
-					(dirName indexOfSubCollection: 'GemStone64Bit' == 1)
+					(dirName indexOfSubCollection: 'GemStone64Bit') == 1
 						ifTrue: [
 							| productVersion dashIndex |
 							dashIndex := dirName indexOf: $-.
 							productVersion := dirName copyFrom: 'GemStone64Bit' size + 1 to: dashIndex - 1.
 							installedProducts at: productVersion put: productDir ]
 						ifFalse: [
-							(dirName indexOfSubCollection: 'GemBuilderC' == 1)
+							(dirName indexOfSubCollection: 'GemBuilderC') == 1
 								ifTrue: [
 									| productVersion dashIndex |
 									dashIndex := dirName indexOf: $-.
@@ -78,7 +78,8 @@ doit
 	[
 		self getAndVerifyOptions == self noResult
 			ifTrue: [ ^ self noResult ].
-		^ self produceProductsReport
+		self produceProductsReport.
+		^ self noResult
 	] on: Error do: [:ex |
 		self debug ifTrue: [ ex pass ].
 		self exit: ex messageText withStatus: 1 "does not return" ].

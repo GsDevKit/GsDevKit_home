@@ -37,4 +37,5 @@ if [ $# -ne 0 ]; then
 fi
 
 # Run script
-"$GS_HOME/bin/devKitCommandLine" products
+#"$GS_HOME/bin/devKitCommandLine" products
+"$GS_HOME/superdoit_devkit/bin/products"
