@@ -1,5 +1,13 @@
 #! /usr/bin/env bash
+#
+#	Expected script command line:
+#		script [ <script-args> ] [ -- <topaz-command-line-args> ]
+#
+#	Not worried about duplicate topaz options at this point ... let the cards fall where they may
+#
 # set -x 
+
+set -e
 
 export superdoitDir="`dirname $0`/.."
 
@@ -23,10 +31,6 @@ if [ "$ARCHBASE"x != "x" ] ; then
 		export GEMSTONE="$ARCHBASE/fast/gs/product"
 		export GEM_SOLO_EXTENT="$ARCHBASE/fast/gs/hidden/bin/extent0.rowan.dbf"
 	fi
-elif [ "$GEMSTONE"x != "x" ] ; then
-	echo "A GemStone product tree including extent0.rowan.dbf has not been shipped yet."
-	echo "	until then use https://github.com/GsDevKit/GsDevKit_home."
-	exit 1
 else
 	# Installation using extent0.solo.dbf from GsDevKit_home
 	export GEMSTONE="$gemstoneDir/gs/product"
@@ -34,6 +38,14 @@ else
 	if [ "$ROWAN_PROJECTS_HOME"x = "x" ] ; then
 		export ROWAN_PROJECTS_HOME="$GS_HOME/shared/repos"
 	fi
+fi
+
+skip="skip"
+if [ "$skip"x = "x" ] ; then
+	echo "script file: $scriptFile"
+	echo "script args: $*"
+	echo "======================"
+	# exit 0
 fi
 
 $GEMSTONE/bin/topaz -l \
