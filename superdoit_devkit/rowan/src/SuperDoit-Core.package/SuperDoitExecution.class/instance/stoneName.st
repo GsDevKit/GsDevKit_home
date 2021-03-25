@@ -1,3 +1,3 @@
 accessing
 stoneName
-       ^GsNetworkResourceString currentStoneName
+	^GsNetworkResourceString currentStoneName
