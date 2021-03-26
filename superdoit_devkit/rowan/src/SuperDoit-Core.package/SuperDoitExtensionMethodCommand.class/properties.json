@@ -1,0 +1,15 @@
+{
+	"category" : "SuperDoit-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"className",
+		"isMeta" ],
+	"name" : "SuperDoitExtensionMethodCommand",
+	"pools" : [
+		 ],
+	"super" : "SuperDoitCommand",
+	"type" : "normal" }

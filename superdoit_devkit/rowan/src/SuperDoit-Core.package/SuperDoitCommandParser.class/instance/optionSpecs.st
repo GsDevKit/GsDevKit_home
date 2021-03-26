@@ -1,3 +1,3 @@
 accessing
 optionSpecs
-	^ optionSpecs
+	^ optionSpecs ifNil: [ optionSpecs := Dictionary new ]

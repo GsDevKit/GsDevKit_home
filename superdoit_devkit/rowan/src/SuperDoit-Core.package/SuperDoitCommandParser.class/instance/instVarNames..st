@@ -1,3 +1,3 @@
-commands
-instVarNames: string
-	instVarNames := self instVarNames , (('#(' , string , ')') evaluate)
+accessing
+instVarNames: anArray
+	instVarNames := anArray

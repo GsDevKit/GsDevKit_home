@@ -1,5 +1,3 @@
 commands
-method: string in: className
-	(Rowan globalNamed: className)
-		ifNotNil: [ :class | class compileMethod: string ]
-		ifNil: [ self error: 'No class ' , className printString , ' found' ]
+method: aString in: className
+	^ SuperDoitExtensionMethodCommand chunk: aString className: className

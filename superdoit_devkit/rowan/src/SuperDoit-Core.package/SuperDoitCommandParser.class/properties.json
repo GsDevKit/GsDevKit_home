@@ -16,7 +16,9 @@
 		"scriptArgs",
 		"scriptPath",
 		"systemDictionary",
-		"optionSpecs" ],
+		"optionSpecs",
+		"projectsHome",
+		"commandDefinition" ],
 	"name" : "SuperDoitCommandParser",
 	"pools" : [
 		 ],

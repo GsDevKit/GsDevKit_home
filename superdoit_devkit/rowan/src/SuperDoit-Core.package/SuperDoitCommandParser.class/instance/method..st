@@ -1,3 +1,3 @@
 commands
-method: string
-	self superDoitExecutionClass compileMethod: string
+method: aString
+	^ SuperDoitMethodCommand chunk: aString

@@ -12,7 +12,8 @@
 		"_usage",
 		"_noResult",
 		"_optionSpecs",
-		"_positionalArgs" ],
+		"_positionalArgs",
+		"_loadSpecs" ],
 	"name" : "SuperDoitExecution",
 	"pools" : [
 		 ],
