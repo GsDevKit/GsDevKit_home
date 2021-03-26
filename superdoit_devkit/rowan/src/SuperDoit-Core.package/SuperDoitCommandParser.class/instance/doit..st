@@ -1,4 +1,4 @@
-commands
+doit
 doit: string
 	| instance |
 	self superDoitExecutionClass
@@ -13,4 +13,5 @@ doit: string
 	instance usage: self usage.
 	instance optionSpecs: self optionSpecs.
 	instance processDynamicSections: self.
+	self loadSpecs.
 	instance displayResult: instance doit

@@ -1,3 +1,3 @@
-accessing
-stoneName
+script info
+executionStoneName
 	^GsNetworkResourceString currentStoneName

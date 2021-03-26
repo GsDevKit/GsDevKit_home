@@ -23,6 +23,8 @@ processNextCommand
 		ifTrue: [ ^ self options: self nextChunk ].
 	command = 'INSTVARS'
 		ifTrue: [ ^ self instVarNames: self nextChunk ].
+	command = 'PROJECTSHOME'
+		ifTrue: [ ^ self projectsHome: self nextChunk ].
 	command = 'SPECS'
 		ifTrue: [ ^ self specSton: self nextChunk ].
 	command = 'SPECURLS'
