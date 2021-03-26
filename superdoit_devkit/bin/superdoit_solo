@@ -9,9 +9,9 @@
 
 set -e
 
-export superdoitDir="`dirname $0`/.."
+export SUPERDOIT_DIR="`dirname $0`/.."
 
-gemstoneDir="$superdoitDir/gemstone"
+gemstoneDir="$SUPERDOIT_DIR/gemstone"
 
 scriptFile=$1
 shift
@@ -21,20 +21,20 @@ if [ "$ARCHBASE"x != "x" ] ; then
   if [ -d "$ARCHBASE/fast42" ] ; then
 		# private build i386.Darwin"
 		export GEMSTONE="$ARCHBASE/fast42/gs/product"
-		export GEM_SOLO_EXTENT="$ARCHBASE/fast42/gs/hidden/bin/extent0.rowan.dbf"
+		GEM_SOLO_EXTENT="$ARCHBASE/fast42/gs/hidden/bin/extent0.rowan.dbf"
   elif [ -d "$ARCHBASE/fast50" ] ; then
 		# private build x86_64.Linux"
 		export GEMSTONE="$ARCHBASE/fast50/gs/product"
-		export GEM_SOLO_EXTENT="$ARCHBASE/fast50/gs/hidden/bin/extent0.rowan.dbf"
+		GEM_SOLO_EXTENT="$ARCHBASE/fast50/gs/hidden/bin/extent0.rowan.dbf"
 	else
 		# sanctioned build"
 		export GEMSTONE="$ARCHBASE/fast/gs/product"
-		export GEM_SOLO_EXTENT="$ARCHBASE/fast/gs/hidden/bin/extent0.rowan.dbf"
+		GEM_SOLO_EXTENT="$ARCHBASE/fast/gs/hidden/bin/extent0.rowan.dbf"
 	fi
 else
 	# Installation using extent0.solo.dbf from GsDevKit_home
 	export GEMSTONE="$gemstoneDir/gs/product"
-	export GEM_SOLO_EXTENT="$gemstoneDir/gs/extent0.solo.dbf"
+	GEM_SOLO_EXTENT="$gemstoneDir/gs/extent0.solo.dbf"
 	if [ "$ROWAN_PROJECTS_HOME"x = "x" ] ; then
 		export ROWAN_PROJECTS_HOME="$GS_HOME/shared/repos"
 	fi
