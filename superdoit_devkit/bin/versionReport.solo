@@ -1,0 +1,51 @@
+#!/usr/bin/env superdoit_solo
+#
+options
+{
+  SuperDoitCommandLineOption long: 'help' short: 'h'.
+  SuperDoitCommandLineOption long: 'debug' short: 'D'.
+}
+%
+usage
+-----
+USAGE $basename [--help | -h] [--debug | -D] 
+DESCRIPTION
+  Write the Gem Version report for the current solo extent on stdout.
+
+OPTIONS
+  -h, --help                 display usage message
+  -D, --debug                bring up topaz debugger in the event of a script error
+
+EXAMPLES
+  $basename --help
+  $basename -h
+  $basename --debug
+  $basename -D
+  $basename
+  $basename -- gs_360
+  $basename -- gs_360 -T 100000
+-----
+%
+method
+getAndVerifyOptions
+		self getOpts: self optionSpecs.
+		self help ifTrue: [ ^ self usage ].
+%
+doit
+	[
+		self getAndVerifyOptions == self noResult
+			ifTrue: [ ^ self noResult ].
+		
+		self stdout nextPutAll: '--------------------'; lf.
+		self stdout nextPutAll: 'Gem Version Report for ', self executionStoneName printString; lf.
+		self stdout nextPutAll: '--------------------'; lf.
+		System gemVersionReport keysAndValuesDo: [:key :value |
+			self stdout
+				nextPutAll: key asString ; lf; tab; nextPutAll: ' = ', value asString; lf ].
+		self stdout nextPutAll: '--------------------'; lf.
+
+		^ self noResult
+	] on: Error do: [:ex | 
+		self debug ifTrue: [ ex pass ].
+		self exit: ex description withStatus: 1 "does not return" ].
+%
