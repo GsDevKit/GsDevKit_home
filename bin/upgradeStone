@@ -241,7 +241,7 @@ EOF
 			"$GS_HOME/bin/private/postUpgradeSeasideImage" $targetStoneName "$upgradeLogDir"
 			echo "Seaside Upgrade completed. No errors detected."
       ;;
-		3.5.*|3.6.*)
+		3.5.*|3.6.*|3.7.*|3.8.*|3.9.*)
 			case "$gsvers" in
 				3.5.*) remoteDebugFlag="";; # remote debugging flag is not available in 3.5.x
 				*) remoteDebugFlag="$topazWaitForDebug" ;;
