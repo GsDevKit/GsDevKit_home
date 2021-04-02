@@ -7,4 +7,11 @@ GsUpgrader batchErrorHandlingDo: [
   Transcript
     cr;
     show: '-----Upgrade GLASS1 using gsUpgrader'.
-  GsUpgrader upgradeGLASS1 ].
+  GsUpgrader upgradeGLASS1 
+	Transcript 
+		cr; 
+		show: 'ClassOrganizer class >>  is '.
+	(ClassOrganizer compiledMethodAt: #_resetCachedOrganizer otherwise: nil)
+		ifNotNil: [ 'present' ]
+		ifNil: [ 'ABSENT' ] ].
+	System commit
