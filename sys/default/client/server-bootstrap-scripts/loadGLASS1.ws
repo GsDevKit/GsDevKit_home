@@ -3,7 +3,7 @@
 
 Transcript cr; show: '---Step 3 of tODE bootstrap process: execute loadGLASS1.ws'.
 
-Transcipt cr; show: 'DEBUGGEM - PID: ', (System gemVersionAt: 'processId') asString, ' token: ', System listenForDebugConnection asString.
+Transcript cr; show: 'DEBUGGEM - PID: ', (System gemVersionAt: 'processId') asString, ' token: ', System listenForDebugConnection asString.
 GsUpgrader batchErrorHandlingDo: [
   Transcript
     cr;
