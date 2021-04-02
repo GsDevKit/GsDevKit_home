@@ -13,5 +13,5 @@ GsUpgrader batchErrorHandlingDo: [
 		show: 'ClassOrganizer class >> _resetCachedOrganizer is '.
 	Transcript show: ((ClassOrganizer compiledMethodAt: #_resetCachedOrganizer otherwise: nil)
 		ifNotNil: [ 'present' ]
-		ifNil: [ 'ABSENT' ] ]).
+		ifNil: [ 'ABSENT' ]) ].
 	System commit
