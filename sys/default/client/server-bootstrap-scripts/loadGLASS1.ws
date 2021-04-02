@@ -10,8 +10,8 @@ GsUpgrader batchErrorHandlingDo: [
   GsUpgrader upgradeGLASS1. 
 	Transcript 
 		cr; 
-		show: 'ClassOrganizer class >>  is '.
-	(ClassOrganizer compiledMethodAt: #_resetCachedOrganizer otherwise: nil)
+		show: 'ClassOrganizer class >> _resetCachedOrganizer is '.
+	Transcript show: ((ClassOrganizer compiledMethodAt: #_resetCachedOrganizer otherwise: nil)
 		ifNotNil: [ 'present' ]
-		ifNil: [ 'ABSENT' ] ].
+		ifNil: [ 'ABSENT' ] ]).
 	System commit
