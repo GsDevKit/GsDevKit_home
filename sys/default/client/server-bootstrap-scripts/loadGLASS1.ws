@@ -3,6 +3,7 @@
 
 Transcript cr; show: '---Step 3 of tODE bootstrap process: execute loadGLASS1.ws'.
 
+System listenForDebugConnection.
 GsUpgrader batchErrorHandlingDo: [
   Transcript
     cr;
@@ -14,4 +15,9 @@ GsUpgrader batchErrorHandlingDo: [
 	Transcript show: ((ClassOrganizer class compiledMethodAt: #_resetCachedOrganizer otherwise: nil)
 		ifNotNil: [ 'present' ]
 		ifNil: [ 'ABSENT' ]) ].
+false 
+ifTrue: [
 	System commit
+] ifFalse: [
+	self halt.
+].
