@@ -62,36 +62,37 @@ env:
 #  - GS_VERSION=3.5.4 UPGRADE_FROM=3.4.5 TEST=Upgrade_unittest
 #  - GS_VERSION=3.5.4 UPGRADE_FROM=3.2.17 TEST=Upgrade_unittest
 #  - GS_VERSION=3.5.4 TEST=Upgrade_71 
-#  - GS_VERSION=3.4.0 UPGRADE_FROM=3.3.9 TEST=Upgrade_unittest
-#  - GS_VERSION=3.4.3 UPGRADE_FROM=3.3.9 TEST=Upgrade_unittest
-#  - GS_VERSION=3.4.3 UPGRADE_FROM=3.4.0 TEST=Upgrade_unittest
-#  - GS_VERSION=3.4.5 UPGRADE_FROM=3.3.9 TEST=Upgrade_unittest
-#  - GS_VERSION=3.4.5 UPGRADE_FROM=3.4.0 TEST=Upgrade_unittest
-#  - GS_VERSION=3.4.5 UPGRADE_FROM=3.4.3 TEST=Upgrade_unittest
-#  - GS_VERSION=3.5.0 UPGRADE_FROM=3.3.9 TEST=Upgrade_unittest
-#  - GS_VERSION=3.5.0 UPGRADE_FROM=3.4.0 TEST=Upgrade_unittest
-#  - GS_VERSION=3.5.0 UPGRADE_FROM=3.4.3 TEST=Upgrade_unittest
-#  - GS_VERSION=3.5.0 UPGRADE_FROM=3.4.5 TEST=Upgrade_unittest
-#  - GS_VERSION=3.5.3 UPGRADE_FROM=3.3.9 TEST=Upgrade_unittest
-#  - GS_VERSION=3.5.3 UPGRADE_FROM=3.4.0 TEST=Upgrade_unittest
-#  - GS_VERSION=3.5.3 UPGRADE_FROM=3.5.0 TEST=Upgrade_unittest
-#  - GS_VERSION=3.5.5 UPGRADE_FROM=3.3.9 TEST=Upgrade_unittest
-#  - GS_VERSION=3.5.5 UPGRADE_FROM=3.4.0 TEST=Upgrade_unittest
-#  - GS_VERSION=3.5.5 UPGRADE_FROM=3.4.3 TEST=Upgrade_unittest
-#  - GS_VERSION=3.5.5 UPGRADE_FROM=3.4.5 TEST=Upgrade_unittest
-#  - GS_VERSION=3.5.5 UPGRADE_FROM=3.5.0 TEST=Upgrade_unittest
-#  - GS_VERSION=3.5.5 UPGRADE_FROM=3.5.3 TEST=Upgrade_unittest
-  - GS_VERSION=3.6.0 UPGRADE_FROM=3.3.9 TEST=Upgrade_unittest
-#  - GS_VERSION=3.6.0 UPGRADE_FROM=3.4.0 TEST=Upgrade_unittest
-#  - GS_VERSION=3.6.0 UPGRADE_FROM=3.4.3 TEST=Upgrade_unittest
-#  - GS_VERSION=3.6.0 UPGRADE_FROM=3.4.5 TEST=Upgrade_unittest
-#  - GS_VERSION=3.6.0 UPGRADE_FROM=3.5.0 TEST=Upgrade_unittest
-#  - GS_VERSION=3.6.0 UPGRADE_FROM=3.5.3 TEST=Upgrade_unittest
-#  - GS_VERSION=3.6.0 UPGRADE_FROM=3.5.5 TEST=Upgrade_unittest
-#  - GS_VERSION=3.6.0 UPGRADE_FROM=3.4.5 TEST=Upgrade_User
-#  - GS_VERSION=3.6.0 UPGRADE_FROM=3.4.5 TEST=Upgrade_unittest
 #  - GS_VERSION=3.6.0 UPGRADE_FROM=3.3.9 TEST=Upgrade_71 
 #  - GS_VERSION=3.6.0 UPGRADE_FROM=3.3.9 TEST=Upgrade_TOC
+
+#  - GS_VERSION=3.6.0 UPGRADE_FROM=3.3.9 TEST=Upgrade_unittest # passed build #1199
+  - GS_VERSION=3.6.0 UPGRADE_FROM=3.4.0 TEST=Upgrade_unittest
+  - GS_VERSION=3.6.0 UPGRADE_FROM=3.4.3 TEST=Upgrade_unittest
+  - GS_VERSION=3.6.0 UPGRADE_FROM=3.4.5 TEST=Upgrade_unittest
+  - GS_VERSION=3.6.0 UPGRADE_FROM=3.5.0 TEST=Upgrade_unittest
+  - GS_VERSION=3.6.0 UPGRADE_FROM=3.5.3 TEST=Upgrade_unittest
+  - GS_VERSION=3.6.0 UPGRADE_FROM=3.5.5 TEST=Upgrade_unittest
+  - GS_VERSION=3.6.0 UPGRADE_FROM=3.4.5 TEST=Upgrade_User
+  - GS_VERSION=3.6.0 UPGRADE_FROM=3.4.5 TEST=Upgrade_unittest
+# - GS_VERSION=3.4.0 UPGRADE_FROM=3.3.9 TEST=Upgrade_unittest # expected failure (https://github.com/GsDevKit/GsDevKit_home/issues/312)
+  - GS_VERSION=3.4.3 UPGRADE_FROM=3.3.9 TEST=Upgrade_unittest
+  - GS_VERSION=3.4.3 UPGRADE_FROM=3.4.0 TEST=Upgrade_unittest
+  - GS_VERSION=3.4.5 UPGRADE_FROM=3.3.9 TEST=Upgrade_unittest
+  - GS_VERSION=3.4.5 UPGRADE_FROM=3.4.0 TEST=Upgrade_unittest
+  - GS_VERSION=3.4.5 UPGRADE_FROM=3.4.3 TEST=Upgrade_unittest
+  - GS_VERSION=3.5.0 UPGRADE_FROM=3.3.9 TEST=Upgrade_unittest
+  - GS_VERSION=3.5.0 UPGRADE_FROM=3.4.0 TEST=Upgrade_unittest
+  - GS_VERSION=3.5.0 UPGRADE_FROM=3.4.3 TEST=Upgrade_unittest
+  - GS_VERSION=3.5.0 UPGRADE_FROM=3.4.5 TEST=Upgrade_unittest
+  - GS_VERSION=3.5.3 UPGRADE_FROM=3.3.9 TEST=Upgrade_unittest
+  - GS_VERSION=3.5.3 UPGRADE_FROM=3.4.0 TEST=Upgrade_unittest
+  - GS_VERSION=3.5.3 UPGRADE_FROM=3.5.0 TEST=Upgrade_unittest
+  - GS_VERSION=3.5.5 UPGRADE_FROM=3.3.9 TEST=Upgrade_unittest
+  - GS_VERSION=3.5.5 UPGRADE_FROM=3.4.0 TEST=Upgrade_unittest
+  - GS_VERSION=3.5.5 UPGRADE_FROM=3.4.3 TEST=Upgrade_unittest
+  - GS_VERSION=3.5.5 UPGRADE_FROM=3.4.5 TEST=Upgrade_unittest
+  - GS_VERSION=3.5.5 UPGRADE_FROM=3.5.0 TEST=Upgrade_unittest
+  - GS_VERSION=3.5.5 UPGRADE_FROM=3.5.3 TEST=Upgrade_unittest
 
 addons:
   hosts:
