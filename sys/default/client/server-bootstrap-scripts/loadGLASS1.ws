@@ -22,7 +22,7 @@ GsUpgrader batchErrorHandlingDo: [
 	key := GsPackagePolicy current sessionMethodDictionaryGlobalName.
 	((tmps at: key otherwise: nil) includes: ClassOrganizer)
 		ifTrue: [ Transcript cr; show: 'ClassOrganizer is present in session method set' ]
-		ifFalse: [ Transcript cr; show: '*****ClassOrganizer is NOT present in session method set*****' ].
+		ifFalse: [ Transcript cr; show: '*****ClassOrganizer is NOT present in session method set*****' ] ].
 true ifTrue: [
 	false ifTrue: [ System commit ]
 ] ifFalse: [
