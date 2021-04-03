@@ -1,0 +1,10 @@
+RwPlatformNestedProjectLoadComponentV2 {
+	#name : 'deprecated/SuperDoit',
+	#condition : [
+		'deprecated'
+	],
+	#packageNames : [
+		'SuperDoit-Deprecated'
+	],
+	#comment : 'deprecated classes'
+}

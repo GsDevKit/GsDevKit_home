@@ -1,0 +1,14 @@
+{
+	"category" : "SuperDoit-Command",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"chunk" ],
+	"name" : "SuperDoitCommand",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -11,18 +11,22 @@ processNextCommand
 		ifTrue: [ ^ nil ].
 
 	command := words first asUppercase.
-	(command at: 1) == $# 
+	(command at: 1) == $#
 		ifTrue: [ ^ self scriptComment: line ].
 	command = 'DOIT'
 		ifTrue: [ ^ self doit: self nextChunk ].
 	command = 'METHOD'
-		ifTrue: [ ^ self method: self nextChunk  ].
+		ifTrue: [ ^ self method: self nextChunk ].
 	command = 'METHOD:'
-		ifTrue: [  ^ self method: self nextChunk className: (words at: 2) ].
+		ifTrue: [ ^ self method: self nextChunk className: (words at: 2) ].
 	command = 'CLASSMETHOD:'
 		ifTrue: [ ^ self classMethod: self nextChunk className: (words at: 2) ].
+	command = 'INPUT'
+		ifTrue: [ ^ self input: self nextChunk ].
 	command = 'OPTIONS'
 		ifTrue: [ ^ self options: self nextChunk ].
+	command = 'CUSTOMOPTIONS'
+		ifTrue: [ ^ self customOptions: self nextChunk ].
 	command = 'INSTVARS'
 		ifTrue: [ ^ self instVarNamesCommand: self nextChunk ].
 	command = 'PROJECTSHOME'

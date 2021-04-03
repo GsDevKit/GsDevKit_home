@@ -2,7 +2,7 @@ command line
 commandLineSummary
 	| opts |
 	opts := Dictionary new.
-	self optionSpecs do: [:option |
+	self optionsDict do: [:option |
 		option wasSet
 			ifTrue: [ opts at: option longName put: option value ] ].
 	^ Dictionary new

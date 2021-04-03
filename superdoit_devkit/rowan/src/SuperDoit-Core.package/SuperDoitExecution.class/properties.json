@@ -11,9 +11,9 @@
 		"_scriptPath",
 		"_usage",
 		"_noResult",
-		"_optionSpecs",
 		"_positionalArgs",
-		"_loadSpecs" ],
+		"_loadSpecs",
+		"_optionsDict" ],
 	"name" : "SuperDoitExecution",
 	"pools" : [
 		 ],

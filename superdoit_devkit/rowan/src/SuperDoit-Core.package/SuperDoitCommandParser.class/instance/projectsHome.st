@@ -1,3 +1,3 @@
 accessing
 projectsHome
-	^ projectsHome ifNil: [ 'ROWAN_PROJECTS_HOME' ]
+	^ projectsHome ifNil: [ '$ROWAN_PROJECTS_HOME' ]
