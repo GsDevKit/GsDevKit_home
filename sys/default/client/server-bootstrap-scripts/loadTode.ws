@@ -21,12 +21,18 @@ Transcript show: ((ClassOrganizer class compiledMethodAt: #_resetCachedOrganizer
 				on: Error
 				do: [:ex |
 true ifTrue: [
-	| wait |
+	| wait tmps key |
+Transcript cr; show: 'ERROR: ', ex description.
 Transcript show: ((ClassOrganizer class compiledMethodAt: #_resetCachedOrganizer otherwise: nil)
 		ifNotNil: [ 'present' ]
 		ifNil: [ 'ABSENT' ]).
+	tmps := SessionTemps current.
+	key := GsPackagePolicy current sessionMethodDictionaryGlobalName.
+	((tmps at: key otherwise: nil) includes: ClassOrganizer)
+		ifTrue: [ Transcript cr; show: 'ClassOrganizer is present in session method set' ]
+		ifFalse: [ Transcript cr; show: '*****ClassOrganizer is NOT present in session method set*****' ].
 	Transcript cr; show: 'DEBUGGEM ', (System gemVersionAt: 'processId') asString, ' ', System listenForDebugConnection asString.
 	wait := true.
 	[ wait ] whileTrue: [ (Delay forSeconds: 1) wait ]
-].
-					 ] ] ].
+]
+	ifFalse: [ ex pass ] ] ] ].
