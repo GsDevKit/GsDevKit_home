@@ -9,6 +9,12 @@ GsUpgrader batchErrorHandlingDo: [
     cr;
     show: '-----Install tODE using ', todeRepo.
   GsDeployer bulkMigrate: [ 
+true ifTrue: [
+	| wait |
+	Transcript cr; show: 'DEBUGGEM - ', (System gemVersionAt: 'processId') asString, ' ', System listenForDebugConnection asString.
+	wait := true.
+	[ wait ] whileTrue: [ (Delay forSeconds: 1) wait ]
+].
     Metacello new
       baseline: 'Tode';
       repository: todeRepo;
