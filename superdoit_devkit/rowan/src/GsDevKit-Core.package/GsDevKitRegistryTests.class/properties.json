@@ -1,5 +1,5 @@
 {
-	"category" : "BaselineOfSuperDoit_GsDevKit",
+	"category" : "GsDevKit-Core",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
@@ -7,8 +7,8 @@
 	"commentStamp" : "",
 	"instvars" : [
 		 ],
-	"name" : "BaselineOfSuperDoit_GsDevKit",
+	"name" : "GsDevKitRegistryTests",
 	"pools" : [
 		 ],
-	"super" : "BaselineOf",
+	"super" : "TestCase",
 	"type" : "normal" }

@@ -18,12 +18,12 @@ If you write GsDevKit superdoit scripts, you may also want to interact with the 
 - [Registering source code locations](docs/repos.md)
 
 ##### [Registry File Formats](docs/fileFormats.md)
-- [registry.ston](docs/fileFormats.md#registry.ston)
-- [stone.context](docs/fileFormats.md#stone.context)
+- [registry.ston](docs/fileFormats.md#user-content-registryston)
+- [stone.context](docs/fileFormats.md#user-content-stonecontext)
 
 ##### [Registry Classes](docs/classes.md)
 - [GsDevKitRegistry](docs/classes.md#GsDevKitRegistry)
-- [GsDevKitStoneRegistration](docs/classes.md#GsDevKitStoneRegistrationcontext)
-- [GsDevKitRemoteStoneRegistration](docs/classes.md#GsDevKitRemoteStoneRegistration)
-- [GsDevKitStoneRegistration](docs/classes.md#GsDevKitStoneRegistrationcontext)
-- [GsDevKitSourceRepoRegistration](docs/classes.md#GsDevKitSourceRepoRegistration)
+- [GsDevKitStoneRegistration](docs/classes.md#user-content-GsDevKitStoneRegistrationcontext)
+- [GsDevKitRemoteStoneRegistration](docs/classes.md#user-content-GsDevKitRemoteStoneRegistration)
+- [GsDevKitStoneRegistration](docs/classes.md#user-content-GsDevKitStoneRegistrationcontext)
+- [GsDevKitSourceRepoRegistration](docs/classes.md#user-content-GsDevKitSourceRepoRegistration)

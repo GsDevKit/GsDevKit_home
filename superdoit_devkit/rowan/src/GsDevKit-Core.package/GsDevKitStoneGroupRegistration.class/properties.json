@@ -1,0 +1,14 @@
+{
+	"category" : "GsDevKit-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"stoneNames" ],
+	"name" : "GsDevKitStoneGroupRegistration",
+	"pools" : [
+		 ],
+	"super" : "GsDevKitAbstractPathRegistration",
+	"type" : "normal" }

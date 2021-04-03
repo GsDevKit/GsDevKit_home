@@ -1,4 +1,4 @@
-instance creation
+importing
 importFrom: filePath
   [ ^ STON fromString: filePath asFileReference contents ]
     on: Error

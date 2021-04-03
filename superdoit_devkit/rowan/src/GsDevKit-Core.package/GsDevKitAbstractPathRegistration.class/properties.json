@@ -1,0 +1,14 @@
+{
+	"category" : "GsDevKit-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"path" ],
+	"name" : "GsDevKitAbstractPathRegistration",
+	"pools" : [
+		 ],
+	"super" : "GsDevKitAbstractRegistration",
+	"type" : "normal" }

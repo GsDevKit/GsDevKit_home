@@ -1,0 +1,3 @@
+defaults
+defaultPassword
+  ^ 'swordfish'

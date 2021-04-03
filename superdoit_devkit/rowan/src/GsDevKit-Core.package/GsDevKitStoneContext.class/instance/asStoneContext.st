@@ -1,0 +1,3 @@
+converting
+asStoneContext
+  ^ self
