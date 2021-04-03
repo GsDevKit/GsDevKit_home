@@ -4,7 +4,7 @@
 Transcript cr; show: '---Step 3 of tODE bootstrap process: execute loadGLASS1.ws'.
 
 false ifTrue: [
-	Transcript cr; show: 'DEBUGGEM - ', (System gemVersionAt: 'processId') asString, ' ', System listenForDebugConnection asString.
+	Transcript cr; show: 'DEBUGGEM ', (System gemVersionAt: 'processId') asString, ' ', System listenForDebugConnection asString; cr.
 ].
 GsUpgrader batchErrorHandlingDo: [
   Transcript
@@ -18,7 +18,7 @@ GsUpgrader batchErrorHandlingDo: [
 		ifNotNil: [ 'present' ]
 		ifNil: [ 'ABSENT' ]) ].
 true ifTrue: [
-	System commit
+	false ifTrue: [ System commit ]
 ] ifFalse: [
 	| wait |
 	wait := true.

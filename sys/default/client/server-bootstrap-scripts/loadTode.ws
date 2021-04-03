@@ -8,17 +8,25 @@ GsUpgrader batchErrorHandlingDo: [
   Transcript
     cr;
     show: '-----Install tODE using ', todeRepo.
+Transcript show: ((ClassOrganizer class compiledMethodAt: #_resetCachedOrganizer otherwise: nil)
+		ifNotNil: [ 'present' ]
+		ifNil: [ 'ABSENT' ]).
   GsDeployer bulkMigrate: [ 
-true ifTrue: [
-	| wait defaultHandlers |
-	Transcript cr; show: 'DEBUGGEM - ', (System gemVersionAt: 'processId') asString, ' ', System listenForDebugConnection asString.
-	wait := true.
-	defaultHandlers := AlmostOutOfMemory defaultHandlers.
-	[ wait ] whileTrue: [ (Delay forSeconds: 1) wait ]
-].
-    Metacello new
+    [ Metacello new
       baseline: 'Tode';
       repository: todeRepo;
       get;
       lock;
-      load: 'GemStone Dev' ] ].
+      load: 'GemStone Dev']
+				on: Error
+				do: [:ex |
+true ifTrue: [
+	| wait |
+Transcript show: ((ClassOrganizer class compiledMethodAt: #_resetCachedOrganizer otherwise: nil)
+		ifNotNil: [ 'present' ]
+		ifNil: [ 'ABSENT' ]).
+	Transcript cr; show: 'DEBUGGEM ', (System gemVersionAt: 'processId') asString, ' ', System listenForDebugConnection asString.
+	wait := true.
+	[ wait ] whileTrue: [ (Delay forSeconds: 1) wait ]
+].
+					 ] ] ].
