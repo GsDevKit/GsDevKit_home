@@ -1,11 +1,9 @@
 #!/usr/bin/env superdoit_solo
 options
 {
-  SuperDoitCommandLineOption long: 'help' short: 'h'.
-  SuperDoitCommandLineOption long: 'debug' short: 'D'.
-  SuperDoitRequiredCommandLineOption long: 'import'.
-  SuperDoitRequiredCommandLineOption long: 'version'.
-  SuperDoitOptionalCommandLineOption long: 'gsdir' default: '.'.
+  SuperDoitRequiredOptionWithRequiredArg long: 'import'.
+  SuperDoitRequiredOptionWithRequiredArg long: 'version'.
+  SuperDoitOptionalOptionWithRequiredArg long: 'gsdir' default: '.'.
 }
 %
 usage
@@ -37,13 +35,6 @@ EXAMPLES
   $basename --import=file:$GS_HOME/shared/repos/Rowan/platforms/gemstone/projects/FileSystemGs/rowan/specsV2/FileSystemGs.ston \
             --version=3.5.0
 -----
-%
-method
-getAndVerifyOptions
-		self getOpts: self optionSpecs.
-		self help ifTrue: [ ^ self usage ].
-		self import ifNil: [ self error: 'Missing required option --import' ]. 
-		self version ifNil: [ self error: 'Missing required option --version' ]. 
 %
 method
 readSpecFrom: specUrl
@@ -83,12 +74,6 @@ doImportExport
 	visitor visit: projectSetModification.
 %
 doit
-	[
-		self getAndVerifyOptions == self noResult
-			ifTrue: [ ^ self noResult ].
-		self doImportExport.
-	] on: Error do: [:ex | 
-		self debug ifTrue: [ ex pass ].
-		self exit: ex messageText withStatus: 1 "does not return" ].
+	self doImportExport.
 	true
 %

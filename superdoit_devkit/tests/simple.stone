@@ -1,11 +1,5 @@
 #!/usr/bin/env superdoit_stone
 #
-options
-{
-  SuperDoitCommandLineOption long: 'help' short: 'h'.
-  SuperDoitCommandLineOption long: 'debug' short: 'D'.
-}
-%
 usage
 -----
 USAGE $basename [--help | -h] [--debug | -D] [-- [<stone-name> [<topaz-command-line-args>] ] ]
@@ -32,17 +26,6 @@ EXAMPLES
   $basename -- gs_360 -T 100000
 -----
 %
-method
-getAndVerifyOptions
-		self getOpts: self optionSpecs.
-		self help ifTrue: [ ^ self usage ].
-%
 doit
-	[
-		self getAndVerifyOptions == self noResult
-			ifTrue: [ ^ self noResult ].
-		^ 3 + 4
-	] on: Error do: [:ex | 
-		self debug ifTrue: [ ex pass ].
-		self exit: ex description withStatus: 1 "does not return" ].
+	^ 3 + 4
 %

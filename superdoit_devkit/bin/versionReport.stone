@@ -1,17 +1,17 @@
 #!/usr/bin/env superdoit_stone
 #
-options
-{
-  SuperDoitCommandLineOption long: 'help' short: 'h'.
-  SuperDoitCommandLineOption long: 'debug' short: 'D'.
-}
-%
+# Standard options are always present unless customoptions section is used
+#{
+#  SuperDoitOptionalOptionWithNoArg long: 'help' short: 'h'.
+#  SuperDoitOptionalOptionWithNoArg long: 'debug' short: 'D'.
+#}
+#
 usage
 -----
 USAGE $basename [--help | -h] [--debug | -D] [-- [<stone-name> [<topaz-command-line-args>] ] ]
 
 DESCRIPTION
-  Evaluate the Smalltalk expression: 3+4 and return the result on stdout.
+  Write the Stone Version report for the current stone on stdout.
 
 OPTIONS
   <stone-name>               Name of the GsDevKit_home stone. <stone-name> argument
@@ -32,26 +32,14 @@ EXAMPLES
   $basename -- gs_360 -T 100000
 -----
 %
-method
-getAndVerifyOptions
-		self getOpts: self optionSpecs.
-		self help ifTrue: [ ^ self usage ].
-%
 doit
-	[
-		self getAndVerifyOptions == self noResult
-			ifTrue: [ ^ self noResult ].
-		
-		self stdout nextPutAll: '--------------------'; lf.
-		self stdout nextPutAll: 'Stone Version Report for ', self executionStoneName printString; lf.
-		self stdout nextPutAll: '--------------------'; lf.
-		System stoneVersionReport keysAndValuesDo: [:key :value |
-			self stdout
-				nextPutAll: key asString ; lf; tab; nextPutAll: ' = ', value asString; lf ].
-		self stdout nextPutAll: '--------------------'; lf.
+	self stdout nextPutAll: '--------------------'; lf.
+	self stdout nextPutAll: 'Stone Version Report for ', self executionStoneName printString; lf.
+	self stdout nextPutAll: '--------------------'; lf.
+	System stoneVersionReport keysAndValuesDo: [:key :value |
+		self stdout
+			nextPutAll: key asString ; lf; tab; nextPutAll: ' = ', value asString; lf ].
+	self stdout nextPutAll: '--------------------'; lf.
 
-		^ self noResult
-	] on: Error do: [:ex | 
-		self debug ifTrue: [ ex pass ].
-		self exit: ex description withStatus: 1 "does not return" ].
+	^ self noResult
 %

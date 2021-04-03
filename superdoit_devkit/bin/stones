@@ -4,11 +4,9 @@ instvars
 %
 options
 {
-  SuperDoitCommandLineOption long: 'help' short: 'h'.
-  SuperDoitCommandLineOption long: 'all' short: 'a'.
-  SuperDoitCommandLineOption long: 'installed' short: 'i'.
-	SuperDoitCommandLineOption long: 'running' short: 'r'.
-	SuperDoitCommandLineOption long: 'debug'.
+  SuperDoitOptionalOptionWithNoArg long: 'all' short: 'a'.
+  SuperDoitOptionalOptionWithNoArg long: 'installed' short: 'i'.
+	SuperDoitOptionalOptionWithNoArg long: 'running' short: 'r'.
 }
 %
 usage
@@ -31,11 +29,6 @@ EXAMPLES
   $basename -i -r
   $basename
 -----
-%
-method
-getAndVerifyOptions
-	self getOpts: self optionSpecs.
-	self help ifTrue: [ ^ self usage ].
 %
 method
 produceStonesReport
@@ -129,11 +122,13 @@ method
 gsListResult
 	^ gsListResult ifNil: [ gsListResult := GsHostProcess execute: self gs_binDirectory, 'gslist -lc' ]
 %
+method
 doit
+	"override doit method, because ChildError does not exist in 3.6.0"
 	[
 		self getAndVerifyOptions == self noResult
 			ifTrue: [ ^ self noResult ].
-		^ self produceStonesReport
+		^ self theDoit
 	] on: Error do: [:ex |
 		self debug ifTrue: [ ex pass ].
 		self
@@ -141,4 +136,7 @@ doit
 				ifTrue: [ ex stderr asString trimBoth ]
 				ifFalse: [ ex messageText ])
 			withStatus: 1 "does not return" ].
+%
+doit
+	^ self produceStonesReport
 %

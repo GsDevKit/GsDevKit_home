@@ -2,12 +2,6 @@
 instvars
 	installedProducts
 %
-options
-{
-  SuperDoitCommandLineOption long: 'help' short: 'h'.
-	SuperDoitCommandLineOption long: 'debug'.
-}
-%
 usage
 -----
 USAGE $basename [--help | -h]
@@ -22,11 +16,6 @@ EXAMPLES
   $basename --help
   $basename
 -----
-%
-method
-getAndVerifyOptions
-	self getOpts: self optionSpecs.
-	self help ifTrue: [ ^ self usage ].
 %
 method
 produceProductsReport
@@ -75,12 +64,6 @@ gs_productsDirectory
 	^  ((System gemEnvironmentVariable: 'GS_HOME'), '/shared/downloads/products') asFileReference
 %
 doit
-	[
-		self getAndVerifyOptions == self noResult
-			ifTrue: [ ^ self noResult ].
-		self produceProductsReport.
-		^ self noResult
-	] on: Error do: [:ex |
-		self debug ifTrue: [ ex pass ].
-		self exit: ex messageText withStatus: 1 "does not return" ].
+	self produceProductsReport.
+	^ self noResult
 %

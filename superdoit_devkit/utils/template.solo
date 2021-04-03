@@ -1,11 +1,11 @@
 #!/usr/bin/env superdoit_solo
-options
-{
-  SuperDoitCommandLineOption long: 'help' short: 'h'.
-  SuperDoitCommandLineOption long: 'debug' short: 'D'.
-
-}
-%
+#options
+#{
+#	SuperDoitOptionalOptionWithNoArg long: 'optional' short: 'o'.
+#	SuperDoitOptionalOptionWithRequiredArg long: 'optional' short: 'o' default: 'blue'.
+#	SuperDoitRequiredOptionWithRequiredArg long: 'required' short: 'r'.
+#}
+#%
 usage
 -----
 USAGE $basename [--help | -h] [--debug | -D]
@@ -25,18 +25,10 @@ EXAMPLES
   $basename  
 -----
 %
-method
-getAndVerifyOptions
-		self getOpts: self optionSpecs.
-		self help ifTrue: [ ^ self usage ].
-%
 doit
-	[
-		self getAndVerifyOptions == self noResult
-			ifTrue: [ ^ self noResult ].
-		"write your code here"
-	] on: Error do: [:ex | 
-		self debug ifTrue: [ ex pass ].
-		self exit: ex messageText withStatus: 1 "does not return" ].
-	true
+	"write your code here"
+	"return value will be written in STON format to stdout. 
+		Return `self noResult` to suppress writing STON 
+		to stdout"
+	self noResult
 %

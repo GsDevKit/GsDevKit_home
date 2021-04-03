@@ -1,9 +1,4 @@
 #!/usr/bin/env superdoit_solo
-options
-{
-  SuperDoitCommandLineOption long: 'help' short: 'h'.
-  SuperDoitCommandLineOption long: 'debug' short: 'D'.
-}
 %
 usage
 -----
@@ -26,38 +21,27 @@ EXAMPLES
   $basename x 1 y 2 z 3
 -----
 %
-method
-getAndVerifyOptions
-		self getOpts: self optionSpecs.
-		self help ifTrue: [ ^ self usage ].
-%
 doit
-	[
-		| pairs command args stdout |
-		self getAndVerifyOptions == self noResult
-			ifTrue: [ ^ self noResult ].
-		pairs := self positionalArgs.
-		command := '$SUPERDOIT_DIR'  asFileReference / 'tests' / 'printEnvVars.solo'.
-		args :=  String new.
-		1 to: pairs size by: 2 do: [:index |
-			| envName |
-			envName := (pairs at: index).
-			args add: envName, ' '.
-			System 
-				gemEnvironmentVariable: envName
-				put: (pairs at: index + 1 ifAbsent: ['']) ].
-		stdout := GsHostProcess execute: command pathString, ' ', args.
-		self stdout 
-			nextPutAll: 'And the results are:'; lf;
-			nextPutAll: '  GsHostProcess values: '; lf;
-			nextPutAll: stdout; lf;
-			nextPutAll: '  current process values: '; lf.
-		1 to: pairs size by: 2 do: [:index |
-			| envName |
-			envName := (pairs at: index).
-			self logMessage: envName, '=', (System gemEnvironmentVariable: envName) printString ]. 		
-		self noResult
-	] on: Error do: [:ex | 
-		self debug ifTrue: [ ex pass ].
-		self exit: ex messageText withStatus: 1 "does not return" ].
+	| pairs command args stdout |
+	pairs := self positionalArgs.
+	command := '$SUPERDOIT_DIR'  asFileReference / 'tests' / 'printEnvVars.solo'.
+	args :=  String new.
+	1 to: pairs size by: 2 do: [:index |
+		| envName |
+		envName := (pairs at: index).
+		args add: envName, ' '.
+		System 
+			gemEnvironmentVariable: envName
+			put: (pairs at: index + 1 ifAbsent: ['']) ].
+	stdout := GsHostProcess execute: command pathString, ' ', args.
+	self stdout 
+		nextPutAll: 'And the results are:'; lf;
+		nextPutAll: '  GsHostProcess values: '; lf;
+		nextPutAll: stdout; lf;
+		nextPutAll: '  current process values: '; lf.
+	1 to: pairs size by: 2 do: [:index |
+		| envName |
+		envName := (pairs at: index).
+		self logMessage: envName, '=', (System gemEnvironmentVariable: envName) printString ]. 		
+	self noResult
 %

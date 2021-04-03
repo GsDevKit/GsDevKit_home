@@ -1,12 +1,10 @@
 #!/usr/bin/env superdoit_solo
 options
 {
-  SuperDoitCommandLineOption long: 'help' short: 'h'.
-  SuperDoitCommandLineOption long: 'debug' short: 'D'.
-  SuperDoitRequiredCommandLineOption long: 'addPackage'.
-  SuperDoitRequiredCommandLineOption long: 'componentName'.
-	SuperDoitRequiredCommandLineOption long: 'conditionalPath'.
-	SuperDoitRequiredCommandLineOption long: 'componentPath'.
+  SuperDoitRequiredOptionWithRequiredArg long: 'addPackage'.
+  SuperDoitRequiredOptionWithRequiredArg long: 'componentName'.
+	SuperDoitRequiredOptionWithRequiredArg long: 'conditionalPath'.
+	SuperDoitRequiredOptionWithRequiredArg long: 'componentPath'.
 }
 %
 usage
@@ -39,23 +37,6 @@ EXAMPLES
             --conditionPath=tests/gs3.[6-] componentPath=tests/gemstone36-
 -----
 %
-method
-getAndVerifyOptions
-		self getOpts: self optionSpecs.
-		self help ifTrue: [ ^ self usage ].
-true ifTrue: [ ^ self ].
-		self addPackage ifNil: [ self error: 'Missing required option --addPackage' ]. 
-		self componentName ifNil: [ self error: 'Missing required option --componentName' ]. 
-		self conditionalPath ifNil: [ self error: 'Missing required option --conditionalPath' ]. 
-		self componentPath ifNil: [ self error: 'Missing required option --componentPath' ]. 
-%
 doit
-	[
-		self getAndVerifyOptions == self noResult
-			ifTrue: [ ^ self noResult ].
-		self error: 'not yet implemented'.
-	] on: Error do: [:ex | 
-		self debug ifTrue: [ ex pass ].
-		self exit: ex messageText withStatus: 1 "does not return" ].
-	true
+	self error: 'not yet implemented'.
 %

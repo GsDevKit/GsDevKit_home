@@ -42,10 +42,10 @@ EXAMPLES
   $basename -h
   $basename --debug
   $basename -D
-  $basename  --import=file:$GS_HOME/superdoit_devkit/rowan/specs/SuperDoit.ston \
-             --importHome=file:$GS_HOME \
-             --export=file:$GS_HOME/shared/repos/superDoit/rowan/specs/SuperDoit.ston \
-             --exportHome=file:$GS_HOME/shared/repos/
+  $basename --export=file:$GS_HOME/superdoit_devkit/rowan/specs/SuperDoit.ston \
+            --exportHome=file:$GS_HOME \
+            --import=file:$GS_HOME/shared/repos/superDoit/rowan/specs/SuperDoit.ston \
+            --importHome=file:$GS_HOME/shared/repos/
 -----
 %
 method
@@ -55,7 +55,7 @@ readSpecFrom: specUrl
 method
 doImportExport
 	| attributes importSpec importProject exportSpec exportProject |
-	attributes :=  Rowan platformConditionalAttributes, {'3.6.0' asRwGemStoneVersionNumber . 'tode' . 'rowan'}.
+	attributes :=  Rowan platformConditionalAttributes, {'3.6.0' asRwGemStoneVersionNumber . 'tode' . 'rowan' . 'deprecated' }.
 	importSpec := self readSpecFrom: self import.
 	importProject := importSpec resolve
 		projectsHome: self importHome asFileReference;
