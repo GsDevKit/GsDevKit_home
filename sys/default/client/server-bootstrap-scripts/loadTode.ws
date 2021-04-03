@@ -10,9 +10,10 @@ GsUpgrader batchErrorHandlingDo: [
     show: '-----Install tODE using ', todeRepo.
   GsDeployer bulkMigrate: [ 
 true ifTrue: [
-	| wait |
+	| wait defaultHandlers |
 	Transcript cr; show: 'DEBUGGEM - ', (System gemVersionAt: 'processId') asString, ' ', System listenForDebugConnection asString.
 	wait := true.
+	defaultHandlers := AlmostOutOfMemory defaultHandlers.
 	[ wait ] whileTrue: [ (Delay forSeconds: 1) wait ]
 ].
     Metacello new
