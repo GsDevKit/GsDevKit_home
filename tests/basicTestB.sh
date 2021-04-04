@@ -22,7 +22,7 @@ stopAllStones
 startAllStones
 stopAllStones -b
 startAllStones -b
-deleteStone ${STONENAME2}
+#deleteStone ${STONENAME2}
 deleteStone ${STONENAME3}
 
 startStone -b ${STONENAME1}
