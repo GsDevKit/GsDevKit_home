@@ -10,7 +10,7 @@ GsUpgrader batchErrorHandlingDo: [
   Transcript
     cr;
     show: '-----Install tODE using ', todeRepo.
-false ifTrue: [ Transcript show: ((ClassOrganizer class compiledMethodAt: #_resetCachedOrganizer otherwise: nil)
+true ifTrue: [ Transcript show: 'ClassOrganizer class >> _resetCachedOrganizer is ', ((ClassOrganizer class compiledMethodAt: #_resetCachedOrganizer otherwise: nil)
 		ifNotNil: [ 'present' ]
 		ifNil: [ 'ABSENT' ]).
 ].
@@ -23,10 +23,10 @@ false ifTrue: [ Transcript show: ((ClassOrganizer class compiledMethodAt: #_rese
       load: 'GemStone Dev']
 				on: Error
 				do: [:ex |
-false ifTrue: [
+true ifTrue: [
 	| wait tmps key |
 Transcript cr; show: 'ERROR: ', ex description.
-Transcript show: ((ClassOrganizer class compiledMethodAt: #_resetCachedOrganizer otherwise: nil)
+Transcript show: 'ClassOrganizer class >> _resetCachedOrganizer is ', ((ClassOrganizer class compiledMethodAt: #_resetCachedOrganizer otherwise: nil)
 		ifNotNil: [ 'present' ]
 		ifNil: [ 'ABSENT' ]).
 	tmps := SessionTemps current.
