@@ -208,6 +208,9 @@ fi
 
 "$GS_HOME/bin/newExtent" $todeSnapshotArg $noRestartArg $snapshotFileFlag ${snapshotFileArg} $stoneName
 
+## start a statmon for debugging https://github.com/GsDevKit/GsDevKit_home/issues/310
+startStatmonitor ${stoneName}
+
 if [ "${noRestartArg}x" = "x" ] ; then
   "$GS_HOME/bin/startNetldi" $stoneName
   "${GS_HOME}/bin/devKitCommandLine" setupRuntimeSmalltalkCIStoneNew $stoneName $gemstoneUserId $gemstonePassword "${smalltalkCIConfigPath}"
