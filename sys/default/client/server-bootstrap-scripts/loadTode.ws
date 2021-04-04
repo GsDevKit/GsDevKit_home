@@ -8,9 +8,10 @@ GsUpgrader batchErrorHandlingDo: [
   Transcript
     cr;
     show: '-----Install tODE using ', todeRepo.
-Transcript show: ((ClassOrganizer class compiledMethodAt: #_resetCachedOrganizer otherwise: nil)
+false ifTrue: [ Transcript show: ((ClassOrganizer class compiledMethodAt: #_resetCachedOrganizer otherwise: nil)
 		ifNotNil: [ 'present' ]
 		ifNil: [ 'ABSENT' ]).
+].
   GsDeployer bulkMigrate: [ 
     [ Metacello new
       baseline: 'Tode';
@@ -20,7 +21,7 @@ Transcript show: ((ClassOrganizer class compiledMethodAt: #_resetCachedOrganizer
       load: 'GemStone Dev']
 				on: Error
 				do: [:ex |
-true ifTrue: [
+false ifTrue: [
 	| wait tmps key |
 Transcript cr; show: 'ERROR: ', ex description.
 Transcript show: ((ClassOrganizer class compiledMethodAt: #_resetCachedOrganizer otherwise: nil)
