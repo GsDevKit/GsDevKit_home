@@ -1,6 +1,8 @@
 "Fourth and final step in tODE load process: load tODE."
 
-Transcript cr; show: '---Step 4 of tODE bootstrap process: execute loadTode.ws'.
+Transcript cr; show: '---Step 4 of tODE bootstrap process: execute loadTode.ws';
+		cr;
+		show: '	Gem Process Id: ', System gemProcessId printString.
 
 GsUpgrader batchErrorHandlingDo: [
   | todeRepo |

@@ -3,7 +3,9 @@
 
   Transcript
     cr;
-    show: '---Step 1 of tODE bootstrap process: execute upgradeGlass.ws'.
+    show: '---Step 1 of tODE bootstrap process: execute upgradeGlass.ws';
+		cr;
+		show: '	Gem Process Id: ', System gemProcessId printString.
   [ 
   | monticelloDir gofer sysLocal |
   Transcript

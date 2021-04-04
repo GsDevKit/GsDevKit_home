@@ -3,7 +3,9 @@
 
 "Important Note --- the values of these env vars are as of the last time that the netldi was started"
 
-Transcript cr; show: '---Step 2 of tODE bootstrap process: execute loadMetacello.ws'.
+Transcript cr; show: '---Step 2 of tODE bootstrap process: execute loadMetacello.ws';
+		cr;
+		show: '	Gem Process Id: ', System gemProcessId printString.
 
 GsUpgrader batchErrorHandlingDo: [
   | metacelloRepo filetreeRepo greaseRepo pharoCompatRepo glass1Repo rbRepo stonRepo zincRepo zodiacRepo |

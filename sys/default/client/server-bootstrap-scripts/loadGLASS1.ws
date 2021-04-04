@@ -1,7 +1,9 @@
 "Third step in tODE load process: load GLASS1.
  Let GsUpgrader do the load. GsUpgrader package loaded during step 1 (upgradeGLASS.ws)."
 
-Transcript cr; show: '---Step 3 of tODE bootstrap process: execute loadGLASS1.ws'.
+Transcript cr; show: '---Step 3 of tODE bootstrap process: execute loadGLASS1.ws';
+		cr;
+		show: '	Gem Process Id: ', System gemProcessId printString.
 
 false ifTrue: [
 	Transcript cr; show: 'DEBUGGEM ', (System gemVersionAt: 'processId') asString, ' ', System listenForDebugConnection asString; cr.
