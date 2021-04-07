@@ -10,5 +10,5 @@
 	"name" : "SuperDoitOptionalOptionWithRequiredArg",
 	"pools" : [
 		 ],
-	"super" : "SuperDoitOptionWithArgument",
+	"super" : "SuperDoitAbstractOptionWithRequiredArgument",
 	"type" : "normal" }
