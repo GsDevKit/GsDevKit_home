@@ -1,5 +1,4 @@
 #!/usr/bin/env superdoit_solo
-%
 usage
 -----
 USAGE $basename [--help | -h] [--debug | -D] <env-var-name/value-pairs> ...
