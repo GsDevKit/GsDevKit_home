@@ -8,7 +8,7 @@ options
 	SuperDoitOptionalOptionWithNoArg long: 'conversion' short: 'C'.
 	SuperDoitOptionalOptionWithNoArg long: 'notranslogs' short: 'N'.
 	SuperDoitOptionalOptionWithNoArg long: 'restore' short: 'R'.
-	SuperDoitOptionalOptionWithRequiredArg long: 'wait' short: 'w' default: -1.
+	SuperDoitOptionalOptionWithRequiredArg long: 'wait' short: 'w' default: '-1'.
 }
 %
 usage
