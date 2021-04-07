@@ -1,0 +1,14 @@
+{
+	"category" : "SuperDoit-Deprecated",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "SuperDoitOptionalCommandLineOption",
+	"pools" : [
+		 ],
+	"super" : "SuperDoitCommandLineOptionWithArgument",
+	"type" : "normal" }
