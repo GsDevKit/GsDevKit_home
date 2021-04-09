@@ -9,6 +9,8 @@ set -e  # print commands and exit on error
 
 uname -a   #gather info for bug 44185
 
+unset GEMSTONE_NRS_ALL # see https://github.com/GsDevKit/GsDevKit_home/issues/316
+
 if [ "${STONENAME1}x" = "x" ] ; then
   export STONENAME1="travis1"
 fi
