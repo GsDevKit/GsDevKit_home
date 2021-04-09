@@ -1,0 +1,17 @@
+{
+	"category" : "SuperDoit-Option",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"NotSet",
+		"NoValue" ],
+	"commentStamp" : "",
+	"instvars" : [
+		"longName",
+		"shortName",
+		"value" ],
+	"name" : "SuperDoitAbstractOption",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

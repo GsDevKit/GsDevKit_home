@@ -2,12 +2,6 @@
 instvars
 	gsListResult
 %
-options
-{
-  SuperDoitCommandLineOption long: 'help' short: 'h'.
-	SuperDoitCommandLineOption long: 'debug'.
-}
-%
 usage
 -----
 USAGE $basename stone-name [snapshot-file] [mime-type]
@@ -24,11 +18,6 @@ EXAMPLES
   $basename myStone /opt/snapshots/mySnapshop.dbf
   $basename myStone /opt/snapshots/mySnapshot.dbf.gz x-gzip
 -----
-%
-method
-getAndVerifyOptions
-	self getOpts: self optionSpecs.
-	self help ifTrue: [ ^ self usage ].
 %
 method
 newExtent
@@ -97,16 +86,24 @@ method
 gsListResult
 	^ gsListResult ifNil: [ gsListResult := GsHostProcess execute: self gs_binDirectory, 'gslist -lc' ]
 %
+method
 doit
-	[
-		self getAndVerifyOptions == self noResult
-			ifTrue: [ ^ self noResult ].
-		^ self newExtent
-	] on: Error do: [:ex |
-		self debug ifTrue: [ ex pass ].
-		self
-			exit: ((ex respondsTo: #stderr)
-				ifTrue: [ ex stderr asString trimBoth ]
-				ifFalse: [ ex messageText ])
-			withStatus: 1 "does not return" ].
+	"override doit method, because ChildError does not exist in 3.6.0" 
+	[ 
+	self getAndVerifyOptions == self noResult
+		ifTrue: [ ^ self noResult ].
+	^ self theDoit
+	]
+		on: Error
+		do: [ :ex | 
+			((self respondsTo: #'debug') and: [ self debug ])
+				ifTrue: [ ex pass ].
+			self
+				exit: ((ex respondsTo: #stderr)
+					ifTrue: [ ex stderr asString trimBoth ]
+					ifFalse: [ ex messageText ])
+				withStatus: 1 "does not return" ].
+%
+doit
+	self newExtent
 %

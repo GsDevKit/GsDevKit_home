@@ -1,0 +1,14 @@
+{
+	"category" : "SuperDoit-Command",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "SuperDoitMethodCommand",
+	"pools" : [
+		 ],
+	"super" : "SuperDoitCommand",
+	"type" : "normal" }

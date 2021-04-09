@@ -1,12 +1,6 @@
 #!/usr/bin/env superdoit_solo
 instvars
 %
-options
-{
-	SuperDoitCommandLineOption long: 'help' short: 'h'.
-	SuperDoitCommandLineOption long: 'debug'.
-}
-%
 usage
 -----
 USAGE: restartnetldi [-h] <stone-name>
@@ -135,16 +129,12 @@ stoneName
 	^ self positionalArgs at: 1
 %
 method
-getAndVerifyOptions
-	self getOpts: self optionSpecs.
-	self help ifTrue: [ ^ self usage ].
-%
 doit
+	"override doit method, because ChildError does not exist in 3.6.0" 
 	[
 		self getAndVerifyOptions == self noResult
 			ifTrue: [ ^ self noResult ].
-		self restartNetldi.
-		^ self noResult
+		^ self theDoit
 	] on: Error do: [:ex |
 		self debug ifTrue: [ ex pass ].
 		self
@@ -152,4 +142,8 @@ doit
 				ifTrue: [ ex stderr asString trimBoth ]
 				ifFalse: [ ex messageText ])
 			withStatus: 1 "does not return" ].
+%
+doit
+		self restartNetldi.
+		^ self noResult
 %

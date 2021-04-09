@@ -1,0 +1,3 @@
+script info
+executionStoneName
+	^GsNetworkResourceString currentStoneName

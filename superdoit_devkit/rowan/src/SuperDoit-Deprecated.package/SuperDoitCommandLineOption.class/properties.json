@@ -1,0 +1,17 @@
+{
+	"category" : "SuperDoit-Deprecated",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"NotSet",
+		"NoValue" ],
+	"commentStamp" : "",
+	"instvars" : [
+		"longName",
+		"shortName",
+		"value" ],
+	"name" : "SuperDoitCommandLineOption",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

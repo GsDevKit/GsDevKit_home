@@ -9,8 +9,8 @@
 
 set -e
 
-export superdoitDir="`dirname $0`/.."
-gemstoneDir="$superdoitDir/gemstone"
+export SUPERDOIT_DIR="`dirname $0`/.."
+gemstoneDir="$SUPERDOIT_DIR/gemstone"
 
 if [ "$GS_HOME"x = "x" ] ; then
 	>&2 echo "The env var \$GS_HOME is expected to be defined when running GsDevKit_home scripts"
@@ -46,20 +46,20 @@ if [ "$stoneName"x = "x" ] ; then
 	# expect current directory to be a stone directory
 	currentDir=`pwd`
 	stoneName="`basename $currentDir`"
-	export stoneDir=$GS_HOME/server/stones/$stoneName
-	if [ ! -d "$stoneDir" ] ; then
+	export SUPERDOIT_STONE_DIR=$GS_HOME/server/stones/$stoneName
+	if [ ! -d "$SUPERDOIT_STONE_DIR" ] ; then
 		>&2 echo "No stone name specified on the command line AND the current directory"
-		>&2 echo "$stoneDir is NOT a \$GS_HOME stone directory."
+		>&2 echo "$SUPERDOIT_STONE_DIR is NOT a \$GS_HOME stone directory."
 		>&2 echo "---"
 		>&2 echo "run the script in a proper \$GS_HOME stone directory or specify the stone-name:"
 		>&2 echo "  Usage: script [ <script-args> ] [ -- [ <stone-name> [ <topaz-command-line-args> ] ] ]"
 		exit 1
 	fi
 else
-	export stoneDir=$GS_HOME/server/stones/$stoneName
-	if [ ! -d "$stoneDir" ] ; then
+	export SUPERDOIT_STONE_DIR=$GS_HOME/server/stones/$stoneName
+	if [ ! -d "$SUPERDOIT_STONE_DIR" ] ; then
 		>&2 echo "The stone name $stoneName is not the name of an existing stone:"
-		>&2 echo "	$stoneDir is NOT a valid \$GS_HOME/server/stones stone directory."
+		>&2 echo "	$SUPERDOIT_STONE_DIR is NOT a valid \$GS_HOME/server/stones stone directory."
 		>&2 echo "---"
 		>&2 echo "run the script in a proper \$GS_HOME stone directory or specify the stone-name:"
 		>&2 echo "  Usage: script [ <script-args> ] [ -- [ <stone-name> [ <topaz-command-line-args> ] ] ]"
@@ -79,12 +79,12 @@ if [ "$skip"x = "x" ] ; then
 fi
 
 # set up GsDevKit_home stone environment
-pushd "$stoneDir" >& /dev/null
-  source "$stoneDir/stone.env"
+pushd "$SUPERDOIT_STONE_DIR" >& /dev/null
+  source "$SUPERDOIT_STONE_DIR/stone.env"
 popd >& /dev/null
 
 if [ "$GEMSTONE"x = "x" ] ; then
-	export GEMSTONE="$stoneDir/product"
+	export GEMSTONE="$SUPERDOIT_STONE_DIR/product"
 fi
 
 if [ "$ROWAN_PROJECTS_HOME"x = "x" ] ; then
@@ -92,6 +92,6 @@ if [ "$ROWAN_PROJECTS_HOME"x = "x" ] ; then
 fi
 
 $GEMSTONE/bin/topaz $defaultTopazArgs $topazArgs \
-	-I "$stoneDir/.topazini" \
+	-I "$SUPERDOIT_STONE_DIR/.topazini" \
 	-q \
 	-S $gemstoneDir/superdoit.tpz -- $scriptFile -- $scriptArgs

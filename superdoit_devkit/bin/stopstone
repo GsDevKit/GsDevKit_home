@@ -4,9 +4,7 @@ instvars
 %
 options
 {
-	SuperDoitCommandLineOption long: 'help' short: 'h'.
 	SuperDoitCommandLineOption long: 'both' short: 'b'.
-	SuperDoitCommandLineOption long: 'debug'.
 }
 %
 usage
@@ -107,16 +105,11 @@ topaziniDict
 	^ dict
 %
 method
-getAndVerifyOptions
-	self getOpts: self optionSpecs.
-	self help ifTrue: [ ^ self usage ].
-%
 doit
+	"override doit method, because ChildError does not exist in 3.6.0"
 	[
 		self getAndVerifyOptions == self noResult
 			ifTrue: [ ^ self noResult ].
-		self stopStone.
-		^ self noResult
 	] on: Error do: [:ex |
 		self debug ifTrue: [ ex pass ].
 		self
@@ -124,4 +117,8 @@ doit
 				ifTrue: [ ex stderr asString trimBoth ]
 				ifFalse: [ ex messageText ])
 			withStatus: 1 "does not return" ].
+%
+doit
+	self stopStone.
+	^ self noResult
 %

@@ -2,8 +2,8 @@ login
 run
 "install superDoit support code in image"
 (Rowan  
-	projectFromUrl: 'file:$superdoitDir/rowan/specs/SuperDoit_devkit.ston'
-	diskUrl: 'file:$superdoitDir')
+	projectFromUrl: 'file:$SUPERDOIT_DIR/rowan/specs/SuperDoit_devkit.ston'
+	diskUrl: 'file:$SUPERDOIT_DIR')
 		load.
 %
 run

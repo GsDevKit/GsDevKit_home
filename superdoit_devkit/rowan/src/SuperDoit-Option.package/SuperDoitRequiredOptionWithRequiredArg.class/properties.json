@@ -1,0 +1,14 @@
+{
+	"category" : "SuperDoit-Option",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "SuperDoitRequiredOptionWithRequiredArg",
+	"pools" : [
+		 ],
+	"super" : "SuperDoitOptionalOptionWithRequiredArg",
+	"type" : "normal" }

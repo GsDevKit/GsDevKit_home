@@ -1,12 +1,10 @@
 #!/usr/bin/env superdoit_solo
 options
 {
-  SuperDoitCommandLineOption long: 'help' short: 'h'.
-  SuperDoitCommandLineOption long: 'debug' short: 'D'.
-  SuperDoitRequiredCommandLineOption long: 'import'.
-  SuperDoitRequiredCommandLineOption long: 'importHome' default: '$ROWAN_PROJECTS_HOME'.
-  SuperDoitRequiredCommandLineOption long: 'export'.
-  SuperDoitRequiredCommandLineOption long: 'exportHome' default: '$ROWAN_PROJECTS_HOME'.}
+  SuperDoitRequiredOptionWithRequiredArg long: 'import'.
+  SuperDoitOptionalOptionWithRequiredArg long: 'importHome' default: '$ROWAN_PROJECTS_HOME'.
+  SuperDoitRequiredOptionWithRequiredArg long: 'export'.
+  SuperDoitOptionalOptionWithRequiredArg long: 'exportHome' default: '$ROWAN_PROJECTS_HOME'.}
 %
 usage
 -----
@@ -44,18 +42,11 @@ EXAMPLES
   $basename -h
   $basename --debug
   $basename -D
-  $basename  --import=file:$GS_HOME/superdoit_devkit/rowan/specs/SuperDoit.ston \
-             --importHome=file:$GS_HOME \
-             --export=file:$GS_HOME/shared/repos/superDoit/rowan/specs/SuperDoit.ston \
-             --exportHome=file:$GS_HOME/shared/repos/
+  $basename --export=file:$GS_HOME/superdoit_devkit/rowan/specs/SuperDoit.ston \
+            --exportHome=file:$GS_HOME \
+            --import=file:$GS_HOME/shared/repos/superDoit/rowan/specs/SuperDoit.ston \
+            --importHome=file:$GS_HOME/shared/repos/
 -----
-%
-method
-getAndVerifyOptions
-		self getOpts: self optionSpecs.
-		self help ifTrue: [ ^ self usage ].
-		self import ifNil: [ self error: 'Missing required option --import' ]. 
-		self export ifNil: [ self error: 'Missing required option --export' ]. 
 %
 method
 readSpecFrom: specUrl
@@ -64,7 +55,7 @@ readSpecFrom: specUrl
 method
 doImportExport
 	| attributes importSpec importProject exportSpec exportProject |
-	attributes :=  Rowan platformConditionalAttributes, {'3.6.0' asRwGemStoneVersionNumber . 'tode' . 'rowan'}.
+	attributes :=  Rowan platformConditionalAttributes, {'3.6.0' asRwGemStoneVersionNumber . 'tode' . 'rowan' . 'deprecated' }.
 	importSpec := self readSpecFrom: self import.
 	importProject := importSpec resolve
 		projectsHome: self importHome asFileReference;
@@ -93,12 +84,6 @@ doImportExport
 		yourself
 %
 doit
-	[
-		self getAndVerifyOptions == self noResult
-			ifTrue: [ ^ self noResult ].
-		self doImportExport.
-	] on: Error do: [:ex | 
-		self debug ifTrue: [ ex pass ].
-		self exit: ex messageText withStatus: 1 "does not return" ].
+	self doImportExport.
 	true
 %
