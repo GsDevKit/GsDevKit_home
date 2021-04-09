@@ -1,7 +1,7 @@
-exporting
+ston
 excludedInstVarNames
   | excluded |
-  excluded := Set new.
+  excluded := super excludedInstVarNames , #(#'registry').
   excluded add: #'excludeNetLDIPort'.
   self netLDIPortRange ifNil: [ excluded add: #'netLDIPortRange' ].
   self excludeNetLDIPort
@@ -20,5 +20,4 @@ excludedInstVarNames
   self snapshotDirectory isEmpty
     ifTrue: [ excluded add: #'snapshotDirectory' ].
   environmentId ifNil: [ excluded add: #'environmentId' ].
-  todeUserId ifNil: [ excluded add: #'todeUserId' ].
   ^ excluded

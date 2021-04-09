@@ -6,9 +6,10 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		 ],
+		"stonePath",
+		"context" ],
 	"name" : "GsDevKitStoneRegistration",
 	"pools" : [
 		 ],
-	"super" : "GsDevKitAbstractPathRegistration",
+	"super" : "GsDevKitAbstractRegistration",
 	"type" : "normal" }

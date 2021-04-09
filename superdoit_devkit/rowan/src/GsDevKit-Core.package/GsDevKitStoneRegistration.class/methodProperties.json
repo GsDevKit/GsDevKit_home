@@ -2,4 +2,10 @@
 	"class" : {
 		 },
 	"instance" : {
-		 } }
+		"context" : "jupiter 04/04/2021 23:43",
+		"defaultSourcePath" : "jupiter 04/08/2021 12:51",
+		"defaultStonePath" : "jupiter 04/08/2021 12:40",
+		"excludedInstVarNames" : "jupiter 04/07/2021 23:03",
+		"reifyContext" : "jupiter 04/04/2021 23:45",
+		"stonePath" : "jupiter 04/07/2021 23:17",
+		"stonePath:" : "jupiter 04/08/2021 15:10" } }

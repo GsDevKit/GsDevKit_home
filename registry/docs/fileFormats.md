@@ -21,3 +21,12 @@ The registry file is located in `$GS_HOME/registry/registry.ston`
 The GsDevKitStoneContext class is part of the GsDevKit-Core package that is available to superdoit scripts.
 
 The stone.context file is located in the root of your stone directory..
+
+```
+GsDevKitStoneContext {
+  #registryName : 'myStoneName',
+  #stoneName : 'myStoneName',
+  #gsVers : '3.6.0'
+(more to come)
+}
+```

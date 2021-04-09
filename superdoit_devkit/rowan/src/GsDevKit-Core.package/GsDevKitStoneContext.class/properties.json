@@ -30,5 +30,5 @@
 	"name" : "GsDevKitStoneContext",
 	"pools" : [
 		 ],
-	"super" : "GsDevKitAbstractObject",
+	"super" : "GsDevKitSton",
 	"type" : "normal" }

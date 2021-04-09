@@ -1,0 +1,14 @@
+{
+	"category" : "GsDevKit-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "jupiter 04/07/2021 21:11",
+	"instvars" : [
+		 ],
+	"name" : "GsDevKitShellEnvironment",
+	"pools" : [
+		 ],
+	"super" : "GsDevKitSerializable",
+	"type" : "normal" }

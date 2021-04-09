@@ -3,14 +3,15 @@
 	"classinstvars" : [
 		 ],
 	"classvars" : [
-		 ],
+		"registries" ],
 	"commentStamp" : "",
 	"instvars" : [
+		"gsDevKitRoot",
 		"sourceRepos",
 		"stones",
 		"groups" ],
 	"name" : "GsDevKitRegistry",
 	"pools" : [
 		 ],
-	"super" : "GsDevKitAbstractObject",
+	"super" : "GsDevKitSton",
 	"type" : "normal" }
