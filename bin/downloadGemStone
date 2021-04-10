@@ -28,13 +28,13 @@ OPTIONS
   -h
      display help
   -d <directory-name>
-     Download the GemStone product zipfile from the given <directory-name> on 
+     Download the GemStone product zipfile from the given <directory-name> on
      the ftp site, instead of the default location.
   -f
      If a product download already exists in the \$GS_HOME/shared/downloads/products
      directory, delete the exising download and replace with the freshly downloaded
-     product tree. NOTE that any stones created with a non-standard release must be 
-     recreated as upgrades from the non-standard version to a release version is not 
+     product tree. NOTE that any stones created with a non-standard release must be
+     recreated as upgrades from the non-standard version to a release version is not
      supported.
 
 EXAMPLES
@@ -60,14 +60,14 @@ shift $(($OPTIND - 1))
 
 if [ "$1x" = "x" ] ; then
   usage; exit_1_banner "Required positional argument missing"
-fi 
+fi
 vers="$1"
 if [ "${GS_HOME}x" = "x" ] ; then
   exit_1_banner "the GS_HOME environment variable needs to be defined"
 fi
 source "${GS_HOME}/bin/defGsDevKit.env"
 
-if [ "${alternateDir}x" = "x" ] ; then 
+if [ "${alternateDir}x" = "x" ] ; then
   bucket=$vers
   echo "Downloading GemStone/S $vers"
 else
@@ -86,8 +86,16 @@ case "$PLATFORM" in
     Darwin-i386)
       dlvers="GemStone64Bit${bucket}-i386.Darwin"
       gsvers="GemStone64Bit${vers}-i386.Darwin"
-      if  [ "$vers" \> "3.5.2"  ] ;  then 
+      if  [ "$vers" \> "3.5.2"  ] ;  then
       	dl_format=dmg
+      fi
+      ;;
+    Darwin-arm64)
+      dlvers="GemStone64Bit${bucket}-arm64.Darwin"
+      gsvers="GemStone64Bit${vers}-arm64.Darwin"
+      dl_format=dmg
+      if  [ "$vers" \< "3.6.1"  ] ;  then
+      	exit_1_banner "Apple M1 support not available for versions < 3.6.1"
       fi
       ;;
     Linux-x86_64)
@@ -96,7 +104,7 @@ case "$PLATFORM" in
       gsvers="GemStone64Bit${vers}-x86_64.Linux"
       ;;
     MSYS_NT*|MINGW32_NT*|MINGW64_NT*)
-      if  [ "$vers" \< "3.3.0"  ] ;  then 
+      if  [ "$vers" \< "3.3.0"  ] ;  then
           gsvers="GemBuilderC${vers}-x86.Windows_NT"
           dlvers="$gsvers"
       else
@@ -170,10 +178,17 @@ pushd "$GS_SHARED_DOWNLOADS/zip" >& /dev/null
 		  fi
 		  ;;
       dmg)
+      	OSVERSION="`sw_vers -productVersion`"
+     	MAJOR="`echo $OSVERSION | cut -f1 -d.`"
+     	MINOR="`echo $OSVERSION | cut -f2 -d.`"
+     	xpath_args="-e"
+     	if [[ $MAJOR -lt 11 ]] ; then
+          xpath_args=""
+    	fi
       	# This will fail is there is more than one mountable volume in the dmg
       	attach_result=`hdiutil attach -plist $dl_gss_file`
-      	attach_device=`echo $attach_result | xpath "//dict/array/dict[true]/key[.='dev-entry']/following-sibling::string[1]/text()" 2>/dev/null`
-      	attach_path=`echo $attach_result | xpath "//dict/array/dict[true]/key[.='mount-point']/following-sibling::string[1]/text()" 2>/dev/null`
+      	attach_device=`echo $attach_result | xpath $xpath_args "//dict/array/dict[true]/key[.='dev-entry']/following-sibling::string[1]/text()" 2>/dev/null`
+      	attach_path=`echo $attach_result | xpath $xpath_args "//dict/array/dict[true]/key[.='mount-point']/following-sibling::string[1]/text()" 2>/dev/null`
       	cp -R "${attach_path}/${gsvers}" "$GS_SHARED_DOWNLOADS/products"
       	hdiutil detach ${attach_device}
       	;;
@@ -250,7 +265,7 @@ if [ "${GS_TRAVIS}x" != "x" ] ; then
       fi
       ;;
    *)
-     # no need for special handling 
+     # no need for special handling
      ;;
    esac
 fi
