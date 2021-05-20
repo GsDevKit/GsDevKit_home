@@ -18,6 +18,7 @@ pushd superdoit_devkit/gemstone/gs
 	chmod -w extent0.solo.dbf
 	ln -s $GS_HOME/shared/downloads/products/GemStone64Bit3.6.0-* product
 popd
-test.doit -h
+versionReport.solo -h
+versionReport.solo
 installServerClient
 ```
