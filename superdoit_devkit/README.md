@@ -1,10 +1,3 @@
-### partial copy of https://github.com/dalehenrich/superDoit
-Use the ??? script to update this copy from the master superDoit project.
-
-A copy of the project is made to isolate the superdoit code from the
-superDoit project to allow for imcompatible changes to be made without 
-affecting operation of GsDevKit_home scripts
-
 ### installation
 ```
 git clone https://github.com/GsDevKit/GsDevKit_home.git
