@@ -14,7 +14,7 @@ jobs:
       GS_VERSION: ${{ matrix.gs_version }}
       TEST: ${{ matrix.test }}
     #continue-on-error: ${{ matrix.allowfailure }}
-    name: ${{ matrix.gs_version matrix.test }}
+    name: ${{ matrix.gs_version }} - ${{ matrix.test }}
     steps:
       - uses: actions/checkout@v2
       - name: Install Chrome
