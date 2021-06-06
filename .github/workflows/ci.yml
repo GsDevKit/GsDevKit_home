@@ -9,8 +9,8 @@ jobs:
       fail-fast: false
       matrix:
         gs_version: [ 2.4.8, 3.1.0.6, 3.2.17, 3.3.9, 3.4.5, 3.5.5, 3.6.1 ]
-        # test: [ UnitTests, BasicA, BasicB, Seaside3, SmalltalkCI ]
-        test: [ UnitTests ]
+        test: [ UnitTests, BasicA, BasicB, Seaside3, SmalltalkCI ]
+        allowfailure: [ false ]
         exclude:
           - gs_version: 3.1.0.6
             test: Seaside3
@@ -23,24 +23,115 @@ jobs:
           - gs_version: 3.3.9
             test: SmalltalkCI
         include:
+          # allow failures
+          - gs_version: 2.4.8
+            test: UnitTests
+            allowfailure: true
+          - gs_version: 2.4.8
+            test: BasicB
+            allowfailure: true
+          - gs_version: 3.2.17
+            test: UnitTests
+            allowfailure: true
+          # upgrade tests
           - gs_version: 3.4.5
             upgrade_from: 3.3.9
             test: Upgrade_unittest
           - gs_version: 3.5.1
             upgrade_from: 3.3.9
             test: Upgrade_unittest
+          - gs_version: 3.1.0.6
+            upgrade_from: 2.4.4.1
+            test: Upgrade_unittest
+          - gs_version: 3.2.17
+            upgrade_from: 3.2.9
+            test: Upgrade_unittest
+          - gs_version: 3.4.5
+            upgrade_from: 3.1.0.6
+            test: Upgrade_unittest
+          - gs_version: 3.3.9
+            upgrade_from: 3.2.17
+            test: Upgrade_unittest
+          - gs_version: 3.4.5
+            upgrade_from: 3.3.3
+            test: Upgrade_unittest
+          - gs_version: 3.5.5
+            upgrade_from: 3.4.5
+            test: Upgrade_unittest
+          - gs_version: 3.5.5
+            upgrade_from: 3.2.17
+            test: Upgrade_unittest
+          - gs_version: 3.6.1
+            upgrade_from: 3.3.9
+            test: Upgrade_unittest
+          - gs_version: 3.6.1
+            upgrade_from: 3.4.5
+            test: Upgrade_unittest
+          - gs_version: 3.6.1
+            upgrade_from: 3.5.0
+            test: Upgrade_unittest
+          - gs_version: 3.6.1
+            upgrade_from: 3.4.5
+            test: Upgrade_User
+          - gs_version: 3.6.1
+            upgrade_from: 3.3.9
+            test: Upgrade_71
+          - gs_version: 3.6.1
+            upgrade_from: 3.3.9
+            test: Upgrade_TOC
+          # specific tests?
           - gs_version: 3.3.4.3
             test: Error
           - gs_version: 3.4.5
             test: Install
-
+          - gs_version: 3.5.5
+            test: Upgrade_71
+          # clients
+          - gs_version: 3.3.9
+            test: Clients
+          - gs_version: 3.4.5
+            test: Clients
+          - gs_version: 3.3.9
+            test: Client
+            client: Pharo3.0
+          - gs_version: 3.3.9
+            test: Client
+            client: Pharo6.1
+          - gs_version: 3.4.5
+            test: Client
+            client: Pharo3.0    
+          - gs_version: 3.4.5
+            test: Client
+            client: Pharo6.1
+          - gs_version: 3.5.5
+            test: Client
+            client: Pharo3.0    
+          - gs_version: 3.5.5
+            test: Client
+            client: Pharo6.1
+          - gs_version: 3.6.1
+            test: Client
+            client: Pharo3.0
+          - gs_version: 3.6.1
+            test: Client
+            client: Pharo5.0
+          - gs_version: 3.6.1
+            test: Client
+            client: Pharo6.0
+          - gs_version: 3.6.1
+            test: Client
+            client: Pharo6.1
+          - gs_version: 3.6.1
+            test: Client
+            client: Pharo7.0
           
     env:
       GS_VERSION: ${{ matrix.gs_version }}
       TEST: ${{ matrix.test }}
       UPGRADE_FROM: ${{ matrix.upgrade_from }}
-    #continue-on-error: ${{ matrix.allowfailure }}
-    name: ${{ matrix.gs_version }} - ${{ matrix.test }} - ${{ matrix.upgrade_from }}
+      Client: ${{ matrix.client }}
+    continue-on-error: ${{ matrix.allowfailure }}
+    name: ${{ matrix.gs_version }} - ${{ matrix.test }} - ${{ matrix.upgrade_from }} - ${{ matrix.client }}
     steps:
       - uses: actions/checkout@v2
       - name: Install Chrome
