@@ -8,8 +8,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        gs_version: [ 3.1.0.6, 3.2.17, 3.3.9, 3.4.5, 3.5.5, 3.6.1 ]
-        test: [ UnitTests, BasicA, BasicB, Seaside3, SmalltalkCI ]
+        gs_version: [ 2.4.8, 3.1.0.6, 3.2.17, 3.3.9, 3.4.5, 3.5.5, 3.6.1 ]
+        # test: [ UnitTests, BasicA, BasicB, Seaside3, SmalltalkCI ]
+        test: [ UnitTests ]
+        exclude:
+          - gs_version: 3.1.0.6
+            test: Seaside3
+          - gs_version: 2.4.8
+            test: Seaside3
+          - gs_version: 3.1.0.6
+            test: SmalltalkCI
+          - gs_version: 3.2.17
+            test: SmalltalkCI
+          - gs_version: 3.3.9
+            test: SmalltalkCI
         include:
           - gs_version: 3.4.5
             upgrade_from: 3.3.9
@@ -21,21 +33,14 @@ jobs:
             test: Error
           - gs_version: 3.4.5
             test: Install
-        exclude:
-          - gs_version: 3.1.0.6
-            test: Seaside3
-          - gs_version: 3.1.0.6
-            test: SmalltalkCI
-          - gs_version: 3.2.17
-            test: SmalltalkCI
-          - gs_version: 3.3.9
-            test: SmalltalkCI
+
           
     env:
       GS_VERSION: ${{ matrix.gs_version }}
       TEST: ${{ matrix.test }}
+      UPGRADE_FROM: ${{ matrix.upgrade_from }}
     #continue-on-error: ${{ matrix.allowfailure }}
-    name: ${{ matrix.gs_version }} - ${{ matrix.test }}
+    name: ${{ matrix.gs_version }} - ${{ matrix.test }} - ${{ matrix.upgrade_from }}
     steps:
       - uses: actions/checkout@v2
       - name: Install Chrome
