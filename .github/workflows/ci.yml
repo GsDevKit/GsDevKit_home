@@ -10,11 +10,27 @@ jobs:
       matrix:
         gs_version: [ 3.1.0.6, 3.2.17, 3.3.9, 3.4.5, 3.5.5, 3.6.1 ]
         test: [ UnitTests, BasicA, BasicB, Seaside3, SmalltalkCI ]
+        include:
+          - gs_version: 3.4.5
+            upgrade_from: 3.3.9
+            test: Upgrade_unittest
+          - gs_version: 3.5.1
+            upgrade_from: 3.3.9
+            test: Upgrade_unittest
+          - gs_version: 3.3.4.3
+            test: Error
+          - gs_version: 3.4.5
+            test: Install
         exclude:
           - gs_version: 3.1.0.6
             test: Seaside3
-          - gs_version: [ 3.1.0.6, 3.2.17, 3.3.9 ]
+          - gs_version: 3.1.0.6
             test: SmalltalkCI
+          - gs_version: 3.2.17
+            test: SmalltalkCI
+          - gs_version: 3.3.9
+            test: SmalltalkCI
+          
     env:
       GS_VERSION: ${{ matrix.gs_version }}
       TEST: ${{ matrix.test }}
@@ -27,7 +43,6 @@ jobs:
           sudo apt install google-chrome-stable
       - name: Run tests
         run: |
-          sudo hostname travis.dev
           export GS_HOME="$(pwd)"
           export PATH=$GS_HOME/bin:$PATH
           export GS_TRAVIS=true
