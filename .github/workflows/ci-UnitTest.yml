@@ -1,0 +1,50 @@
+name: smalltalkCI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    strategy:
+      fail-fast: false
+      matrix:
+        gs_version: [ 2.4.8, 3.1.0.6, 3.2.17, 3.3.9, 3.4.5, 3.5.5, 3.6.1 ]
+        test: [ UnitTests, BasicA, BasicB ]
+        allowfailure: [ false ]
+        include:
+          # allow failures
+          - gs_version: 2.4.8
+            test: UnitTests
+            allowfailure: true
+          - gs_version: 2.4.8
+            test: BasicB
+            allowfailure: true
+          - gs_version: 3.2.17
+            test: UnitTests
+            allowfailure: true
+          # specific tests
+          - gs_version: 3.3.4.3
+            test: Error
+            allowfailure: false
+          - gs_version: 3.4.5
+            test: Install
+            allowfailure: false
+          - gs_version: 3.5.5
+            test: Upgrade_71
+            allowfailure: false
+    env:
+      GS_VERSION: ${{ matrix.gs_version }}
+      TEST: ${{ matrix.test }}
+    continue-on-error: ${{ matrix.allowfailure }}
+    name: ${{ matrix.gs_version }} - ${{ matrix.test }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run tests
+        run: |
+          export GS_HOME="$(pwd)"
+          export PATH=$GS_HOME/bin:$PATH
+          export GS_TRAVIS=true
+          hostname
+          cat /etc/hosts
+          $GITHUB_WORKSPACE/tests/testTravisCI.sh
+        shell: bash

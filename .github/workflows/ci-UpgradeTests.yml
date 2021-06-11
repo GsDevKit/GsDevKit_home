@@ -1,0 +1,67 @@
+name: smalltalkCI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    strategy:
+      fail-fast: false
+      matrix:
+        gs_version: [ 2.4.8, 3.1.0.6, 3.2.17, 3.3.9, 3.4.5, 3.5.5, 3.6.1 ]
+        allowfailure: [ false ]
+        test: [ Upgrade_unittest ]
+        include:
+          # specify upgrade_from
+          - gs_version: 3.4.5
+            upgrade_from: 3.3.9
+          - gs_version: 3.5.1
+            upgrade_from: 3.3.9
+          - gs_version: 3.1.0.6
+            upgrade_from: 2.4.4.1
+          - gs_version: 3.2.17
+            upgrade_from: 3.2.9
+          - gs_version: 3.4.5
+            upgrade_from: 3.1.0.6
+          - gs_version: 3.3.9
+            upgrade_from: 3.2.17
+          - gs_version: 3.4.5
+            upgrade_from: 3.3.3
+          - gs_version: 3.5.5
+            upgrade_from: 3.4.5
+          - gs_version: 3.5.5
+            upgrade_from: 3.2.17
+          - gs_version: 3.6.1
+            upgrade_from: 3.3.9
+          - gs_version: 3.6.1
+            upgrade_from: 3.4.5
+          - gs_version: 3.6.1
+            upgrade_from: 3.5.0
+          # additional upgrade tests
+          - gs_version: 3.6.1
+            upgrade_from: 3.4.5
+            test: Upgrade_User
+          - gs_version: 3.6.1
+            upgrade_from: 3.3.9
+            test: Upgrade_71
+          - gs_version: 3.6.1
+            upgrade_from: 3.3.9
+            test: Upgrade_TOC
+
+    env:
+      GS_VERSION: ${{ matrix.gs_version }}
+      TEST: ${{ matrix.test }}
+      UPGRADE_FROM: ${{ matrix.upgrade_from }}
+    continue-on-error: ${{ matrix.allowfailure }}
+    name: ${{ matrix.gs_version }} - ${{ matrix.test }} - ${{ matrix.upgrade_from }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run tests
+        run: |
+          export GS_HOME="$(pwd)"
+          export PATH=$GS_HOME/bin:$PATH
+          export GS_TRAVIS=true
+          hostname
+          cat /etc/hosts
+          $GITHUB_WORKSPACE/tests/testTravisCI.sh
+        shell: bash
