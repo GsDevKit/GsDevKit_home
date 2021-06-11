@@ -1,4 +1,4 @@
-name: smalltalkCI
+name: SmalltalkCI Tests
 
 on: [push, pull_request]
 
@@ -9,6 +9,7 @@ jobs:
       fail-fast: false
       matrix:
         gs_version: [ 2.4.8, 3.1.0.6, 3.2.17, 3.3.9, 3.4.5, 3.5.5, 3.6.1 ]
+        test: [ SmalltalkCI ]
         allowfailure: [ false ]
         exclude:
           - gs_version: 3.1.0.6
@@ -19,9 +20,9 @@ jobs:
             test: SmalltalkCI
     env:
       GS_VERSION: ${{ matrix.gs_version }}
-      TEST: SmalltalkCI
+      TEST: matrix.text
     continue-on-error: ${{ matrix.allowfailure }}
-    name: ${{ matrix.gs_version }} - SmalltalkCI
+    name: ${{ matrix.gs_version }} - ${{ matrix.test }}
     steps:
       - uses: actions/checkout@v2
       - name: Run tests

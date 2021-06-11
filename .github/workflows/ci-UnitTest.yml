@@ -1,4 +1,4 @@
-name: smalltalkCI
+name: Unit Tests
 
 on: [push, pull_request]
 

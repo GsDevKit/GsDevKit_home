@@ -1,4 +1,4 @@
-name: smalltalkCI
+name: Seaside3 Tests
 
 on: [push, pull_request]
 

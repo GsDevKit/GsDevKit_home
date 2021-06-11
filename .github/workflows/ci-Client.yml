@@ -1,4 +1,4 @@
-name: smalltalkCI
+name: Client Tests
 
 on: [push, pull_request]
 
@@ -15,6 +15,7 @@ jobs:
           - gs_version: 3.3.9
             test: Client
             client: Pharo3.0
+            allowfailure: false
           - gs_version: 3.3.9
             test: Client
             client: Pharo6.1

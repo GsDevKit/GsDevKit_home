@@ -1,4 +1,4 @@
-name: smalltalkCI
+name: Upgrade Tests
 
 on: [push, pull_request]
 
@@ -15,39 +15,53 @@ jobs:
           # specify upgrade_from
           - gs_version: 3.4.5
             upgrade_from: 3.3.9
+            allowfailure: false
           - gs_version: 3.5.1
             upgrade_from: 3.3.9
+            allowfailure: false
           - gs_version: 3.1.0.6
             upgrade_from: 2.4.4.1
+            allowfailure: false
           - gs_version: 3.2.17
             upgrade_from: 3.2.9
+            allowfailure: false
           - gs_version: 3.4.5
             upgrade_from: 3.1.0.6
+            allowfailure: false
           - gs_version: 3.3.9
             upgrade_from: 3.2.17
+            allowfailure: false
           - gs_version: 3.4.5
             upgrade_from: 3.3.3
+            allowfailure: false
           - gs_version: 3.5.5
             upgrade_from: 3.4.5
+            allowfailure: false
           - gs_version: 3.5.5
             upgrade_from: 3.2.17
+            allowfailure: false
           - gs_version: 3.6.1
             upgrade_from: 3.3.9
+            allowfailure: false
           - gs_version: 3.6.1
             upgrade_from: 3.4.5
+            allowfailure: false
           - gs_version: 3.6.1
             upgrade_from: 3.5.0
+            allowfailure: false
           # additional upgrade tests
           - gs_version: 3.6.1
             upgrade_from: 3.4.5
             test: Upgrade_User
+            allowfailure: false
           - gs_version: 3.6.1
             upgrade_from: 3.3.9
             test: Upgrade_71
+            allowfailure: false
           - gs_version: 3.6.1
             upgrade_from: 3.3.9
             test: Upgrade_TOC
-
+            allowfailure: false
     env:
       GS_VERSION: ${{ matrix.gs_version }}
       TEST: ${{ matrix.test }}
