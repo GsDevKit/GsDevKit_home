@@ -65,3 +65,6 @@ jobs:
           cat /etc/hosts
           $GITHUB_WORKSPACE/tests/testTravisCI.sh
         shell: bash
+      - name: Save run status
+        if: steps.last_run_status.outputs.last_run_status != 'success'
+        run: echo "::set-output name=last_run_status::${{ steps.test_run.outcome }}" > last_run_status
