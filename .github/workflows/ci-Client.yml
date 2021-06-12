@@ -88,6 +88,7 @@ jobs:
         with:
           ref: ${{ github.event.workflow_dispatch.ref }}
       - name: Run tests
+        id: test_run
         run: |
           export GS_HOME="$(pwd)"
           export PATH=$GS_HOME/bin:$PATH

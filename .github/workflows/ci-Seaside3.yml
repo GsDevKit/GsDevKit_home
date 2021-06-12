@@ -29,9 +29,9 @@ jobs:
         with:
           path: |
             last_run_status
-          key: ${{ github.run_id }}-${{ matrix.gs_version }}-${{ matrix.test }}-${{ steps.date.outputs.date }}
+          key: ${{ github.run_id }}-${{ matrix.gs_version }}-${{ steps.date.outputs.date }}
           restore-keys: |
-            ${{ github.run_id }}-${{ matrix.gs_version }}-${{ matrix.test }}-
+            ${{ github.run_id }}-${{ matrix.gs_version }}-
       - name: Set last run status
         id: last_run_status
         run: cat last_run_status
@@ -43,6 +43,7 @@ jobs:
         run: |
           sudo apt install google-chrome-stable
       - name: Run tests
+        id: test_run
         run: |
           export GS_HOME="$(pwd)"
           export PATH=$GS_HOME/bin:$PATH
