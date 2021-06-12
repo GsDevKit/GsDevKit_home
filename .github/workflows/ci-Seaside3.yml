@@ -16,6 +16,28 @@ jobs:
     continue-on-error: ${{ matrix.allowfailure }}
     name: ${{ matrix.gs_version }} - Seaside3
     steps:
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%dT%H:%M:%S')"
+      - name: Log date
+        run: echo "${{ steps.date.outputs.date }}"
+      - name: Set default run status
+        run: echo "::set-output name=last_run_status::default" > last_run_status
+      - name: Restore last run status
+        id: last_run
+        uses: actions/cache@v2
+        with:
+          path: |
+            last_run_status
+          key: ${{ github.run_id }}-${{ matrix.gs_version }}-${{ matrix.test }}-${{ steps.date.outputs.date }}
+          restore-keys: |
+            ${{ github.run_id }}-${{ matrix.gs_version }}-${{ matrix.test }}-
+      - name: Set last run status
+        id: last_run_status
+        run: cat last_run_status
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.workflow_dispatch.ref }}
       - uses: actions/checkout@v2
       - name: Install Chrome
         run: |
@@ -31,3 +53,6 @@ jobs:
           cat /etc/hosts
           $GITHUB_WORKSPACE/tests/testTravisCI.sh
         shell: bash
+      - name: Save run status
+        if: steps.last_run_status.outputs.last_run_status != 'success'
+        run: echo "::set-output name=last_run_status::${{ steps.test_run.outcome }}" > last_run_status
