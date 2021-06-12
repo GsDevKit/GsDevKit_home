@@ -20,7 +20,7 @@ jobs:
             test: SmalltalkCI
     env:
       GS_VERSION: ${{ matrix.gs_version }}
-      TEST: matrix.text
+      TEST: matrix.test
     continue-on-error: ${{ matrix.allowfailure }}
     name: ${{ matrix.gs_version }} - ${{ matrix.test }}
     steps:

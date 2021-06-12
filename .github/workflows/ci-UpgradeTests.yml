@@ -12,11 +12,8 @@ jobs:
         allowfailure: [ false ]
         test: [ Upgrade_unittest ]
         include:
-          # specify upgrade_from
+          # include the upgrade_from parameter in the matrix
           - gs_version: 3.4.5
-            upgrade_from: 3.3.9
-            allowfailure: false
-          - gs_version: 3.5.1
             upgrade_from: 3.3.9
             allowfailure: false
           - gs_version: 3.1.0.6
@@ -50,6 +47,10 @@ jobs:
             upgrade_from: 3.5.0
             allowfailure: false
           # additional upgrade tests
+          - gs_version: 3.5.1
+            upgrade_from: 3.3.9
+            test: Upgrade_unittest
+            allowfailure: false
           - gs_version: 3.6.1
             upgrade_from: 3.4.5
             test: Upgrade_User
