@@ -11,6 +11,10 @@ jobs:
         gs_version: [ 3.1.0.6, 3.2.17, 3.3.9, 3.4.5, 3.5.5, 3.6.1 ]
         allowfailure: [ false ]
         test: [ Upgrade_unittest ]
+        exclude:
+          - gs_version: 3.2.17
+            upgrade_from: 3.2.9
+            allowfailure: false
         include:
           # include the upgrade_from parameter in the matrix
           - gs_version: 3.4.5
@@ -21,7 +25,7 @@ jobs:
             allowfailure: false
           - gs_version: 3.2.17
             upgrade_from: 3.2.9
-            allowfailure: false
+            allowfailure: true
           - gs_version: 3.4.5
             upgrade_from: 3.1.0.6
             allowfailure: false
