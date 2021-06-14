@@ -114,3 +114,16 @@ jobs:
       - name: Save run status
         if: steps.last_run_status.outputs.last_run_status != 'success'
         run: echo "::set-output name=last_run_status::${{ steps.test_run.outcome }}" > last_run_status
+  slack-workflow-status:
+    if: always()
+    name: Post Workflow Status To Slack
+    needs:
+      - build
+    runs-on: ubuntu-18.04
+    steps:
+       - name: Slack Workflow Notification
+         uses: Gamesight/slack-workflow-status@master
+         with:
+          repo_token: ${{secrets.GITHUB_TOKEN}}
+          slack_webhook_url: ${{secrets.SLACK_DALEHENRICH}}
+          name: 'action run' 
