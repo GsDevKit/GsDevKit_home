@@ -1,6 +1,10 @@
 name: Seaside3 Tests
 
-on: [push, pull_request]
+on: 
+  push:
+  pull_request:
+  schedule:
+    - cron: "15 3 19 * *" #run job on the 19th day of every month on the 15th minute of the d hour
 
 jobs:
   build:

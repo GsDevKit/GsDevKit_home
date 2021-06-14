@@ -1,6 +1,10 @@
 name: SmalltalkCI Tests
 
-on: [push, pull_request]
+on: 
+  push:
+  pull_request:
+  schedule:
+    - cron: "15 4 19 * *" #run job on the 19th day of every month on the 15th minute of the 4th hour
 
 jobs:
   build:
