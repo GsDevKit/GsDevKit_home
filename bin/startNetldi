@@ -70,7 +70,7 @@ pushd "$stonePath" >& /dev/null
 popd >& /dev/null
 
 set +e
-"$GS_HOME/bin/devKitCommandLine" startnetldi $stoneName $*"
+"$GS_HOME/bin/devKitCommandLine" startnetldi $stoneName $*
 #"$GS_HOME/superdoit_devkit/bin/startnetldi" $stoneName $*
 
 status="$?"
