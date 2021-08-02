@@ -113,8 +113,8 @@ if [ "${restart}x" = "x" ] ; then
 fi
 
 # start the stone
-#"$GS_HOME/bin/devKitCommandLine" startstone $stoneName $ARG
-"$GS_HOME/superdoit_devkit/bin/startstone" $stoneName $ARG
+"$GS_HOME/bin/devKitCommandLine" startstone $stoneName $ARG
+# "$GS_HOME/superdoit_devkit/bin/startstone" $stoneName $ARG
 
 if [ "${waitTime}x" = "x" ] ; then
   if [ "${GS_TRAVIS}x" != "x" ] ; then

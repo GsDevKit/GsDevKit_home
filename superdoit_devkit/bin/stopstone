@@ -4,7 +4,7 @@ instvars
 %
 options
 {
-	SuperDoitCommandLineOption long: 'both' short: 'b'.
+	SuperDoitOptionalOptionWithNoArg long: 'both' short: 'b'.
 }
 %
 usage
@@ -110,6 +110,7 @@ doit
 	[
 		self getAndVerifyOptions == self noResult
 			ifTrue: [ ^ self noResult ].
+		^self theDoit
 	] on: Error do: [:ex |
 		self debug ifTrue: [ ex pass ].
 		self

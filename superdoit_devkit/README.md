@@ -15,3 +15,6 @@ versionReport.solo -h
 versionReport.solo
 installServerClient
 ```
+### development process
+1. Use two shell windows, one that has the $GS_HOME/bin AND superdoit bin directories included in $PATH (`. $GS_HOME/bin/defSUPERDOIT_PATH.env`) and one that has just $GS_HOME/bin in $PATH (`. $GS_HOME/bin/defHOME_PATH.env`). Use the superdoit_bin shell for testing/executing the superdoit scripts nad the gs_home_bin shell for creating/stopping/starting stones, etc.
+
