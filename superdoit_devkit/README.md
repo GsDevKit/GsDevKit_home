@@ -28,8 +28,8 @@ Use two shell windows, one that has the $GS_HOME/bin AND superdoit bin directori
    createStone supderdoit_tode 3.6.0
    ``` 
 3. install filesystem support into tode stone
-   ```bash
-   startTopaz supderdoit_tode -l << EOF
+```bash
+startTopaz supderdoit_tode -l << EOF
 set u SystemUser p swordfish
 login
 input $GS_HOME/superdoit_devkit/tode/350/FileSystemGs_350.gs
@@ -37,7 +37,7 @@ input $GS_HOME/superdoit_devkit/tode/350/FileSystemGs_350_aux.gs
 commit
 logout
 EOF
-   ```
+```
 4. Load superDoit and GsDevKit code into a tODE image.
    ```smalltalk
    Metacello new
