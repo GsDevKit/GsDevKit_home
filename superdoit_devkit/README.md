@@ -56,7 +56,7 @@ EOF
       GsDevKitRegistryTests debug: #testExportRegistry
     0 errors
     0 unexpected passes
-```
+   ```
 6. debugging/development
    Write code in tODE, test with tests, then save packages/project to disk, run script using `-D` (debug) flag and debug scripts using topaz ...
 #### Sample debugging session (in the supderdoit shell)
