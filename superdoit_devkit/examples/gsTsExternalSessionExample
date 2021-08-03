@@ -1,0 +1,79 @@
+#!/usr/bin/env superdoit_solo
+instvars
+stoneName
+sessionDescription
+externalSession
+%
+usage
+-----
+USAGE: $basename [-h] [--help | -h] [--debug | -D] <stone-name>
+
+DESCRIPTION
+Example of creating an external session in the named stone. Will be useful for
+backup and restore scripts, especially restore, since part of the restore 
+process kills the session.
+
+Includes an optional example of using DEBUGGEM to debug errors that occur in the
+remote session.
+
+OPTIONS
+  -h, --help 	               display usage message
+  -D, --debug                bring up topaz debugger in the event of a script error
+  <stone-name>               name of the stone to log into  
+
+EXAMPLES
+  $basename -h
+  $basename myStoneName
+-----
+%
+method
+gsHome
+	^ (System gemEnvironmentVariable: 'GS_HOME') asFileReference
+%
+method
+sessionDescriptionHome
+	^ self gsHome / 'sys' / 'local' / 'sessions'
+%
+method
+createExternalSession
+	| sessionDescriptionReference |
+	sessionDescriptionReference := self sessionDescriptionHome / stoneName.
+	sessionDescriptionReference exists
+		ifFalse: [ 
+			Error signal: 'Session description file ' , 
+				sessionDescriptionReference pathString printString , 
+				' for ' , 
+				self stoneName printString ,
+        ' not found.' ].
+	sessionDescription := TDSessionDescription importFrom: sessionDescriptionReference pathString.
+	externalSession := GsTsExternalSession
+		gemNRS: sessionDescription gemNRS 
+		stoneNRS: sessionDescription stoneNRS 
+		username: sessionDescription userId 
+		password: sessionDescription password. 
+
+%
+doit
+	self positionalArgs size < 1 
+		ifTrue: [ 
+			self stderr 
+				nextPutAll: '!!!!!!!!!'; lf;
+				nextPutAll: 'Missing required positional parameter <stone-name>'; lf;
+				nextPutAll: '!!!!!!!!!'; lf.
+			self usage.
+			self exitWithStatus: 1 ].
+	stoneName := self positionalArgs at: 1.
+	self createExternalSession.
+	externalSession login.
+	[ 
+		true
+			ifTrue: [ ^ externalSession executeString: '3+4' ]
+			ifFalse: [ 
+				"example of use of DEBUGGEM for remotely debugging errors"
+				| gemPid token |
+				gemPid := externalSession  gemProcessId.
+				token := externalSession  executeString: 'System listenForDebugConnection printString'.
+				self stdout nextPutAll: 'DEBUGGEM ', gemPid printString, ' ',  token ; lf.
+				^ externalSession executeString: '[ self halt ] on: Halt do: [:ex | [true ] whileTrue: [ (Delay forSeconds: 1) wait ] ]' ] 
+	]	ensure: [ externalSession logout ].
+%
