@@ -29,7 +29,7 @@ Use two shell windows, one that has the $GS_HOME/bin AND superdoit bin directori
    ``` 
 3. install filesystem support into tode stone
 ```bash
-startTopaz supderdoit_tode -l << EOF
+startTopaz superdoit_tode -l << EOF
 set u SystemUser p swordfish
 login
 input $GS_HOME/superdoit_devkit/tode/350/FileSystemGs_350.gs
