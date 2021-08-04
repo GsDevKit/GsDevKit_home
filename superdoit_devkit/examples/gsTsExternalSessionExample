@@ -35,8 +35,16 @@ sessionDescriptionHome
 	^ self gsHome / 'sys' / 'local' / 'sessions'
 %
 method
+stonesHome
+	^ self gsHome / 'server' / 'stones'
+%
+method
+gemstoneProjectTree
+	^ self stonesHome / stoneName / 'product'
+%
+method
 createExternalSession
-	| sessionDescriptionReference |
+	| sessionDescriptionReference gemstoneParameters gciLibrary |
 	sessionDescriptionReference := self sessionDescriptionHome / stoneName.
 	sessionDescriptionReference exists
 		ifFalse: [ 
@@ -46,12 +54,18 @@ createExternalSession
 				self stoneName printString ,
         ' not found.' ].
 	sessionDescription := TDSessionDescription importFrom: sessionDescriptionReference pathString.
-	externalSession := GsTsExternalSession
-		gemNRS: sessionDescription gemNRS 
-		stoneNRS: sessionDescription stoneNRS 
-		username: sessionDescription userId 
-		password: sessionDescription password. 
-
+	gemstoneParameters :=  GemStoneParameters new
+		gemService: sessionDescription gemNRS asString ;
+		gemStoneName: sessionDescription stoneNRS asString ;
+		username: sessionDescription userId ;
+		password: sessionDescription password;
+		yourself.
+	gciLibrary := GciTsLibrary 
+		newForVersion: sessionDescription gemstoneVersion 
+		product: self gemstoneProjectTree pathString.
+  externalSession := GsTsExternalSession 
+		parameters: gemstoneParameters 
+		library: gciLibrary
 %
 doit
 	self positionalArgs size < 1 
@@ -67,7 +81,7 @@ doit
 	externalSession login.
 	[ 
 		true
-			ifTrue: [ ^ externalSession executeString: '3+4' ]
+			ifTrue: [ ^ externalSession executeString: 'System stoneVersionReportString' ]
 			ifFalse: [ 
 				"example of use of DEBUGGEM for remotely debugging errors"
 				| gemPid token |
