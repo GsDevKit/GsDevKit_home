@@ -91,7 +91,14 @@ if [ "$ROWAN_PROJECTS_HOME"x = "x" ] ; then
 	export ROWAN_PROJECTS_HOME="$GS_HOME/shared/repos"
 fi
 
+vers=`awk 'NR==2{print $1; exit}' $GEMSTONE/version.txt`
+case $vers in
+	3.6.0|3.6.1) export bootstrapSuperDoit_file="$gemstoneDir/bootstrap/bootstrapSuperDoit_36x.gs" ;;
+	3.7.0) export bootstrapSuperDoit_file="$gemstoneDir/bootstrap/bootstrapSuperDoit_37x.gs" ;;
+	*) echo "unsupported gemstone version $vers"; exit 1 ;;
+esac
+
 $GEMSTONE/bin/topaz $defaultTopazArgs $topazArgs \
 	-I "$SUPERDOIT_STONE_DIR/.topazini" \
 	-q \
-	-S $gemstoneDir/superdoit.tpz -- $scriptFile -- $scriptArgs
+	-S $gemstoneDir/superdoit_boot.tpz -- $scriptFile -- $scriptArgs
