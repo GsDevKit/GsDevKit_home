@@ -1,7 +1,5 @@
-! superDoit and FileSystemGs fileout for: 
-!		superDoit [6165a73]
-!		FileSystemGs [dfef7ec60]
-!	2021-08-04T15:29:27.182963-07:00
+! superDoit fileout
+!	2021-08-05T16:29:12.070280-07:00
 
 ! Class Declarations
 ! Generated file, do not Edit
@@ -1685,15 +1683,6 @@ at: key ifPresent: oneArgBlock ifAbsent: absentBlock
 %
 
 ! Class extensions for 'GsFile'
-
-!		Class methods for 'GsFile'
-
-category: '*filesystem-gemstone-kernel-35x'
-classmethod: GsFile
-_contentsOfServerDirectory: aPathName expandPath: aBoolean
-
-	^ self _contentsOfServerDirectory: aPathName expandPath: aBoolean utf8Results: false
-%
 
 !		Instance methods for 'GsFile'
 

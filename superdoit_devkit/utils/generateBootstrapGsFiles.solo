@@ -3,12 +3,11 @@ options
 {
 	SuperDoitOptionalOptionWithNoArg long: 'generate'.
 	SuperDoitOptionalOptionWithNoArg long: 'versionMap'.
-	SuperDoitOptionalOptionWithRequiredArg long: 'projectsHome' default: '$GS_HOME/shared/repos'.
 }
 %
 usage
 -----
-USAGE $basename [--help | -h] [--debug | -D] ( --versionMap | --generate [ --projectsHome=<rowan-projects-home> ] )
+USAGE $basename [--help | -h] [--debug | -D] ( --versionMap | --generate )
 
 DESCRIPTION
   Rowan-based script for generating .gs files for bootstrapping superDoit into a
@@ -24,8 +23,6 @@ DESCRIPTION
 OPTIONS
       --generate             generate the superdoit bootstrap files
       --versionMap           generate the GemStone version map .ston file
-      --projectsHome=<rowan-projects-home>
-                             define parent directory of Rowan and superDoit projects. if default ($GS_HOME/shared/repos) is not correct
   -h, --help                 display usage message
   -D, --debug                bring up topaz debugger in the event of a script error
 
@@ -36,7 +33,6 @@ EXAMPLES
   $basename -D
   $basename --versionMap
   $basename --generate
-  $basename --generate --projectsHome=/pathToSomeplaceElse/repos
 -----
 %
 method
@@ -80,22 +76,14 @@ generateBootstrapFiles: supportedGemStoneVersionMap
 	gsDir asFileReference ensureCreateDirectory.
 
 	fileToVersionsMap keysAndValuesDo: [:filename :versions |
-		| attributes projectSetDefinition projectSetModification visitor headerStream |
+		| attributes projectSetDefinition projectSetModification visitor headerStream importSpec importProject |
 		attributes :=  { 'common' . Rowan platform basePlatformConditionalAttribute }, (versions collect: [:version | version asRwGemStoneVersionNumber]).
 		projectSetDefinition := RwProjectSetDefinition new. 
 		headerStream := WriteStream on: String new.
-		headerStream nextPutAll: '! superDoit and FileSystemGs fileout for: '; lf.
-		{ {'superDoit' . 'rowan/specs/SuperDoit.ston' } . 
-			{ 'Rowan' . 'platforms/gemstone/projects/FileSystemGs/rowan/specsV2/FileSystemGs.ston' } 
-		} do: [:ar |
-			| projectName specPath importSpec importProject |
-			projectName := ar at: 1.
-			specPath := ar at: 2.
-			importSpec := RwSpecification fromUrl: 'file:', self projectsHome, '/', projectName, '/', specPath.
-			importProject := importSpec resolve read: attributes.
+		headerStream nextPutAll: '! superDoit fileout'; lf.
+		importSpec := RwSpecification fromUrl: 'file:$GS_HOME/superdoit_devkit/rowan/specs/SuperDoit.ston'.
+		importProject := importSpec resolve read: attributes.
 			projectSetDefinition addProject: importProject.
-			headerStream 
-				nextPutAll: '!		', importProject name, ' [', importProject commitId, ']'; lf ].
 		projectSetModification := projectSetDefinition
 			compareAgainstBase: RwProjectSetDefinition new.
 		headerStream 
