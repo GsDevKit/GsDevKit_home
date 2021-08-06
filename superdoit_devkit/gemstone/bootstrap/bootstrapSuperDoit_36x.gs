@@ -1,5 +1,5 @@
 ! superDoit fileout
-!	2021-08-05T16:29:12.070280-07:00
+!	2021-08-05T17:21:41.940303-07:00
 
 ! Class Declarations
 ! Generated file, do not Edit
@@ -1572,7 +1572,7 @@ preDoitSpecLoad: specBlock
 	self _loadSpecs
 		do: [ :spec | 
 			specBlock cull: spec.
-			projectSet addAll: spec resolve readProjectSet ].
+			spec resolve readProjectSet do: [ :project | projectSet addProject: project ] ].
 	^ projectSet load
 %
 
