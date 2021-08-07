@@ -1,5 +1,5 @@
 ! superDoit fileout
-!	2021-08-05T17:21:41.825317-07:00
+!	2021-08-05T18:12:34.481843-07:00
 
 ! Class Declarations
 ! Generated file, do not Edit
@@ -703,7 +703,7 @@ className: object
 category: 'execution'
 method: SuperDoitExtensionMethodCommand
 executeAgainst: aCommandParser
-	(Rowan globalNamed: self className)
+	(SuperDoitExecution globalNamed: self className)
 		ifNotNil: [ :class | 
 			| beh |
 			beh := self isMeta
@@ -817,6 +817,12 @@ category: 'execution'
 method: SuperDoitSpecsCommand
 executeAgainst: aCommandParser
 	| stonStream |
+	SuperDoitExecution
+		globalNamed: #'Rowan'
+		ifAbsent: [ 
+			self
+				error:
+					'Rowan must be present in the image in order to use the specs command' ].
 	stonStream := self chunk readStreamPortable.
 	[ stonStream atEnd ]
 		whileFalse: [ 
@@ -843,13 +849,19 @@ executeAgainst: aCommandParser
 category: 'execution'
 method: SuperDoitSpecUrlsCommand
 executeAgainst: aCommandParser
-	| urlStream |
+	| urlStream rowanSpecificationClass |
+	rowanSpecificationClass := SuperDoitExecution
+		globalNamed: #'RwSpecification'
+		ifAbsent: [ 
+			self
+				error:
+					'Rowan must be present in the image in order to use the specurls command' ].
 	urlStream := self chunk readStreamPortable.
 	[ urlStream atEnd ]
 		whileFalse: [ 
 			| url spec |
 			url := urlStream nextLine.
-			spec := (RwSpecification fromUrl: url)
+			spec := (rowanSpecificationClass fromUrl: url)
 				projectsHome: aCommandParser projectsHome;
 				yourself.
 			aCommandParser specs add: spec ]
@@ -1259,6 +1271,22 @@ usageCommand: string
 
 ! Class implementation for 'SuperDoitExecution'
 
+!		Class methods for 'SuperDoitExecution'
+
+category: 'utiities'
+classmethod: SuperDoitExecution
+globalNamed: aString
+	"return nil if global not defined"
+
+	^ GsSession currentSession objectNamed: aString asSymbol
+%
+
+category: 'utiities'
+classmethod: SuperDoitExecution
+globalNamed: aString ifAbsent: absentBlock
+	^ (self globalNamed: aString) ifNil: absentBlock
+%
+
 !		Instance methods for 'SuperDoitExecution'
 
 category: 'script info'
@@ -1485,6 +1513,12 @@ getOpts
 				ifFalse: [ opt value: true ] ]
 %
 
+category: 'accessing'
+method: SuperDoitExecution
+globalNamed: aString ifAbsent: absentBlock
+	^ self class globalNamed: aString ifAbsent: absentBlock
+%
+
 category: 'script info'
 method: SuperDoitExecution
 isSolo
@@ -1565,10 +1599,16 @@ preDoitSpecLoad: specBlock
 
 	"return list of RwProjects loaded"
 
-	| projectSet |
+	| projectSet rowanProjectSetDefinitionClass |
 	self _loadSpecs isEmpty
 		ifTrue: [ ^ self ].
-	projectSet := RwProjectSetDefinition new.
+	rowanProjectSetDefinitionClass := SuperDoitExecution
+		globalNamed: #'RwProjectSetDefinition'
+		ifAbsent: [ 
+			self
+				error:
+					'Rowan must be present in the image in order to use the specurls command' ].
+	projectSet := rowanProjectSetDefinitionClass new.
 	self _loadSpecs
 		do: [ :spec | 
 			specBlock cull: spec.

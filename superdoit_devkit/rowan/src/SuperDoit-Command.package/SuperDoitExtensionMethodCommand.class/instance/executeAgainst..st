@@ -1,6 +1,6 @@
 execution
 executeAgainst: aCommandParser
-	(Rowan globalNamed: self className)
+	(SuperDoitExecution globalNamed: self className)
 		ifNotNil: [ :class | 
 			| beh |
 			beh := self isMeta
