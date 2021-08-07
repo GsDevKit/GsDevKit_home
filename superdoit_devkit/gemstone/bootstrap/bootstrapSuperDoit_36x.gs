@@ -1,5 +1,5 @@
 ! superDoit fileout
-!	2021-08-05T18:12:34.602876-07:00
+!	2021-08-06T18:07:33.727254-07:00
 
 ! Class Declarations
 ! Generated file, do not Edit
@@ -910,35 +910,6 @@ preClassCreationExecuteAgainst: aCommandParser
 
 ! Class implementation for 'SuperDoitCommandParser'
 
-!		Class methods for 'SuperDoitCommandParser'
-
-category: 'instance creation'
-classmethod: SuperDoitCommandParser
-processInputFile
-	"command line looks like the following:
-		<path-to-topaz>/topaz <topaz arguments> -- <script-file-path> -- <script-args>
-	"
-
-	| args scriptArgStart argIndex scriptPath scriptFile scriptArgs scriptArgIndex |
-	args := System commandLineArguments.
-	scriptArgStart := args indexOf: '--'.
-	argIndex := scriptArgStart + 1.	"arg after initial --"
-	(scriptArgStart <= 0 or: [ argIndex > args size ])
-		ifTrue: [ self error: 'input file is expected to be specified on the command line' ].
-	scriptFile := args at: argIndex.
-	scriptArgIndex := args indexOf: '--' startingAt: argIndex + 1.
-	scriptArgs := scriptArgIndex = 0
-		ifTrue: [ #() ]
-		ifFalse: [ args copyFrom: scriptArgIndex + 1 to: args size ].
-	 
-	scriptPath := scriptFile asFileReference.
-	^ self new 
-		scriptPath: scriptPath;
-		scriptArgs: scriptArgs;
-		parseAndExecuteScriptFile: scriptPath;
-		yourself
-%
-
 !		Instance methods for 'SuperDoitCommandParser'
 
 category: 'commands'
@@ -1045,25 +1016,6 @@ optionsDict: object
 	optionsDict := object
 %
 
-category: 'execution'
-method: SuperDoitCommandParser
-parseAndExecuteScriptFile: scriptFileReference
-	scriptFileReference
-		readStreamDo: [ :fStream | 
-			stream := ZnBufferedReadStream on: fStream.
-			[ self done ]
-				whileFalse: [ 
-					self processNextCommand
-						ifNotNil: [ :command | self commandDefinition addCommand: command ] ].
-			optionsDict
-				ifNil: [ 
-					"no options specified, so go with the standard options and add it at the beginning of commands"
-					self commandDefinition commands addFirst: (SuperDoitOptionsCommand chunk: '{}') ].
-			self commandDefinition preClassCreationExecuteAgainst: self. "make a pass to ensure that all commands that need to be processed BEFORE class creation get a chance to run (i'm looking at you SuperDoitInstVarNamesCommand"
-			self commandDefinition executeAgainst: self.
-			^ doitResult ]
-%
-
 category: 'parsing'
 method: SuperDoitCommandParser
 processNextCommand
@@ -1150,12 +1102,6 @@ category: 'accessing'
 method: SuperDoitCommandParser
 scriptPath
 	^ scriptPath
-%
-
-category: 'accessing'
-method: SuperDoitCommandParser
-scriptPath: aFileReference
-	scriptPath := aFileReference
 %
 
 category: 'accessing'
@@ -1289,12 +1235,6 @@ globalNamed: aString ifAbsent: absentBlock
 
 !		Instance methods for 'SuperDoitExecution'
 
-category: 'script info'
-method: SuperDoitExecution
-basename
-	^ self scriptPath basename
-%
-
 category: 'command line'
 method: SuperDoitExecution
 commandLine
@@ -1330,12 +1270,6 @@ commandLineSummary
 		at: 'options' put: opts;
 		at: 'args' put: self positionalArgs; 
 		yourself.
-%
-
-category: 'script info'
-method: SuperDoitExecution
-dirname
-	^ self scriptPath parent
 %
 
 category: 'logging'
@@ -1642,12 +1576,6 @@ scriptPath
 	^ _scriptPath
 %
 
-category: 'accessing'
-method: SuperDoitExecution
-scriptPath: aFileReference
-	_scriptPath := aFileReference
-%
-
 category: 'logging'
 method: SuperDoitExecution
 stderr
@@ -1730,5 +1658,102 @@ category: '*superdoit-gemstone-kernel36x'
 method: GsFile
 print: anObject
  anObject printOn: self
+%
+
+! Class extensions for 'SuperDoitCommandParser'
+
+!		Class methods for 'SuperDoitCommandParser'
+
+category: '*superdoit-stone-core'
+classmethod: SuperDoitCommandParser
+processInputFile
+	"command line looks like the following:
+		<path-to-topaz>/topaz <topaz arguments> -- <script-file-path> -- <script-args>
+	"
+
+	| args scriptArgStart argIndex scriptFile scriptArgs scriptArgIndex |
+	args := System commandLineArguments.
+	scriptArgStart := args indexOf: '--'.
+	argIndex := scriptArgStart + 1.	"arg after initial --"
+	(scriptArgStart <= 0 or: [ argIndex > args size ])
+		ifTrue: [ self error: 'input file is expected to be specified on the command line' ].
+	scriptFile := args at: argIndex.
+	scriptArgIndex := args indexOf: '--' startingAt: argIndex + 1.
+	scriptArgs := scriptArgIndex = 0
+		ifTrue: [ #() ]
+		ifFalse: [ args copyFrom: scriptArgIndex + 1 to: args size ].
+
+	^ self new
+		scriptPath: scriptFile;
+		scriptArgs: scriptArgs;
+		parseAndExecuteScriptFile: scriptFile;
+		yourself
+%
+
+!		Instance methods for 'SuperDoitCommandParser'
+
+category: '*superdoit-stone-core'
+method: SuperDoitCommandParser
+parseAndExecuteScriptFile: scriptFilePath
+	stream := FileStream fileNamed: scriptFilePath.
+	[ 
+	[ self done ]
+		whileFalse: [ 
+			self processNextCommand
+				ifNotNil: [ :command | self commandDefinition addCommand: command ] ].
+	optionsDict
+		ifNil: [ 
+			"no options specified, so go with the standard options and add it at the beginning of commands"
+			self commandDefinition commands
+				addFirst: (SuperDoitOptionsCommand chunk: '{}') ].
+	self commandDefinition preClassCreationExecuteAgainst: self.	"make a pass to ensure that all commands that need to be processed BEFORE class creation get a chance to run (i'm looking at you SuperDoitInstVarNamesCommand"
+	self commandDefinition executeAgainst: self.
+	^ doitResult ]
+		ensure: [ stream close ]
+%
+
+category: '*superdoit-stone-core'
+method: SuperDoitCommandParser
+scriptPath: aFilePath
+	scriptPath := aFilePath
+%
+
+! Class extensions for 'SuperDoitExecution'
+
+!		Instance methods for 'SuperDoitExecution'
+
+category: '*superdoit-stone-core'
+method: SuperDoitExecution
+basename
+	self _splitName: self scriptPath to: [ :parentPath :basename | ^ basename ]
+%
+
+category: '*superdoit-stone-core'
+method: SuperDoitExecution
+dirname
+	self _splitName: self scriptPath to: [ :parentPath :basename | ^ parentPath ]
+%
+
+category: '*superdoit-stone-core'
+method: SuperDoitExecution
+scriptPath: aFilePath
+	_scriptPath := aFilePath
+%
+
+category: '*superdoit-stone-core'
+method: SuperDoitExecution
+_splitName: fullName to: pathAndNameBlock
+	"Take the file name and convert it to the path name of a directory and a local file name within that directory. FileName must be of the form: <dirPath><delimiter><localName>, where <dirPath><delimiter> is optional. The <dirPath> part may contain delimiters."
+
+	| delimiter i dirName localName |
+	delimiter := $/.
+	(i := fullName findLast: [ :c | c = delimiter ]) = 0
+		ifTrue: [ 
+			dirName := String new.
+			localName := fullName ]
+		ifFalse: [ 
+			dirName := fullName copyFrom: 1 to: (i - 1 max: 1).
+			localName := fullName copyFrom: i + 1 to: fullName size ].
+	^ pathAndNameBlock value: dirName value: localName
 %
 

@@ -77,11 +77,11 @@ generateBootstrapFiles: supportedGemStoneVersionMap
 
 	fileToVersionsMap keysAndValuesDo: [:filename :versions |
 		| attributes projectSetDefinition projectSetModification visitor headerStream importSpec importProject |
-		attributes :=  { 'common' . Rowan platform basePlatformConditionalAttribute }, (versions collect: [:version | version asRwGemStoneVersionNumber]).
+		attributes :=  { 'stone' . 'common' . Rowan platform basePlatformConditionalAttribute }, (versions collect: [:version | version asRwGemStoneVersionNumber]).
 		projectSetDefinition := RwProjectSetDefinition new. 
 		headerStream := WriteStream on: String new.
 		headerStream nextPutAll: '! superDoit fileout'; lf.
-		importSpec := RwSpecification fromUrl: 'file:$GS_HOME/superdoit_devkit/rowan/specs/SuperDoit.ston'.
+		importSpec := RwSpecification fromUrl: 'file:$GS_HOME/shared/repos/superDoit/rowan/specs/SuperDoit_stone.ston'.
 		importProject := importSpec resolve read: attributes.
 			projectSetDefinition addProject: importProject.
 		projectSetModification := projectSetDefinition
