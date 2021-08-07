@@ -6,7 +6,8 @@ RwSimpleProjectLoadComponentV2 {
 		'deprecated/SuperDoit',
 		'gemstone/SuperDoit',
 		'gemstone36/SuperDoit',
-		'rowan/SuperDoit',
+		'solo/SuperDoit',
+		'stone/SuperDoit',
 		'tode/SuperDoit'
 	],
 	#packageNames : [

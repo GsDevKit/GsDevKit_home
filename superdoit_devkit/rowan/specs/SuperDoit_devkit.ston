@@ -8,7 +8,7 @@ RwLoadSpecificationV2 {
 		'GsDevKit'
 	],
 	#customConditionalAttributes : [
-		'rowan'
+		'solo'
 	],
 	#comment : 'loads SuperDoit support code AND GsDevKit support code in support of the GsDevKit scripts'
 }

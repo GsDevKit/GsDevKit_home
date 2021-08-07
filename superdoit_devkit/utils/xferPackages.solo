@@ -42,9 +42,9 @@ EXAMPLES
   $basename -h
   $basename --debug
   $basename -D
-  $basename --export=file:$GS_HOME/superdoit_devkit/rowan/specs/SuperDoit.ston \
+  $basename --export=file:$GS_HOME/superdoit_devkit/rowan/specs/SuperDoit_solo.ston \
             --exportHome=file:$GS_HOME \
-            --import=file:$GS_HOME/shared/repos/superDoit/rowan/specs/SuperDoit.ston \
+            --import=file:$GS_HOME/shared/repos/superDoit/rowan/specs/SuperDoit_solo.ston \
             --importHome=file:$GS_HOME/shared/repos/
 -----
 %

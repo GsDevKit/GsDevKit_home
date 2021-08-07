@@ -1,0 +1,10 @@
+RwPlatformNestedProjectLoadComponentV2 {
+	#name : 'solo/SuperDoit',
+	#condition : [
+		'solo'
+	],
+	#packageNames : [
+		'SuperDoit-Solo-Core'
+	],
+	#comment : 'Code that is used for running .solo scripts. Rowan and FileSystemGs are present'
+}

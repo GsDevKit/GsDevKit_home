@@ -1,8 +1,8 @@
-instance creation
+*superdoit-solo-core
 processInputFile
 	"command line looks like the following:
-		<path-to-topaz>/topaz <topaz arguments> -- <script-file-path> -- <script-args>
-	"
+               <path-to-topaz>/topaz <topaz arguments> -- <script-file-path> -- <script-args>
+       "
 
 	| args scriptArgStart argIndex scriptPath scriptFile scriptArgs scriptArgIndex |
 	args := System commandLineArguments.
@@ -15,9 +15,9 @@ processInputFile
 	scriptArgs := scriptArgIndex = 0
 		ifTrue: [ #() ]
 		ifFalse: [ args copyFrom: scriptArgIndex + 1 to: args size ].
-	 
+
 	scriptPath := scriptFile asFileReference.
-	^ self new 
+	^ self new
 		scriptPath: scriptPath;
 		scriptArgs: scriptArgs;
 		parseAndExecuteScriptFile: scriptPath;

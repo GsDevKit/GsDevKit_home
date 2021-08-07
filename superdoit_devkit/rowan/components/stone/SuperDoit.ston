@@ -1,0 +1,10 @@
+RwPlatformNestedProjectLoadComponentV2 {
+	#name : 'stone/SuperDoit',
+	#condition : [
+		'stone'
+	],
+	#packageNames : [
+		'SuperDoit-Stone-Core'
+	],
+	#comment : 'Code that is used for running superDot .stone scripts. Rowan and FileSystemGs are not present ... portable to GemStone versions as old as 2.4.x'
+}
