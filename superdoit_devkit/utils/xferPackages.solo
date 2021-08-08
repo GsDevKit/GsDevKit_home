@@ -17,6 +17,15 @@ DESCRIPTION
     projects. Read/write packages in tonel format for superDoit project and 
     read/write packages in filetree format to superdoit_devkit project.
 
+NOT YET IMPLEMENTED
+  The following files should be shared in addition to all of the packages:
+    - bin/superdoit_stone
+    - bin/superdoit_solo should be shared
+    - examples/utility/generateBootstrapGsFiles.solo
+    - gemstone/bootstrap/*
+    - gemstone/superdoit.tpz
+    - gemstone/superdoit_boot.tpz
+
 OPTIONS
   -h, --help                 display usage message
   -D, --debug                bring up topaz debugger in the event of a script error
