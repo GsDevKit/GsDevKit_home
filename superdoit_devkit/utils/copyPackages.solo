@@ -1,0 +1,131 @@
+#!/usr/bin/env superdoit_solo
+instvars
+operation
+%
+usage
+-----
+USAGE $basename [--help | -h]
+  t2f2t.sh [--debug ] create <component-name> <project-root> <t2f2t-data-dir> <tonel-pkg-dir> <filetree-pkg-dir>
+
+  t2f2t.sh  [--debug ] filetree <t2f2t-data-dir-path>
+  t2f2t.sh  [--debug ] tonel <t2f2t-data-dir-path>
+
+DESCRIPTION
+  Copy all of the packages from one package directory to another package
+  directory, converting from/to filetree/tonel along the way.
+
+	Leverages the https://github.com/GsDevKit/T2F2T-Conversion project.
+
+
+OPTIONS
+  -h, --help                 display usage message
+  -D, --debug                bring up topaz debugger in the event of a script error
+
+EXAMPLES
+  $basename --help
+  $basename -h
+  $basename --debug
+  $basename -D
+
+  $basename create SuperDoit $GS_HOME/shared/repos/superDoit packages/t2f2t packages/tonel packages/filetree
+  $basename --debug create $GS_HOME/shared/repos/superDoit packages/t2f2t packages/tonel packages/filetree
+
+  $basename filetree $GS_HOME/shared/repos/superDoit/packages/t2f2t
+  $basename --debug filetree $GS_HOME/shared/repos/superDoit/t2f2t
+
+  $basename tonel $GS_HOME/shared/repos/superDoit/packages/t2f2t
+  $basename --debug tonel $GS_HOME/shared/repos/superDoit/t2f2t
+
+-----
+%
+projectshome
+$GS_HOME/shared/repos
+%
+specs
+[
+RwLoadSpecificationV2 {
+	#projectName : 'T2F2T-Conversion',
+	#gitUrl : 'file:$ROWAN_PROJECTS_HOME/T2F2T-Conversion',
+	#revision : 'gemstone',
+	#projectSpecFile : 'rowan/tonel.ston',
+	#componentNames : [
+		'Core'
+	],
+	#comment : 't2f2t load specification for tonel format packages'
+}
+]
+%
+method
+operation
+	| posArgs |
+	operation 
+		ifNil: [
+			operation := self positionalArgs at: 1.
+			(#( 'create' 'filetree' 'tonel' ) 
+					includes: operation) ifFalse: [ self error: 'Unknown command ', operation printString ].
+			operation = 'create'
+				ifTrue: [ 
+					(posArgs := self positionalArgs size) ~= 6
+						ifTrue: [
+							self error: 'Missing positional arguments for ', 
+								operation printString, 
+								' command. Expected 6 got ', 
+								posArgs printString ].
+					^ operation ].
+			(posArgs := self positionalArgs size) ~= 2
+				ifTrue: [ 
+					self error: 'Missing positional arguments for ', 
+						operation printString, 
+						' command. Expected 2 got ', 
+						posArgs printString ] ].
+	^ operation
+%
+method
+t2f2tPath
+	^ self positionalArgs at: 2
+%
+method
+componentName
+	^ self positionalArgs at: 2
+%
+method
+projectRootPath
+	^ self positionalArgs at: 3
+%
+method
+createT2f2tPath
+	^ self positionalArgs at: 4
+%
+method
+tonelPackagePath
+	^ self positionalArgs at: 5
+%
+method
+filetreePackagePath
+	^ self positionalArgs at: 6
+%
+doit
+	| converter |
+	self preDoitSpecLoad.	"load the T2F2T-Conversion project from spec"
+	converter := (self 
+		globalNamed: 'T2F2TConversion' 
+		ifAbsent: [ self error: 'T2F2TConversion class not loaded']) new.
+	self operation = 'create'
+		ifTrue: [
+			converter
+				createForProject: self projectRootPath 
+				t2f2t: self createT2f2tPath
+				tonel: self tonelPackagePath
+				filetree: self filetreePackagePath
+				projectName: 't2f2tMeta' 
+				componentName: self componentName 
+				packageConvention: 'Monticello' 
+				stdout: self stdout.
+			^ true ].
+	converter 
+		convertTo: self operation 
+		packagesUsing: self t2f2tPath 
+		stdout: self stdout.
+	^true
+%
+
