@@ -16,6 +16,23 @@ EXAMPLES
   $basename myStoneName
 -----
 %
+projectshome
+$GS_HOME/shared/gemstone/repos
+%
+specs
+[
+RwLoadSpecificationV2 {
+	#specName : 'GsDevKit_SuperDoit',
+	#projectName : 'GsDevKit_SuperDoit',
+	#diskUrl : 'file:$GS_HOME/shared/gemstone/repos/GsDevKit_SuperDoit',
+	#projectSpecFile : 'rowan/project.ston',
+	#componentNames : [
+		'GsDevKit'
+	],
+	#comment : 'loads GsDevKit support code in support of GsDevKit_home superDoit scripts'
+}
+]
+%
 method
 stopNetldi
 	| sess stoneInfo netldiArgs result |
@@ -54,7 +71,7 @@ sessionDescriptionFor: aStoneName ifAbsent: absentBlock
 	sessionDescriptionReference := self sessionDescriptionHome / aStoneName.
 	sessionDescriptionReference exists
 		ifFalse: [ ^ absentBlock value: sessionDescriptionReference ].
-	^ TDSessionDescription importFrom: sessionDescriptionReference pathString
+	^ (self globalNamed: 'TDSessionDescription') importFrom: sessionDescriptionReference pathString
 %
 method
 sessionDescriptionHome
@@ -74,7 +91,7 @@ gs_stoneDirectory
 %
 method
 stoneInfoClass
-	^ GsDevKitStoneInfo
+	^ (self globalNamed: 'GsDevKitStoneInfo')
 %
 method
 stoneInfoFilename
