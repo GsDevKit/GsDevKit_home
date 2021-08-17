@@ -1,0 +1,3 @@
+defaults
+defaultFileName
+  ^ 'registry.ston'

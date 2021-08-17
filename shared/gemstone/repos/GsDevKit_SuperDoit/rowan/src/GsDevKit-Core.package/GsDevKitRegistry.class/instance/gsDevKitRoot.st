@@ -1,0 +1,3 @@
+Accessing
+gsDevKitRoot
+  ^ gsDevKitRoot

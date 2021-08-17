@@ -1,0 +1,14 @@
+{
+	"category" : "GsDevKit-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GsDevKitRemoteStoneRegistration",
+	"pools" : [
+		 ],
+	"super" : "GsDevKitStoneRegistration",
+	"type" : "normal" }

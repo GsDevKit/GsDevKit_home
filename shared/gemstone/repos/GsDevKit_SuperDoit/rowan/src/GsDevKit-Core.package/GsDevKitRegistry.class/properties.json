@@ -1,0 +1,17 @@
+{
+	"category" : "GsDevKit-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"registries" ],
+	"commentStamp" : "",
+	"instvars" : [
+		"gsDevKitRoot",
+		"sourceRepos",
+		"stones",
+		"groups" ],
+	"name" : "GsDevKitRegistry",
+	"pools" : [
+		 ],
+	"super" : "GsDevKitSton",
+	"type" : "normal" }

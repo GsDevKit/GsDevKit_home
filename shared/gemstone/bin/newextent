@@ -1,0 +1,109 @@
+#!/usr/bin/env superdoit_solo
+instvars
+	gsListResult
+%
+usage
+-----
+USAGE $basename stone-name [snapshot-file] [mime-type]
+
+DESCRIPTION
+	Copy a new extent to the stones extent directory
+
+OPTIONS
+  -h, --help 		display usage message
+
+EXAMPLES
+  $basename --help
+  $basename myStone
+  $basename myStone /opt/snapshots/mySnapshop.dbf
+  $basename myStone /opt/snapshots/mySnapshot.dbf.gz x-gzip
+-----
+%
+method
+newExtent
+	| stream stoneDirectory extentFile |
+	stream := self stderr.
+	self positionalArgs size == 0 ifTrue: [
+		^ Error signal: 'Wrong number of arguments (' , self positionalArgs size printString , ')' ].
+		stoneDirectory := self gs_stoneDirectory.
+		extentFile := stoneDirectory / 'extents' / 'extent0.dbf'.
+		extentFile exists
+			ifTrue: [ extentFile delete ].
+		self mediaType = 'x-gzip'
+			ifTrue: [ self gunzipSnapshotExtent: stoneDirectory ]
+			ifFalse: [ self copySnapshotExtent: stoneDirectory ].
+
+	^ self noResult
+%
+method
+mediaType
+	self positionalArgs size < 3 ifTrue: [ ^ 'octet-stream' ].
+	^ self positionalArgs at: 3
+%
+method
+copySnapshotExtent: stoneDirectory
+	"use copydbf, so that any corruption in the extent file can be found at the outset"
+
+	self copySnapshotExtent: self snapshotFile to: stoneDirectory for: self gsVers
+%
+method
+copySnapshotExtent: snapshotExtentFile to: stoneDirectory for: aGsVersionString
+	"use copydbf, so that any corruption in the extent file can be found at the outset"
+
+	| extentFile argsArray cmdPath |
+	self stderr nextPutAll: ('Copying extent file: ' , snapshotExtentFile pathString printString); cr.
+	extentFile := stoneDirectory / 'extents' / 'extent0.dbf'.
+	cmdPath := (aGsVersionString beginsWith: '2.4')
+		ifTrue: [
+			"cannot use copydbf to copy extent from product tree, so unconditionally use `cp`"
+			'/bin/cp' ]
+		ifFalse: [ (self gemstoneBin / 'copydbf') pathString ].
+	argsArray := {(snapshotExtentFile pathString). (extentFile pathString)}.
+	self stderr nextPutAll: (self runShellCommand: cmdPath args: argsArray); cr.
+	OSProcess command: 'chmod +w "' , extentFile pathString, '"'
+%
+method
+gs_stonesDirectory
+	^  ((System gemEnvironmentVariable: 'GS_HOME'), '/server/stones') asFileReference
+%
+method
+gs_stoneDirectory
+	^  self gs_stonesDirectory / self stoneName
+%
+method
+stoneName
+	^ self positionalArgs at: 1
+%
+method
+stoneInfoFilename
+	^  'info.ston'
+%
+method
+gs_binDirectory
+	^ (System gemEnvironmentVariable: 'GEMSTONE'), '/bin/'
+%
+method
+gsListResult
+	^ gsListResult ifNil: [ gsListResult := GsHostProcess execute: self gs_binDirectory, 'gslist -lc' ]
+%
+method
+doit
+	"override doit method, because ChildError does not exist in 3.6.0" 
+	[ 
+	self getAndVerifyOptions == self noResult
+		ifTrue: [ ^ self noResult ].
+	^ self theDoit
+	]
+		on: Error
+		do: [ :ex | 
+			((self respondsTo: #'debug') and: [ self debug ])
+				ifTrue: [ ex pass ].
+			self
+				exit: ((ex respondsTo: #stderr)
+					ifTrue: [ ex stderr asString trimBoth ]
+					ifFalse: [ ex messageText ])
+				withStatus: 1 "does not return" ].
+%
+doit
+	self newExtent
+%
