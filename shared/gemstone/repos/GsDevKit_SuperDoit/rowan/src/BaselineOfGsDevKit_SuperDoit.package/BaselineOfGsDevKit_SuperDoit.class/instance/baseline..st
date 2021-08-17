@@ -8,4 +8,4 @@ baseline: spec
         package: 'GsDevKit-Core';
         package: 'GsDevKit-Tests' with: [ spec requires: #('GsDevKit-Core') ].
       spec
-        group: 'default' with: #('GsDevKitTests') ].
+        group: 'default' with: #('GsDevKit-Tests') ].
