@@ -5,6 +5,7 @@ RwSimpleProjectLoadComponentV2 {
 	#componentNames : [ ],
 	#packageNames : [
 		'GsDevKit-Core'
+		'GsDevKit-TDSessionDescription'
 	],
 	#comment : ''
 }

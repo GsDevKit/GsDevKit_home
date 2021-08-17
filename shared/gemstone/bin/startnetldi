@@ -58,6 +58,12 @@ RwLoadSpecificationV2 {
 ]
 %
 method
+globalNamed: aString
+	^ self 
+		globalNamed: aString 
+		ifAbsent: [ self error: 'The global named ', aString printString, ' cannot be found.'].
+%
+method
 startNetldi
 	| netldiArgs result |
 	self shouldNotBeForeignStone.

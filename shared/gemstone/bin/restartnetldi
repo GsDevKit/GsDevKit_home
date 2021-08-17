@@ -34,6 +34,12 @@ RwLoadSpecificationV2 {
 ]
 %
 method
+globalNamed: aString
+	^ self 
+		globalNamed: aString 
+		ifAbsent: [ self error: 'The global named ', aString printString, ' cannot be found.'].
+%
+method
 restartNetldi
 	"If GemStone version if >= 3.3 netldi supports restarting with -r.
 	 Older version need to be stopped and then started using the same arguments used to start it the first time"
