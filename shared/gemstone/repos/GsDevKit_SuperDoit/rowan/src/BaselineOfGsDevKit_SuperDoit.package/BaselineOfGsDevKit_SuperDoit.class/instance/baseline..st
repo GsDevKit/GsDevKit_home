@@ -1,5 +1,7 @@
 baseline
 baseline: spec
+  ""
+
   <baseline>
   spec
     for: #'common'
@@ -7,13 +9,9 @@ baseline: spec
       spec
         package: 'GsDevKit-Core';
         package: 'GsDevKit-Tests' with: [ spec requires: #('GsDevKit-Core') ].
-      spec
-        group: 'default' with: #('GsDevKit-Tests') ].
+      spec group: 'default' with: #('GsDevKit-Tests') ].
   spec
     for: #'NeedsTDSessionDescription'
     do: [ 
-      spec
-        package: 'GsDevKit-TDSessionDescription'.
-      spec
-        group: 'default' with: #('GsDevKit-TDSessionDescription') ].
-
+      spec package: 'GsDevKit-TDSessionDescription'.
+      spec group: 'default' with: #('GsDevKit-TDSessionDescription') ]
