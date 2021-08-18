@@ -18,7 +18,7 @@ EXAMPLES
 %
 method
 stopNetldi
-	| sess stoneInfo netldiArgs result |
+	| sess stoneInfo netldiArgs result tempenvvalue |
 	(self positionalArgs size < 1)
 		ifTrue: [
 			^ Error signal: 'Wrong number of arguments (' , self positionalArgs size printString , ')' ].
@@ -26,7 +26,10 @@ stopNetldi
 	sess := self sessionDescriptionIfAbsent: [ :ignored |  ].
 	stoneInfo := self stoneInfo.
 	netldiArgs := sess ifNil: [ stoneInfo netLDI ] ifNotNil: [ sess netLDI ].
+	tempenvvalue := System gemEnvironmentVariable: 'GEMSTONE'.
+	System gemEnvironmentVariable: 'GEMSTONE' put: (System gemEnvironmentVariable: 'TARGET_GEMSTONE').
 	result := GsHostProcess execute: (self gs_binDirectory / 'stopnetldi ') fullPath asString, ' ', netldiArgs.
+	System gemEnvironmentVariable: 'GEMSTONE' put: tempenvvalue.
 	self stderr nextPutAll: result
 %
 method
@@ -62,7 +65,7 @@ sessionDescriptionHome
 %
 method
 gs_binDirectory
-	^ ((System gemEnvironmentVariable: 'GEMSTONE'), '/bin') asFileReference
+	^ (self gs_stoneDirectory / 'product' / 'bin') asFileReference
 %
 method
 gs_stonesDirectory

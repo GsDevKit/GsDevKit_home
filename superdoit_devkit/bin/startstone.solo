@@ -38,7 +38,6 @@ startStone
 	tempenvvalue := System gemEnvironmentVariable: 'GEMSTONE'.
 	System gemEnvironmentVariable: 'GEMSTONE' put: (System gemEnvironmentVariable: 'TARGET_GEMSTONE').
 	result := GsHostProcess execute: self startStoneCommand.
-"	self stdout nextPutAll: self startStoneCommand."
 	System gemEnvironmentVariable: 'GEMSTONE' put: tempenvvalue.
 	self stderr nextPutAll: result; cr.
 %

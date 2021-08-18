@@ -42,10 +42,13 @@ EXAMPLES
 %
 method
 startNetldi
-	| netldiArgs result |
+	| netldiArgs result tempenvvalue |
 	self shouldNotBeForeignStone.
 	netldiArgs := self netldiArgsStringFromArray: self netldiArgs.
+	tempenvvalue := System gemEnvironmentVariable: 'GEMSTONE'.
+	System gemEnvironmentVariable: 'GEMSTONE' put: (System gemEnvironmentVariable: 'TARGET_GEMSTONE').
 	result := GsHostProcess execute: (self gs_binDirectory / 'startnetldi ') fullPath asString, ' ', netldiArgs.
+	System gemEnvironmentVariable: 'GEMSTONE' put: tempenvvalue.
 	self stderr nextPutAll: result
 %
 method
@@ -115,7 +118,7 @@ sessionDescriptionHome
 %
 method
 gs_binDirectory
-	^ ((System gemEnvironmentVariable: 'GEMSTONE'), '/bin') asFileReference
+	^ (self gs_stoneDirectory / 'product' / 'bin') asFileReference
 %
 method
 gs_logDirectory
