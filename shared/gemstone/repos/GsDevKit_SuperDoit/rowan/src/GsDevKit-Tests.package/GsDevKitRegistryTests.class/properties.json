@@ -1,0 +1,15 @@
+{
+	"category" : "GsDevKit-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"registry",
+		"registryFileSystem" ],
+	"name" : "GsDevKitRegistryTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

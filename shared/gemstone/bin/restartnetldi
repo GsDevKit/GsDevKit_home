@@ -1,0 +1,173 @@
+#!/usr/bin/env superdoit_solo
+instvars
+%
+usage
+-----
+USAGE: restartnetldi [-h] <stone-name>
+
+DESCRIPTION
+Restart a running netldi process.
+
+OPTIONS
+  -h, --help 	display usage message
+
+EXAMPLES
+  $basename -h
+  $basename myStoneName
+-----
+%
+projectshome
+$GS_HOME/shared/gemstone/repos
+%
+specs
+[
+RwLoadSpecificationV2 {
+	#specName : 'GsDevKit_SuperDoit',
+	#projectName : 'GsDevKit_SuperDoit',
+	#diskUrl : 'file:$GS_HOME/shared/gemstone/repos/GsDevKit_SuperDoit',
+	#projectSpecFile : 'rowan/project.ston',
+	#componentNames : [
+		'GsDevKit'
+	],
+	#comment : 'loads GsDevKit support code in support of GsDevKit_home superDoit scripts'
+}
+]
+%
+method
+globalNamed: aString
+	^ self 
+		globalNamed: aString 
+		ifAbsent: [ self error: 'The global named ', aString printString, ' cannot be found.'].
+%
+method
+restartNetldi
+	"If GemStone version if >= 3.3 netldi supports restarting with -r.
+	 Older version need to be stopped and then started using the same arguments used to start it the first time"
+
+	| result netldiArgs |
+	self stderr nextPutAll: 'SESS_HOME: ', (System gemEnvironmentVariable: 'GS_SYS_SESSIONS').
+	self stoneInfo gsVers >= '3.3.0' ifTrue: [
+		result :=  GsHostProcess execute: (self gs_binDirectory / 'startnetldi ') fullPath asString, ' -r ', self sessionDescription netLDI.
+		self stderr nextPutAll: result.
+	] ifFalse: [
+		result := GsHostProcess execute: (self gs_devKitBinDirectory / 'stopNetldi ') fullPath asString, ' ', self stoneName.
+		self stderr nextPutAll: result.
+		netldiArgs := self netldiArgsStringFromArray: self netldiArgs.
+		result := GsHostProcess execute: (self gs_devKitBinDirectory / 'startNetldi ') fullPath asString, ' ', netldiArgs.
+		self stderr nextPutAll: result.
+	].
+%
+method
+netldiArgs
+	| sess netldiArgs |
+	sess := self sessionDescription.
+	netldiArgs := OrderedCollection new.
+	self netldiArgsOn: netldiArgs.
+	(self scriptArgs size = 1 or: [ self scriptArgs size = 2 and: [ self privateRestart ] ])
+		ifTrue: [
+			self privateRestart ifTrue: [ netldiArgs add: '-r' ].
+			sess netldiArgsOn: netldiArgs.
+		]
+		ifFalse: [
+			netldiArgs
+				addAll: (self scriptArgs copyFrom: 3 to: self scriptArgs size);
+				add: sess netLDI
+		].
+	^ netldiArgs
+%
+method
+netldiArgsOn: netldiArgs
+	| logDir |
+	logDir := self gs_logDirectory.
+	netldiArgs
+		add: '-l';
+		add: (logDir / 'netldi.log') fullPath asString
+%
+method
+netldiArgsStringFromArray: netldiArgsArray
+	^ String streamContents: [ :stream |
+			netldiArgsArray
+				do: [ :item | stream nextPutAll: item asString ]
+					separatedBy: [ stream space ]
+		]
+%
+method
+sessionDescription
+	^ self
+		sessionDescriptionIfAbsent: [ :sessionDescriptionReference |
+			Error signal:
+					'Session description file ' , sessionDescriptionReference pathString printString , ' for ' , self stoneName printString
+						, ' not found.' ]
+%
+method
+sessionDescriptionIfAbsent: absentBlock
+	^self sessionDescriptionFor: self stoneName ifAbsent: absentBlock
+%
+method
+sessionDescriptionFor: aStoneName ifAbsent: absentBlock
+	| sessionDescriptionReference |
+	sessionDescriptionReference := self sessionDescriptionHome / aStoneName.
+	sessionDescriptionReference exists
+		ifFalse: [ ^ absentBlock value: sessionDescriptionReference ].
+	^ (self globalNamed: 'TDSessionDescription') importFrom: sessionDescriptionReference pathString
+%
+method
+sessionDescriptionHome
+	^ (System gemEnvironmentVariable: 'GS_SYS_SESSIONS') asFileReference
+%
+method
+gs_binDirectory
+	^ ((System gemEnvironmentVariable: 'GEMSTONE'), '/bin') asFileReference
+%
+method
+gs_logDirectory
+	^ (System gemEnvironmentVariable: 'GEMSTONE_LOGDIR') asFileReference
+%
+method
+gs_stonesDirectory
+	^  ((System gemEnvironmentVariable: 'GS_HOME'), '/server/stones') asFileReference
+%
+method
+gs_devKitBinDirectory
+	^  ((System gemEnvironmentVariable: 'GS_HOME'), '/bin') asFileReference
+%
+method
+gs_stoneDirectory
+	^  self gs_stonesDirectory / self stoneName
+%
+method
+stoneInfoClass
+	^ (self globalNamed: 'GsDevKitStoneInfo')
+%
+method
+stoneInfoFilename
+	^  'info.ston'
+%
+method
+stoneInfo
+	^ self stoneInfoClass importFrom: self gs_stoneDirectory / self stoneInfoFilename
+%
+method
+stoneName
+	^ self positionalArgs at: 1
+%
+method
+doit
+	"override doit method, because ChildError does not exist in 3.6.0" 
+	[
+		self getAndVerifyOptions == self noResult
+			ifTrue: [ ^ self noResult ].
+		^ self theDoit
+	] on: Error do: [:ex |
+		self debug ifTrue: [ ex pass ].
+		self
+			exit: ((ex respondsTo: #stderr)
+				ifTrue: [ ex stderr asString trimBoth ]
+				ifFalse: [ ex messageText ])
+			withStatus: 1 "does not return" ].
+%
+doit
+	self preDoitSpecLoad.	"load the GsDevKit_SuperDoit project from spec"
+	self restartNetldi.
+	^ self noResult
+%

@@ -1,0 +1,16 @@
+{
+	"category" : "GsDevKit-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "jupiter 04/07/2021 16:21",
+	"instvars" : [
+		"sourcePath",
+		"sourceReference",
+		"modificationTime" ],
+	"name" : "GsDevKitSerializable",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

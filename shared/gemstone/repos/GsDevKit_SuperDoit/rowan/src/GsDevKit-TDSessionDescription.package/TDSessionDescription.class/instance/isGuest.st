@@ -1,0 +1,4 @@
+testing
+isGuest
+
+	^ osUserId isNil

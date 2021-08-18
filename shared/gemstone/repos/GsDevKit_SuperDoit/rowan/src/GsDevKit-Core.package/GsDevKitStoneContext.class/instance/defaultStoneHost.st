@@ -1,0 +1,3 @@
+defaults
+defaultStoneHost
+  ^ 'localhost'

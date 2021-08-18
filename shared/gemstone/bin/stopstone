@@ -1,0 +1,148 @@
+#!/usr/bin/env superdoit_solo
+instvars
+	stoneName
+%
+options
+{
+	SuperDoitOptionalOptionWithNoArg long: 'both' short: 'b'.
+}
+%
+usage
+-----
+USAGE: $basename [-h] [-b] <stone-name>
+
+DESCRIPTION
+ Start the stone process for the given stone.
+
+OPTIONS
+  -h, --help 	display usage message
+
+The following options not implemented here
+  -b, --both 		start both stone and netldi
+
+EXAMPLES
+  $basename -h
+  $basename myStoneName
+  $basename -b myStoneName
+-----
+%
+projectshome
+$GS_HOME/shared/gemstone/repos
+%
+specs
+[
+RwLoadSpecificationV2 {
+	#specName : 'GsDevKit_SuperDoit',
+	#projectName : 'GsDevKit_SuperDoit',
+	#diskUrl : 'file:$GS_HOME/shared/gemstone/repos/GsDevKit_SuperDoit',
+	#projectSpecFile : 'rowan/project.ston',
+	#componentNames : [
+		'GsDevKit'
+	],
+	#comment : 'loads GsDevKit support code in support of GsDevKit_home superDoit scripts'
+}
+]
+%
+method
+globalNamed: aString
+	^ self 
+		globalNamed: aString 
+		ifAbsent: [ self error: 'The global named ', aString printString, ' cannot be found.'].
+%
+method
+stopStone
+	| result |
+	(self positionalArgs size < 1 or: [ self positionalArgs size > 2 ])
+		ifTrue: [
+			^ Error signal: 'Wrong number of arguments (' , self positionalArgs size printString , ')' ].
+	self shouldNotBeForeignStone.
+	result := GsHostProcess execute: self stopStoneCommand.
+	self stderr nextPutAll: result.
+%
+method
+stopStoneCommand
+	| topaziniDict |
+	topaziniDict := self topaziniDict.
+	^ String streamContents: [ :stream |
+		stream
+			nextPutAll: (self gs_binDirectory / 'stopstone ') fullPath asString;
+			nextPut: Character space;
+			nextPutAll: self positionalArgs first;
+			nextPut: Character space;
+			nextPutAll: (topaziniDict at: 'user');
+			nextPut: Character space;
+			nextPutAll: (topaziniDict at: 'password')
+	]
+%
+method
+shouldNotBeForeignStone
+	self stoneInfo isForeignStone
+		ifTrue: [
+			^ Error signal:
+					'The stone ' , self stoneName printString , ' is a foreign stone and should not be controlled from GsDevKit_home.' ].
+%
+method
+gs_binDirectory
+	^ ((System gemEnvironmentVariable: 'GEMSTONE'), '/bin') asFileReference
+%
+method
+gs_stonesDirectory
+	^  ((System gemEnvironmentVariable: 'GS_HOME'), '/server/stones') asFileReference
+%
+method
+gs_stoneDirectory
+	^  self gs_stonesDirectory / self stoneName
+%
+method
+stoneName
+	stoneName ifNil: [ stoneName := self positionalArgs at: 1 ].
+	^ stoneName
+%
+method
+stoneInfoClass
+	^ (self globalNamed: 'GsDevKitStoneInfo')
+%
+method
+stoneInfoFilename
+	^  'info.ston'
+%
+method
+stoneInfo
+	^ self stoneInfoClass importFrom: self gs_stoneDirectory / self stoneInfoFilename
+%
+method
+topaziniFile
+	^self gs_stoneDirectory / '.topazini'
+%
+method
+topaziniDict
+	| dict topaziniData index|
+	dict := Dictionary new.
+	topaziniData := self topaziniFile contents.
+	dict at: 'user' put: (topaziniData
+		copyFrom: (index := topaziniData indexOfSubCollection: 'user') + 5
+		to: (topaziniData indexOf: Character lf startingAt: index) - 1).
+	dict at: 'password' put: (topaziniData
+		copyFrom: (index := topaziniData indexOfSubCollection: 'password') + 9
+		to: (topaziniData indexOf: Character lf startingAt: index) - 1).
+	^ dict
+%
+method
+doit
+	"override doit method, because ChildError does not exist in 3.6.0"
+	[
+		self getAndVerifyOptions == self noResult
+			ifTrue: [ ^ self noResult ].
+		^self theDoit
+	] on: Error do: [:ex |
+		self debug ifTrue: [ ex pass ].
+		self
+			exit: ((ex respondsTo: #stderr)
+				ifTrue: [ ex stderr asString trimBoth ]
+				ifFalse: [ ex messageText ])
+			withStatus: 1 "does not return" ].
+%
+doit
+	self stopStone.
+	^ self noResult
+%

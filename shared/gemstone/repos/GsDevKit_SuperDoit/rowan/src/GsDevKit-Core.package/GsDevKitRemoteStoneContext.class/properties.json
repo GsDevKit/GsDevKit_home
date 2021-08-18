@@ -1,0 +1,14 @@
+{
+	"category" : "GsDevKit-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GsDevKitRemoteStoneContext",
+	"pools" : [
+		 ],
+	"super" : "GsDevKitStoneContext",
+	"type" : "normal" }

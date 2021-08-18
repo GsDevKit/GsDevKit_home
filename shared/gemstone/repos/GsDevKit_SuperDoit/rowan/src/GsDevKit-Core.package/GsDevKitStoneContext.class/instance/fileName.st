@@ -1,0 +1,3 @@
+exporting
+fileName
+  ^ 'stone.context'
