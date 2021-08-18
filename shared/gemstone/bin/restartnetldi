@@ -34,12 +34,6 @@ RwLoadSpecificationV2 {
 ]
 %
 method
-globalNamed: aString
-	^ self 
-		globalNamed: aString 
-		ifAbsent: [ self error: 'The global named ', aString printString, ' cannot be found.'].
-%
-method
 restartNetldi
 	"If GemStone version if >= 3.3 netldi supports restarting with -r.
 	 Older version need to be stopped and then started using the same arguments used to start it the first time"
@@ -109,7 +103,7 @@ sessionDescriptionFor: aStoneName ifAbsent: absentBlock
 	sessionDescriptionReference := self sessionDescriptionHome / aStoneName.
 	sessionDescriptionReference exists
 		ifFalse: [ ^ absentBlock value: sessionDescriptionReference ].
-	^ (self globalNamed: 'TDSessionDescription') importFrom: sessionDescriptionReference pathString
+	^ TDSessionDescription importFrom: sessionDescriptionReference pathString
 %
 method
 sessionDescriptionHome
@@ -168,6 +162,6 @@ doit
 %
 doit
 	self preDoitSpecLoad.	"load the GsDevKit_SuperDoit project from spec"
-	self restartNetldi.
-	^ self noResult
+		self restartNetldi.
+		^ self noResult
 %
