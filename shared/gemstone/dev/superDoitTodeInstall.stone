@@ -44,7 +44,7 @@ doit
 		load.
 	metacello new
 		baseline: 'SuperDoit';
-		repository: 'filetree://$GS_HOME/shared/gemstone/repos/superDoit/packages/filetree';
+		repository: 'filetree://$GS_HOME/shared/gemstone/repos/superDoit/src';
 		load.
 	System commit.
 	^ self noResult
