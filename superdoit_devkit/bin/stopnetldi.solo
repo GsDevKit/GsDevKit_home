@@ -3,7 +3,7 @@ instvars
 %
 usage
 -----
-USAGE: startNetldi [-h] <stone-name> [<startnetldi-commandLine-args>]
+USAGE: $basename [-h] <stone-name>
 
 DESCRIPTION
 Stop the netldi process for the given stone.
