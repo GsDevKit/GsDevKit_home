@@ -40,7 +40,7 @@ doit
 		ifAbsent: [ self error: 'Metacello is required to run this script'].
 	metacello new
 		baseline: 'GsDevKit_SuperDoit';
-		repository: 'filetree://$GS_HOME/shared/gemstone/repos/GsDevKit_SuperDoit/rowan/src';
+		repository: 'filetree://$GS_HOME/shared/gemstone/repos/GsDevKit_SuperDoit/src';
 		load.
 	metacello new
 		baseline: 'SuperDoit';
