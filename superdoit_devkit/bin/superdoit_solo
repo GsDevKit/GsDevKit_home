@@ -15,7 +15,7 @@ gemstoneDir="$SUPERDOIT_DIR/gemstone"
 
 scriptFile=$1
 shift
-
+export TARGET_GEMSTONE=$GEMSTONE
 if [ "$ARCHBASE"x != "x" ] ; then
 	# Internal GemStone private or sanctioned build (3.6.0 and newer)"
   if [ -d "$ARCHBASE/fast42" ] ; then

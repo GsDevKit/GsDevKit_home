@@ -71,8 +71,8 @@ do
       popd >& /dev/null
 
       # stop the stone
-      "$GS_HOME/bin/devKitCommandLine" stopstone $stoneName
-      #"$GS_HOME/superdoit_devkit/bin/stopstone" $stoneName
+      #"$GS_HOME/bin/devKitCommandLine" stopstone $stoneName
+      "$GS_HOME/superdoit_devkit/bin/stopstone" $stoneName
 
       if [ "${stopNetldi}" = "true" ] ; then
         "$GS_HOME/bin/stopNetldi" $stoneName
