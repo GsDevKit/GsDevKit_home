@@ -42,4 +42,4 @@ if [ "$1" = "-h" ] ; then
 fi
 
 # "$GS_HOME/bin/devKitCommandLine" stones $*
-"$GS_HOME/superdoit_devkit/bin/stones" $*
+"$GS_HOME/superdoit_devkit/bin/stones.solo" $*

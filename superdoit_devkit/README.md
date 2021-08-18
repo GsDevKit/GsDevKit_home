@@ -17,7 +17,9 @@ installServerClient
 ```
 ### development process
 #### two shell windows
-Use two shell windows, one that has the $GS_HOME/bin AND superdoit bin directories included in $PATH (`. $GS_HOME/bin/defSUPERDOIT_PATH.env`) and one that has just $GS_HOME/bin in $PATH (`. $GS_HOME/bin/defHOME_PATH.env`). Use the superdoit_bin shell for testing/executing the superdoit scripts nad the gs_home_bin shell for creating/stopping/starting stones, etc.
+Use two shell windows, one that has the $GS_HOME/bin AND superdoit bin directories included in $PATH (`. $GS_HOME/bin/defSUPERDOIT_PATH.env`) and one that has just $GS_HOME/bin in $PATH (`. $GS_HOME/bin/defHOME_PATH.env`). 
+Use the superdoit_bin shell for executing the `$GS_HOME/bin` scripts that use superdoit scripts and for testing/executing the superdoit scripts themselves.
+Use the gs_home_bin shell for the `$GS_HOME/bin` scripts that still use the Pharo devKitCommandLine image.
 #### develop in tODE
 1. create tODE client tode
    ```bash
