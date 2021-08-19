@@ -1,0 +1,121 @@
+name: Client Tests
+
+on: 
+  push:
+  pull_request:
+  schedule:
+    - cron: "15 2 19 * *" #run job on the 19th day of every month on the 15th minute of the 2nd hour
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    strategy:
+      fail-fast: false
+      matrix:
+        gs_version: [ 2.4.8, 3.1.0.6, 3.2.17, 3.3.9, 3.4.5, 3.5.5, 3.6.1 ]
+        test: [ Clients ]
+        allowfailure: [ false ]
+        include:
+          - gs_version: 3.3.9
+            test: Client
+            client: Pharo3.0
+            allowfailure: false
+          - gs_version: 3.3.9
+            test: Client
+            client: Pharo6.1
+            allowfailure: false
+          - gs_version: 3.4.5
+            test: Client
+            client: Pharo3.0    
+            allowfailure: false
+          - gs_version: 3.4.5
+            test: Client
+            client: Pharo6.1
+            allowfailure: false
+          - gs_version: 3.5.5
+            test: Client
+            client: Pharo3.0
+            allowfailure: false
+          - gs_version: 3.5.5
+            test: Client
+            client: Pharo6.1
+            allowfailure: false
+          - gs_version: 3.6.1
+            test: Client
+            client: Pharo3.0
+            allowfailure: false
+          - gs_version: 3.6.1
+            test: Client
+            client: Pharo5.0
+            allowfailure: false
+          - gs_version: 3.6.1
+            test: Client
+            client: Pharo6.0
+            allowfailure: false
+          - gs_version: 3.6.1
+            test: Client
+            client: Pharo6.1
+            allowfailure: false
+          - gs_version: 3.6.1
+            test: Client
+            client: Pharo7.0
+            allowfailure: false
+          
+    env:
+      GS_VERSION: ${{ matrix.gs_version }}
+      TEST: ${{ matrix.test }}
+      UPGRADE_FROM: ${{ matrix.upgrade_from }}
+      Client: ${{ matrix.client }}
+    continue-on-error: ${{ matrix.allowfailure }}
+    name: ${{ matrix.gs_version }} - ${{ matrix.test }} - ${{ matrix.upgrade_from }} - ${{ matrix.client }}
+    steps:
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%dT%H:%M:%S')"
+      - name: Log date
+        run: echo "${{ steps.date.outputs.date }}"
+      - name: Set default run status
+        run: echo "::set-output name=last_run_status::default" > last_run_status
+      - name: Restore last run status
+        id: last_run
+        uses: actions/cache@v2
+        with:
+          path: |
+            last_run_status
+          key: ${{ github.run_id }}-${{ matrix.gs_version }}-${{ matrix.test }}-${{ matrix.upgrade_from }}-${{ matrix.client }}-${{ steps.date.outputs.date }}
+          restore-keys: |
+            ${{ github.run_id }}-${{ matrix.gs_version }}-${{ matrix.test }}-${{ matrix.upgrade_from }}-${{ matrix.client }}-
+      - name: Set last run status
+        id: last_run_status
+        run: cat last_run_status
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.workflow_dispatch.ref }}
+      - name: Run tests
+        id: test_run
+        if: steps.last_run_status.outputs.last_run_status != 'success'
+        run: |
+          export GS_HOME="$(pwd)"
+          export PATH="$GS_HOME/superdoit_devkit/bin":"$GS_HOME/superdoit_devkit/examples":"$GS_HOME/superdoit_devkit/utils":"$GS_HOME/superdoit_devkit/tests":"$GS_HOME/bin":$PATH
+          export GS_TRAVIS=true
+          export JAVA="/usr/bin/java"
+          hostname
+          cat /etc/hosts
+          $GITHUB_WORKSPACE/tests/testTravisCI.sh
+        shell: bash
+      - name: Save run status
+        if: steps.last_run_status.outputs.last_run_status != 'success'
+        run: echo "::set-output name=last_run_status::${{ steps.test_run.outcome }}" > last_run_status
+  slack-workflow-status:
+    if: always()
+    name: Post Workflow Status To Slack
+    needs:
+      - build
+    runs-on: ubuntu-18.04
+    steps:
+       - name: Slack Workflow Notification
+         uses: Gamesight/slack-workflow-status@master
+         with:
+          repo_token: ${{secrets.GITHUB_TOKEN}}
+          slack_webhook_url: ${{secrets.SLACK_DALEHENRICH}}
+          name: 'action run' 

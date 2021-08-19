@@ -23,6 +23,10 @@ OPTIONS
   -f
      Force creation of new stone by deleting 
      \$GS_HOME/gemstone/stone/<target-stone-name> directory if it exists
+  -g
+     Do not install tODE in upgraded stone. Allow for upgrading a stone that
+     does not have tODE installed in the original stone and that should not
+     have installed post upgrade.
   -l <post-load-tode-script>
      tODE path to the tODE script that loads your application code
   -m <tempObjCacheSize>
@@ -75,11 +79,13 @@ tempObjCacheSize="100000"
 gemstoneUserId="DataCurator"
 gemstonePassword="swordfish"
 topazWaitForDebug=""
-while getopts "cfhl:s:um:U:P:W" OPT ; do
+skipInstallTode="false"
+while getopts "cfhl:s:um:U:P:Wg" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     c) runUpgrade="false";;
     f) forceArg="-f";; 
+		g) skipInstallTode="true";;
     l) postUpgradeLoadScriptPath="${OPTARG}";;
     m) tempObjCacheSize="${OPTARG}" ;;
     s) 
@@ -130,9 +136,9 @@ stone "$targetStoneName":
   6. executes the \$GEMSTONE/bin/upgradeImage script
   7. executes the \$GEMSTONE/seaside/bin/upgradeSeasideImage script
   8. executes the \$GS_SERVER/bin/todeLoad in $targetStoneName stone
-     to complete the upgrade process.
-  9. executes the <post-load-tode-script> (-l option)
- 10. perform post-upgrade tasks
+     to complete the upgrade process, unless -g option specified.
+  9. executes the <post-load-tode-script> (-l option), unless -g option specified.
+ 10. perform post-upgrade tasks, unless -g option specified.
 
 If an error occurs during execution of this script, the details of the error are
 available in the topazerrors.log file in the 
@@ -304,31 +310,35 @@ EOF
   
 popd >& /dev/null  
 
-echo "Installing tODE"
-"$GS_HOME/bin/todeLoad" $targetStoneName
-if [ "${createStone}" = "true" ] ; then
-  if [ -d  "$GS_SYS_STONES/$sourceStoneName/projects" ] ; then
-    cp -r $GS_SYS_STONES/$sourceStoneName/projects/. \
-          $GS_SYS_STONES/$targetStoneName/projects/
-  fi
-  if [ -d  "$GS_SYS_STONES/$sourceStoneName/home" ] ; then
-    cp -r $GS_SYS_STONES/$sourceStoneName/home/. \
-          $GS_SYS_STONES/$targetStoneName/home/
-  fi
-fi
+if [ "${skipInstallTode}" = "true" ] ; then
+	echo "Installation of tODE SKIPPED"
+	echo "  Post upgrade load script SKIPPED"
+	echo "	postUpgradeStone tasks SKIPPED"
+else
+	echo "Installing tODE"
+	"$GS_HOME/bin/todeLoad" $targetStoneName
+	if [ "${createStone}" = "true" ] ; then
+  	if [ -d  "$GS_SYS_STONES/$sourceStoneName/projects" ] ; then
+    	cp -r $GS_SYS_STONES/$sourceStoneName/projects/. \
+      	    $GS_SYS_STONES/$targetStoneName/projects/
+  	fi
+  	if [ -d  "$GS_SYS_STONES/$sourceStoneName/home" ] ; then
+    	cp -r $GS_SYS_STONES/$sourceStoneName/home/. \
+      	    $GS_SYS_STONES/$targetStoneName/home/
+  	fi
+	fi
 
+	if [ "${postUpgradeLoadScriptPath}x" != "x" ] ;  then
+	  #install application code
+  	echo "Running ${postUpgradeLoadScriptPath} tODE script"
 
-if [ "${postUpgradeLoadScriptPath}x" != "x" ] ;  then
-  #install application code
-  echo "Running ${postUpgradeLoadScriptPath} tODE script"
-
-  "$GS_HOME/bin/private/gsDevKitTodeCommandLine" todeIt $targetStoneName << TODE
+  	"$GS_HOME/bin/private/gsDevKitTodeCommandLine" todeIt $targetStoneName << TODE
 project upgrade --install=${postUpgradeLoadScriptPath}
 TODE
+	fi
+
+	echo "Performing post upgrade tasks"
+	"$GS_HOME/bin/devKitCommandLine" postUpgradeStone $sourceStoneName $targetStoneName $gsvers
 fi
-
-echo "Performing post upgrade tasks"
-"$GS_HOME/bin/devKitCommandLine" postUpgradeStone $sourceStoneName $targetStoneName $gsvers
-
 exit_0_banner "...finished"
 
