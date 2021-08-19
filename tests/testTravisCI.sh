@@ -269,6 +269,30 @@ EOF
     stopStone -b $upgradeStoneName
 		exit $status
     ;;
+  Upgrade_318) # Issue #318 test case ... upgradeStone -g option
+    installServer
+    upgradeFromStoneName="${STONENAME1}_${UPGRADE_FROM}"
+    upgradeFromVersion="${UPGRADE_FROM}"
+    createStone -g ${STONENAME1}_${UPGRADE_FROM} ${UPGRADE_FROM}
+    upgradeStoneName="${STONENAME1}_${GS_VERSION}"
+    set +e
+    upgradeStone -g -f ${TOPAZWAITFORDEBUG} ${STONENAME1}_${UPGRADE_FROM} $upgradeStoneName $GS_VERSION << EOF
+
+EOF
+    status=$?
+    echo "UPGRADE FINISHED WITH $status exit status"
+    if [ "$status" = "0" ] ; then
+      startStone ${STONENAME1}_${UPGRADE_FROM}	#stopped during upgrade
+      $GS_HOME/tests/unitTests.sh $upgradeStoneName true #fail if unit tests don't pass
+      status=$?
+      if [ "$status" != "0" ] ; then
+        echo "unit tests failed after upgrade"
+      fi
+    fi
+    stopStone -b ${STONENAME1}_${UPGRADE_FROM}
+    stopStone -b $upgradeStoneName
+    exit $status
+    ;;
   BasicTodeClient)
     $GS_HOME/tests/basicTodeClientTests.sh
     ;;
