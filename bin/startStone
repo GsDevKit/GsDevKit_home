@@ -114,7 +114,7 @@ fi
 
 # start the stone
 # "$GS_HOME/bin/devKitCommandLine" startstone $stoneName $ARG
-"$GS_HOME/superdoit_devkit/bin/startstone.solo" $stoneName $ARG
+"$GS_HOME/shared/gemstone/bin/startstone.solo" $stoneName $ARG
 
 if [ "${waitTime}x" = "x" ] ; then
   if [ "${GS_TRAVIS}x" != "x" ] ; then

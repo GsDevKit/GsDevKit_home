@@ -148,7 +148,7 @@ if [ "${noRestart}" = "false" ] ; then
   case "$filetype" in
     backup) 
       # "$GS_HOME/bin/devKitCommandLine" newExtent $stoneName "$stonePath/product/bin/extent0.dbf"
-      "$GS_HOME/superdoit_devkit/bin/newExtent.solo" $stoneName "$stonePath/product/bin/extent0.dbf"
+      "$GS_HOME/shared/gemstone/bin/newExtent.solo" $stoneName "$stonePath/product/bin/extent0.dbf"
       # -N option used to ignore tranlog files during restart
       echo "Restarting stone and netldi"
       "$GS_HOME/bin/startStone" -b -N $stoneName
@@ -162,10 +162,10 @@ if [ "${noRestart}" = "false" ] ; then
       if [ "${snapshotFile}x" != "x" ] ; then
         mimeType=`file -b --mime-type $snapshotFile | cut -d / -f 2`
         # "$GS_HOME/bin/devKitCommandLine" newExtent $stoneName "${snapshotFile}" $mimeType
-        "$GS_HOME/superdoit_devkit/bin/newExtent.solo" -D $stoneName "${snapshotFile}" $mimeType
+        "$GS_HOME/shared/gemstone/bin/newExtent.solo" -D $stoneName "${snapshotFile}" $mimeType
       else
         # "$GS_HOME/bin/devKitCommandLine" newExtent $stoneName
-        "$GS_HOME/superdoit_devkit/bin/newExtent.solo" $stoneName
+        "$GS_HOME/shared/gemstone/bin/newExtent.solo" $stoneName
       fi
       # -N option used to ignore tranlog files during restart
       echo "Restarting stone and netldi"
@@ -195,7 +195,7 @@ else
   fi
   mimeType=`file -b --mime-type $snapshotFile | cut -d / -f 2`
   # "$GS_HOME/bin/devKitCommandLine" newExtentForRecovery $stoneName "${snapshotFile}" $mimeType
-  "$GS_HOME/superdoit_devkit/bin/newExtent.solo" -R $stoneName "${snapshotFile}" $mimeType
+  "$GS_HOME/shared/gemstone/bin/newExtent.solo" -R $stoneName "${snapshotFile}" $mimeType
 
   echo "Stone is now ready for recovery. Please read the How to Restore from Backup"
   echo "section of the manual (http://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/GS64-SysAdmin-3.2.htm?http://downloads.gemtalksystems.com/docs/GemStone64/3.2.x/GS64-SysAdmin-3.2/9-BackupAndRestore.htm#pgfId-999128)"
