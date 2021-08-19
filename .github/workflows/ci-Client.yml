@@ -96,7 +96,7 @@ jobs:
         if: steps.last_run_status.outputs.last_run_status != 'success'
         run: |
           export GS_HOME="$(pwd)"
-          export PATH=$GS_HOME/bin:$PATH
+          export PATH="$GS_HOME/superdoit_devkit/bin":"$GS_HOME/superdoit_devkit/examples":"$GS_HOME/superdoit_devkit/utils":"$GS_HOME/superdoit_devkit/tests":"$GS_HOME/bin":$PATH
           export GS_TRAVIS=true
           export JAVA="/usr/bin/java"
           hostname
