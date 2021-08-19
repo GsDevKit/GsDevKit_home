@@ -46,12 +46,6 @@ RwLoadSpecificationV2 {
 ]
 %
 method
-globalNamed: aString
-	^ self 
-		globalNamed: aString 
-		ifAbsent: [ self error: 'The global named ', aString printString, ' cannot be found.'].
-%
-method
 startStone
 	| result tempenvvalue |
 	(self positionalArgs size < 1 or: [ self positionalArgs size > 1 ])
