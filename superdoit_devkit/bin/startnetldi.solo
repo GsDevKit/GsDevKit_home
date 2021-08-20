@@ -8,6 +8,7 @@ options
 	SuperDoitOptionalOptionWithNoArg long: 'privateUserName' short: 'a'.
 	SuperDoitOptionalOptionWithNoArg long: 'privatePortNumber' short: 'P'.
 	SuperDoitOptionalOptionWithNoArg long: 'privateRestart' short: 'r'.
+	SuperDoitOptionalOptionWithNoArg long: 'privateAddress' short: 'A'.
 }
 %
 usage
