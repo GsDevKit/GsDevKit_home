@@ -59,7 +59,7 @@ setupType=$1
 "$GS_HOME/bin/utils/cloneGsDevKitProjects" $modeArg $organizationArg $setupType
 "$GS_HOME/bin/utils/cloneSharedTodeProjects" $modeArg $setupType
 
-pushd $GS_HOME/shared/gemstone
+pushd $GS_HOME/shared/gemstone/repos
 	$GS_HOME/bin/downloadGemStone 3.6.1
 	$GS_HOME/bin/private/cloneGitHubProject -c https dalehenrich superDoit
 	cd superDoit/gemstone/gs
