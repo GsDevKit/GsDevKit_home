@@ -90,9 +90,9 @@ jobs:
         if: steps.last_run_status.outputs.last_run_status != 'success'
         run: |
           export GS_HOME="$(pwd)"
-          echo "GS_HOME--->${GS_HOME}<---"
+          echo ${GS_HOME}
           export PATH="$GS_HOME/shared/gemstone/bin":"$GS_HOME/shared/gemstone/repos/superDoit/bin":"$GS_HOME/bin":$PATH
-          echo "PATH--->${$PATH}<---"
+          echo ${$PATH}
           export GS_TRAVIS=true
           hostname
           cat /etc/hosts
