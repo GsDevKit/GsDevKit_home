@@ -30,8 +30,8 @@ $GS_HOME/bin/private/clone_sys_local -c https
 # Customize the scripts used by tODE (https://github.com/dalehenrich/tode/issues/226)
 $GS_HOME/tests/travisCustomize.sh
 
-# Prepare superdoit scripts
-$GS_HOME/tests/prepare_tests_superdoit.sh
+## Prepare superdoit scripts
+#$GS_HOME/tests/prepare_tests_superdoit.sh
 
 if [ "${DOWNLOAD}x" != "x" ] ; then
   downloadGemStone -f -d "${DOWNLOAD}" $GS_VERSION
