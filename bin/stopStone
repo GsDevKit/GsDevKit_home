@@ -72,7 +72,7 @@ do
 
       # stop the stone
       #"$GS_HOME/bin/devKitCommandLine" stopstone $stoneName
-      "$GS_HOME/shared/gemstone/bin/stopstone.solo" -D $stoneName
+      "$GS_HOME/shared/gemstone/bin/stopstone.solo" $stoneName
 
       if [ "${stopNetldi}" = "true" ] ; then
         "$GS_HOME/bin/stopNetldi" $stoneName

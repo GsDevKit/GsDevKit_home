@@ -18,8 +18,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # gs_version: [ 2.4.8, 3.1.0.6, 3.2.17, 3.3.9, 3.4.5, 3.5.5, 3.6.1 ]
-        gs_version: [ 3.6.1 ]
+        gs_version: [ 2.4.8, 3.1.0.6, 3.2.17, 3.3.9, 3.4.5, 3.5.5, 3.6.1 ]
         test: [ UnitTests, BasicA, BasicB ]
         allowfailure: [false]
         exclude:
@@ -84,7 +83,7 @@ jobs:
           ref: ${{ github.event.workflow_dispatch.ref }}
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
-        # if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug_enabled }}
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug_enabled }}
       - name: Run tests
         id: test_run
         if: steps.last_run_status.outputs.last_run_status != 'success'
