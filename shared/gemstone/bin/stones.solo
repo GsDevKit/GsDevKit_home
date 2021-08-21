@@ -123,21 +123,6 @@ method
 gsListResult
 	^ gsListResult ifNil: [ gsListResult := GsHostProcess execute: self gs_binDirectory, 'gslist -lc' ]
 %
-method
-doit
-	"override doit method, because ChildError does not exist in 3.6.0"
-	[
-		self getAndVerifyOptions == self noResult
-			ifTrue: [ ^ self noResult ].
-		^ self theDoit
-	] on: Error do: [:ex |
-		self debug ifTrue: [ ex pass ].
-		self
-			exit: ((ex respondsTo: #stderr)
-				ifTrue: [ ex stderr asString trimBoth ]
-				ifFalse: [ ex messageText ])
-			withStatus: 1 "does not return" ].
-%
 doit
 	^ self produceStonesReport
 %
