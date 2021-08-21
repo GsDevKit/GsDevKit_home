@@ -6,7 +6,7 @@ options
 {
   SuperDoitOptionalOptionWithNoArg long: 'all' short: 'a'.
   SuperDoitOptionalOptionWithNoArg long: 'installed' short: 'i'.
-	SuperDoitOptionalOptionWithNoArg long: 'running' short: 'r'.
+  SuperDoitOptionalOptionWithNoArg long: 'running' short: 'r'.
 }
 %
 usage
@@ -88,8 +88,9 @@ gsListReportNamed: reportName matching: matchString on: stream
 	stream
 		nextPutAll: 'Running ', reportName, ':';
 		cr.
-	(self gsListResult indexOfSubCollection: 'gslist[Info]: No GemStone servers') ~= 0
-		ifTrue: [ ^ self ].
+	"TEMPORARILY PATCHED WITH ERROR HANDLER TO HANDLE NON-ZERO EXIT STATUS"
+	[ (self gsListResult indexOfSubCollection: 'gslist[Info]: No GemStone servers') ~= 0 
+		ifTrue: [ ^ self ] ] on: Error do:[ ^ self ].
 	stream
 		tab;
 		nextPutAll: 'Status        Version    Owner       Pid   Port   Started     Type       Name';
@@ -97,7 +98,7 @@ gsListReportNamed: reportName matching: matchString on: stream
 		tab;
 		nextPutAll: '-------      --------- --------- -------- ----- ------------ ------      ----';
 		cr.
-	(gsListResult substrings: '', Character lf)
+	(self gsListResult substrings: '', Character lf)
 		do: [ :line |
 			(line matchPattern: { $*. matchString. $*})
 				ifTrue: [

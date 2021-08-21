@@ -8,6 +8,7 @@ options
 	SuperDoitOptionalOptionWithNoArg long: 'privateUserName' short: 'a'.
 	SuperDoitOptionalOptionWithNoArg long: 'privatePortNumber' short: 'P'.
 	SuperDoitOptionalOptionWithNoArg long: 'privateRestart' short: 'r'.
+	SuperDoitOptionalOptionWithNoArg long: 'privateAddress' short: 'A'.
 }
 %
 usage
@@ -64,7 +65,8 @@ startNetldi
 	netldiArgs := self netldiArgsStringFromArray: self netldiArgs.
 	tempenvvalue := System gemEnvironmentVariable: 'GEMSTONE'.
 	System gemEnvironmentVariable: 'GEMSTONE' put: (System gemEnvironmentVariable: 'TARGET_GEMSTONE').
-	result := GsHostProcess execute: (self gs_binDirectory / 'startnetldi ') fullPath asString, ' ', netldiArgs.
+	"TEMPORARILY PATCHED WITH ERROR HANDLER TO HANDLE NON-ZERO EXIT STATUS"
+	[ result := GsHostProcess execute: (self gs_binDirectory / 'startnetldi ') fullPath asString, ' ', netldiArgs ] on: Error do:[:e | result := 'non-zero exit status!' ].
 	System gemEnvironmentVariable: 'GEMSTONE' put: tempenvvalue.
 	self stderr nextPutAll: result
 %
@@ -151,7 +153,7 @@ gs_stoneDirectory
 %
 method
 stoneInfoClass
-	^ (self globalNamed: 'GsDevKitStoneInfo')
+	^ (self globalNamed: 'TDSessionDescription')
 %
 method
 stoneInfoFilename
@@ -181,7 +183,7 @@ doit
 			withStatus: 1 "does not return" ].
 %
 doit
-	self preDoitSpecLoad.	"load the GsDevKit_SuperDoit project from spec"
+	self preDoitSpecLoad.   "load the GsDevKit_SuperDoit project from spec"
 	self startNetldi.
 	^ self noResult
 
