@@ -35,7 +35,7 @@ while getopts "hc:o:" OPT ; do
 done
 shift $(($OPTIND - 1))
 
-if [ $# -ne 1 ]; then
+if [ $# -ne 0 ]; then
   usage; exit_1_banner "Wrong number of arguments (0 expected)"
 fi
 
