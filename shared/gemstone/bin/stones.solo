@@ -77,7 +77,7 @@ installedStones
 					(stoneDir filesMatching: self stoneInfoFilename)
 						do: [ :infoFile |
 							| info |
-							info := GsDevKitStoneInfo importFrom: infoFile.
+							info := (self globalNamed: 'GsDevKitStoneInfo') importFrom: infoFile.
 							stoneDir isSymlink
 								ifTrue: [ info isAttached: true ].
 							installedStones add: info ] ].
