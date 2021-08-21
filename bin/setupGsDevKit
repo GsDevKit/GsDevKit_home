@@ -59,15 +59,7 @@ setupType=$1
 "$GS_HOME/bin/utils/cloneGsDevKitProjects" $modeArg $organizationArg $setupType
 "$GS_HOME/bin/utils/cloneSharedTodeProjects" $modeArg $setupType
 
-pushd $GS_HOME/shared/gemstone/repos
-	$GS_HOME/bin/downloadGemStone 3.6.1
-	$GS_HOME/bin/private/cloneGitHubProject -c https dalehenrich superDoit
-	cd superDoit/gemstone/gs
-	curl  -L -O -s -S "https://github.com/dalehenrich/superDoit/releases/download/v0.1.0/3.6.1_extent0.solo.dbf.gz"
-	gunzip --stdout 3.6.1_extent0.solo.dbf.gz > extent0.solo.dbf
-	chmod -w extent0.solo.dbf
-	ln -s $GS_HOME/shared/downloads/products/GemStone64Bit3.6.1-* product
-popd
+"$$GS_HOME/bin/installSuperDoit.sh"
 
 cat - > "$GS_HOME/bin/.gsdevkitSetup" << EOF
 the presence of this file means that \$GS_HOME/bin/setupGsDevKit has
