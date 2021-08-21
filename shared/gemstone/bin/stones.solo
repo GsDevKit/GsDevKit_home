@@ -30,11 +30,28 @@ EXAMPLES
   $basename
 -----
 %
+projectshome
+$GS_HOME/shared/gemstone/repos
+%
+specs
+[
+RwLoadSpecificationV2 {
+	#specName : 'GsDevKit_SuperDoit',
+	#projectName : 'GsDevKit_SuperDoit',
+	#diskUrl : 'file:$GS_HOME/shared/gemstone/repos/GsDevKit_SuperDoit',
+	#projectSpecFile : 'rowan/project.ston',
+	#componentNames : [
+		'GsDevKit'
+	],
+	#comment : 'loads GsDevKit support code in support of GsDevKit_home superDoit scripts'
+}
+]
+%
 method
 produceStonesReport
 	| stream |
 	stream := self stderr.
-	self scriptArgs size == 0 ifTrue: [ self all: true ].
+	(self all or: [ self installed or: [ self running ] ]) ifFalse: [ self all: true ].
 	(self all or: [self installed]) ifTrue: [
 		self installedStoneReportOn: stream
 	].
@@ -124,5 +141,6 @@ gsListResult
 	^ gsListResult ifNil: [ gsListResult := GsHostProcess execute: self gs_binDirectory, 'gslist -lc' ]
 %
 doit
+	self preDoitSpecLoad.	"load the GsDevKit_SuperDoit project from spec"
 	^ self produceStonesReport
 %
