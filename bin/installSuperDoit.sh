@@ -42,7 +42,7 @@ if [ $# -ne 0 ]; then
   usage; exit_1_banner "Wrong number of arguments (0 expected)"
 fi
 
-gsvers=3.6.0	#make it easy to switch between 3.6.0 and 3.6.1
+gsvers=3.6.1	#make it easy to switch between 3.6.0 and 3.6.1
 if [ ! -d "$GS_HOME/shared/gemstone/repos/superDoit" ] ; then
 	pushd $GS_HOME/shared/gemstone/repos
 		$GS_HOME/bin/downloadGemStone $gsvers
