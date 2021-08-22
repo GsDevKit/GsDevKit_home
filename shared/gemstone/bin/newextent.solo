@@ -102,8 +102,6 @@ copySnapshotExtent: snapshotExtentFile to: stoneDirectory for: aGsVersionString
 			"cannot use copydbf to copy extent from product tree, so unconditionally use `cp`"
 			'/bin/cp' ]
 		ifFalse: [ (self gs_binDirectory / 'copydbf') pathString ].
-	(System gemEnvironmentVariable: 'GEMSTONE')
-		ifNil: [ System gemEnvironmentVariable: 'GEMSTONE' put: (self gs_stoneDirectory / 'product') pathString."???"].
 	self stderr 
 		nextPutAll: (GsHostProcess execute: cmdPath, ' "',(snapshotExtentFile pathString),'" "', (extentFile pathString), '"');
 		cr.
