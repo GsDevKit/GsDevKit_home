@@ -7,6 +7,7 @@ options
 	SuperDoitOptionalOptionWithNoArg long: 'conversion' short: 'C'.
 	SuperDoitOptionalOptionWithNoArg long: 'notranlogs' short: 'N'.
 	SuperDoitOptionalOptionWithNoArg long: 'restore' short: 'R'.
+	SuperDoitOptionalOptionWithNoArg long: 'restart' short: 'r'.
 }
 %
 usage
@@ -56,7 +57,16 @@ startStone
 	(System gemEnvironmentVariable: 'TARGET_GEMSTONE')
 		ifNil: [ System gemEnvironmentVariable: 'GEMSTONE' put: (self gs_stoneDirectory / 'product') pathString ]
 		ifNotNil: [:target | System gemEnvironmentVariable: 'GEMSTONE' put: target ].
-	result := GsHostProcess execute: self startStoneCommand.
+	[ result := GsHostProcess execute: self startStoneCommand ]
+		on: ChildError
+		do: [:ex |
+			(self restart and: [ ex status = 1 ])
+				ifTrue: [ 
+					"starting in 3.6.0 exit status of 1 indicates that the stone is running ... stone NOT restarted"
+					self stderr nextPutAll: 'Restart of stones for GemStone 3.6.0 and later is not supported. Manual stop and start is suggested' ]
+				ifFalse: [
+					"pre-3.6.0 non-zero exit status signalled an error"
+					self error: result ] ].
 	System gemEnvironmentVariable: 'GEMSTONE' put: tempenvvalue.
 	self stderr nextPutAll: result; cr.
 %
