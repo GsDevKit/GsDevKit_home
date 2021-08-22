@@ -54,6 +54,10 @@ startStone
 	self shouldNotBeForeignStone.
 	tempenvvalue := System gemEnvironmentVariable: 'GEMSTONE'.
 	System gemEnvironmentVariable: 'GEMSTONE' put: (System gemEnvironmentVariable: 'TARGET_GEMSTONE').
+"TEMPORARY PATCH"
+(System gemEnvironmentVariable: 'GEMSTONE')
+		ifNil: [ System gemEnvironmentVariable: 'GEMSTONE' put: (self gs_stoneDirectory / 'product') pathString. ].
+"TERMPORARY PATCH"
 	result := GsHostProcess execute: self startStoneCommand.
 	System gemEnvironmentVariable: 'GEMSTONE' put: tempenvvalue.
 	self stderr nextPutAll: result; cr.

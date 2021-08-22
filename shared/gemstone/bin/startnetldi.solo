@@ -65,6 +65,10 @@ startNetldi
 	netldiArgs := self netldiArgsStringFromArray: self netldiArgs.
 	tempenvvalue := System gemEnvironmentVariable: 'GEMSTONE'.
 	System gemEnvironmentVariable: 'GEMSTONE' put: (System gemEnvironmentVariable: 'TARGET_GEMSTONE').
+"TEMPORARY PATCH"
+(System gemEnvironmentVariable: 'GEMSTONE')
+		ifNil: [ System gemEnvironmentVariable: 'GEMSTONE' put: (self gs_stoneDirectory / 'product') pathString. ].
+"TERMPORARY PATCH"
 	"TEMPORARILY PATCHED WITH ERROR HANDLER TO HANDLE NON-ZERO EXIT STATUS"
 	[ result := GsHostProcess execute: (self gs_binDirectory / 'startnetldi ') fullPath asString, ' ', netldiArgs ] on: Error do:[:e | result := 'non-zero exit status!' ].
 	System gemEnvironmentVariable: 'GEMSTONE' put: tempenvvalue.
