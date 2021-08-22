@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        gs_version: [ 3.1.0.6, 3.2.17, 3.3.9, 3.4.5, 3.5.5, 3.6.1 ]
+        gs_version: [ 3.1.0.6, 3.2.17, 3.3.9, 3.4.5, 3.5.7, 3.6.1 ]
         allowfailure: [ false ]
         test: [ Upgrade_unittest ]
         exclude:
@@ -39,10 +39,10 @@ jobs:
           - gs_version: 3.4.5
             upgrade_from: 3.3.3
             allowfailure: false
-          - gs_version: 3.5.5
+          - gs_version: 3.5.7
             upgrade_from: 3.4.5
             allowfailure: false
-          - gs_version: 3.5.5
+          - gs_version: 3.5.7
             upgrade_from: 3.2.17
             allowfailure: false
           - gs_version: 3.6.1
