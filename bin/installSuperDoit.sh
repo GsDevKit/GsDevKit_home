@@ -42,20 +42,21 @@ if [ $# -ne 0 ]; then
   usage; exit_1_banner "Wrong number of arguments (0 expected)"
 fi
 
+gsvers=3.6.0	#make it easy to switch between 3.6.0 and 3.6.1
 if [ ! -d "$GS_HOME/shared/gemstone/repos/superDoit" ] ; then
 	pushd $GS_HOME/shared/gemstone/repos
-		$GS_HOME/bin/downloadGemStone 3.6.1
+		$GS_HOME/bin/downloadGemStone $gsvers
 		if [ ! -d "superDoit" ] ; then
 			$GS_HOME/bin/private/cloneGitHubProject -c https dalehenrich superDoit
 		fi
 		cd superDoit/gemstone/gs
 		if [ ! -e "extent0.solo.dbf" ] ; then
-			curl  -L -O -s -S "https://github.com/dalehenrich/superDoit/releases/download/v0.1.0/3.6.1_extent0.solo.dbf.gz"
-			gunzip --stdout 3.6.1_extent0.solo.dbf.gz > extent0.solo.dbf
+			curl  -L -O -s -S "https://github.com/dalehenrich/superDoit/releases/download/v0.1.0/${gsvers}_extent0.solo.dbf.gz"
+			gunzip --stdout ${gsvers}_extent0.solo.dbf.gz > extent0.solo.dbf
 			chmod -w extent0.solo.dbf
 		fi
 		if [ ! -e "product" ] ; then
-			ln -s $GS_HOME/shared/downloads/products/GemStone64Bit3.6.1-* product
+			ln -s $GS_HOME/shared/downloads/products/GemStone64Bit${gsvers}-* product
 		fi
 	popd
 fi
