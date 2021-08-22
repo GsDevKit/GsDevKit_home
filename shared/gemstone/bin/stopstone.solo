@@ -42,11 +42,9 @@ stopStone
 			^ Error signal: 'Wrong number of arguments (' , self positionalArgs size printString , ')' ].
 	self shouldNotBeForeignStone.
 	tempenvvalue := System gemEnvironmentVariable: 'GEMSTONE'.
-	System gemEnvironmentVariable: 'GEMSTONE' put: (System gemEnvironmentVariable: 'TARGET_GEMSTONE').
-"TEMPORARY PATCH"
-(System gemEnvironmentVariable: 'GEMSTONE')
-		ifNil: [ System gemEnvironmentVariable: 'GEMSTONE' put: (self gs_stoneDirectory / 'product') pathString. ].
-"TERMPORARY PATCH"
+	(System gemEnvironmentVariable: 'TARGET_GEMSTONE')
+		ifNil: [ System gemEnvironmentVariable: 'GEMSTONE' put: (self gs_stoneDirectory / 'product') pathString ]
+		ifNotNil: [:target | System gemEnvironmentVariable: 'GEMSTONE' put: target ].
 	"TEMPORARILY PATCHED WITH ERROR HANDLER TO HANDLE NON-ZERO EXIT STATUS"
 	[ result := GsHostProcess execute: self stopStoneCommand ] on: Error do:[:e | result := 'non-zero exit status!' ].
 	System gemEnvironmentVariable: 'GEMSTONE' put: tempenvvalue.

@@ -24,7 +24,7 @@ EXAMPLES
   $basename myStone
   $basename myStone /opt/snapshots/mySnapshop.dbf
   $basename myStone /opt/snapshots/mySnapshot.dbf.gz x-gzip
-  %basename -R myStone /opt/snapshots/mySnapshot.dbf
+  $basename myStone -R /opt/snapshots/mySnapshot.dbf
 -----
 %
 projectshome
@@ -50,11 +50,9 @@ newExtent
 	(self positionalArgs size == 0 or:[ self recovery & (self positionalArgs size < 2) ]) ifTrue: [
 		^ Error signal: 'Wrong number of arguments (' , self positionalArgs size printString , ')' ].
 	tempenvvalue := System gemEnvironmentVariable: 'GEMSTONE'.
-	System gemEnvironmentVariable: 'GEMSTONE' put: (System gemEnvironmentVariable: 'TARGET_GEMSTONE').
-"TEMPORARY PATCH"
-(System gemEnvironmentVariable: 'GEMSTONE')
-		ifNil: [ System gemEnvironmentVariable: 'GEMSTONE' put: (self gs_stoneDirectory / 'product') pathString. ].
-"TERMPORARY PATCH"
+	(System gemEnvironmentVariable: 'TARGET_GEMSTONE')
+		ifNil: [ System gemEnvironmentVariable: 'GEMSTONE' put: (self gs_stoneDirectory / 'product') pathString ]
+		ifNotNil: [:target | System gemEnvironmentVariable: 'GEMSTONE' put: target ].
 	stoneDirectory := self gs_stoneDirectory.
 	self stderr 
 		nextPutAll: 'New extent for ';
