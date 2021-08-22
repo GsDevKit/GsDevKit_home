@@ -102,6 +102,8 @@ copySnapshotExtent: snapshotExtentFile to: stoneDirectory for: aGsVersionString
 			"cannot use copydbf to copy extent from product tree, so unconditionally use `cp`"
 			'/bin/cp' ]
 		ifFalse: [ (self gs_binDirectory / 'copydbf') pathString ].
+	(System gemEnvironmentVariable: 'GEMSTONE')
+		ifNil: [ System gemEnvironmentVariable: 'GEMSTONE' put: (self gs_stoneDirectory / 'product') pathString."???"].
 	self stderr 
 		nextPutAll: (GsHostProcess execute: cmdPath, ' "',(snapshotExtentFile pathString),'" "', (extentFile pathString), '"');
 		cr.
@@ -175,24 +177,6 @@ stoneInfo
 method
 gs_binDirectory
 	^ (self gs_stoneDirectory / 'product' / 'bin') asFileReference
-%
-method
-doit
-	"override doit method, because ChildError does not exist in 3.6.0" 
-	[ 
-	self getAndVerifyOptions == self noResult
-		ifTrue: [ ^ self noResult ].
-	^ self theDoit
-	]
-		on: Error
-		do: [ :ex | 
-			((self respondsTo: #'debug') and: [ self debug ])
-				ifTrue: [ ex pass ].
-			self
-				exit: ((ex respondsTo: #stderr)
-					ifTrue: [ ex stderr asString trimBoth ]
-					ifFalse: [ ex messageText ])
-				withStatus: 1 "does not return" ].
 %
 doit
 	self preDoitSpecLoad.	"load the GsDevKit_SuperDoit project from spec"
