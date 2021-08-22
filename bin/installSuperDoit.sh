@@ -1,9 +1,11 @@
-i#! /usr/bin/env bash
+#! /usr/bin/env bash
 #=========================================================================
 # Copyright (c) 2015, 2016 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
 #
 #   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
 #=========================================================================
+
+set -x
 
 theArgs="$*"
 source "${GS_HOME}/bin/private/shFeedback"
@@ -28,8 +30,9 @@ if [ "${GS_HOME}x" = "x" ] ; then
 fi
 source "${GS_HOME}/bin/defGsDevKit.env"
 
-while getopts "hc:o:" OPT ; do
+while getopts "h" OPT ; do
   case "$OPT" in
+    h) usage; exit 0;;
     *) usage; exit_1_banner "Unknown option";;
   esac
 done
@@ -42,12 +45,18 @@ fi
 if [ ! -d "$GS_HOME/shared/gemstone/repos/superDoit" ] ; then
 	pushd $GS_HOME/shared/gemstone/repos
 		$GS_HOME/bin/downloadGemStone 3.6.1
-		$GS_HOME/bin/private/cloneGitHubProject -c https dalehenrich superDoit
+		if [ ! -d "superDoit" ] ; then
+			$GS_HOME/bin/private/cloneGitHubProject -c https dalehenrich superDoit
+		fi
 		cd superDoit/gemstone/gs
-		curl  -L -O -s -S "https://github.com/dalehenrich/superDoit/releases/download/v0.1.0/3.6.1_extent0.solo.dbf.gz"
-		gunzip --stdout 3.6.1_extent0.solo.dbf.gz > extent0.solo.dbf
-		chmod -w extent0.solo.dbf
-		ln -s $GS_HOME/shared/downloads/products/GemStone64Bit3.6.1-* product
+		if [ ! -e "extent0.solo.dbf" ] ; then
+			curl  -L -O -s -S "https://github.com/dalehenrich/superDoit/releases/download/v0.1.0/3.6.1_extent0.solo.dbf.gz"
+			gunzip --stdout 3.6.1_extent0.solo.dbf.gz > extent0.solo.dbf
+			chmod -w extent0.solo.dbf
+		fi
+		if [ ! -e "product" ] ; then
+			ln -s $GS_HOME/shared/downloads/products/GemStone64Bit3.6.1-* product
+		fi
 	popd
 fi
 
