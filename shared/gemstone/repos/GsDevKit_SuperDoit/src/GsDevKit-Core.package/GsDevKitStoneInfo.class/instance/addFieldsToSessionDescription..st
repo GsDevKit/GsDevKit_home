@@ -1,7 +1,7 @@
 session descriptions
 addFieldsToSessionDescription: description
   | vrsnAr |
-  vrsnAr := description gemstoneVersion findTokens: '.'.
+  vrsnAr := description gemstoneVersion subStringsDelimitedBy: $..
   ((vrsnAr at: 1) asNumber < 3
     or: [ (vrsnAr at: 1) asNumber = 3 and: [ (vrsnAr at: 2) asNumber < 2 ] ])
     ifTrue: [ 

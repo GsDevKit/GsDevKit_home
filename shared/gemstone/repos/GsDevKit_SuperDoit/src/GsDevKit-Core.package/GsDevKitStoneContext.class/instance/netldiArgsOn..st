@@ -12,7 +12,7 @@ netldiArgsOn: netldiArgs
   self netLDIPortRange
     ifNotNil: [ :range | 
       | vrsnAr |
-      vrsnAr := self gemstoneVersion findTokens: '.'.
+      vrsnAr := self gemstoneVersion subStringsDelimitedBy: $..
       ((vrsnAr at: 1) asNumber < 3
         or: [ (vrsnAr at: 1) asNumber = 3 and: [ (vrsnAr at: 2) asNumber < 2 ] ])
         ifTrue: [ 
