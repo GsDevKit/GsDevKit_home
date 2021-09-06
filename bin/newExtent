@@ -153,8 +153,8 @@ if [ "${noRestart}" = "false" ] ; then
       echo "Restarting stone and netldi"
       "$GS_HOME/bin/startStone" -b -N $stoneName
       echo "Restoring from backup"
-      "$GS_HOME/bin/devKitCommandLine" restoreFromBackupAltUser $stoneName "${snapshotFile}" DataCurator swordfish
-      # "$GS_HOME/superdoit_devkit/bin/restorefrombackup.solo" $stoneName "${snapshotFile}" DataCurator swordfish
+      #"$GS_HOME/bin/devKitCommandLine" restoreFromBackupAltUser $stoneName "${snapshotFile}" DataCurator swordfish
+      "$GS_HOME/superdoit_devkit/bin/restorefrombackup.solo" -a $stoneName "${snapshotFile}" DataCurator swordfish
       ;;
     extent) 
       if [ -e "$stonePath/extents/extent0.dbf" ] ; then

@@ -1,0 +1,225 @@
+#!/usr/bin/env superdoit_solo
+instvars
+sessionDescription
+%
+options
+{
+	SuperDoitOptionalOptionWithNoArg long: 'altuser' short: 'a'.
+}
+%
+usage
+-----
+USAGE $basename [-a] [ --help] <stone-name> <backup-file> [ <gemstone-user-id> <gemstone-password> ]
+
+DESCRIPTION
+  Run restore from backup for the given stone, using the named backup file from the stone backup directory
+
+  Optionally, use the -a argument and supply a <gemstone-user-id> and <gemstone-password> for the initial login. 
+  Mainly useful when restoring a backup for a stone with non-standard user id and password into a standard extent0.dbf.
+
+OPTIONS
+  -h, --help 		display usage message
+  -a, --altuser		use alternate username and password for initial login
+
+EXAMPLES
+    $basename --help
+    $basename kit home.dbf
+    $basename kit /home/users/you/backups/home.dbf
+	$basename -a kit backup.dbf DataCurator swordfish
+-----
+%
+projectshome
+$GS_HOME/shared/gemstone/repos
+%
+specs
+[
+RwLoadSpecificationV2 {
+	#specName : 'GsDevKit_SuperDoit',
+	#projectName : 'GsDevKit_SuperDoit',
+	#diskUrl : 'file:$GS_HOME/shared/gemstone/repos/GsDevKit_SuperDoit',
+	#projectSpecFile : 'rowan/project.ston',
+	#componentNames : [
+		'GsDevKit'
+	],
+	#comment : 'loads GsDevKit support code in support of GsDevKit_home superDoit scripts'
+}
+]
+%
+method
+restoreFromBackup
+	| backupReference tempenvvalue |
+	self positionalArgs size < 2 ifTrue: [
+		^ Error signal: 'Wrong number of arguments (' , self positionalArgs size printString , ')' ].
+	(self altuser and: [ self positionalArgs size < 4 ]) ifTrue:[
+		^ Error signal: 'Wrong number of arguments (' , self positionalArgs size printString , ')' ].
+	self shouldNotBeForeignStone.
+	tempenvvalue := System gemEnvironmentVariable: 'GEMSTONE'.
+	(System gemEnvironmentVariable: 'TARGET_GEMSTONE')
+		ifNil: [ System gemEnvironmentVariable: 'GEMSTONE' put: (self gs_stoneDirectory / 'product') pathString ]
+		ifNotNil: [:target | System gemEnvironmentVariable: 'GEMSTONE' put: target ].
+	backupReference := self backupFile asFileReference.
+	backupReference isAbsolute
+		ifFalse: [ backupReference := self backupsHome / self backupFile ].
+	self restoreFromBackup: backupReference pathString.
+	self commitRestore.
+	System gemEnvironmentVariable: 'GEMSTONE' put: tempenvvalue.
+^ self noResult
+%
+method
+restoreFromBackup: backupFilePathString
+	| externalSession |
+	externalSession := self createExternalSessionForBackupRestore.
+	externalSession login.
+	self stdout 
+		nextPutAll:  '---Starting restore from ' , backupFilePathString printString , ' (';
+		nextPutAll: DateAndTime now printString;
+		nextPutAll: ')';
+		cr.
+	[  [ externalSession executeString: 'SystemRepository restoreFromBackup: ',backupFilePathString printString ]
+		on: GciError
+		do: [ :ex | 
+			ex originalNumber ~~ 4046
+				ifTrue: [ ^ ex pass ].
+			self stdout nextPutAll: ex description; cr ]
+	] ensure: [ externalSession logout ].			
+%
+method
+commitRestore
+	| externalSession |
+	externalSession := self createExternalSessionForCommitRestore.
+	externalSession login.
+	[  [ externalSession executeString: 
+			'| status |
+			status := SystemRepository restoreStatus.
+			(status asLowercase beginsWith: ''Restoring from Transaction Log files'' asLowercase)
+				ifFalse: [ ^nil error: ''System is not prepared to commit restore: '', status].
+			status := SystemRepository commitRestore.
+			"normally terminates the session"
+			^nil error: ''Commit restore failed: '', status' ]
+		on: GciError
+		do: [ :ex | 
+			ex originalNumber ~~ 4048
+				ifTrue: [ ^ ex pass ].
+			self stdout nextPutAll: ex description; cr ]
+	] ensure: [ externalSession logout ]
+%
+method
+createExternalSessionForBackupRestore
+	^ self altuser
+		ifTrue:[ self createExternalSessionWithUsername: self username password: self password ]
+		ifFalse:[ self createExternalSessionWithUsername: nil password: nil ]
+%
+method
+createExternalSessionForCommitRestore
+	^ self createExternalSessionWithUsername: nil password: nil
+%
+method
+createExternalSessionWithUsername: username password: password
+	| externalSession sessionDescriptionReference gemstoneParameters gciLibrary |
+	sessionDescriptionReference := self sessionDescriptionHome / self stoneName.
+	sessionDescriptionReference exists
+		ifFalse: [ 
+			Error signal: 'Session description file ' , 
+				sessionDescriptionReference pathString printString , 
+				' for ' , 
+				self stoneName printString ,
+        ' not found.' ].
+	sessionDescription := (self globalNamed: 'TDSessionDescription') importFrom: sessionDescriptionReference pathString.
+	gemstoneParameters :=  GemStoneParameters new
+		gemService: sessionDescription gemNRS asString ;
+		gemStoneName: sessionDescription stoneNRS asString ;
+		username: (username ifNil: [ sessionDescription userId ]);
+		password: (password ifNil: [ sessionDescription password ]);
+		yourself.
+	gciLibrary := GciTsLibrary 
+		newForVersion: sessionDescription gemstoneVersion 
+		product: self gemstoneProjectTree pathString.
+  	externalSession := GsTsExternalSession 
+		parameters: gemstoneParameters 
+		library: gciLibrary.
+	^ externalSession
+%
+method
+shouldNotBeForeignStone
+	self stoneInfo isForeignStone
+		ifTrue: [
+			^ Error signal:
+					'The stone ' , self stoneName printString , ' is a foreign stone and should not be controlled from GsDevKit_home.' ].
+%
+method
+gs_stonesDirectory
+	^  ((System gemEnvironmentVariable: 'GS_HOME'), '/server/stones') asFileReference
+%
+method
+gs_stoneDirectory
+	^  self gs_stonesDirectory / self stoneName
+%
+method
+gemstoneProjectTree
+	^ self gs_stonesDirectory / self stoneName / 'product'
+%
+method
+gsHome
+	^ (System gemEnvironmentVariable: 'GS_HOME') asFileReference
+%
+method
+sessionDescriptionHome
+	^ self gsHome / 'sys' / 'local' / 'sessions'
+%
+method
+stoneName
+	^ self positionalArgs at: 1
+%
+method
+backupFile
+	^ self positionalArgs at: 2
+%
+method
+username
+	^ self positionalArgs at: 3
+%
+method
+password
+	^ self positionalArgs at: 4
+%
+method
+backupsHome 
+	^ self gs_stonesDirectory / self stoneName / 'backups'
+%
+method
+stoneInfoClass
+	^ (self globalNamed: 'GsDevKitStoneInfo')
+%
+method
+stoneInfoFilename
+	^  'info.ston'
+%
+method
+stoneInfo
+	^ self stoneInfoClass importFrom: self gs_stoneDirectory / self stoneInfoFilename
+%
+method
+gs_binDirectory
+	^ (self gs_stoneDirectory / 'product' / 'bin') asFileReference
+%
+method
+doit
+	"override doit method, because ChildError does not exist in 3.6.0" 
+	[
+		self getAndVerifyOptions == self noResult
+			ifTrue: [ ^ self noResult ].
+		^ self theDoit
+	] on: Error do: [:ex |
+		self debug ifTrue: [ ex pass ].
+		self
+			exit: ((ex respondsTo: #stderr)
+				ifTrue: [ ex stderr asString trimBoth ]
+				ifFalse: [ ex messageText ])
+			withStatus: 1 "does not return" ].
+%
+doit
+	self preDoitSpecLoad.	"load the GsDevKit_SuperDoit project from spec"
+	self restoreFromBackup.
+	^ self noResult
+
+%
