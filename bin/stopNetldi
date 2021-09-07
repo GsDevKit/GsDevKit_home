@@ -55,7 +55,7 @@ do
       popd >& /dev/null
 
       # "$GS_HOME/bin/devKitCommandLine" stopnetldi $stoneName
-      "$GS_HOME/superdoit_devkit/bin/stopnetldi.solo" $stoneName
+      "$GS_HOME/shared/gemstone/bin/stopnetldi.solo" $stoneName
     else
       exit_1_banner "Required file: $stonePath/stone.env does not exits for $stoneName"
     fi

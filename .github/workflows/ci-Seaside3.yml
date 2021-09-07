@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        gs_version: [ 3.2.17, 3.3.9, 3.4.5, 3.5.5, 3.6.1 ]
+        gs_version: [ 3.2.17, 3.3.9, 3.4.5, 3.5.7, 3.6.1 ]
         allowfailure: [ false ]
     env:
       GS_VERSION: ${{ matrix.gs_version }}
@@ -46,12 +46,15 @@ jobs:
       - name: Install Chrome
         run: |
           sudo apt install google-chrome-stable
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug_enabled }}
       - name: Run tests
         id: test_run
         if: steps.last_run_status.outputs.last_run_status != 'success'
         run: |
           export GS_HOME="$(pwd)"
-          export PATH="$GS_HOME/superdoit_devkit/bin":"$GS_HOME/superdoit_devkit/examples":"$GS_HOME/superdoit_devkit/utils":"$GS_HOME/superdoit_devkit/tests":"$GS_HOME/bin":$PATH
+          export PATH="$GS_HOME/shared/gemstone/bin":"$GS_HOME/shared/gemstone/repos/superDoit/bin":"$GS_HOME/bin":$PATH
           export GS_TRAVIS=true
           export JAVA="/usr/bin/java"
           export CHROME_DRIVER_VERSION="90.0.4430.24"

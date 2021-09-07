@@ -59,6 +59,8 @@ setupType=$1
 "$GS_HOME/bin/utils/cloneGsDevKitProjects" $modeArg $organizationArg $setupType
 "$GS_HOME/bin/utils/cloneSharedTodeProjects" $modeArg $setupType
 
+"$GS_HOME/bin/installSuperDoit.sh"
+
 cat - > "$GS_HOME/bin/.gsdevkitSetup" << EOF
 the presence of this file means that \$GS_HOME/bin/setupGsDevKit has
 been successfully run.

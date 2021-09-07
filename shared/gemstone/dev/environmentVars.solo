@@ -1,0 +1,34 @@
+#!/usr/bin/env superdoit_solo
+instvars
+%
+usage
+-----
+USAGE $basename [--help | -h] <command>
+
+DESCRIPTION
+  Environment variable exploration
+
+OPTIONS
+  -h, --help 		display usage message
+	--debug		display debugging messages
+
+EXAMPLES
+  $basename --help
+  $basename --debug gemstone
+
+  $basename gemstone
+-----
+%
+method
+doGemstone
+	self stderr nextPutAll: 'GEMSTONE: ', (System gemEnvironmentVariable: 'GEMSTONE') asString; cr.
+	^ self noResult
+%
+doit
+	| command |
+	command := (self positionalArgs atOrNil: 1)
+		ifNotNil: [:arg | command := arg asLowercase ]
+		ifNil: [ ^ self error: 'No command specified' ].
+	command = 'gemstone' ifTrue: [ ^ self doGemstone ].
+	^ self noResult
+%

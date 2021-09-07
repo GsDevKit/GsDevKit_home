@@ -38,4 +38,4 @@ fi
 
 # Run script
 #"$GS_HOME/bin/devKitCommandLine" products
-"$GS_HOME/superdoit_devkit/bin/products.solo"
+"$GS_HOME/shared/gemstone/bin/products.solo"

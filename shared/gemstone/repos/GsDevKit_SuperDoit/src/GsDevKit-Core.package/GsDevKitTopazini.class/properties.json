@@ -1,0 +1,14 @@
+{
+	"category" : "GsDevKit-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GsDevKitTopazini",
+	"pools" : [
+		 ],
+	"super" : "GsDevKitSerializable",
+	"type" : "normal" }

@@ -1,0 +1,34 @@
+{
+	"category" : "GsDevKit-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"stoneHost",
+		"stoneName",
+		"gemHost",
+		"netLDI",
+		"netLDIPort",
+		"netLDIPortRange",
+		"gemTask",
+		"userId",
+		"password",
+		"osUserId",
+		"osPassword",
+		"dataDirectory",
+		"backupDirectory",
+		"snapshotDirectory",
+		"gemstoneVersion",
+		"gciLibraryName",
+		"excludeNetLDIPort",
+		"authorId",
+		"environmentId",
+		"topazini",
+		"environmentVariables" ],
+	"name" : "GsDevKitStoneContext",
+	"pools" : [
+		 ],
+	"super" : "GsDevKitSton",
+	"type" : "normal" }

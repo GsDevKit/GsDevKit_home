@@ -1,0 +1,146 @@
+#!/usr/bin/env superdoit_solo
+instvars
+	gsListResult
+%
+options
+{
+  SuperDoitOptionalOptionWithNoArg long: 'all' short: 'a'.
+  SuperDoitOptionalOptionWithNoArg long: 'installed' short: 'i'.
+  SuperDoitOptionalOptionWithNoArg long: 'running' short: 'r'.
+}
+%
+usage
+-----
+USAGE $basename [--help | -h] [--all | -a] [--installed | -i] [--running | -r]
+
+DESCRIPTION
+  Provide information on the running and installed stones.
+
+OPTIONS
+  -h, --help 		display usage message
+  -a, --all 		display information on running and installed stones (default)
+  -i, --installed	display information on installed stones
+  -r, --running		display information on running stones
+
+EXAMPLES
+  $basename --help
+  $basename -a
+  $basename --installed
+  $basename -i -r
+  $basename
+-----
+%
+projectshome
+$GS_HOME/shared/gemstone/repos
+%
+specs
+[
+RwLoadSpecificationV2 {
+	#specName : 'GsDevKit_SuperDoit',
+	#projectName : 'GsDevKit_SuperDoit',
+	#diskUrl : 'file:$GS_HOME/shared/gemstone/repos/GsDevKit_SuperDoit',
+	#projectSpecFile : 'rowan/project.ston',
+	#componentNames : [
+		'GsDevKit'
+	],
+	#comment : 'loads GsDevKit support code in support of GsDevKit_home superDoit scripts'
+}
+]
+%
+method
+produceStonesReport
+	| stream |
+	stream := self stderr.
+	(self all or: [ self installed or: [ self running ] ]) ifFalse: [ self all: true ].
+	(self all or: [self installed]) ifTrue: [
+		self installedStoneReportOn: stream
+	].
+	(self all or: [self running]) ifTrue: [
+		self
+			gsListReportNamed: 'Stones' matching: ' Stone' on: stream;
+			gsListReportNamed: 'NetLdis' matching: ' Netldi' on: stream.
+	].
+	^ self noResult
+%
+method
+installedStoneReportOn: stream
+	stream
+		nextPutAll: 'Installed Stones:';
+		cr.
+		(self installedStones asSortedCollection: [ :a :b | a printString < b printString ])
+			do: [ :info |
+				stream
+					tab;
+					nextPutAll: info gsVers;
+					tab;
+					nextPutAll: info stoneName.
+				info isForeignStone
+					ifTrue: [
+						stream
+							tab;
+							nextPutAll: '(foreign)' ].
+				info isAttached
+					ifTrue: [
+						stream
+							tab;
+							nextPutAll: '(attached)' ].
+				stream cr ]
+%
+method
+installedStones
+	| installedStones |
+			installedStones := Set new.
+			self gs_stonesDirectory directories do: [ :stoneDir |
+					(stoneDir filesMatching: self stoneInfoFilename)
+						do: [ :infoFile |
+							| info |
+							info := (self globalNamed: 'GsDevKitStoneInfo') importFrom: infoFile.
+							stoneDir isSymlink
+								ifTrue: [ info isAttached: true ].
+							installedStones add: info ] ].
+	^ installedStones
+%
+method
+gsListReportNamed: reportName matching: matchString on: stream
+	stream
+		nextPutAll: 'Running ', reportName, ':';
+		cr.
+	"TEMPORARILY PATCHED WITH ERROR HANDLER TO HANDLE NON-ZERO EXIT STATUS"
+	[ (self gsListResult indexOfSubCollection: 'gslist[Info]: No GemStone servers') ~= 0 
+		ifTrue: [ ^ self ] ] on: Error do:[ ^ self ].
+	stream
+		tab;
+		nextPutAll: 'Status        Version    Owner       Pid   Port   Started     Type       Name';
+		cr;
+		tab;
+		nextPutAll: '-------      --------- --------- -------- ----- ------------ ------      ----';
+		cr.
+	(self gsListResult substrings: '', Character lf)
+		do: [ :line |
+			(line matchPattern: { $*. matchString. $*})
+				ifTrue: [
+					stream
+						tab;
+						nextPutAll: line;
+						cr ] ]
+%
+method
+gs_stonesDirectory
+	^  ((System gemEnvironmentVariable: 'GS_HOME'), '/server/stones') asFileReference
+%
+method
+stoneInfoFilename
+	^  'info.ston'
+%
+method
+gs_binDirectory
+	^ (System gemEnvironmentVariable: 'GEMSTONE'), '/bin/'
+%
+method
+gsListResult
+	^ gsListResult ifNil: [ gsListResult := GsHostProcess execute: self gs_binDirectory, 'gslist -lc' ]
+%
+doit
+	self preDoitSpecLoad.	"load the GsDevKit_SuperDoit project from spec"
+	^ self produceStonesReport
+%

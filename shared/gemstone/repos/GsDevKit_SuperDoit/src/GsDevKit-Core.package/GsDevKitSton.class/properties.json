@@ -1,0 +1,14 @@
+{
+	"category" : "GsDevKit-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GsDevKitSton",
+	"pools" : [
+		 ],
+	"super" : "GsDevKitSerializable",
+	"type" : "normal" }

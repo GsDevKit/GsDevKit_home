@@ -72,7 +72,12 @@ while getopts "bhrw:CNR" OPT ; do
       fi
       ARG="-R"
     ;;
-    r) restart="true" ;;
+    r) 
+			if [ "${ARG}x" != "x" ] ; then
+        exit_1_banner "Only one of -C -N or -R options may be specified"
+      fi
+			restart="true"
+		 	ARG="-r";;
     w) waitTime="${OPTARG}" ;;
     *) usage; exit_1_banner "Unknown option" ;;
   esac
@@ -114,7 +119,7 @@ fi
 
 # start the stone
 # "$GS_HOME/bin/devKitCommandLine" startstone $stoneName $ARG
-"$GS_HOME/superdoit_devkit/bin/startstone.solo" $stoneName $ARG
+"$GS_HOME/shared/gemstone/bin/startstone.solo" $stoneName $ARG
 
 if [ "${waitTime}x" = "x" ] ; then
   if [ "${GS_TRAVIS}x" != "x" ] ; then

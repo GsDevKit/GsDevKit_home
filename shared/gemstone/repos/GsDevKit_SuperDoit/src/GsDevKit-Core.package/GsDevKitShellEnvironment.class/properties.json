@@ -1,0 +1,14 @@
+{
+	"category" : "GsDevKit-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GsDevKitShellEnvironment",
+	"pools" : [
+		 ],
+	"super" : "GsDevKitSerializable",
+	"type" : "normal" }

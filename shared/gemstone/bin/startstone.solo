@@ -1,0 +1,176 @@
+#!/usr/bin/env superdoit_solo
+instvars
+	stoneName
+%
+options
+{
+	SuperDoitOptionalOptionWithNoArg long: 'conversion' short: 'C'.
+	SuperDoitOptionalOptionWithNoArg long: 'notranlogs' short: 'N'.
+	SuperDoitOptionalOptionWithNoArg long: 'restore' short: 'R'.
+	SuperDoitOptionalOptionWithNoArg long: 'restart' short: 'r'.
+}
+%
+usage
+-----
+USAGE: $basename [-h] [-C] [-N] [-R] <stone-name>
+
+DESCRIPTION
+Start the stone repository monitor process for the given stone.
+
+OPTIONS
+  -h, --help 	display usage message
+  -C   			Startup for conversion of Gs64 v2.4 repository to v3.x.
+  -N   			Startup does not require transaction logs.
+  -R   			Start from most recent checkpoint to go into restore mode.
+
+EXAMPLES
+  $basename -h
+  $basename myStoneName
+  $basename -N mystoneName
+-----
+%
+projectshome
+$GS_HOME/shared/gemstone/repos
+%
+specs
+[
+RwLoadSpecificationV2 {
+	#specName : 'GsDevKit_SuperDoit',
+	#projectName : 'GsDevKit_SuperDoit',
+	#diskUrl : 'file:$GS_HOME/shared/gemstone/repos/GsDevKit_SuperDoit',
+	#projectSpecFile : 'rowan/project.ston',
+	#componentNames : [
+		'GsDevKit'
+	],
+	#comment : 'loads GsDevKit support code in support of GsDevKit_home superDoit scripts'
+}
+]
+%
+method
+startStone
+	| result tempenvvalue |
+	(self positionalArgs size < 1 or: [ self positionalArgs size > 1 ])
+		ifTrue: [
+			^ Error signal: 'Wrong number of arguments (' , self positionalArgs size printString , ')' ].
+	self shouldNotBeForeignStone.
+	tempenvvalue := System gemEnvironmentVariable: 'GEMSTONE'.
+	(System gemEnvironmentVariable: 'TARGET_GEMSTONE')
+		ifNil: [ System gemEnvironmentVariable: 'GEMSTONE' put: (self gs_stoneDirectory / 'product') pathString ]
+		ifNotNil: [:target | System gemEnvironmentVariable: 'GEMSTONE' put: target ].
+	[ result := GsHostProcess execute: self startStoneCommand ]
+		on: ChildError
+		do: [:ex |
+			(self restart and: [ ex status = 1 ])
+				ifTrue: [ 
+					"starting in 3.6.0 exit status of 1 indicates that the stone is running ... stone NOT restarted"
+					self stderr nextPutAll: 'Restart of stones for GemStone 3.6.0 and later is not supported. Manual stop and start is suggested' ]
+				ifFalse: [
+					"pre-3.6.0 non-zero exit status signalled an error"
+					self error: result ] ].
+	System gemEnvironmentVariable: 'GEMSTONE' put: tempenvvalue.
+	self stderr nextPutAll: result; cr.
+%
+method
+startStoneCommand
+	| topaziniDict |
+	topaziniDict := self topaziniDict.
+	^ String streamContents: [ :stream |
+		stream
+			nextPutAll: (self gs_binDirectory / 'startstone ') fullPath asString;
+			nextPut: Character space;
+			nextPutAll: self passThroughArguments;
+			nextPut: Character space;
+			nextPutAll: self stoneName;
+			nextPut: Character space;
+			"The following hard-codes the arguments normally passed to startstone in $GsDevKit_home/server/bin/gs/startGemstone but configured via stone.env..."
+			nextPutAll: '-z';
+			nextPut: Character space;
+			nextPutAll: (self gs_stoneDirectory / 'extents' / 'system.conf') fullPath asString;
+			nextPut: Character space;
+			nextPutAll: '-l';
+			nextPut: Character space;
+			nextPutAll: (self gs_stoneDirectory / 'logs' / (self stoneName, '.log')) fullPath asString
+	]
+%
+method
+shouldNotBeForeignStone
+	self stoneInfo isForeignStone
+		ifTrue: [
+			^ Error signal:
+					'The stone ' , self stoneName printString , ' is a foreign stone and should not be controlled from GsDevKit_home.' ].
+%
+method
+passThroughArguments
+	^ String streamContents: [ :stream |
+			self notranlogs ifTrue: [ stream nextPutAll: ' -N '; nextPut: Character space ].
+			self restore ifTrue: [ stream nextPutAll: ' -R '; nextPut: Character space ].
+			self conversion ifTrue: [ stream nextPutAll: '-C'; nextPut: Character space ].
+		]
+%
+method
+gs_binDirectory
+	^ (self gs_stoneDirectory / 'product' / 'bin') asFileReference
+%
+method
+gs_stonesDirectory
+	^  ((System gemEnvironmentVariable: 'GS_HOME'), '/server/stones') asFileReference
+%
+method
+gs_stoneDirectory
+	^  self gs_stonesDirectory / self stoneName
+%
+method
+stoneName
+	stoneName ifNil: [ stoneName := self positionalArgs at: 1 ].
+	^ stoneName
+%
+method
+stoneInfoClass
+	^ (self globalNamed: 'GsDevKitStoneInfo')
+%
+method
+stoneInfoFilename
+	^  'info.ston'
+%
+method
+stoneInfo
+	^ self stoneInfoClass importFrom: self gs_stoneDirectory / self stoneInfoFilename
+%
+method
+topaziniFile
+	^self gs_stoneDirectory / '.topazini'
+%
+method
+topaziniDict
+	| dict topaziniData index|
+	dict := Dictionary new.
+	topaziniData := self topaziniFile contents.
+	dict at: 'user' put: (topaziniData
+		copyFrom: (index := topaziniData indexOfSubCollection: 'user') + 5
+		to: (topaziniData indexOf: Character lf startingAt: index) - 1).
+	dict at: 'password' put: (topaziniData
+		copyFrom: (index := topaziniData indexOfSubCollection: 'password') + 9
+		to: (topaziniData indexOf: Character lf startingAt: index) - 1).
+	^ dict
+%
+method
+doit
+	"override doit method, because ChildError does not exist in 3.6.0" 
+	[
+		self getAndVerifyOptions == self noResult
+			ifTrue: [ ^ self noResult ].
+		^ self theDoit
+	] on: Error do: [:ex |
+		self debug ifTrue: [ ex pass ].
+		self
+			exit: ((ex respondsTo: #stderr)
+				ifTrue: [ ex stderr asString trimBoth ]
+				ifFalse: [ ex messageText ])
+			withStatus: 1 "does not return" ].
+%
+doit
+	self preDoitSpecLoad.	"load the GsDevKit_SuperDoit project from spec"
+	self startStone.
+	^ self noResult
+
+%
