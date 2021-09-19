@@ -45,8 +45,9 @@ stopStone
 	(System gemEnvironmentVariable: 'TARGET_GEMSTONE')
 		ifNil: [ System gemEnvironmentVariable: 'GEMSTONE' put: (self gs_stoneDirectory / 'product') pathString ]
 		ifNotNil: [:target | System gemEnvironmentVariable: 'GEMSTONE' put: target ].
-	"TEMPORARILY PATCHED WITH ERROR HANDLER TO HANDLE NON-ZERO EXIT STATUS"
-	[ result := GsHostProcess execute: self stopStoneCommand ] on: Error do:[:e | result := 'non-zero exit status!' ].
+	[ result := GsHostProcess execute: self stopStoneCommand ] 
+		on: ChildError 
+		do:[ :e | e status > 2 ifTrue:[ e pass ] ].
 	System gemEnvironmentVariable: 'GEMSTONE' put: tempenvvalue.
 	self stderr nextPutAll: result.
 %
