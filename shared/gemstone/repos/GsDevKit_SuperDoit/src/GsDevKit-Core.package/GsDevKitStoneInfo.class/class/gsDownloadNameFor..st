@@ -1,6 +1,6 @@
 accessing
 gsDownloadNameFor: aGsVersionString
-  self isMacOS
+  self isMacOSX
     ifTrue: [ ^ 'GemStone64Bit' , aGsVersionString , '-i386.Darwin' ]
     ifFalse: [ 
       self isUnix

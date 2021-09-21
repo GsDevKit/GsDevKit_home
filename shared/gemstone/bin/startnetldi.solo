@@ -154,7 +154,7 @@ gs_stoneDirectory
 	^  self gs_stonesDirectory / self stoneName
 %
 method
-stoneInfoClass
+sessionDescriptionClass
 	^ (self globalNamed: 'TDSessionDescription')
 %
 method
@@ -163,7 +163,7 @@ stoneInfoFilename
 %
 method
 stoneInfo
-	^ self stoneInfoClass importFrom: self gs_stoneDirectory / self stoneInfoFilename
+	^ self sessionDescriptionClass importFrom: self gs_stoneDirectory / self stoneInfoFilename
 %
 method
 stoneName
