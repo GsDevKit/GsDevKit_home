@@ -1,0 +1,350 @@
+#!/usr/bin/env superdoit_solo
+instvars
+	stoneName
+  gsVers
+%
+usage
+-----
+USAGE $basename [-h] <stone-name> <gs-version> <gemstone-user-id> [<smalltalkCI-config-path>]
+
+DESCRIPTION
+  Create a directory under /server/stones using the given
+  <stone-name> and populate directory with supporting files 
+  and directories based on the given <gs-version>.
+
+  If a <smalltalkCI-config-path> argument is present, extract and apply the attributes 
+  that can be applied after the stone directory has been created (i.e., #gemConfPath).
+
+OPTIONS
+  -h, --help 		display usage message
+  <stone-name>              name of the stone to be created
+  <gs-version>              GemStone version with which to create stone
+  <gemstone-user-id>        GemStone userId to use in session description, .topazini file, etc.
+  <smalltalkCI-config-path> Path to the SmalltalkCI configuration file (.smalltalk.ston)
+
+EXAMPLES
+  $basename --help
+  $basename sample 3.2.4
+  $basename sample 3.2.4 SystemUser
+  $basename sample 3.2.4 /opt/_home//sys/local/server/templates/myStoneConfig.ston
+  $basename sample 3.2.4 SystemUser /opt/_home//sys/local/server/templates/myStoneConfig.ston
+-----
+%
+projectshome
+$GS_HOME/shared/gemstone/repos
+%
+specs
+[
+RwLoadSpecificationV2 {
+	#specName : 'GsDevKit_SuperDoit',
+	#projectName : 'GsDevKit_SuperDoit',
+	#diskUrl : 'file:$GS_HOME/shared/gemstone/repos/GsDevKit_SuperDoit',
+	#projectSpecFile : 'rowan/project.ston',
+	#componentNames : [
+		'GsDevKit'
+	],
+	#comment : 'loads GsDevKit support code in support of GsDevKit_home superDoit scripts'
+}
+]
+%
+method
+createStone
+	| stoneDirectory newStoneInfo newSessionDescription |
+  (self positionalArgs size < 2 or: [ self positionalArgs size > 4 ])
+		ifTrue: [
+			^ Error signal: 'Wrong number of arguments (' , self positionalArgs size printString , ')' ].
+	self stdout 
+    nextPutAll: 'Creating stone ' , self stoneName;
+    cr.
+	stoneDirectory := self gs_stoneDirectory.
+	stoneDirectory exists
+		ifTrue: [ 
+			self stoneInfo gsVers = self gsVers
+				ifFalse: [
+					self stderr 
+            nextPutAll: 'Attempting to create new stone with GemStone version ';
+            nextPutAll: self gsVers printString;
+            nextPutAll: ', but stone has already been created using GemStone version ';
+            nextPutAll: self stoneInfo gsVers printString;
+            nextPutAll: '.';
+            cr.
+          self error: '' ].
+			self stderr
+				nextPutAll: stoneDirectory pathString , ' already exists.';
+				cr;
+				nextPutAll: 'To replace it, remove or rename it and rerun this script';
+				cr.
+			^ self ].
+	stoneDirectory createDirectory.
+	self
+		createProductLn: stoneDirectory;
+		createEmptySubDirectories: stoneDirectory;
+		createEmptyStatsSubDirectories: stoneDirectory;
+		copyTemplateSystemConf: stoneDirectory;
+		copyTemplateFiles: stoneDirectory;
+		createDefStoneLn: stoneDirectory;
+		createSysLocalStonesLn: stoneDirectory;
+		yourself.
+	(newStoneInfo := self stoneInfoClass new
+		stoneName: self stoneName;
+		gsVers: self gsVers;
+		yourself) exportTo: stoneDirectory / self stoneInfoFilename.
+	newSessionDescription := self createTodeDescription: newStoneInfo.
+	self createTopaziniFile: stoneDirectory sessionDescription: newSessionDescription.
+	self stdout
+    nextPutAll: 'Finished creating stone ' , self stoneName;
+		cr.
+  "TODO: smalltalk CI spec"
+%
+method
+createProductLn: stoneDirectory
+	| gsProductName gsProductDir |
+	gsProductName := self stoneInfoClass gsDownloadNameFor: self gsVers.
+	self stdout
+		nextPutAll: 'Creating product symbolic link to ' , gsProductName;
+    cr.
+	gsProductDir := self gs_productsDirectory / gsProductName.
+	gsProductDir exists not
+		ifTrue: [ self error: 'The specified product directory: ' , gsProductDir pathString printString , ' does not exist' ].
+%
+method
+createEmptySubDirectories: stoneDirectory
+	self stdout
+    nextPutAll: 'Creating subdirectories ';
+    cr.
+	self subDirectories
+		do: [ :dirName | 
+			| dir |
+			dir := stoneDirectory / dirName.
+			dir exists
+				ifTrue: [ 
+					self stderr
+						nextPutAll: dir pathString , ' already exists and is being skipped.';
+						lf ]
+				ifFalse: [ dir createDirectory ] ]
+%
+method
+subDirectories
+	^ #('backups' 'bin' 'extents' 'git' 'logs' 'stats' 'tranlogs' 'snapshots')
+%
+method
+createEmptyStatsSubDirectories: stoneDirectory
+	| statsDirectory |
+	statsDirectory := stoneDirectory / 'stats'.
+	self stdout
+		nextPutAll: 'Creating stats subdirectories ';
+    cr.
+	self statsSubDirectories
+		do: [ :dirName | 
+			| dir |
+			dir := statsDirectory / dirName.
+			dir exists
+				ifTrue: [ 
+					self stderr
+						nextPutAll: dir pathString , ' already exists and is being skipped.';
+						lf ]
+				ifFalse: [ dir createDirectory ] ]
+%
+method
+statsSubDirectories
+	^ #('1-second' '60-second')
+%
+method
+copyTemplateSystemConf: stoneDirectory
+	| systemConfFile templateSystemConfFile |
+	self stdout
+    nextPutAll: 'Copying system.conf file';
+    cr.
+	templateSystemConfFile := self gemStoneTemplateFileRefForFile: 'system.conf'.
+	systemConfFile := stoneDirectory / 'extents' / 'system.conf'.
+	templateSystemConfFile copyTo: systemConfFile
+%
+method
+gemStoneTemplateFileRefForFile: aFileName
+	| ref |
+	ref := self serverTodeSysLocalServerGemStoneTemplates resolveString: aFileName.
+	ref isFile
+		ifTrue: [ ^ ref ].
+	^ self serverTodeSysDefaultServerGemStoneTemplates resolveString: aFileName
+%
+method
+serverTodeSysLocalServerGemStoneTemplates
+	^ self serverTodeSysLocalServer / 'gemstone' / 'templates'
+%
+method
+serverTodeSysLocalServer
+	^ (System gemEnvironmentVariable: 'GS_SYS_LOCAL_SERVER') asFileReference
+%
+method
+serverTodeSysDefaultServerGemStoneTemplates
+	^ self serverTodeSysDefaultServer / 'gemstone' / 'templates'
+%
+method
+serverTodeSysDefaultServer
+	^ ( System gemEnvironmentVariable: 'GS_SYS_DEFAULT_SERVER') asFileReference
+%
+method
+copyTemplateFiles: stoneDirectory
+	self stdout
+    nextPutAll: 'Copying template files';
+    cr.
+	self templateFiles
+		do: [ :assocOrString | 
+			| fileName destName templateFile |
+			assocOrString isString
+				ifTrue: [ fileName := destName := assocOrString ]
+				ifFalse: [ 
+					fileName := assocOrString key.
+					destName := assocOrString value ].
+			templateFile := self gemStoneTemplateFileRefForFile: fileName.
+			templateFile copyTo: stoneDirectory / destName ]
+%
+method
+templateFiles
+	^ #('stone.env' 'gem.conf' 'maint.conf' 'custom_stone.env')
+%
+method
+createDefStoneLn: stoneDirectory
+	| defStoneBinFile defStone |
+	defStone := 'defStone.env'.
+	defStoneBinFile := self binHomeDirectory / defStone.
+	self stdout
+		nextPutAll: 'Creating defStone.env symbolic link to ' , defStoneBinFile pathString;
+    cr.
+	GsHostProcess execute: '/bin/ln -sf "' , defStoneBinFile pathString , '" "' , (stoneDirectory / defStone) pathString, '"'
+%
+method
+createSysLocalStonesLn: stoneDirectory
+	| sysLocalStonesStoneStoneNameDir todeLnName |
+	todeLnName := 'tode'.
+	sysLocalStonesStoneStoneNameDir := self serverTodeSysLocalServerStones / self stoneName.
+	self stdout
+		nextPutAll: 'Creating ' , todeLnName , ' symbolic link to ' , sysLocalStonesStoneStoneNameDir pathString;
+    cr.
+	GsHostProcess execute: '/bin/ln -sf ' , sysLocalStonesStoneStoneNameDir pathString , ' ' , (stoneDirectory / todeLnName) pathString
+%
+method
+serverTodeSysLocalServerStones
+	^ self serverTodeSysLocalServer / 'stones'
+%
+method
+createTodeDescription: theStoneInfo
+	| description |
+	description := theStoneInfo createSessionDescriptionFor: self for: self localHostName.
+	description exportTo: self sessionDescriptionHome pathString , '/'.
+	^ description
+%
+method
+createTopaziniFile: stoneDirectory sessionDescription: aSessionDescriptionOrNil
+	| topaziniFile stream |
+	self stdout
+		nextPutAll: 'Create .topazini file';
+    cr.
+	topaziniFile := stoneDirectory / '.topazini'.
+	stream := FileStream write: topaziniFile.
+  stream
+		nextPutAll: 'SET GEMSTONE ' , self stoneName;
+		lf;
+		nextPutAll: 'set user ' , self gemstoneUserId;
+		lf;
+		nextPutAll: 'set password ' , self gemstonePassword;
+		lf.
+	aSessionDescriptionOrNil
+    ifNotNil: [ 
+			stream
+				nextPutAll: '# uncomment the following line before attempting to login using RPC gems';
+				lf;
+				nextPutAll: '# set gemnetid ' , aSessionDescriptionOrNil gemNRS;
+				lf ]
+%
+method
+localHostName
+  ^ (GsHostProcess execute: '/bin/hostname') trim
+%
+method
+serverTodeHome
+  ^  System gemEnvironmentVariable: 'GS_HOME'
+%
+method
+backupsHome
+  ^ self gs_stoneDirectory / 'backups'
+%
+method
+backupsHome
+  ^ self gs_stoneDirectory / 'snapshots'
+%
+method
+gemstoneUserId
+	^ self positionalArgs at: 3 ifAbsent: ['DataCurator']
+%
+method
+gemstonePassword
+	^ self positionalArgs at: 4 ifAbsent: ['swordfish']
+%
+method
+gs_stonesDirectory
+	^  ((System gemEnvironmentVariable: 'GS_HOME'), '/server/stones') asFileReference
+%
+method
+gs_productsDirectory
+	^  ((System gemEnvironmentVariable: 'GS_HOME'), '/shared/downloads/products') asFileReference
+%
+method
+gs_stoneDirectory
+	^  self gs_stonesDirectory / self stoneName
+%
+method
+binHomeDirectory
+  ^ ((System gemEnvironmentVariable: 'GS_HOME'), '/bin') asFileReference
+%
+method
+stoneName
+	stoneName ifNil: [ stoneName := self positionalArgs at: 1 ].
+	^ stoneName
+%
+method
+sessionDescriptionHome
+	^ (System gemEnvironmentVariable: 'GS_SYS_SESSIONS') asFileReference
+%
+method
+gsVers
+	gsVers ifNil: [ gsVers := self positionalArgs at: 2 ].
+	^ gsVers
+%
+method
+stoneInfoClass
+	^ (self globalNamed: 'GsDevKitStoneInfo')
+%
+method
+sessionDescriptionClass
+	^ (self globalNamed: 'TDSessionDescription')
+%
+method
+stoneInfoFilename
+	^  'info.ston'
+%
+method
+stoneInfo
+	^ self stoneInfoClass importFrom: self gs_stoneDirectory / self stoneInfoFilename
+%
+method
+doit
+	"override doit method, because ChildError does not exist in 3.6.0" 
+	[
+		self getAndVerifyOptions == self noResult
+			ifTrue: [ ^ self noResult ].
+		^ self theDoit
+	] on: Error do: [:ex |
+		self debug ifTrue: [ ex pass ].
+		self
+			exit: ((ex respondsTo: #stderr)
+				ifTrue: [ ex stderr asString trimBoth ]
+				ifFalse: [ ex messageText ])
+			withStatus: 1 "does not return" ].
+%
+doit
+	self preDoitSpecLoad.	"load the GsDevKit_SuperDoit project from spec"
+	self createStone.
+	^ self noResult
+%
+
