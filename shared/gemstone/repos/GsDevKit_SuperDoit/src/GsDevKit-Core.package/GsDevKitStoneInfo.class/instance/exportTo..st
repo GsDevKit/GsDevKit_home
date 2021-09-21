@@ -1,3 +1,7 @@
 ston
 exportTo: aFileReference
-      STON put: self onStreamPretty: (FileStream write: aFileReference pathString) 
+  | stream |
+  [ 
+    stream := FileStream write: aFileReference pathString.
+    STON put: self onStreamPretty: stream 
+  ] ensure: [ stream ifNotNil:[ stream close ] ]

@@ -92,6 +92,7 @@ createStone
 	newSessionDescription := self createTodeDescription: newStoneInfo.
 	self createTopaziniFile: stoneDirectory sessionDescription: newSessionDescription.
 	self stdout
+    tab;
     nextPutAll: 'Finished creating stone ' , self stoneName;
 		cr.
   "TODO: smalltalk CI spec"
@@ -101,15 +102,18 @@ createProductLn: stoneDirectory
 	| gsProductName gsProductDir |
 	gsProductName := self stoneInfoClass gsDownloadNameFor: self gsVers.
 	self stdout
+    tab;
 		nextPutAll: 'Creating product symbolic link to ' , gsProductName;
     cr.
 	gsProductDir := self gs_productsDirectory / gsProductName.
 	gsProductDir exists not
 		ifTrue: [ self error: 'The specified product directory: ' , gsProductDir pathString printString , ' does not exist' ].
+    GsHostProcess execute: '/bin/ln -sf "' , gsProductDir pathString , '" "' , (stoneDirectory / 'product') pathString, '"'
 %
 method
 createEmptySubDirectories: stoneDirectory
 	self stdout
+    tab;
     nextPutAll: 'Creating subdirectories ';
     cr.
 	self subDirectories
@@ -132,6 +136,7 @@ createEmptyStatsSubDirectories: stoneDirectory
 	| statsDirectory |
 	statsDirectory := stoneDirectory / 'stats'.
 	self stdout
+    tab;
 		nextPutAll: 'Creating stats subdirectories ';
     cr.
 	self statsSubDirectories
@@ -153,6 +158,7 @@ method
 copyTemplateSystemConf: stoneDirectory
 	| systemConfFile templateSystemConfFile |
 	self stdout
+    tab;
     nextPutAll: 'Copying system.conf file';
     cr.
 	templateSystemConfFile := self gemStoneTemplateFileRefForFile: 'system.conf'.
@@ -186,6 +192,7 @@ serverTodeSysDefaultServer
 method
 copyTemplateFiles: stoneDirectory
 	self stdout
+    tab;
     nextPutAll: 'Copying template files';
     cr.
 	self templateFiles
@@ -209,6 +216,7 @@ createDefStoneLn: stoneDirectory
 	defStone := 'defStone.env'.
 	defStoneBinFile := self binHomeDirectory / defStone.
 	self stdout
+    tab;
 		nextPutAll: 'Creating defStone.env symbolic link to ' , defStoneBinFile pathString;
     cr.
 	GsHostProcess execute: '/bin/ln -sf "' , defStoneBinFile pathString , '" "' , (stoneDirectory / defStone) pathString, '"'
@@ -219,6 +227,7 @@ createSysLocalStonesLn: stoneDirectory
 	todeLnName := 'tode'.
 	sysLocalStonesStoneStoneNameDir := self serverTodeSysLocalServerStones / self stoneName.
 	self stdout
+    tab;
 		nextPutAll: 'Creating ' , todeLnName , ' symbolic link to ' , sysLocalStonesStoneStoneNameDir pathString;
     cr.
 	GsHostProcess execute: '/bin/ln -sf ' , sysLocalStonesStoneStoneNameDir pathString , ' ' , (stoneDirectory / todeLnName) pathString
@@ -238,10 +247,11 @@ method
 createTopaziniFile: stoneDirectory sessionDescription: aSessionDescriptionOrNil
 	| topaziniFile stream |
 	self stdout
+    tab;
 		nextPutAll: 'Create .topazini file';
     cr.
 	topaziniFile := stoneDirectory / '.topazini'.
-	stream := FileStream write: topaziniFile.
+	stream := FileStream write: topaziniFile pathString.
   stream
 		nextPutAll: 'SET GEMSTONE ' , self stoneName;
 		lf;
@@ -259,27 +269,27 @@ createTopaziniFile: stoneDirectory sessionDescription: aSessionDescriptionOrNil
 %
 method
 localHostName
-  ^ (GsHostProcess execute: '/bin/hostname') trim
+  ^ (GsHostProcess execute: '/bin/hostname') trimSeparators
 %
 method
 serverTodeHome
-  ^  System gemEnvironmentVariable: 'GS_HOME'
+  ^  (System gemEnvironmentVariable: 'GS_HOME') asFileReference
 %
 method
 backupsHome
-  ^ self gs_stoneDirectory / 'backups'
+  ^ (self gs_stoneDirectory / 'backups') asFileReference
 %
 method
-backupsHome
-  ^ self gs_stoneDirectory / 'snapshots'
+snapshotsHome
+  ^ (self gs_stoneDirectory / 'snapshots') asFileReference
 %
 method
 gemstoneUserId
-	^ self positionalArgs at: 3 ifAbsent: ['DataCurator']
+	^ self positionalArgs at: 3 ifAbsent: [ 'DataCurator' ]
 %
 method
 gemstonePassword
-	^ self positionalArgs at: 4 ifAbsent: ['swordfish']
+	^ self positionalArgs at: 4 ifAbsent: [ 'swordfish' ]
 %
 method
 gs_stonesDirectory
