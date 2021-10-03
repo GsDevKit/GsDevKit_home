@@ -200,7 +200,8 @@ echo "Creating stone $stoneName"
 
 "$GS_HOME/bin/downloadGemStone" $vers
 
-"${GS_HOME}/bin/devKitCommandLine" createSmalltalkCIStoneNew $stoneName $vers $gemstoneUserId $gemstonePassword "${smalltalkCIConfigPath}"
+#"${GS_HOME}/bin/devKitCommandLine" createSmalltalkCIStoneNew $stoneName $vers $gemstoneUserId $gemstonePassword "${smalltalkCIConfigPath}"
+"$GS_HOME/shared/gemstone/bin/createStone.solo" $stoneName $vers $gemstoneUserId $gemstonePassword "${smalltalkCIConfigPath}"
 
 if [ "${snapshotFileArg}x" = "x" ] ; then
    snapshotFileArg=" -s $GS_HOME/server/stones/${stoneName}/product/bin/${defaultExtentName} "

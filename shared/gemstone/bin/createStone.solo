@@ -1,11 +1,12 @@
 #!/usr/bin/env superdoit_solo
 instvars
-	stoneName
+  stoneName
   gsVers
+  projectDirectoryPath
 %
 usage
 -----
-USAGE $basename [-h] <stone-name> <gs-version> <gemstone-user-id> [<smalltalkCI-config-path>]
+USAGE $basename [-h] <stone-name> <gs-version> <gemstone-user-id> <gemstone-password> [<smalltalkCI-config-path>]
 
 DESCRIPTION
   Create a directory under /server/stones using the given
@@ -20,6 +21,7 @@ OPTIONS
   <stone-name>              name of the stone to be created
   <gs-version>              GemStone version with which to create stone
   <gemstone-user-id>        GemStone userId to use in session description, .topazini file, etc.
+  <gemstone-password>		GemStone password to use
   <smalltalkCI-config-path> Path to the SmalltalkCI configuration file (.smalltalk.ston)
 
 EXAMPLES
@@ -50,7 +52,7 @@ RwLoadSpecificationV2 {
 method
 createStone
 	| stoneDirectory newStoneInfo newSessionDescription |
-  (self positionalArgs size < 2 or: [ self positionalArgs size > 4 ])
+  (self positionalArgs size < 2 or: [ self positionalArgs size > 5 ])
 		ifTrue: [
 			^ Error signal: 'Wrong number of arguments (' , self positionalArgs size printString , ')' ].
 	self stdout 
@@ -95,7 +97,11 @@ createStone
     tab;
     nextPutAll: 'Finished creating stone ' , self stoneName;
 		cr.
-  "TODO: smalltalk CI spec"
+  self positionalArgs size = 5 ifTrue:[
+	| ci |
+	ci := self readSmalltalkCISpec.
+	projectDirectoryPath := ci projectDirectory asFileReference.
+	(ci compatibleConfigurationsFor: #gemstone) do: [ :configSpec | self applyOptionsFromConfigurationSpec: configSpec ] ]
 %
 method
 createProductLn: stoneDirectory
@@ -268,6 +274,35 @@ createTopaziniFile: stoneDirectory sessionDescription: aSessionDescriptionOrNil
 				lf ]
 %
 method
+readSmalltalkCISpec
+	^ (self globalNamed: 'SmalltalkCI') platformClass basicNew
+		readSTONSpec: self smalltalkCIConfig;
+		yourself
+%
+method
+applyOptionsFromConfigurationSpec: configSpec
+	configSpec gemConfPath ifNotNil: [ :path | self createConfFileLn: path as: nil ].
+	configSpec stoneConfPath ifNotNil: [ :path | self createConfFileLn: path as: self stoneName , '.conf' ]
+%
+method
+createConfFileLn: confFilePath as: confFileName
+	| sourceFile lnPath |
+	sourceFile := confFilePath.
+	confFilePath asFileReference isRelative
+		ifTrue: [ sourceFile := self projectDirectoryPath / confFilePath ].
+	lnPath := confFileName ifNotNil: [ self stoneDirectory / confFileName ] ifNil: [ self stoneDirectory ].
+	self stdout
+		cr;
+		tab;
+		nextPutAll: 'Creating exe conf directory symbolic link from ';
+		nextPutAll: sourceFile pathString printString;
+		nextPutAll: ' to ';
+		nextPutAll: lnPath pathString printString.
+	sourceFile exists not
+		ifTrue: [ self exitFailure: 'The specified conf file: ' , sourceFile pathString printString , ' does not exist' ].
+	GsHostProcess execute: '/bin/ln -sf "', sourceFile pathString , '" "' , lnPath pathString, '"'.
+%
+method
 localHostName
   ^ (GsHostProcess execute: '/bin/hostname') trimSeparators
 %
@@ -290,6 +325,10 @@ gemstoneUserId
 method
 gemstonePassword
 	^ self positionalArgs at: 4 ifAbsent: [ 'swordfish' ]
+%
+method
+smalltalkCIConfig
+	^ (self positionalArgs at: 5) asFileReference
 %
 method
 gs_stonesDirectory
