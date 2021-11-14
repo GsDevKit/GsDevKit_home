@@ -259,7 +259,8 @@ EOF
 fi
 
 if [ "${loadSmalltalkCIConfig}" = "true" ] ; then
-  "${GS_HOME}/bin/devKitCommandLine" serverDoIt  $stoneName << EOF
+  # "${GS_HOME}/bin/devKitCommandLine" serverDoIt  $stoneName << EOF
+  "$GS_HOME/shared/gemstone/bin/serverdoit.solo" $stoneName << EOF
   GsDeployer bulkMigrate: [
     [
       Metacello new

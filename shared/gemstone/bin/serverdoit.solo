@@ -1,0 +1,161 @@
+#!/usr/bin/env superdoit_solo
+instvars
+  stoneName
+  sessionDescription
+%
+usage
+-----
+USAGE: $(basename $0) [ --help] <stone-name>
+	
+DESCRIPTION:
+  Execute the Smalltalk expressions on stdin against the given <stone-name>.
+
+EXAMPLES
+    $(basename $0) --help
+    $(basename $0) kit
+-----
+%
+projectshome
+$GS_HOME/shared/gemstone/repos
+%
+specs
+[
+RwLoadSpecificationV2 {
+	#specName : 'GsDevKit_SuperDoit',
+	#projectName : 'GsDevKit_SuperDoit',
+	#diskUrl : 'file:$GS_HOME/shared/gemstone/repos/GsDevKit_SuperDoit',
+	#projectSpecFile : 'rowan/project.ston',
+	#componentNames : [
+		'GsDevKit'
+	],
+	#comment : 'loads GsDevKit support code in support of GsDevKit_home superDoit scripts'
+}
+]
+%
+method
+todeIt
+	| tempenvvalue externalSession result |
+	tempenvvalue := System gemEnvironmentVariable: 'GEMSTONE'.
+	(System gemEnvironmentVariable: 'TARGET_GEMSTONE')
+		ifNil: [ System gemEnvironmentVariable: 'GEMSTONE' put: (self gs_stoneDirectory / 'product') pathString ]
+		ifNotNil: [:target | System gemEnvironmentVariable: 'GEMSTONE' put: target ].
+	externalSession := self createExternalSession.
+	externalSession login.
+	[  
+		result := externalSession executeString: self smalltalkExpression.
+	] ensure: [ 
+		System gemEnvironmentVariable: 'GEMSTONE' put: tempenvvalue.
+		externalSession logout ].
+	self stdout 
+		nextPutAll:'serverDoIt result --> ';
+		nextPutAll: result asString;
+		cr.
+%
+method
+smalltalkExpression
+	^ GsFile stdin contents
+%
+method
+createExternalSession
+	| externalSession sessionDescriptionReference gemstoneParameters gciLibrary |
+	sessionDescriptionReference := self sessionDescriptionHome / stoneName.
+	sessionDescriptionReference exists
+		ifFalse: [ 
+			Error signal: 'Session description file ' , 
+				sessionDescriptionReference pathString printString , 
+				' for ' , 
+				self stoneName printString ,
+        ' not found.' ].
+	sessionDescription := (self globalNamed: 'TDSessionDescription') importFrom: sessionDescriptionReference pathString.
+	gemstoneParameters :=  GemStoneParameters new
+		gemService: sessionDescription gemNRS asString ;
+		gemStoneName: sessionDescription stoneNRS asString ;
+		username: sessionDescription userId ;
+		password: sessionDescription password;
+		yourself.
+	gciLibrary := GciTsLibrary 
+		newForVersion: sessionDescription gemstoneVersion 
+		product: self gemstoneProjectTree pathString.
+  externalSession := GsTsExternalSession 
+		parameters: gemstoneParameters 
+		library: gciLibrary.
+  ^ externalSession
+%
+method
+gs_stonesDirectory
+	^  ((System gemEnvironmentVariable: 'GS_HOME'), '/server/stones') asFileReference
+%
+method
+gs_stoneDirectory
+	^  self gs_stonesDirectory / self stoneName
+%
+method
+gemstoneProjectTree
+	^ self gs_stonesDirectory / self stoneName / 'product'
+%
+method
+gsHome
+	^ (System gemEnvironmentVariable: 'GS_HOME') asFileReference
+%
+method
+sessionDescriptionHome
+	^ self gsHome / 'sys' / 'local' / 'sessions'
+%
+method
+gs_binDirectory
+	^ (self gs_stoneDirectory / 'product' / 'bin') asFileReference
+%
+method
+stoneName
+	stoneName ifNil: [ stoneName := self positionalArgs at: 1 ].
+	^ stoneName
+%
+method
+stoneInfoClass
+	^ (self globalNamed: 'GsDevKitStoneInfo')
+%
+method
+stoneInfoFilename
+	^  'info.ston'
+%
+method
+stoneInfo
+	^ self stoneInfoClass importFrom: self gs_stoneDirectory / self stoneInfoFilename
+%
+method
+topaziniFile
+	^self gs_stoneDirectory / '.topazini'
+%
+method
+topaziniDict
+	| dict topaziniData index|
+	dict := Dictionary new.
+	topaziniData := self topaziniFile contents.
+	dict at: 'user' put: (topaziniData
+		copyFrom: (index := topaziniData indexOfSubCollection: 'user') + 5
+		to: (topaziniData indexOf: Character lf startingAt: index) - 1).
+	dict at: 'password' put: (topaziniData
+		copyFrom: (index := topaziniData indexOfSubCollection: 'password') + 9
+		to: (topaziniData indexOf: Character lf startingAt: index) - 1).
+	^ dict
+%
+method
+doit
+	"override doit method, because ChildError does not exist in 3.6.0" 
+	[
+		self getAndVerifyOptions == self noResult
+			ifTrue: [ ^ self noResult ].
+		^ self theDoit
+	] on: Error do: [:ex |
+		self debug ifTrue: [ ex pass ].
+		self
+			exit: ((ex respondsTo: #stderr)
+				ifTrue: [ ex stderr asString trimBoth ]
+				ifFalse: [ ex messageText ])
+			withStatus: 1 "does not return" ].
+%
+doit
+	self preDoitSpecLoad.	"load the GsDevKit_SuperDoit project from spec"
+	self todeIt.
+	^ self noResult
+%

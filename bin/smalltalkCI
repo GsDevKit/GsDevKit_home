@@ -104,7 +104,8 @@ fi
 "$GS_HOME/bin/newExtent" ${attachTodeArgs} $snapshotFileFlag $snapshotFileArg $stoneName
 
 if [ "${attachTodeArgs}x" != "x" ] ; then
-  "${GS_HOME}/bin/devKitCommandLine" serverDoIt  $stoneName << EOF
+  # "${GS_HOME}/bin/devKitCommandLine" serverDoIt  $stoneName << EOF
+  "$GS_HOME/shared/gemstone/bin/serverdoit.solo" $stoneName << EOF
   GsDeployer bulkMigrate: [
     [
     Metacello new
