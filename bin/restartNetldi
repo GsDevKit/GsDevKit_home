@@ -71,7 +71,7 @@ popd >& /dev/null
 
 set +e
 #"$GS_HOME/bin/devKitCommandLine" startnetldi $stoneName $*"
-"$GS_HOME/superdoit_devkit/bin/restartnetldi" $stoneName $*
+"$GS_HOME/shared/gemstone/bin/restartnetldi" $stoneName $*
 
 status="$?"
 

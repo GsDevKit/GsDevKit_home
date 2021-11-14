@@ -71,6 +71,6 @@ popd >& /dev/null
 
 # do tODE restore
 #"$GS_HOME/bin/private/gsDevKitTodeCommandLine" $interactiveArg restoreFromBackup $stoneName "$backupFile"
-"$GS_HOME/superdoit_devkit/bin/restorefrombackup.solo" $interactiveArg $stoneName "$backupFile"
+"$GS_HOME/shared/gemstone/bin/restorefrombackup.solo" $interactiveArg $stoneName "$backupFile"
 
 exit_0_banner "...finished"
