@@ -52,7 +52,7 @@ if [ ! -d "$GS_HOME/shared/gemstone/repos/superDoit" ] ; then
 				git checkout v2.0
 			popd
 		fi
-		cd superDoit/gemstone/gs
+		cd superDoit/gemstone/solo
 		if [ ! -e "extent0.solo.dbf" ] ; then
 			curl  -L -O -s -S "https://github.com/dalehenrich/superDoit/releases/download/v0.1.0/${gsvers}_extent0.solo.dbf.gz"
 			gunzip --stdout ${gsvers}_extent0.solo.dbf.gz > extent0.solo.dbf
