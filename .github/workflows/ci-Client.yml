@@ -33,7 +33,7 @@ jobs:
             test: Client
             client: Pharo6.1
             allowfailure: false
-          - gs_version: 3.57.
+          - gs_version: 3.5.7
             test: Client
             client: Pharo3.0
             allowfailure: false
