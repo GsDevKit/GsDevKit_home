@@ -48,6 +48,8 @@ if [ ! -d "$GS_HOME/shared/gemstone/repos/superDoit" ] ; then
 		$GS_HOME/bin/downloadGemStone $gsvers
 		if [ ! -d "superDoit" ] ; then
 			$GS_HOME/bin/private/cloneGitHubProject -c https dalehenrich superDoit
+			cd superDoit
+			git checkout v2.0
 		fi
 		cd superDoit/gemstone/gs
 		if [ ! -e "extent0.solo.dbf" ] ; then
