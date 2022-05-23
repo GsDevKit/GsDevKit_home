@@ -57,10 +57,12 @@ jobs:
         id: test_run
         if: steps.last_run_status.outputs.last_run_status != 'success'
         run: |
+          set -x
+          echo "LOOK AT ME"
           export GS_HOME="$(pwd)"
           export PATH=$GS_HOME/bin:$PATH
           export GS_TRAVIS=true
-          export JAVA="/usr/bin/java"
+          export JAVA="java"
           $JAVA -h
           hostname
           cat /etc/hosts
