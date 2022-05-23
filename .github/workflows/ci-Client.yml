@@ -34,31 +34,31 @@ jobs:
             test: Client
             client: Pharo6.1
             allowfailure: false
-          - gs_version: 3.5.5
+          - gs_version: 3.5.8
             test: Client
             client: Pharo3.0
             allowfailure: false
-          - gs_version: 3.5.5
+          - gs_version: 3.5.8
             test: Client
             client: Pharo6.1
             allowfailure: false
-          - gs_version: 3.6.1
+          - gs_version: 3.6.3
             test: Client
             client: Pharo3.0
             allowfailure: false
-          - gs_version: 3.6.1
+          - gs_version: 3.6.3
             test: Client
             client: Pharo5.0
             allowfailure: false
-          - gs_version: 3.6.1
+          - gs_version: 3.6.3
             test: Client
             client: Pharo6.0
             allowfailure: false
-          - gs_version: 3.6.1
+          - gs_version: 3.6.3
             test: Client
             client: Pharo6.1
             allowfailure: false
-          - gs_version: 3.6.1
+          - gs_version: 3.6.3
             test: Client
             client: Pharo7.0
             allowfailure: false
