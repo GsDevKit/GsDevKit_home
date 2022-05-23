@@ -10,6 +10,8 @@ set -e  # exit on error
 # selenium needed for complete testing of Seaside application (https://github.com/GsDevKit/GsDevKit_home/issues/284#
 if [ ! -d "selenium-server-standalone-3.141.59.jar" ] ; then
 	# download launch theselenium web driver
+	CHROME_MAJOR_VERSION=`google-chrome --version | cut -d ' ' -f3 | cut -d '.' -f1,2,3`
+	CHROME_DRIVER_VERSION=`curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_MAJOR_VERSION`
 	wget http://selenium-release.storage.googleapis.com/3.141/selenium-server-standalone-3.141.59.jar
 	wget https://chromedriver.storage.googleapis.com/${CHROME_DRIVER_VERSION}/chromedriver_linux64.zip
 	unzip chromedriver_linux64.zip
