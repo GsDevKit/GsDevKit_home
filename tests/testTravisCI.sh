@@ -82,8 +82,11 @@ case $TEST in
     $GS_HOME/tests/smalltalkCITests.sh
     ;; 
 	Seaside3)
-		$GS_HOME/tests/basicInstallServer.sh
-    source $GS_HOME/bin/defGsDevKit.env
+		which java
+		java -h
+		$JAVA -h
+#		$GS_HOME/tests/basicInstallServer.sh
+#    source $GS_HOME/bin/defGsDevKit.env
     $GS_HOME/tests/seaside3Install.sh
 		;;
 	UnitTests)
