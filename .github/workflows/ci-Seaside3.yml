@@ -48,6 +48,11 @@ jobs:
       - name: Install Chrome
         run: |
           sudo apt install google-chrome-stable
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin' # See 'Supported distributions' for available options
+          java-version: '17'
       - name: Run tests
         id: test_run
         if: steps.last_run_status.outputs.last_run_status != 'success'
@@ -56,7 +61,7 @@ jobs:
           export PATH=$GS_HOME/bin:$PATH
           export GS_TRAVIS=true
           export JAVA="/usr/bin/java"
-          export CHROME_DRIVER_VERSION="90.0.4430.24"
+          $JAVA -h
           hostname
           cat /etc/hosts
           $GITHUB_WORKSPACE/tests/testTravisCI.sh
