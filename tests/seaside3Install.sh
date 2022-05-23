@@ -5,7 +5,7 @@
 #   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
 #=========================================================================
 
-set -xe  # exit on error
+set -e  # exit on error
 
 # selenium needed for complete testing of Seaside application (https://github.com/GsDevKit/GsDevKit_home/issues/284#
 if [ ! -d "selenium-server-standalone-3.141.59.jar" ] ; then
