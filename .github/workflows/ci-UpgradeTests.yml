@@ -41,19 +41,19 @@ jobs:
           - gs_version: 3.4.5
             upgrade_from: 3.3.3
             allowfailure: false
-          - gs_version: 3.5.5
+          - gs_version: 3.5.8
             upgrade_from: 3.4.5
             allowfailure: false
-          - gs_version: 3.5.5
+          - gs_version: 3.5.8
             upgrade_from: 3.2.17
             allowfailure: false
-          - gs_version: 3.6.1
+          - gs_version: 3.6.3
             upgrade_from: 3.3.9
             allowfailure: false
-          - gs_version: 3.6.1
+          - gs_version: 3.6.3
             upgrade_from: 3.4.5
             allowfailure: false
-          - gs_version: 3.6.1
+          - gs_version: 3.6.3
             upgrade_from: 3.5.0
             allowfailure: false
           # additional upgrade tests
@@ -61,15 +61,15 @@ jobs:
             upgrade_from: 3.3.9
             test: Upgrade_unittest
             allowfailure: false
-          - gs_version: 3.6.1
+          - gs_version: 3.6.3
             upgrade_from: 3.4.5
             test: Upgrade_User
             allowfailure: false
-          - gs_version: 3.6.1
+          - gs_version: 3.6.3
             upgrade_from: 3.3.9
             test: Upgrade_71
             allowfailure: false
-          - gs_version: 3.6.1
+          - gs_version: 3.6.3
             upgrade_from: 3.3.9
             test: Upgrade_TOC
             allowfailure: false
