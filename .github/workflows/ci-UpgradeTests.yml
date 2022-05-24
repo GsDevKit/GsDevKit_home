@@ -29,9 +29,6 @@ jobs:
           - gs_version: 3.1.0.6
             upgrade_from: 2.4.4.1
             allowfailure: false
-          - gs_version: 3.2.17
-            upgrade_from: 3.2.9
-            allowfailure: true
           - gs_version: 3.4.5
             upgrade_from: 3.1.0.6
             allowfailure: false
