@@ -43,7 +43,7 @@ installPrereqsForUbuntu(){
         sudo ln -f -s /lib/i386-linux-gnu/libpam.so.0 /lib/libpam.so.0
         sudo ln -f -s /usr/lib/i386-lin-gnu/libstdc++.so.6 /usr/lib/i386-linux-gnu/libstdc++.so
         ;;
-      14.04|16.04|18.04|20.04)
+      14.04|16.04|18.04|20.04|22.04)
         sudo dpkg --add-architecture i386
         installUbuntuPackages
         sudo apt-get -y install fonts-dejavu # ensure that DejaVu Sans Mono font present (default font for tODE)
