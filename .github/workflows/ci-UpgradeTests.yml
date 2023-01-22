@@ -14,63 +14,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        gs_version: [ 3.1.0.6, 3.2.17, 3.3.9, 3.4.5, 3.5.8, 3.6.3 ]
+        gs_version: [ 3.5.5, 3.5.8, 3.6.0, 3.6.5 ]
         allowfailure: [ false ]
         test: [ Upgrade_unittest ]
-        exclude:
-          - gs_version: 3.2.17
-            test: Upgrade_unittest
-            allowfailure: false
-        include:
-          # include the upgrade_from parameter in the matrix
-          - gs_version: 3.4.5
-            upgrade_from: 3.3.9
-            allowfailure: false
-          - gs_version: 3.1.0.6
-            upgrade_from: 2.4.4.1
-            allowfailure: false
-          - gs_version: 3.4.5
-            upgrade_from: 3.1.0.6
-            allowfailure: false
-          - gs_version: 3.3.9
-            upgrade_from: 3.2.17
-            allowfailure: false
-          - gs_version: 3.4.5
-            upgrade_from: 3.3.3
-            allowfailure: false
-          - gs_version: 3.5.8
-            upgrade_from: 3.4.5
-            allowfailure: false
-          - gs_version: 3.5.8
-            upgrade_from: 3.2.17
-            allowfailure: false
-          - gs_version: 3.6.3
-            upgrade_from: 3.3.9
-            allowfailure: false
-          - gs_version: 3.6.3
-            upgrade_from: 3.4.5
-            allowfailure: false
-          - gs_version: 3.6.3
-            upgrade_from: 3.5.0
-            allowfailure: false
-          # additional upgrade tests
-          - gs_version: 3.5.1
-            upgrade_from: 3.3.9
-            test: Upgrade_unittest
-            allowfailure: false
-          - gs_version: 3.6.3
-            upgrade_from: 3.4.5
-            test: Upgrade_User
-            allowfailure: false
-          - gs_version: 3.6.3
-            upgrade_from: 3.3.9
-            test: Upgrade_71
-            allowfailure: false
-          - gs_version: 3.6.3
-            upgrade_from: 3.3.9
-            test: Upgrade_TOC
-            allowfailure: false
-    env:
+     env:
       GS_VERSION: ${{ matrix.gs_version }}
       TEST: ${{ matrix.test }}
       UPGRADE_FROM: ${{ matrix.upgrade_from }}
@@ -118,7 +65,7 @@ jobs:
     name: Post Workflow Status To Slack
     needs:
       - build
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     steps:
        - name: Slack Workflow Notification
          uses: Gamesight/slack-workflow-status@master

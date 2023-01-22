@@ -14,26 +14,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        gs_version: [ 2.4.8, 3.1.0.6, 3.2.17, 3.3.9, 3.4.5, 3.5.5, 3.6.1 ]
+        gs_version: [ 3.5.5, 3.5.8, 3.6.0, 3.6.5]
         test: [ Clients ]
         allowfailure: [ false ]
         include:
-          - gs_version: 3.3.9
-            test: Client
-            client: Pharo3.0
-            allowfailure: false
-          - gs_version: 3.3.9
-            test: Client
-            client: Pharo6.1
-            allowfailure: false
-          - gs_version: 3.4.5
-            test: Client
-            client: Pharo3.0    
-            allowfailure: false
-          - gs_version: 3.4.5
-            test: Client
-            client: Pharo6.1
-            allowfailure: false
           - gs_version: 3.5.8
             test: Client
             client: Pharo3.0
@@ -113,7 +97,7 @@ jobs:
     name: Post Workflow Status To Slack
     needs:
       - build
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     steps:
        - name: Slack Workflow Notification
          uses: Gamesight/slack-workflow-status@master
