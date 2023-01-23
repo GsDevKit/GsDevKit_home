@@ -17,7 +17,7 @@ jobs:
         gs_version: [ 3.5.5, 3.5.8, 3.6.0, 3.6.5 ]
         allowfailure: [ false ]
         test: [ Upgrade_unittest ]
-       include:
+         include:
          # include the upgrade_from parameter in the matrix
           - gs_version: 3.5.5
            upgrade_from: 3.5.3
@@ -49,7 +49,7 @@ jobs:
          - gs_version: 3.6.5
            upgrade_from: 3.6.4
            allowfailure: false
-      env:
+    env:
       GS_VERSION: ${{ matrix.gs_version }}
       TEST: ${{ matrix.test }}
       UPGRADE_FROM: ${{ matrix.upgrade_from }}
