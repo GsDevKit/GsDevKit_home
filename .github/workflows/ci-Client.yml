@@ -14,39 +14,34 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        gs_version: [ 3.5.2, 3.5.5, 3.5.8, 3.6.0, 3.6.5]
+        gs_version: [ 3.5.3, 3.5.5, 3.5.8, 3.6.0, 3.6.3, 3.6.5]
         test: [ Clients ]
         allowfailure: [ false ]
         include:
-          - gs_version: 3.5.8
+          - gs_version: 3.5.3
             test: Client
             client: Pharo3.0
             allowfailure: false
-          - gs_version: 3.5.8
-            test: Client
-            client: Pharo6.1
-            allowfailure: false
-          - gs_version: 3.6.3
+         - gs_version: 3.5.5
             test: Client
             client: Pharo3.0
             allowfailure: false
-          - gs_version: 3.6.3
+         - gs_version: 3.5.8
             test: Client
-            client: Pharo5.0
+            client: Pharo3.0
             allowfailure: false
-          - gs_version: 3.6.3
+         - gs_version: 3.6.0
             test: Client
-            client: Pharo6.0
+            client: Pharo3.0
             allowfailure: false
-          - gs_version: 3.6.3
+         - gs_version: 3.6.3
             test: Client
-            client: Pharo6.1
+            client: Pharo3.0
             allowfailure: false
-          - gs_version: 3.6.3
+         - gs_version: 3.6.5
             test: Client
-            client: Pharo7.0
-            allowfailure: false
-          
+            client: Pharo3.0
+            allowfailure: false          
     env:
       GS_VERSION: ${{ matrix.gs_version }}
       TEST: ${{ matrix.test }}

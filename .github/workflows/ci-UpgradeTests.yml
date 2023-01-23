@@ -14,10 +14,42 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        gs_version: [ 3.5.2, 3.5.5, 3.5.8, 3.6.0, 3.6.5 ]
+        gs_version: [ 3.5.5, 3.5.8, 3.6.0, 3.6.5 ]
         allowfailure: [ false ]
         test: [ Upgrade_unittest ]
-      env:
+       include:
+         # include the upgrade_from parameter in the matrix
+          - gs_version: 3.5.5
+           upgrade_from: 3.5.3
+           allowfailure: false
+          - gs_version: 3.5.8
+           upgrade_from: 3.5.3
+           allowfailure: false
+          - gs_version: 3.5.8
+           upgrade_from: 3.5.4
+           allowfailure: false
+          - gs_version: 3.6.0
+           upgrade_from: 3.5.8
+           allowfailure: false
+         - gs_version: 3.6.5
+           upgrade_from: 3.5.4
+           allowfailure: false
+         - gs_version: 3.5.8
+           upgrade_from: 3.5.7
+           allowfailure: false
+         - gs_version: 3.6.5
+           upgrade_from: 3.5.7
+           allowfailure: false
+         - gs_version: 3.6.5
+           upgrade_from: 3.5.8
+           allowfailure: false
+         - gs_version: 3.6.5
+           upgrade_from: 3.6.0
+           allowfailure: false
+         - gs_version: 3.6.5
+           upgrade_from: 3.6.4
+           allowfailure: false
+     env:
       GS_VERSION: ${{ matrix.gs_version }}
       TEST: ${{ matrix.test }}
       UPGRADE_FROM: ${{ matrix.upgrade_from }}
