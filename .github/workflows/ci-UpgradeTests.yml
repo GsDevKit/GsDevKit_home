@@ -49,7 +49,7 @@ jobs:
          - gs_version: 3.6.5
            upgrade_from: 3.6.4
            allowfailure: false
-     env:
+      env:
       GS_VERSION: ${{ matrix.gs_version }}
       TEST: ${{ matrix.test }}
       UPGRADE_FROM: ${{ matrix.upgrade_from }}

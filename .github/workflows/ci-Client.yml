@@ -22,26 +22,27 @@ jobs:
             test: Client
             client: Pharo3.0
             allowfailure: false
-         - gs_version: 3.5.5
+          - gs_version: 3.5.5
             test: Client
             client: Pharo3.0
             allowfailure: false
-         - gs_version: 3.5.8
+          - gs_version: 3.5.8
             test: Client
             client: Pharo3.0
             allowfailure: false
-         - gs_version: 3.6.0
+          - gs_version: 3.6.0
             test: Client
             client: Pharo3.0
             allowfailure: false
-         - gs_version: 3.6.3
+          - gs_version: 3.6.3
             test: Client
             client: Pharo3.0
             allowfailure: false
-         - gs_version: 3.6.5
+          - gs_version: 3.6.5
             test: Client
             client: Pharo3.0
             allowfailure: false          
+
     env:
       GS_VERSION: ${{ matrix.gs_version }}
       TEST: ${{ matrix.test }}
