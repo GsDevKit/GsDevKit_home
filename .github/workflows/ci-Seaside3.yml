@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        gs_version: [ 3.5.5, 3.5.8, 3.6.0, 3.6.5 ]
+        gs_version: [ 3.5.2, 3.5.5, 3.5.8, 3.6.0, 3.6.5 ]
         allowfailure: [ false ]
     env:
       GS_VERSION: ${{ matrix.gs_version }}
