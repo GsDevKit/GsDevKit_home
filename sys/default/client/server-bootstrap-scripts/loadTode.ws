@@ -30,6 +30,6 @@ debuggGem  ifTrue: [
 						show: '-----DEBUGGEM ', 
 							(System gemVersionReport at: 'processId') printString, 
 							' ',
-							System waitForDebug printString ].
+							System waitForDebug printString ]
 ifFalse: [ex pass ].
-				 ] ].
+				 ] ] ].
