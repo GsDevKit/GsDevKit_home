@@ -23,6 +23,13 @@ $JAVA -Dwebdriver.chrome.driver=chromedriver -Dwebdriver.chrome.logfile=${TRAVIS
 
 startStone -b ${STONENAME1}
 
+here=`pwd`
+gsrepos
+git clone https://github.com/SeasideSt/Seaside.git
+cd Seaside
+git checkout issue_1355
+cd $here
+
 # test the Getting started with Seaside instructions
 "$GS_HOME/bin/private/gsDevKitTodeCommandLine" todeIt ${STONENAME1} << EOF
 # after test run, <self> will be a TestResult
