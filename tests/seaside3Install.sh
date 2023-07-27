@@ -37,7 +37,7 @@ status=$?
 kill %1
 
 if [ "$status" != "0" ] ; then
- exit $statue
+ exit $status
 fi
 
 if [ -e "${TRAVIS_BUILD_DIR}/chromedriver.log" ] ; then
