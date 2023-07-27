@@ -30,7 +30,7 @@ set +e	# we want to ensure that we kill the chrome driver in the event of a test
 project install --url=http://gsdevkit.github.io/GsDevKit_home/Seaside32.ston
 project load --loads=\`#('CI')\` Seaside3
 test --batch project Seaside3
-eval \`[ (self hasErrors or: [ self unexpectedFailures size > 0 ]) ifTrue: [ self error: 'Tests failed' ] ] on: Warning do: [ :ex | ex resume: true ]\`
+eval \`[ (self hasErrors or: [ self unexpectedFailures size > 0 ]) ifTrue: [ self error: 'Tests FAILED' ] ifFalse: [ 'Tests PASSED' ] ] on: Warning do: [ :ex | ex resume: true ]\`
 EOF
 status=$?
 
@@ -40,13 +40,13 @@ if [ "$status" != "0" ] ; then
  exit $status
 fi
 
-if [ -e "${TRAVIS_BUILD_DIR}/chromedriver.log" ] ; then
-	echo "======CHROME======="
-	cat ${TRAVIS_BUILD_DIR}/chromedriver.log
-fi
-if [ -e "${TRAVIS_BUILD_DIR}/seleniumlog.txt" ] ; then
-	echo "======SELENIUM======="
-	cat ${TRAVIS_BUILD_DIR}/seleniumlog.txt &
-fi
+#if [ -e "${TRAVIS_BUILD_DIR}/chromedriver.log" ] ; then
+#	echo "======CHROME======="
+#	cat ${TRAVIS_BUILD_DIR}/chromedriver.log
+#fi
+#if [ -e "${TRAVIS_BUILD_DIR}/seleniumlog.txt" ] ; then
+#	echo "======SELENIUM======="
+#	cat ${TRAVIS_BUILD_DIR}/seleniumlog.txt &
+#fi
 
 
