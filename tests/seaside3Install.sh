@@ -24,6 +24,7 @@ $JAVA -Dwebdriver.chrome.driver=chromedriver -Dwebdriver.chrome.logfile=${TRAVIS
 startStone -b ${STONENAME1}
 
 # test the Getting started with Seaside instructions
+set +e	# we want to ensure that we kill the chrome driver in the event of a test failure
 "$GS_HOME/bin/private/gsDevKitTodeCommandLine" todeIt ${STONENAME1} << EOF
 # after test run, <self> will be a TestResult
 project install --url=http://gsdevkit.github.io/GsDevKit_home/Seaside32.ston
@@ -31,8 +32,13 @@ project load --loads=\`#('CI')\` Seaside3
 test --batch project Seaside3
 eval \`[(self hasErrors or: [ self hasFailures ]) ifTrue: [ self error: 'Tests failed' ] ] on: Warning do: [:ex | ex resume: true ]\`
 EOF
+status=$?
 
 kill %1
+
+if [ "$status" != "0" ] ; then
+ exit $statue
+fi
 
 if [ -e "${TRAVIS_BUILD_DIR}/chromedriver.log" ] ; then
 	echo "======CHROME======="
