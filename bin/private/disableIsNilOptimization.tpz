@@ -1,0 +1,52 @@
+#=========================================================================
+# Copyright (c) 2023 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#
+#   MIT license: https://github.com/GsDevKit/GsDevKit_home/blob/master/license.txt
+#=========================================================================
+
+# Disable isNil optimization in a 3.7.0 or greater image
+# ( see https://github.com/GsDevKit/GsDevKit_upgrade/issues/30)
+
+! run with topaz -l -T50000 or larger
+
+level 1
+iferr 1 stk
+iferr 2 stack
+iferr 3 exit 1
+
+set user SystemUser pass swordfish
+login
+category: 'Private'
+classmethod: GsNMethod
+_adjustOptimizedSelectors
+  OptimizedSelectors := #( notNil yourself ).
+%
+
+run
+| x |
+GsNMethod _adjustOptimizedSelectors .
+(x := GsNMethod configurableOptimizedSelectors) = #( notNil yourself ) 
+ifFalse:[ Error signal: 'wrong value ', x printString ].
+true
+%
+commit
+logout
+login
+run
+ "recompile methods that contain an isNil selector pattern ... to ensure method is not optimized"
+ | cnt | 
+ cnt := 0 .
+ ((ClassOrganizer new substringSearch: 'isNil') at: 1) do:[:meth |
+   meth recompileFromSource .
+   GsFile gciLogServer:'recompiled  ' , meth printString .
+   cnt := cnt + 1 .
+ ].
+ ^ cnt
+%
+commit
+
+errorCount
+
+logout
+
+exit 0

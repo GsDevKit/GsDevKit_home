@@ -23,6 +23,13 @@ OPTIONS
   -f
      Force creation of new stone by deleting 
      \$GS_HOME/gemstone/stone/<target-stone-name> directory if it exists
+  -E
+    Upgrades to 3.7.z and above.
+    Enable isNil optimization (leave enabled). upgradeImage enables isNil 
+    optimization by default but, there are potential problems with isNil 
+    optimization in some Seaside projects, upgradeSeasideImage disables 
+    isNil optimiazation unless this options is specified. See 
+    https://github.com/GsDevKit/GsDevKit_home/issues/331 for more information.
   -g
      Do not install tODE in upgraded stone. Allow for upgrading a stone that
      does not have tODE installed in the original stone and that should not
@@ -53,7 +60,9 @@ EXAMPLES
   $(basename $0) -h
   $(basename $0) -l /home/loadMyApplication gs_3106 gs_329 3.2.9
   $(basename $0) -U bozo -P theClown gs_3106 gs_329 3.2.9
-  $(basename $0) gs_3106 gs_329 3.2.9
+  $(basename $0) -E gs_366 gs_370 3.7.0
+  $(basename $0) gs_345 gs_355 3.5.5
+  $(basename $0) gs_366 gs_370 3.7.0
 
 HELP
 }
@@ -80,7 +89,8 @@ gemstoneUserId="DataCurator"
 gemstonePassword="swordfish"
 topazWaitForDebug=""
 skipInstallTode="false"
-while getopts "cfhl:s:um:U:P:Wg" OPT ; do
+enableIsNilOptimizationArg=""
+while getopts "cfhl:s:um:U:EP:Wg" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     c) runUpgrade="false";;
@@ -96,6 +106,7 @@ while getopts "cfhl:s:um:U:P:Wg" OPT ; do
     U) gemstoneUserId="${OPTARG}";;
     P) gemstonePassword="${OPTARG}";;
 		W) topazWaitForDebug=" -W ";;
+		E) enableIsNilOptimizationArg="-E";;
     *) usage; exit_1_banner "Uknown option";;
   esac
 done
@@ -252,9 +263,12 @@ EOF
 				3.5.*) remoteDebugFlag="";; # remote debugging flag is not available in 3.5.x
 				*) remoteDebugFlag="$topazWaitForDebug" ;;
 			esac
+			case "$gsvers" in
+				3.5.*|3.6.*) enableIsNilOptimizationFlag="";; # enable isNil optimization flag not available in 3.5.x and 3.6.x
+				*) enableIsNilOptimizationFlag="$enableIsNilOptimizationArg"
 			set +e
 			upgradeScript=$GEMSTONE/upgrade/createGsDevKit_upgrade.topaz
-      "$GEMSTONE/seaside/bin/upgradeSeasideImage" -c $tempObjCacheSize -s $targetStoneName -u $gemstoneUserId -p $gemstonePassword -P $upgradeScript $remoteDebugFlag 2>&1 << EOF
+      "$GEMSTONE/seaside/bin/upgradeSeasideImage" -c $tempObjCacheSize -s $targetStoneName -u $gemstoneUserId -p $gemstonePassword -P $upgradeScript $remoteDebugFlag $enableIsNilOptimizationFlag 2>&1 << EOF
 
 EOF
 			status=$?

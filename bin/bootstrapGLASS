@@ -17,6 +17,12 @@ Bootstrap GLASS into an extent0.dbf.
 OPTIONS
   -h
      display help
+  -E
+    enable isNil optimization (leave enabled). upgradeImage enables isNil 
+    optimization by default but, there are potential problems with isNil 
+    optimization in some Seaside projects, upgradeSeasideImage disables 
+    isNil optimiazation unless this options is specified. See 
+    https://github.com/GsDevKit/GsDevKit_home/issues/331 for more information
 
 EXAMPLES
    $(basename $0) -h
@@ -32,6 +38,15 @@ source ${GS_HOME}/bin/defGsDevKit.env
 
 source ${GS_HOME}/bin/private/shFunctions
 getOpts_help $@
+
+enableIsNilOptimization="false"
+while getopts "E" OPT ; do
+  case "$OPT" in
+		E) enableIsNilOptimization="true";;
+    *) usage; exit_1_banner "Uknown option";;
+  esac
+done
+shift $(($OPTIND - 1))
 
 if [ $# -ne 1 ]; then
   usage; exit_1_banner "wrong number of arguments (1 expected)"
@@ -61,6 +76,12 @@ export upgradeDir=$GEMSTONE/upgrade
 $GS_HOME/bin/startTopaz $stoneName -l << EOF
 input $GS_HOME/bin/private/prepareBootstrapGLASS.tpz
 EOF
+
+if [ "enableIsNilOptimization" = "false" ]; then
+$GS_HOME/bin/startTopaz $stoneName -l << EOF
+input $GS_HOME/bin/private/disableIsNilOptimization.tpz
+EOF
+fi
 
 $GS_HOME/bin/startTopaz $stoneName -l << EOF
 input $GS_HOME/bin/private/bootstrapGLASS.tpz

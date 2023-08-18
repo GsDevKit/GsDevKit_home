@@ -30,7 +30,7 @@ set +e	# we want to ensure that we kill the chrome driver in the event of a test
 project install --url=http://gsdevkit.github.io/GsDevKit_home/Seaside32.ston
 project load --loads=\`#('CI')\` Seaside3
 test --batch project Seaside3
-eval \`[ (self hasErrors or: [ self unexpectedFailures size > 0 ]) ifTrue: [ self error: 'Tests FAILED' ] ifFalse: [ 'Tests PASSED' ] ] on: Warning do: [ :ex | ex resume: true ]\`
+eval \`[ (self hasErrors or: [ self unexpectedFailures size > 0 or: [ (self unexpectedPasses reject: [ :each | each class = WAWebDriverFunctionalTestCase and: [ each selector = #'testCORSFilterFunctionalTest' ] ]) size > 0 ] ]) ifTrue: [ self error: 'Tests failed' ] ifFalse: [ 'Tests PASSED' ] ] on: Warning do: [ :ex | ex resume: true ]\`
 EOF
 status=$?
 

@@ -32,6 +32,13 @@ as the default <gemstone-user-id>.
 OPTIONS
   -h
      display help
+  -E
+    3.7.0 ONLY. Only has an effect when used with the -b option.
+    Enable isNil optimization (leave enabled). upgradeImage enables isNil 
+    optimization by default but, there are potential problems with isNil 
+    optimization in some Seaside projects, upgradeSeasideImage disables 
+    isNil optimiazation unless this options is specified. See 
+    https://github.com/GsDevKit/GsDevKit_home/issues/331 for more information.
   -f
      Force creation of new stone, by deleting 
      \$GS_SERVER/stones/<stone-name> directory if it exists
@@ -108,6 +115,7 @@ EXAMPLES
   $(basename $0) -c -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_329 3.2.9
   $(basename $0) -BG -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_340 3.4.0
   $(basename $0) -BGC -z \$GS_HOME/sys/local/server/templates/myStoneConfig.ston gs_340 3.4.0
+  $(basename $0) -b -E -U bozo gs_370 3.7.0
   $(basename $0) -b -U bozo gs_329 3.2.9
   $(basename $0) -b -U bozo -P theClown gs_329 3.2.9
 
@@ -144,7 +152,8 @@ bootstrapGLASS="false"
 defaultExtentName="extent0.seaside.dbf"
 defaultGemstoneUserId="DataCurator"
 gemstonePassword="swordfish"
-while getopts "fghns:t:u:i:l:z:cBCGU:P:b" OPT ; do
+enableIsNilOptimizationArg=""
+while getopts "fghns:t:u:i:l:z:cBCEGU:P:b" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
     f) force="true";; 
@@ -163,6 +172,7 @@ while getopts "fghns:t:u:i:l:z:cBCGU:P:b" OPT ; do
     b) bootstrapGLASS="true"; defaultExtentName="extent0.dbf" ;;
     U) gemstoneUserId="${OPTARG}";;
     P) gemstonePassword="${OPTARG}";;
+		E) enableIsNilOptimizationArg="-E";;
     *) usage; exit_1_banner "Uknown option";;
   esac
 done
@@ -215,7 +225,12 @@ fi
 
 if [ "$installTode" = "true" ] ; then
   if [ "$bootstrapGLASS" = "true" ] ; then
-    "$GS_HOME/bin/bootstrapGLASS" $stoneName
+		majorMinorVersion="${vers:0:3}"
+		if [ "$majorMinorVersion" = "3.7" ] ; then
+			# ignore enableIsNilOptimizationArg for versions other than 3.7.x
+      enableIsNilOptimizationArg=""
+		fi
+    "$GS_HOME/bin/bootstrapGLASS" $enableIsNilOptimizationArg $stoneName
   fi
   "$GS_SYS/bin/todeLoad" $stoneName
 else
