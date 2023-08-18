@@ -77,7 +77,7 @@ $GS_HOME/bin/startTopaz $stoneName -l << EOF
 input $GS_HOME/bin/private/prepareBootstrapGLASS.tpz
 EOF
 
-if [ "enableIsNilOptimization" = "false" ]; then
+if [ "$enableIsNilOptimization" = "false" ]; then
 $GS_HOME/bin/startTopaz $stoneName -l << EOF
 input $GS_HOME/bin/private/disableIsNilOptimization.tpz
 EOF
