@@ -266,6 +266,7 @@ EOF
 			case "$gsvers" in
 				3.5.*|3.6.*) enableIsNilOptimizationFlag="";; # enable isNil optimization flag not available in 3.5.x and 3.6.x
 				*) enableIsNilOptimizationFlag="$enableIsNilOptimizationArg"
+			esac
 			set +e
 			upgradeScript=$GEMSTONE/upgrade/createGsDevKit_upgrade.topaz
       "$GEMSTONE/seaside/bin/upgradeSeasideImage" -c $tempObjCacheSize -s $targetStoneName -u $gemstoneUserId -p $gemstonePassword -P $upgradeScript $remoteDebugFlag $enableIsNilOptimizationFlag 2>&1 << EOF
