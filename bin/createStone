@@ -226,7 +226,7 @@ fi
 if [ "$installTode" = "true" ] ; then
   if [ "$bootstrapGLASS" = "true" ] ; then
 		majorMinorVersion="${vers:0:3}"
-		if [ "$majorMinorVersion" = "3.7" ] ; then
+		if [ "$majorMinorVersion" != "3.7" ] ; then
 			# ignore enableIsNilOptimizationArg for versions other than 3.7.x
       enableIsNilOptimizationArg=""
 		fi
